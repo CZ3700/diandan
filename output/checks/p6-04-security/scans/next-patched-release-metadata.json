@@ -1,0 +1,48 @@
+{
+  "name": "next",
+  "version": "16.3.6",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "dependencies": {
+    "postcss": "8.5.23",
+    "@next/env": "16.3.6",
+    "styled-jsx": "5.1.6",
+    "@swc/helpers": "0.5.23",
+    "caniuse-lite": "^1.0.30001579",
+    "baseline-browser-mapping": "^2.9.19"
+  },
+  "peerDependencies": {
+    "sass": "^1.3.0",
+    "react": "^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0",
+    "react-dom": "^18.2.0 || 19.0.0-rc-de68d2f4-20241204 || ^19.0.0",
+    "@playwright/test": "^1.51.1",
+    "@opentelemetry/api": "^1.1.0",
+    "babel-plugin-react-compiler": "*"
+  },
+  "dist": {
+    "shasum": "29a6cecb103bd2642a0ce322e68ecdb38a0f0af5",
+    "tarball": "https://registry.npmjs.org/next/-/next-16.3.6.tgz",
+    "fileCount": 8531,
+    "integrity": "sha512-L+otWM/aQbYTx98aZhgEoMb4bZAXx1YVW4UMA/vuCyCoWG5HJyZUili8QAkqzrcC+5///tsz3s0M+SlyB5bLMw==",
+    "signatures": [
+      {
+        "sig": "MEQCIFeQtYjYNFeTVVMCb9R9eqER3cznRCM9d5UF184QCkFWAiBV31uF941r5Rhbvqa1KtofsWU9v5GFNVQXHbiDS/S9dg==",
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+      },
+      {
+        "sig": "MEUCIDfLaDpn05UKdfurUrTE9RHmjaVzgX31o7ejn/mF5I7MAiEA3BmiIHLfjzuWD+bXx2TZBtNphTg/0iaZ0NvHXAPc/yw=",
+        "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+      }
+    ],
+    "attestations": {
+      "url": "https://registry.npmjs.org/-/npm/v1/attestations/next@16.3.6",
+      "provenance": {
+        "predicateType": "https://slsa.dev/provenance/v1"
+      }
+    },
+    "unpackedSize": 184778106
+  },
+  "retrievedAt": "2026-09-24T11:28:31.018582+00:00",
+  "sourceUrl": "https://registry.npmjs.org/next/16.3.6"
+}

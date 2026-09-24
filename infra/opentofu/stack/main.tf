@@ -56,15 +56,17 @@ module "compute" {
   log_retention_days       = var.log_retention_days
 }
 module "edge" {
-  source            = "../modules/edge"
-  name              = var.name
-  domains           = var.domains
-  aliases           = var.aliases
-  zone_id           = var.zone_id
-  alb               = module.compute.alb
-  derivative_domain = module.media.buckets.derivative.domain
-  waf_enforce       = var.waf_enforce
-  rate_limit        = var.rate_limit
+  source                    = "../modules/edge"
+  name                      = var.name
+  domains                   = var.domains
+  aliases                   = var.aliases
+  zone_id                   = var.zone_id
+  alb                       = module.compute.alb
+  derivative_domain         = module.media.buckets.derivative.domain
+  waf_enforce               = var.waf_enforce
+  rate_limit                = var.rate_limit
+  rate_limit_window_seconds = var.rate_limit_window_seconds
+  operation_rate_limits     = var.operation_rate_limits
 }
 module "operations" {
   source              = "../modules/operations"

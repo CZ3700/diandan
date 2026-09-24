@@ -1,0 +1,16 @@
+✔ local service transport refuses every destination outside its exact owned origins (2.370208ms)
+✔ OIDC signing identity survives restart and existing invalid keys are never overwritten (27.064667ms)
+✔ mail capture is authenticated encryption and rejects another notification identity (111.166292ms)
+✔ mail capture rejects a truncated 4-byte authentication tag (0.150084ms)
+✔ mail capture rejects a truncated 8-byte authentication tag (0.09825ms)
+✔ mail capture rejects a truncated 12-byte authentication tag (0.071167ms)
+✔ mail capture rejects a truncated 15-byte authentication tag (0.074333ms)
+✔ mail capture keeps its 16-byte tag format and rejects tampered authenticated fields (0.161458ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 176.940334

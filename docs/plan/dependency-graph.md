@@ -24,7 +24,7 @@ flowchart LR
 
 2026-09-22 ADR-016：用户接受剩余20项本地排期，当前仅 P5-04 READY。P1-03 已 DONE，P4-04 已验收 TEST runtime/connectors 的适用范围经独立核对。后继按原直接依赖的本地完整实现及非作者验收逐项就绪，不改变下面的完整任务/Phase 退出顺序或最终证据。Phase 6/7 当前仍 LOCKED，满足对应波次条件后才在 MASTER/phase 登记有限本地 ACTIVE 范围，不一次性 READY。
 
-2026-09-24 接续登记：P6-01/02适用本地完整验收及独立复核已ACCEPT，原远端CI/人工门仍保留，Lane D释放；仅P6-03原依赖本地成果核对后有限READY。范围和验证计划见MASTER/phase-6；P6-04至P6-06仍PENDING、Phase7仍LOCKED。此条更新当前波次，不改原完整依赖图。
+2026-09-24 接续登记：P6-01/02/03本地完整范围和P6-04明确范围安全检查已ACCEPT，原远端CI/人工/真实用户门及CSP/Permissions与部署续验保留，Lane D释放；仅P6-05原P1-06/P4-06/P5-06本地成果及193路径独立复核后有限READY。范围和验证计划见MASTER/phase-6；P6-06 PENDING、Phase7 LOCKED，31 DONE/10 IN_PROGRESS/1 READY/7 PENDING。此条更新当前波次，不改原完整依赖图。
 
 已接受的本地执行顺序（原外部验收全部保留）：
 

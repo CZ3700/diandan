@@ -1,0 +1,31 @@
+✖ CLI renders independent data from a poisoned window with an explicit degraded status (90.532375ms)
+✔ dashboard explicitly marks empty windows and missing INP rather than passing (24.347625ms)
+✔ log reader filters ordinary logs, rejects malformed observations and bounds records (5.164292ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 184.154833
+
+✖ failing tests:
+
+test at scripts/render-rum-dashboard.test.mjs:9:1
+✖ CLI renders independent data from a poisoned window with an explicit degraded status (90.532375ms)
+  AssertionError [ERR_ASSERTION]: RUM report failed; check input validity, bounds and output ownership.
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/render-rum-dashboard.test.mjs:23:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

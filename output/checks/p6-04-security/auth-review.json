@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "taskId": "P6-04",
+  "reviewer": "security_auth_review",
+  "baseline": "e65c9ffde4e9651c7c3b6e86df6426db05fbf410",
+  "scope": [
+    "AUTH",
+    "RBAC",
+    "CSRF",
+    "token",
+    "cart creation",
+    "payment",
+    "refund",
+    "webhook/reconcile replay"
+  ],
+  "cloudEvidence": false,
+  "postgresIntegrationExecutedByReviewer": false,
+  "protectedAcceptanceUntouched": "acceptance-e143d720dd1a4357a3c3",
+  "confirmedHighCritical": 0,
+  "findings": [
+    {
+      "id": "F-AUTH-01",
+      "severity": "MEDIUM",
+      "cwe": [
+        "CWE-770",
+        "CWE-400"
+      ],
+      "title": "敏感操作差异化限流缺口",
+      "preconditions": "Cart production composition configured; untrusted client supplies valid origin/market/currency and discards cookies. Admin variant requires explicit local OIDC composition.",
+      "evidence": [
+        "apps/api/src/cart-route.ts:221",
+        "packages/application/src/cart-runtime.ts:210",
+        "packages/persistence-postgres/src/cart-runtime-repository.ts:101",
+        "packages/application/src/admin-access.ts:100",
+        "database/migrations/0030_admin-access.up.sql:53"
+      ],
+      "reproduction": "auth-review-rate-repro.json",
+      "result": {
+        "fixedClock": true,
+        "requestsPerCase": 100,
+        "uniqueCartPersistenceCalls": 100,
+        "uniqueChallengePersistenceCalls": 100,
+        "externalNetwork": false,
+        "realDatabase": false
+      },
+      "status": "LOCAL_IAC_CONFIGURATION_GAP_CLOSED_PENDING_CLOUD_ACCEPTANCE",
+      "residual": "No application quota added to direct local API; WAF approximate; formal IdP not composed for production."
+    }
+  ],
+  "changedFiles": [
+    "infra/opentofu/modules/edge/main.tf",
+    "infra/opentofu/stack/variables.tf",
+    "infra/opentofu/stack/main.tf",
+    "infra/opentofu/stack/tests/offline.tftest.json",
+    "scripts/security-rate-limit.test.mjs",
+    "docs/runbooks/infrastructure-offline.md"
+  ],
+  "unitTestRuns": [
+    {
+      "key": "identity",
+      "cwd": "packages/identity-oidc",
+      "command": "mise exec node@24.20.0 -- node ../../node_modules/vitest/vitest.mjs run --config ../../vitest.config.ts --root .",
+      "evidence": "auth-tests-identity.json",
+      "actualFiles": [
+        "packages/identity-oidc/src/index.test.ts",
+        "packages/identity-oidc/src/real-oidc.test.ts"
+      ],
+      "passedTests": 75,
+      "failedTests": 0
+    },
+    {
+      "key": "api",
+      "cwd": "apps/api",
+      "command": "mise exec node@24.20.0 -- node ../../node_modules/vitest/vitest.mjs run --config ../../vitest.config.ts --root . src/admin-access-route.test.ts src/admin-session-route.test.ts src/admin-finance-route.test.ts src/admin-payment-configuration-route.test.ts src/admin-exceptions-route.test.ts src/order-access-route.test.ts src/order-access-credentials.test.ts src/payment-runtime-route.test.ts src/payment-webhook-route.e2e.test.ts",
+      "evidence": "auth-tests-api.json",
+      "actualFiles": [
+        "apps/api/src/admin-access-route.test.ts",
+        "apps/api/src/admin-exceptions-route.test.ts",
+        "apps/api/src/admin-finance-route.test.ts",
+        "apps/api/src/admin-payment-configuration-route.test.ts",
+        "apps/api/src/admin-session-route.test.ts",
+        "apps/api/src/order-access-credentials.test.ts",
+        "apps/api/src/order-access-route.test.ts",
+        "apps/api/src/payment-runtime-route.test.ts",
+        "apps/api/src/payment-webhook-route.e2e.test.ts"
+      ],
+      "passedTests": 51,
+      "failedTests": 0
+    },
+    {
+      "key": "persistence",
+      "cwd": "packages/persistence-postgres",
+      "command": "mise exec node@24.20.0 -- node ../../node_modules/vitest/vitest.mjs run --config ../../vitest.config.ts --root . src/admin-access-repository.test.ts src/admin-authorization-repository.test.ts src/admin-finance-recovery.test.ts src/admin-session-repository.test.ts src/admin-payment-configuration.test.ts src/admin-exceptions-repository.test.ts src/order-access-repository.test.ts src/payment-runtime-evidence.test.ts src/webhook-endpoint-security.test.ts src/authority-evidence-security.test.ts",
+      "evidence": "auth-tests-persistence.json",
+      "actualFiles": [
+        "packages/persistence-postgres/src/admin-access-repository.test.ts",
+        "packages/persistence-postgres/src/admin-authorization-repository.test.ts",
+        "packages/persistence-postgres/src/admin-finance-recovery.test.ts",
+        "packages/persistence-postgres/src/admin-payment-configuration.test.ts",
+        "packages/persistence-postgres/src/admin-session-repository.test.ts",
+        "packages/persistence-postgres/src/authority-evidence-security.test.ts",
+        "packages/persistence-postgres/src/order-access-repository.test.ts",
+        "packages/persistence-postgres/src/payment-runtime-evidence.test.ts",
+        "packages/persistence-postgres/src/webhook-endpoint-security.test.ts"
+      ],
+      "passedTests": 44,
+      "failedTests": 0
+    },
+    {
+      "key": "application",
+      "cwd": "packages/application",
+      "command": "mise exec node@24.20.0 -- node ../../node_modules/vitest/vitest.mjs run --config ../../vitest.config.ts --root . src/admin-access.test.ts src/admin-session.test.ts src/admin-finance.test.ts src/admin-finance-webhook.test.ts src/admin-payment-configuration.test.ts src/admin-exceptions.test.ts src/order-access.test.ts src/payment-runtime.test.ts src/payment-runtime-recovery.test.ts src/receive-payment-webhook.test.ts src/process-webhook-inbox.test.ts",
+      "evidence": "auth-tests-application.json",
+      "actualFiles": [
+        "packages/application/src/admin-access.test.ts",
+        "packages/application/src/admin-exceptions.test.ts",
+        "packages/application/src/admin-finance-webhook.test.ts",
+        "packages/application/src/admin-finance.test.ts",
+        "packages/application/src/admin-payment-configuration.test.ts",
+        "packages/application/src/admin-session.test.ts",
+        "packages/application/src/order-access.test.ts",
+        "packages/application/src/payment-runtime.test.ts",
+        "packages/application/src/process-webhook-inbox.test.ts",
+        "packages/application/src/receive-payment-webhook.test.ts"
+      ],
+      "passedTests": 91,
+      "failedTests": 0
+    },
+    {
+      "key": "admin",
+      "cwd": "apps/admin",
+      "command": "mise exec node@24.20.0 -- node ../../node_modules/vitest/vitest.mjs run --config ../../vitest.config.ts --root . src/server/admin-access-bff.test.ts src/server/admin-bff.test.ts src/server/admin-finance-operations.test.ts src/server/admin-exceptions-operations.test.ts src/server/admin-payment-configuration-operations.test.ts",
+      "evidence": "auth-tests-admin.json",
+      "actualFiles": [
+        "apps/admin/src/server/admin-access-bff.test.ts",
+        "apps/admin/src/server/admin-bff.test.ts",
+        "apps/admin/src/server/admin-exceptions-operations.test.ts",
+        "apps/admin/src/server/admin-finance-operations.test.ts",
+        "apps/admin/src/server/admin-payment-configuration-operations.test.ts"
+      ],
+      "passedTests": 44,
+      "failedTests": 0
+    },
+    {
+      "key": "storefront",
+      "cwd": "apps/storefront",
+      "command": "mise exec node@24.20.0 -- node ../../node_modules/vitest/vitest.mjs run --config ../../vitest.config.ts --root . src/server/cart-proxy.test.ts src/server/checkout-proxy.test.ts src/server/order-proxy.test.ts src/server/request-origin.test.ts",
+      "evidence": "auth-tests-storefront.json",
+      "actualFiles": [
+        "apps/storefront/src/server/cart-proxy.test.ts",
+        "apps/storefront/src/server/checkout-proxy.test.ts",
+        "apps/storefront/src/server/order-proxy.test.ts",
+        "apps/storefront/src/server/request-origin.test.ts"
+      ],
+      "passedTests": 48,
+      "failedTests": 0
+    },
+    {
+      "key": "payment-gateway",
+      "cwd": "packages/payment-gateway",
+      "command": "mise exec node@24.20.0 -- node ../../node_modules/vitest/vitest.mjs run --config ../../vitest.config.ts --root . src/webhook.test.ts",
+      "evidence": "auth-tests-payment-gateway.json",
+      "actualFiles": [
+        "packages/payment-gateway/src/webhook.test.ts"
+      ],
+      "passedTests": 7,
+      "failedTests": 0
+    }
+  ],
+  "unitCounts": {
+    "earlySubset": 170,
+    "laterAdditional": 190,
+    "totalUniqueTests": 360,
+    "totalFiles": 40,
+    "rerunAfterDependencyRestore": true
+  },
+  "additionalTests": {
+    "controlledReproduction": 2,
+    "nodeToolsAndPath": 7,
+    "opentofuMockPlanRuns": 18
+  },
+  "iacEvidence": {
+    "red": "iac-red/14-stack-test.log",
+    "green": "iac-green/result.json",
+    "final": "iac-final/result.json",
+    "finalStatus": "PASS"
+  },
+  "runbook": "docs/runbooks/infrastructure-offline.md",
+  "sourceReferences": [
+    "https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-rate-based-high-level-settings.html",
+    "https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-rate-based-caveats.html"
+  ],
+  "sourceSha256": {
+    "infra/opentofu/modules/edge/main.tf": "5933df2c11d9f422a8287ff4dce14df7abfe25eddaa87daeb4f4a9f9a3b78977",
+    "infra/opentofu/stack/variables.tf": "48596910f2565c7e14e40b30a6089ac1d52833a1e54a0c8889c30378c7452c34",
+    "infra/opentofu/stack/main.tf": "cdccfcad5498769ebc0d7e93d431b5b1f7ce1aeddfd40f8182cfade542401918",
+    "infra/opentofu/stack/tests/offline.tftest.json": "4a7b59f38f9306b35e8cc45881bb9a4447865b058908063b185022c8dada55fb",
+    "scripts/security-rate-limit.test.mjs": "4f250e3899d6a0c6ebf57123071e0a7a5f5558556ee2385b5c49c4627c3c0227",
+    "docs/runbooks/infrastructure-offline.md": "50d3e470e3d2270a1503ea6f95acd2311ca787f0bc420e7211c3144d035b1baf"
+  }
+}

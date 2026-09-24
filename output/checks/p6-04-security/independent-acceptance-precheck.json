@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "status": "NOT_ACCEPTED_RUN_1_FAILED_RUM",
+  "checkedAt": "2026-09-24T12:01:41.149Z",
+  "sourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+  "recomputedSourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+  "selectedFiles": 2921,
+  "executableFiles": 2834,
+  "rootMismatch": [],
+  "isolatedWorkspaceMismatch": [],
+  "protectedOriginalFiles": 8457,
+  "protectedOriginalMismatch": [],
+  "runStatus": "FAIL",
+  "passedCommands": 15,
+  "failedCommands": [
+    {
+      "label": "16-rum-browser",
+      "startedAt": "2026-09-24T11:54:02.863Z",
+      "completedAt": "2026-09-24T12:00:29.053Z",
+      "log": "16-rum-browser.txt",
+      "exitCode": 1,
+      "signal": null,
+      "launchFailed": false,
+      "status": "FAIL"
+    }
+  ],
+  "missingSteps": [
+    "17-seven-locale-journey",
+    "18-artifact-boundaries",
+    "19-built-artifacts"
+  ],
+  "archiveFiles": 62,
+  "archiveVsOriginalMismatch": [],
+  "cloudEvidence": false,
+  "protectedPrivateConfig": {
+    "sha256": "1bb3a5ec2d125d1e836e4ca336928e843a0d29cd3ddf31d71ca838e8ca8fd91e",
+    "matchesStart": true
+  }
+}

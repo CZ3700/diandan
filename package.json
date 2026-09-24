@@ -33,6 +33,8 @@
     "preview:logs": "node ./scripts/runtime-preview.mjs logs",
     "preview:up": "node ./scripts/runtime-preview.mjs up",
     "preview:verify": "node ./scripts/runtime-preview.mjs verify",
+    "security:dependencies": "node --test ./scripts/security-dependencies.test.mjs && corepack pnpm audit --registry=https://registry.npmjs.org --audit-level=high",
+    "security:regressions": "corepack pnpm exec turbo run build --filter=@fan-support/observability... --output-logs=errors-only && node --test ./scripts/security-rate-limit.test.mjs ./apps/api/scripts/local-experience-services.test.mjs ./scripts/render-rum-dashboard.test.mjs",
     "security:secrets": "node ./scripts/scan-secrets.mjs",
     "test": "turbo run test",
     "test:postgres": "corepack pnpm --filter @fan-support/persistence-postgres test:postgres && corepack pnpm --filter @fan-support/api test:postgres:catalog && corepack pnpm --filter @fan-support/api test:postgres:admin-content && corepack pnpm --filter @fan-support/api test:postgres:content-authoring && corepack pnpm --filter @fan-support/api test:postgres:base-content && corepack pnpm --filter @fan-support/api test:postgres:resource-management && corepack pnpm --filter @fan-support/api test:postgres:publication-preflight && corepack pnpm --filter @fan-support/api test:postgres:publication-runtime && corepack pnpm --filter @fan-support/api test:postgres:admin-workspace && corepack pnpm --filter @fan-support/api test:postgres:gift-commerce && corepack pnpm --filter @fan-support/api test:postgres:storefront && corepack pnpm --filter @fan-support/api test:postgres:gift-storefront && corepack pnpm --filter @fan-support/api test:postgres:storefront-acceptance && corepack pnpm --filter @fan-support/api test:postgres:cart && corepack pnpm --filter @fan-support/api test:postgres:cart-storefront && corepack pnpm --filter @fan-support/api test:postgres:checkout-preflight && corepack pnpm --filter @fan-support/api test:postgres:payment-runtime && corepack pnpm --filter @fan-support/api test:postgres:order-payment && corepack pnpm --filter @fan-support/api test:postgres:order-access && corepack pnpm --filter @fan-support/persistence-postgres test:postgres:commerce-expiry && corepack pnpm --filter @fan-support/persistence-postgres test:postgres:notifications && corepack pnpm --filter @fan-support/api test:postgres:admin-access && corepack pnpm --filter @fan-support/persistence-postgres test:postgres:admin-orders && corepack pnpm --filter @fan-support/persistence-postgres test:postgres:admin-order-resends && corepack pnpm --filter @fan-support/api test:postgres:admin-orders && corepack pnpm --filter @fan-support/persistence-postgres test:postgres:admin-finance && corepack pnpm --filter @fan-support/api test:postgres:admin-finance && corepack pnpm --filter @fan-support/api test:postgres:admin-payment-configuration && corepack pnpm --filter @fan-support/api test:postgres:admin-exceptions",
@@ -79,7 +81,7 @@
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
     "@eslint/js": "10.0.1",
-    "@next/eslint-plugin-next": "16.3.4",
+    "@next/eslint-plugin-next": "16.3.6",
     "@playwright/test": "1.62.1",
     "@secretlint/secretlint-rule-preset-recommend": "13.0.5",
     "@tailwindcss/postcss": "4.3.3",

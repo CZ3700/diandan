@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { Buffer } from "node:buffer";
 import { randomBytes } from "node:crypto";
 import { mkdtemp, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -79,4 +80,52 @@ test("mail capture is authenticated encryption and rejects another notification 
   assert.throws(() =>
     module.decryptMailCapture(randomBytes(32), "notification-one", encrypted),
   );
+});
+
+for (const tagBytes of [4, 8, 12, 15]) {
+  test(`mail capture rejects a truncated ${tagBytes}-byte authentication tag`, async () => {
+    const { encryptMailCapture, decryptMailCapture } =
+      await import("./local-experience-services-mail-store.mjs");
+    const key = randomBytes(32);
+    const encrypted = encryptMailCapture(key, "notification-one", {
+      text: "synthetic test content",
+    });
+    const truncated = {
+      ...encrypted,
+      tag: Buffer.from(encrypted.tag, "base64url")
+        .subarray(0, tagBytes)
+        .toString("base64url"),
+    };
+    assert.throws(() => decryptMailCapture(key, "notification-one", truncated));
+  });
+}
+
+test("mail capture keeps its 16-byte tag format and rejects tampered authenticated fields", async () => {
+  const { encryptMailCapture, decryptMailCapture } =
+    await import("./local-experience-services-mail-store.mjs");
+  const key = randomBytes(32);
+  const value = { text: "synthetic test content" };
+  const encrypted = encryptMailCapture(key, "notification-one", value);
+  assert.deepEqual(Object.keys(encrypted).sort(), [
+    "ciphertext",
+    "iv",
+    "schemaVersion",
+    "tag",
+  ]);
+  assert.equal(encrypted.schemaVersion, 1);
+  assert.equal(Buffer.from(encrypted.tag, "base64url").length, 16);
+  assert.deepEqual(
+    decryptMailCapture(key, "notification-one", encrypted),
+    value,
+  );
+  for (const field of ["iv", "tag", "ciphertext"]) {
+    const tampered = Buffer.from(encrypted[field], "base64url");
+    tampered[0] ^= 1;
+    assert.throws(() =>
+      decryptMailCapture(key, "notification-one", {
+        ...encrypted,
+        [field]: tampered.toString("base64url"),
+      }),
+    );
+  }
 });

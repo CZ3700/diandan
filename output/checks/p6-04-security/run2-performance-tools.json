@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "author": "security_auth_review",
+  "scope": "Fresh step 10 against frozen run 2 inputs, supersedes invalid reuse in original run 2 report",
+  "startedAt": "2026-09-24T12:09:53.656Z",
+  "completedAt": "2026-09-24T12:09:54.048Z",
+  "workspace": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace",
+  "nodeVersion": "v24.20.0",
+  "sourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+  "rumBrowserSha256": "16b8fc45927ccb93c6f6627acd110e242aad2b299f8c918c1cad1432f3208972",
+  "command": [
+    "/Users/mario/.local/share/mise/installs/node/24.20.0/bin/node",
+    "--test",
+    "apps/api/scripts/performance-content.test.mjs",
+    "apps/api/scripts/performance-resources.test.mjs",
+    "apps/api/scripts/rum-browser-lifecycle.test.mjs",
+    "apps/api/scripts/rum-browser.test.mjs",
+    "apps/api/scripts/storefront-acceptance-performance.test.mjs",
+    "apps/api/scripts/storefront-test-rum-config.test.mjs",
+    "packages/persistence-postgres/scripts/catalog-performance.test.mjs",
+    "scripts/performance-plan.test.mjs",
+    "scripts/render-rum-dashboard.test.mjs"
+  ],
+  "testFileCount": 9,
+  "testFiles": [
+    "apps/api/scripts/performance-content.test.mjs",
+    "apps/api/scripts/performance-resources.test.mjs",
+    "apps/api/scripts/rum-browser-lifecycle.test.mjs",
+    "apps/api/scripts/rum-browser.test.mjs",
+    "apps/api/scripts/storefront-acceptance-performance.test.mjs",
+    "apps/api/scripts/storefront-test-rum-config.test.mjs",
+    "packages/persistence-postgres/scripts/catalog-performance.test.mjs",
+    "scripts/performance-plan.test.mjs",
+    "scripts/render-rum-dashboard.test.mjs"
+  ],
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "summary": [
+    "ℹ tests 37",
+    "ℹ suites 0",
+    "ℹ pass 37",
+    "ℹ fail 0",
+    "ℹ cancelled 0",
+    "ℹ skipped 0",
+    "ℹ todo 0",
+    "ℹ duration_ms 364.70925"
+  ],
+  "log": "run2-performance-tools.txt",
+  "logSha256": "ae74da9a309fe52966f5a235e6aab991748e9960185b07ead99d0fc40e6dad85"
+}

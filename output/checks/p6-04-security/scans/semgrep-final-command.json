@@ -1,0 +1,38 @@
+{
+  "command": [
+    "/opt/homebrew/bin/semgrep",
+    "scan",
+    "--oss-only",
+    "--metrics=off",
+    "--disable-version-check",
+    "--project-root",
+    "/Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final",
+    "--no-git-ignore",
+    "--disable-nosem",
+    "--verbose",
+    "--jobs",
+    "2",
+    "--timeout",
+    "15",
+    "--max-target-bytes",
+    "2000000",
+    "--config",
+    "/Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/official-security-rules-v2.json",
+    "--json-output",
+    "/Users/mario/Desktop/下单/output/checks/p6-04-security/scans/semgrep-final.json",
+    "--sarif-output",
+    "/Users/mario/Desktop/下单/output/checks/p6-04-security/scans/semgrep-final-sarif.json",
+    "/Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final"
+  ],
+  "cwd": "/Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final",
+  "startedAt": "2026-09-24T11:45:09.144922+00:00",
+  "finishedAt": "2026-09-24T11:47:21.994601+00:00",
+  "elapsedSeconds": 132.84831662476063,
+  "exitCode": 0,
+  "privacy": {
+    "metrics": "off",
+    "versionCheck": false,
+    "cloudUpload": false,
+    "engine": "OSS"
+  }
+}

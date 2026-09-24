@@ -1,0 +1,15 @@
+✔ offline command sequence cannot apply, refresh or activate a backend (1.058ms)
+✔ mock plan tests reject implicit apply, live providers, unmapped aliases and unknown blocks (0.316333ms)
+✔ manifest accepts four immutable digests and rejects tags, extra apps, unknown evidence and invalid region (1.190084ms)
+✔ child process environment excludes credentials, CLI injection and user config (0.21225ms)
+✔ unmocked provider aliases and executable providers fail before any tool runs (3.402708ms)
+✔ all six sensitive operations cover actual BFF and API paths without grouping by object ID (3.087542ms)
+✔ write scopes exclude safe reads and WAF uses source IP instead of spoofable forwarded headers (0.308458ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72.480042

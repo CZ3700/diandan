@@ -2,5 +2,10 @@
 export {
   rumObservationSchema,
   rumReportSchema,
+  rumReportV2Schema,
 } from "@fan-support/contracts/rum";
-export { aggregateRum, RUM_MAX_RECORDS } from "@fan-support/observability/rum";
+export {
+  aggregateRum,
+  aggregateRumV2,
+  RUM_MAX_RECORDS,
+} from "@fan-support/observability/rum";

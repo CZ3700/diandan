@@ -1,0 +1,25 @@
+✔ partial launch failure still kills the already spawned child before removing its profile (1.006833ms)
+✔ close rejection or timeout cannot prevent owned kill and profile cleanup (21.35925ms)
+✔ unconfirmed process exit blocks success and preserves the owned profile (22.013166ms)
+✔ fresh owned context success waits for process exit and profile cleanup (0.28ms)
+✔ connection and profile-removal failures cannot become successful verification (0.349541ms)
+✔ visibility evidence rejects synthetic, missing, navigated, or still visible documents (4.751042ms)
+✔ RUM exchange rejects headers or body that could disclose private context (3.900916ms)
+✔ request attempts remain observable when acknowledgement or header validation fails (9.235541ms)
+✔ server evidence excludes non-RUM logs and rejects malformed RUM observations (1.077875ms)
+✔ 204 acknowledgement requires completed response and pending observations are bounded (42.341958ms)
+✔ a partial browser matrix cannot count as RUM acceptance (0.235833ms)
+✔ default fixture configuration does not enable RUM or change its environment (1.055375ms)
+✔ explicit local RUM is confined to the owned TEST runtime and uses full sampling (0.333708ms)
+✔ RUM fixture injection cannot target production, preview, or missing environment (1.248166ms)
+✔ CLI renders independent data from a poisoned window with an explicit degraded status (154.927166ms)
+✔ dashboard explicitly marks empty windows and missing INP rather than passing (30.8225ms)
+✔ log reader filters ordinary logs, rejects malformed observations and bounds records (6.644416ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 405.740792

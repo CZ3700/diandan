@@ -1,0 +1,259 @@
+$ pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --output-logs=errors-only && node --test ./scripts/order-access-*.test.mjs && node ./scripts/order-access-http.mjs
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/api, @fan-support/application, @fan-support/cache-purge-cdn, @fan-support/cache-purge-port, @fan-support/cart, @fan-support/catalog, @fan-support/config, @fan-support/content, @fan-support/contracts, @fan-support/domain, @fan-support/i18n, @fan-support/identity-oidc, @fan-support/identity-port, @fan-support/key-management-kms, @fan-support/key-management-port, @fan-support/media-image, @fan-support/media-port, @fan-support/media-s3, @fan-support/notification-port, @fan-support/notification-provider, @fan-support/observability, @fan-support/payment-fake, @fan-support/payment-gateway, @fan-support/payment-port, @fan-support/persistence-port, @fan-support/persistence-postgres, @fan-support/testing, @fan-support/worker
+   • Running build in 28 packages
+   • Remote caching disabled
+
+
+ Tasks:    28 successful, 28 total
+Cached:    28 cached, 28 total
+  Time:    67ms >>> FULL TURBO
+
+✔ actual successful access response loses BEFORE_HEADERS without fabricated business state (24.044042ms)
+✔ actual successful access response loses AFTER_HEADERS without fabricated business state (33.135ms)
+{"status":"PASS","actualPostgres":true,"actualHttp":true,"fixtureOrders":0,"requests":[{"status":401,"code":"ACCESS_DENIED"},{"status":401,"code":"ACCESS_DENIED"},{"status":401,"code":"ACCESS_DENIED"},{"status":400,"code":"INVALID_REQUEST"},{"status":400,"code":"INVALID_REQUEST"},{"status":413,"code":"INVALID_REQUEST"},{"status":403,"code":"ACCESS_DENIED"}]}
+✔ actual empty PostgreSQL access HTTP fails closed on unknown credentials and malformed payloads (1271.885792ms)
+{"status":"PASS","actualPostgres":true,"actualHttp":true,"fixtureOrders":0,"requests":[{"status":401,"code":"ACCESS_DENIED"},{"status":401,"code":"ACCESS_DENIED"},{"status":429,"code":"RATE_LIMITED"}]}
+✔ actual access limiter persists failed exchange attempts and rejects spoofed proxy identity (1184.233042ms)
+{"status":"PASS","actualPostgres":true,"actualHttp":true,"fixtureOrders":0,"requests":[]}
+✔ actual access HTTP sees valid framing and rejects repeated Cookie, Origin, and independent CSRF headers (1206.726292ms)
+✔ replacement media origin owns distinct certificate files and verifies actual TLS (200.674333ms)
+✔ raw access probe sends valid HTTP framing while preserving each duplicate authorization header (10.003708ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4351.392875
+Order access: processing original fictional Mira Vale independent media
+Order access: processing original fictional Kai Ren independent media
+Order access: processing original fictional Rose Palace gift artwork
+Order access: processing original fictional Blue Orbit gift artwork
+Order access: processing original fictional Ruby Bouquet gift artwork
+Order access: authoring real gift 1/27
+Order access: authoring real gift 2/27
+Order access: authoring real gift 3/27
+Order access: authoring real gift 4/27
+Order access: authoring real gift 5/27
+Order access: authoring real gift 6/27
+Order access: authoring real gift 7/27
+Order access: authoring real gift 8/27
+Order access: authoring real gift 9/27
+Order access: authoring real gift 10/27
+Order access: authoring real gift 11/27
+Order access: authoring real gift 12/27
+Order access: authoring real gift 13/27
+Order access: authoring real gift 14/27
+Order access: authoring real gift 15/27
+Order access: authoring real gift 16/27
+Order access: authoring real gift 17/27
+Order access: authoring real gift 18/27
+Order access: authoring real gift 19/27
+Order access: authoring real gift 20/27
+Order access: authoring real gift 21/27
+Order access: authoring real gift 22/27
+Order access: authoring real gift 23/27
+Order access: authoring real gift 24/27
+Order access: authoring real gift 25/27
+Order access: authoring real gift 26/27
+Order access: authoring real gift 27/27
+Order access: reading actual PostgreSQL price activation time
+Order access: creating complete TEST price book 1/2
+Order access: publishing complete TEST price book 1/2
+Order access: creating complete TEST price book 2/2
+Order access: publishing complete TEST price book 2/2
+Order access: creating actual inventory location
+Order access: stock, review and publication for gift 1/26
+Order access: stock, review and publication for gift 2/26
+Order access: stock, review and publication for gift 3/26
+Order access: stock, review and publication for gift 4/26
+Order access: stock, review and publication for gift 5/26
+Order access: stock, review and publication for gift 6/26
+Order access: stock, review and publication for gift 7/26
+Order access: stock, review and publication for gift 8/26
+Order access: stock, review and publication for gift 9/26
+Order access: stock, review and publication for gift 10/26
+Order access: stock, review and publication for gift 11/26
+Order access: stock, review and publication for gift 12/26
+Order access: stock, review and publication for gift 13/26
+Order access: stock, review and publication for gift 14/26
+Order access: stock, review and publication for gift 15/26
+Order access: stock, review and publication for gift 16/26
+Order access: stock, review and publication for gift 17/26
+Order access: stock, review and publication for gift 18/26
+Order access: stock, review and publication for gift 19/26
+Order access: stock, review and publication for gift 20/26
+Order access: stock, review and publication for gift 21/26
+Order access: stock, review and publication for gift 22/26
+Order access: stock, review and publication for gift 23/26
+Order access: stock, review and publication for gift 24/26
+Order access: stock, review and publication for gift 25/26
+Order access: stock, review and publication for gift 26/26
+Order access: proving tracked availability is one location's maximum, never a sum
+Order access: publishing actual TEST terms policy
+Order access: publishing actual TEST privacy policy
+Order access: publishing actual TEST refund policy
+Order access: publishing actual TEST delivery policy
+Order access: normal TEST webhook endpoint configuration
+Order access: provision owned durable event queue before VERIFY runtimes
+Order access: start actual signed webhook HTTP ingress
+Order access: seven locale paid orders establish protected order sessions
+Checkout HTTP {"ordinal":1,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":2,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":3,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":4,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Order access HTTP {"category":"BOOTSTRAP","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access media {"status":200,"locale":"en"}
+Order access media {"status":200,"locale":"en"}
+Checkout HTTP {"ordinal":5,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":6,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":7,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":8,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Order access HTTP {"category":"BOOTSTRAP","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access media {"status":200,"locale":"zh-CN"}
+Order access media {"status":200,"locale":"zh-CN"}
+Checkout HTTP {"ordinal":9,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":10,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":11,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":12,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Order access HTTP {"category":"BOOTSTRAP","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access media {"status":200,"locale":"th"}
+Order access media {"status":200,"locale":"th"}
+Checkout HTTP {"ordinal":13,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":14,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":15,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":16,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Order access HTTP {"category":"BOOTSTRAP","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access media {"status":200,"locale":"vi"}
+Order access media {"status":200,"locale":"vi"}
+Checkout HTTP {"ordinal":17,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":18,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":19,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":20,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Order access HTTP {"category":"BOOTSTRAP","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access media {"status":200,"locale":"ja"}
+Order access media {"status":200,"locale":"ja"}
+Checkout HTTP {"ordinal":21,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":22,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":23,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":24,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Order access HTTP {"category":"BOOTSTRAP","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access media {"status":200,"locale":"es"}
+Order access media {"status":200,"locale":"es"}
+Checkout HTTP {"ordinal":25,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":26,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":27,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":28,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Order access HTTP {"category":"BOOTSTRAP","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access media {"status":200,"locale":"pt"}
+Order access media {"status":200,"locale":"pt"}
+Order access: DAILY Chinese original retains truthful historical content and image language
+Checkout HTTP {"ordinal":29,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":30,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":31,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":32,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Payment HTTP {"category":"RECOVER_ATTEMPT","status":200,"code":null}
+Order access HTTP {"category":"BOOTSTRAP","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Checkout HTTP {"ordinal":33,"category":"INITIALIZE_CART","status":200,"code":null}
+Checkout HTTP {"ordinal":34,"category":"ADD_CART_ITEM","status":200,"code":null}
+Checkout HTTP {"ordinal":35,"category":"VALIDATE","status":200,"code":null}
+Checkout HTTP {"ordinal":36,"category":"CREATE","status":200,"code":null}
+Payment HTTP {"category":"CAPABILITIES","status":200,"code":null}
+Payment HTTP {"category":"CREATE_ATTEMPT","status":200,"code":null}
+Order access HTTP {"category":"BOOTSTRAP","status":409,"code":"PAYMENT_NOT_CONFIRMED"}
+Order access: actual HTTP authorization, malformed input, and order scope rejection
+Order access HTTP {"category":"READ","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"READ","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"READ","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"READ","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"READ","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"READ","status":403,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"READ_QUERY_REJECTED","status":400,"code":"INVALID_REQUEST"}
+Order access HTTP {"category":"BOOTSTRAP","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"BOOTSTRAP","status":403,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"BOOTSTRAP","status":403,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"REVOKE","status":403,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"EXCHANGE","status":400,"code":"INVALID_REQUEST"}
+Order access HTTP {"category":"EXCHANGE","status":400,"code":"INVALID_REQUEST"}
+Order access HTTP {"category":"EXCHANGE","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"EXTRA_EXCHANGE_FIELD","status":400,"code":"INVALID_REQUEST"}
+Order access: one-time link consumption, rotation, revocation and concurrent exchange
+Order access HTTP {"category":"EXCHANGE","status":200,"code":null}
+Order access HTTP {"category":"READ","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access HTTP {"category":"EXCHANGE","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"EXCHANGE","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"EXCHANGE","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"EXCHANGE","status":200,"code":null}
+Order access HTTP {"category":"EXCHANGE","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access HTTP {"category":"REVOKE","status":200,"code":null}
+Order access HTTP {"category":"READ","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"EXCHANGE","status":401,"code":"ACCESS_DENIED"}
+Order access: real token and session expiry; retained checkout can establish a new scope
+Order access HTTP {"category":"EXCHANGE","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"BOOTSTRAP","status":200,"code":null}
+Order access HTTP {"category":"READ","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"BOOTSTRAP","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access: real socket response loss with and without a received Cookie
+Order access HTTP {"category":"EXCHANGE","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"BOOTSTRAP","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access HTTP {"category":"EXCHANGE","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access: unavailable key service rejects without consuming credentials
+Order access HTTP {"category":"EXCHANGE","status":503,"code":"TEMPORARY_UNAVAILABLE"}
+Order access HTTP {"category":"EXCHANGE","status":200,"code":null}
+Order access HTTP {"category":"READ","status":503,"code":"TEMPORARY_UNAVAILABLE"}
+Order access: current content and prices change while historical protected snapshots remain stable
+Order access historical media metadata {"currentLifecycle":"PUBLISHED","priorReferenceLifecycle":"PUBLISHED","referenceAdvanced":false}
+Order access historical detail media {"priorLifecycle":"SUPERSEDED","replacementLifecycle":"PUBLISHED","differentAsset":true}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access HTTP {"category":"READ","status":200,"code":null}
+Order access: persistent per-scope rate limits survive independent API instances
+Order access HTTP {"category":"EXCHANGE","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"EXCHANGE","status":401,"code":"ACCESS_DENIED"}
+Order access HTTP {"category":"EXCHANGE","status":429,"code":"RATE_LIMITED"}
+PASS order access 6859 assertions; /Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p4-05-order-access/run-2026-09-24T11-49-09.135Z

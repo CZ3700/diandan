@@ -1,0 +1,28 @@
+{
+  "at": "2026-09-24T11:32:16.163Z",
+  "node": "v24.20.0",
+  "scope": "Pure in-memory synthetic local TEST mail capture; no service, user data, or database touched",
+  "results": [
+    {
+      "tagBytes": 16,
+      "accepted": true
+    },
+    {
+      "tagBytes": 15,
+      "accepted": true
+    },
+    {
+      "tagBytes": 12,
+      "accepted": true
+    },
+    {
+      "tagBytes": 8,
+      "accepted": true
+    },
+    {
+      "tagBytes": 4,
+      "accepted": true
+    }
+  ],
+  "assessment": "Valid GCM authentication tag prefixes can be accepted below intended 16 bytes on project Node24. A local stored-data defense-in-depth issue; no remote write/exploit path established."
+}

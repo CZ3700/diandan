@@ -1,0 +1,57 @@
+{
+  "completedAt": "2026-09-24T11:51:13.011362+00:00",
+  "scope": "P6-04 owned local source/TEST dependency/SAST/secret verification only",
+  "sourceFiles": 2535,
+  "parentSourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+  "sourceDriftAfterChecks": [],
+  "audit": {
+    "exitCode": 0,
+    "dependencies": 628,
+    "high": 0,
+    "critical": 0,
+    "allReportedAdvisories": 0,
+    "knownFeedGapRetained": true
+  },
+  "next": {
+    "admin": "16.3.6",
+    "storefront": "16.3.6",
+    "knownCritical": "GHSA-vcvr-r3jv-pc5j version range cleared in candidate",
+    "futureReleaseRecheckRequired": true
+  },
+  "semgrep": {
+    "version": "1.157.0",
+    "engine": "OSS",
+    "configuredRules": 494,
+    "runRules": 482,
+    "reportedTargets": 2536,
+    "sourceTargets": 2535,
+    "rawFindings": 130,
+    "ERROR": 3,
+    "WARNING": 114,
+    "INFO": 13,
+    "partialParsingDiagnostics": 11,
+    "manuallyInspectedUniqueLineLocations": 15,
+    "exitCode": 0,
+    "unresolvedConfirmedHighCritical": 0,
+    "wholeApplicationSecurityGuarantee": false
+  },
+  "secrets": {
+    "exitCode": 0,
+    "originalRulesUnchanged": true,
+    "privateConfigValuesDisplayed": false
+  },
+  "residuals": [
+    "Low: SPEC15 global CSP and Permissions-Policy baseline incomplete; strict nonce/hash script policy is not deployed across app; no demonstrated injection precondition",
+    "Low: IAM task-definition wildcard least-privilege review before cloud apply",
+    "cloud/WAF/production composition and current runtime image validation remain deployment gates",
+    "Semgrep OSS/local-language scope and disclosed partial parses do not equal full cross-file analysis"
+  ],
+  "notRunByThisReviewer": [
+    "PostgreSQL",
+    "browser",
+    "remote target scanning",
+    "cloud apply",
+    "user-owned persistent service restart"
+  ],
+  "parentIntegrationInProgress": true
+}

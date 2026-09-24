@@ -1,0 +1,37 @@
+{
+  "at": "2026-09-24T11:36:50.243977+00:00",
+  "results": [
+    {
+      "command": [
+        "/Users/mario/.local/share/mise/installs/node/24.20.0/bin/node",
+        "node_modules/eslint/bin/eslint.js",
+        "apps/api/scripts/local-experience-services.test.mjs",
+        "apps/api/scripts/local-experience-services-mail-store.mjs",
+        "--max-warnings=0"
+      ],
+      "exitCode": 0,
+      "log": "gcm-final-check-1-log.txt"
+    },
+    {
+      "command": [
+        "/Users/mario/.local/share/mise/installs/node/24.20.0/bin/node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "apps/api/scripts/local-experience-services.test.mjs",
+        "apps/api/scripts/local-experience-services-mail-store.mjs"
+      ],
+      "exitCode": 0,
+      "log": "gcm-final-check-2-log.txt"
+    },
+    {
+      "command": [
+        "/Users/mario/.local/share/mise/installs/node/24.20.0/bin/node",
+        "--test",
+        "apps/api/scripts/local-experience-services.test.mjs",
+        "apps/api/scripts/regression-journey-state.test.mjs"
+      ],
+      "exitCode": 0,
+      "log": "gcm-final-check-3-log.txt"
+    }
+  ]
+}

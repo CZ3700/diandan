@@ -1,0 +1,19 @@
+tests/offline.tftest.json... pass
+  run "topology"... pass
+  run "reject_mutable_image"... pass
+  run "reject_plaintext_secret"... pass
+  run "reject_implicit_environment"... pass
+  run "reject_wildcard_deployment"... pass
+  run "reject_unsupported_origin_zone"... pass
+  run "production_same_baseline"... pass
+  run "reject_wildcard_key_grant"... pass
+  run "reject_operation_rate_missing"... pass
+  run "reject_operation_rate_unknown"... pass
+  run "reject_operation_rate_low_limit"... pass
+  run "reject_operation_rate_fractional_limit"... pass
+  run "reject_operation_rate_high_limit"... pass
+  run "reject_operation_rate_window"... pass
+  run "reject_rate_limit"... pass
+  run "reject_rate_limit_window_seconds"... pass
+
+Success! 16 passed, 0 failed.

@@ -1,0 +1,13 @@
+{
+  "createdAt": "2026-09-24T12:08:28.488877+00:00",
+  "scope": "sole changed file from run1 to run2; exact-file supplemental SAST",
+  "targetSourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+  "files": [
+    {
+      "path": "apps/api/scripts/rum-browser.mjs",
+      "sha256": "16b8fc45927ccb93c6f6627acd110e242aad2b299f8c918c1cad1432f3208972",
+      "bytes": 27898
+    }
+  ],
+  "rulesConfigSha256": "73977b92b62a850bcdaf255e89bada42cb3195b7bbf7fbd6ca397c2ebca768b0"
+}

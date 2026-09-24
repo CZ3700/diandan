@@ -227,7 +227,34 @@
       "worker": [
         "arn:aws:kms:us-east-1:000000000000:key/22222222-2222-2222-2222-222222222222"
       ]
-    }
+    },
+    "operation_rate_limits": {
+      "LOGIN": {
+        "limit": 20,
+        "window_seconds": 300
+      },
+      "ORDER_ACCESS": {
+        "limit": 120,
+        "window_seconds": 60
+      },
+      "CART": {
+        "limit": 60,
+        "window_seconds": 60
+      },
+      "PAYMENT_CREATE": {
+        "limit": 30,
+        "window_seconds": 120
+      },
+      "REFUND": {
+        "limit": 10,
+        "window_seconds": 600
+      },
+      "WEBHOOK": {
+        "limit": 600,
+        "window_seconds": 60
+      }
+    },
+    "rate_limit_window_seconds": 300
   },
   "run": {
     "topology": {
@@ -291,6 +318,22 @@
         {
           "condition": "${length(output.invariants.compute.application_mac_actions) == 2 && alltrue([for actions in output.invariants.compute.application_mac_actions : length(actions) == 1 && contains(actions, \"kms:GenerateMac\")])}",
           "error_message": "Blind-index HMAC permissions must use separate key references and only the actual GenerateMac operation."
+        },
+        {
+          "condition": "${length(try(output.invariants.edge.operation_rates, {})) == 6}",
+          "error_message": "Six operation-specific rate rules must protect sensitive public requests."
+        },
+        {
+          "condition": "${length(output.invariants.edge.operation_rates) == 6 && alltrue([for key, policy in output.invariants.edge.operation_rates : policy.limit == var.operation_rate_limits[key].limit && policy.window_seconds == var.operation_rate_limits[key].window_seconds && policy.aggregate_key_type == \"IP\" && !policy.sampled_requests && length(policy.scope) == 1 && policy.count && !policy.block])}",
+          "error_message": "All sensitive operation scopes must enforce explicit IP policies with the reviewed rollout mode and no raw samples."
+        },
+        {
+          "condition": "${output.invariants.edge.global_rate_limit.limit == var.rate_limit && output.invariants.edge.global_rate_limit.window_seconds == var.rate_limit_window_seconds && output.invariants.edge.global_rate_limit.aggregate_key_type == \"IP\"}",
+          "error_message": "Keep global viewer-IP rate protection alongside operation-specific rules."
+        },
+        {
+          "condition": "${alltrue([for key, routes in output.invariants.edge.operation_routes : alltrue([for route in routes : strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), jsonencode(route.path)) && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), jsonencode(route.method))]) && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), \"URL_DECODE\") && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), \"NORMALIZE_PATH\")])}",
+          "error_message": "Planned WAF scopes must contain the reviewed method/path pairs and canonicalization transforms."
         }
       ]
     },
@@ -373,6 +416,18 @@
         {
           "condition": "${!output.invariants.edge.managed_count && !output.invariants.edge.rate_count}",
           "error_message": "Reviewed WAF enforcement must remove both count-only overrides."
+        },
+        {
+          "condition": "${length(output.invariants.edge.operation_rates) == 6 && alltrue([for key, policy in output.invariants.edge.operation_rates : policy.limit == var.operation_rate_limits[key].limit && policy.window_seconds == var.operation_rate_limits[key].window_seconds && policy.aggregate_key_type == \"IP\" && !policy.sampled_requests && length(policy.scope) == 1 && policy.block && !policy.count])}",
+          "error_message": "All sensitive operation scopes must enforce explicit IP policies with the reviewed rollout mode and no raw samples."
+        },
+        {
+          "condition": "${output.invariants.edge.global_rate_limit.limit == var.rate_limit && output.invariants.edge.global_rate_limit.window_seconds == var.rate_limit_window_seconds && output.invariants.edge.global_rate_limit.aggregate_key_type == \"IP\"}",
+          "error_message": "Keep global viewer-IP rate protection alongside operation-specific rules."
+        },
+        {
+          "condition": "${alltrue([for key, routes in output.invariants.edge.operation_routes : alltrue([for route in routes : strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), jsonencode(route.path)) && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), jsonencode(route.method))]) && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), \"URL_DECODE\") && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), \"NORMALIZE_PATH\")])}",
+          "error_message": "Planned WAF scopes must contain the reviewed method/path pairs and canonicalization transforms."
         }
       ]
     },
@@ -390,6 +445,236 @@
         }
       },
       "expect_failures": ["var.application_mac_key_arns"]
+    },
+    "reject_operation_rate_missing": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "operation_rate_limits": {
+          "LOGIN": {
+            "limit": 20,
+            "window_seconds": 300
+          },
+          "ORDER_ACCESS": {
+            "limit": 120,
+            "window_seconds": 60
+          },
+          "PAYMENT_CREATE": {
+            "limit": 30,
+            "window_seconds": 120
+          },
+          "REFUND": {
+            "limit": 10,
+            "window_seconds": 600
+          },
+          "WEBHOOK": {
+            "limit": 600,
+            "window_seconds": 60
+          }
+        }
+      },
+      "expect_failures": ["var.operation_rate_limits"]
+    },
+    "reject_operation_rate_unknown": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "operation_rate_limits": {
+          "LOGIN": {
+            "limit": 20,
+            "window_seconds": 300
+          },
+          "ORDER_ACCESS": {
+            "limit": 120,
+            "window_seconds": 60
+          },
+          "CART": {
+            "limit": 60,
+            "window_seconds": 60
+          },
+          "PAYMENT_CREATE": {
+            "limit": 30,
+            "window_seconds": 120
+          },
+          "REFUND": {
+            "limit": 10,
+            "window_seconds": 600
+          },
+          "WEBHOOK": {
+            "limit": 600,
+            "window_seconds": 60
+          },
+          "EXTRA": {
+            "limit": 60,
+            "window_seconds": 60
+          }
+        }
+      },
+      "expect_failures": ["var.operation_rate_limits"]
+    },
+    "reject_operation_rate_low_limit": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "operation_rate_limits": {
+          "LOGIN": {
+            "limit": 20,
+            "window_seconds": 300
+          },
+          "ORDER_ACCESS": {
+            "limit": 120,
+            "window_seconds": 60
+          },
+          "CART": {
+            "limit": 9,
+            "window_seconds": 60
+          },
+          "PAYMENT_CREATE": {
+            "limit": 30,
+            "window_seconds": 120
+          },
+          "REFUND": {
+            "limit": 10,
+            "window_seconds": 600
+          },
+          "WEBHOOK": {
+            "limit": 600,
+            "window_seconds": 60
+          }
+        }
+      },
+      "expect_failures": ["var.operation_rate_limits"]
+    },
+    "reject_operation_rate_fractional_limit": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "operation_rate_limits": {
+          "LOGIN": {
+            "limit": 20,
+            "window_seconds": 300
+          },
+          "ORDER_ACCESS": {
+            "limit": 120,
+            "window_seconds": 60
+          },
+          "CART": {
+            "limit": 10.5,
+            "window_seconds": 60
+          },
+          "PAYMENT_CREATE": {
+            "limit": 30,
+            "window_seconds": 120
+          },
+          "REFUND": {
+            "limit": 10,
+            "window_seconds": 600
+          },
+          "WEBHOOK": {
+            "limit": 600,
+            "window_seconds": 60
+          }
+        }
+      },
+      "expect_failures": ["var.operation_rate_limits"]
+    },
+    "reject_operation_rate_high_limit": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "operation_rate_limits": {
+          "LOGIN": {
+            "limit": 20,
+            "window_seconds": 300
+          },
+          "ORDER_ACCESS": {
+            "limit": 120,
+            "window_seconds": 60
+          },
+          "CART": {
+            "limit": 2000000001,
+            "window_seconds": 60
+          },
+          "PAYMENT_CREATE": {
+            "limit": 30,
+            "window_seconds": 120
+          },
+          "REFUND": {
+            "limit": 10,
+            "window_seconds": 600
+          },
+          "WEBHOOK": {
+            "limit": 600,
+            "window_seconds": 60
+          }
+        }
+      },
+      "expect_failures": ["var.operation_rate_limits"]
+    },
+    "reject_operation_rate_window": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "operation_rate_limits": {
+          "LOGIN": {
+            "limit": 20,
+            "window_seconds": 300
+          },
+          "ORDER_ACCESS": {
+            "limit": 120,
+            "window_seconds": 60
+          },
+          "CART": {
+            "limit": 60,
+            "window_seconds": 61
+          },
+          "PAYMENT_CREATE": {
+            "limit": 30,
+            "window_seconds": 120
+          },
+          "REFUND": {
+            "limit": 10,
+            "window_seconds": 600
+          },
+          "WEBHOOK": {
+            "limit": 600,
+            "window_seconds": 60
+          }
+        }
+      },
+      "expect_failures": ["var.operation_rate_limits"]
+    },
+    "reject_rate_limit": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "rate_limit": 0
+      },
+      "expect_failures": ["var.rate_limit"]
+    },
+    "reject_rate_limit_window_seconds": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "variables": {
+        "rate_limit_window_seconds": 61
+      },
+      "expect_failures": ["var.rate_limit_window_seconds"]
     }
   }
 }

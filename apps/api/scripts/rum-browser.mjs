@@ -12,7 +12,7 @@ import {
   rumIntakeSchema,
   rumObservationSchema,
 } from "@fan-support/contracts/rum";
-import { aggregateRum } from "@fan-support/observability/rum";
+import { aggregateRumV2 } from "@fan-support/observability/rum";
 import {
   hideRumDocument,
   withNativeRumContext,
@@ -145,7 +145,7 @@ export async function verifyRumDashboard(
 ) {
   const { renderRumDashboard } =
     await import("../../../scripts/render-rum-dashboard.mjs");
-  const empty = aggregateRum([], {
+  const empty = aggregateRumV2([], {
     windowStart: cliReport.windowStart,
     windowEnd: cliReport.windowEnd,
     minimumSamples: cliReport.minimumSamples,
@@ -225,6 +225,9 @@ export async function verifyRumDashboard(
         await expect(page.locator("#summary")).toContainText(
           "42 metric groups",
         );
+        await expect(page.locator("#integrity")).toContainText(
+          "CLEAN — no conflicting measurement keys; 42 records retained.",
+        );
         await capture("all");
         for (const locale of SUPPORTED_LOCALES) {
           await page
@@ -275,8 +278,14 @@ export async function verifyRumDashboard(
         await expect(page.locator("#summary")).toHaveText(
           "No observations — INSUFFICIENT",
         );
-        await expect(page.locator(".notice")).toContainText(
-          "missing INP is never filled with zero",
+        await expect(
+          page.locator(".notice").filter({
+            hasText:
+              "Local and automated observations verify instrumentation only.",
+          }),
+        ).toContainText("missing INP is never filled with zero");
+        await expect(page.locator("#integrity")).toContainText(
+          "CLEAN — no conflicting measurement keys; 0 records retained.",
         );
         await capture("empty-window");
         cell.emptyWindow = "INSUFFICIENT";
@@ -729,12 +738,13 @@ export async function verifyRumBrowser({
       path.join(directory, "observations.jsonl"),
       records.map((record) => JSON.stringify(record)).join("\n") + "\n",
     );
-    const dashboard = aggregateRum(records, {
+    const dashboard = aggregateRumV2(records, {
       windowStart: startedAt,
       windowEnd: completedAt,
       minimumSamples: 100,
     });
     assert.equal(dashboard.rows.length, 42);
+    assert.equal(dashboard.integrity.status, "CLEAN");
     assert.ok(dashboard.rows.every((row) => row.assessment === "LOCAL_ONLY"));
     await writeFile(
       path.join(directory, "dashboard-expected.json"),

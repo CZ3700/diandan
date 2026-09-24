@@ -2,6 +2,7 @@ import {
   rumIntakeSchema,
   rumObservationSchema,
   rumReportSchema,
+  rumReportV2Schema,
 } from "./rum.js";
 import * as adminPaymentConfiguration from "./admin-payment-configuration.js";
 import {
@@ -700,6 +701,7 @@ const registrations = [
     schema: rumObservationSchema,
   },
   { name: "RumReport", audience: "internal", schema: rumReportSchema },
+  { name: "RumReportV2", audience: "internal", schema: rumReportV2Schema },
   {
     name: "GiftBrowseQuery",
     audience: "public-http",

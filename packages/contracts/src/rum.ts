@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { supportedLocaleSchema } from "./locale.js";
+import { createRumReportV2Schema } from "./rum-report-v2.js";
 
 export { RUM_ENDPOINT } from "./rum-browser.js";
 export const RUM_MAX_BODY_BYTES = 2048;
@@ -92,3 +93,6 @@ export type RumIntake = z.infer<typeof rumIntakeSchema>;
 export type RumObservation = z.infer<typeof rumObservationSchema>;
 export type RumReport = z.infer<typeof rumReportSchema>;
 export type RumContext = z.infer<typeof rumContextSchema>;
+
+export const rumReportV2Schema = createRumReportV2Schema(rumReportSchema);
+export type RumReportV2 = z.infer<typeof rumReportV2Schema>;

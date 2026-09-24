@@ -1,0 +1,23 @@
+✔ both application manifests exclude the published critical Next.js advisory (1.60875ms)
+✔ the frozen lock has no affected Next.js resolution, including secondary copies (51.85975ms)
+✔ both apps, the Next lint plugin and their locked versions stay aligned (36.667833ms)
+✔ defines every required locale, viewport, interaction, axe, and motion case (5.816375ms)
+✔ scenario validation fails closed for missing, duplicate, and unsafe evidence (0.288792ms)
+✔ axe excludes only Base UI transient focus sentinels (0.09ms)
+✔ page measurement assessment rejects overflow, clipping, small targets, and missing fonts (0.198292ms)
+✔ interaction text measurement includes portal surfaces (0.104916ms)
+✔ reduced-motion assessment requires the media query and zero animation (0.123667ms)
+✔ request classification allows only same-origin or embedded resources (0.122042ms)
+✔ overlay focus classification permits only popup focus or its transient inside guard (0.072291ms)
+✔ active Menu item matching waits for the requested radio item (0.077042ms)
+✔ scroll release measurement waits for both menu and modal locks (0.110541ms)
+✔ evidence validator accepts a complete proof and rejects tampering (14.085083ms)
+✔ README clearly scopes the production-build evidence (0.336667ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 140.685125

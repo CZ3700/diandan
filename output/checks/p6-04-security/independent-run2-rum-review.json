@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_RUM_SCOPE_ONLY_NOT_FINAL_ACCEPTANCE",
+  "checkedAt": "2026-09-24T12:17:21.556Z",
+  "sourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+  "locales": [
+    "en",
+    "zh-CN",
+    "th",
+    "vi",
+    "ja",
+    "es",
+    "pt"
+  ],
+  "viewports": [
+    "390x844",
+    "1440x900"
+  ],
+  "positiveCells": 14,
+  "excludedSensitiveCells": 14,
+  "metricResponses204": 42,
+  "privacyHeadersAbsent": true,
+  "orderAccessPosts": 0,
+  "orderAccessRequestAttempts": 0,
+  "actualTrustedVisibilityEvents": true,
+  "metricsInjected": false,
+  "realUserEvidence": false,
+  "physicalDeviceEvidence": false,
+  "dashboardFiltersPerViewport": 23,
+  "dashboardScreenshots": 6,
+  "visualInspections": [
+    "dashboard-390-empty-window.png",
+    "dashboard-1440-all.png"
+  ],
+  "integrity": {
+    "status": "CLEAN",
+    "quarantinedMeasurementKeys": 0,
+    "quarantinedRecords": 0,
+    "acceptedRecords": 42
+  },
+  "assessments": [
+    "LOCAL_ONLY"
+  ],
+  "initialJavascript": {
+    "gzipBytes": 156692,
+    "recommendationBytes": 150000,
+    "recommendationMet": false,
+    "scope": "SHOULD observation, not a field-performance acceptance"
+  },
+  "inputs": [
+    {
+      "path": "../.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/results.json",
+      "sha256": "ab59442a8abdbd691bdfdd56e0adbc5a9b3bf42a35284ec16ebbef30fe8c94c1"
+    },
+    {
+      "path": "../.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-browser.json",
+      "sha256": "f5a877a0c8b73750e1f42e9958742726198237c8bc86055e750b9ab6d1e8b6ca"
+    },
+    {
+      "path": "../.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-cli/rum-report.json",
+      "sha256": "e3d7f009675ab24f2f7ed3e84d2ba1094c44a6dc999831fd5ea591124ae2de9c"
+    },
+    {
+      "path": "../.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-cli/rum-dashboard.html",
+      "sha256": "11e0b734335bb0a1fbed5136da93c0ccff3e15331ed899f3c51ab6633f89b8f4"
+    },
+    {
+      "path": "../.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-390-all.png",
+      "sha256": "cf0737f07f1e40f32ef4137ccdef688ac4488e96c6173811187ac38f43c84845"
+    },
+    {
+      "path": "../.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-390-desktop-filter.png",
+      "sha256": "f899eb6d38e6e841d42522a744f4be9f8cda5c482ae93c494dc4fe19c929fa0b"
+    },
+    {
+      "path": "../.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-390-empty-window.png",
+      "sha256": "bd8edc1464f206c03812c41ac8540a74de21602796c0693aa83a058e9453ea7a"
+    },
+    {
+      "path": "../.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-1440-all.png",
+      "sha256": "6a3de95a6a3efc9c8473892f9e924031c8cfc044e99765969615c6dc4fc10141"
+    },
+    {
+      "path": "../.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-1440-desktop-filter.png",
+      "sha256": "cf7cc0667876e2672d307a600c4b25d5e55f23489c33019358171e2d1dfbfe60"
+    },
+    {
+      "path": "../.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-1440-empty-window.png",
+      "sha256": "b94dc941dd19383678771b4037ccec901445bf5a40287e622c51a9b9947c610d"
+    }
+  ]
+}

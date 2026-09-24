@@ -1,0 +1,63 @@
+✖ both application manifests exclude the published critical Next.js advisory (1.526708ms)
+✖ the frozen lock has no affected Next.js resolution, including secondary copies (54.230042ms)
+✖ both apps, the Next lint plugin and their locked versions stay aligned (37.080083ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 134.382417
+
+✖ failing tests:
+
+test at scripts/security-dependencies.test.mjs:23:1
+✖ both application manifests exclude the published critical Next.js advisory (1.526708ms)
+  AssertionError [ERR_ASSERTION]: GHSA-vcvr-r3jv-pc5j: affected Next.js 16.3.4; use the published patched release
+      at assertPatched (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/security-dependencies.test.mjs:17:10)
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/security-dependencies.test.mjs:26:5)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/security-dependencies.test.mjs:30:1
+✖ the frozen lock has no affected Next.js resolution, including secondary copies (54.230042ms)
+  AssertionError [ERR_ASSERTION]: GHSA-vcvr-r3jv-pc5j: affected Next.js 16.3.4; use the published patched release
+      at assertPatched (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/security-dependencies.test.mjs:17:10)
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/security-dependencies.test.mjs:34:31)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/security-dependencies.test.mjs:37:1
+✖ both apps, the Next lint plugin and their locked versions stay aligned (37.080083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '16.3.4(eslint@10.9.1(jiti@2.7.0)(supports-color@10.2.2))'
+  - '16.3.4'
+           ^
+  
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/scripts/security-dependencies.test.mjs:50:10)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '16.3.4(eslint@10.9.1(jiti@2.7.0)(supports-color@10.2.2))',
+    expected: '16.3.4',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

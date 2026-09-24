@@ -140,7 +140,32 @@ variable "waf_enforce" {
   type        = bool
   default     = false
 }
-variable "rate_limit" { type = number }
+variable "rate_limit" {
+  type = number
+  validation {
+    condition     = var.rate_limit >= 10 && var.rate_limit <= 2000000000 && floor(var.rate_limit) == var.rate_limit
+    error_message = "Global WAF limit must be an integer between 10 and 2000000000."
+  }
+}
+variable "rate_limit_window_seconds" {
+  type = number
+  validation {
+    condition     = contains([60, 120, 300, 600], var.rate_limit_window_seconds)
+    error_message = "Global WAF evaluation window must be 60, 120, 300 or 600 seconds."
+  }
+}
+variable "operation_rate_limits" {
+  description = "Explicit reviewed per-viewer-IP limits for all six sensitive operations; no merchant defaults."
+  type        = map(object({ limit = number, window_seconds = number }))
+  validation {
+    condition     = toset(keys(var.operation_rate_limits)) == toset(["LOGIN", "ORDER_ACCESS", "CART", "PAYMENT_CREATE", "REFUND", "WEBHOOK"])
+    error_message = "Supply exactly LOGIN, ORDER_ACCESS, CART, PAYMENT_CREATE, REFUND and WEBHOOK rate policies."
+  }
+  validation {
+    condition     = alltrue([for policy in var.operation_rate_limits : policy.limit >= 10 && policy.limit <= 2000000000 && floor(policy.limit) == policy.limit && contains([60, 120, 300, 600], policy.window_seconds)])
+    error_message = "Each WAF policy needs an integer limit from 10 to 2000000000 and a 60, 120, 300 or 600 second window."
+  }
+}
 variable "oidc_provider_arn" { type = string }
 variable "oidc_issuer" { type = string }
 variable "oidc_subjects" {

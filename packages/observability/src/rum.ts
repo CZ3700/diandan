@@ -1,8 +1,10 @@
 import {
   rumObservationSchema,
   rumReportSchema,
+  rumReportV2Schema,
   type RumObservation,
   type RumReport,
+  type RumReportV2,
 } from "@fan-support/contracts/rum";
 
 export type RumSink = Readonly<{
@@ -136,5 +138,64 @@ export function aggregateRum(
                   : "OVER_BUDGET",
         };
       }),
+  });
+}
+
+/** Anonymous conflicting keys lose all their records, without suppressing other observations. */
+export function aggregateRumV2(
+  input: readonly RumObservation[],
+  options: ReportOptions,
+): RumReportV2 {
+  // Preserve v1's window and sample-bound validation before reading observations.
+  aggregateRum([], options);
+  if (input.length > RUM_MAX_RECORDS)
+    throw new Error("Invalid RUM aggregation bounds");
+  const start = Date.parse(options.windowStart);
+  const end = Date.parse(options.windowEnd);
+  const records: RumObservation[] = [];
+  const identities = new Map<string, string>();
+  const revisionValues = new Map<string, number>();
+  const quarantined = new Set<string>();
+  for (const candidate of input) {
+    const record = rumObservationSchema.parse(candidate);
+    const received = Date.parse(record.receivedAt);
+    if (received < start || received >= end) continue;
+    records.push(record);
+    const metric = record.measurement.metric;
+    const key = metric.measurementKey;
+    if (quarantined.has(key)) continue;
+    const recordIdentity = identity(record);
+    const previousIdentity = identities.get(key);
+    const revisionKey = `${key}:${metric.revision}`;
+    const previousValue = revisionValues.get(revisionKey);
+    if (
+      (previousIdentity !== undefined && previousIdentity !== recordIdentity) ||
+      (previousValue !== undefined && previousValue !== metric.value)
+    ) {
+      quarantined.add(key);
+      continue;
+    }
+    identities.set(key, recordIdentity);
+    revisionValues.set(revisionKey, metric.value);
+  }
+  const accepted = records.filter(
+    (record) => !quarantined.has(record.measurement.metric.measurementKey),
+  );
+  const report = aggregateRum(accepted, options);
+  const degraded = quarantined.size > 0;
+  return rumReportV2Schema.parse({
+    ...report,
+    schemaVersion: 2,
+    receivedRecords: records.length,
+    integrity: {
+      status: degraded ? "DEGRADED" : "CLEAN",
+      quarantinedMeasurementKeys: quarantined.size,
+      quarantinedRecords: records.length - accepted.length,
+      acceptedRecords: accepted.length,
+    },
+    rows: report.rows.map((row) => ({
+      ...row,
+      assessment: degraded ? "DEGRADED" : row.assessment,
+    })),
   });
 }

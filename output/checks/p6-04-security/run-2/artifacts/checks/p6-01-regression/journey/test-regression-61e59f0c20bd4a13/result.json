@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "instance": "test-regression-61e59f0c20bd4a13",
+  "status": "PASS",
+  "commands": [
+    {
+      "label": "1-build",
+      "startedAt": "2026-09-24T12:15:37.797Z",
+      "completedAt": "2026-09-24T12:15:38.035Z",
+      "log": "1-build.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "2-start",
+      "startedAt": "2026-09-24T12:15:38.270Z",
+      "completedAt": "2026-09-24T12:16:02.639Z",
+      "log": "2-start.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "3-stop",
+      "startedAt": "2026-09-24T12:20:33.435Z",
+      "completedAt": "2026-09-24T12:20:35.191Z",
+      "log": "3-stop.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "4-reset",
+      "startedAt": "2026-09-24T12:20:35.191Z",
+      "completedAt": "2026-09-24T12:20:35.567Z",
+      "log": "4-reset.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    }
+  ],
+  "browser": {
+    "status": "PASS",
+    "reportPath": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/report.json",
+    "cases": 14,
+    "evidenceChecks": 171
+  },
+  "dataPreserved": false
+}

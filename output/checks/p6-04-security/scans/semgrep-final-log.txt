@@ -1,0 +1,1570 @@
+                     
+                     
+┌───────────────────┐
+│ 130 Code Findings │
+└───────────────────┘
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/admin/src/workspace/content-for
+  m.test.tsx                                                                                                            
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           80┆ `<label[^>]*>${label}</label><textarea[^>]*disabled=""[^>]*></textarea>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/accessibility-brows
+  er-tools.test.mjs                                                                                                     
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           97┆ : `<main data-order-payment-status="PAID">Exchange succeeded</main><script>history.replaceS
+               tate(null,"",location.pathname);setTimeout(()=>location.replace(${JSON.stringify(targetPath
+               )}),200)</script>`;                                                                        
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/admin-payment-confi
+  g-process.mjs                                                                                                         
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+           52┆ const value = await keyManagement[message.method](message.value);
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/admin-workspace-fix
+  tures.mjs                                                                                                             
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          131┆ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}"                    
+               height="${height}"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-                
+               color="hsl(${hue},36%,22%)"/><stop offset="1" stop-color="hsl(${hue +                    
+               40},46%,62%)"/></linearGradient></defs><rect width="100%" height="100%"                  
+               fill="url(#g)"/><circle cx="${width * 0.5}" cy="${height * 0.35}" r="${Math.min(width,   
+               height) * 0.2}" fill="#efe3ce" opacity=".85"/><ellipse cx="${width * 0.5}" cy="${height *
+               0.95}" rx="${width * 0.33}" ry="${height * 0.4}" fill="#262a31"/><circle cx="${width *   
+               0.15}" cy="${height * 0.15}" r="${width * 0.05}" fill="#dac294" opacity=".7"/></svg>`;   
+                                                                                                                      
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/cart-http-kms.mjs
+   ❯❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.node-crypto.security.gcm-no-tag-
+       length.gcm-no-tag-length                                                                                 
+          ❰❰ Blocking ❱❱
+          The call to 'createDecipheriv' with the Galois Counter Mode (GCM) mode of operation is missing an 
+          expected authentication tag length. If the expected authentication tag length is not specified or 
+          otherwise checked, the application might be tricked into verifying a shorter-than-expected        
+          authentication tag. This can be abused by an attacker to spoof ciphertexts or recover the implicit
+          authentication key of GCM, allowing arbitrary forgeries.                                          
+                                                                                                            
+           71┆ decipher = createDecipheriv(
+           72┆   "aes-256-gcm",
+           73┆   master,
+           74┆   bytes.subarray(0, 12),
+           75┆ );
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/checkout-preflight-
+  changes.mjs                                                                                                           
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          152┆ ? `${row.fields[field]}<p>${marker}</p>`
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/gift-storefront-fix
+  tures.mjs                                                                                                             
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           82┆ fullBio: `<p>${copy[locale].story}</p>`,
+            ⋮┆----------------------------------------
+          546┆ body: `<p>${copy[locale].care}</p>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/local-experience-bo
+  otstrap-postgres.mjs                                                                                                  
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+           29┆ const value = target[key];
+           30┆ return typeof value === "function"
+           31┆   ? (...args) => {
+           32┆       assertions++;
+           33┆       return value(...args);
+           34┆     }
+           35┆   : value;
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/local-experience-br
+  owser.mjs                                                                                                             
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.insecure-object-
+       assign.insecure-object-assign                                                                          
+          ❰❰ Blocking ❱❱
+          Depending on the context, user control data in `Object.assign` can cause web response to include
+          data that it should not have or can lead to a mass assignment vulnerability.                    
+                                                                                                          
+          896┆ Object.assign(report.facts, {
+          897┆   giftId: gift.targetId,
+          898┆   giftHandle: gift.handle,
+          899┆ });
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/local-experience-km
+  s.mjs                                                                                                                 
+   ❯❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.node-crypto.security.gcm-no-tag-
+       length.gcm-no-tag-length                                                                                 
+          ❰❰ Blocking ❱❱
+          The call to 'createDecipheriv' with the Galois Counter Mode (GCM) mode of operation is missing an 
+          expected authentication tag length. If the expected authentication tag length is not specified or 
+          otherwise checked, the application might be tricked into verifying a shorter-than-expected        
+          authentication tag. This can be abused by an attacker to spoof ciphertexts or recover the implicit
+          authentication key of GCM, allowing arbitrary forgeries.                                          
+                                                                                                            
+           77┆ decipher = createDecipheriv(
+           78┆   "aes-256-gcm",
+           79┆   master,
+           80┆   bytes.subarray(0, 12),
+           81┆ );
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/local-experience-se
+  rvices-common.mjs                                                                                                     
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           62┆ return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"   
+               content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title></head><bod
+               y><main><h1>${escapeHtml(title)}</h1>${content}</main></body></html>`;                     
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/local-experience-se
+  rvices-mail.mjs                                                                                                       
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           58┆ return `<a href="${escapeHtml(part)}">Open secure order link</a>`;
+   
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unknown-value-
+       with-script-tag.unknown-value-with-script-tag                                                              
+          ❰❰ Blocking ❱❱
+          Cannot determine what 'nonce' is and it is used with a '<script>' tag. This could be susceptible to
+          cross-site scripting (XSS). Ensure 'nonce' is not externally controlled, or sanitize this data.    
+                                                                                                             
+          165┆ "content-security-policy": `${privateHeaders["content-security-policy"]}; script-src
+               'nonce-${nonce}'; connect-src 'self'`,                                              
+   
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          170┆ `<p id="status" role="status">Open this mailbox from the local experience                  
+               launcher.</p><script nonce="${nonce}">const token=new URLSearchParams(location.hash.slice(1
+               )).get('token');history.replaceState(null,'',location.pathname);if(token){fetch('/session',
+               {method:'POST',headers:{'content-                                                          
+               type':'application/json'},body:JSON.stringify({token}),credentials:'same-                  
+               origin'}).then(r=>{if(r.ok)location.reload();else                                          
+               document.getElementById('status').textContent='Mailbox access expired. Reopen it from the  
+               local launcher.';}).catch(()=>{document.getElementById('status').textContent='Mailbox      
+               unavailable. Reopen it from the local launcher.';});}</script>`,                           
+   
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unknown-value-
+       with-script-tag.unknown-value-with-script-tag                                                              
+          ❰❰ Blocking ❱❱
+          Cannot determine what 'nonce' is and it is used with a '<script>' tag. This could be susceptible to
+          cross-site scripting (XSS). Ensure 'nonce' is not externally controlled, or sanitize this data.    
+                                                                                                             
+          170┆ `<p id="status" role="status">Open this mailbox from the local experience                  
+               launcher.</p><script nonce="${nonce}">const token=new URLSearchParams(location.hash.slice(1
+               )).get('token');history.replaceState(null,'',location.pathname);if(token){fetch('/session',
+               {method:'POST',headers:{'content-                                                          
+               type':'application/json'},body:JSON.stringify({token}),credentials:'same-                  
+               origin'}).then(r=>{if(r.ok)location.reload();else                                          
+               document.getElementById('status').textContent='Mailbox access expired. Reopen it from the  
+               local launcher.';}).catch(()=>{document.getElementById('status').textContent='Mailbox      
+               unavailable. Reopen it from the local launcher.';});}</script>`,                           
+   
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          181┆ `<p>Captured locally. No email is sent. Messages expire from this view after the configured
+               retention period.</p><p><a href="/">Refresh messages</a></p>${messages.length ?            
+               messages.map((mail) => `<article><h2>${escapeHtml(mail.content.subject)}</h2><p>${escapeHtm
+               l(mail.acceptedAt)}</p><pre>${safeMailText(mail.content.text,                              
+               config.origins.storefront)}</pre></article>`).join("") : "<p>No captured messages          
+               yet.</p>"}`,                                                                               
+            ⋮┆----------------------------------------
+          181┆ `<p>Captured locally. No email is sent. Messages expire from this view after the configured
+               retention period.</p><p><a href="/">Refresh messages</a></p>${messages.length ?            
+               messages.map((mail) => `<article><h2>${escapeHtml(mail.content.subject)}</h2><p>${escapeHtm
+               l(mail.acceptedAt)}</p><pre>${safeMailText(mail.content.text,                              
+               config.origins.storefront)}</pre></article>`).join("") : "<p>No captured messages          
+               yet.</p>"}`,                                                                               
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/local-experience-se
+  rvices-oidc.mjs                                                                                                       
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          178┆ `<p>This local simulator uses synthetic identities and simulated MFA. No account password  
+               is required.</p><form method="post" action="/authorize"><input type="hidden" name="ticket" 
+               value="${ticket}"><input type="hidden" name="csrf" value="${tokenFor(ticket)}"><p><label   
+               for="actor">Test identity</label> <select id="actor"                                       
+               name="actor">${settings.actors.map((actor) => `<option value="${escapeHtml(actor.key)}">${e
+               scapeHtml(actor.label)}</option>`).join("")}</select></p><button type="submit">Continue to 
+               management center</button></form>`,                                                        
+            ⋮┆----------------------------------------
+          178┆ `<p>This local simulator uses synthetic identities and simulated MFA. No account password  
+               is required.</p><form method="post" action="/authorize"><input type="hidden" name="ticket" 
+               value="${ticket}"><input type="hidden" name="csrf" value="${tokenFor(ticket)}"><p><label   
+               for="actor">Test identity</label> <select id="actor"                                       
+               name="actor">${settings.actors.map((actor) => `<option value="${escapeHtml(actor.key)}">${e
+               scapeHtml(actor.label)}</option>`).join("")}</select></p><button type="submit">Continue to 
+               management center</button></form>`,                                                        
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/local-experience-se
+  rvices-psp.mjs                                                                                                        
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          200┆ `<p>Local hosted payment simulator. Do not enter card numbers, security codes or wallet   
+               credentials.</p><p>Test card networks: Visa / Mastercard. These controls simulate a result
+               only.</p><p data-test-psp-amount>${escapeHtml(value.currency)}                            
+               ${escapeHtml(value.amountMinor)} minor units</p><p data-test-psp-status>Provider status:  
+               ${escapeHtml(value.status)}</p>${ended ? `<p><a                                           
+               href="${escapeHtml(value.returnUrl)}">Return to the store</a></p>` : `<form               
+               method="post"><input type="hidden" name="csrf"                                            
+               value="${formToken(url.pathname)}"><p><button name="outcome" value="SUCCEEDED" data-test- 
+               psp-capture>Complete TEST payment</button></p><p><button name="outcome" value="FAILED"    
+               data-test-psp-fail>Simulate declined payment</button></p><p><button name="outcome"        
+               value="CANCELED" data-test-psp-cancel>Cancel TEST payment</button></p><p><button          
+               name="outcome" value="EXPIRED" data-test-psp-expire>Simulate expired                      
+               payment</button></p></form>`}<p>Payment status in the store changes only after a signed   
+               provider event is received.</p>`,                                                         
+            ⋮┆----------------------------------------
+          200┆ `<p>Local hosted payment simulator. Do not enter card numbers, security codes or wallet   
+               credentials.</p><p>Test card networks: Visa / Mastercard. These controls simulate a result
+               only.</p><p data-test-psp-amount>${escapeHtml(value.currency)}                            
+               ${escapeHtml(value.amountMinor)} minor units</p><p data-test-psp-status>Provider status:  
+               ${escapeHtml(value.status)}</p>${ended ? `<p><a                                           
+               href="${escapeHtml(value.returnUrl)}">Return to the store</a></p>` : `<form               
+               method="post"><input type="hidden" name="csrf"                                            
+               value="${formToken(url.pathname)}"><p><button name="outcome" value="SUCCEEDED" data-test- 
+               psp-capture>Complete TEST payment</button></p><p><button name="outcome" value="FAILED"    
+               data-test-psp-fail>Simulate declined payment</button></p><p><button name="outcome"        
+               value="CANCELED" data-test-psp-cancel>Cancel TEST payment</button></p><p><button          
+               name="outcome" value="EXPIRED" data-test-psp-expire>Simulate expired                      
+               payment</button></p></form>`}<p>Payment status in the store changes only after a signed   
+               provider event is received.</p>`,                                                         
+            ⋮┆----------------------------------------
+          200┆ `<p>Local hosted payment simulator. Do not enter card numbers, security codes or wallet   
+               credentials.</p><p>Test card networks: Visa / Mastercard. These controls simulate a result
+               only.</p><p data-test-psp-amount>${escapeHtml(value.currency)}                            
+               ${escapeHtml(value.amountMinor)} minor units</p><p data-test-psp-status>Provider status:  
+               ${escapeHtml(value.status)}</p>${ended ? `<p><a                                           
+               href="${escapeHtml(value.returnUrl)}">Return to the store</a></p>` : `<form               
+               method="post"><input type="hidden" name="csrf"                                            
+               value="${formToken(url.pathname)}"><p><button name="outcome" value="SUCCEEDED" data-test- 
+               psp-capture>Complete TEST payment</button></p><p><button name="outcome" value="FAILED"    
+               data-test-psp-fail>Simulate declined payment</button></p><p><button name="outcome"        
+               value="CANCELED" data-test-psp-cancel>Cancel TEST payment</button></p><p><button          
+               name="outcome" value="EXPIRED" data-test-psp-expire>Simulate expired                      
+               payment</button></p></form>`}<p>Payment status in the store changes only after a signed   
+               provider event is received.</p>`,                                                         
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/order-storefront-re
+  covery.mjs                                                                                                            
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-non-
+       literal-regexp.detect-non-literal-regexp                                                                
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `publicOrderId` function argument, this might allow an attacker to cause a   
+          Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main      
+          thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on
+          user-controlled input, consider performing input validation or use a regex checking/sanitization    
+          library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear      
+          vulnerable to ReDoS.                                                                                
+                                                                                                              
+            7┆ return new RegExp(`/api/storefront/orders/${publicOrderId}$`, "iu");
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/payment-runtime-com
+  mit-faults.mjs                                                                                                        
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+           21┆ const value = await repos.paymentRuntime[method](...args);
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/payment-runtime-psp
+  -server.mjs                                                                                                           
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          180┆ const page = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" 
+               content="width=device-width"><title>TEST payment</title><body><main><h1>TEST payment — no
+               real charge</h1><p>This is an isolated payment simulator. Do not enter card or wallet    
+               information.</p><p data-test-psp-amount>${escape(value.currency)}                        
+               ${escape(value.amountMinor)} minor units</p><p data-test-psp-                            
+               status>${escape(value.status)}</p><form method="post"><input type="hidden" name="csrf"   
+               value="${escape(formToken(url.pathname))}"><button name="outcome" value="SUCCEEDED" data-
+               test-psp-capture>Simulate completed payment</button><button name="outcome" value="FAILED"
+               data-test-psp-fail>Simulate declined payment</button><button name="outcome"              
+               value="CANCELED" data-test-psp-cancel>Cancel test payment</button><button name="outcome" 
+               value="EXPIRED" data-test-psp-expire>Simulate expired                                    
+               payment</button></form></main></body></html>`;                                           
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/regression-journey-
+  state.mjs                                                                                                             
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           86┆ mail.content.html.includes(`<html lang="${locale}">`),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/storefront-acceptan
+  ce-content-browser.mjs                                                                                                
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           19┆ `<!doctype html><html lang="${locale}"><head><meta charset="UTF-8"><meta name="viewport"
+               content="width=device-width,initial-scale=1"><title>TEST                                
+               collector</title></head><body><main>${content}</main></body></html>`;                   
+            ⋮┆----------------------------------------
+           64┆ body: unavailable + `<div hidden>${normal}</div>`,
+            ⋮┆----------------------------------------
+           69┆ body: `<div style="opacity:0">${normal}</div>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/storefront-acceptan
+  ce-overlay-browser.mjs                                                                                                
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           70┆ await page.setContent(`<!doctype html><html lang="en"><head><meta
+               charset="utf-8"><style>${css}</style></head><body>               
+           71┆   <div class="storefront"><header class="storefront-header"><span class="storefront-
+               wordmark">TEST BACKGROUND HEADER</span></header><main><p>Background                 
+               content</p></main></div>                                                            
+           72┆   <div class="fs-overlay__backdrop"></div>
+           73┆   <div class="fs-overlay__viewport" data-overlay-kind="drawer" data-side="inline-end">
+           74┆     <div role="dialog" aria-modal="true" aria-labelledby="overlay-title" aria-        
+               describedby="overlay-description" class="fs-drawer__popup" data-overlay-popup="drawer"
+               data-side="inline-end">                                                               
+           75┆       <header class="fs-overlay__header"><div class="fs-overlay__intro"><h2 class="fs-    
+               overlay__title" id="overlay-title">TEST filters</h2><p class="fs-overlay__description"    
+               id="overlay-description">Find the TEST gift by category and availability.</p></div><button
+               class="fs-overlay__close" aria-label="Close TEST filters">×</button></header>             
+           76┆     </div>
+           77┆   </div></body></html>`);
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/storefront-catalog-
+  fixtures.mjs                                                                                                          
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          181┆ fullBio: `<p>${copy[locale].story}</p>`,
+            ⋮┆----------------------------------------
+          387┆ body: `<p>${copy[locale].care}</p>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/storefront-gift-tra
+  ce-analysis.mjs                                                                                                       
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.insecure-object-
+       assign.insecure-object-assign                                                                          
+          ❰❰ Blocking ❱❱
+          Depending on the context, user control data in `Object.assign` can cause web response to include
+          data that it should not have or can lead to a mass assignment vulnerability.                    
+                                                                                                          
+          592┆ Object.assign(values, {
+          593┆   inputFiles,
+          594┆   capturedFiles: capturedAttempt.files,
+          595┆ });
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/scripts/storefront-operatio
+  ns-uat-materials.mjs                                                                                                  
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           80┆ description: `<p>${value.description}</p>`,
+            ⋮┆----------------------------------------
+           94┆ fullBio: `<p>${value.bio}</p>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/admin-content-authoring
+  -route.ts                                                                                                             
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.express.security.audit.xss.direct-
+       response-write.direct-response-write                                                                       
+          ❰❰ Blocking ❱❱
+          Detected directly writing to a Response object from user-defined input. This bypasses any HTML      
+          escaping and may expose your application to a Cross-Site-scripting (XSS) vulnerability. Instead, use
+          'resp.render()' to render safely escaped HTML.                                                      
+                                                                                                              
+          254┆ : reply.send(response);
+                                                                                                                       
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/admin-content-route.ts
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.express.security.audit.xss.direct-
+       response-write.direct-response-write                                                                       
+          ❰❰ Blocking ❱❱
+          Detected directly writing to a Response object from user-defined input. This bypasses any HTML      
+          escaping and may expose your application to a Cross-Site-scripting (XSS) vulnerability. Instead, use
+          'resp.render()' to render safely escaped HTML.                                                      
+                                                                                                              
+          251┆ : reply.send(response);
+            ⋮┆----------------------------------------
+          283┆ : reply.send(response);
+                                                                                                                      
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/base-content-route.ts
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.express.security.audit.xss.direct-
+       response-write.direct-response-write                                                                       
+          ❰❰ Blocking ❱❱
+          Detected directly writing to a Response object from user-defined input. This bypasses any HTML      
+          escaping and may expose your application to a Cross-Site-scripting (XSS) vulnerability. Instead, use
+          'resp.render()' to render safely escaped HTML.                                                      
+                                                                                                              
+          289┆ : reply.send(response);
+            ⋮┆----------------------------------------
+          319┆ : reply.send(response);
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/cart-edit-route.test.ts
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.hardcoded-hmac-
+       key.hardcoded-hmac-key                                                                                      
+          ❰❰ Blocking ❱❱
+          Detected a hardcoded hmac key. Avoid hardcoding secrets and consider using an alternate option such
+          as reading the secret from a config file or using an environment variable.                         
+                                                                                                             
+           32┆ digestBase64: createHmac("sha256", "TEST_KEY")
+                                                                                                                   
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/cart-route.test.ts
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.hardcoded-hmac-
+       key.hardcoded-hmac-key                                                                                      
+          ❰❰ Blocking ❱❱
+          Detected a hardcoded hmac key. Avoid hardcoding secrets and consider using an alternate option such
+          as reading the secret from a config file or using an environment variable.                         
+                                                                                                             
+           39┆ digestBase64: createHmac("sha256", "TEST_SECRET")
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/checkout-preflight-rout
+  e.test.ts                                                                                                             
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.hardcoded-hmac-
+       key.hardcoded-hmac-key                                                                                      
+          ❰❰ Blocking ❱❱
+          Detected a hardcoded hmac key. Avoid hardcoding secrets and consider using an alternate option such
+          as reading the secret from a config file or using an environment variable.                         
+                                                                                                             
+           49┆ digestBase64: createHmac("sha256", "TEST_CHECKOUT_KEY")
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/checkout-preflight-rout
+  e.ts                                                                                                                  
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+          175┆ await options.useCases[action](command, context),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/order-access-observabil
+  ity.test.ts                                                                                                           
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.hardcoded-hmac-
+       key.hardcoded-hmac-key                                                                                      
+          ❰❰ Blocking ❱❱
+          Detected a hardcoded hmac key. Avoid hardcoding secrets and consider using an alternate option such
+          as reading the secret from a config file or using an environment variable.                         
+                                                                                                             
+           43┆ digestBase64: createHmac("sha256", "TEST_ORDER_OBSERVABILITY")
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/order-access-route.test
+  .ts                                                                                                                   
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.hardcoded-hmac-
+       key.hardcoded-hmac-key                                                                                      
+          ❰❰ Blocking ❱❱
+          Detected a hardcoded hmac key. Avoid hardcoding secrets and consider using an alternate option such
+          as reading the secret from a config file or using an environment variable.                         
+                                                                                                             
+          120┆ digestBase64: createHmac("sha256", "TEST_ORDER_ACCESS_KEY")
+                                                                                                                      
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/order-access-route.ts
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+          283┆ await options.useCases[action](command),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/payment-runtime-route.t
+  est.ts                                                                                                                
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.hardcoded-hmac-
+       key.hardcoded-hmac-key                                                                                      
+          ❰❰ Blocking ❱❱
+          Detected a hardcoded hmac key. Avoid hardcoding secrets and consider using an alternate option such
+          as reading the secret from a config file or using an environment variable.                         
+                                                                                                             
+           63┆ digestBase64: createHmac("sha256", "TEST_PAYMENT_KEY")
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/payment-runtime-route.t
+  s                                                                                                                     
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+          270┆ await options.useCases[action](command, context),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/publication-preflight-r
+  oute.ts                                                                                                               
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.express.security.audit.xss.direct-
+       response-write.direct-response-write                                                                       
+          ❰❰ Blocking ❱❱
+          Detected directly writing to a Response object from user-defined input. This bypasses any HTML      
+          escaping and may expose your application to a Cross-Site-scripting (XSS) vulnerability. Instead, use
+          'resp.render()' to render safely escaped HTML.                                                      
+                                                                                                              
+          224┆ return reply.send(response);
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/publication-runtime-rou
+  te.ts                                                                                                                 
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.express.security.audit.xss.direct-
+       response-write.direct-response-write                                                                       
+          ❰❰ Blocking ❱❱
+          Detected directly writing to a Response object from user-defined input. This bypasses any HTML      
+          escaping and may expose your application to a Cross-Site-scripting (XSS) vulnerability. Instead, use
+          'resp.render()' to render safely escaped HTML.                                                      
+                                                                                                              
+          294┆ return reply.send(response);
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/api/src/resource-management-rou
+  te.ts                                                                                                                 
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.express.security.audit.xss.direct-
+       response-write.direct-response-write                                                                       
+          ❰❰ Blocking ❱❱
+          Detected directly writing to a Response object from user-defined input. This bypasses any HTML      
+          escaping and may expose your application to a Cross-Site-scripting (XSS) vulnerability. Instead, use
+          'resp.render()' to render safely escaped HTML.                                                      
+                                                                                                              
+          267┆ : reply.send(response);
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/app/ui-primitive
+  s-specimen.test.tsx                                                                                                   
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           83┆ new RegExp(`<h2(?=[^>]*lang="en")[^>]*>${heading}</h2>`, "u"),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/server/image-con
+  fig.ts                                                                                                                
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-
+       redos.detect-redos                                                                                  
+          ❰❰ Blocking ❱❱
+          Detected the use of a regular expression                                                            
+          `^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)*[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$` which appears to be       
+          vulnerable to a Regular expression Denial-of-Service (ReDoS). For this reason, it is recommended to 
+          review the regex and ensure it is not vulnerable to catastrophic backtracking, and if possible use a
+          library which offers default safety against ReDoS vulnerabilities.                                  
+                                                                                                              
+           20┆ /^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)*[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/u.test(
+           21┆   hostname,
+           22┆ );
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/server/sitemap.t
+  s                                                                                                                     
+     ❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.audit.detect-replaceall-
+       sanitization.detect-replaceall-sanitization                                                      
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `value`. Manually    
+          sanitizing input through a manually built list can be circumvented in many situations, and it's
+          better to use a well known sanitization library such as `sanitize-html` or `DOMPurify`.        
+                                                                                                         
+           22┆ value
+           23┆   .replaceAll("&", "&amp;")
+            ⋮┆----------------------------------------
+     ❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.audit.detect-replaceall-
+       sanitization.detect-replaceall-sanitization                                                      
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `value                 
+          .replaceAll("&", "&amp;")`. Manually sanitizing input through a manually built list can be       
+          circumvented in many situations, and it's better to use a well known sanitization library such as
+          `sanitize-html` or `DOMPurify`.                                                                  
+                                                                                                           
+           22┆ value
+           23┆   .replaceAll("&", "&amp;")
+           24┆   .replaceAll("<", "&lt;")
+            ⋮┆----------------------------------------
+     ❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.audit.detect-replaceall-
+       sanitization.detect-replaceall-sanitization                                                      
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `value               
+          .replaceAll("&", "&amp;")     .replaceAll("<", "&lt;")`. Manually sanitizing input through a   
+          manually built list can be circumvented in many situations, and it's better to use a well known
+          sanitization library such as `sanitize-html` or `DOMPurify`.                                   
+                                                                                                         
+           22┆ value
+           23┆   .replaceAll("&", "&amp;")
+           24┆   .replaceAll("<", "&lt;")
+           25┆   .replaceAll(">", "&gt;")
+            ⋮┆----------------------------------------
+     ❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.audit.detect-replaceall-
+       sanitization.detect-replaceall-sanitization                                                      
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `value               
+          .replaceAll("&", "&amp;")     .replaceAll("<", "&lt;")     .replaceAll(">", "&gt;")`. Manually 
+          sanitizing input through a manually built list can be circumvented in many situations, and it's
+          better to use a well known sanitization library such as `sanitize-html` or `DOMPurify`.        
+                                                                                                         
+           22┆ value
+           23┆   .replaceAll("&", "&amp;")
+           24┆   .replaceAll("<", "&lt;")
+           25┆   .replaceAll(">", "&gt;")
+           26┆   .replaceAll('"', "&quot;")
+            ⋮┆----------------------------------------
+     ❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.audit.detect-replaceall-
+       sanitization.detect-replaceall-sanitization                                                      
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `value                 
+          .replaceAll("&", "&amp;")     .replaceAll("<", "&lt;")     .replaceAll(">", "&gt;")              
+          .replaceAll('"', "&quot;")`. Manually sanitizing input through a manually built list can be      
+          circumvented in many situations, and it's better to use a well known sanitization library such as
+          `sanitize-html` or `DOMPurify`.                                                                  
+                                                                                                           
+           22┆ value
+           23┆   .replaceAll("&", "&amp;")
+           24┆   .replaceAll("<", "&lt;")
+           25┆   .replaceAll(">", "&gt;")
+           26┆   .replaceAll('"', "&quot;")
+           27┆   .replaceAll("'", "&apos;");
+   
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          136┆ `<url><loc>${escapeXml(new URL(page.canonicalPath,                                         
+               origin).href)}</loc><lastmod>${escapeXml(translated.lastModified)}</lastmod>${Object.entrie
+               s(                                                                                         
+          137┆   alternates,
+          138┆ )
+          139┆   .map(
+          140┆     ([language, href]) =>
+          141┆       `<xhtml:link rel="alternate" hreflang="${language}" href="${escapeXml(href)}"/>`,
+          142┆   )
+          143┆   .join("")}</url>`,
+            ⋮┆----------------------------------------
+          141┆ `<xhtml:link rel="alternate" hreflang="${language}" href="${escapeXml(href)}"/>`,
+            ⋮┆----------------------------------------
+          148┆ `${declaration}<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+               xmlns:xhtml="http://www.w3.org/1999/xhtml">${entries.join("")}</urlset>`, 
+            ⋮┆----------------------------------------
+          180┆ entries.push(`<sitemap><loc>${escapeXml(url.href)}</loc></sitemap>`);
+            ⋮┆----------------------------------------
+          192┆ `${declaration}<sitemapindex                                                            
+               xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${entries.join("")}</sitemapindex>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/artis
+  t-directory.test.tsx                                                                                                  
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           23┆ `<h${headingLevel + 1}>Fictional 1</h${headingLevel + 1}>`,
+            ⋮┆----------------------------------------
+           34┆ `<h${headingLevel + 1}>artistEmptyTitle</h${headingLevel + 1}>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/conte
+  nt-safety.tsx                                                                                                         
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.typescript.react.security.audit.react-
+       dangerouslysetinnerhtml.react-dangerouslysetinnerhtml                                               
+          ❰❰ Blocking ❱❱
+          Detection of dangerouslySetInnerHTML from non-constant definition. This can inadvertently expose  
+          users to cross-site scripting (XSS) attacks if this comes from user-provided input. If you have to
+          use dangerouslySetInnerHTML, consider using a sanitization library such as DOMPurify to sanitize  
+          your HTML.                                                                                        
+                                                                                                            
+           20┆ dangerouslySetInnerHTML={{ __html: value }}
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/gift-
+  browse.test.tsx                                                                                                       
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           56┆ expect(html).toContain(`<h3 lang="${locale}">Fictional gift</h3>`);
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/gift-
+  content.tsx                                                                                                           
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.typescript.react.security.audit.react-
+       dangerouslysetinnerhtml.react-dangerouslysetinnerhtml                                               
+          ❰❰ Blocking ❱❱
+          Detection of dangerouslySetInnerHTML from non-constant definition. This can inadvertently expose  
+          users to cross-site scripting (XSS) attacks if this comes from user-provided input. If you have to
+          use dangerouslySetInnerHTML, consider using a sanitization library such as DOMPurify to sanitize  
+          your HTML.                                                                                        
+                                                                                                            
+           67┆ dangerouslySetInnerHTML={{ __html: safe }}
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/gift-
+  directory-page-entry.test.tsx                                                                                         
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          190┆ expect(html).toContain(`<h1>${copy.giftTitle}</h1>`);
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/gift-
+  page-scheduling.test.tsx                                                                                              
+     ❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.audit.detect-replaceall-
+       sanitization.detect-replaceall-sanitization                                                      
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `params.toString()`.     
+          Manually sanitizing input through a manually built list can be circumvented in many situations, and
+          it's better to use a well known sanitization library such as `sanitize-html` or `DOMPurify`.       
+                                                                                                             
+          384┆ `/${locale}/policies/studio-delivery?${params.toString().replaceAll("&", "&amp;")}`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/page-
+  factory.test.tsx                                                                                                      
+     ❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.audit.detect-replaceall-
+       sanitization.detect-replaceall-sanitization                                                      
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `href`. Manually     
+          sanitizing input through a manually built list can be circumvented in many situations, and it's
+          better to use a well known sanitization library such as `sanitize-html` or `DOMPurify`.        
+                                                                                                         
+          171┆ const encodedHref = href.replaceAll("&", "&amp;");
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/publi
+  shed-image.test.tsx                                                                                                   
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-non-
+       literal-regexp.detect-non-literal-regexp                                                                
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `tag` function argument, this might allow an attacker to cause a Regular     
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+                                                                                                              
+           55┆ const element = html.match(new RegExp(`<${tag}\\s[^>]*>`));
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/seo-s
+  tructured-data.tsx                                                                                                    
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.typescript.react.security.audit.react-
+       dangerouslysetinnerhtml.react-dangerouslysetinnerhtml                                               
+          ❰❰ Blocking ❱❱
+          Detection of dangerouslySetInnerHTML from non-constant definition. This can inadvertently expose  
+          users to cross-site scripting (XSS) attacks if this comes from user-provided input. If you have to
+          use dangerouslySetInnerHTML, consider using a sanitization library such as DOMPurify to sanitize  
+          your HTML.                                                                                        
+                                                                                                            
+          141┆ __html: JSON.stringify(data)
+          142┆   .replace(/</gu, "\\u003c")
+          143┆   .replace(/\u2028/gu, "\\u2028")
+          144┆   .replace(/\u2029/gu, "\\u2029"),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/worker/scripts/media-processing
+  -integration.mjs                                                                                                      
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+          306┆ mediaProcessing[method](command),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/worker/scripts/notification-lin
+  k-browser.test.mjs                                                                                                    
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           13┆ html: `<a href="${url.replaceAll("&", "&amp;")}">View order</a>`,
+   
+     ❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.audit.detect-replaceall-
+       sanitization.detect-replaceall-sanitization                                                      
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `url`. Manually sanitizing
+          input through a manually built list can be circumvented in many situations, and it's better to use a
+          well known sanitization library such as `sanitize-html` or `DOMPurify`.                             
+                                                                                                              
+           13┆ html: `<a href="${url.replaceAll("&", "&amp;")}">View order</a>`,
+   
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           53┆ html: `<a href="${htmlUrl.replaceAll("&", "&amp;")}">View order</a>`,
+   
+     ❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.audit.detect-replaceall-
+       sanitization.detect-replaceall-sanitization                                                      
+          ❰❰ Blocking ❱❱
+          Detected a call to `replaceAll()` in an attempt to HTML escape the string `htmlUrl`. Manually  
+          sanitizing input through a manually built list can be circumvented in many situations, and it's
+          better to use a well known sanitization library such as `sanitize-html` or `DOMPurify`.        
+                                                                                                         
+           53┆ html: `<a href="${htmlUrl.replaceAll("&", "&amp;")}">View order</a>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/infra/opentofu/modules/compute/main.
+  tf                                                                                                                    
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.terraform.aws.security.aws-elb-access-logs-not-
+       enabled.aws-elb-access-logs-not-enabled                                                                      
+          ❰❰ Blocking ❱❱
+          ELB has no logging. Missing logs can cause missing important event information.
+                                                                                         
+          103┆ resource "aws_lb" "this" {
+          104┆   name                       = var.name
+          105┆   internal                   = true
+          106┆   load_balancer_type         = "application"
+          107┆   subnets                    = var.subnet_ids
+          108┆   security_groups            = [var.alb_security_group_id]
+          109┆   enable_deletion_protection = true
+          110┆   drop_invalid_header_fields = true
+          111┆   desync_mitigation_mode     = "strictest"
+          112┆   # Raw ALB access logs contain query strings; no token/PII-safe format exists here.
+             [hid 1 additional lines, adjust with --max-lines-per-finding] 
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/infra/opentofu/modules/network/main.
+  tf                                                                                                                    
+     ❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.terraform.aws.security.aws-ec2-security-group-
+       rule-missing-description.aws-ec2-security-group-rule-missing-description                                    
+          ❰❰ Blocking ❱❱
+          The AWS security group rule is missing a description, or its description is empty or the default    
+          value.  Security groups rules should include a meaningful description in order to simplify auditing,
+          debugging, and managing security groups.                                                            
+                                                                                                              
+           86┆ resource "aws_security_group" "alb" {
+           87┆   name_prefix = "${var.name}-alb-"
+           88┆   vpc_id      = aws_vpc.this.id
+           89┆ }
+            ⋮┆----------------------------------------
+           90┆ resource "aws_security_group" "application" {
+           91┆   for_each    = local.ports
+           92┆   name_prefix = "${var.name}-${each.key}-"
+           93┆   vpc_id      = aws_vpc.this.id
+           94┆ }
+            ⋮┆----------------------------------------
+           95┆ resource "aws_security_group" "database" {
+           96┆   name_prefix = "${var.name}-database-"
+           97┆   vpc_id      = aws_vpc.this.id
+           98┆ }
+            ⋮┆----------------------------------------
+           99┆ resource "aws_security_group" "endpoints" {
+          100┆   name_prefix = "${var.name}-endpoints-"
+          101┆   vpc_id      = aws_vpc.this.id
+          102┆ }
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/infra/opentofu/modules/operations/ma
+  in.tf                                                                                                                 
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.terraform.lang.security.iam.no-iam-creds-
+       exposure.no-iam-creds-exposure                                                                         
+          ❰❰ Blocking ❱❱
+          Ensure IAM policies don't allow credentials exposure. Credentials exposure actions return       
+          credentials as part of the API response, and can possibly lead to leaking important credentials.
+          Instead, use another action that doesn't return sensitive data as part of the API response.     
+                                                                                                          
+          184┆ { Effect = "Allow", Action = "ecr:GetAuthorizationToken", Resource = "*" },
+   
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.terraform.lang.security.iam.no-iam-resource-
+       exposure.no-iam-resource-exposure                                                                         
+          ❰❰ Blocking ❱❱
+          Ensure IAM policies don't allow resource exposure. These actions can expose AWS resources to the
+          public. For example `ecr:SetRepositoryPolicy` could let an attacker retrieve container images.  
+          Instead, use another action that doesn't expose AWS resources.                                  
+                                                                                                          
+          188┆ { Effect = "Allow", Action = "iam:PassRole", Resource = var.task_role_arns, Condition = {
+               StringEquals = { "iam:PassedToService" = "ecs-tasks.amazonaws.com" } } }                 
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/application/src/order-notif
+  ications.test.ts                                                                                                      
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.hardcoded-hmac-
+       key.hardcoded-hmac-key                                                                                      
+          ❰❰ Blocking ❱❱
+          Detected a hardcoded hmac key. Avoid hardcoding secrets and consider using an alternate option such
+          as reading the secret from a config file or using an environment variable.                         
+                                                                                                             
+          154┆ digestBase64: createHmac("sha256", "test-only-key")
+   
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          194┆ html: `<a href="${command.variables.orderUrl}">View</a>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/application/src/translation
+  -test-support.ts                                                                                                      
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           45┆ body: `<p>Terms ${locale}</p>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/catalog/src/directory-curso
+  r.test.ts                                                                                                             
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.incomplete-
+       sanitization.incomplete-sanitization                                                                    
+          ❰❰ Blocking ❱❱
+          `payload.replace` method will only replace the first occurrence when used with a string argument
+          ("{"). If this method is used for escaping of dangerous data then there is a possibility for a  
+          bypass. Try to use sanitization library instead or use a Regex with a global flag.              
+                                                                                                          
+           49┆ payload.replace("{", '{"schemaVersion":2,'),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/domain/src/late-payment-suc
+  cess.ts                                                                                                               
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-
+       redos.detect-redos                                                                                  
+          ❰❰ Blocking ❱❱
+          Detected the use of a regular expression `^[a-z][a-z0-9]*(?:[-_:][a-z0-9]+)*$` which appears to be  
+          vulnerable to a Regular expression Denial-of-Service (ReDoS). For this reason, it is recommended to 
+          review the regex and ensure it is not vulnerable to catastrophic backtracking, and if possible use a
+          library which offers default safety against ReDoS vulnerabilities.                                  
+                                                                                                              
+          110┆ : actor.taskName.length <= 128 && TASK_NAME_PATTERN.test(actor.taskName);
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/i18n/src/notifications/noti
+  fications.test.ts                                                                                                     
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           98┆ expect(content.html).toContain(`<html lang="${locale}">`);
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/key-management-kms/src/adap
+  ter.ts                                                                                                                
+   ❯❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.node-crypto.security.gcm-no-tag-
+       length.gcm-no-tag-length                                                                                 
+          ❰❰ Blocking ❱❱
+          The call to 'createDecipheriv' with the Galois Counter Mode (GCM) mode of operation is missing an 
+          expected authentication tag length. If the expected authentication tag length is not specified or 
+          otherwise checked, the application might be tricked into verifying a shorter-than-expected        
+          authentication tag. This can be abused by an attacker to spoof ciphertexts or recover the implicit
+          authentication key of GCM, allowing arbitrary forgeries.                                          
+                                                                                                            
+          690┆ const decipher = createDecipheriv(
+          691┆   "aes-256-gcm",
+          692┆   dataKey,
+          693┆   initializationVector,
+          694┆ );
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-postgres/script
+  s/admin-payment-configuration-storage-cases.mjs                                                                       
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+          232┆ r[method](input),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-postgres/script
+  s/payment-health-postgres.mjs                                                                                         
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+           95┆ (repository) => repository[method](command),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-postgres/script
+  s/postgres-content-authoring-fixtures.mjs                                                                             
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          120┆ body: `<p>${locale} No legal effect.</p>`,
+            ⋮┆----------------------------------------
+          197┆ body: `<p>${locale} A test policy.</p>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-postgres/script
+  s/postgres-resource-management-concurrency.mjs                                                                        
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+          288┆ await run(({ resources }) => resources[method](value)),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-postgres/src/ad
+  min-orders-repository.test.ts                                                                                         
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+           54┆ expect(await repo[method]({ schemaVersion: 99 } as never)).toMatchObject({
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-postgres/src/ba
+  se-content-preview-repository.test.ts                                                                                 
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+           18┆ expect(await repository[method]({} as never)).toEqual({
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-postgres/src/ba
+  se-content-review-repository.test.ts                                                                                  
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+           18┆ expect(await repository[method]({} as never)).toEqual({
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-postgres/src/pu
+  blication-runtime-repository.test.ts                                                                                  
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+           14┆ await createPublicationRuntimeRepository(client, scope)[method](
+           15┆   {} as never,
+           16┆ ),
+            ⋮┆----------------------------------------
+           39┆ await createPublicationPurgeRepository(client, scope)[method](
+           40┆   {} as never,
+           41┆ ),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-postgres/src/re
+  source-management-repository.test.ts                                                                                  
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.unsafe-dynamic-
+       method.unsafe-dynamic-method                                                                                
+          ❰❰ Blocking ❱❱
+          Using non-static data to retrieve and run functions from the object is dangerous. If the data is
+          user-controlled, it may allow executing arbitrary code.                                         
+                                                                                                          
+           55┆ expect(await repository[method]({} as never)).toEqual({
+                                                                                                                 
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/ui/src/gift-tile.tsx
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.typescript.react.security.audit.react-href-
+       var.react-href-var                                                                                       
+          ❰❰ Blocking ❱❱
+          Detected a variable used in an anchor tag with the 'href' attribute. A malicious actor may be able
+          to input the 'javascript:' URI, which could cause cross-site scripting (XSS). It is recommended to
+          disallow 'javascript:' URIs within your application.                                              
+                                                                                                            
+           69┆ <Link href={props.href} variant="standalone">
+                                                                                                            
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/ui/src/hero.tsx
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.typescript.react.security.audit.react-href-
+       var.react-href-var                                                                                       
+          ❰❰ Blocking ❱❱
+          Detected a variable used in an anchor tag with the 'href' attribute. A malicious actor may be able
+          to input the 'javascript:' URI, which could cause cross-site scripting (XSS). It is recommended to
+          disallow 'javascript:' URIs within your application.                                              
+                                                                                                            
+           53┆ href={props.action.href}
+                                                                                                                    
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/ui/src/idol-context.tsx
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.typescript.react.security.audit.react-href-
+       var.react-href-var                                                                                       
+          ❰❰ Blocking ❱❱
+          Detected a variable used in an anchor tag with the 'href' attribute. A malicious actor may be able
+          to input the 'javascript:' URI, which could cause cross-site scripting (XSS). It is recommended to
+          disallow 'javascript:' URIs within your application.                                              
+                                                                                                            
+           59┆ <Link href={props.href} variant="standalone">
+            ⋮┆----------------------------------------
+           73┆ href={props.action.href}
+                                                                                                                     
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/ui/src/idol-portrait.tsx
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.typescript.react.security.audit.react-href-
+       var.react-href-var                                                                                       
+          ❰❰ Blocking ❱❱
+          Detected a variable used in an anchor tag with the 'href' attribute. A malicious actor may be able
+          to input the 'javascript:' URI, which could cause cross-site scripting (XSS). It is recommended to
+          disallow 'javascript:' URIs within your application.                                              
+                                                                                                            
+           76┆ href={props.href!}
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/scripts/check-design-foundations.tes
+  t.mjs                                                                                                                 
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          207┆ `export default function Page() { return <DesignFoundationSpecimen locale="${locale}" />;
+               }\n`,                                                                                    
+                                                                                                                   
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/scripts/check-ui-composites.mjs
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-non-
+       literal-regexp.detect-non-literal-regexp                                                                
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `className` function argument, this might allow an attacker to cause a       
+          Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main      
+          thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on
+          user-controlled input, consider performing input validation or use a regex checking/sanitization    
+          library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear      
+          vulnerable to ReDoS.                                                                                
+                                                                                                              
+          635┆ new RegExp(`\\.${className}(?![\\w-])`, "u").test(rule.selector),
+                                                                                                                     
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/scripts/check-ui-interactions.mjs
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-non-
+       literal-regexp.detect-non-literal-regexp                                                                
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `source` function argument, this might allow an attacker to cause a Regular  
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+                                                                                                              
+          1619┆ new RegExp(`\\[\\s*${openName}\\s*\\]`, "u").test(source) &&
+            ⋮┆----------------------------------------
+          1620┆ (new RegExp(`useMenuScrollLock\\(\\s*${openName}\\s*\\)`, "u").test(
+            ⋮┆----------------------------------------
+          1623┆ new RegExp(`if\\s*\\(\\s*!\\s*${openName}\\s*\\)`, "u").test(source));
+            ⋮┆----------------------------------------
+          1807┆ new RegExp(
+          1808┆   `\\bconst\\s+([A-Za-z_$][\\w$]*)\\s*=\\s*${rootPattern}(?:\\.lang|\\.getAttribute\\(\\s*
+               ${attributePattern}\\s*\\))\\s*;`,                                                         
+          1809┆   "u",
+          1810┆ ),
+            ⋮┆----------------------------------------
+          1812┆ const setLanguagePattern = new RegExp(
+          1813┆   `(?:${rootPattern}\\.lang\\s*=\\s*previewLocale|${rootPattern}\\.setAttribute\\(\\s*${at
+               tributePattern}\\s*,\\s*previewLocale\\s*\\))`,                                            
+          1814┆   "u",
+          1815┆ );
+            ⋮┆----------------------------------------
+          1845┆ (new RegExp(`${rootPattern}\\.lang\\s*=\\s*${previousName}\\s*;`, "u").test(
+            ⋮┆----------------------------------------
+          1848┆ new RegExp(
+          1849┆                                                                                         
+               `${rootPattern}\\.setAttribute\\(\\s*${attributePattern}\\s*,\\s*${previousName}\\s*\\)`,
+          1850┆   "u",
+          1851┆ ).test(cleanup));
+            ⋮┆----------------------------------------
+          1854┆ const removesMissingPrevious = new RegExp(
+          1855┆   `${rootPattern}\\.removeAttribute\\(\\s*${attributePattern}\\s*\\)`,
+          1856┆   "u",
+          1857┆ ).test(cleanup);
+            ⋮┆----------------------------------------
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-non-
+       literal-regexp.detect-non-literal-regexp                                                                
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `className` function argument, this might allow an attacker to cause a       
+          Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main      
+          thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on
+          user-controlled input, consider performing input validation or use a regex checking/sanitization    
+          library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear      
+          vulnerable to ReDoS.                                                                                
+                                                                                                              
+          2389┆ new RegExp(`\\.${className}(?![-_a-zA-Z0-9])`, "u").test(rule.selector),
+                                                                                                               
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/scripts/check-ui-motion.mjs
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+          554┆ if (!source.includes(`<UiMotionSpecimen locale="${locale}" />`)) {
+                                                                                                                   
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/scripts/check-ui-primitives.mjs
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-non-
+       literal-regexp.detect-non-literal-regexp                                                                
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `className` function argument, this might allow an attacker to cause a       
+          Regular Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main      
+          thread. For this reason, it is recommended to use hardcoded regexes instead. If your regex is run on
+          user-controlled input, consider performing input validation or use a regex checking/sanitization    
+          library such as https://www.npmjs.com/package/recheck to verify that the regex does not appear      
+          vulnerable to ReDoS.                                                                                
+                                                                                                              
+          820┆ new RegExp(`\\.${className}(?![\\w-])`, "u").test(subject),
+            ⋮┆----------------------------------------
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-non-
+       literal-regexp.detect-non-literal-regexp                                                                
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `names` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+                                                                                                              
+          1288┆ if (!new RegExp(`<${name}\\b`, "u").test(source)) {
+                                                                                                                    
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/scripts/render-rum-dashboard.mjs
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           74┆   return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport"   
+               content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy"
+               content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-            
+               inline'"><title>Storefront performance observations</title><style>                     
+           75┆ body{font:16px/1.6 system-ui,sans-serif;margin:0;background:#111318;color:#f5f3ef}main{max-
+               width:1200px;margin:auto;padding:40px 24px}h1{font-size:32px;margin:0 0                    
+               8px}p{color:#c3c7ce}label{display:inline-grid;gap:4px;margin:0 16px 20px                   
+               0}select{font:inherit;color:inherit;background:#242830;padding:8px;border:1px solid        
+               #717987;border-radius:4px}table{border-collapse:collapse;width:100%;font-variant-          
+               numeric:tabular-nums}td,th{text-align:left;padding:10px;border-bottom:1px solid            
+               #40444d}th{color:#d8b26e}.scroll{overflow:auto}.notice{padding:16px;border-left:3px solid  
+               #d8b26e}caption{text-align:left;padding:16px 0}                                            
+           76┆ </style><main><h1>Storefront performance observations</h1><p>Anonymous document metrics ·  
+               LCP / INP / CLS</p><p id="window"></p><p class="notice">Local and automated observations   
+               verify instrumentation only. Browser automation is self-reported. A field label does not   
+               prove real users or release acceptance. INSUFFICIENT means more samples are required;      
+               missing INP is never filled with zero. Standard hard-document metrics retain the initial   
+               route; soft navigations are not measured separately. BFCache restores after a soft-route   
+               change are excluded.</p><div id="filters"></div><div class="scroll"><table><caption        
+               id="summary">No observations — INSUFFICIENT</caption><thead><tr><th>Source</th><th>Locale</
+               th><th>Page</th><th>Viewport</th><th>Metric</th><th>Samples</th><th>p75</th><th>Budget     
+               &lt;</th><th>Assessment</th></tr></thead><tbody                                            
+               id="rows"></tbody></table></div></main><script type="application/json"                     
+               id="data">${data}</script><script>                                                         
+           77┆ const report=JSON.parse(document.getElementById('data').textContent);
+           78┆ const integrity=document.createElement('p');integrity.id='integrity';integrity.className='n
+               otice';integrity.textContent=${JSON.stringify(integrity)};document.getElementById('window')
+               .after(integrity);                                                                         
+           79┆ document.getElementById('window').textContent=report.windowStart+' → '+report.windowEnd+' ·
+               receipt window · minimum '+report.minimumSamples+' samples per metric · nearest-rank p75'; 
+           80┆ const baseGroups=new Map();
+           81┆ for(const row of report.rows){const key=JSON.stringify([row.mode,row.context,row.samplePerm
+               ille]);if(!baseGroups.has(key))baseGroups.set(key,[]);baseGroups.get(key).push(row);}      
+           82┆ const rows=[];for(const group of baseGroups.values()){for(const metric of ['LCP','INP','CLS
+               ']){rows.push(group.find(row=>row.metric===metric)||{...group[0],metric,count:0,p75:null,bu
+               dgetExclusive:{LCP:2500,INP:200,CLS:0.1}[metric],assessment:'INSUFFICIENT'});}}            
+           83┆ const controls={};for(const field of ['mode','locale','page','viewport']){const            
+               label=document.createElement('label');label.textContent=field;const                        
+               select=document.createElement('select');for(const value of ['all',...new                   
+               Set(rows.map(row=>field==='mode'?row.mode:row.context[field]))]){const option=document.crea
+               teElement('option');option.value=value;option.textContent=value;select.append(option);}labe
+               l.append(select);document.getElementById('filters').append(label);controls[field]=select;se
+               lect.addEventListener('change',render);}                                                   
+             [hid 2 additional lines, adjust with --max-lines-per-finding] 
+                                                                                                               
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/scripts/runtime-preview.mjs
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.html-in-template-
+       string.html-in-template-string                                                                          
+          ❰❰ Blocking ❱❱
+          This template literal looks like HTML and has interpolated variables. These variables are not HTML-
+          encoded by default. If the variables contain HTML tags, these may be interpreted by the browser,   
+          resulting in cross-site scripting (XSS).                                                           
+                                                                                                             
+           45┆ (origin) => `<AllowedOrigin>${origin}</AllowedOrigin>`,
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/scripts/security-rate-limit.test.mjs
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-non-
+       literal-regexp.detect-non-literal-regexp                                                                
+          ❰❰ Blocking ❱❱
+          RegExp() called with a `route` function argument, this might allow an attacker to cause a Regular   
+          Expression Denial-of-Service (ReDoS) within your application as RegExP blocks the main thread. For  
+          this reason, it is recommended to use hardcoded regexes instead. If your regex is run on user-      
+          controlled input, consider performing input validation or use a regex checking/sanitization library 
+          such as https://www.npmjs.com/package/recheck to verify that the regex does not appear vulnerable to
+          ReDoS.                                                                                              
+                                                                                                              
+           62┆ (route) => route.method === method && new RegExp(route.path).test(path),
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/scripts/verify-ui-composites-browser
+  .mjs                                                                                                                  
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-
+       redos.detect-redos                                                                                  
+          ❰❰ Blocking ❱❱
+          Detected the use of a regular expression `^[a-z0-9]+(?:-[a-z0-9]+)*$` which appears to be vulnerable
+          to a Regular expression Denial-of-Service (ReDoS). For this reason, it is recommended to review the 
+          regex and ensure it is not vulnerable to catastrophic backtracking, and if possible use a library   
+          which offers default safety against ReDoS vulnerabilities.                                          
+                                                                                                              
+          389┆ !/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(scan.id)
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/scripts/verify-ui-interactions-brows
+  er.mjs                                                                                                                
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-
+       redos.detect-redos                                                                                  
+          ❰❰ Blocking ❱❱
+          Detected the use of a regular expression `^[a-z0-9]+(?:-[a-z0-9]+)*$` which appears to be vulnerable
+          to a Regular expression Denial-of-Service (ReDoS). For this reason, it is recommended to review the 
+          regex and ensure it is not vulnerable to catastrophic backtracking, and if possible use a library   
+          which offers default safety against ReDoS vulnerabilities.                                          
+                                                                                                              
+          342┆ !/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(scan.id)
+                                                                                                                        
+    /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/scripts/verify-ui-primitives-browser
+  .mjs                                                                                                                  
+    ❯❱ Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-
+       redos.detect-redos                                                                                  
+          ❰❰ Blocking ❱❱
+          Detected the use of a regular expression `^[a-z0-9]+(?:-[a-z0-9]+)*$` which appears to be vulnerable
+          to a Regular expression Denial-of-Service (ReDoS). For this reason, it is recommended to review the 
+          regex and ensure it is not vulnerable to catastrophic backtracking, and if possible use a library   
+          which offers default safety against ReDoS vulnerabilities.                                          
+                                                                                                              
+          289┆ !/^[a-z0-9]+(?:-[a-z0-9]+)*$/u.test(scan.id)
+
+running 494 rules from 1 config /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/official-security-rules-v2.json_0
+Rules:
+<SKIPPED DATA (too many entries; use --max-log-list-entries)>
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 2536 files with 494 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin   Rules                                                                   
+ ─────────────────────────────        ────────────────                                                                  
+  <multilang>       1    2536          Custom     494                                                                   
+  ts              172    1949                                                                                           
+  js              167     570                                                                                           
+  terraform       261      12                                                                                           
+  yaml             42       2                                                                                           
+  dockerfile        7       1                                                                                           
+                                                                                                                        
+SCA findings adjustment: No SCA rules to adjust
+[WARN] Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/.github/workflows/ci.yml:62:
+ When parsing a snippet as Bash for metavariable-pattern in rule 'Users.mario.Desktop..node_modules..cache.p6-04-security-tools.yaml.github-actions.security.curl-eval.curl-eval', `${{` was unexpected
+[WARN] Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/.github/workflows/ci.yml:62:
+ When parsing a snippet as Bash for metavariable-pattern in rule 'Users.mario.Desktop..node_modules..cache.p6-04-security-tools.yaml.github-actions.security.gha-curl-pipe-shell.gha-curl-pipe-shell', `${{` was unexpected
+[WARN] Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/artist-directory.test.tsx:80:
+ `&currency=USD` was unexpected
+[WARN] Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/cart-checkout-entry.test.tsx:37:
+ `&state=secret` was unexpected
+[WARN] Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/commerce-context.test.tsx:67:
+ `&currency=USD` was unexpected
+[WARN] Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/gift-browse.test.tsx:50:
+ `&currency=USD&cart=one&cart=two&variant=old` was unexpected
+[WARN] Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/gift-directory.test.tsx:130:
+ `&currency=USD&cart=one&cart=two&page=2` was unexpected
+[WARN] Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/page-factory.test.tsx:159:
+ `&currency=USD` was unexpected
+[WARN] Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/site-header-lazy-boundary.test.tsx:113:
+ `&currency=USD` was unexpected
+[WARN] Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/site-header-navigation.test.tsx:24:
+ `&currency=USD` was unexpected
+[WARN] Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-port/src/index.ts:1:
+ `type` was unexpected
+
+========================================
+Files skipped:
+========================================
+
+  Always skipped by Semgrep:
+
+   • <none>
+
+  Skipped by .gitignore:
+  (Disabled with --no-git-ignore)
+
+   • <none>
+
+  Skipped by .semgrepignore:
+  - https://semgrep.dev/docs/ignoring-files-folders-code/#understand-semgrep-defaults
+
+   • <none>
+
+  Skipped by --include patterns:
+
+   • <none>
+
+  Skipped by --exclude patterns:
+
+   • <none>
+
+  Files that couldn't be accessed:
+
+   • <none>
+
+  Skipped by limiting to files smaller than 2000000 bytes:
+  (Adjust with the --max-target-bytes flag)
+
+   • <none>
+
+  Partially analyzed due to parsing or internal Semgrep errors
+
+   • /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/.github/workflows/ci.yml (~1.8% of
+     lines always skipped)
+
+     The following lines were skipped for all analysis:
+
+     • lines 62-62 due to exception "PartialParsing" raised during analysis
+     • lines 62-62 due to exception "PartialParsing" raised during analysis
+
+   • /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-
+     final/apps/storefront/src/storefront/artist-directory.test.tsx (~0.9% of lines always skipped)
+
+     The following lines were skipped for all analysis:
+
+     • lines 80-80 due to exception "PartialParsing" raised during analysis
+
+   • /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/cart-
+     checkout-entry.test.tsx (~2.0% of lines always skipped)
+
+     The following lines were skipped for all analysis:
+
+     • lines 37-37 due to exception "PartialParsing" raised during analysis
+
+   • /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-
+     final/apps/storefront/src/storefront/commerce-context.test.tsx (~1.2% of lines always skipped)
+
+     The following lines were skipped for all analysis:
+
+     • lines 67-67 due to exception "PartialParsing" raised during analysis
+     • lines 140-140 due to exception "PartialParsing" raised during analysis
+
+   • /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/gift-
+     browse.test.tsx (~0.7% of lines always skipped)
+
+     The following lines were skipped for all analysis:
+
+     • lines 50-50 due to exception "PartialParsing" raised during analysis
+
+   • /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/gift-
+     directory.test.tsx (~0.9% of lines always skipped)
+
+     The following lines were skipped for all analysis:
+
+     • lines 130-130 due to exception "PartialParsing" raised during analysis
+     • lines 214-214 due to exception "PartialParsing" raised during analysis
+
+   • /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/page-
+     factory.test.tsx (~0.1% of lines always skipped)
+
+     The following lines were skipped for all analysis:
+
+     • lines 159-159 due to exception "PartialParsing" raised during analysis
+
+   • /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/site-
+     header-lazy-boundary.test.tsx (~0.8% of lines always skipped)
+
+     The following lines were skipped for all analysis:
+
+     • lines 113-113 due to exception "PartialParsing" raised during analysis
+
+   • /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/site-
+     header-navigation.test.tsx (~2.1% of lines always skipped)
+
+     The following lines were skipped for all analysis:
+
+     • lines 24-24 due to exception "PartialParsing" raised during analysis
+
+   • /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-
+     port/src/index.ts (~1.1% of lines always skipped)
+
+     The following lines were skipped for all analysis:
+
+     • lines 1-1 due to exception "PartialParsing" raised during analysis
+     • lines 2-2 due to exception "PartialParsing" raised during analysis
+     • lines 333-333 due to exception "PartialParsing" raised during analysis
+     • lines 334-334 due to exception "PartialParsing" raised during analysis
+
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 130 (130 blocking)
+ • Rules run: 482
+ • Targets scanned: 2536
+ • Parsed lines: ~99.9%
+ • No ignore information available
+Ran 482 rules on 2536 files: 130 findings.
+Not sending pseudonymous metrics since metrics are configured to OFF, registry usage is False, and login status is False

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/homebrew/bin/semgrep",
+    "scan",
+    "--metrics=off",
+    "--disable-version-check",
+    "--pro",
+    "--validate",
+    "--config",
+    "/Users/mario/Desktop/\u4e0b\u5355/node_modules/.cache/p6-04-security-tools/official-security-rules.json"
+  ],
+  "exitCode": 2,
+  "time": "2026-09-24T11:26:40.096002+00:00"
+}

@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "commands": 14,
+  "nonzeroCommands": [],
+  "inputCount": 21,
+  "inputHashMismatch": [],
+  "cloudEvidence": false,
+  "source": "../iac-final/result.json",
+  "reviewedTestLogs": [
+    {
+      "path": "../iac-final/6-bootstrap-test.log",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "path": "../iac-final/10-registry-test.log",
+      "passed": 1,
+      "failed": 0
+    },
+    {
+      "path": "../iac-final/14-stack-test.log",
+      "passed": 16,
+      "failed": 0
+    }
+  ]
+}

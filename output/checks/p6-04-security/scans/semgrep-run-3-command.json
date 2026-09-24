@@ -1,0 +1,38 @@
+{
+  "command": [
+    "/opt/homebrew/bin/semgrep",
+    "scan",
+    "--oss-only",
+    "--metrics=off",
+    "--disable-version-check",
+    "--project-root",
+    "/Users/mario/Desktop/\u4e0b\u5355/node_modules/.cache/p6-04-security-tools/source-baseline",
+    "--no-git-ignore",
+    "--disable-nosem",
+    "--verbose",
+    "--jobs",
+    "2",
+    "--timeout",
+    "15",
+    "--max-target-bytes",
+    "2000000",
+    "--config",
+    "/Users/mario/Desktop/\u4e0b\u5355/node_modules/.cache/p6-04-security-tools/official-security-rules-v2.json",
+    "--json-output",
+    "/Users/mario/Desktop/\u4e0b\u5355/output/checks/p6-04-security/scans/semgrep-run-3.json",
+    "--sarif-output",
+    "/Users/mario/Desktop/\u4e0b\u5355/output/checks/p6-04-security/scans/semgrep-run-3-sarif.json",
+    "/Users/mario/Desktop/\u4e0b\u5355/node_modules/.cache/p6-04-security-tools/source-baseline"
+  ],
+  "cwd": "/Users/mario/Desktop/\u4e0b\u5355/node_modules/.cache/p6-04-security-tools/source-baseline",
+  "startedAt": "2026-09-24T11:29:01.494930+00:00",
+  "finishedAt": "2026-09-24T11:29:57.242374+00:00",
+  "elapsedSeconds": 55.7474865000695,
+  "exitCode": 0,
+  "privacy": {
+    "metrics": "off",
+    "versionCheck": false,
+    "cloudUpload": false,
+    "engine": "OSS"
+  }
+}

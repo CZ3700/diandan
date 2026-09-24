@@ -22,6 +22,7 @@ export function decryptMailCapture(key, identity, value) {
     "aes-256-gcm",
     key,
     Buffer.from(value.iv, "base64url"),
+    { authTagLength: 16 },
   );
   cipher.setAAD(Buffer.from(identity));
   cipher.setAuthTag(Buffer.from(value.tag, "base64url"));

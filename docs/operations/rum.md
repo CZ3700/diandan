@@ -43,19 +43,23 @@ node scripts/render-rum-dashboard.mjs \
   --minimum-samples 100
 ```
 
-可重复 `--input` 合并最多 32 个日志文件。输出为 `rum-report.json` 和可直接打开、无需网络的 `rum-dashboard.html`。工具拒绝覆盖已有产物，流式读取累计最多 100 MiB、单行 65536 字符、100000 条有效观测；超限按有界时间片另建报告。非 RUM 普通日志忽略，声明为 RUM 但不符合合同的行会中止，错误不反射原行。
+可重复 `--input` 合并最多 32 个日志文件。输出为 v2 合同的 `rum-report.json` 和可直接打开、无需网络的 `rum-dashboard.html`。工具拒绝覆盖已有产物，流式读取累计最多 100 MiB、单行 65536 字符、100000 条有效观测；超限按有界时间片另建报告。非 RUM 普通日志忽略，声明为 RUM 但不符合合同的行会中止，错误不反射原行。
 
-聚合以服务器接收时间 `[from,to)` 为窗口。同一 measurementKey 取最高 revision，重复/乱序不增加访问数，同 revision 不同值或身份维度冲突拒绝。p75 使用 nearest-rank（排序后第 ceil(n×0.75) 项）；按 mode、automation、locale、page、viewport、采样配置、metric 独立分组。报告包含收到的记录数、去重观测数、各指标样本数及窗口。
+聚合以服务器接收时间 `[from,to)` 为窗口。同一 measurementKey 取最高 revision，重复/乱序不增加访问数。匿名上报不能作为可信标识来源：同 revision 不同值或身份维度变化时，v2 隔离该 key 在窗口内的全部记录，包括较新或随后到达的 revision；其他 key 仍可查看。报告 `integrity` 明确列出状态、隔离 key 数、隔离记录数和保留记录数，只输出计数，不输出原 key。只要存在冲突，整个窗口及所有行均为 `DEGRADED`，展示保留样本的 p75，但暂停预算判断；即使其他行样本足够也不能显示 `WITHIN_BUDGET`。全部记录被隔离时仍生成可读的降级空报告。损坏日志或非法 schema 属于不同错误，继续 fail-closed。
 
-实验室、本地和自动化流量永远为 LOCAL_ONLY。field 样本不足为 INSUFFICIENT；满足样本数时比较规范严格预算 LCP <2500 ms、INP <200 ms、CLS <0.1。WITHIN_BUDGET 只表示这个受限分组的数值比较，不是 Release Gate PASS。空窗口或缺某指标在看板明确标记 INSUFFICIENT；样本阈值由报告参数公开列出，不冒充统计置信度保证。真实用户分布、实际代表性和观测窗口仍须上线阶段取证。
+p75 使用 nearest-rank（排序后第 ceil(n×0.75) 项）；按 mode、automation、locale、page、viewport、采样配置、metric 独立分组。`receivedRecords = acceptedRecords + quarantinedRecords`；`acceptedRecords` 包括合法重复更新，`uniqueMeasurements` 和行样本数只计未隔离且去重后的观测。CLI 成功退出仅代表报告已生成，stdout 始终 `fieldAcceptance:false`，并显式打印完整性状态。`CLEAN` 只说明未发现 key 冲突，不能证明匿名样本真实或代表性。遇 `DEGRADED` 时保留受限原始日志、调查入口滥用/采集缺陷并建立新的完整观测窗口，不应删掉冲突行重做“通过”证据。
+
+旧 `RumReport` v1 合同及 `aggregateRum` 保留历史解码与原冲突拒绝行为；新 CLI 使用 `RumReportV2` 和 `aggregateRumV2`。历史 v1 看板明确标记未报告隔离完整性，不能当作 v2 的 `CLEAN` 证据。
+
+无冲突窗口中，实验室、本地和自动化流量为 LOCAL_ONLY。field 样本不足为 INSUFFICIENT；满足样本数时比较规范严格预算 LCP <2500 ms、INP <200 ms、CLS <0.1。污染窗口统一显示 DEGRADED，但原 mode/automation 来源保持，不会将本地数据升级为真实流量。WITHIN_BUDGET 只表示这个受限分组的数值比较，不是 Release Gate PASS。空窗口或缺某指标在看板明确标记 INSUFFICIENT；样本阈值由报告参数公开列出，不冒充统计置信度保证。真实用户分布、实际代表性和观测窗口仍须上线阶段取证。
 
 ## 复验入口
 
 - `packages/contracts/src/rum*.test.ts`：严格字段及规范 OpenAPI。
 - `packages/config/src/rum-config.test.ts`：默认关闭、配置层级与来源门。
-- `packages/observability/src/rum.test.ts`：revision 去重、冲突、p75、来源分组及 sink 失败。
+- `packages/observability/src/rum*.test.ts`：v1兼容、v2冲突隔离、全部/空窗口、乱序与重复、p75、来源/样本门及 sink 失败。
 - `apps/storefront/src/server/rum*.test.ts*`、`src/storefront/rum-client.test.ts`：同源/体积/超时/并发、禁采、一次订阅和 BFCache/SPA。
-- `node --test scripts/render-rum-dashboard.test.mjs`：本地文件边界与空窗口。
+- `node --test scripts/render-rum-dashboard.test.mjs`：真实CLI污染窗口仍可查看正常样本、降级声明、损坏日志拒绝、本地文件边界与空窗口。
 - 根 `verify:rum`：真实生产编译的自有 TEST 接线。使用独立 Chrome 默认上下文与真实切换标签页产生可信 hidden，保持被测文档、URL 和 timeOrigin 不变；要求三项真实库回调、隐私字段、完整 requestfinished 和实际同源 204、服务器记录逐条对应。客户端只消费成功 204 的空响应，失败不重试。敏感页面按相同生命周期观察完整 10 秒且 POST 尝试为零。自动化观察明确属于 local，不能替代 field p75。
 
 针对本次浏览器问题的独立诊断入口（先完成依赖编译，输出目录必须是新的绝对路径）：

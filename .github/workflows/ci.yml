@@ -104,7 +104,10 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Audit dependencies
-        run: pnpm audit --registry=https://registry.npmjs.org --audit-level=high
+        run: pnpm security:dependencies
+
+      - name: Check security regressions
+        run: pnpm security:regressions
 
       - name: Scan repository for secrets
         run: pnpm security:secrets

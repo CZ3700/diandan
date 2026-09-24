@@ -1,0 +1,20 @@
+tests/offline.tftest.json... fail
+  run "topology"... fail
+  run "reject_mutable_image"... pass
+  run "reject_plaintext_secret"... pass
+  run "reject_implicit_environment"... pass
+  run "reject_wildcard_deployment"... pass
+  run "reject_unsupported_origin_zone"... pass
+  run "production_same_baseline"... pass
+  run "reject_wildcard_key_grant"... pass
+
+Failure! 7 passed, 1 failed.
+
+Error: Test assertion failed
+
+  on tests/offline.tftest.json line 305, in run.topology.assert[14]:
+ 305:           "condition": "${length(try(output.invariants.edge.operation_rates, {})) == 6}",
+    ├────────────────
+    │ output.invariants.edge is object with 10 attributes
+
+Six operation-specific rate rules must protect sensitive public requests.

@@ -1,0 +1,295 @@
+{
+  "selectedSourceFiles": 2535,
+  "reportedTargetsScanned": 2536,
+  "extraTarget": ".semgrepignore (owned selection config)",
+  "configuredSecurityRules": 494,
+  "reportedRulesRun": 482,
+  "engine": "OSS",
+  "findings": {
+    "WARNING": 114,
+    "ERROR": 3,
+    "INFO": 13
+  },
+  "findingsTotal": 130,
+  "partialParsingErrors": [
+    {
+      "type": "PartialParsing",
+      "message": "Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/.github/workflows/ci.yml:62:\n When parsing a snippet as Bash for metavariable-pattern in rule 'Users.mario.Desktop..node_modules..cache.p6-04-security-tools.yaml.github-actions.security.curl-eval.curl-eval', `${{` was unexpected",
+      "locations": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "start": {
+            "line": 62,
+            "col": 110,
+            "offset": 1943
+          },
+          "end": {
+            "line": 62,
+            "col": 113,
+            "offset": 1946
+          }
+        }
+      ]
+    },
+    {
+      "type": "PartialParsing",
+      "message": "Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/.github/workflows/ci.yml:62:\n When parsing a snippet as Bash for metavariable-pattern in rule 'Users.mario.Desktop..node_modules..cache.p6-04-security-tools.yaml.github-actions.security.gha-curl-pipe-shell.gha-curl-pipe-shell', `${{` was unexpected",
+      "locations": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "start": {
+            "line": 62,
+            "col": 110,
+            "offset": 1943
+          },
+          "end": {
+            "line": 62,
+            "col": 113,
+            "offset": 1946
+          }
+        }
+      ]
+    },
+    {
+      "type": "PartialParsing",
+      "message": "Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/artist-directory.test.tsx:80:\n `&currency=USD` was unexpected",
+      "locations": [
+        {
+          "path": "apps/storefront/src/storefront/artist-directory.test.tsx",
+          "start": {
+            "line": 80,
+            "col": 32,
+            "offset": 0
+          },
+          "end": {
+            "line": 80,
+            "col": 45,
+            "offset": 13
+          }
+        }
+      ]
+    },
+    {
+      "type": "PartialParsing",
+      "message": "Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/cart-checkout-entry.test.tsx:37:\n `&state=secret` was unexpected",
+      "locations": [
+        {
+          "path": "apps/storefront/src/storefront/cart-checkout-entry.test.tsx",
+          "start": {
+            "line": 37,
+            "col": 34,
+            "offset": 0
+          },
+          "end": {
+            "line": 37,
+            "col": 47,
+            "offset": 13
+          }
+        }
+      ]
+    },
+    {
+      "type": "PartialParsing",
+      "message": "Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/commerce-context.test.tsx:67:\n `&currency=USD` was unexpected",
+      "locations": [
+        {
+          "path": "apps/storefront/src/storefront/commerce-context.test.tsx",
+          "start": {
+            "line": 67,
+            "col": 36,
+            "offset": 0
+          },
+          "end": {
+            "line": 67,
+            "col": 49,
+            "offset": 13
+          }
+        },
+        {
+          "path": "apps/storefront/src/storefront/commerce-context.test.tsx",
+          "start": {
+            "line": 140,
+            "col": 36,
+            "offset": 0
+          },
+          "end": {
+            "line": 140,
+            "col": 92,
+            "offset": 56
+          }
+        }
+      ]
+    },
+    {
+      "type": "PartialParsing",
+      "message": "Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/gift-browse.test.tsx:50:\n `&currency=USD&cart=one&cart=two&variant=old` was unexpected",
+      "locations": [
+        {
+          "path": "apps/storefront/src/storefront/gift-browse.test.tsx",
+          "start": {
+            "line": 50,
+            "col": 34,
+            "offset": 0
+          },
+          "end": {
+            "line": 50,
+            "col": 77,
+            "offset": 43
+          }
+        }
+      ]
+    },
+    {
+      "type": "PartialParsing",
+      "message": "Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/gift-directory.test.tsx:130:\n `&currency=USD&cart=one&cart=two&page=2` was unexpected",
+      "locations": [
+        {
+          "path": "apps/storefront/src/storefront/gift-directory.test.tsx",
+          "start": {
+            "line": 130,
+            "col": 32,
+            "offset": 0
+          },
+          "end": {
+            "line": 130,
+            "col": 70,
+            "offset": 38
+          }
+        },
+        {
+          "path": "apps/storefront/src/storefront/gift-directory.test.tsx",
+          "start": {
+            "line": 214,
+            "col": 32,
+            "offset": 0
+          },
+          "end": {
+            "line": 214,
+            "col": 59,
+            "offset": 27
+          }
+        }
+      ]
+    },
+    {
+      "type": "PartialParsing",
+      "message": "Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/page-factory.test.tsx:159:\n `&currency=USD` was unexpected",
+      "locations": [
+        {
+          "path": "apps/storefront/src/storefront/page-factory.test.tsx",
+          "start": {
+            "line": 159,
+            "col": 41,
+            "offset": 0
+          },
+          "end": {
+            "line": 159,
+            "col": 54,
+            "offset": 13
+          }
+        }
+      ]
+    },
+    {
+      "type": "PartialParsing",
+      "message": "Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/site-header-lazy-boundary.test.tsx:113:\n `&currency=USD` was unexpected",
+      "locations": [
+        {
+          "path": "apps/storefront/src/storefront/site-header-lazy-boundary.test.tsx",
+          "start": {
+            "line": 113,
+            "col": 36,
+            "offset": 0
+          },
+          "end": {
+            "line": 113,
+            "col": 49,
+            "offset": 13
+          }
+        }
+      ]
+    },
+    {
+      "type": "PartialParsing",
+      "message": "Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/apps/storefront/src/storefront/site-header-navigation.test.tsx:24:\n `&currency=USD` was unexpected",
+      "locations": [
+        {
+          "path": "apps/storefront/src/storefront/site-header-navigation.test.tsx",
+          "start": {
+            "line": 24,
+            "col": 41,
+            "offset": 0
+          },
+          "end": {
+            "line": 24,
+            "col": 54,
+            "offset": 13
+          }
+        }
+      ]
+    },
+    {
+      "type": "PartialParsing",
+      "message": "Syntax error at line /Users/mario/Desktop/下单/node_modules/.cache/p6-04-security-tools/source-final/packages/persistence-port/src/index.ts:1:\n `type` was unexpected",
+      "locations": [
+        {
+          "path": "packages/persistence-port/src/index.ts",
+          "start": {
+            "line": 1,
+            "col": 8,
+            "offset": 0
+          },
+          "end": {
+            "line": 1,
+            "col": 12,
+            "offset": 4
+          }
+        },
+        {
+          "path": "packages/persistence-port/src/index.ts",
+          "start": {
+            "line": 2,
+            "col": 8,
+            "offset": 0
+          },
+          "end": {
+            "line": 2,
+            "col": 12,
+            "offset": 4
+          }
+        },
+        {
+          "path": "packages/persistence-port/src/index.ts",
+          "start": {
+            "line": 333,
+            "col": 8,
+            "offset": 0
+          },
+          "end": {
+            "line": 333,
+            "col": 12,
+            "offset": 4
+          }
+        },
+        {
+          "path": "packages/persistence-port/src/index.ts",
+          "start": {
+            "line": 334,
+            "col": 8,
+            "offset": 0
+          },
+          "end": {
+            "line": 334,
+            "col": 12,
+            "offset": 4
+          }
+        }
+      ]
+    }
+  ],
+  "otherErrors": [],
+  "skippedRules": [],
+  "sourceManifest": "source-final-manifest.json",
+  "rulesManifest": "rules-manifest-v2.json",
+  "note": "Exit0 indicates scan execution, not zero findings; no --error flag"
+}

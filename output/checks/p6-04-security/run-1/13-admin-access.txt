@@ -1,0 +1,25 @@
+$ corepack pnpm --filter @fan-support/api test:browser:admin-access
+$ pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-access-browser-diagnostics.test.mjs ./scripts/admin-access-test-dns.test.mjs && node ./scripts/admin-access-http.mjs --ui
+• turbo 2.10.12
+
+   • Packages in scope: @fan-support/api, @fan-support/application, @fan-support/cache-purge-port, @fan-support/cart, @fan-support/catalog, @fan-support/config, @fan-support/content, @fan-support/contracts, @fan-support/design-tokens, @fan-support/domain, @fan-support/i18n, @fan-support/identity-oidc, @fan-support/identity-port, @fan-support/key-management-kms, @fan-support/key-management-port, @fan-support/media-image, @fan-support/media-port, @fan-support/media-s3, @fan-support/notification-port, @fan-support/observability, @fan-support/payment-fake, @fan-support/payment-gateway, @fan-support/payment-port, @fan-support/persistence-port, @fan-support/persistence-postgres, @fan-support/testing, @fan-support/ui
+   • Running build in 27 packages
+   • Remote caching disabled
+
+
+ Tasks:    27 successful, 27 total
+Cached:    27 cached, 27 total
+  Time:    22ms >>> FULL TURBO
+
+✔ classifies browser execution failures separately without requiring raw credentials (1.207041ms)
+✔ early clean-document snippets redact URLs and opaque values and stop after authentication begins (0.471333ms)
+✔ owned Next child resolves only the reserved Admin hostname through scoped callback and promise DNS APIs (25.952541ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59.551208
+ADMIN_ACCESS_PASS 859 checks; /Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z

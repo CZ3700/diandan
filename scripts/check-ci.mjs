@@ -130,7 +130,11 @@ const expectedWorkflow = {
         installStep,
         {
           name: "Audit dependencies",
-          run: "pnpm audit --registry=https://registry.npmjs.org --audit-level=high",
+          run: "pnpm security:dependencies",
+        },
+        {
+          name: "Check security regressions",
+          run: "pnpm security:regressions",
         },
         {
           name: "Scan repository for secrets",
@@ -233,6 +237,10 @@ async function validateWorkflowDirectory(errors) {
 function validateManifest(manifest, errors) {
   const requiredScripts = {
     "check:ci": "node ./scripts/check-ci.mjs",
+    "security:dependencies":
+      "node --test ./scripts/security-dependencies.test.mjs && corepack pnpm audit --registry=https://registry.npmjs.org --audit-level=high",
+    "security:regressions":
+      "corepack pnpm exec turbo run build --filter=@fan-support/observability... --output-logs=errors-only && node --test ./scripts/security-rate-limit.test.mjs ./apps/api/scripts/local-experience-services.test.mjs ./scripts/render-rum-dashboard.test.mjs",
     "security:secrets": "node ./scripts/scan-secrets.mjs",
   };
 

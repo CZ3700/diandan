@@ -1,0 +1,8 @@
+semgrep error: Invalid rule schema
+  --> None:1
+1 | a: b
+  | ^^^
+
+None is not of type 'array'
+
+[ERROR] invalid configuration file found (1 configs were invalid)

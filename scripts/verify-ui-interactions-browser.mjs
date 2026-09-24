@@ -65,7 +65,7 @@ const interactionTextRootSelectors = Object.freeze([
 ]);
 const expectedEvidenceVersions = Object.freeze({
   axe: "4.13.0",
-  next: "16.3.4",
+  next: "16.3.6",
   node: "v24.20.0",
   playwright: "1.62.1",
   pnpm: "11.25.0",

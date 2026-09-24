@@ -6,6 +6,74 @@ variable "alb" { type = object({ arn = string, dns_name = string, zone_id = stri
 variable "derivative_domain" { type = string }
 variable "waf_enforce" { type = bool }
 variable "rate_limit" { type = number }
+variable "rate_limit_window_seconds" { type = number }
+variable "operation_rate_limits" {
+  type = map(object({ limit = number, window_seconds = number }))
+}
+locals {
+  # Source-owned route scopes; one IP bucket per operation spans BFF/API and all IDs.
+  operation_rate_routes = jsondecode(<<-ROUTES
+{
+  "LOGIN": [
+    {
+      "method": "POST",
+      "path": "^/api/(admin/auth/(begin|logout)|v1/admin/access/(begin|callback|logout))/?$"
+    },
+    {
+      "method": "GET",
+      "path": "^/api/admin/auth/callback/?$"
+    }
+  ],
+  "ORDER_ACCESS": [
+    {
+      "method": "POST",
+      "path": "^/api/(storefront|v1)/(order-access/(exchange|revoke)|checkout/sessions/[^/]+/order-access)/?$"
+    },
+    {
+      "method": "GET",
+      "path": "^/api/(storefront|v1)/orders/[^/]+/?$"
+    }
+  ],
+  "CART": [
+    {
+      "method": "POST",
+      "path": "^/api/(storefront/cart(/items(/[^/]+/editor)?|/validate)?|v1/(carts|cart/(items(/[^/]+/editor)?|validate)))/?$"
+    },
+    {
+      "method": "GET",
+      "path": "^/api/(storefront|v1)/cart/?$"
+    },
+    {
+      "method": "PATCH",
+      "path": "^/api/(storefront|v1)/cart/items/[^/]+/?$"
+    },
+    {
+      "method": "DELETE",
+      "path": "^/api/(storefront|v1)/cart/items/[^/]+/?$"
+    }
+  ],
+  "PAYMENT_CREATE": [
+    {
+      "method": "POST",
+      "path": "^/api/(storefront|v1)/checkout/sessions(/[^/]+/attempts(/[^/]+/recover)?)?/?$"
+    }
+  ],
+  "REFUND": [
+    {
+      "method": "POST",
+      "path": "^/api/(admin/finance-refund|v1/admin/finance/refund)/?$"
+    }
+  ],
+  "WEBHOOK": [
+    {
+      "method": "POST",
+      "path": "^/api/v1/webhooks/payments/[^/]+/?$"
+    }
+  ]
+}
+ROUTES
+  )
+}
 resource "aws_acm_certificate" "this" {
   domain_name               = var.domains.storefront
   subject_alternative_names = concat([var.domains.admin, var.domains.origin, var.domains.media], var.aliases)
@@ -198,14 +266,123 @@ resource "aws_wafv2_web_acl" "this" {
     }
     statement {
       rate_based_statement {
-        aggregate_key_type = "IP"
-        limit              = var.rate_limit
+        aggregate_key_type    = "IP"
+        limit                 = var.rate_limit
+        evaluation_window_sec = var.rate_limit_window_seconds
       }
     }
     visibility_config {
       cloudwatch_metrics_enabled = true
       metric_name                = "${var.name}-rate"
       sampled_requests_enabled   = false
+    }
+  }
+  dynamic "rule" {
+    for_each = local.operation_rate_routes
+    content {
+      name     = "operation-${rule.key}"
+      priority = 10 + index(sort(keys(local.operation_rate_routes)), rule.key)
+      action {
+        dynamic "count" {
+          for_each = var.waf_enforce ? [] : [1]
+          content {}
+        }
+        dynamic "block" {
+          for_each = var.waf_enforce ? [1] : []
+          content {}
+        }
+      }
+      statement {
+        rate_based_statement {
+          aggregate_key_type    = "IP"
+          limit                 = var.operation_rate_limits[rule.key].limit
+          evaluation_window_sec = var.operation_rate_limits[rule.key].window_seconds
+          scope_down_statement {
+            dynamic "and_statement" {
+              for_each = length(rule.value) == 1 ? rule.value : []
+              content {
+
+                statement {
+                  byte_match_statement {
+                    field_to_match {
+                      method {}
+                    }
+                    positional_constraint = "EXACTLY"
+                    search_string         = and_statement.value.method
+                    text_transformation {
+                      priority = 0
+                      type     = "NONE"
+                    }
+                  }
+                }
+                statement {
+                  regex_match_statement {
+                    field_to_match {
+                      uri_path {}
+                    }
+                    regex_string = and_statement.value.path
+                    text_transformation {
+                      priority = 0
+                      type     = "URL_DECODE"
+                    }
+                    text_transformation {
+                      priority = 1
+                      type     = "NORMALIZE_PATH"
+                    }
+                  }
+                }
+
+              }
+            }
+            dynamic "or_statement" {
+              for_each = length(rule.value) > 1 ? [rule.value] : []
+              content {
+                dynamic "statement" {
+                  for_each = or_statement.value
+                  content {
+                    and_statement {
+                      statement {
+                        byte_match_statement {
+                          field_to_match {
+                            method {}
+                          }
+                          positional_constraint = "EXACTLY"
+                          search_string         = statement.value.method
+                          text_transformation {
+                            priority = 0
+                            type     = "NONE"
+                          }
+                        }
+                      }
+                      statement {
+                        regex_match_statement {
+                          field_to_match {
+                            uri_path {}
+                          }
+                          regex_string = statement.value.path
+                          text_transformation {
+                            priority = 0
+                            type     = "URL_DECODE"
+                          }
+                          text_transformation {
+                            priority = 1
+                            type     = "NORMALIZE_PATH"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      visibility_config {
+        cloudwatch_metrics_enabled = true
+        metric_name                = "${var.name}-${lower(rule.key)}"
+        sampled_requests_enabled   = false
+      }
     }
   }
 }
@@ -322,5 +499,21 @@ output "distribution_arn" { value = aws_cloudfront_distribution.application.arn 
 output "media_distribution_arn" { value = aws_cloudfront_distribution.media.arn }
 output "distribution_id" { value = aws_cloudfront_distribution.application.id }
 output "invariants" {
-  value = { private_origin = true, origin_protocol = aws_cloudfront_vpc_origin.this.vpc_origin_endpoint_config[0].origin_protocol_policy, dynamic_cache_ttl = aws_cloudfront_cache_policy.private.max_ttl, no_store = anytrue([for item in aws_cloudfront_response_headers_policy.private.custom_headers_config[0].items : item.header == "Cache-Control" && item.value == "private, no-store" && item.override]), oac_signing = aws_cloudfront_origin_access_control.media.signing_behavior, waf_enforce = var.waf_enforce, managed_count = sum([for rule in aws_wafv2_web_acl.this.rule : length(rule.override_action) > 0 ? length(rule.override_action[0].count) : 0]) > 0, rate_count = sum([for rule in aws_wafv2_web_acl.this.rule : length(rule.action) > 0 ? length(rule.action[0].count) : 0]) > 0, sampled_requests = aws_wafv2_web_acl.this.visibility_config[0].sampled_requests_enabled, error_cache_ttl = max([for error in aws_cloudfront_distribution.application.custom_error_response : error.error_caching_min_ttl]...) }
+  value = merge({ private_origin = true, origin_protocol = aws_cloudfront_vpc_origin.this.vpc_origin_endpoint_config[0].origin_protocol_policy, dynamic_cache_ttl = aws_cloudfront_cache_policy.private.max_ttl, no_store = anytrue([for item in aws_cloudfront_response_headers_policy.private.custom_headers_config[0].items : item.header == "Cache-Control" && item.value == "private, no-store" && item.override]), oac_signing = aws_cloudfront_origin_access_control.media.signing_behavior, waf_enforce = var.waf_enforce, managed_count = sum([for rule in aws_wafv2_web_acl.this.rule : length(rule.override_action) > 0 ? length(rule.override_action[0].count) : 0]) > 0, rate_count = sum([for rule in aws_wafv2_web_acl.this.rule : length(rule.action) > 0 ? length(rule.action[0].count) : 0]) > 0, sampled_requests = aws_wafv2_web_acl.this.visibility_config[0].sampled_requests_enabled, error_cache_ttl = max([for error in aws_cloudfront_distribution.application.custom_error_response : error.error_caching_min_ttl]...) }, {
+    global_rate_limit = one([for rule in aws_wafv2_web_acl.this.rule : {
+      limit              = rule.statement[0].rate_based_statement[0].limit
+      window_seconds     = rule.statement[0].rate_based_statement[0].evaluation_window_sec
+      aggregate_key_type = rule.statement[0].rate_based_statement[0].aggregate_key_type
+    } if rule.name == "rate-limit"])
+    operation_rates = { for rule in aws_wafv2_web_acl.this.rule : trimprefix(rule.name, "operation-") => {
+      limit              = rule.statement[0].rate_based_statement[0].limit
+      window_seconds     = rule.statement[0].rate_based_statement[0].evaluation_window_sec
+      aggregate_key_type = rule.statement[0].rate_based_statement[0].aggregate_key_type
+      count              = length(rule.action[0].count) == 1
+      block              = length(rule.action[0].block) == 1
+      sampled_requests   = rule.visibility_config[0].sampled_requests_enabled
+      scope              = rule.statement[0].rate_based_statement[0].scope_down_statement
+    } if startswith(rule.name, "operation-") }
+    operation_routes = local.operation_rate_routes
+  })
 }

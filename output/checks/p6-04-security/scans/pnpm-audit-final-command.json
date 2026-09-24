@@ -1,0 +1,17 @@
+{
+  "command": [
+    "corepack",
+    "pnpm",
+    "audit",
+    "--registry=https://registry.npmjs.org",
+    "--audit-level=high",
+    "--json"
+  ],
+  "startedAt": "2026-09-24T11:45:09.148931+00:00",
+  "finishedAt": "2026-09-24T11:45:10.120498+00:00",
+  "exitCode": 0,
+  "node": "v24.20.0",
+  "pnpm": "11.25.0",
+  "lockfileSha256": "14c778d003431078eb4c1053d49758bd8667d198e8f8fa0038d2ce307ec3cdf4",
+  "network": "standard package dependency metadata to official npm audit registry; no source/private configs uploaded"
+}

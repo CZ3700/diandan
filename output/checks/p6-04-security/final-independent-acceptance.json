@@ -1,0 +1,1344 @@
+{
+  "schemaVersion": 1,
+  "status": "ACCEPTED_LOCAL_SECURITY_SCOPE_WITH_RECORDED_RESIDUALS",
+  "checkedAt": "2026-09-24T12:28:43.157Z",
+  "reviewer": "security_auth_review",
+  "scope": "P6-04 bounded local security regression and source/evidence integrity; not full P6-01, phase completion, staging, remote CI or production release",
+  "productionReleaseAccepted": false,
+  "remoteCIAccepted": false,
+  "stagedSecretScan": {
+    "status": "INITIAL_OWNED_STAGE_PASS_FINAL_STAGE_PENDING_ROOT",
+    "evidence": "final-secret-precheck.json",
+    "sha256": "393dbd64bbd521ca961a26370568fb8f48fc22095a14b7c664edb6c35fd802b0",
+    "exitCode": 0,
+    "log": "final-secret-precheck.txt",
+    "logSha256": "c5de5c7294bce3c849ea5b4d2c4df1edc669c7858437ffd95fa7af48e078d2c1",
+    "scope": "Original secretlint rules after initial own-only staging; later final progress/evidence staging still requires closing check"
+  },
+  "source": {
+    "baseCommit": "e65c9ffde4e9651c7c3b6e86df6426db05fbf410",
+    "sourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+    "recomputedSourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+    "selectedFiles": 2921,
+    "executableFiles": 2834,
+    "rootMismatch": [],
+    "frozenMismatch": [],
+    "deltaFromRun1": [
+      "apps/api/scripts/rum-browser.mjs"
+    ]
+  },
+  "acceptedCommandMatrix": [
+    {
+      "label": "05-development-quality",
+      "status": "PASS",
+      "evidenceMode": "FRESH_RUN_2_INPUTS",
+      "report": "run-2/report.json",
+      "reportSha256": "9bc875d05100b9dd39cb6a362b56802ac607f9dc43979e33e18ce91cddd391c8",
+      "log": "run-2/05-development-quality.txt",
+      "logSha256": "a12c5bc4f33e239fff90c95eaf73fbd985c602f452d4ae9d0247683870246ef6",
+      "sourceManifest": "run-2/source.json",
+      "sourceManifestSha256": "d132d940e76de3844e46743a3b51dd8a0cbb702fec2548020082c7d1ea71b1b1",
+      "sourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+      "startedAt": "2026-09-24T12:06:45.623Z",
+      "completedAt": "2026-09-24T12:09:06.231Z",
+      "exitCode": 0
+    },
+    {
+      "label": "06-dependencies",
+      "status": "PASS",
+      "evidenceMode": "REUSED_UNCHANGED_INPUTS",
+      "report": "run-1/report.json",
+      "reportSha256": "ff556fb73eb0c89277e6aefde12707d6a539405a07df7663914aa7ef85dca315",
+      "log": "run-1/06-dependencies.txt",
+      "logSha256": "cd2e5cb4ee9e00e1d911901a5802a1337f6a07cd406a58063b1fb71f7bea96d2",
+      "sourceManifest": "run-1/source.json",
+      "sourceManifestSha256": "15e8ec202b237907f77ad39d43204a9939bb9fe3393ed241efb1eee519ea37fb",
+      "sourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+      "startedAt": "2026-09-24T11:47:03.341Z",
+      "completedAt": "2026-09-24T11:47:05.143Z",
+      "exitCode": 0
+    },
+    {
+      "label": "07-security-regressions",
+      "status": "PASS",
+      "evidenceMode": "REUSED_UNCHANGED_INPUTS",
+      "report": "run-1/report.json",
+      "reportSha256": "ff556fb73eb0c89277e6aefde12707d6a539405a07df7663914aa7ef85dca315",
+      "log": "run-1/07-security-regressions.txt",
+      "logSha256": "b96d11feb1b1f49fb0a8622b7b2586e481be1cd1476d86faa4e84482682dee49",
+      "sourceManifest": "run-1/source.json",
+      "sourceManifestSha256": "15e8ec202b237907f77ad39d43204a9939bb9fe3393ed241efb1eee519ea37fb",
+      "sourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+      "startedAt": "2026-09-24T11:47:05.144Z",
+      "completedAt": "2026-09-24T11:47:06.519Z",
+      "exitCode": 0
+    },
+    {
+      "label": "08-contracts",
+      "status": "PASS",
+      "evidenceMode": "REUSED_UNCHANGED_INPUTS",
+      "report": "run-1/report.json",
+      "reportSha256": "ff556fb73eb0c89277e6aefde12707d6a539405a07df7663914aa7ef85dca315",
+      "log": "run-1/08-contracts.txt",
+      "logSha256": "7a5cb029389f33e5eb0203024eb763ca97e9ce0445e9cf8d156e520cc579a8a7",
+      "sourceManifest": "run-1/source.json",
+      "sourceManifestSha256": "15e8ec202b237907f77ad39d43204a9939bb9fe3393ed241efb1eee519ea37fb",
+      "sourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+      "startedAt": "2026-09-24T11:47:06.520Z",
+      "completedAt": "2026-09-24T11:47:16.770Z",
+      "exitCode": 0
+    },
+    {
+      "label": "09-ci-policy",
+      "status": "PASS",
+      "evidenceMode": "REUSED_UNCHANGED_INPUTS",
+      "report": "run-1/report.json",
+      "reportSha256": "ff556fb73eb0c89277e6aefde12707d6a539405a07df7663914aa7ef85dca315",
+      "log": "run-1/09-ci-policy.txt",
+      "logSha256": "5f54aa4b78c25da00cb70acd769b5490a02cfe3048c714f23e4ab503ffab7f59",
+      "sourceManifest": "run-1/source.json",
+      "sourceManifestSha256": "15e8ec202b237907f77ad39d43204a9939bb9fe3393ed241efb1eee519ea37fb",
+      "sourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+      "startedAt": "2026-09-24T11:47:16.771Z",
+      "completedAt": "2026-09-24T11:47:16.841Z",
+      "exitCode": 0
+    },
+    {
+      "label": "10-performance-tools",
+      "status": "PASS",
+      "evidenceMode": "FRESH_RUN_2_INPUTS",
+      "report": "run2-performance-tools.json",
+      "reportSha256": "950d32d21949e69bfd565f8462ada3b31fce93bb487a7828286e90bc55073c19",
+      "log": "run2-performance-tools.txt",
+      "logSha256": "ae74da9a309fe52966f5a235e6aab991748e9960185b07ead99d0fc40e6dad85",
+      "sourceManifest": "run-2/source.json",
+      "sourceManifestSha256": "d132d940e76de3844e46743a3b51dd8a0cbb702fec2548020082c7d1ea71b1b1",
+      "sourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+      "startedAt": "2026-09-24T12:09:53.656Z",
+      "completedAt": "2026-09-24T12:09:54.048Z",
+      "exitCode": 0
+    },
+    {
+      "label": "11-infrastructure",
+      "status": "PASS",
+      "evidenceMode": "REUSED_UNCHANGED_INPUTS",
+      "report": "run-1/report.json",
+      "reportSha256": "ff556fb73eb0c89277e6aefde12707d6a539405a07df7663914aa7ef85dca315",
+      "log": "run-1/11-infrastructure.txt",
+      "logSha256": "11bce038842e13f6590452d93d1081543c54173c9b1760a82c808e0af866bdbb",
+      "sourceManifest": "run-1/source.json",
+      "sourceManifestSha256": "15e8ec202b237907f77ad39d43204a9939bb9fe3393ed241efb1eee519ea37fb",
+      "sourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+      "startedAt": "2026-09-24T11:47:17.885Z",
+      "completedAt": "2026-09-24T11:49:02.052Z",
+      "exitCode": 0
+    },
+    {
+      "label": "12-order-access",
+      "status": "PASS",
+      "evidenceMode": "REUSED_UNCHANGED_INPUTS",
+      "report": "run-1/report.json",
+      "reportSha256": "ff556fb73eb0c89277e6aefde12707d6a539405a07df7663914aa7ef85dca315",
+      "log": "run-1/12-order-access.txt",
+      "logSha256": "bbece8eee03b0c6b48c36f11d4d7ae01dc6c4695321793ecbcb8fdae79a3814f",
+      "sourceManifest": "run-1/source.json",
+      "sourceManifestSha256": "15e8ec202b237907f77ad39d43204a9939bb9fe3393ed241efb1eee519ea37fb",
+      "sourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+      "startedAt": "2026-09-24T11:49:02.053Z",
+      "completedAt": "2026-09-24T11:50:05.410Z",
+      "exitCode": 0
+    },
+    {
+      "label": "13-admin-access",
+      "status": "PASS",
+      "evidenceMode": "REUSED_UNCHANGED_INPUTS",
+      "report": "run-1/report.json",
+      "reportSha256": "ff556fb73eb0c89277e6aefde12707d6a539405a07df7663914aa7ef85dca315",
+      "log": "run-1/13-admin-access.txt",
+      "logSha256": "ad58b2083cbe0999d9980f0f10f19fb934f97dd09ec31d63687cd09f3790b824",
+      "sourceManifest": "run-1/source.json",
+      "sourceManifestSha256": "15e8ec202b237907f77ad39d43204a9939bb9fe3393ed241efb1eee519ea37fb",
+      "sourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+      "startedAt": "2026-09-24T11:50:05.411Z",
+      "completedAt": "2026-09-24T11:50:39.807Z",
+      "exitCode": 0
+    },
+    {
+      "label": "14-admin-finance",
+      "status": "PASS",
+      "evidenceMode": "REUSED_UNCHANGED_INPUTS",
+      "report": "run-1/report.json",
+      "reportSha256": "ff556fb73eb0c89277e6aefde12707d6a539405a07df7663914aa7ef85dca315",
+      "log": "run-1/14-admin-finance.txt",
+      "logSha256": "ac663f00244fc1cb4ec3130569a7cc81b9a55f0fecf7daa82c1195187914562a",
+      "sourceManifest": "run-1/source.json",
+      "sourceManifestSha256": "15e8ec202b237907f77ad39d43204a9939bb9fe3393ed241efb1eee519ea37fb",
+      "sourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+      "startedAt": "2026-09-24T11:50:39.808Z",
+      "completedAt": "2026-09-24T11:51:26.166Z",
+      "exitCode": 0
+    },
+    {
+      "label": "15-admin-exceptions",
+      "status": "PASS",
+      "evidenceMode": "REUSED_UNCHANGED_INPUTS",
+      "report": "run-1/report.json",
+      "reportSha256": "ff556fb73eb0c89277e6aefde12707d6a539405a07df7663914aa7ef85dca315",
+      "log": "run-1/15-admin-exceptions.txt",
+      "logSha256": "830208ab1f7efc76e357bb0000950352cc695e2f768b65ecee1690b30f61daf5",
+      "sourceManifest": "run-1/source.json",
+      "sourceManifestSha256": "15e8ec202b237907f77ad39d43204a9939bb9fe3393ed241efb1eee519ea37fb",
+      "sourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+      "startedAt": "2026-09-24T11:51:26.167Z",
+      "completedAt": "2026-09-24T11:54:02.863Z",
+      "exitCode": 0
+    },
+    {
+      "label": "16-rum-browser",
+      "status": "PASS",
+      "evidenceMode": "FRESH_RUN_2_INPUTS",
+      "report": "run-2/report.json",
+      "reportSha256": "9bc875d05100b9dd39cb6a362b56802ac607f9dc43979e33e18ce91cddd391c8",
+      "log": "run-2/16-rum-browser.txt",
+      "logSha256": "1dca80c42ed47184a9c48de6a6b2e8091de1d4b44f116159d17992136610abe0",
+      "sourceManifest": "run-2/source.json",
+      "sourceManifestSha256": "d132d940e76de3844e46743a3b51dd8a0cbb702fec2548020082c7d1ea71b1b1",
+      "sourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+      "startedAt": "2026-09-24T12:09:06.232Z",
+      "completedAt": "2026-09-24T12:15:37.569Z",
+      "exitCode": 0
+    },
+    {
+      "label": "17-seven-locale-journey",
+      "status": "PASS",
+      "evidenceMode": "FRESH_RUN_2_INPUTS",
+      "report": "run-2/report.json",
+      "reportSha256": "9bc875d05100b9dd39cb6a362b56802ac607f9dc43979e33e18ce91cddd391c8",
+      "log": "run-2/17-seven-locale-journey.txt",
+      "logSha256": "d7b9ec2947f99e19ac420c907da6fe94d1f5d666d0be274e5cc3b3d2cb37b635",
+      "sourceManifest": "run-2/source.json",
+      "sourceManifestSha256": "d132d940e76de3844e46743a3b51dd8a0cbb702fec2548020082c7d1ea71b1b1",
+      "sourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+      "startedAt": "2026-09-24T12:15:37.570Z",
+      "completedAt": "2026-09-24T12:20:35.587Z",
+      "exitCode": 0
+    },
+    {
+      "label": "18-artifact-boundaries",
+      "status": "PASS",
+      "evidenceMode": "FRESH_RUN_2_INPUTS",
+      "report": "run-2/report.json",
+      "reportSha256": "9bc875d05100b9dd39cb6a362b56802ac607f9dc43979e33e18ce91cddd391c8",
+      "log": "run-2/18-artifact-boundaries.txt",
+      "logSha256": "360ebfcae9aea3200bb9c177b8cbe7aad839b167bcbdceb6cdb98cc49e9c89b2",
+      "sourceManifest": "run-2/source.json",
+      "sourceManifestSha256": "d132d940e76de3844e46743a3b51dd8a0cbb702fec2548020082c7d1ea71b1b1",
+      "sourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+      "startedAt": "2026-09-24T12:20:35.588Z",
+      "completedAt": "2026-09-24T12:20:39.618Z",
+      "exitCode": 0
+    },
+    {
+      "label": "19-built-artifacts",
+      "status": "PASS",
+      "evidenceMode": "FRESH_RUN_2_INPUTS",
+      "report": "run-2/report.json",
+      "reportSha256": "9bc875d05100b9dd39cb6a362b56802ac607f9dc43979e33e18ce91cddd391c8",
+      "log": "run-2/19-built-artifacts.txt",
+      "logSha256": "3ea4930d8fccf6fbcd51b53d744119d247eef442e94ecaa858048c1597a26df7",
+      "sourceManifest": "run-2/source.json",
+      "sourceManifestSha256": "d132d940e76de3844e46743a3b51dd8a0cbb702fec2548020082c7d1ea71b1b1",
+      "sourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+      "startedAt": "2026-09-24T12:20:39.618Z",
+      "completedAt": "2026-09-24T12:20:40.147Z",
+      "exitCode": 0
+    }
+  ],
+  "rejectedReuse": {
+    "label": "10-performance-tools",
+    "reason": "The existing test imports changed rum-browser.mjs",
+    "replacement": "run2-performance-tools.json",
+    "replacementTests": 37
+  },
+  "preservedFailures": {
+    "run1": {
+      "status": "FAIL",
+      "failedCommand": "16-rum-browser",
+      "reason": "Original .notice strict-mode locator matched both notices",
+      "reportSha256": "ff556fb73eb0c89277e6aefde12707d6a539405a07df7663914aa7ef85dca315"
+    },
+    "run2": {
+      "status": "FAIL",
+      "failure": "Regression source changed during verification",
+      "reportSha256": "9bc875d05100b9dd39cb6a362b56802ac607f9dc43979e33e18ce91cddd391c8",
+      "allExecutedCommandsPassed": true,
+      "finalSourceGate": "source-restoration-check.json",
+      "independentFullSourceRecheckPassed": true,
+      "driftFiles": [
+        "apps/admin/next-env.d.ts",
+        "apps/storefront/next-env.d.ts"
+      ],
+      "explanation": "Normal user-instance dev startup regenerated only Next type import paths; exact frozen/HEAD bytes restored; original FAIL retained"
+    }
+  },
+  "archives": [
+    {
+      "run": "run-1",
+      "files": 62,
+      "mismatch": []
+    },
+    {
+      "run": "run-2",
+      "files": 108,
+      "mismatch": []
+    }
+  ],
+  "artifactProof": [
+    {
+      "path": "run-1/artifacts/checks/p5-08-local-deployment/iac/offline-results.json",
+      "sha256": "cea716065e15ccb0f7872756f6742d8f28d99bc36ee4bf2db939065507b8b5cc",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-08-local-deployment/iac/offline-results.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-06-exception-operations/integration-2026-09-24T11-51-28.563Z/postgres-environment.json",
+      "sha256": "4d9daeb48ababa7da313afcdd25345409c5168c5cd26ca321794f5dc7ed098ec",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-06-exception-operations/integration-2026-09-24T11-51-28.563Z/postgres-environment.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-06-exception-operations/integration-2026-09-24T11-51-28.563Z/protocol.json",
+      "sha256": "088f9941594757b90b150290791fc966fba20374ee56cbcc81716e08f5a4d2d2",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-06-exception-operations/integration-2026-09-24T11-51-28.563Z/protocol.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-06-exception-operations/integration-2026-09-24T11-51-28.563Z/run-result.json",
+      "sha256": "c3f8bfd0c341c391fb6f1d068219c55937937d3ecaba8446be7599f6b0b8c40b",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-06-exception-operations/integration-2026-09-24T11-51-28.563Z/run-result.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-06-exception-operations/integration-2026-09-24T11-51-28.563Z/scope.json",
+      "sha256": "71b6fbe785ebd4aedb28d16266af1808a8412292e6f2fb06690a2bd923bb1791",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-06-exception-operations/integration-2026-09-24T11-51-28.563Z/scope.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-06-exception-operations/integration-2026-09-24T11-51-28.563Z/storage-cases.json",
+      "sha256": "9ff224558ab36cc9324267cf5198d92631a65d9b41957d9644e3bb54b7f5adba",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-06-exception-operations/integration-2026-09-24T11-51-28.563Z/storage-cases.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-03-finance/integration-2026-09-24T11-50-43.972Z/postgres-environment.json",
+      "sha256": "4d9daeb48ababa7da313afcdd25345409c5168c5cd26ca321794f5dc7ed098ec",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-03-finance/integration-2026-09-24T11-50-43.972Z/postgres-environment.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-03-finance/integration-2026-09-24T11-50-43.972Z/protocol.json",
+      "sha256": "cde2773fe803b9d9e62d9e4b008460975d7e10bff7cae8da30c73df1c10dec95",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-03-finance/integration-2026-09-24T11-50-43.972Z/protocol.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-03-finance/integration-2026-09-24T11-50-43.972Z/run-result.json",
+      "sha256": "cc0dcbfc725920c35b245e1a8bbd7202aeb77b1a0a3d08ad250ae4a370ec6369",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-03-finance/integration-2026-09-24T11-50-43.972Z/run-result.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-03-finance/integration-2026-09-24T11-50-43.972Z/scope.json",
+      "sha256": "e0a8e4385783368d9a0f0b190303776a8ba36a58a8116bd41f50062db05719a7",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-03-finance/integration-2026-09-24T11-50-43.972Z/scope.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser.json",
+      "sha256": "a33d2709d7de4d1f2f3f19ee0c8d1551c8b945352a611af7094595597e5f2a70",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/cleanup.json",
+      "sha256": "ecbb786f74ce675427b2053a53ac133acb516e2fa29b215660bfa718641f80c2",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/cleanup.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/validation.json",
+      "sha256": "32cf465ea16bd5ae8fb2461ed6d7a300919e817f9440044af00391c66f918b53",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/validation.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-1440-login.png",
+      "sha256": "a6c20671d340c8b6b6c5c72a06beb78806ed29713b150a5e3bef25093c9b41de",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-1440-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-1440-workspace.png",
+      "sha256": "f7bb20c8bae4735a9c1d0ce128d5583f55026bd0d3e58cae64efd9e2b080555b",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-1440-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-login-disconnect.png",
+      "sha256": "6530bc7fd4a9533cb2a123aac47c7719d6acc36041b7397c87830ea0ae8d5561",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-login-disconnect.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-login-no-mfa.png",
+      "sha256": "6530bc7fd4a9533cb2a123aac47c7719d6acc36041b7397c87830ea0ae8d5561",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-login-no-mfa.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-login-wrong-signature.png",
+      "sha256": "6530bc7fd4a9533cb2a123aac47c7719d6acc36041b7397c87830ea0ae8d5561",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-login-wrong-signature.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-login.png",
+      "sha256": "2a51d9de64288fd05c1c49c45d15630f9b43113f5c8f91f5cbed3f0214fddbc3",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-logout-failed.png",
+      "sha256": "bf9cabd70047fa9f21c51da6830cd8849fbbbb62918f0303b854b72a8a4d6f02",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-logout-failed.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-session-revoked.png",
+      "sha256": "dc916c4b9086d1df0c6fa3bee0c34be0de9e38020dad7db09ffae36fba99f83a",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-session-revoked.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-session-unavailable.png",
+      "sha256": "b7fbe9b239e42ee3f86fee7ac50045904a6654280312c9949b5aeaa8f3437c93",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-session-unavailable.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-workspace.png",
+      "sha256": "732ab55be310e193c8545b47a8f2e69b3a839389097506b7f4ebe4be410a47ca",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/en-390-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/es-1440-login.png",
+      "sha256": "d486c96173fd669f8c304e6cfd1ab3747d0e4f7038601aed07e7a77cfb08e0a1",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/es-1440-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/es-1440-workspace.png",
+      "sha256": "369b27a2fa44f1ef79b777493b9813d42eb81420d90a73659c547fa037badfda",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/es-1440-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/es-390-login.png",
+      "sha256": "5469adc22975b790d9c2e7dd4097b3d99ebcd6cd3535198aec6b81027129d6c8",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/es-390-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/es-390-workspace.png",
+      "sha256": "a1715f1e394d3a352412111f4cf293329b208869c7094d443e8f99c15d536360",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/es-390-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/ja-1440-login.png",
+      "sha256": "f927df67d13653b81b7ee6b39bf1a16c4e3b2d5a65274362750f7051ffdbd806",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/ja-1440-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/ja-1440-workspace.png",
+      "sha256": "414e0ce3a383bd24b0a4a448aac7caaf8ce71bee432e9f41c9f56fc0df6767e0",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/ja-1440-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/ja-390-login.png",
+      "sha256": "73a0a7b8d564bfe4688d5a36346ba8d625dc32b61eb3a8c4c279a5451c8c09bb",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/ja-390-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/ja-390-workspace.png",
+      "sha256": "47d841ee50c98236cb0859a6fbe598eec3539722c47f5d067410c53e6b4d55dc",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/ja-390-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/pt-1440-login.png",
+      "sha256": "83a8b3430b2c719a01a08b8e593344be2413014d582ea2c914bb65f46cc736c2",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/pt-1440-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/pt-1440-workspace.png",
+      "sha256": "b6a7f77319c99217c95c6e333380d1c08fa145538a7565a5267a047cb1d154a5",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/pt-1440-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/pt-390-login.png",
+      "sha256": "1bc6e38e8251fab5d9239eeef510fd5ec33fb746fc1459736d622dfde6fe6ce4",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/pt-390-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/pt-390-workspace.png",
+      "sha256": "adaf654b0b283c6f2014f1e8a950bf58f5db555ea7a98b2c2e713e8eff5ca91e",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/pt-390-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/results.json",
+      "sha256": "a33d2709d7de4d1f2f3f19ee0c8d1551c8b945352a611af7094595597e5f2a70",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/results.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/th-1440-login.png",
+      "sha256": "70284f030ec8088df276186151530c196b058f93be8a271a7554622d7d8c9282",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/th-1440-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/th-1440-workspace.png",
+      "sha256": "3ea4abf686ae0e34d3d133c6299cd6d2dab181b906a7ed093308ae9921b131f1",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/th-1440-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/th-390-login.png",
+      "sha256": "2588f3b2e57b50bef79470810775038d46d1c9b55a7736f8d9b3346c4476d9d3",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/th-390-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/th-390-workspace.png",
+      "sha256": "3d8c46fc9c545691da6c2462be3d346f5f917660e5d91d5bd006164dd1ca3118",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/th-390-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/vi-1440-login.png",
+      "sha256": "699815eaa275dd353d77cc8e7bd32f72a5b7bed729351d954a2aa5dc09a6a5af",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/vi-1440-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/vi-1440-workspace.png",
+      "sha256": "03d89c0d300970d14bfdb651c909cf60b3f29d5a7493714445811d3bd48846f4",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/vi-1440-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/vi-390-login.png",
+      "sha256": "d8a63ac4647bfa9dea5d11a33e8541bb0901b3288cb52360ef893265a9f7b747",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/vi-390-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/vi-390-workspace.png",
+      "sha256": "a3e67d6fdf92311c6ee11669c01f97e365c8cacddd6c3691074a4805a4622458",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/vi-390-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/zh-CN-1440-login.png",
+      "sha256": "ae47c02e7517c0b91af72ef7155fd1663de28bd94bc646a1bbca6fff3ca714af",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/zh-CN-1440-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/zh-CN-1440-workspace.png",
+      "sha256": "e4ea5817754766d77777fa1e9ec884c537ad30bc5dbeacafdac3b6befdff5bd1",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/zh-CN-1440-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/zh-CN-390-login.png",
+      "sha256": "47168561fe11b9c9ff3e6bf1dd818a99557525392c712d653fc8077caee38636",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/zh-CN-390-login.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/zh-CN-390-workspace.png",
+      "sha256": "f618db769ea6c4e1037491d3564336338b3280a0693d85d13aea622df6f05729",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p5-01-admin-access/integration-2026-09-24T11-50-06.550Z/browser-access/zh-CN-390-workspace.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p4-05-order-access/run-2026-09-24T11-49-09.135Z/fixture-manifest.json",
+      "sha256": "8f57afd5b52a344afd7dc54b7f64344de0746f44ba08315d095a4dea76676a45",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p4-05-order-access/run-2026-09-24T11-49-09.135Z/fixture-manifest.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p4-05-order-access/run-2026-09-24T11-49-09.135Z/protocol-checkpoint.json",
+      "sha256": "1fe8da1c9b4febb91f110fe5d86e847a4ed5548e278a7800ca44793ccacd4df8",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p4-05-order-access/run-2026-09-24T11-49-09.135Z/protocol-checkpoint.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p4-05-order-access/run-2026-09-24T11-49-09.135Z/protocol-results.json",
+      "sha256": "8f8359f0e28e474e22daa02f776a728e910517862a799668f2746b5d48b9184e",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p4-05-order-access/run-2026-09-24T11-49-09.135Z/protocol-results.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p4-05-order-access/run-2026-09-24T11-49-09.135Z/run-result.json",
+      "sha256": "2daf20c61ca29939185db393a5cae4a231b4661b6dbd8a2058ebe75410b5b0e5",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p4-05-order-access/run-2026-09-24T11-49-09.135Z/run-result.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/concurrent-public-reads-1790250991599.json",
+      "sha256": "13308cb33e37a2ab5c1d110f4dfd84bb8ce0f7d8ed9f036fe1c8dfda61e07b97",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/concurrent-public-reads-1790250991599.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/fixture-manifest.json",
+      "sha256": "967241acae0a2eecd032f991b9cd6452e0ab9495231b5a5bef876b816601e184",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/fixture-manifest.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/protocol-results.json",
+      "sha256": "72e829e0ea47b37ff6fd34696847e8d6bce6fbb46f03be9a846d6545ad4149a3",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/protocol-results.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/failure.json",
+      "sha256": "3339c9e6c7574d9498eacaf05b3cbb311cf8847710ad6a5607c43808116e6897",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/failure.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/dashboard-390-all.png",
+      "sha256": "9442baff3a53c59856358cad9d7f7b50a53ef79c2f4cabc709b86f7ca1210608",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/dashboard-390-all.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/dashboard-390-desktop-filter.png",
+      "sha256": "8d2f357316496adec80cadbcd540fa6925265b1c21a89e798f10fff9754198c3",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/dashboard-390-desktop-filter.png"
+    },
+    {
+      "path": "run-1/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/dashboard-browser.json",
+      "sha256": "800c26e724be1c6e7fa594f9187e0f351de5d36625a2445c33628462ec55a78f",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/dashboard-browser.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/dashboard-expected.json",
+      "sha256": "cf69c6a8b893af79aa8ce302b70280fc461c7c7442bf90d1dfa4a47bff152c4e",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/dashboard-expected.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/results.json",
+      "sha256": "a2bb8853ac7dfa6f31e0077f72b910c6860b1520e1c4ac778023aa23a00f6906",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/results.json"
+    },
+    {
+      "path": "run-1/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/dashboard-cli/rum-report.json",
+      "sha256": "cf69c6a8b893af79aa8ce302b70280fc461c7c7442bf90d1dfa4a47bff152c4e",
+      "original": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T11-54-05-042Z/browser-attempt-1/rum/dashboard-cli/rum-report.json"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-1440-management.png",
+      "sha256": "dfa35fd38ad555b2abb0e51145574830b590781e4d23432adae996b3c680b53c",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-1440-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-1440-published-gift.png",
+      "sha256": "05aefaadd1b67cf07c3cde3769c8b6e234f297db483189db8e834003833a19e2",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-1440-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-1440-published-homepage.png",
+      "sha256": "346062fd9df5f7f8d114974930e9eecd4ba5091e3f289c6fd57db7f2266747d8",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-1440-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-390-management.png",
+      "sha256": "6ac895e0cb14144fea1120b9ce23f70c04949cd9800f4e21724c3a1f43b02812",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-390-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-390-published-gift.png",
+      "sha256": "a5c5727d32ce39fd073304db17d0c339340a3930222130956f0b59e393706d5d",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-390-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-390-published-homepage.png",
+      "sha256": "dfa54da62091da263cf2c8c5436a92b4ce114cd31a66f8903ac9e45afcabd86b",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/en-390-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-1440-management.png",
+      "sha256": "d045d3c31f5fe44255c7463ac6cde5a958c8fe9e91ac8509361729f46e482d1e",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-1440-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-1440-published-gift.png",
+      "sha256": "c4a9c8bd75cf324c19889ac93531b7045d77b77daaa18b81e3d0dbe79679ad92",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-1440-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-1440-published-homepage.png",
+      "sha256": "f3b1995f78006be8bb3d35e1f26cbe4f3fa1e94173c6bf8bb21c8701b884d79f",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-1440-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-390-management.png",
+      "sha256": "839fdf121be90edf2581d90baa8a46f8dddb6cd0604f59812203fd0d82af1733",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-390-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-390-published-gift.png",
+      "sha256": "0cdf0dd44a936961071eabd38ee2031a0c6ef1709564b8e5f29ceb912dbd3844",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-390-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-390-published-homepage.png",
+      "sha256": "56e428e728f4bdee5028ff216ab32668d9909709e3b24e123f8aa4886fb9e69f",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/es-390-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/facts.json",
+      "sha256": "f88cadc76f4b6a258a7cbd9e3b0a754aede462d2978b0018ec75e8feff301888",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/facts.json"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-1440-management.png",
+      "sha256": "3f666013e192bc1ddaf670b6ffd852a0fc3709429294db326251bef49fc459ca",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-1440-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-1440-published-gift.png",
+      "sha256": "ea96278c4aaa12bc7a41f78d06cd7f8e2c79f473ba0e8cec3ba53e3822ef52ca",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-1440-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-1440-published-homepage.png",
+      "sha256": "1c53ae95a71b4da30470e785058bd22877f189cd224ba26192360777ecb80bd4",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-1440-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-390-management.png",
+      "sha256": "fe42f129ef6ddc4681f03c789939d1cdbb17bb92f2766fc7754f58cb8c3af095",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-390-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-390-published-gift.png",
+      "sha256": "b531fac4168a6eaaa5b51030fd7337b1260289773fe6a839a0f117154663e4f0",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-390-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-390-published-homepage.png",
+      "sha256": "3b138808340bb3303e5389552ee7a0d822fc88e48af1590d4f7187ced7280ae5",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/ja-390-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-1440-management.png",
+      "sha256": "b7af8560912eb3be7e72eaab0723d73d4fc3c9a475b6ac0228c3be3b0a6dd699",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-1440-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-1440-published-gift.png",
+      "sha256": "e36af6becb9520d890f8b1df2b9cc4153fd54243a34d1b4197ca4d85e5c41bf0",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-1440-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-1440-published-homepage.png",
+      "sha256": "0aef099bdffe60f3ddae0366e6eb289d5bc0a3b7c883a27697c5dace14f9930f",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-1440-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-390-management.png",
+      "sha256": "d4e6ed3188bf70c7bc76a926f5e7c3586163a9951d2908150ae11b252a2470e2",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-390-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-390-published-gift.png",
+      "sha256": "2c80ee43ba6f0369a4db2d44cd0986d357f9b3573c4ec762ec97541614b51cf2",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-390-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-390-published-homepage.png",
+      "sha256": "8e53b441550176ea343a799f88c3abdd2341dda684e71195933f38504423b4f4",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/pt-390-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/report.json",
+      "sha256": "acaa87da9d88c8b68104dbd5a68c16b7659f6b94695f0aa81dcbd53d3b9149ce",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/report.json"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-1440-management.png",
+      "sha256": "5a263fc5def5d4fc53be1a285f1641cc64ddec762689caba110c523b5f2a308e",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-1440-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-1440-published-gift.png",
+      "sha256": "470e693627143356e80944b538ff7619710dabf5aae18fa586ff4cf8c923533a",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-1440-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-1440-published-homepage.png",
+      "sha256": "488f1091785ef9a916c21d488e8804ed51a631f3d0ba09d41cffdc8d013cec08",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-1440-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-390-management.png",
+      "sha256": "0966d039ba8b39a8be1976f8760de0beedcc101033d2dd56feb354b642bca5c8",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-390-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-390-published-gift.png",
+      "sha256": "025ebef25060f83eddc9973b8cd59a3f28f63c1c0f0fdd3e210f4e003e17b482",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-390-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-390-published-homepage.png",
+      "sha256": "97968569d00d27becfc3280637564ab4641bd7d7fde40e82174ed05dec4e3b42",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/th-390-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-1440-management.png",
+      "sha256": "3282904e108b093b78c8ec02f416b32d28733cb47984802a9d1d8c54dce364b0",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-1440-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-1440-published-gift.png",
+      "sha256": "1bde5a1e8191cef18c4cbbea7d276c5e4c76ae51a23685f32096826ff1ab8475",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-1440-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-1440-published-homepage.png",
+      "sha256": "ecf9a5fb78f926d8f979175ff9d0619088b965d5c286c9db3e74e51fac547195",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-1440-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-390-management.png",
+      "sha256": "aa3e93f2a4b0a127e1fb674180b74d3fc2f22f75a2ff15c519df9f57586bac51",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-390-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-390-published-gift.png",
+      "sha256": "fdfe6ae4e45818e5745e54762b1ddbab4a03d9b4316c61ab5f50baa18aec46d6",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-390-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-390-published-homepage.png",
+      "sha256": "459d22472267e620815a6852b96bf8bf5442320a7fb68a88e9453fd7de91e9a8",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/vi-390-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-1440-management.png",
+      "sha256": "7c8e693bf7d535a28f7f563e91a66b36b60f713879862d7c50c724d022609069",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-1440-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-1440-published-gift.png",
+      "sha256": "1f892f28647f4e6dceaa199f89df6a75681b221c7eb47929cad650506f8f3f0b",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-1440-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-1440-published-homepage.png",
+      "sha256": "d97f4afd2299479efe91d0376c6e42bd709b2221ad344e57ee52146c15fc5353",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-1440-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-390-management.png",
+      "sha256": "6c547499351d77262519e053ac484e71200e9148a8baf6af33ba47b0291d86f9",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-390-management.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-390-published-gift.png",
+      "sha256": "402cb0c8ef944a9863dc6fbeaeb05169d4925e2e314719c169affa6cfb59a28e",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-390-published-gift.png"
+    },
+    {
+      "path": "run-2/artifacts/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-390-published-homepage.png",
+      "sha256": "994b1a1f4abcef91296a9661bec9bc38af406298915cef021ef11ed6557ee506",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/playwright/p5-08-local-experience/test-regression-61e59f0c20bd4a13-1790252162643/zh-CN-390-published-homepage.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/1-build.txt",
+      "sha256": "95099c3639801f6a9cb8d91855daedde20939905248ad36f62ab46b729ea37bc",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/1-build.txt"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/2-start.txt",
+      "sha256": "39664da22749b70666599e65efd203cd5c31255f54df2c6dfc0375e9601ccd0d",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/2-start.txt"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/3-stop.txt",
+      "sha256": "8a2fa92fa23157ce223572e863fa86c666b892c13ff04dcccfc2d731afa49379",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/3-stop.txt"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/4-reset.txt",
+      "sha256": "2befba1c27d120441b26ac07deeac0e0b20af89e1bf7a785e34c52d348651f37",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/4-reset.txt"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/result.json",
+      "sha256": "4a0963f9a5c75fe10b9a58ea1ead832ab924c7e4b44a2b73fd508df1280a0b14",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/result.json"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/canceled-restored-cart.png",
+      "sha256": "115a11ffed8f680fc1413711b38330d4f8efcba866234cbaab87f0731e5b498d",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/canceled-restored-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-1440-cart.png",
+      "sha256": "7bcaff1011b4b3d6f01628b017bc0253683997024344d6fc5e7a501f9a1bf0be",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-1440-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-1440-checkout.png",
+      "sha256": "40dce4296d2ebf6c93b353e8f78f7db19b5dac75dc66736c06344af254cda40c",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-1440-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-1440-paid-order.png",
+      "sha256": "80392b9a0347f7a778f40d5a3db4a96406ae4a9d5f67318a64498b140179e1f4",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-1440-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-390-cart.png",
+      "sha256": "115a11ffed8f680fc1413711b38330d4f8efcba866234cbaab87f0731e5b498d",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-390-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-390-checkout.png",
+      "sha256": "3251328bfa60fa77ac0a4f1fd4c4a8a40639be962744e65f57b56c5c06a3095e",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-390-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-390-paid-order.png",
+      "sha256": "64bbc1f3e3cb9dceaa4cb932134f93309162afb96452d5913be1c686ad46d80b",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/en-390-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-1440-cart.png",
+      "sha256": "f7e6e903bc8481d33a3d3d7300b6562ca476e667037ad4477141d0af7cac42e7",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-1440-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-1440-checkout.png",
+      "sha256": "3b2f34037bd0caf9a7a32bce75465ec8929fe667c0772e4d4da546d0b063d906",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-1440-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-1440-paid-order.png",
+      "sha256": "c54c656e3d4c7b5cae4dbdad271bffe5ac8775f1b6b71d3932facb923195fc6a",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-1440-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-390-cart.png",
+      "sha256": "4c0b6803d9300a7df9800fb3dd098586ef57c2dc005ce5d22a9d2d0a65ed5b89",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-390-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-390-checkout.png",
+      "sha256": "8fe4879daf3ba8aff2c2495ec349e0d57f319b19484bf021c89360a6595558bd",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-390-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-390-paid-order.png",
+      "sha256": "4285aa8a4f076ab780972c1f15aaef424a0f8509b72954587bc343b993a4e367",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/es-390-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/failed-restored-cart.png",
+      "sha256": "115a11ffed8f680fc1413711b38330d4f8efcba866234cbaab87f0731e5b498d",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/failed-restored-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-1440-cart.png",
+      "sha256": "0c4ea671829823be750e27e01f6a18559e40f50abd6491488f3dd64790da8b5f",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-1440-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-1440-checkout.png",
+      "sha256": "ced895718cebd95d7142eb8d9179167b0a054b23553bcf2be538abf526aa3332",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-1440-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-1440-paid-order.png",
+      "sha256": "b046027762aa6b2f1247e3c9c78ade6871c280e3ccb0da82f74051dea09815b7",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-1440-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-390-cart.png",
+      "sha256": "36c6064c45c13b8a6120817c86e9e40017089d2016a8680a28bd80eca0a1062a",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-390-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-390-checkout.png",
+      "sha256": "4f6c314abc8e92ada5fc7daab81518de889eb672b7439c8e76276915d4432d83",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-390-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-390-paid-order.png",
+      "sha256": "d5725ec3757f81f16573c71a9429e82924ea69827e3b606d58cd9692c0b4bb0f",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/ja-390-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-1440-cart.png",
+      "sha256": "0682a7b441e02e8bb6dbf53d3302c2fa987da35653b5ed5de1aa31db04e726ca",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-1440-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-1440-checkout.png",
+      "sha256": "33302ab996538b0526cb98b161d9dc3cbd1ba42727f24fc950b38bc552d8311d",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-1440-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-1440-paid-order.png",
+      "sha256": "be0181e325e28ac19afb511d24742d02f2902f5da147c528f4852161038ed95f",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-1440-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-390-cart.png",
+      "sha256": "d1950cac8876dd93b4bdf183ed77309919bf62200b3a400990541e9b13c44f8b",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-390-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-390-checkout.png",
+      "sha256": "3258258cd0f86cfb197f44e10462d3134f12b82bf6509ffa1b7fcb3b9406470a",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-390-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-390-paid-order.png",
+      "sha256": "f7f95a5807bae95cbed09444aa58ee7b5017bde57368f0044e2bc947d0e98951",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/pt-390-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/report.json",
+      "sha256": "babc073c09f3d797108946db599e58825b0becf882ed07a2ca872a146d7d79b7",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/report.json"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-1440-cart.png",
+      "sha256": "3ef677db330e2662f1f64bb443568abd49825dab00f1a8e25504cff508853ca3",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-1440-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-1440-checkout.png",
+      "sha256": "7a10eeafbc80738a7037c3fce3e0cf901f7e8e4feb167dbb613fe41815da9ea2",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-1440-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-1440-paid-order.png",
+      "sha256": "ac5e523b7295d637e12e0dbfd236cca8982b91cc1d9c336f58884df776b6be9a",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-1440-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-390-cart.png",
+      "sha256": "d8f820b1e5e7ae677ec53d026780f5b7a692bd7d5cde8fa35b6c866b9c255caf",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-390-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-390-checkout.png",
+      "sha256": "7f43a129c9e5c1cc081e89602089a36b9718b02a1ddaa1caaf14822ed1499560",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-390-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-390-paid-order.png",
+      "sha256": "97cb8bbc9cc9e256a406fda0b742aba2693884c0e322ab756088766391d110cc",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/th-390-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-1440-cart.png",
+      "sha256": "00d4c78be2d8d93d544e6081b491e24b56b965a813927f7c7934069d70998503",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-1440-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-1440-checkout.png",
+      "sha256": "6978fa340393ac9cdac8cea7ebb5d8020448736afb32b0b7f03dfec904318dd5",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-1440-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-1440-paid-order.png",
+      "sha256": "b4c5592daddaca90ca05831842deec281d1bb5b4583e2f1eaa44153658dcb329",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-1440-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-390-cart.png",
+      "sha256": "77e00caa09f2bc93d851989576272d931bf412779563aa5aef739ab14ac1302c",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-390-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-390-checkout.png",
+      "sha256": "842db29139ecf2c80314beb7af73ad050d9cff23acb8f353eba3aa42cec44e43",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-390-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-390-paid-order.png",
+      "sha256": "dd20d9d190d28a997d9da5d5ef5cb3de371d2d5ea7a05aed274d8e35575d08e8",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/vi-390-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-1440-cart.png",
+      "sha256": "b7b6a94db270de36a711717003cc771567bf046df7077a9ded8de8b878ed4a42",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-1440-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-1440-checkout.png",
+      "sha256": "272f60b551c4a993dcac207854b6d63aee7da0aae07c0abb66619bfb69d373f8",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-1440-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-1440-paid-order.png",
+      "sha256": "d8c39b7554fa05c6cd38be99f5d8656cec86bb7dea96a715204f02eea687f8f8",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-1440-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-390-cart.png",
+      "sha256": "0c97098dbead54fbaf80e93881bc089cef62ed45b0c1fe818d7abcdc1e592d61",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-390-cart.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-390-checkout.png",
+      "sha256": "e762511ac1b600c4b22dbde4c4d43d4e52916d0d4030878fbb9bd7bdede24431",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-390-checkout.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-390-paid-order.png",
+      "sha256": "c436bb395f4fac12210091f56bd01fd148336eb080ab6b02716f48a3965e4ea7",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/zh-CN-390-paid-order.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/concurrent-public-reads-1790251898657.json",
+      "sha256": "d9cb2501e5203041f49844fc50780fc59c30396cf5f93732d9030c8d05c907b3",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/concurrent-public-reads-1790251898657.json"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/fixture-manifest.json",
+      "sha256": "69141c0da0c9cb7bd6d8f292fbbb229a10f9bf02e1df4bf7b96de67bf90c2ff1",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/fixture-manifest.json"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/protocol-results.json",
+      "sha256": "9422c3508b9bb2bbb7f269de334cb38d6a601ed06bc7e0fb95a8587b4ce19650",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/protocol-results.json"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/results.json",
+      "sha256": "1ea80e9db422357e26bf1b9e19506ce87e56ca44775a0dc9f579e8d40f3c971c",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/results.json"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-1440-all.png",
+      "sha256": "6a3de95a6a3efc9c8473892f9e924031c8cfc044e99765969615c6dc4fc10141",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-1440-all.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-1440-desktop-filter.png",
+      "sha256": "cf7cc0667876e2672d307a600c4b25d5e55f23489c33019358171e2d1dfbfe60",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-1440-desktop-filter.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-1440-empty-window.png",
+      "sha256": "b94dc941dd19383678771b4037ccec901445bf5a40287e622c51a9b9947c610d",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-1440-empty-window.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-390-all.png",
+      "sha256": "cf0737f07f1e40f32ef4137ccdef688ac4488e96c6173811187ac38f43c84845",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-390-all.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-390-desktop-filter.png",
+      "sha256": "f899eb6d38e6e841d42522a744f4be9f8cda5c482ae93c494dc4fe19c929fa0b",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-390-desktop-filter.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-390-empty-window.png",
+      "sha256": "bd8edc1464f206c03812c41ac8540a74de21602796c0693aa83a058e9453ea7a",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-390-empty-window.png"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-browser.json",
+      "sha256": "f5a877a0c8b73750e1f42e9958742726198237c8bc86055e750b9ab6d1e8b6ca",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-browser.json"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-expected.json",
+      "sha256": "e3d7f009675ab24f2f7ed3e84d2ba1094c44a6dc999831fd5ea591124ae2de9c",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-expected.json"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/results.json",
+      "sha256": "ab59442a8abdbd691bdfdd56e0adbc5a9b3bf42a35284ec16ebbef30fe8c94c1",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/results.json"
+    },
+    {
+      "path": "run-2/artifacts/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-cli/rum-report.json",
+      "sha256": "e3d7f009675ab24f2f7ed3e84d2ba1094c44a6dc999831fd5ea591124ae2de9c",
+      "original": "/Users/mario/Desktop/.fan-support-regression/90be5724-4da1-4f8f-baed-316a23351950/workspace/output/checks/p3-06-storefront-acceptance/run-2026-09-24T12-09-08-861Z/browser-attempt-1/rum/dashboard-cli/rum-report.json"
+    }
+  ],
+  "protection": {
+    "originalUntrackedFiles": 8457,
+    "mismatch": [],
+    "privateConfigSha256": "1bb3a5ec2d125d1e836e4ca336928e843a0d29cd3ddf31d71ca838e8ca8fd91e",
+    "privateConfigUnchanged": true,
+    "normalUserInstanceRestart": "user-instance-refresh.json",
+    "resetPerformed": false,
+    "limit": "No full business-database row-by-row comparison claimed"
+  },
+  "contracts": [
+    {
+      "file": "packages/contracts/generated/contracts.schema.json",
+      "section": "$defs",
+      "originalEntries": 707,
+      "removed": [],
+      "changed": [],
+      "added": [
+        "RumReportV2"
+      ]
+    },
+    {
+      "file": "packages/contracts/generated/openapi.json",
+      "section": "components.schemas",
+      "originalEntries": 207,
+      "removed": [],
+      "changed": [],
+      "added": []
+    },
+    {
+      "file": "packages/contracts/generated/openapi.json",
+      "section": "paths",
+      "originalEntries": 129,
+      "removed": [],
+      "changed": [],
+      "added": []
+    }
+  ],
+  "database": {
+    "checkedAt": "2026-09-24T12:19:20.481Z",
+    "base": "e65c9ffde4e9651c7c3b6e86df6426db05fbf410",
+    "sourceHash": "0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b",
+    "oldDatabaseFiles": 76,
+    "frozenDatabaseFiles": 76,
+    "added": [],
+    "removed": [],
+    "changed": [],
+    "scope": "No database/migration changes in frozen source compared with baseline"
+  },
+  "runtimeCyclesIntroduced": false,
+  "authorSeparation": {
+    "edgeAuthor": "security_auth_review",
+    "edgeIndependentReviewer": "security_scans",
+    "edgeIndependentEvidence": "scans/independent-iac-final-evidence.json",
+    "edgeInputs": 21,
+    "edgeMockRuns": 18,
+    "selfIndependentEdgeAcceptance": false,
+    "mailAuthor": "security_scans",
+    "mailIndependentReviewer": "security_auth_review",
+    "rootChangesIndependentReview": [
+      "security_auth_review",
+      "security_scans"
+    ]
+  },
+  "actualIntegration": {
+    "orderAccessAssertions": 6859,
+    "adminAccessAssertions": 859,
+    "financeAssertions": 6164,
+    "exceptionAssertions": 6161,
+    "countsNotSummed": true,
+    "rum": {
+      "source": "independent-run2-rum-review.json",
+      "positiveCells": 14,
+      "sensitiveExclusionCells": 14,
+      "metricResponses204": 42,
+      "dashboardFiltersPerViewport": 23,
+      "screenshots": 6,
+      "integrity": "CLEAN",
+      "assessment": "LOCAL_ONLY",
+      "physicalDeviceEvidence": false,
+      "fieldAcceptance": false,
+      "initialJavascriptGzipBytes": 156692,
+      "javascriptRecommendationBytes": 150000,
+      "javascriptRecommendationMet": false
+    },
+    "journey": {
+      "result": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/result.json",
+      "browserReport": "run-2/artifacts/checks/p6-01-regression/journey/test-regression-61e59f0c20bd4a13/browser/report.json",
+      "cells": 14,
+      "localeSwitches": 28,
+      "recoveries": 2,
+      "screenshots": 44,
+      "preDepartureSamePurchaseChecks": 14,
+      "evidenceChecks": 171,
+      "ownedInstance": "test-regression-61e59f0c20bd4a13",
+      "stopAndResetPassed": true,
+      "dataPreserved": false,
+      "visualInspections": [
+        "th-390-checkout.png",
+        "pt-1440-paid-order.png"
+      ]
+    }
+  },
+  "residuals": [
+    {
+      "severity": "Low",
+      "item": "Unified CSP/Permissions-Policy and nonce/hash baseline incomplete",
+      "gate": "Close before public staging/P7 with real Next/PSP regression"
+    },
+    {
+      "severity": "Low",
+      "item": "ECS task-definition deployment IAM minimum privileges require actual-account verification",
+      "gate": "Cloud deployment gate"
+    }
+  ],
+  "externalGates": [
+    "Formal IdP/MFA/KMS/IAM/mail and PSP sandbox/real-money checks remain",
+    "Actual CloudFront/WAF/private-origin enforcement, count-to-block tuning, shared NAT/PSP retries and propagation delay remain",
+    "Direct local TEST API requests bypass WAF and have no equivalent operation quota; no claim of fixing arbitrary direct ingress",
+    "Human locale/screen-reader review, physical devices and trusted real-user p75 remain",
+    "Full staging/remote CI and phase-wide release acceptance remain",
+    "Recheck upcoming Next security disclosure before deployment"
+  ],
+  "reviewToolFailure": {
+    "stage": "Redundant baseline schema re-read",
+    "code": "ENOBUFS",
+    "bufferMiB": 16,
+    "resolution": "Used prior completed independent deep comparison; contract files unchanged between frozen snapshots",
+    "productTestFailure": false
+  },
+  "evidenceReferences": [
+    {
+      "path": "auth-review.json",
+      "sha256": "ad68beb68a4c32684eee60e718bdeeddb53a39a54b4d1d3f5955e0419464422e"
+    },
+    {
+      "path": "content-review.json",
+      "sha256": "6807a81133aa0a42f0deec7f488b26989f8c20de5de383a1e7f6ead01aa65770"
+    },
+    {
+      "path": "final-source-review.json",
+      "sha256": "60fbd77739b5d36a79a56b4f6ca30b0157988957410cf74e12622b9fe72f3b80"
+    },
+    {
+      "path": "scans/independent-change-review.md",
+      "sha256": "abf645c5f590eefaabfce5267e43bfa748d5f7732eb97f70176f44e5b56a0566"
+    },
+    {
+      "path": "scans/independent-iac-final-evidence.json",
+      "sha256": "4917e3c029623f2da9a742b9f41ed4ac5e699bfd065d0b53b908cc43f46dda43"
+    },
+    {
+      "path": "scans/scan-final-report.md",
+      "sha256": "76b2298dddf5ecd6942772bbbb39a4b463f9847a1c7d6048a4720076bde5c160"
+    },
+    {
+      "path": "scans/semgrep-delta-run2-command.json",
+      "sha256": "888a00e37fd473bf8d74afca037d3b42e3bf87fe811c765fba63ac2302ac7f96"
+    },
+    {
+      "path": "scans/semgrep-delta-run2.json",
+      "sha256": "4f9544c8782878b060cc9a67e90511b74a06bbeff23aecc13b979f886589bb74"
+    },
+    {
+      "path": "independent-run2-input-review.json",
+      "sha256": "9bf6c104b9fa577dc9e21588b072d0f178995ba164c037fd06c695febeddf867"
+    },
+    {
+      "path": "independent-run2-rum-review.json",
+      "sha256": "f616b7dd30011d8f22102abd7927339aaaffd46cfab3d67b75e4f6a05284a21e"
+    },
+    {
+      "path": "independent-contract-preservation.json",
+      "sha256": "1a7e74911afae2df5f25590dd50702444ac7ea89628c8ce24db694efd3d7b06a"
+    },
+    {
+      "path": "independent-database-preservation.json",
+      "sha256": "5fdd540ee17454bf19501f559088d8f439d8128dbc46acb2be2f212db0dbc88c"
+    },
+    {
+      "path": "protection-final.json",
+      "sha256": "6e51f95ba6cd0b06697b2800f4188651a88a1f22a7b8a1aa373c9e5f4e227cce"
+    },
+    {
+      "path": "user-instance-refresh.json",
+      "sha256": "5c3f936ed0acdba8295962acd49803bac23d8c633862e03fbfafd1ce78a70c61"
+    },
+    {
+      "path": "run-2-source-drift.json",
+      "sha256": "39b01c203b6a757c26e5012b6d900f325b5bdd3a7c533ef5607988a46a0a3b0f"
+    },
+    {
+      "path": "source-restoration-check.json",
+      "sha256": "abb88fb16c9ebc45626bb019ac08a60a1589d2044d40ccbd8af0e5633ca4bc7b"
+    }
+  ],
+  "supplementedAt": "2026-09-24T12:29:26.242Z"
+}

@@ -1,0 +1,76 @@
+✔ local service transport refuses every destination outside its exact owned origins (2.70775ms)
+(node:84136) [DEP0182] DeprecationWarning: Using AES-GCM authentication tags of less than 128 bits without specifying the authTagLength option when initializing decryption is deprecated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ OIDC signing identity survives restart and existing invalid keys are never overwritten (14.18025ms)
+✔ mail capture is authenticated encryption and rejects another notification identity (102.185084ms)
+✖ mail capture rejects a truncated 4-byte authentication tag (0.343ms)
+✖ mail capture rejects a truncated 8-byte authentication tag (0.12325ms)
+✖ mail capture rejects a truncated 12-byte authentication tag (0.094875ms)
+✖ mail capture rejects a truncated 15-byte authentication tag (0.102209ms)
+✔ mail capture keeps its 16-byte tag format and rejects tampered authenticated fields (0.1615ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 4
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 158.100916
+
+✖ failing tests:
+
+test at apps/api/scripts/local-experience-services.test.mjs:86:3
+✖ mail capture rejects a truncated 4-byte authentication tag (0.343ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/local-experience-services.test.mjs:99:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at apps/api/scripts/local-experience-services.test.mjs:86:3
+✖ mail capture rejects a truncated 8-byte authentication tag (0.12325ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/local-experience-services.test.mjs:99:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at apps/api/scripts/local-experience-services.test.mjs:86:3
+✖ mail capture rejects a truncated 12-byte authentication tag (0.094875ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/local-experience-services.test.mjs:99:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at apps/api/scripts/local-experience-services.test.mjs:86:3
+✖ mail capture rejects a truncated 15-byte authentication tag (0.102209ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (file:///Users/mario/Desktop/%E4%B8%8B%E5%8D%95/apps/api/scripts/local-experience-services.test.mjs:99:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

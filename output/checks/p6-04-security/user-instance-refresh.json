@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-09-24T12:16:04.411Z",
+  "status": "PASS",
+  "instanceId": "713fc5bc-571a-431f-859b-4c99600bdbdd",
+  "beforeRunId": "a4fa1d81-bb78-4ec8-af7d-de3e66d3e518",
+  "action": "NORMAL_STOP_AND_START",
+  "resetPerformed": false,
+  "requests": [
+    {
+      "app": "storefront",
+      "method": "GET",
+      "pathname": "/zh-CN",
+      "statusCode": 200,
+      "certificateVerified": true
+    },
+    {
+      "app": "admin",
+      "method": "GET",
+      "pathname": "/zh-CN",
+      "statusCode": 200,
+      "certificateVerified": true
+    }
+  ],
+  "afterRunId": "f31faa6d-69fa-4542-88fe-e7c72373de7b",
+  "services": {
+    "api": true,
+    "worker": true,
+    "storefront": true,
+    "admin": true
+  },
+  "privateConfigSha256": "1bb3a5ec2d125d1e836e4ca336928e843a0d29cd3ddf31d71ca838e8ca8fd91e",
+  "nextVersions": {
+    "admin": "16.3.6",
+    "storefront": "16.3.6"
+  },
+  "completedAt": "2026-09-24T12:16:49.093Z"
+}

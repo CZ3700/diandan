@@ -1,0 +1,13 @@
+{
+  "scenario": "RUM_CONFLICT_POISONING",
+  "requestStatuses": [
+    204,
+    204,
+    204
+  ],
+  "admittedRecords": 3,
+  "legitimateRecordsIndependentlyUsable": 1,
+  "aggregateError": "Conflicting RUM measurement",
+  "networkAccess": false,
+  "inputData": "synthetic"
+}

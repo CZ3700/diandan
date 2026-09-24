@@ -1,8 +1,8 @@
 # Phase 6 — 质量、安全与韧性加固
 
-> 状态：ACTIVE（ADR-016，P6-01/02/03 本地已 ACCEPT；P6-04 有限本地 READY）
+> 状态：ACTIVE（ADR-016，P6-01/02/03/04 本地范围已 ACCEPT；P6-05 有限本地 READY）
 > 任务：6  
-> 正常解锁条件：Phase 5 退出门禁通过；按 ADR-016 逐项登记本地范围；P6-01/02/03 本地已验收但保留原外部门，现仅 P6-04 有限本地 READY；P6-05/06 仍 PENDING。
+> 正常解锁条件：Phase 5 退出门禁通过；按 ADR-016 逐项登记本地范围；P6-01/02/03/04 本地范围已验收但保留残余加固与原外部门，现仅 P6-05 有限本地 READY；P6-06 仍 PENDING。
 
 ## 目标
 
@@ -15,8 +15,8 @@
 | P6-01 | IN_PROGRESS | —（本地 ACCEPT，Lane D 已释放） | P4-06、P5-07 | 5组/17命令/14路径本地通过；实际远端 CI 待补 |
 | P6-02 | IN_PROGRESS | —（本地反馈修复 ACCEPT，Lane D 已释放） | P3-06、P4-06、P5-02 | 七语28单元/196核心页通过；真人读屏与人工语言原门保留 |
 | P6-03 | IN_PROGRESS | —（本地 ACCEPT，Lane D 已释放） | P3-06、P4-06 | 当前七语六视口及RUM接线完整接受；真实用户p75/真机/正式环境原门保留 |
-| P6-04 | READY | —（尚未领取） | P5-06 | ADR-016：仅明确范围的自有本地TEST安全检查；原High/Critical=0门未执行 |
-| P6-05 | PENDING | — | P1-06、P4-06、P5-06 | Fault injection |
+| P6-04 | IN_PROGRESS | —（有限本地 ACCEPT，Lane D 已释放） | P5-06 | 已确认问题修复与适用回归通过；CSP/Permissions及部署原门保留 |
+| P6-05 | READY | —（尚未领取） | P1-06、P4-06、P5-06 | 仅自有本地TEST故障注入；范围及验证计划见末尾登记 |
 | P6-06 | PENDING | — | P0-05、P1-04、P5-05、P5-08、P6-05 | Recovery/rollback drill |
 
 ## 必须证明
@@ -29,7 +29,7 @@
 
 ## Phase 退出证据
 
-P6-01 完整本地回归和 P6-02 本地自动验收已 ACCEPT，分别保留远端 CI、真人读屏/人工语言原门；P6-03 本地完整范围已 ACCEPT，保留真实用户、真机与正式环境原门而仍 IN_PROGRESS，Lane D 已释放，仅 P6-04 有限本地 READY、尚未领取。Phase 完整退出仍待全部原门。
+P6-01 完整本地回归和 P6-02 本地自动验收已 ACCEPT，分别保留远端 CI、真人读屏/人工语言原门；P6-03 本地完整范围已 ACCEPT，保留真实用户、真机与正式环境原门而仍 IN_PROGRESS，P6-04明确范围的本地安全检查也已ACCEPT，保留响应头加固及部署门而仍IN_PROGRESS；Lane D已释放，仅P6-05有限本地READY、尚未领取。Phase完整退出仍待全部原门。
 
 ## P6-01 本地激活与执行登记（2026-09-23）
 
@@ -164,3 +164,30 @@ P6-01 完整本地回归和 P6-02 本地自动验收已 ACCEPT，分别保留远
 范围：按原任务检查越权、XSS、CSRF、SSRF、重放、token、secret、依赖与PII，限定本仓库及自有本地TEST服务；保留High/Critical=0、实际扫描报告、修复回归、完整适用质量/集成与非作者复核要求，不能预先宣布不存在漏洞。正式身份/MFA、真实商户、真实邮件/内容、云staging与Release Gate不因此通过。
 
 Owner无、尚未领取，Lane D空闲；后续执行者先完整读取入口、登记开始时间/范围/验证再改代码。全局31 DONE/9 IN_PROGRESS/1 READY/8 PENDING=49。P6-05/06仍PENDING、Phase7仍LOCKED；不自动执行后继或批准部署。
+
+
+## P6-04 执行登记（2026-09-24）
+
+- Owner：Codex `/root`，Lane D 唯一 executor；开始 `2026-09-24T11:21:26.012Z`；基线 `e65c9ffde4e9651c7c3b6e86df6426db05fbf410`；分支 `codex/p6-04-security`。P5-06 原完整验收和交接已读，69项直接相关源逐SHA再次核对一致。
+- 范围：本仓库与独立自有TEST实例的权限/会话/token、XSS/CSRF/SSRF、支付重放、secret/依赖与PII安全检查；检查现有源码和真实入口，修复有复现证据的问题，补可重复安全检查与报告。不新增业务功能，保留简单管理中心、现有视觉、交易权威和旧合同兼容。
+- 验证：明确资产/攻击面与测试矩阵；非作者并行只读审查；缺陷先失败回归再最小修复；受影响单测、真实隔离PG/HTTP/必要浏览器、SAST/依赖/秘密扫描、format/lint/typecheck/build、非作者验收与S.U.P.E.R十项。High/Critical=0须在明确检查范围和报告证据下判断，不预先宣称不存在漏洞。
+- 保护与外部门：原未跟踪文件及私有配置只存SHA，见 `output/checks/p6-04-security/start.json`；不对用户持久实例做攻击/重置。实际生产身份、商户、邮件、云staging和Release Gate仍在原任务保留。本轮只本地提交、不push/云apply/真实资金。P6-05/06未激活，Phase7仍LOCKED；31 DONE/10 IN_PROGRESS/0 READY/8 PENDING=49。
+
+## P6-04 有限本地验收与交接（2026-09-24）
+
+- 最终执行源 `0d523ce1fd33903d1ca1a01c6cc47f8b91099229ab92d8cbd081798faa15313b`，2834执行/2921选定文件。四项修复：Next已公布影响版本移除；六类viewer-IP限流IaC；RUM冲突key隔离并DEGRADED；TEST邮件固定16B GCM tag。已确认High/Critical在本次明确范围内无剩余，原130 SAST候选与部分解析限制完整保留，不称应用无漏洞。
+- 原check:dev、依赖/CI/合同/边界/32exports通过；真实PG查单6859、登录含浏览器859、财务6164、异常恢复6161；OpenTofu18个mock场景通过。真实RUM七语双端14场景、42指标、46筛选/6PNG和敏感页排除通过；fresh购买14×10里程碑、28语言切换、2失败/取消恢复、独立邮件查单、171 evidenceChecks/44PNG通过，页面错误0。内容准备573断言只是POSTER准备范围，不代替全部后台UI验收。
+- 原run-1第16看板locator失败保留；新增提示使.notice匹配2元素，真实RED后收窄原文字定位并增强CLEAN检查。run-2所有执行命令通过，末尾源保护因原体验dev重启自动改写两个next-env.d.ts而FAIL；仅恢复已确认本轮自动生成差异，同验证器复验根/冻结2921输入一致。第10性能工具因消费修改脚本单独37/37补跑，不能按原run-2计划误列复用。最终是跨运行明确矩阵，不称任一原整轮全绿。
+- 固定Semgrep完整2535源+精确1文件差异、npm audit、原秘密扫描、非作者源码与整体证据复核/S.U.P.E.R适用10项通过；旧707定义/207组件/129路径及76数据库文件不变。8457原文件与私有配置未变，原持久实例正常stop/start、Next16.3.6、四服务ready、两站严格TLS GET200，未reset。新journey实例清理仅作用于自有TEST实例。
+- 本轮本地范围ACCEPT，P6-04仍IN_PROGRESS，释放Lane D。**未关闭：全站CSP/Permissions-Policy及nonce/hash策略的Low加固，必须在公开staging/Phase7前完成并验证Next/PSP兼容；云IAM与真实WAF阻断、正式身份/邮件/PSP与其他部署门继续保留。** Next后续安全通告部署前复核；当前RUM仅LOCAL_ONLY，JS SHOULD建议仍超，不签真实p75或真机门。
+- 逐命令、工具版本、原始失败、扫描限制、独立复核与后续运行入口见 `output/checks/p6-04-security/final-verification.md`、`docs/operations/security-checks.md`。只本地提交、不push/部署。
+
+## P6-05 有限本地激活与 READY（尚未领取）
+
+依据ADR-016，本轮本地验收及 `output/checks/p6-04-security/p6-05-readiness-final-run-2.md/json`，原直接依赖仍为P1-06/P4-06/P5-06。198次检查覆盖193个相关路径：P1 67、P4 62、P5 69，在既有已审值、根、run-2清单与实际副本间SHA/mode一致；旧合同兼容和当前Next/邮件改动由本轮适用完整验收承接。原历史完整验收与非作者证据见就绪报告，未重新运行远端CI。
+
+有限范围：只在独占、可销毁的自有LOCAL_TEST新实例，以合成数据验证PSP超时/提交后响应丢失、已验签事件重复乱序/commit-before-ACK、有限pg-boss积压/失败重试/DLQ与真实进程重启、邮件未知回执/短暂失败、对象存储和数据库短暂故障。记录固定seed、真实注入及解除时间、目标与非目标对照、持久before/after计数、退出状态和cleanup。证明无丢单/重复经济效果、UNKNOWN固定原账户/attempt/key可对账、backlog恢复；不删业务历史/幂等记录，不放宽生产预算制造恢复。
+
+验证计划：先覆盖矩阵和可失败对照；复用适用PG/HTTP/队列入口并只补缺口；缺陷RED→GREEN、受影响测试与原format/lint/typecheck/build、必要真实浏览器、秘密扫描、非作者验收/S.U.P.E.R。保护原持久体验，不reset；真实OS kill仅限所拥有PID，不以对象重建冒充。
+
+Owner无、Lane D空闲，执行者领取前先登记开始时间/范围。P6-05仅此范围READY；P6-06仍PENDING、Phase7仍LOCKED。P6-04响应头续验及各原商户/云/PITR/回退/RPO-RTO/灰度观察门不随之通过。全局31 DONE/10 IN_PROGRESS/1 READY/7 PENDING=49。

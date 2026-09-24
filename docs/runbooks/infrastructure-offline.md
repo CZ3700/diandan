@@ -41,6 +41,31 @@ node scripts/check-infrastructure.mjs --tofu /absolute/path/to/tofu
 
 ALB/CloudFront 原始访问日志和 WAF sampled request 均不启用，避免 query、Cookie、Authorization、token、完整邮箱或私密留言进入云日志。应用沿用现有结构化 allowlist；RDS 禁止 SQL statement/parameter error logging。CloudWatch 平台指标仍可用。应用 OTel exporter、pg-boss backlog/DLQ 自定义指标的 cloud composition 与触达仍须实际接通，不能把本模块的基础设施告警说成完整业务监控。
 
+## 敏感操作限流与发布验证
+
+Stack 必须显式提供全局 `rate_limit`、`rate_limit_window_seconds`，以及 `operation_rate_limits` 中恰好六个分类：`LOGIN`、`ORDER_ACCESS`、`CART`、`PAYMENT_CREATE`、`REFUND`、`WEBHOOK`。每类为 `{ limit, window_seconds }`；请求数必须为 10–2,000,000,000 的整数，窗口只能是 60/120/300/600 秒。没有商户默认阈值，离线 fixture 的数值只是合成测试输入，不能直接当成生产容量结论。`waf_enforce=false` 保留全局和六类规则的 count；经过实际流量、PSP 重试及回跳证据评审后才设为 true，统一切换为 block。
+
+所有规则以 CloudFront WAF 实际看到的来源 IP 聚合，不信任请求提供的 forwarded IP，不按 Cookie、订单 ID、attempt ID 或完整路径分桶。同一类中的 BFF 与 `/api/v1` 入口共享计数；全局规则继续覆盖其他流量。匹配路径使用 URL_DECODE、NORMALIZE_PATH 和首尾锚定表达式，允许末尾单个 `/`。下表的 `{id}` 表示单个非空路径段，不作为授权凭据。
+
+| 分类 | 方法 | 覆盖入口 |
+| --- | --- | --- |
+| LOGIN | POST | `/api/admin/auth/{begin,logout}`；`/api/v1/admin/access/{begin,callback,logout}` |
+| LOGIN | GET | `/api/admin/auth/callback` |
+| ORDER_ACCESS | POST | `/api/{storefront,v1}/order-access/{exchange,revoke}`；`/api/{storefront,v1}/checkout/sessions/{id}/order-access` |
+| ORDER_ACCESS | GET | `/api/{storefront,v1}/orders/{id}` |
+| CART | POST | `/api/storefront/cart`、`/api/v1/carts`；`/api/{storefront,v1}/cart/{items,validate}`；`/api/{storefront,v1}/cart/items/{id}/editor` |
+| CART | GET | `/api/{storefront,v1}/cart` |
+| CART | PATCH、DELETE | `/api/{storefront,v1}/cart/items/{id}` |
+| PAYMENT_CREATE | POST | `/api/{storefront,v1}/checkout/sessions`；其下 `/{id}/attempts`、`/{id}/attempts/{id}/recover` |
+| REFUND | POST | `/api/admin/finance-refund`、`/api/v1/admin/finance/refund` |
+| WEBHOOK | POST | `/api/v1/webhooks/payments/{id}` |
+
+运行 `mise exec node@24.20.0 -- node --test scripts/security-rate-limit.test.mjs scripts/check-infrastructure.test.mjs`，再运行上述固定 OpenTofu 离线入口。mock plan 检查六类规则、实际生成的 method/path scope、阈值、窗口、来源 IP 聚合、raw sample 关闭、两种 rollout 模式及非法输入拒绝；路径测试覆盖 BFF/API、不同对象 ID 和无关读取入口。它们不发送攻击流量，也不证明真实 AWS 阻断。
+
+真实 staging 门必须记录：公网无法绕过 CloudFront 直连 internal ALB/task；同一来源 IP 更换 Cookie/对象 ID/伪造 forwarded header 仍进入同类规则；BFF/API 两条路的计数、超阈值响应、恢复时间；共享 NAT 正常用户、登录 callback、PSP webhook 突发重试和浏览器回跳均能正常工作。用指标和合成请求证据，不启用原始请求采样，不存真实 Token/留言。先 count 观察，再评审阈值并验证 block 与回退；不能仅凭 `waf_enforce=true` 的 plan 放行生产。
+
+AWS WAF 是近似流量控制，不能保证精确第 N+1 次阻断；检测与传播有延迟，变更规则还会重置计数。参见 [官方评估窗口说明](https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-rate-based-high-level-settings.html)和[执行限制](https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-type-rate-based-caveats.html)。当前修复关闭批准的 CloudFront→private ALB 部署架构中的差异化配置缺口。独立直连本地 API 仍没有购物车/登录挑战的应用级配额；Admin 普通 production composition 尚未接入正式 IdP，此处规则为其发布门预置保护，不代表已完成生产身份或云限流验收。
+
 ## 密钥和运行时组合
 
 IaC 不创建 `secret_version`、随机密码或任何带明文 secret 的 data source。RDS 自管管理员密码，Terraform 只保存 secret ARN；应用角色不获管理员 secret 权限。DB role 和具有 `sslmode=verify-full`/受信 CA 的连接配置必须经受控流程建立为独立 Secrets Manager 对象。应用只接受完整 ARN references，通过 ECS execution role 在启动时注入；每 app 的 KMS/Secrets 权限单独列明。日后轮换注入 secret 需要受控 service rollout，不会因为 ARN 不变而自动更新运行中的环境变量。

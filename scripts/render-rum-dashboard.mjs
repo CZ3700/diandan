@@ -7,7 +7,8 @@ import { parseArgs } from "node:util";
 import {
   rumObservationSchema,
   rumReportSchema,
-  aggregateRum,
+  rumReportV2Schema,
+  aggregateRumV2,
   RUM_MAX_RECORDS,
 } from "../apps/storefront/scripts/rum-runtime.mjs";
 
@@ -57,7 +58,16 @@ export async function readRumLogs(files) {
 }
 
 export function renderRumDashboard(candidate) {
-  const report = rumReportSchema.parse(candidate);
+  const report =
+    candidate?.schemaVersion === 2
+      ? rumReportV2Schema.parse(candidate)
+      : rumReportSchema.parse(candidate);
+  const integrity =
+    report.schemaVersion === 2
+      ? report.integrity.status === "DEGRADED"
+        ? `DEGRADED — ${report.integrity.quarantinedMeasurementKeys} conflicting measurement keys and ${report.integrity.quarantinedRecords} records quarantined; ${report.integrity.acceptedRecords} records retained. Budget assessment is withheld for this entire window.`
+        : `CLEAN — no conflicting measurement keys; ${report.integrity.acceptedRecords} records retained. This status does not authenticate anonymous observations or establish release acceptance.`
+      : "LEGACY v1 — quarantine integrity was not reported.";
   const data = JSON.stringify(report)
     .replaceAll("<", "\\u003c")
     .replaceAll("&", "\\u0026");
@@ -65,6 +75,7 @@ export function renderRumDashboard(candidate) {
 body{font:16px/1.6 system-ui,sans-serif;margin:0;background:#111318;color:#f5f3ef}main{max-width:1200px;margin:auto;padding:40px 24px}h1{font-size:32px;margin:0 0 8px}p{color:#c3c7ce}label{display:inline-grid;gap:4px;margin:0 16px 20px 0}select{font:inherit;color:inherit;background:#242830;padding:8px;border:1px solid #717987;border-radius:4px}table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}td,th{text-align:left;padding:10px;border-bottom:1px solid #40444d}th{color:#d8b26e}.scroll{overflow:auto}.notice{padding:16px;border-left:3px solid #d8b26e}caption{text-align:left;padding:16px 0}
 </style><main><h1>Storefront performance observations</h1><p>Anonymous document metrics · LCP / INP / CLS</p><p id="window"></p><p class="notice">Local and automated observations verify instrumentation only. Browser automation is self-reported. A field label does not prove real users or release acceptance. INSUFFICIENT means more samples are required; missing INP is never filled with zero. Standard hard-document metrics retain the initial route; soft navigations are not measured separately. BFCache restores after a soft-route change are excluded.</p><div id="filters"></div><div class="scroll"><table><caption id="summary">No observations — INSUFFICIENT</caption><thead><tr><th>Source</th><th>Locale</th><th>Page</th><th>Viewport</th><th>Metric</th><th>Samples</th><th>p75</th><th>Budget &lt;</th><th>Assessment</th></tr></thead><tbody id="rows"></tbody></table></div></main><script type="application/json" id="data">${data}</script><script>
 const report=JSON.parse(document.getElementById('data').textContent);
+const integrity=document.createElement('p');integrity.id='integrity';integrity.className='notice';integrity.textContent=${JSON.stringify(integrity)};document.getElementById('window').after(integrity);
 document.getElementById('window').textContent=report.windowStart+' → '+report.windowEnd+' · receipt window · minimum '+report.minimumSamples+' samples per metric · nearest-rank p75';
 const baseGroups=new Map();
 for(const row of report.rows){const key=JSON.stringify([row.mode,row.context,row.samplePermille]);if(!baseGroups.has(key))baseGroups.set(key,[]);baseGroups.get(key).push(row);}
@@ -94,7 +105,7 @@ async function main() {
     throw new Error(
       "Provide --input --output --from --to and positive --minimum-samples",
     );
-  const report = aggregateRum(await readRumLogs(values.input), {
+  const report = aggregateRumV2(await readRumLogs(values.input), {
     windowStart: values.from,
     windowEnd: values.to,
     minimumSamples: Number(values["minimum-samples"]),
@@ -116,6 +127,7 @@ async function main() {
       schemaVersion: 1,
       uniqueMeasurements: report.uniqueMeasurements,
       groups: report.rows.length,
+      integrity: report.integrity.status,
       fieldAcceptance: false,
     }),
   );

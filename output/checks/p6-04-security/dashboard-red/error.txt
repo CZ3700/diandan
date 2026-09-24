@@ -1,0 +1,11 @@
+Error: expect(locator).toContainText(expected) failed
+
+Locator: locator('.notice')
+Expected substring: "missing INP is never filled with zero"
+Error: strict mode violation: locator('.notice') resolved to 2 elements:
+    1) <p id="integrity" class="notice">CLEAN — no conflicting measurement keys; 0 record…</p> aka getByText('CLEAN — no conflicting')
+    2) <p class="notice">Local and automated observations verify instrumen…</p> aka getByText('Local and automated')
+
+Call log:
+  - Expect "to.have.text" with timeout 5000ms
+  - waiting for locator('.notice')

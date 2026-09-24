@@ -1,0 +1,46 @@
+
+ RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
+
+ ❯ src/rum-report-v2.test.ts (2 tests | 2 failed) 4ms
+   × v2 reports expose only consistent quarantine counts while preserving the v1 decoder 3ms
+   × degraded reports cannot claim any row is within budget 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/rum-report-v2.test.ts > v2 reports expose only consistent quarantine counts while preserving the v1 decoder
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/rum-report-v2.test.ts:15:44
+     13| };
+     14| test("v2 reports expose only consistent quarantine counts while preser…
+     15|   expect("rumReportV2Schema" in contracts).toBe(true);
+       |                                            ^
+     16|   const schema = contracts.rumReportV2Schema;
+     17|   expect(schema.parse(clean)).toEqual(clean);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/rum-report-v2.test.ts > degraded reports cannot claim any row is within budget
+TypeError: Cannot read properties of undefined (reading 'parse')
+ ❯ src/rum-report-v2.test.ts:38:17
+     36|   const report = { ...clean, receivedRecords: 3, uniqueMeasurements: 1…
+     37|   const schema = contracts.rumReportV2Schema;
+     38|   expect(schema.parse(report)).toEqual(report);
+       |                 ^
+     39|   expect(schema.safeParse({ ...report, rows: [{ ...row, assessment: "W…
+     40|   expect(schema.safeParse({ ...clean, receivedRecords: 1, uniqueMeasur…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  18:32:16
+   Duration  133ms (transform 16ms, setup 0ms, import 40ms, tests 4ms, environment 0ms)
+

@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "scope": "P6-04 owned local security regression, not all P6-01 suites",
+  "status": "FAIL",
+  "startedAt": "2026-09-24T11:44:06.544Z",
+  "sourceHead": "e65c9ffde4e9651c7c3b6e86df6426db05fbf410",
+  "sourceHash": "e2e16adc03d98cf80b0b8f69ab3196f71dc0fe9300ce2ea1f115980f84c15523",
+  "workspace": "/Users/mario/Desktop/.fan-support-regression/95ced988-13ce-4bd3-9a69-0faeb0005371/workspace",
+  "commands": [
+    {
+      "label": "01-git-init",
+      "startedAt": "2026-09-24T11:44:07.257Z",
+      "completedAt": "2026-09-24T11:44:07.266Z",
+      "log": "01-git-init.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "02-git-index",
+      "startedAt": "2026-09-24T11:44:07.266Z",
+      "completedAt": "2026-09-24T11:44:08.609Z",
+      "log": "02-git-index.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "03-git-freeze",
+      "startedAt": "2026-09-24T11:44:08.610Z",
+      "completedAt": "2026-09-24T11:44:08.734Z",
+      "log": "03-git-freeze.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "04-frozen-install",
+      "startedAt": "2026-09-24T11:44:08.734Z",
+      "completedAt": "2026-09-24T11:44:12.366Z",
+      "log": "04-frozen-install.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "05-development-quality",
+      "startedAt": "2026-09-24T11:44:12.366Z",
+      "completedAt": "2026-09-24T11:47:03.340Z",
+      "log": "05-development-quality.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "06-dependencies",
+      "startedAt": "2026-09-24T11:47:03.341Z",
+      "completedAt": "2026-09-24T11:47:05.143Z",
+      "log": "06-dependencies.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "07-security-regressions",
+      "startedAt": "2026-09-24T11:47:05.144Z",
+      "completedAt": "2026-09-24T11:47:06.519Z",
+      "log": "07-security-regressions.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "08-contracts",
+      "startedAt": "2026-09-24T11:47:06.520Z",
+      "completedAt": "2026-09-24T11:47:16.770Z",
+      "log": "08-contracts.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "09-ci-policy",
+      "startedAt": "2026-09-24T11:47:16.771Z",
+      "completedAt": "2026-09-24T11:47:16.841Z",
+      "log": "09-ci-policy.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "10-performance-tools",
+      "startedAt": "2026-09-24T11:47:16.842Z",
+      "completedAt": "2026-09-24T11:47:17.884Z",
+      "log": "10-performance-tools.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "11-infrastructure",
+      "startedAt": "2026-09-24T11:47:17.885Z",
+      "completedAt": "2026-09-24T11:49:02.052Z",
+      "log": "11-infrastructure.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "12-order-access",
+      "startedAt": "2026-09-24T11:49:02.053Z",
+      "completedAt": "2026-09-24T11:50:05.410Z",
+      "log": "12-order-access.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "13-admin-access",
+      "startedAt": "2026-09-24T11:50:05.411Z",
+      "completedAt": "2026-09-24T11:50:39.807Z",
+      "log": "13-admin-access.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "14-admin-finance",
+      "startedAt": "2026-09-24T11:50:39.808Z",
+      "completedAt": "2026-09-24T11:51:26.166Z",
+      "log": "14-admin-finance.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "15-admin-exceptions",
+      "startedAt": "2026-09-24T11:51:26.167Z",
+      "completedAt": "2026-09-24T11:54:02.863Z",
+      "log": "15-admin-exceptions.txt",
+      "exitCode": 0,
+      "signal": null,
+      "launchFailed": false,
+      "status": "PASS"
+    },
+    {
+      "label": "16-rum-browser",
+      "startedAt": "2026-09-24T11:54:02.863Z",
+      "completedAt": "2026-09-24T12:00:29.053Z",
+      "log": "16-rum-browser.txt",
+      "exitCode": 1,
+      "signal": null,
+      "launchFailed": false,
+      "status": "FAIL"
+    }
+  ],
+  "failure": "A recorded verification command failed",
+  "archive": {
+    "schemaVersion": 1,
+    "files": 62
+  },
+  "completedAt": "2026-09-24T12:00:29.067Z"
+}

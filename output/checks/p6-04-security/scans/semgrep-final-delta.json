@@ -1,0 +1,16 @@
+{
+  "added": [
+    {
+      "rule": "Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp",
+      "path": "scripts/security-rate-limit.test.mjs",
+      "count": 1
+    }
+  ],
+  "removed": [
+    {
+      "rule": "Users.mario.Desktop..node_modules..cache.p6-04-security-tools.javascript.node-crypto.security.gcm-no-tag-length.gcm-no-tag-length",
+      "path": "apps/api/scripts/local-experience-services-mail-store.mjs",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "security_auth_review",
+  "reviewMode": "non-author read-only",
+  "status": "PASS_WITH_EXTERNAL_ACCEPTANCE_BOUNDARIES",
+  "sourceChangesByReviewer": false,
+  "excludedIndependentReview": [
+    "edge: authored by this reviewer; security_scans owns independent acceptance"
+  ],
+  "findings": [],
+  "requiredFixesConverged": true,
+  "newRuntimeCycles": false,
+  "existingBusinessSchemaChanged": false,
+  "additiveInternalSchema": "RumReportV2 schemaVersion 2; v1 unchanged",
+  "sourceSha256": {
+    "apps/api/scripts/local-experience-services-mail-store.mjs": "d9fb85fd5cff03749fab3c106e0b7cd00caf7b141a47e93a76efc704cb097d2a",
+    "apps/api/scripts/local-experience-services.test.mjs": "af713fa2fc0764b83da5ced1cef56cc2c9ac07c0e908382d9145921da6e43985",
+    "packages/contracts/src/rum.ts": "59ef9647ebafd7f20c87442889cfd87302115163be59ebbf679033e99d2b66a1",
+    "packages/contracts/src/rum-report-v2.ts": "cff553768679bbbddde43512ae71c2ff9fb16358fd8922d4d09894a15c98bb39",
+    "packages/contracts/src/rum-report-v2.test.ts": "06acc8d42836fc255395e3fbfe832ed3dc3223f4cff749183c447fde60562bcd",
+    "packages/contracts/src/artifact-registry.ts": "f2e01e09d3d6807e19a7187edde481cbf549cbb2d527f62a3df290c82e7a5564",
+    "packages/observability/src/rum.ts": "5ac5bdd563f8e4bad6da6516c51f7b871061c90a8ec9f21a1c3081a57cacd8b5",
+    "packages/observability/src/rum-v2.test.ts": "880ce59afba014acbd53f13a342ae98bf6ae9887396b3ab084d320fc5c7cd16f",
+    "apps/storefront/scripts/rum-runtime.mjs": "09e84d35e73fc3b6f2bf9035e2729238e92f627041e5c3e29cf409f344c39da1",
+    "apps/api/scripts/rum-browser.mjs": "c6af9c523940a5eea0d4c1ed624db73824a3e1c6e3455b38ed110738c1d5e626",
+    "scripts/render-rum-dashboard.mjs": "01d396b74cf72eb238f1d2f9cb5c5b1f1a2f8a38d257c7e595ac443bf1473c6b",
+    "scripts/render-rum-dashboard.test.mjs": "e226a1a5d0aefe2dabe8b444ef8c554f6fe92a511624fab63fd1f0199b874975",
+    "docs/operations/rum.md": "5ab03953a828147329851374f7cb8744ff11e10c00e2922940f771956e7f2701",
+    ".github/workflows/ci.yml": "b02c4d9215fe28b7db3716b3a0ab9e24103d13944617d4036b1af666ff1839e2",
+    "package.json": "f897c7e9bffe46095382f0454a3e346871e73325a4d76e21064fde6726a95193",
+    "scripts/check-ci.mjs": "c5e23f5717720cd29cf770c2af40f9918c26670019744a23b1d35f3375814d64",
+    "scripts/security-dependencies.test.mjs": "81d85c4e83a268a54414dfc04f0fd4d09f56ddffa58ee31056737ab3e6b32963",
+    "apps/admin/package.json": "06a79cb9c37188d585533e7aa67489aeb74274e2a0524bec8d5b08ae258e3394",
+    "apps/storefront/package.json": "7df6c616c19015eed4b2a31f97daf7a4dd6bffcabacee6ccfb3490522a692270",
+    "pnpm-lock.yaml": "14c778d003431078eb4c1053d49758bd8667d198e8f8fa0038d2ce307ec3cdf4"
+  },
+  "tests": [
+    {
+      "name": "mail/local services",
+      "command": "mise exec node@24.20.0 -- node --test apps/api/scripts/local-experience-services.test.mjs",
+      "passed": 8,
+      "failed": 0,
+      "evidence": "final-review-mail.log.txt"
+    },
+    {
+      "name": "dependency guard + RUM CLI",
+      "command": "mise exec node@24.20.0 -- node --test scripts/security-dependencies.test.mjs scripts/render-rum-dashboard.test.mjs",
+      "passed": 6,
+      "failed": 0,
+      "evidence": "final-review-node.log.txt"
+    },
+    {
+      "name": "CI contract",
+      "command": "mise exec node@24.20.0 -- node scripts/check-ci.mjs",
+      "status": "PASS",
+      "evidence": "final-review-ci.log.txt"
+    },
+    {
+      "name": "rum contracts",
+      "passed": 3,
+      "failed": 0,
+      "evidence": "final-review-rum-contracts.json"
+    },
+    {
+      "name": "rum observability",
+      "passed": 15,
+      "failed": 0,
+      "evidence": "final-review-rum-observability.json"
+    }
+  ],
+  "totalTests": 32,
+  "root19StepAcceptanceReviewed": false,
+  "productionEvidence": false,
+  "officialDependencySource": "https://github.com/vercel/next.js/security/advisories/GHSA-vcvr-r3jv-pc5j"
+}

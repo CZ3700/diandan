@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-09-24T11:29:41.075305+00:00",
+  "currentLockedVersion": "16.3.4",
+  "lockedPackages": [
+    "apps/admin/package.json",
+    "apps/storefront/package.json"
+  ],
+  "officialAdvisory": {
+    "id": "GHSA-vcvr-r3jv-pc5j",
+    "severity": "CRITICAL",
+    "cvss": "9.5",
+    "affectedRange": ">=16.2.0 <16.3.6",
+    "fixedVersion": "16.3.6",
+    "url": "https://github.com/vercel/next.js/security/advisories/GHSA-vcvr-r3jv-pc5j",
+    "condition": "Attacker-controlled SVG content, attributes, or styles passed to Node.js ImageResponse from next/og"
+  },
+  "currentSourceEvidence": {
+    "searchedFileCount": 2530,
+    "pattern": "ImageResponse|next/og|satori",
+    "hits": [],
+    "metadataReference": "apps/storefront/src/storefront/seo-metadata.ts:54-66,75-96",
+    "metadataBehavior": "Open Graph and Twitter metadata reference existing published media URL; do not generate images"
+  },
+  "assessment": "Locked dependency version affected; no matching application source call site found. No exploit reproduced; do not infer unreachable from package audit alone. Patch advised.",
+  "registryCoverageGap": "pnpm audit at 2026-09-24T11:24:05Z returned zero all severities despite official affected-version notice.",
+  "futureAdvisory": {
+    "url": "https://nextjs.org/blog/upcoming-nextjs-security-release-september-2026",
+    "published": "2026-09-23",
+    "plannedRelease": "2026-09-30",
+    "plannedVersions": [
+      "16.3.7",
+      "15.5.27"
+    ],
+    "announcedSeverityCounts": {
+      "critical": 1,
+      "high": 2,
+      "medium": 5,
+      "low": 1
+    },
+    "assessment": "Not yet published: affected version ranges and application reachability cannot be assessed; release-date recheck required before deployment."
+  }
+}

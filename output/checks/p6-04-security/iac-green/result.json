@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "scope": "offline-infrastructure",
+  "cloudEvidence": false,
+  "commands": [
+    {
+      "args": [
+        "version",
+        "-json"
+      ],
+      "workingDirectory": "toolchain",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "fmt",
+        "-check",
+        "-recursive",
+        "-no-color"
+      ],
+      "workingDirectory": "toolchain",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "fmt",
+        "-check",
+        "-recursive",
+        "-no-color"
+      ],
+      "workingDirectory": "bootstrap",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "init",
+        "-backend=false",
+        "-input=false",
+        "-lockfile=readonly",
+        "-no-color"
+      ],
+      "workingDirectory": "bootstrap",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "validate",
+        "-no-color"
+      ],
+      "workingDirectory": "bootstrap",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "test",
+        "-filter=tests/offline.tftest.json",
+        "-no-color"
+      ],
+      "workingDirectory": "bootstrap",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "fmt",
+        "-check",
+        "-recursive",
+        "-no-color"
+      ],
+      "workingDirectory": "registry",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "init",
+        "-backend=false",
+        "-input=false",
+        "-lockfile=readonly",
+        "-no-color"
+      ],
+      "workingDirectory": "registry",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "validate",
+        "-no-color"
+      ],
+      "workingDirectory": "registry",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "test",
+        "-filter=tests/offline.tftest.json",
+        "-no-color"
+      ],
+      "workingDirectory": "registry",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "fmt",
+        "-check",
+        "-recursive",
+        "-no-color"
+      ],
+      "workingDirectory": "stack",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "init",
+        "-backend=false",
+        "-input=false",
+        "-lockfile=readonly",
+        "-no-color"
+      ],
+      "workingDirectory": "stack",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "validate",
+        "-no-color"
+      ],
+      "workingDirectory": "stack",
+      "exitCode": 0
+    },
+    {
+      "args": [
+        "test",
+        "-filter=tests/offline.tftest.json",
+        "-no-color"
+      ],
+      "workingDirectory": "stack",
+      "exitCode": 0
+    }
+  ],
+  "inputSha256": {
+    "bootstrap/.terraform.lock.hcl": "7576380b719748af089262066847a1e6c5faa35791398a4bf228b39eccab8a12",
+    "bootstrap/main.tf": "72df1e325715dd93bb14c2c1801eaae1d289df5080d7edc035895f144886f060",
+    "bootstrap/tests/offline.tftest.json": "2991a804d5fcaa55f8de3efa14f0a206c4c7f1e859a20120843804a33ca3ad8d",
+    "deployment-manifest.example.json": "131623ee339fb9c74de08710598a34f481986d13672b1d6fa9f2ce3255f33973",
+    "deployment-manifest.schema.json": "cd736aba2a86558132a0dc5045c89c1b9f30a6b089551007074be098327554f0",
+    "modules/compute/main.tf": "b5b4290521dd93fdbc7b3ba0eab3dcb9f4370a0ac6cf6e015b4ac65a2fef78e9",
+    "modules/data/main.tf": "673131461bc8a006fea40d872eeac933e3829ba9ba46cc3f4db8d0f0278388f9",
+    "modules/edge/main.tf": "5933df2c11d9f422a8287ff4dce14df7abfe25eddaa87daeb4f4a9f9a3b78977",
+    "modules/media/main.tf": "80d58459d42cbf8ee475b47956371bc46a79e7bc019774978c7532c2bff65cb3",
+    "modules/network/main.tf": "2f60603bf73231b37cd14309a2e67106db02ea3deb0461c35df12d5c698b135c",
+    "modules/operations/main.tf": "861190cc32a012b1fa09e04d82632821eb3f7042385071d7fcef2e303ec94e55",
+    "registry/.terraform.lock.hcl": "7576380b719748af089262066847a1e6c5faa35791398a4bf228b39eccab8a12",
+    "registry/main.tf": "ab8fe758bf51a79fc97972ddb46d935a830337120bc575253f81e210bad8f3f0",
+    "registry/tests/offline.tftest.json": "58e87cf01ffc4e36d5a9d8fc30c56bee20c15d22f171646bafcf30b6923349bc",
+    "stack/.terraform.lock.hcl": "7576380b719748af089262066847a1e6c5faa35791398a4bf228b39eccab8a12",
+    "stack/main.tf": "cdccfcad5498769ebc0d7e93d431b5b1f7ce1aeddfd40f8182cfade542401918",
+    "stack/outputs.tf": "f874f02aea921ed82e626d9e21ca0ad7720a5be5e66d6408d665b98d4aac506d",
+    "stack/tests/offline.tftest.json": "3fd13d67bd01a6c2517d87f9e5e0b6bdfa8c2fd18133bbb99733d39a69e20c08",
+    "stack/variables.tf": "48596910f2565c7e14e40b30a6089ac1d52833a1e54a0c8889c30378c7452c34",
+    "stack/versions.tf": "1a3c3e56a5512c25247e0bf2fd79261ef285a179f70eed7248d03195a81d35fc",
+    "toolchain.json": "70c6378682353244c8bdf68bb3af61d4488aafc4fcdf012e40e52d4473996465"
+  },
+  "status": "PASS"
+}

@@ -1,0 +1,95 @@
+{
+  "at": "2026-09-24T11:43:16.444003+00:00",
+  "head": "e65c9ffde4e9651c7c3b6e86df6426db05fbf410",
+  "scope": "read-only parent changes, excluding reviewer-authored TEST mail change; IaC pending author freeze",
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "b02c4d9215fe28b7db3716b3a0ab9e24103d13944617d4036b1af666ff1839e2"
+    },
+    {
+      "path": "package.json",
+      "sha256": "f897c7e9bffe46095382f0454a3e346871e73325a4d76e21064fde6726a95193"
+    },
+    {
+      "path": "apps/admin/package.json",
+      "sha256": "06a79cb9c37188d585533e7aa67489aeb74274e2a0524bec8d5b08ae258e3394"
+    },
+    {
+      "path": "apps/storefront/package.json",
+      "sha256": "7df6c616c19015eed4b2a31f97daf7a4dd6bffcabacee6ccfb3490522a692270"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "14c778d003431078eb4c1053d49758bd8667d198e8f8fa0038d2ce307ec3cdf4"
+    },
+    {
+      "path": "scripts/security-dependencies.test.mjs",
+      "sha256": "81d85c4e83a268a54414dfc04f0fd4d09f56ddffa58ee31056737ab3e6b32963"
+    },
+    {
+      "path": "scripts/check-ci.mjs",
+      "sha256": "c5e23f5717720cd29cf770c2af40f9918c26670019744a23b1d35f3375814d64"
+    },
+    {
+      "path": "packages/contracts/src/rum.ts",
+      "sha256": "59ef9647ebafd7f20c87442889cfd87302115163be59ebbf679033e99d2b66a1"
+    },
+    {
+      "path": "packages/contracts/src/rum-report-v2.ts",
+      "sha256": "cff553768679bbbddde43512ae71c2ff9fb16358fd8922d4d09894a15c98bb39"
+    },
+    {
+      "path": "packages/contracts/src/rum-report-v2.test.ts",
+      "sha256": "06acc8d42836fc255395e3fbfe832ed3dc3223f4cff749183c447fde60562bcd"
+    },
+    {
+      "path": "packages/contracts/src/artifact-registry.ts",
+      "sha256": "f2e01e09d3d6807e19a7187edde481cbf549cbb2d527f62a3df290c82e7a5564"
+    },
+    {
+      "path": "packages/contracts/generated/contracts.schema.json",
+      "sha256": "6490b84bdfec8ca19658011ae8197603185b1ef4b95416ded146b04e9df59812"
+    },
+    {
+      "path": "packages/observability/src/rum.ts",
+      "sha256": "5ac5bdd563f8e4bad6da6516c51f7b871061c90a8ec9f21a1c3081a57cacd8b5"
+    },
+    {
+      "path": "packages/observability/src/rum-v2.test.ts",
+      "sha256": "880ce59afba014acbd53f13a342ae98bf6ae9887396b3ab084d320fc5c7cd16f"
+    },
+    {
+      "path": "apps/api/scripts/rum-browser.mjs",
+      "sha256": "c6af9c523940a5eea0d4c1ed624db73824a3e1c6e3455b38ed110738c1d5e626"
+    },
+    {
+      "path": "apps/storefront/scripts/rum-runtime.mjs",
+      "sha256": "09e84d35e73fc3b6f2bf9035e2729238e92f627041e5c3e29cf409f344c39da1"
+    },
+    {
+      "path": "scripts/render-rum-dashboard.mjs",
+      "sha256": "01d396b74cf72eb238f1d2f9cb5c5b1f1a2f8a38d257c7e595ac443bf1473c6b"
+    },
+    {
+      "path": "scripts/render-rum-dashboard.test.mjs",
+      "sha256": "e226a1a5d0aefe2dabe8b444ef8c554f6fe92a511624fab63fd1f0199b874975"
+    },
+    {
+      "path": "scripts/verify-ui-interactions-browser.mjs",
+      "sha256": "5661384249eee8b38a5047b78a05e459af0d059d74c77297201e885807e73b64"
+    },
+    {
+      "path": "scripts/verify-ui-interactions-browser.test.mjs",
+      "sha256": "b3414f62d08810b60f3ad9a5e7981b619c90c3b8213c85ee7cc8083437de9e9d"
+    },
+    {
+      "path": "docs/operations/security-checks.md",
+      "sha256": "46d2927763d3d06d1c2f296f83e0c66ae819cd5b3a641743af910eed86995e71"
+    },
+    {
+      "path": "docs/operations/rum.md",
+      "sha256": "5ab03953a828147329851374f7cb8744ff11e10c00e2922940f771956e7f2701"
+    }
+  ]
+}
