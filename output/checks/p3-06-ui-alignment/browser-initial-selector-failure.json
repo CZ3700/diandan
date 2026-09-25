@@ -1,8 +1,0 @@
-{
-  "status": "FAIL",
-  "checks": 0,
-  "cases": [],
-  "axe": [],
-  "pageErrors": [],
-  "failure": "locator.waitFor: Error: strict mode violation: locator('h1') resolved to 2 elements:\n    1) <h1>Loading…</h1> aka getByRole('heading', { name: 'Loading…' })\n    2) <h1 lang=\"en\" id=\"hero-title\">Local artist 1700ae32</h1> aka locator('#hero-title')\n\nCall log:\n\u001b[2m  - waiting for locator('h1') to be visible\u001b[22m\n"
-}

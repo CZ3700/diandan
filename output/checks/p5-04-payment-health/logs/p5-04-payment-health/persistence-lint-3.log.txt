@@ -1,9 +1,0 @@
-
-/Users/mario/Desktop/下单/packages/persistence-postgres/scripts/payment-health-postgres.mjs
-  692:16  error  'setTimeout' is not defined    no-undef
-  701:7   error  'clearTimeout' is not defined  no-undef
-
-/Users/mario/Desktop/下单/packages/persistence-postgres/src/payment-health-client.ts
-  32:7  error  'timer' is never reassigned. Use 'const' instead  prefer-const
-
-✖ 3 problems (3 errors, 0 warnings)

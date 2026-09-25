@@ -1,9 +1,0 @@
-$ vitest run --config ../../vitest.config.ts --root . src/payment-transaction-canonical.test.ts src/admin-finance-migration.test.ts
-
- RUN  v4.1.11 /Users/mario/Desktop/下单/packages/persistence-postgres
-
-
- Test Files  2 passed (2)
-      Tests  7 passed (7)
-   Start at  03:01:26
-   Duration  509ms (transform 330ms, setup 0ms, import 461ms, tests 6ms, environment 0ms)

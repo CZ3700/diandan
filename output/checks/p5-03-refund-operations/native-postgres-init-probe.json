@@ -1,5 +1,0 @@
-{
-  "exitCode": 1,
-  "stdout": "",
-  "stderr": "dyld[3472]: Symbol not found: _libintl_bind_textdomain_codeset\n  Referenced from: <24E4052E-E669-3870-AC66-0E44CC122595> /Users/mario/Desktop/\u4e0b\u5355/output/checks/p5-03-refund-operations/native-runtime/dist/postgresql@18/18.6/bin/postgres\n  Expected in:     <no uuid> unknown\nno data was returned by command \"\"/Users/mario/Desktop/\u4e0b\u5355/output/checks/p5-03-refund-operations/native-runtime/dist/postgresql@18/18.6/bin/postgres\" -V\"\nchild process was terminated by signal 6: Abort trap: 6\ninitdb: error: program \"postgres\" is needed by initdb but was not found in the same directory as \"/Users/mario/Desktop/\u4e0b\u5355/output/checks/p5-03-refund-operations/native-runtime/dist/postgresql@18/18.6/bin/initdb\"\n"
-}

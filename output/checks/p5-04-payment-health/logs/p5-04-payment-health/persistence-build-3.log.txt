@@ -1,5 +1,0 @@
-$ tsc -p tsconfig.build.json
-src/payment-health-repository.ts(200,13): error TS2304: Cannot find name 'policy'.
-/Users/mario/Desktop/下单/packages/persistence-postgres:
-[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/persistence-postgres@0.0.0 build: `tsc -p tsconfig.build.json`
-Exit status 1

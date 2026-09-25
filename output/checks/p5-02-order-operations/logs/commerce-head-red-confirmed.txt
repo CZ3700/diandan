@@ -1,6 +1,0 @@
-{"probe":"verifyCartRuntimeRollbackProtection","code":"ERR_ASSERTION","actual":"0032","expected":"0029"}
-{"probe":"verifyCartEditRollbackProtection","code":"ERR_ASSERTION","actual":"0032","expected":"0029"}
-{"probe":"verifyCheckoutPreflightRollbackProtection","code":"ERR_ASSERTION","actual":"0032","expected":"0029"}
-{"probe":"verifyPaymentRuntimeRollbackProtection","code":"ERR_ASSERTION","actual":"0032","expected":"0029"}
-{"probe":"verifyOrderPaymentRollbackProtection","code":"ERR_ASSERTION","actual":"0032","expected":"0029"}
-RED_CONFIRMED: five original proofs reject actual empty current head 0032 before any downgrade

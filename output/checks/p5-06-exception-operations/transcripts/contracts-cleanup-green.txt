@@ -1,9 +1,0 @@
-$ vitest run --config ../../vitest.config.ts --root . --maxWorkers=2 src/admin-exceptions.test.ts src/admin-exceptions-persistence.test.ts src/admin-exceptions-openapi.test.ts
-
- RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
-
-
- Test Files  3 passed (3)
-      Tests  7 passed (7)
-   Start at  14:36:08
-   Duration  879ms (transform 347ms, setup 0ms, import 603ms, tests 425ms, environment 0ms)

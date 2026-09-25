@@ -1,6 +1,0 @@
-$ tsc -p tsconfig.build.json
-src/storefront/gift-directory-page-entry.test.tsx(177,30): error TS2339: Property 'pageInfo' does not exist on type '{ schemaVersion: 1; outcome: "SUCCESS"; catalogVersion: string; items: { schemaVersion: 1; gift: { schemaVersion: 1; id: string & $brand<"GiftId">; handle: string & $brand<"Slug">; ... 16 more ...; safetyNotice?: string | undefined; }; offer: { ...; }; }[]; pageInfo: { ...; }; } | { ...; }'.
-  Property 'pageInfo' does not exist on type '{ schemaVersion: 1; outcome: "FAILURE"; code: "CATALOG_UNAVAILABLE" | "INVALID_QUERY" | "INVALID_CURSOR" | "CATALOG_CHANGED" | "ANCHOR_NOT_FOUND"; }'.
-/Users/mario/Desktop/下单/apps/storefront:
-[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @fan-support/storefront@0.0.0 typecheck: `tsc -p tsconfig.build.json`
-Exit status 2

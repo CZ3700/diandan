@@ -1,9 +1,0 @@
-$ vitest run --config ../../vitest.config.ts --root . src/management-payments/api.test.ts src/management-payments/pending-store.test.ts src/management-payments/model.test.ts src/server/admin-payment-configuration-operations.test.ts
-
- RUN  v4.1.11 /Users/mario/Desktop/下单/apps/admin
-
-
- Test Files  4 passed (4)
-      Tests  5 passed (5)
-   Start at  12:35:47
-   Duration  453ms (transform 744ms, setup 0ms, import 1.09s, tests 19ms, environment 0ms)

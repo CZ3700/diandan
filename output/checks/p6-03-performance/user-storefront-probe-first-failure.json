@@ -1,8 +1,0 @@
-{
-  "status": "TOOL_SETUP_FAILURE_RETAINED",
-  "exitCode": 1,
-  "completion": "39bd6a",
-  "errorCode": "ECONNRESET",
-  "cause": "The initial ad hoc GET probe erroneously destroyed its own request before attaching an error listener and did not load the configured CA. It is not evidence of a storefront failure. Replaced with a complete awaited CA-verified GET above.",
-  "writeActions": 0
-}

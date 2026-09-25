@@ -1,9 +1,0 @@
-$ vitest run --config ../../vitest.config.ts --root . src/payment-runtime-composition.test.ts src/payment-runtime-lifecycle.test.ts src/payment-runtime-bootstrap.test.ts src/payment-runtime-route.test.ts
-
- RUN  v4.1.11 /Users/mario/Desktop/下单/apps/api
-
-
- Test Files  4 passed (4)
-      Tests  20 passed (20)
-   Start at  01:03:51
-   Duration  1.84s (transform 2.83s, setup 0ms, import 4.87s, tests 145ms, environment 0ms)

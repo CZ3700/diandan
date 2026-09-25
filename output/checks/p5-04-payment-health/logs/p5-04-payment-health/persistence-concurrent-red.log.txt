@@ -1,2 +1,0 @@
-{"outcome":"FAIL","stage":"same-transaction-concurrency","message":"parallel calls inside one transaction serialize accounting without lost observations\n\n2 !== 3\n","code":"ERR_ASSERTION","checks":70}
-{"outcome":"FAIL","stage":"same-transaction-concurrency","name":"EphemeralPostgresError","message":"ephemeral PostgreSQL operation failed","checks":70}

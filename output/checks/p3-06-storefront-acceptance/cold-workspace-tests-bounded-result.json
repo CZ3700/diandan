@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 1,
-  "command": "mise exec node@24.20.0 -- corepack pnpm exec turbo run test --force --concurrency=2 --output-logs=errors-only",
-  "startedAt": "2026-09-07T11:50:11.554134+00:00",
-  "finishedAt": "2026-09-07T11:52:47.547382+00:00",
-  "exitCode": 0,
-  "scope": "All workspace test tasks forced; workspace concurrency bounded to two, original test deadlines and assertions unchanged."
-}

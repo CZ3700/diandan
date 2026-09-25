@@ -1,9 +1,0 @@
-$ vitest run --config ../../vitest.config.ts --root . --maxWorkers=2 src/payment-rollout.test.ts
-
- RUN  v4.1.11 /Users/mario/Desktop/下单/packages/contracts
-
-
- Test Files  1 passed (1)
-      Tests  2 passed (2)
-   Start at  01:15:47
-   Duration  388ms (transform 224ms, setup 0ms, import 327ms, tests 4ms, environment 0ms)
