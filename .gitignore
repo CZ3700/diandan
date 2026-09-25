@@ -27,3 +27,15 @@ blob-report/
 .DS_Store
 .idea/
 .vscode/
+__MACOSX/
+
+# Evidence and generated artifacts stay out of git (2026-09-26 slim-down;
+# already-tracked files under these paths remain tracked until migrated).
+output/
+packages/contracts/generated/
+
+# Credential files must never enter the repository.
+*.pem
+*.key
+*.p12
+*.pfx
