@@ -1,5 +1,7 @@
 # Progress Master
 
+> **2026-09-26 起按 V2 上线方案推进**：当前进度见 [v2-progress.md](v2-progress.md)，方案见 [2026-09-26-v2-launch-plan.md](../plan/2026-09-26-v2-launch-plan.md)，规范变更见 SPEC §0.2。本文件以下内容为 V2 之前的 49 项 Phase/Task 体系记录，保留作历史与验收参考，不再作为新工作的领取门禁。
+
 > 最后更新：2026-09-24（Asia/Bangkok）
 > 当前里程碑：完整本地 TEST 体验已交付，进入 Phase 6 质量加固；M3/M4 未完外部验收保留（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-016，逐项本地研发）；Phase 6 有限 ACTIVE（P6-01/02/03/04 本地范围 ACCEPT、P6-05 READY）；Phase 7 仍 LOCKED
