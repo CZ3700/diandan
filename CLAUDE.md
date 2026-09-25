@@ -18,3 +18,7 @@
 
 - 项目锁定 Node 24.20.0，本机使用便携版：运行项目命令前执行 `source /c/Users/admin/.tools/xiadan-env.sh`（把 Node 24.20.0 与 corepack 的 pnpm shim 放到 PATH 最前）。
 - 日常门禁：`corepack pnpm check:dev`。完整 `pnpm check` 依赖 PostgreSQL 18 与 S3 模拟，本机尚未具备，由 CI 承担。
+
+## 阶段交接
+
+交接文档写到 `docs/handoff/YYYY-MM-DD-<主题>.md`，纳入 git 跟踪并推送（用户 2026-09-26 确认）。新会话从最新的交接文档冷启动。
