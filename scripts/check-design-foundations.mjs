@@ -104,6 +104,11 @@ const MOTION_TIMING_PROPERTIES =
   /^(?:animation|animation-delay|animation-duration|transition|transition-delay|transition-duration)$/u;
 const BASE_MOTION_TOKEN = /var\((--motion-(?:control|fast|hero|layout))\)/u;
 
+/** Workspace-relative path with `/` separators, matching the POSIX literals used by every rule. */
+function workspaceRelativePath(workspaceRoot, absolutePath) {
+  return path.relative(workspaceRoot, absolutePath).split(path.sep).join("/");
+}
+
 async function readText(workspaceRoot, relativePath, errors) {
   try {
     return await readFile(path.join(workspaceRoot, relativePath), "utf8");
@@ -895,7 +900,7 @@ async function validateStorefrontFontRoutes(
     ...(await walkConsumerSourceFiles(storefrontSourceRoot)),
   ];
   for (const absolutePath of importCandidates) {
-    const relativePath = path.relative(workspaceRoot, absolutePath);
+    const relativePath = workspaceRelativePath(workspaceRoot, absolutePath);
     if (
       relativePath.startsWith(`${publicRouteRoot}/`) &&
       relativePath.endsWith("/page.tsx")
@@ -1065,13 +1070,13 @@ async function validateFontPackage(
     );
   }
 
-  const packageDirectory = path.join(
+  const packageDirectory = path.posix.join(
     "packages/design-tokens/node_modules",
     packageName,
   );
   const packageManifest = await readJson(
     workspaceRoot,
-    path.join(packageDirectory, "package.json"),
+    path.posix.join(packageDirectory, "package.json"),
     errors,
   );
   if (
@@ -1089,7 +1094,7 @@ async function validateFontPackage(
     );
   }
 
-  const licensePath = path.join(packageDirectory, "LICENSE");
+  const licensePath = path.posix.join(packageDirectory, "LICENSE");
   const license = await readText(workspaceRoot, licensePath, errors);
   if (
     license !== undefined &&
@@ -1119,7 +1124,7 @@ async function validateFontPackage(
     }
   }
 
-  const dependencyCssPath = path.join(packageDirectory, "wght.css");
+  const dependencyCssPath = path.posix.join(packageDirectory, "wght.css");
   const dependencyCss = await readText(
     workspaceRoot,
     dependencyCssPath,
@@ -1576,7 +1581,7 @@ function validateConsumerSourceText(relativePath, source, errors) {
 async function validateConsumerCss(workspaceRoot, contract, errors) {
   const allowedBreakpoints = new Set(contract?.breakpoints?.values() ?? []);
   for (const absolutePath of await consumerCssFiles(workspaceRoot)) {
-    const relativePath = path.relative(workspaceRoot, absolutePath);
+    const relativePath = workspaceRelativePath(workspaceRoot, absolutePath);
     const css = await readFile(absolutePath, "utf8");
     validateConsumerCssText(relativePath, css, allowedBreakpoints, errors);
   }
@@ -1584,7 +1589,7 @@ async function validateConsumerCss(workspaceRoot, contract, errors) {
 
 async function validateConsumerSources(workspaceRoot, errors) {
   for (const absolutePath of await consumerSourceFiles(workspaceRoot)) {
-    const relativePath = path.relative(workspaceRoot, absolutePath);
+    const relativePath = workspaceRelativePath(workspaceRoot, absolutePath);
     const source = await readFile(absolutePath, "utf8");
     validateConsumerSourceText(relativePath, source, errors);
   }

@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import postcss from "postcss";
 import ts from "typescript";
 
+import { requiresBrowserEvidence } from "./browser-evidence-policy.mjs";
 import {
   assessCurrentMotionEvidence,
   collectMotionSourceFingerprint,
@@ -739,12 +740,23 @@ export async function validatePersistedUiMotionEvidence(
   }
 }
 
-async function main() {
+/** Boundaries are always checked; persisted browser evidence only when required. */
+export async function runUiMotionCheck({
+  workspaceRoot = defaultWorkspaceRoot,
+  requireBrowserEvidence = false,
+  validateStructure = validateUiMotion,
+  validateEvidence = validatePersistedUiMotionEvidence,
+} = {}) {
   const [boundaryErrors, evidenceErrors] = await Promise.all([
-    validateUiMotion(defaultWorkspaceRoot),
-    validatePersistedUiMotionEvidence(defaultWorkspaceRoot),
+    validateStructure(workspaceRoot),
+    requireBrowserEvidence ? validateEvidence(workspaceRoot) : [],
   ]);
-  const errors = [...boundaryErrors, ...evidenceErrors];
+  return [...boundaryErrors, ...evidenceErrors];
+}
+
+async function main() {
+  const requireBrowserEvidence = requiresBrowserEvidence();
+  const errors = await runUiMotionCheck({ requireBrowserEvidence });
   if (errors.length > 0) {
     for (const error of errors) {
       console.error(`- ${error}`);
@@ -752,7 +764,11 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  console.log("UI motion boundary check passed.");
+  console.log(
+    requireBrowserEvidence
+      ? "UI motion boundary check passed."
+      : "UI motion boundary check passed (browser evidence not required locally; run pnpm verify:ui-motion:browser for browser acceptance).",
+  );
 }
 
 if (process.argv[1] === scriptPath) {

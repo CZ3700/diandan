@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import ts from "typescript";
 
+import { requiresBrowserEvidence } from "./browser-evidence-policy.mjs";
 import {
   assessCurrentCompositeEvidence,
   collectCompositeSourceFingerprint,
@@ -781,12 +782,23 @@ export async function validatePersistedUiCompositeEvidence(
   }
 }
 
-async function main() {
+/** Structure is always checked; persisted browser evidence only when required. */
+export async function runUiCompositesCheck({
+  workspaceRoot = defaultWorkspaceRoot,
+  requireBrowserEvidence = false,
+  validateStructure = validateUiComposites,
+  validateEvidence = validatePersistedUiCompositeEvidence,
+} = {}) {
   const [structureErrors, evidenceErrors] = await Promise.all([
-    validateUiComposites(defaultWorkspaceRoot),
-    validatePersistedUiCompositeEvidence(defaultWorkspaceRoot),
+    validateStructure(workspaceRoot),
+    requireBrowserEvidence ? validateEvidence(workspaceRoot) : [],
   ]);
-  const errors = [...structureErrors, ...evidenceErrors];
+  return [...structureErrors, ...evidenceErrors];
+}
+
+async function main() {
+  const requireBrowserEvidence = requiresBrowserEvidence();
+  const errors = await runUiCompositesCheck({ requireBrowserEvidence });
   if (errors.length > 0) {
     for (const error of errors) {
       console.error(`- ${error}`);
@@ -794,7 +806,11 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  console.log("UI composite boundary check passed.");
+  console.log(
+    requireBrowserEvidence
+      ? "UI composite boundary check passed."
+      : "UI composite boundary check passed (browser evidence not required locally; run pnpm verify:ui-composites:browser for browser acceptance).",
+  );
 }
 
 if (process.argv[1] === scriptPath) {

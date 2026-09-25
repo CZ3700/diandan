@@ -3,6 +3,14 @@ import { mkdir, open, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { resolveSpawnCommand } from "./spawn-command.mjs";
+
+/** Spawn a fixed argv without a shell, portable to Windows corepack. */
+function spawnPortable(command, args, options) {
+  const resolved = resolveSpawnCommand(command, args);
+  return spawnSync(resolved.command, resolved.args, options);
+}
+
 const entry = fileURLToPath(import.meta.url);
 const workspaceRoot = path.resolve(path.dirname(entry), "..");
 const usage = `Usage: pnpm verify:psp-onboarding [--plan] [--output NEW_DIRECTORY]
@@ -84,7 +92,7 @@ export function planPspOnboarding(args) {
 /** Sequential fixed local gates. Never overwrite evidence or continue after failure. */
 export async function runPspOnboarding(
   plan,
-  { runCommand = spawnSync, log = console.log } = {},
+  { runCommand = spawnPortable, log = console.log } = {},
 ) {
   if (plan.mode !== "run") {
     log(plan.mode === "help" ? usage : JSON.stringify(plan, null, 2));

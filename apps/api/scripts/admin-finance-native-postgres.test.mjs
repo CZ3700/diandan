@@ -4,6 +4,12 @@ import { mkdir, readFile, writeFile, stat, access, rm } from "node:fs/promises";
 import path from "node:path";
 import { withNativeFinancePostgres } from "./admin-finance-native-postgres.mjs";
 
+// The native TEST cluster relies on POSIX file modes and Unix-socket settings.
+const posixOnlySkip =
+  process.platform === "win32"
+    ? "native PostgreSQL TEST harness requires POSIX file modes; run on Linux/macOS or CI"
+    : "";
+
 function fakeNative({ failStart = false } = {}) {
   const calls = [];
   let directory, password;
@@ -57,7 +63,8 @@ function fakeNative({ failStart = false } = {}) {
   };
 }
 
-test("native TEST cluster is newly owned, private, loopback-only, password-authenticated and always removed", async () => {
+test("native TEST cluster is newly owned, private, loopback-only, password-authenticated and always removed", async (context) => {
+  if (posixOnlySkip) return context.skip(posixOnlySkip);
   const h = fakeNative();
   const value = await withNativeFinancePostgres(
     async (config, metadata) => {
@@ -89,7 +96,8 @@ test("native TEST cluster is newly owned, private, loopback-only, password-authe
   );
 });
 
-test("a partially started native cluster is stopped and cleaned while command details stay private", async () => {
+test("a partially started native cluster is stopped and cleaned while command details stay private", async (context) => {
+  if (posixOnlySkip) return context.skip(posixOnlySkip);
   const h = fakeNative({ failStart: true });
   await assert.rejects(
     withNativeFinancePostgres(async () => assert.fail("start failed"), {
@@ -103,7 +111,8 @@ test("a partially started native cluster is stopped and cleaned while command de
   await assert.rejects(access(h.directory));
 });
 
-test("native callback failure preserves no password and still shuts down only its new cluster", async () => {
+test("native callback failure preserves no password and still shuts down only its new cluster", async (context) => {
+  if (posixOnlySkip) return context.skip(posixOnlySkip);
   const h = fakeNative();
   await assert.rejects(
     withNativeFinancePostgres(
@@ -122,7 +131,8 @@ test("native callback failure preserves no password and still shuts down only it
   await assert.rejects(access(h.directory));
 });
 
-test("native harness refuses cleanup when its exact ownership marker changed", async () => {
+test("native harness refuses cleanup when its exact ownership marker changed", async (context) => {
+  if (posixOnlySkip) return context.skip(posixOnlySkip);
   const h = fakeNative();
   let metadata;
   try {

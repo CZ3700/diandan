@@ -1,5 +1,13 @@
 import assert from "node:assert/strict";
-import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import {
+  cp,
+  mkdir,
+  mkdtemp,
+  readFile,
+  rm,
+  symlink,
+  writeFile,
+} from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -35,15 +43,28 @@ async function loadEvidenceValidator() {
   return loaded.validatePersistedUiCompositeEvidence;
 }
 
+/**
+ * Copy a package without recreating pnpm's dependency links, then link its
+ * node_modules back. Junctions need no symlink privilege on Windows; other
+ * platforms create an ordinary directory symlink, so resolution is unchanged.
+ */
+async function copyPackage(relativePath, root) {
+  const source = path.join(workspaceRoot, relativePath);
+  const destination = path.join(root, relativePath);
+  await cp(source, destination, {
+    recursive: true,
+    filter: (candidate) => path.basename(candidate) !== "node_modules",
+  });
+  await symlink(
+    path.join(source, "node_modules"),
+    path.join(destination, "node_modules"),
+    "junction",
+  );
+}
+
 async function fixture() {
   const root = await mkdtemp(path.join(os.tmpdir(), "ui-composites-"));
-  await cp(
-    path.join(workspaceRoot, "packages/ui"),
-    path.join(root, "packages/ui"),
-    {
-      recursive: true,
-    },
-  );
+  await copyPackage("packages/ui", root);
   await cp(
     path.join(workspaceRoot, "apps/storefront/src/app"),
     path.join(root, "apps/storefront/src/app"),
@@ -71,9 +92,53 @@ test("accepts the reviewed composite package, CSS and preview routes", async () 
   assert.deepEqual(await validate(workspaceRoot), []);
 });
 
-test("binds persisted browser evidence to the current render inputs", async () => {
+test("binds persisted browser evidence to the current render inputs", async (context) => {
+  const { requiresBrowserEvidence } =
+    await import("./browser-evidence-policy.mjs");
+  if (!requiresBrowserEvidence([], process.env)) {
+    context.skip(
+      "browser evidence is re-verified in CI after verify:ui-composites:browser",
+    );
+    return;
+  }
   const validate = await loadEvidenceValidator();
   assert.deepEqual(await validate(workspaceRoot), []);
+});
+
+test("browser evidence is required only in CI or by explicit flag", async () => {
+  const { requiresBrowserEvidence } =
+    await import("./browser-evidence-policy.mjs");
+  assert.equal(requiresBrowserEvidence([], {}), false);
+  assert.equal(requiresBrowserEvidence([], { CI: "false" }), false);
+  assert.equal(requiresBrowserEvidence([], { CI: "1" }), true);
+  assert.equal(requiresBrowserEvidence([], { CI: "true" }), true);
+  assert.equal(
+    requiresBrowserEvidence(["--require-browser-evidence"], {}),
+    true,
+  );
+});
+
+test("local composite checks skip persisted evidence unless required", async () => {
+  const { runUiCompositesCheck } = await import("./check-ui-composites.mjs");
+  let evidenceCalls = 0;
+  const options = {
+    workspaceRoot: "/virtual-workspace",
+    validateStructure: async () => ["structure finding"],
+    validateEvidence: async () => {
+      evidenceCalls += 1;
+      return ["evidence finding"];
+    },
+  };
+  assert.deepEqual(
+    await runUiCompositesCheck({ ...options, requireBrowserEvidence: false }),
+    ["structure finding"],
+  );
+  assert.equal(evidenceCalls, 0);
+  assert.deepEqual(
+    await runUiCompositesCheck({ ...options, requireBrowserEvidence: true }),
+    ["structure finding", "evidence finding"],
+  );
+  assert.equal(evidenceCalls, 1);
 });
 
 test("fails closed when persisted browser evidence is missing", async (context) => {

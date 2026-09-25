@@ -19,24 +19,33 @@ type BootstrapModule = Readonly<{
 })
 class FailingModule {}
 
-test("turns Nest initialization failures into catchable rejections", async () => {
-  const bootstrap = (await import("./bootstrap.js").catch(() => undefined)) as
-    BootstrapModule | undefined;
+// Importing bootstrap loads the whole route graph; on a cold module cache under
+// parallel test load this legitimately exceeds Vitest's 5 second default.
+const bootstrapImport = { timeout: 30_000 };
 
-  expect(bootstrap, "API bootstrap module must exist").toBeDefined();
-  expect(bootstrap?.apiNestApplicationOptions).toEqual({
-    abortOnError: false,
-    logger: false,
-  });
-  if (bootstrap?.apiNestApplicationOptions === undefined) {
-    return;
-  }
+test(
+  "turns Nest initialization failures into catchable rejections",
+  bootstrapImport,
+  async () => {
+    const bootstrap = (await import("./bootstrap.js").catch(
+      () => undefined,
+    )) as BootstrapModule | undefined;
 
-  await expect(
-    NestFactory.create(
-      FailingModule,
-      new FastifyAdapter({ logger: false }),
-      bootstrap.apiNestApplicationOptions,
-    ),
-  ).rejects.toThrow("EXPECTED_NEST_STARTUP_FAILURE");
-});
+    expect(bootstrap, "API bootstrap module must exist").toBeDefined();
+    expect(bootstrap?.apiNestApplicationOptions).toEqual({
+      abortOnError: false,
+      logger: false,
+    });
+    if (bootstrap?.apiNestApplicationOptions === undefined) {
+      return;
+    }
+
+    await expect(
+      NestFactory.create(
+        FailingModule,
+        new FastifyAdapter({ logger: false }),
+        bootstrap.apiNestApplicationOptions,
+      ),
+    ).rejects.toThrow("EXPECTED_NEST_STARTUP_FAILURE");
+  },
+);

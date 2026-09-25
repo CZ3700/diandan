@@ -3,6 +3,8 @@ import { glob, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { resolveSpawnCommand } from "./spawn-command.mjs";
+
 const entry = fileURLToPath(import.meta.url);
 const workspaceRoot = path.resolve(path.dirname(entry), "..");
 const usage = `Usage: pnpm check:dev [--plan] [--filter PACKAGE[...]]
@@ -90,10 +92,16 @@ export function planDevelopmentCheck(args, packageNames) {
   };
 }
 
+/** Spawn a fixed argv without a shell, portable to Windows corepack. */
+function spawnPortable(command, args, options) {
+  const resolved = resolveSpawnCommand(command, args);
+  return spawnSync(resolved.command, resolved.args, options);
+}
+
 /** Run one process at a time, retaining the first failing exit status. */
 export function runDevelopmentCheck(
   plan,
-  { cwd = workspaceRoot, runCommand = spawnSync, log = console.log } = {},
+  { cwd = workspaceRoot, runCommand = spawnPortable, log = console.log } = {},
 ) {
   if (plan.mode === "help") {
     log(usage);

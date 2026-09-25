@@ -157,7 +157,7 @@ test("isolated source snapshots include owned new source, exclude private state 
   }
 });
 
-test("source snapshot rejects traversal and symbolic links", async () => {
+test("source snapshot rejects traversal and symbolic links", async (context) => {
   assert.equal(typeof module.createRegressionWorkspace, "function");
   const directory = await mkdtemp(
     path.join(os.tmpdir(), "regression-snapshot-"),
@@ -166,15 +166,22 @@ test("source snapshot rejects traversal and symbolic links", async () => {
     const source = path.join(directory, "source");
     await mkdir(path.join(source, "apps/site"), { recursive: true });
     await writeFile(path.join(directory, "private"), "sensitive");
-    await symlink(
-      path.join(directory, "private"),
-      path.join(source, "apps/site/linked.ts"),
-    );
-    for (const [i, input] of [
-      "apps/../../private",
-      "apps/site/linked.ts",
-      "/absolute.ts",
-    ].entries())
+    const inputs = ["apps/../../private", "/absolute.ts"];
+    try {
+      await symlink(
+        path.join(directory, "private"),
+        path.join(source, "apps/site/linked.ts"),
+      );
+      inputs.push("apps/site/linked.ts");
+    } catch (error) {
+      // Unprivileged Windows accounts cannot create file symlinks; Linux and
+      // macOS runs still cover the symbolic-link case.
+      if (process.platform !== "win32" || error?.code !== "EPERM") throw error;
+      context.diagnostic(
+        "symbolic-link case skipped: Windows symlink privilege unavailable",
+      );
+    }
+    for (const [i, input] of inputs.entries())
       await assert.rejects(
         module.createRegressionWorkspace({
           source,

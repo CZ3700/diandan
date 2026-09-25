@@ -2,6 +2,7 @@ import { spawn } from "node:child_process";
 import { open, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { regressionCoverage } from "./regression-plan.mjs";
+import { resolveSpawnCommand } from "./spawn-command.mjs";
 import { regressionSuiteEnvironment } from "./regression-environment.mjs";
 export { regressionSuiteEnvironment } from "./regression-environment.mjs";
 
@@ -17,7 +18,14 @@ export async function runRegressionCommand(
   let result;
   try {
     result = await new Promise((resolve) => {
-      const child = spawn(step.command, step.args, {
+      let resolved;
+      try {
+        resolved = resolveSpawnCommand(step.command, step.args);
+      } catch {
+        resolve({ exitCode: 1, signal: null, launchFailed: true });
+        return;
+      }
+      const child = spawn(resolved.command, resolved.args, {
         cwd: workspace,
         env: environment,
         shell: false,

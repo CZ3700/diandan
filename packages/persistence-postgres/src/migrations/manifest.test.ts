@@ -116,7 +116,7 @@ describe("loadMigrationManifest", () => {
     );
   });
 
-  test("rejects a migration SQL symbolic link", async () => {
+  test("rejects a migration SQL symbolic link", async (context) => {
     const workspaceRoot = await createWorkspace();
     const migrationDirectory = path.join(workspaceRoot, "database/migrations");
     const upSql = "CREATE TABLE example (id bigint PRIMARY KEY);\n";
@@ -124,10 +124,22 @@ describe("loadMigrationManifest", () => {
     await writeSingleMigrationManifest(workspaceRoot, upSql, downSql);
     await rm(path.join(migrationDirectory, "0001_example.up.sql"));
     await writeFile(path.join(workspaceRoot, "linked.sql"), upSql);
-    await symlink(
-      path.join(workspaceRoot, "linked.sql"),
-      path.join(migrationDirectory, "0001_example.up.sql"),
-    );
+    try {
+      await symlink(
+        path.join(workspaceRoot, "linked.sql"),
+        path.join(migrationDirectory, "0001_example.up.sql"),
+      );
+    } catch (error) {
+      // Unprivileged Windows accounts cannot create file symlinks; Linux and
+      // macOS runs still exercise the rejection path.
+      if (
+        process.platform === "win32" &&
+        (error as NodeJS.ErrnoException).code === "EPERM"
+      ) {
+        context.skip("file symlinks require Windows symlink privilege");
+      }
+      throw error;
+    }
 
     await expect(loadMigrationManifest({ workspaceRoot })).rejects.toThrow(
       "is not a regular file",

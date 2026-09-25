@@ -1,5 +1,13 @@
 import assert from "node:assert/strict";
-import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import {
+  cp,
+  mkdir,
+  mkdtemp,
+  readFile,
+  rm,
+  symlink,
+  writeFile,
+} from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -37,15 +45,28 @@ async function loadPersistedValidator() {
   return loaded.validatePersistedUiMotionEvidence;
 }
 
+/**
+ * Copy a package without recreating pnpm's dependency links, then link its
+ * node_modules back. Junctions need no symlink privilege on Windows; other
+ * platforms create an ordinary directory symlink, so resolution is unchanged.
+ */
+async function copyPackage(relativePath, root) {
+  const source = path.join(workspaceRoot, relativePath);
+  const destination = path.join(root, relativePath);
+  await cp(source, destination, {
+    recursive: true,
+    filter: (candidate) => path.basename(candidate) !== "node_modules",
+  });
+  await symlink(
+    path.join(source, "node_modules"),
+    path.join(destination, "node_modules"),
+    "junction",
+  );
+}
+
 async function fixture() {
   const root = await mkdtemp(path.join(os.tmpdir(), "ui-motion-"));
-  await cp(
-    path.join(workspaceRoot, "packages/ui"),
-    path.join(root, "packages/ui"),
-    {
-      recursive: true,
-    },
-  );
+  await copyPackage("packages/ui", root);
   await cp(
     path.join(workspaceRoot, "apps/storefront/src/app"),
     path.join(root, "apps/storefront/src/app"),
@@ -78,9 +99,40 @@ test("accepts the reviewed motion entries, CSS and internal previews", async () 
   assert.deepEqual(await validate(workspaceRoot), []);
 });
 
-test("binds persisted browser evidence to the current motion render inputs", async () => {
+test("binds persisted browser evidence to the current motion render inputs", async (context) => {
+  const { requiresBrowserEvidence } =
+    await import("./browser-evidence-policy.mjs");
+  if (!requiresBrowserEvidence([], process.env)) {
+    context.skip(
+      "browser evidence is re-verified in CI after verify:ui-motion:browser",
+    );
+    return;
+  }
   const validate = await loadPersistedValidator();
   assert.deepEqual(await validate(workspaceRoot), []);
+});
+
+test("local motion checks skip persisted evidence unless required", async () => {
+  const { runUiMotionCheck } = await import("./check-ui-motion.mjs");
+  let evidenceCalls = 0;
+  const options = {
+    workspaceRoot: "/virtual-workspace",
+    validateStructure: async () => ["structure finding"],
+    validateEvidence: async () => {
+      evidenceCalls += 1;
+      return ["evidence finding"];
+    },
+  };
+  assert.deepEqual(
+    await runUiMotionCheck({ ...options, requireBrowserEvidence: false }),
+    ["structure finding"],
+  );
+  assert.equal(evidenceCalls, 0);
+  assert.deepEqual(
+    await runUiMotionCheck({ ...options, requireBrowserEvidence: true }),
+    ["structure finding", "evidence finding"],
+  );
+  assert.equal(evidenceCalls, 1);
 });
 
 test("rejects missing, widened or incorrectly side-effected motion exports", async (context) => {
