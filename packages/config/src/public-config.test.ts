@@ -78,6 +78,18 @@ test.each([
   });
 });
 
+test.each(["https://localhost:3443", "https://localhost:3444"])(
+  "accepts an exact local preview HTTPS origin %s",
+  async (siteOrigin) => {
+    const { parsePublicRuntimeConfig } = await loadPublicConfigModule();
+
+    expect(parsePublicRuntimeConfig({ schemaVersion: 1, siteOrigin })).toEqual({
+      schemaVersion: 1,
+      siteOrigin,
+    });
+  },
+);
+
 test("rejects extra public fields instead of stripping them", async () => {
   const { parsePublicRuntimeConfig } = await loadPublicConfigModule();
 

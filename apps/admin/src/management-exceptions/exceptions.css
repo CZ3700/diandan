@@ -1,0 +1,112 @@
+.me-workspace {
+  min-width: 0;
+}
+.me-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.me-heading p {
+  color: var(--color-text-muted);
+}
+.me-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: end;
+  gap: var(--space-4);
+  margin-block: var(--space-6);
+}
+.me-list,
+.me-history {
+  list-style: none;
+  padding: 0;
+}
+.me-row {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: var(--border-width) solid var(--color-border);
+  color: inherit;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: start;
+  gap: var(--space-2);
+  padding: var(--space-6) 0;
+  font: inherit;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.me-row:focus-visible {
+  outline: calc(var(--border-width) * 2) solid var(--color-accent);
+  outline-offset: var(--space-1);
+}
+.me-row time,
+.me-row span {
+  color: var(--color-text-muted);
+}
+.me-row .me-view {
+  color: var(--color-accent);
+}
+.me-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  margin-block: var(--space-6);
+}
+.me-facts dt {
+  color: var(--color-text-muted);
+}
+.me-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.me-section {
+  border-top: var(--border-width) solid var(--color-border);
+  padding-block: var(--space-6);
+}
+.me-section h2 {
+  margin-top: 0;
+}
+.me-action {
+  display: grid;
+  gap: var(--space-4);
+  max-width: calc(var(--space-32) * 6);
+}
+.me-confirm {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  cursor: pointer;
+}
+.me-confirm input {
+  width: var(--space-6);
+  height: var(--space-6);
+  flex-shrink: 0;
+  accent-color: var(--color-accent);
+}
+.me-history li {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-4);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+.me-notice {
+  padding: var(--space-4);
+  border-left: calc(var(--border-width) * 2) solid var(--color-accent);
+  margin-block: var(--space-4);
+}
+@media (width < 48rem) {
+  .me-heading {
+    flex-wrap: wrap;
+  }
+  .me-filters {
+    grid-template-columns: 1fr;
+  }
+  .me-row,
+  .me-facts {
+    grid-template-columns: 1fr;
+  }
+}

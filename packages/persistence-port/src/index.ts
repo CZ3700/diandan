@@ -1,1 +1,364 @@
+export type * from "./admin-payment-configuration.js";
+export type * from "./admin-exceptions.js";
+import type { AdminFinanceRepository } from "./admin-finance.js";
+export * from "./translation-workspace.js";
+export * from "./translation-transfer.js";
+export * from "./admin-preview-media.js";
+export * from "./admin-catalog.js";
+export * from "./admin-session.js";
+export * from "./publication-preflight.js";
+import type { OrderPaymentApplicationRepository } from "./order-payment-application.js";
+import type {
+  AppendOutboxEventCommand,
+  AppendOutboxEventResponse,
+  ApplyInventoryReservationCreationCommand,
+  ApplyInventoryReservationCreationResponse,
+  ApplyInventoryReservationTransitionCommand,
+  ApplyInventoryReservationTransitionResponse,
+  BeginIdempotencyCommand,
+  BeginIdempotencyResponse,
+  CompleteIdempotencyCommand,
+  CompleteIdempotencyResponse,
+  ListReadyOutboxEventsCommand,
+  ListReadyOutboxEventsResponse,
+  LoadInventoryForUpdateCommand,
+  LoadInventoryForUpdateResponse,
+  LoadOutboxDispatchContextCommand,
+  LoadOutboxDispatchContextResponse,
+  LoadPaymentWebhookEndpointCommand,
+  LoadPaymentWebhookEndpointResponse,
+  LoadWebhookProcessingContextCommand,
+  LoadWebhookProcessingContextResponse,
+  PurgeExpiredWebhookPayloadsCommand,
+  PurgeExpiredWebhookPayloadsResponse,
+  RecordOutboxDispatchAttemptCommand,
+  RecordOutboxDispatchAttemptResponse,
+  RecordOutboxEffectCommand,
+  RecordOutboxEffectResponse,
+  RecordVerifiedWebhookReceiptCommand,
+  RecordVerifiedWebhookReceiptResponse,
+  RecordWebhookEffectCommand,
+  RecordWebhookEffectResponse,
+  RecordWebhookProcessingAttemptCommand,
+  RecordWebhookProcessingAttemptResponse,
+  TransactionOptions,
+  PersistenceTransactionFailure,
+} from "@fan-support/contracts";
+
+import { persistenceTransactionFailureSchema } from "@fan-support/contracts";
+
+export {
+  encryptedWebhookPayloadSchema,
+  listReadyOutboxEventsCommandSchema,
+  listReadyOutboxEventsResponseSchema,
+  loadOutboxDispatchContextCommandSchema,
+  loadOutboxDispatchContextResponseSchema,
+  loadPaymentWebhookEndpointCommandSchema,
+  loadPaymentWebhookEndpointResponseSchema,
+  loadWebhookProcessingContextCommandSchema,
+  loadWebhookProcessingContextResponseSchema,
+  paymentWebhookEndpointDescriptorSchema,
+  persistencePortCommandSchema,
+  persistencePortErrorCodeSchema,
+  persistencePortErrorSchema,
+  persistencePortOperationSchema,
+  persistencePortResponseSchema,
+  persistenceTransactionFailureSchema,
+  purgeExpiredWebhookPayloadsCommandSchema,
+  purgeExpiredWebhookPayloadsResponseSchema,
+  recordOutboxDispatchAttemptCommandSchema,
+  recordOutboxDispatchAttemptResponseSchema,
+  recordOutboxEffectCommandSchema,
+  recordOutboxEffectResponseSchema,
+  recordVerifiedWebhookReceiptCommandSchema,
+  recordVerifiedWebhookReceiptResponseSchema,
+  recordWebhookEffectCommandSchema,
+  recordWebhookEffectResponseSchema,
+  recordWebhookProcessingAttemptCommandSchema,
+  recordWebhookProcessingAttemptResponseSchema,
+  reliableEventPersistenceCommandSchema,
+  reliableEventPersistenceOperationSchema,
+  reliableEventPersistenceResponseSchema,
+  transactionOptionsSchema,
+  verifiedWebhookAssociationSchema,
+} from "@fan-support/contracts";
+export type {
+  AppendOutboxEventCommand,
+  AppendOutboxEventResponse,
+  ApplyInventoryReservationCreationCommand,
+  ApplyInventoryReservationCreationResponse,
+  ApplyInventoryReservationTransitionCommand,
+  ApplyInventoryReservationTransitionResponse,
+  BeginIdempotencyCommand,
+  BeginIdempotencyResponse,
+  CompleteIdempotencyCommand,
+  CompleteIdempotencyResponse,
+  EncryptedWebhookPayload,
+  ListReadyOutboxEventsCommand,
+  ListReadyOutboxEventsResponse,
+  LoadInventoryForUpdateCommand,
+  LoadInventoryForUpdateResponse,
+  LoadOutboxDispatchContextCommand,
+  LoadOutboxDispatchContextResponse,
+  LoadPaymentWebhookEndpointCommand,
+  LoadPaymentWebhookEndpointResponse,
+  LoadWebhookProcessingContextCommand,
+  LoadWebhookProcessingContextResponse,
+  PaymentWebhookEndpointDescriptor,
+  PersistencePortCommand,
+  PersistencePortError,
+  PersistencePortFailure,
+  PersistencePortResponse,
+  PersistenceTransactionFailure,
+  PurgeExpiredWebhookPayloadsCommand,
+  PurgeExpiredWebhookPayloadsResponse,
+  RecordOutboxDispatchAttemptCommand,
+  RecordOutboxDispatchAttemptResponse,
+  RecordOutboxEffectCommand,
+  RecordOutboxEffectResponse,
+  RecordVerifiedWebhookReceiptCommand,
+  RecordVerifiedWebhookReceiptResponse,
+  RecordWebhookEffectCommand,
+  RecordWebhookEffectResponse,
+  RecordWebhookProcessingAttemptCommand,
+  RecordWebhookProcessingAttemptResponse,
+  ReliableEventPersistenceCommand,
+  ReliableEventPersistenceOperation,
+  ReliableEventPersistenceResponse,
+  TransactionOptions,
+  VerifiedWebhookAssociation,
+} from "@fan-support/contracts";
+
+function freezeTransactionFailure(
+  failure: PersistenceTransactionFailure,
+): PersistenceTransactionFailure {
+  return Object.freeze({
+    ...failure,
+    error: Object.freeze({ ...failure.error }),
+  });
+}
+
+export class PersistenceTransactionFailureError extends Error {
+  public readonly failure: PersistenceTransactionFailure;
+  declare public readonly retryAfterMs?: number;
+
+  public constructor(failure: PersistenceTransactionFailure) {
+    super("persistence transaction failed");
+    this.name = "PersistenceTransactionFailureError";
+    const parsed = persistenceTransactionFailureSchema.safeParse(failure);
+    if (!parsed.success) {
+      throw new Error("invalid persistence transaction failure");
+    }
+    this.failure = freezeTransactionFailure(parsed.data);
+    if (parsed.data.error.retryAfterMs !== undefined) {
+      Object.defineProperty(this, "retryAfterMs", {
+        configurable: false,
+        enumerable: true,
+        value: parsed.data.error.retryAfterMs,
+        writable: false,
+      });
+    }
+  }
+
+  public get code(): PersistenceTransactionFailure["error"]["code"] {
+    return this.failure.error.code;
+  }
+
+  public get recovery(): PersistenceTransactionFailure["error"]["recovery"] {
+    return this.failure.error.recovery;
+  }
+
+  public toJSON(): PersistenceTransactionFailure {
+    return this.failure;
+  }
+}
+
+export function parsePersistenceTransactionFailure(
+  value: unknown,
+): PersistenceTransactionFailure | undefined {
+  const candidate =
+    value instanceof PersistenceTransactionFailureError ? value.failure : value;
+  const parsed = persistenceTransactionFailureSchema.safeParse(candidate);
+  return parsed.success ? freezeTransactionFailure(parsed.data) : undefined;
+}
+
+export interface IdempotencyRepository {
+  begin(command: BeginIdempotencyCommand): Promise<BeginIdempotencyResponse>;
+  complete(
+    command: CompleteIdempotencyCommand,
+  ): Promise<CompleteIdempotencyResponse>;
+}
+
+export interface OutboxRepository {
+  append(command: AppendOutboxEventCommand): Promise<AppendOutboxEventResponse>;
+}
+
+export interface InventoryRepository {
+  loadManyForUpdate(
+    command: LoadInventoryForUpdateCommand,
+  ): Promise<LoadInventoryForUpdateResponse>;
+  applyReservationCreation(
+    command: ApplyInventoryReservationCreationCommand,
+  ): Promise<ApplyInventoryReservationCreationResponse>;
+  applyReservationTransition(
+    command: ApplyInventoryReservationTransitionCommand,
+  ): Promise<ApplyInventoryReservationTransitionResponse>;
+}
+
+export type TransactionRepositories = Readonly<{
+  idempotency: IdempotencyRepository;
+  outbox: OutboxRepository;
+  inventory: InventoryRepository;
+}>;
+
+export interface PaymentWebhookEndpointRepository {
+  load(
+    command: LoadPaymentWebhookEndpointCommand,
+  ): Promise<LoadPaymentWebhookEndpointResponse>;
+}
+
+export interface VerifiedWebhookReceiptRepository {
+  record(
+    command: RecordVerifiedWebhookReceiptCommand,
+  ): Promise<RecordVerifiedWebhookReceiptResponse>;
+}
+
+export interface WebhookProcessingRepository {
+  loadContext(
+    command: LoadWebhookProcessingContextCommand,
+  ): Promise<LoadWebhookProcessingContextResponse>;
+  recordAttempt(
+    command: RecordWebhookProcessingAttemptCommand,
+  ): Promise<RecordWebhookProcessingAttemptResponse>;
+  recordEffect(
+    command: RecordWebhookEffectCommand,
+  ): Promise<RecordWebhookEffectResponse>;
+}
+
+export interface OutboxDispatchRepository {
+  listReady(
+    command: ListReadyOutboxEventsCommand,
+  ): Promise<ListReadyOutboxEventsResponse>;
+  loadContext(
+    command: LoadOutboxDispatchContextCommand,
+  ): Promise<LoadOutboxDispatchContextResponse>;
+  recordAttempt(
+    command: RecordOutboxDispatchAttemptCommand,
+  ): Promise<RecordOutboxDispatchAttemptResponse>;
+  recordEffect(
+    command: RecordOutboxEffectCommand,
+  ): Promise<RecordOutboxEffectResponse>;
+}
+
+export interface WebhookPayloadRetentionRepository {
+  purgeExpired(
+    command: PurgeExpiredWebhookPayloadsCommand,
+  ): Promise<PurgeExpiredWebhookPayloadsResponse>;
+}
+
+export type ReliableEventTransactionRepositories = Readonly<{
+  adminFinance?: AdminFinanceRepository;
+  orderPaymentApplication?: OrderPaymentApplicationRepository;
+  paymentWebhookEndpoints: PaymentWebhookEndpointRepository;
+  verifiedWebhookReceipts: VerifiedWebhookReceiptRepository;
+  webhookProcessing: WebhookProcessingRepository;
+  outbox: OutboxRepository;
+  outboxDispatch: OutboxDispatchRepository;
+  webhookPayloadRetention: WebhookPayloadRetentionRepository;
+}>;
+
+export type JsonValue =
+  | null
+  | boolean
+  | number
+  | string
+  | readonly JsonValue[]
+  | Readonly<{ [key: string]: JsonValue }>;
+
+export interface TransactionManager {
+  /**
+   * Infrastructure failures reject with PersistenceTransactionFailureError;
+   * callback failures are propagated unchanged. Successful values are returned
+   * as deeply frozen canonical JSON snapshots, never as the callback's mutable
+   * object reference.
+   */
+  runInTransaction<Result extends JsonValue>(
+    options: TransactionOptions,
+    work: (repositories: TransactionRepositories) => Promise<Result>,
+  ): Promise<Result>;
+}
+
+export interface ReliableEventTransactionManager {
+  /**
+   * Uses the same success and failure semantics as runInTransaction while
+   * exposing the additive reliable-event repositories.
+   */
+  runInReliableEventTransaction<Result extends JsonValue>(
+    options: TransactionOptions,
+    work: (
+      repositories: ReliableEventTransactionRepositories,
+    ) => Promise<Result>,
+  ): Promise<Result>;
+}
+
 export const workspacePackageName = "@fan-support/persistence-port" as const;
+
+export type {
+  OrderPaymentApplicationRepository,
+  OrderPaymentApplicationTransactionManager,
+} from "./order-payment-application.js";
+
+export type {
+  CatalogDirectoryRepository,
+  ContentReadRepositories,
+  ContentReadTransactionManager,
+} from "./catalog-directory.js";
+
+export * from "./media-processing.js";
+export * from "./content-drafts.js";
+
+export type {
+  AdminAuthorizationRepository,
+  ContentReviewRepository,
+  ContentPreviewRepository,
+  AdminContentRepositories,
+  AdminContentTransactionManager,
+} from "./admin-content.js";
+
+export * from "./content-authoring.js";
+export * from "./base-content.js";
+
+export * from "./resource-management.js";
+
+export type * from "./publication-runtime.js";
+export type * from "./published-content.js";
+
+export * from "./gift-commerce.js";
+
+export * from "./published-gift-commerce.js";
+
+export * from "./storefront-homepage.js";
+
+export type {
+  StorefrontCommerceRepository,
+  StorefrontCommerceRepositories,
+  StorefrontCommerceTransactionManager,
+} from "./storefront-commerce.js";
+export * from "./storefront-seo.js";
+
+export * from "./management-center.js";
+
+export * from "./management-media.js";
+export * from "./cart-runtime.js";
+
+export * from "./cart-edit.js";
+export * from "./checkout-preflight.js";
+export * from "./payment-runtime.js";
+
+export * from "./order-access.js";
+export * from "./order-notification.js";
+
+export * from "./admin-access.js";
+export * from "./admin-orders.js";
+export * from "./payment-health.js";
+export * from "./admin-finance.js";

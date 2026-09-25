@@ -1,0 +1,27 @@
+{
+  "mock_provider": {
+    "aws": {}
+  },
+  "variables": {
+    "name": "offline-fixture",
+    "account_id": "000000000000"
+  },
+  "run": {
+    "immutable_registry": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "assert": [
+        {
+          "condition": "${length(aws_ecr_repository.application) == 4 && alltrue([for repository in aws_ecr_repository.application : repository.image_tag_mutability == \"IMMUTABLE\" && repository.image_scanning_configuration[0].scan_on_push && !repository.force_delete])}",
+          "error_message": "All four registries require immutable tags, scan and deletion protection."
+        },
+        {
+          "condition": "${alltrue([for policy in aws_ecr_lifecycle_policy.untagged : jsondecode(policy.policy).rules[0].selection.tagStatus == \"untagged\"])}",
+          "error_message": "Tagged releases must remain available for rollback."
+        }
+      ]
+    }
+  }
+}

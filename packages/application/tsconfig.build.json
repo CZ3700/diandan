@@ -13,6 +13,12 @@
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
     "src/**/*.spec.ts",
-    "src/**/*.spec.tsx"
+    "src/**/*.spec.tsx",
+    "src/publication-preflight-fixtures.ts",
+    "src/translation-test-support.ts",
+    "src/cart-runtime.test-fixtures.ts",
+    "src/checkout-preflight.test-fixtures.ts",
+    "src/checkout-preflight.harness.ts",
+    "src/payment-runtime.harness.ts"
   ]
 }

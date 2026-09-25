@@ -1,0 +1,11 @@
+# Final journey artifact privacy review
+
+**Bounded PASS** for frozen run `ebefac61-3dcb-4695-abef-ac81885046db` / source `642a55a818680d763f41ce5d87b5386092591ea5341c92ce4e88c8248bcb8b72`. This is a privacy review of completed journey evidence, not aggregate P6-01 acceptance.
+
+The archive contains 94 files: 4 JSON, 4 TXT and 86 PNG. Scanned all 8 archived text files plus 9 outer runner JSON/TXT files (740,988 bytes), including raw, URL-decoded and parsed JSON strings. All JSON parsed. Thirteen exact private-canary/token patterns produced **zero matching files or values**; selected sensitive-field names also produced no finding. Pattern definitions, every scanned path and each file's SHA-256 are in `privacy-journey.json`. Canonical checkout/attempt/public-order IDs intentionally retained in the report are not secret access tokens.
+
+Directly viewed `en-390-checkout.png`, `zh-CN-1440-checkout.png`, `failed-restored-cart.png` and `ja-1440-paid-order.png`. Checkout email controls have opaque magenta masks. The restored cart only shows saved-message/name indicators; the Japanese paid order shows localized public fixture order details and no private fan content or secure token. The other 82 archived PNG files were not exhaustively inspected. Hashes bind all four inspected images.
+
+The checkout captures occur **before email entry**; visible masks alone therefore do not prove masking of a populated email field. Private message/name values are submitted and authorized-editor readback is checked in memory, then the editor is closed before cart capture. The screenshot helper additionally masks `[data-cart-name]`, `[data-cart-message]`, `[data-checkout-email]`, `[data-private-panel]` and `[data-private-content]`. Mail content, encrypted support-intent snapshots and secure access tokens stay in memory, with no mail screenshot; the browser verifies the secure token is cleared after exchange. Error reports keep closed classifications rather than raw private text.
+
+The file-extension allowlist in the archive collector is not PII redaction. This finite exact-pattern/field scan is not a generic detector of all personal data, and screenshot review is sampled. No source, original report, image or failure evidence was edited, and no service was started by this review.

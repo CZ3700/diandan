@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "id": "4f847525-ed50-44db-b2cb-319977b397e0",
+  "publicOrderId": "92368267-ce38-474a-b6f7-76cbeed24430",
+  "presentationLocale": "en",
+  "orderStatus": "OPEN",
+  "paymentStatus": "PAID",
+  "disputeStatus": "NONE",
+  "fulfillmentStatus": "PENDING",
+  "amount": {
+    "schemaVersion": 1,
+    "market": "US",
+    "currency": "USD",
+    "quoteRevision": 4,
+    "quoteExpiresAt": "2026-09-03T01:00:00Z",
+    "subtotalMinor": 2500,
+    "taxAmountMinor": 0,
+    "shippingAmountMinor": 0,
+    "feeAmountMinor": 0,
+    "discountAmountMinor": 0,
+    "totalAmountMinor": 2500
+  },
+  "items": [
+    {
+      "schemaVersion": 1,
+      "idolTranslation": {
+        "requestedLocale": "en",
+        "resolvedLocale": "en",
+        "translationRevisionId": "7ef0823b-a666-430a-9055-4aa9465d41c7",
+        "fallbackUsed": false
+      },
+      "giftTranslation": {
+        "requestedLocale": "en",
+        "resolvedLocale": "en",
+        "translationRevisionId": "7ef0823b-a666-430a-9055-4aa9465d41c7",
+        "fallbackUsed": false
+      },
+      "idolId": "c24a7022-5ab1-4fe6-bc3e-c69f4fa7af7a",
+      "idolHandle": "idol-one",
+      "idolDisplayName": "Idol One",
+      "idolPortrait": {
+        "assetId": "169823b4-175b-493b-991e-44e1b8ad5e83",
+        "checksum": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "objectKey": "private/idol/original.webp",
+        "metadataRevisionId": "a86287e0-a6bd-4d7b-82ad-93105e090bf0",
+        "alt": "Portrait of Idol One",
+        "altTranslation": {
+          "requestedLocale": "en",
+          "resolvedLocale": "en",
+          "translationRevisionId": "7ef0823b-a666-430a-9055-4aa9465d41c7",
+          "fallbackUsed": false
+        }
+      },
+      "giftId": "7fd728b5-4304-4de8-bd09-f62f315b4a0c",
+      "giftVariantId": "9fa44c67-1a8e-45e9-afc2-887f0422cc8e",
+      "giftTitle": "Celebration bouquet",
+      "giftImage": {
+        "assetId": "42dfc5c4-b905-4053-bf78-2548c7eadc12",
+        "checksum": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "objectKey": "private/gift/original.webp",
+        "metadataRevisionId": "71f2177d-cbb2-4bbb-a2b4-7ed3c98b8d3e",
+        "alt": "Celebration bouquet",
+        "altTranslation": {
+          "requestedLocale": "en",
+          "resolvedLocale": "en",
+          "translationRevisionId": "7ef0823b-a666-430a-9055-4aa9465d41c7",
+          "fallbackUsed": false
+        }
+      },
+      "priceId": "ec4caf66-6e49-4112-876a-11e405b89cc7",
+      "priceRevision": 2,
+      "quantity": 2,
+      "unitAmountMinor": 1250,
+      "lineSubtotalMinor": 2500,
+      "taxAmountMinor": 0,
+      "discountAmountMinor": 0,
+      "lineTotalMinor": 2500,
+      "currency": "USD",
+      "supportIntentId": "3ae12a25-feb8-4ea9-96e8-e0cd17216af8",
+      "displayMode": "nickname"
+    }
+  ],
+  "policyAcceptances": [
+    {
+      "schemaVersion": 1,
+      "locale": "en",
+      "policyRevisionId": "7422a7a5-c493-4a0c-ad08-5f7a14ddae39",
+      "policyTranslationRevisionId": "26c3cfda-21f0-49ef-889b-1b8567345a12",
+      "acceptedAt": "2026-09-03T00:00:00Z"
+    }
+  ],
+  "createdAt": "2026-09-03T00:00:00Z",
+  "updatedAt": "2026-09-03T00:05:00Z"
+}

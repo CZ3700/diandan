@@ -1,0 +1,344 @@
+import { z } from "zod";
+import { schemaVersionSchema } from "./versioning.js";
+import { supportedLocaleSchema } from "./locale.js";
+import {
+  contentTimestampSchema,
+  sourceHashSchema,
+} from "./content-lifecycle.js";
+import { idempotencyKeySchema } from "./identifiers.js";
+import {
+  adminContentFailureSchema,
+  adminOpaqueTokenSchema,
+} from "./admin-content.js";
+import { currencySchema, marketSchema, minorAmountSchema } from "./commerce.js";
+import { giftCategorySchema } from "./catalog-content.js";
+import { giftKindSchema } from "./gift-commerce-profile.js";
+import { publicMediaViewSchema, slugSchema } from "./presentation.js";
+import { mediaMimeTypeSchema } from "./media-content.js";
+import { MEDIA_IMAGE_PROFILE } from "./media-processing.js";
+import { mediaUploadGrantResponseSchema } from "./resource-management.js";
+
+const uuid = z.uuid();
+const version = schemaVersionSchema;
+const sequence = z
+  .number()
+  .int()
+  .nonnegative()
+  .max(Number.MAX_SAFE_INTEGER - 1);
+const text = (limit: number) => z.string().trim().min(1).max(limit);
+const image = z.strictObject({ uploadId: uuid });
+const scope = { market: marketSchema, currency: currencySchema };
+export const managementCenterPriceSchema = z.strictObject({
+  ...scope,
+  amountMinor: minorAmountSchema,
+});
+export const managementCenterInventorySchema = z.discriminatedUnion("policy", [
+  z.strictObject({
+    policy: z.literal("TRACKED"),
+    locationId: uuid,
+    quantity: sequence,
+  }),
+  z.strictObject({ policy: z.literal("PROCURE_ON_DEMAND") }),
+  z.strictObject({ policy: z.literal("PREORDER") }),
+]);
+const editable = {
+  sourceLocale: supportedLocaleSchema,
+  id: uuid.nullable(),
+  expectedVersion: sequence,
+  name: text(40),
+  description: text(600),
+  image: image.nullable(),
+};
+export const managementCenterIntentSchema = z
+  .discriminatedUnion("kind", [
+    z.strictObject({ kind: z.literal("SAVE_ARTIST"), ...editable }),
+    z.strictObject({
+      kind: z.literal("SAVE_GIFT"),
+      ...editable,
+      name: text(100),
+      giftKind: giftKindSchema,
+      category: giftCategorySchema,
+      price: managementCenterPriceSchema,
+      inventory: managementCenterInventorySchema,
+      eligibility: z.strictObject({ rule: z.literal("ALL_ACTIVE_ARTISTS") }),
+    }),
+    z.strictObject({
+      kind: z.literal("REPLACE_POSTER"),
+      sourceLocale: supportedLocaleSchema,
+      expectedVersion: sequence.positive(),
+      image,
+    }),
+    z.strictObject({
+      kind: z.literal("RESTORE_POSTER"),
+      sourceLocale: supportedLocaleSchema,
+      expectedVersion: sequence.positive(),
+      sourceRevisionId: uuid,
+    }),
+  ])
+  .superRefine((value, context) => {
+    if (value.kind === "SAVE_ARTIST" || value.kind === "SAVE_GIFT") {
+      if ((value.id === null) !== (value.expectedVersion === 0))
+        context.addIssue({
+          code: "custom",
+          path: ["expectedVersion"],
+          message:
+            "New targets require version zero; edits require the current version",
+        });
+      if (value.id === null && value.image === null)
+        context.addIssue({
+          code: "custom",
+          path: ["image"],
+          message: "A new target requires an uploaded image",
+        });
+    }
+  });
+export const managementCenterFailureSchema = adminContentFailureSchema.extend({
+  code: z.union([
+    adminContentFailureSchema.shape.code,
+    z.enum([
+      "MANAGEMENT_UNAVAILABLE",
+      "NEEDS_AUTHORIZATION",
+      "MEDIA_FAILED",
+      "UPLOAD_NOT_READY",
+      "HERO_NOT_CONFIGURED",
+      "DEFAULTS_NOT_CONFIGURED",
+      "TARGET_CONFLICT",
+      "PUBLICATION_FAILED",
+      "INVENTORY_POLICY_LOCKED",
+    ]),
+  ]),
+});
+export const managementCenterOperationSchema = z
+  .strictObject({
+    operationId: uuid,
+    version: sequence.positive(),
+    kind: z.enum([
+      "SAVE_ARTIST",
+      "SAVE_GIFT",
+      "REPLACE_POSTER",
+      "RESTORE_POSTER",
+    ]),
+    sourceLocale: supportedLocaleSchema,
+    status: z.enum(["PROCESSING", "PUBLISHED", "FAILED"]),
+    targetId: uuid.nullable(),
+    updatedAt: contentTimestampSchema,
+    result: z
+      .strictObject({
+        targetId: uuid,
+        handle: slugSchema.nullable(),
+        revisionId: uuid,
+        publicationId: uuid,
+        version: sequence.positive(),
+      })
+      .nullable(),
+    failure: z
+      .strictObject({
+        code: managementCenterFailureSchema.shape.code,
+        retryable: z.boolean(),
+      })
+      .nullable(),
+  })
+  .superRefine((value, context) => {
+    const valid =
+      value.status === "PUBLISHED"
+        ? value.result !== null &&
+          value.failure === null &&
+          value.targetId === value.result.targetId
+        : value.status === "FAILED"
+          ? value.result === null && value.failure !== null
+          : value.result === null && value.failure === null;
+    if (!valid)
+      context.addIssue({
+        code: "custom",
+        message: "Operation status and committed result must agree",
+      });
+  });
+const mutation = { idempotencyKey: idempotencyKeySchema };
+const pagination = {
+  page: sequence.positive().max(1_000_000),
+  pageSize: z.number().int().min(1).max(50),
+};
+export const managementCenterCommandSchema = z.discriminatedUnion("action", [
+  z.strictObject({ schemaVersion: version, action: z.literal("CONTEXT") }),
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("LIST"),
+    section: z.enum(["ARTISTS", "GIFTS", "POSTERS"]),
+    ...pagination,
+  }),
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("PREPARE_UPLOAD"),
+    checksumSha256: sourceHashSchema,
+    byteSize: z
+      .number()
+      .int()
+      .positive()
+      .max(MEDIA_IMAGE_PROFILE.sourceByteLimit),
+    mimeType: mediaMimeTypeSchema,
+    rightsConfirmed: z.literal(true),
+    ...mutation,
+  }),
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("SUBMIT"),
+    intent: managementCenterIntentSchema,
+    ...mutation,
+  }),
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("READ_OPERATION"),
+    operationId: uuid,
+  }),
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("RETRY_OPERATION"),
+    operationId: uuid,
+    expectedVersion: sequence.positive(),
+    ...mutation,
+  }),
+]);
+export const managementCenterRequestSchema = z.strictObject({
+  schemaVersion: version,
+  requestId: uuid,
+  sessionToken: adminOpaqueTokenSchema,
+  csrfToken: adminOpaqueTokenSchema,
+  command: managementCenterCommandSchema,
+});
+const listingBase = {
+  id: uuid,
+  version: sequence.positive(),
+  sourceLocale: supportedLocaleSchema,
+  name: text(160),
+  description: z.string().max(600),
+  image: publicMediaViewSchema.nullable(),
+  status: z.enum(["draft", "active", "paused", "archived"]),
+  handle: slugSchema,
+};
+export const managementCenterListItemSchema = z.discriminatedUnion("kind", [
+  z.strictObject({ kind: z.literal("ARTIST"), ...listingBase }),
+  z.strictObject({
+    kind: z.literal("GIFT"),
+    ...listingBase,
+    giftKind: giftKindSchema,
+    category: giftCategorySchema,
+    price: managementCenterPriceSchema.nullable(),
+    inventory: managementCenterInventorySchema.nullable(),
+    eligibility: z.strictObject({
+      rule: z.enum(["ALL_ACTIVE_ARTISTS", "EXPLICIT_ARTISTS"]),
+    }),
+    canEdit: z.boolean(),
+    inventoryPolicyLocked: z.boolean(),
+  }),
+  z
+    .strictObject({
+      kind: z.literal("POSTER"),
+      id: uuid,
+      version: sequence.positive(),
+      sourceLocale: supportedLocaleSchema,
+      sourceRevisionId: uuid,
+      current: z.boolean(),
+      image: publicMediaViewSchema.nullable(),
+      canRestore: z.boolean(),
+      createdAt: contentTimestampSchema,
+    })
+    .refine((value) => !value.canRestore || value.image !== null),
+]);
+const success = { schemaVersion: version, outcome: z.literal("SUCCESS") };
+export const managementCenterResponseSchema = z.union([
+  managementCenterFailureSchema,
+  mediaUploadGrantResponseSchema.options[0],
+  z.strictObject({
+    ...success,
+    kind: z.literal("OPERATION"),
+    operation: managementCenterOperationSchema,
+  }),
+  z
+    .strictObject({
+      ...success,
+      kind: z.literal("LIST"),
+      section: z.enum(["ARTISTS", "GIFTS", "POSTERS"]),
+      ...pagination,
+      totalItems: sequence,
+      items: z.array(managementCenterListItemSchema).max(50),
+    })
+    .superRefine((value, context) => {
+      const expected = Math.max(
+        0,
+        Math.min(
+          value.pageSize,
+          value.totalItems - (value.page - 1) * value.pageSize,
+        ),
+      );
+      const kind =
+        value.section === "ARTISTS"
+          ? "ARTIST"
+          : value.section === "GIFTS"
+            ? "GIFT"
+            : "POSTER";
+      if (
+        value.items.length !== expected ||
+        value.items.some((item) => item.kind !== kind)
+      )
+        context.addIssue({
+          code: "custom",
+          message: "Listing scope and cardinality must match",
+        });
+    }),
+  z.strictObject({
+    ...success,
+    kind: z.literal("CONTEXT"),
+    capability: z.literal("DIRECT_OPERATOR_V1"),
+    markets: z
+      .array(
+        z.strictObject({
+          market: marketSchema,
+          currencies: z.array(currencySchema).min(1).max(100),
+        }),
+      )
+      .max(250),
+    defaults: z
+      .strictObject({
+        priceScope: z.strictObject(scope).nullable(),
+        inventoryPolicy: z.enum(["TRACKED", "PROCURE_ON_DEMAND", "PREORDER"]),
+        inventoryLocationId: uuid.nullable(),
+        eligibility: z.literal("ALL_ACTIVE_ARTISTS"),
+      })
+      .nullable(),
+    giftKinds: z.array(giftKindSchema).min(1).max(5),
+    categories: z.array(giftCategorySchema).min(1).max(5),
+    poster: z
+      .strictObject({
+        available: z.boolean(),
+        version: sequence,
+        currentRevisionId: uuid.nullable(),
+      })
+      .refine((value) =>
+        value.available
+          ? value.version > 0 && value.currentRevisionId !== null
+          : value.version === 0 && value.currentRevisionId === null,
+      ),
+    operations: z.array(managementCenterOperationSchema).max(10),
+  }),
+]);
+export type ManagementCenterIntent = z.infer<
+  typeof managementCenterIntentSchema
+>;
+export type ManagementCenterCommand = z.infer<
+  typeof managementCenterCommandSchema
+>;
+export type ManagementCenterRequest = z.infer<
+  typeof managementCenterRequestSchema
+>;
+export type ManagementCenterResponse = z.infer<
+  typeof managementCenterResponseSchema
+>;
+export type ManagementCenterOperation = z.infer<
+  typeof managementCenterOperationSchema
+>;
+export type ManagementCenterFailure = z.infer<
+  typeof managementCenterFailureSchema
+>;
+export type ManagementCenterListItem = z.infer<
+  typeof managementCenterListItemSchema
+>;

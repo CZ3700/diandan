@@ -1,0 +1,264 @@
+/* Cart copy and private controls share the storefront's existing visual tokens. */
+.cart-page {
+  max-width: var(--layout-content-max);
+  margin-inline: auto;
+}
+.cart-page > h1 {
+  margin-block: 0 var(--space-8);
+}
+.cart-contents {
+  display: grid;
+  gap: var(--space-6);
+  min-width: 0;
+}
+.cart-items {
+  display: grid;
+}
+.cart-item {
+  display: grid;
+  grid-template-columns: var(--space-24) minmax(0, 1fr);
+  gap: var(--space-4);
+  padding-block: var(--space-6);
+  border-block-end: var(--border-width) solid var(--color-border);
+}
+.cart-item-images {
+  position: relative;
+  align-self: start;
+}
+.cart-item-images > .fs-media {
+  aspect-ratio: 1;
+}
+.cart-idol-portrait {
+  position: absolute;
+  width: calc(var(--space-8) + var(--space-2));
+  height: calc(var(--space-8) + var(--space-2));
+  bottom: calc(-1 * var(--space-2));
+  right: calc(-1 * var(--space-2));
+  border: calc(2 * var(--border-width)) solid var(--color-surface);
+  border-radius: 50%;
+  overflow: hidden;
+}
+.cart-idol-portrait .fs-media {
+  width: 100%;
+  height: 100%;
+}
+.cart-item-main {
+  min-width: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+.cart-item-main h2,
+.cart-item-main h3,
+.cart-item-main p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.cart-item-main h2,
+.cart-item-main h3 {
+  font-size: var(--type-body-size);
+}
+.cart-private-state {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  font-size: var(--type-label-size);
+  color: var(--color-text-muted);
+}
+.cart-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+}
+.cart-actions > button:not(.storefront-primary),
+.cart-contents button:not(.storefront-primary):not(.fs-quantity__button) {
+  font: inherit;
+  color: inherit;
+  padding: var(--space-2) 0;
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: var(--link-underline-offset);
+  cursor: pointer;
+}
+.cart-actions button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.cart-scope {
+  color: var(--color-text-muted);
+  font-size: var(--type-label-size);
+  margin: 0;
+}
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+}
+.cart-footer {
+  display: grid;
+  gap: var(--space-4);
+}
+.cart-footer p {
+  font-size: calc(var(--type-label-size) + var(--border-width) * 2);
+  line-height: var(--type-body-leading);
+  margin: 0;
+  color: var(--color-text-muted);
+}
+.cart-footer > a {
+  justify-self: start;
+}
+.cart-empty {
+  padding-block: var(--space-8);
+  text-align: center;
+}
+.cart-empty-title {
+  font-size: calc(var(--type-body-size) + var(--space-1));
+}
+.cart-editor {
+  grid-column: 1 / -1;
+  padding-block: var(--space-4);
+}
+.cart-personalization {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+.cart-personalization legend {
+  font-weight: 500;
+  padding: 0;
+  margin-block-end: var(--space-4);
+}
+.cart-name-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+.cart-name-choice label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.cart-field {
+  display: grid;
+  gap: var(--space-2);
+}
+.cart-field input,
+.cart-field textarea,
+.cart-field select {
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  padding: var(--space-3);
+}
+.cart-field textarea {
+  resize: vertical;
+}
+.cart-field small {
+  font-size: var(--type-label-size);
+  line-height: var(--type-body-leading);
+  color: var(--color-text-muted);
+}
+.cart-editor .cart-actions {
+  margin-block-start: var(--space-6);
+}
+.gift-add {
+  display: grid;
+  gap: var(--space-6);
+  padding-block-start: var(--space-6);
+}
+.cart-add-button[data-cart-add-state="confirmed"] {
+  animation: cart-confirm var(--motion-control-effective) var(--ease-out) both;
+}
+.cart-feedback {
+  min-height: var(--space-6);
+  font-size: calc(var(--type-label-size) + var(--border-width) * 2);
+  margin: 0;
+}
+.cart-notice,
+.cart-contents [role="alert"],
+.gift-add [role="alert"] {
+  font-size: calc(var(--type-label-size) + var(--border-width) * 2);
+  line-height: var(--type-body-leading);
+}
+.storefront-cart-control {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+.storefront-cart-control > .fs-overlay-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: auto;
+  min-width: calc(var(--space-12) - var(--space-1));
+  padding: var(--space-2);
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.storefront-cart-control svg {
+  width: calc(var(--space-4) + var(--space-1));
+  height: calc(var(--space-4) + var(--space-1));
+}
+.cart-count {
+  font-size: var(--type-label-size);
+  font-variant-numeric: tabular-nums;
+}
+@keyframes cart-confirm {
+  from {
+    transform: scale(0.98);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cart-add-button[data-cart-add-state="confirmed"] {
+    animation: none;
+  }
+}
+@media (max-width: 48rem) {
+  .cart-item {
+    grid-template-columns: calc(var(--space-16) + var(--space-2)) minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+  .cart-item-main .fs-quantity {
+    max-width: 100%;
+  }
+}
+
+.cart-actions button,
+.cart-contents button,
+.storefront-cart-control > .fs-overlay-trigger,
+.cart-name-choice label {
+  min-block-size: calc(var(--space-12) - var(--space-1));
+}
+.cart-actions button,
+.cart-contents button {
+  min-inline-size: calc(var(--space-12) - var(--space-1));
+}
+.cart-field input:focus-visible,
+.cart-field textarea:focus-visible,
+.cart-field select:focus-visible,
+.cart-actions button:focus-visible,
+.cart-contents a:focus-visible,
+.cart-contents button:focus-visible,
+.gift-add a:focus-visible,
+.gift-add button:focus-visible,
+.storefront-cart-control button:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-accent);
+  outline-offset: var(--focus-ring-offset);
+}

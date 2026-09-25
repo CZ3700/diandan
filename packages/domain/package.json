@@ -12,7 +12,13 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "test": "vitest run --config ../../vitest.config.ts --root .",
+    "test": "vitest run --config ../../vitest.config.ts --root . --coverage",
     "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@fan-support/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "fast-check": "4.9.0"
   }
 }

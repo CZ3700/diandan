@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "eventId": "16eb83a0-3b1e-480c-a2c0-46cfb809b855",
+  "occurredAt": "2026-09-03T00:05:00Z",
+  "correlationId": "a6a9869f-a9dd-4b7f-8b86-e6f5ad456bd8",
+  "requestId": "018f47a4-7b7c-4f27-8b35-25c984619a11",
+  "traceId": "4bf92f3577b34da6a3ce929d0e0e4736",
+  "eventType": "ORDER_PAYMENT_CONFIRMED",
+  "aggregateId": "4f847525-ed50-44db-b2cb-319977b397e0",
+  "payload": {
+    "orderId": "4f847525-ed50-44db-b2cb-319977b397e0",
+    "paymentAttemptId": "0be91762-1464-45bc-b0c5-d87f03e81d7e"
+  }
+}

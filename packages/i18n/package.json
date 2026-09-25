@@ -8,11 +8,26 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./storefront": {
+      "types": "./dist/storefront/messages.d.ts",
+      "import": "./dist/storefront/messages.js"
+    },
+    "./notifications": {
+      "types": "./dist/notifications/index.d.ts",
+      "import": "./dist/notifications/index.js"
     }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run --config ../../vitest.config.ts --root .",
     "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@fan-support/contracts": "workspace:*",
+    "intl-messageformat": "11.2.14"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3"
   }
 }

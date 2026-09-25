@@ -8,11 +8,26 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./rum": {
+      "types": "./dist/rum.d.ts",
+      "import": "./dist/rum.js"
+    },
+    "./rum-browser": {
+      "types": "./dist/rum-browser.d.ts",
+      "import": "./dist/rum-browser.js"
     }
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "test": "vitest run --config ../../vitest.config.ts --root .",
+    "test": "vitest run --config ../../vitest.config.ts --root . --maxWorkers=2",
     "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "entities": "8.0.0",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3"
   }
 }

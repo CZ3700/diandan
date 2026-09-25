@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "synthetic": true,
+  "provider": "fake-payment",
+  "scenario": "create-requires-action",
+  "request": {
+    "paymentMethod": "fake_card",
+    "amountMinor": 2500,
+    "currency": "USD",
+    "requestedLocale": "en"
+  },
+  "expected": {
+    "status": "REQUIRES_ACTION",
+    "externalReference": "fake-payment/10000000-0000-4000-8000-000000000001",
+    "providerLocale": "en",
+    "fallbackUsed": false,
+    "action": {
+      "schemaVersion": 1,
+      "type": "REDIRECT",
+      "url": "https://payments.example.invalid/continue/10000000-0000-4000-8000-000000000001"
+    }
+  }
+}

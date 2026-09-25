@@ -1,0 +1,370 @@
+.fs-motion-hero,
+.fs-motion-idol,
+.fs-motion-add,
+.fs-motion-success {
+  min-inline-size: 0;
+}
+
+.fs-motion-hero > .fs-hero .fs-hero__media,
+.fs-motion-hero > .fs-hero .fs-hero__content {
+  animation-duration: var(--motion-hero-effective);
+  animation-timing-function: var(--ease-out);
+}
+
+.fs-motion-hero > .fs-hero .fs-hero__media {
+  animation-name: fs-motion-hero-media-enter;
+}
+
+.fs-motion-hero > .fs-hero .fs-hero__content {
+  animation-name: fs-motion-hero-copy-enter;
+}
+
+.fs-motion-idol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: var(--space-4);
+  border: 0;
+}
+
+.fs-motion-idol__legend {
+  padding: 0;
+  font-size: var(--type-heading-size);
+  font-weight: 700;
+  line-height: var(--type-heading-leading);
+  overflow-wrap: anywhere;
+}
+
+.fs-motion-idol__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.fs-motion-idol__option {
+  display: grid;
+  position: relative;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-inline-size: min(100%, calc(var(--space-32) + var(--space-8)));
+  min-block-size: var(--space-12);
+  padding-block: var(--space-2);
+  padding-inline: var(--space-3);
+  gap: var(--space-2);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  color: var(--color-text);
+  background: var(--color-surface);
+  cursor: pointer;
+}
+
+.fs-motion-idol__option[data-selected="true"] {
+  border-color: var(--idol-accent);
+}
+
+.fs-motion-idol__option-name,
+.fs-motion-idol__selected {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+.fs-motion-idol__selected {
+  color: var(--idol-accent);
+  font-size: var(--type-label-size);
+  font-weight: 700;
+}
+
+.fs-motion-idol__radio {
+  position: absolute;
+  inline-size: var(--border-width);
+  block-size: var(--border-width);
+  margin: calc(-1 * var(--border-width));
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.fs-motion-idol__option:has(.fs-motion-idol__radio:focus-visible) {
+  outline: var(--focus-ring-width) solid var(--color-accent);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.fs-motion-idol__panel {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--space-4);
+}
+
+.fs-motion-idol__visual,
+.fs-motion-idol__copy-stack {
+  display: grid;
+  min-inline-size: 0;
+}
+
+.fs-motion-idol__media-layer,
+.fs-motion-idol__copy {
+  grid-column: 1;
+  grid-row: 1;
+  min-inline-size: 0;
+}
+
+.fs-motion-idol__media-layer {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.fs-motion-idol__panel[data-motion-mode="spatial"]
+  .fs-motion-idol__media-layer {
+  transition:
+    opacity var(--motion-layout-effective) var(--ease-out),
+    transform var(--motion-layout-effective) var(--ease-out);
+}
+
+.fs-motion-idol__panel[data-motion-mode="opacity"]
+  .fs-motion-idol__media-layer {
+  transition: opacity var(--motion-control-effective) var(--ease-out);
+}
+
+.fs-motion-idol__panel[data-motion-phase="settled"]
+  .fs-motion-idol__media-layer[data-layer="outgoing"] {
+  opacity: 0;
+}
+
+.fs-motion-idol__panel[data-motion-mode="spatial"][data-motion-phase="settled"]
+  .fs-motion-idol__media-layer[data-layer="outgoing"] {
+  transform: translate3d(-2%, 0, 0) scale(0.995);
+}
+
+.fs-motion-idol__panel[data-motion-mode="spatial"][data-motion-phase="prepare"]
+  .fs-motion-idol__media-layer[data-layer="active"] {
+  opacity: 0;
+  transform: translate3d(2%, 0, 0) scale(1.005);
+}
+
+.fs-motion-idol__panel[data-motion-mode="opacity"][data-motion-phase="prepare"]
+  .fs-motion-idol__media-layer[data-layer="active"] {
+  opacity: 0;
+}
+
+.fs-motion-idol__media {
+  aspect-ratio: 4 / 5 !important;
+  border-radius: 0;
+}
+
+.fs-motion-idol__copy {
+  align-self: start;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fs-motion-idol__copy[data-active="true"] {
+  visibility: visible;
+  opacity: 1;
+}
+
+.fs-motion-idol__copy h3,
+.fs-motion-idol__copy p,
+.fs-motion-success__title,
+.fs-motion-success__description,
+.fs-motion-success__details > * {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.fs-motion-idol__copy h3 {
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-leading);
+}
+
+.fs-motion-idol__copy p,
+.fs-motion-success__description {
+  color: var(--color-text-muted);
+}
+
+.fs-motion-add {
+  display: inline-grid;
+}
+
+.fs-motion-add__button .fs-button__label,
+.fs-motion-add__labels,
+.fs-motion-add__label {
+  display: grid;
+}
+
+.fs-motion-add__button[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.fs-motion-add__label {
+  grid-column: 1;
+  grid-row: 1;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.fs-motion-add__label[data-layer="confirmed"] {
+  opacity: 0;
+  transform: translate3d(0, 25%, 0);
+}
+
+.fs-motion-add[data-motion-mode="spatial"] .fs-motion-add__label {
+  transition:
+    opacity var(--motion-control-effective) var(--ease-out),
+    transform var(--motion-control-effective) var(--ease-out);
+}
+
+.fs-motion-add[data-motion-mode="opacity"] .fs-motion-add__label {
+  transition: opacity var(--motion-control-effective) var(--ease-out);
+  transform: none;
+}
+
+.fs-motion-add[data-confirmation-state="confirmed"]
+  .fs-motion-add__label[data-layer="action"] {
+  opacity: 0;
+  transform: translate3d(0, -25%, 0);
+}
+
+.fs-motion-add[data-confirmation-state="confirmed"]
+  .fs-motion-add__label[data-layer="confirmed"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.fs-motion-add[data-motion-mode="instant"] .fs-button:active,
+.fs-motion-add[data-motion-mode="opacity"] .fs-button:active {
+  transform: none;
+}
+
+.fs-motion-success {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  padding: var(--space-6);
+  gap: var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-media);
+  background: var(--color-surface);
+}
+
+.fs-motion-success__marker {
+  display: grid;
+  place-items: center;
+  inline-size: var(--space-12);
+  aspect-ratio: 1;
+  border: var(--border-width) solid var(--color-success);
+  border-radius: var(--radius-pill);
+  color: var(--color-success);
+  animation: fs-motion-success-marker var(--motion-hero-effective)
+    var(--ease-out);
+}
+
+.fs-motion-success__body {
+  display: grid;
+  min-inline-size: 0;
+  gap: var(--space-2);
+  animation: fs-motion-success-copy var(--motion-hero-effective) var(--ease-out);
+}
+
+.fs-motion-success__title {
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-leading);
+}
+
+.fs-motion-success__details {
+  display: grid;
+  margin-block-start: var(--space-2);
+  gap: var(--space-2);
+}
+
+@keyframes fs-motion-hero-media-enter {
+  from {
+    opacity: 0.72;
+    transform: scale(1.018);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fs-motion-hero-copy-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--space-3), 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fs-motion-success-marker {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--space-2), 0) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes fs-motion-success-copy {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--space-2), 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .fs-motion-idol__option:hover {
+    border-color: var(--color-accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fs-motion-hero > .fs-hero .fs-hero__media,
+  .fs-motion-hero > .fs-hero .fs-hero__content,
+  .fs-motion-success__marker,
+  .fs-motion-success__body {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .fs-motion-idol__panel[data-motion-mode][data-motion-phase]
+    .fs-motion-idol__media-layer[data-layer],
+  .fs-motion-add[data-motion-mode][data-confirmation-state]
+    .fs-motion-add__label[data-layer],
+  .fs-motion-add[data-motion-mode][data-confirmation-state]
+    .fs-motion-add__button.fs-button:active:not(:disabled) {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+
+  .fs-motion-idol__panel[data-motion-mode][data-motion-phase]
+    .fs-motion-idol__media-layer[data-layer="active"] {
+    opacity: 1;
+  }
+
+  .fs-motion-idol__panel[data-motion-mode][data-motion-phase="prepare"]
+    .fs-motion-idol__media-layer[data-layer="outgoing"] {
+    opacity: 1;
+  }
+
+  .fs-motion-idol__panel[data-motion-mode][data-motion-phase="settled"]
+    .fs-motion-idol__media-layer[data-layer="outgoing"] {
+    opacity: 0;
+  }
+}

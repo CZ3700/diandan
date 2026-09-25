@@ -7,14 +7,14 @@ description: Implement and maintain this repository's fully source-owned global 
 
 ## 1. Cross-Conversation Continuity Protocol
 
-Always read `docs/progress/MASTER.md` first. Then read, in order:
+Since 2026-09-26 new work follows the user-approved V2 launch plan (SPEC §0.2). Read, in order:
 
-1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md`
-2. The selected task's ACTIVE file in `docs/progress/` (Phase 1 and Phase 2 may be ACTIVE together only as defined by `MASTER.md`)
-3. The selected Task ID in `docs/plan/task-breakdown.md`
-4. Its direct dependencies and linked risk IDs in `docs/analysis/risk-assessment.md`
+1. `docs/plan/2026-09-26-v2-launch-plan.md` — current stages R0–R3, decisions and conventions
+2. `docs/progress/v2-progress.md` — what is done, in progress and blocked
+3. `docs/FAN_SUPPORT_PLATFORM_SPEC.md` — authoritative behavior (§0.2 lists the V2 changes)
+4. The ADRs and plan appendices the current stage item references
 
-Resume from recorded evidence; do not repeat completed work or infer completion from files alone. Claim exactly one READY task only when its Phase is ACTIVE and its Lane has no executor; record owner and start time, and stop at that task boundary unless explicitly asked to continue.
+Resume from recorded progress; do not repeat completed work or infer completion from files alone. Work the current stage's items in plan order, one item at a time, and record each item in `v2-progress.md`. The original Phase/Task/Lane files in `docs/progress/` and `docs/plan/task-breakdown.md` remain historical records and acceptance references; they no longer gate new V2 work.
 
 ## S.U.P.E.R Architecture — Mandatory Coding Standard
 
@@ -142,32 +142,27 @@ Primary violation hotspots to prevent:
 - implementing payment extensibility as runtime code upload;
 - hardcoding market, currency, site/primary-domain, idol or provider production exceptions;
 - hardcoding locale production exceptions, using English sentences as message keys, coupling locale to market/currency, or caching localized content without locale;
-- introducing Shopify/hosted commerce/CMS, Redis, microservices or extra PSPs without a demonstrated need.
+- introducing Shopify/hosted commerce/CMS, Redis, microservices or extra PSPs without a demonstrated need (the Airwallex/Stripe/PayPal adapters pre-deployed by the V2 plan §3 are user-approved).
 
 Key contracts: `SupportedLocale`, `LocaleContext`, translation/fallback provenance, `CartGiftContext`, `support_intent`, `CheckoutQuote`, `OrderAmountSnapshot`, `InventoryReservation`, `InternalOrderItemSnapshot`, `PublicOrderItemView`, `NotificationCommand`, `ProviderEvent`, `PaymentProvider`, cart/payment/refund/dispute/order/fulfillment state machines and versioned payment route config. Read specification sections 8–14 before changing any of them.
 
 ## 6. Progress Update Instructions
 
-When starting a task:
+For each V2 stage item:
 
-1. Set only that Task ID to `IN_PROGRESS` in its phase file.
-2. Add owner, UTC/offset-aware start time, exact scope and intended verification.
-3. Keep `MASTER.md` counts synchronized.
-
-Before completion:
-
-1. Run the S.U.P.E.R checklist above.
-2. Run affected tests, then repository format/lint/typecheck/build gates.
-3. Run task-required browser, integration, security or recovery checks.
-4. Record exact commands, exit results, evidence paths and remaining risks.
-5. Move to `REVIEW`; only after acceptance move to `DONE`, unlock direct dependents, and update all counts.
+1. Before starting, add one line to `docs/progress/v2-progress.md`: item, scope, verification plan.
+2. Begin behavior changes with a failing test; run affected tests, then `pnpm check:dev` (the daily gate).
+3. Run item-required browser, integration, security or recovery checks. Write their artifacts under `output/` (ignored by git); record only the conclusion.
+4. Record the result in at most ten lines: commands, pass/fail, remaining risks.
+5. Status vocabulary: `DONE` (fully accepted), `LOCAL_ACCEPTED` (complete locally, waiting on an external condition such as a merchant account or cloud environment), `BLOCKED_EXTERNAL` (cannot proceed until an outside decision or resource arrives), `IN_PROGRESS`.
+6. Commit each accepted item and push it (the user authorized pushing on 2026-09-26).
 
 Do not write “done” without observable evidence. A local pass is not production release evidence.
 
 ## 7. Parallel Execution Protocol
 
-- Read `docs/plan/dependency-graph.md` and `task-breakdown.md` before delegating.
-- Treat Phase status as a hard gate; task dependencies never unlock a task inside a LOCKED Phase.
+- Follow the V2 plan's stage order; parallelize only items the plan marks as independent (for example the pure-frontend friction fixes alongside R1).
+- Git push is authorized (user, 2026-09-26). Cloud apply, real funds, formal content publication, production release and formal business decisions still require explicit user confirmation each time. Keep SPEC §9.0/ADR-012's simple management center and original-language daily publication; strict policy/payment/order/email/key-UI approval remains unchanged.
 - Run at most one executor per independent lane; assign explicit Task IDs and exclusive file ownership.
 - Freeze shared contracts before parallel consumers begin.
 - Never let two executors edit the same migration sequence, schemaVersion, global tokens, published content schema or root lockfile concurrently.
@@ -176,7 +171,7 @@ Do not write “done” without observable evidence. A local pass is not product
 
 ## 8. Archive Trigger
 
-After P7-06 and all 48 tasks are DONE:
+After the V2 plan's R3 launch is complete:
 
 1. Create `docs/archives/fan-support-platform-v1/`.
 2. Snapshot the completed analysis, plan, progress and accepted decision records there.

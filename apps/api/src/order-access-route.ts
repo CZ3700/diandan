@@ -1,0 +1,327 @@
+import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import {
+  checkoutSessionIdSchema,
+  publicOrderIdSchema,
+  orderAccessBootstrapCommandSchema,
+  orderAccessBootstrapRequestSchema,
+  orderAccessConfigurationSchema,
+  orderAccessExchangeCommandSchema,
+  orderAccessExchangeRequestSchema,
+  orderAccessFailureSchema,
+  orderAccessRateResultSchema,
+  orderAccessReadCommandSchema,
+  orderAccessResponseSchema,
+  orderAccessRevokeCommandSchema,
+  orderAccessRevokeRequestSchema,
+  type OrderAccessConfiguration,
+  type OrderAccessFailureCode,
+} from "@fan-support/contracts";
+import { resolveRequestId } from "@fan-support/observability";
+import { currentRequestContext } from "@fan-support/observability/node";
+import { cookieToken, privacy, singleHeader } from "./cart-route.js";
+import type { createCartSessionCredentials } from "./cart-session-credentials.js";
+import {
+  isOrderAccessCredential,
+  type createOrderAccessCredentials,
+} from "./order-access-credentials.js";
+
+type Action = "exchange" | "bootstrap" | "read" | "revoke";
+export type OrderAccessRouteDependencies = Readonly<{
+  configuration: OrderAccessConfiguration;
+  credentials: ReturnType<typeof createOrderAccessCredentials>;
+  cartCredentials: ReturnType<typeof createCartSessionCredentials>;
+  useCases: Record<
+    Action | "consumeRateLimit",
+    (command: unknown) => Promise<unknown>
+  >;
+}>;
+const cookieName = "__Host-fan-order";
+const attributes = "Path=/; HttpOnly; Secure; SameSite=Strict";
+function status(code: OrderAccessFailureCode) {
+  switch (code) {
+    case "INVALID_REQUEST":
+      return 400;
+    case "ACCESS_DENIED":
+      return 401;
+    case "PAYMENT_NOT_CONFIRMED":
+      return 409;
+    case "RATE_LIMITED":
+      return 429;
+    case "TEMPORARY_UNAVAILABLE":
+      return 503;
+  }
+}
+function fail(
+  reply: FastifyReply,
+  code: OrderAccessFailureCode,
+  httpStatus = status(code),
+) {
+  return reply.code(httpStatus).send(
+    orderAccessFailureSchema.parse({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code,
+    }),
+  );
+}
+function orderCookie(request: FastifyRequest): string | undefined {
+  const header = singleHeader(request, "cookie");
+  if (!header) return undefined;
+  let token: string | undefined;
+  for (const part of header.split(";")) {
+    const offset = part.indexOf("=");
+    if (offset < 1) return undefined;
+    if (part.slice(0, offset).trim() !== cookieName) continue;
+    if (token !== undefined) return undefined;
+    token = part.slice(offset + 1).trim();
+  }
+  return isOrderAccessCredential(token) ? token : undefined;
+}
+function trace(request: FastifyRequest) {
+  const requestId =
+    currentRequestContext()?.requestId ??
+    resolveRequestId(singleHeader(request, "x-request-id"));
+  return { requestId, correlationId: requestId, taskName: "order-access-http" };
+}
+
+/** Access credentials never enter logs or business commands; reads cannot invoke financial use cases. */
+export function registerOrderAccessRoute(
+  app: FastifyInstance,
+  options: OrderAccessRouteDependencies,
+): void {
+  const configuration = orderAccessConfigurationSchema.parse(
+    options.configuration,
+  );
+  for (const [method, url, action, scopeName, limit] of [
+    [
+      "POST",
+      "/api/v1/order-access/exchange",
+      "exchange",
+      "EXCHANGE",
+      configuration.rateLimit.exchangeMax,
+    ],
+    [
+      "POST",
+      "/api/v1/checkout/sessions/:checkoutSessionId/order-access",
+      "bootstrap",
+      "BOOTSTRAP",
+      configuration.rateLimit.bootstrapMax,
+    ],
+    [
+      "GET",
+      "/api/v1/orders/:publicOrderId",
+      "read",
+      "READ",
+      configuration.rateLimit.readMax,
+    ],
+    [
+      "POST",
+      "/api/v1/order-access/revoke",
+      "revoke",
+      "REVOKE",
+      configuration.rateLimit.revokeMax,
+    ],
+  ] as const)
+    void app.register(async (scope) => {
+      scope.addHook("onRequest", async (request, reply) => {
+        privacy(reply);
+        if (
+          ((method === "POST" || request.headers.origin !== undefined) &&
+            singleHeader(request, "origin") !==
+              configuration.publicStorefrontOrigin) ||
+          (request.headers["sec-fetch-site"] !== undefined &&
+            !["same-origin", "none"].includes(
+              singleHeader(request, "sec-fetch-site") ?? "",
+            ))
+        )
+          return fail(reply, "ACCESS_DENIED", 403);
+        if (
+          (request.raw.url ?? "").includes("?") ||
+          (method === "GET" &&
+            (request.headers["transfer-encoding"] !== undefined ||
+              (request.headers["content-length"] !== undefined &&
+                singleHeader(request, "content-length") !== "0"))) ||
+          (method === "POST" &&
+            !/^application\/json(?:;\s*charset=utf-8)?$/iu.test(
+              singleHeader(request, "content-type") ?? "",
+            ))
+        )
+          return fail(reply, "INVALID_REQUEST");
+        try {
+          // No proxy-header trust: deployment proxies may enforce additional ingress limits.
+          const networkIdentity = request.raw.socket.remoteAddress;
+          if (!networkIdentity) return fail(reply, "TEMPORARY_UNAVAILABLE");
+          const rate = orderAccessRateResultSchema.parse(
+            await options.useCases.consumeRateLimit({
+              schemaVersion: 1,
+              scope: scopeName,
+              bucket:
+                await options.credentials.rateLimitAccess(networkIdentity),
+              windowSeconds: configuration.rateLimit.windowSeconds,
+              maxRequests: limit,
+            }),
+          );
+          if (!rate.allowed) {
+            void reply.header("retry-after", String(rate.retryAfterSeconds));
+            return fail(reply, "RATE_LIMITED");
+          }
+        } catch {
+          return fail(reply, "TEMPORARY_UNAVAILABLE");
+        }
+      });
+      scope.addHook("onSend", async (_request, reply, payload) => {
+        privacy(reply);
+        return payload;
+      });
+      scope.setErrorHandler((error, _request, reply) => {
+        const parsed = error as { code?: string; statusCode?: number };
+        if (parsed.code === "FST_ERR_CTP_BODY_TOO_LARGE")
+          return fail(reply, "INVALID_REQUEST", 413);
+        if (
+          parsed.statusCode &&
+          parsed.statusCode >= 400 &&
+          parsed.statusCode < 500
+        )
+          return fail(reply, "INVALID_REQUEST");
+        return fail(reply, "TEMPORARY_UNAVAILABLE");
+      });
+      scope.route({
+        method,
+        url,
+        bodyLimit: 1024,
+        exposeHeadRoute: false,
+        handler: async (request, reply) => {
+          let input: { token: string } | { publicOrderId: string } | undefined;
+          try {
+            if (action === "read")
+              publicOrderIdSchema.parse(
+                (request.params as { publicOrderId: string }).publicOrderId,
+              );
+            if (action === "bootstrap")
+              checkoutSessionIdSchema.parse(
+                (request.params as { checkoutSessionId: string })
+                  .checkoutSessionId,
+              );
+            if (action === "exchange")
+              input = orderAccessExchangeRequestSchema.parse(request.body);
+            else if (action === "bootstrap")
+              orderAccessBootstrapRequestSchema.parse(request.body);
+            else if (action === "revoke")
+              input = orderAccessRevokeRequestSchema.parse(request.body);
+            else if (request.body !== undefined)
+              return fail(reply, "INVALID_REQUEST");
+          } catch {
+            return fail(reply, "INVALID_REQUEST");
+          }
+          try {
+            let command: unknown;
+            let issued:
+              | Awaited<ReturnType<typeof options.credentials.issueSession>>
+              | undefined;
+            let csrfToken: string | undefined;
+            if (action === "exchange") {
+              const tokenCandidates = await options.credentials.resolveLink(
+                (input as { token: string }).token,
+              );
+              issued = await options.credentials.issueSession();
+              command = orderAccessExchangeCommandSchema.parse({
+                schemaVersion: 1,
+                tokenCandidates,
+                sessionCredential: issued.access,
+                sessionTtlSeconds: configuration.sessionTtlSeconds,
+                ...trace(request),
+              });
+            } else if (action === "bootstrap") {
+              const token = cookieToken(request);
+              if (!token) return fail(reply, "ACCESS_DENIED");
+              const proof = await options.cartCredentials.resolve(
+                token,
+                singleHeader(request, "x-csrf-token"),
+              );
+              if (!proof.csrfValid) return fail(reply, "ACCESS_DENIED", 403);
+              issued = await options.credentials.issueSession();
+              const link = await options.credentials.issueLink();
+              command = orderAccessBootstrapCommandSchema.parse({
+                schemaVersion: 1,
+                checkoutSessionId: (
+                  request.params as { checkoutSessionId: string }
+                ).checkoutSessionId,
+                cartAccesses: proof.accessCandidates,
+                tokenCredential: link.access,
+                sessionCredential: issued.access,
+                sessionTtlSeconds: configuration.sessionTtlSeconds,
+                ...trace(request),
+              });
+            } else {
+              const token = orderCookie(request);
+              if (!token) return fail(reply, "ACCESS_DENIED");
+              const proof = await options.credentials.resolveSession(
+                token,
+                singleHeader(request, "x-csrf-token"),
+              );
+              if (action === "revoke" && !proof.csrfValid)
+                return fail(reply, "ACCESS_DENIED", 403);
+              csrfToken = proof.csrfToken;
+              command =
+                action === "read"
+                  ? orderAccessReadCommandSchema.parse({
+                      schemaVersion: 1,
+                      publicOrderId: (
+                        request.params as { publicOrderId: string }
+                      ).publicOrderId,
+                      sessionCandidates: proof.accesses,
+                    })
+                  : orderAccessRevokeCommandSchema.parse({
+                      schemaVersion: 1,
+                      publicOrderId: (input as { publicOrderId: string })
+                        .publicOrderId,
+                      sessionCandidates: proof.accesses,
+                      ...trace(request),
+                    });
+            }
+            const result = orderAccessResponseSchema.parse(
+              await options.useCases[action](command),
+            );
+            if (result.outcome === "FAILURE")
+              return reply.code(status(result.code)).send(result);
+            if (action === "exchange" || action === "bootstrap") {
+              if (result.action !== "GRANTED" || !issued)
+                throw new Error("Order access response mismatch");
+              void reply.header(
+                "set-cookie",
+                `${cookieName}=${issued.token}; ${attributes}; Expires=${new Date(result.grant.expiresAt).toUTCString()}`,
+              );
+              void reply.header("x-csrf-token", issued.csrfToken);
+            } else if (action === "read") {
+              const publicOrderId = (
+                request.params as { publicOrderId: string }
+              ).publicOrderId;
+              if (
+                result.action !== "READ" ||
+                result.order.publicOrderId.toLowerCase() !==
+                  publicOrderId.toLowerCase()
+              )
+                throw new Error("Order access response mismatch");
+              void reply.header("x-csrf-token", csrfToken!);
+            } else {
+              if (
+                result.action !== "REVOKED" ||
+                result.publicOrderId.toLowerCase() !==
+                  (
+                    input as { publicOrderId: string }
+                  ).publicOrderId.toLowerCase()
+              )
+                throw new Error("Order access response mismatch");
+              void reply.header(
+                "set-cookie",
+                `${cookieName}=; ${attributes}; Max-Age=0`,
+              );
+            }
+            return reply.code(200).send(result);
+          } catch {
+            return fail(reply, "TEMPORARY_UNAVAILABLE");
+          }
+        },
+      });
+    });
+}

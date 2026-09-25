@@ -1,8 +1,8 @@
 # Task Breakdown
 
-> 总任务数：48  
+> 总任务数：49
 > 状态真相源：`docs/progress/phase-*.md`  
-> 领取规则：所在 Phase 已为 `ACTIVE`、依赖全部 `DONE` 且对应 Lane 当前无 executor 后，任务才可从 `PENDING` 改为 `READY/IN_PROGRESS`。
+> 领取规则：所在 Phase 已为 `ACTIVE`、依赖全部 `DONE`（或满足 ADR-016 明确记录的本地完整验收及非作者复核条件）且对应 Lane 当前无 executor 后，任务才可从 `PENDING` 改为 `READY/IN_PROGRESS`。本地例外不删除下列原直接依赖或完整验收。
 
 ## 执行约定
 
@@ -54,6 +54,7 @@
 | 5 | P5-05 | P0 | L | C | S,U,P,E |
 | 5 | P5-06 | P0 | M | D | S,U,P,E |
 | 5 | P5-07 | P1 | M | D | P,E,R |
+| 5 | P5-08 | P0 | L | D | S,U,P,E,R |
 | 6 | P6-01 | P0 | L | D | S,U,P,R |
 | 6 | P6-02 | P0 | L | D | S,U,R |
 | 6 | P6-03 | P1 | M | D | S,E,R |
@@ -68,6 +69,8 @@
 | 7 | P7-06 | P1 | M | D | S,U,E |
 
 每个任务的验收条件隐含：其列出的 S.U.P.E.R 原则 Quick Check 必须通过；详细 10 项检查见项目 SKILL。
+
+P1-01 的 OpenAPI 产物只冻结可复用 schema components，并用扩展字段明确该范围。后续每个 API 实现任务必须同步补入对应 `paths/operation`、认证/RBAC、`Idempotency-Key`、`expectedVersion` 与审计 reason 契约；不得把空 `paths` 误报为完整 API 文档。
 
 ## Phase 0 — 基线与骨架（5）
 
@@ -84,7 +87,7 @@
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
 | P1-01 | P0-01, P0-03 | 在 `contracts` 唯一定义 SupportedLocale schema/type/ordered values/default/native names、LocaleContext、Idol、Gift、PriceBook、Inventory、Cart、SupportIntent、CheckoutQuote/OrderAmount、Payment/ProviderEvent、Order/政策接受/通知语言快照、Refund/Dispute、Fulfillment、错误 envelope 与 schemaVersion；i18n/config/apps 只导入；生成 JSON Schema/OpenAPI | schema snapshot、七 locale 精确集合、仓库无重复 locale 常量、locale/market/currency 分离、兼容/拒绝未知版本测试；OpenAPI 与 Zod 一致性 | R-03, R-14, R-17 |
-| P1-02 | P1-01, P0-04 | 定义自研 content/catalog/pricing/inventory/media/policy 与七语言显式 translation/review schema、source hash/stale/完整度/发布校验及虚构 fixtures | schema/validator tests；缺价格/适用偶像/合格媒体或任一 locale 关键批准译文的内容不能发布 | R-06, R-08, R-17 |
+| P1-02 | P1-01, P0-04 | 定义自研 content/catalog/pricing/inventory/media/policy 与七语言显式 translation/review schema、source hash/stale/完整度/发布校验及虚构 fixtures；明确拆分 base operational status、不可变 revision lifecycle 与 public published view | schema/validator tests；公开 view 不接受 draft/archived；缺价格/适用偶像/合格媒体或任一 locale 关键批准译文的内容不能发布 | R-06, R-08, R-17 |
 | P1-03 | P1-01 | 在纯 `domain` 实现金额、价格 revision、适用关系、库存预占/提交/释放、支付/订单状态机、路由和幂等 | domain 单元/属性测试；不 import Next/Nest/Drizzle/PSP；branch ≥90% | R-01, R-03, R-05, R-06 |
 | P1-04 | P1-01, P1-02, P0-03 | 建立完整 PostgreSQL migrations：内容与 homepage/policy/media translation/review/locale config、商品/价格、inventory balance/ledger/reservation、cart/intent、contact/order/refund/payment、通知 locale、inbox/outbox、履约、RBAC、审计 | 空库 migrate；最近迁移回退/向前修复；translation `(revision, locale)` 唯一/不可变、余额/活动 attempt/退款上限/唯一键/append-only 约束测试 | R-02, R-03, R-06, R-11, R-16, R-17 |
 | P1-05 | P1-01, P1-02, P1-03, P1-04 | 定义 persistence/payment/media/identity/notification/cache-purge/key-management ports；实现 PostgreSQL repositories、S3-compatible/CDN purge、获批 KMS 与 fake adapters | adapter conformance；供应商/Drizzle 对象不越界；fixture 变化能触发失败 | R-02, R-06, R-14 |
@@ -105,14 +108,16 @@
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
-| P3-01 | P1-02, P1-04, P1-05, P1-06 | 实现 locale-aware 内容/媒体/发布 API、不可变七语言 revision、preview token、outbox 与按 locale CDN cache purge | API/事务/权限测试；preview no-store；发布 ≤60 秒可见；locale cache 不串线；失败可重试 | R-08, R-11, R-14, R-17 |
-| P3-02 | P2-03, P3-01 | 实现自研 Admin 的首页、偶像、媒体与翻译矩阵/source diff/审核/导入导出/七语言预览/发布/回退 | 草稿不污染已发布内容；缺失/stale/自审发布阻断；媒体状态；键盘/axe；冲突提示 | R-02, R-08, R-12, R-17 |
-| P3-03 | P2-03, P3-01 | 实现自研 Admin 的礼物/variant、七语言内容、适用偶像、价格簿、库存流水和上下架 | 调价 revision；库存原因/审计；缺关键批准译文或无效礼物不能发布；权限测试 | R-06, R-08, R-10, R-17 |
-| P3-04 | P2-06, P3-01 | 实现 `/:locale` storefront shell、导航/语言切换、首页、偶像目录与详情 | 真实 DB/media fixtures；七语言/全状态；切换保持上下文；无硬编码 ID；视觉/性能/axe | R-01, R-07, R-08, R-12, R-17 |
-| P3-05 | P2-04, P3-01, P3-04 | 实现七语言礼物详情、未选偶像流程、政策与加载/空/下架/失败/fallback-noindex 状态 | 不适用/售罄/低库存/预售；关键政策无 fallback 上线；不显示偶像地址；服务端 canonical 数据 | R-01, R-13, R-17 |
-| P3-06 | P3-02, P3-03, P3-04, P3-05 | 完成七语言 i18n、SEO、OG、structured data、locale sitemap/self-canonical/hreflang/x-default、性能与运营计时验收 | `en/zh-CN/th/vi/ja/es/pt`；SEO/cache snapshot；运营 3/5/8 分钟证据；LCP 预算 | R-08, R-12, R-13, R-17 |
+| P3-01 | P1-02, P1-04, P1-05, P1-06 | 实现 locale-aware 内容/媒体/发布 API、不可变七语言 revision、preview token、outbox 与按 locale CDN cache purge；艺人搜索/anchor/cursor、礼物分页/金额筛选排序、原图角色构图与多语详情扩展合同 | API/事务/权限测试；preview no-store；发布 ≤60 秒可见；locale cache 不串线；失败可重试 | R-08, R-11, R-14, R-17 |
+| P3-02 | P2-03, P3-01 | 实现自研 Admin 的首页、偶像、媒体与翻译矩阵/source diff/审核/导入导出/七语言预览/发布/回退 | 艺人别名、横竖原图/焦点裁切/完整展示与双端构图预览；草稿不污染已发布内容；缺失/stale/自审发布阻断；媒体状态；键盘/axe；冲突提示 | R-02, R-08, R-12, R-17 |
+| P3-03 | P2-03, P3-01 | 实现自研 Admin 的礼物分类/variant、独立库存策略、受控图文块与七语言详情、适用偶像、完整价格簿版本、库存流水和上下架；所有类型仍由工作室转交艺人 | 无库存按单准备可重复售卖；限量余额/并发与策略历史保护；调价/回退 revision；库存原因/审计；缺关键批准译文或无效礼物不能发布；权限与真实 HTTP/PG/浏览器测试 | R-06, R-08, R-10, R-13, R-17 |
+| P3-04 | P2-06, P3-01 | 实现 `/:locale` storefront shell、导航/语言切换、首页、偶像目录与详情；连续横滑分批加载、名字搜索/建议/直接定位 | 真实 DB/media fixtures；七语言/全状态；切换保持上下文；无硬编码 ID；视觉/性能/axe | R-01, R-07, R-08, R-12, R-17 |
+| P3-05 | P2-04, P3-01, P3-04 | 实现礼物目录分页/筛选抽屉/价格排序/URL状态恢复、七语言礼物详情、未选偶像流程、政策与加载/空/下架/失败/fallback-noindex 状态 | 不适用/售罄/低库存/预售；关键政策无 fallback 上线；不显示偶像地址；服务端 canonical 数据 | R-01, R-13, R-17 |
+| P3-06 | P3-02, P3-03, P3-04, P3-05 | 完成七语言 i18n、SEO、OG、structured data、locale sitemap/self-canonical/hreflang/x-default、性能与运营计时验收；大样本目录/搜索/分页、IME/键盘/读屏与混合比例照片验收 | `en/zh-CN/th/vi/ja/es/pt`；SEO/cache snapshot；运营 3/5/8 分钟证据；LCP 预算 | R-08, R-12, R-13, R-17 |
 
 ## Phase 4 — 加购、结账与订单（6）
+
+2026-09-08 调度：按用户授权与 ADR-013 开始 Phase 4 本地开发；P3-06 的性能及人工验收继续保留，以下直接依赖不变，Phase 5 仍须两阶段退出。
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
@@ -120,10 +125,14 @@
 | P4-02 | P2-03, P2-04, P4-01 | 实现购物车抽屉/页：多偶像隔离、数量、删除、留言编辑、乐观回滚 | 同 variant 不同 idol 不合并；失败解释；键盘/live region | R-01, R-07 |
 | P4-03 | P4-01, P4-02 | 实现 checkout preflight：重验并锁 cart version，持久化 CheckoutQuote/OrderAmount、库存预占、PENDING_PAYMENT 订单 `presentation_locale`、偶像/礼物/媒体各自 TranslationSnapshotRef、政策及其 translation revision | 金额算术/过期报价；五类变化阻止旧数据；并发不超卖；各对象 fallback provenance 可重现；切换 UI 不改历史快照；浏览器金额不入账 | R-01, R-05, R-06, R-17 |
 | P4-04 | P1-06, P4-03 | 实现 PaymentProvider、Fake/首个批准 PSP adapter、平台→provider locale 映射、session-scoped capability、首事务固化 provider/rule 的两事务幂等 create Saga、托管 next action、return/UNKNOWN reconcile | provider locale fallback 只改托管 UI；超时/崩溃恢复同一 account+attempt；仅失败终态可重试；回跳不能成功/自动换路 | R-03, R-05, R-17 |
-| P4-05 | P4-04 | 用 endpointId 路由的可信 provider evidence 推进既有 payment/order、关联早到事件、commit/release reservation，并实现保持订单 locale 的查单 token exchange、成功页 | 最终一致；UNMATCHED 可恢复；迟到成功 ON_HOLD；token 安全；公共 DTO 无内部 intent ID；历史本地化快照不漂移 | R-02, R-03, R-06, R-09, R-17 |
+| P4-05 | P4-04（ADR-014 允许先依赖其已验收 TEST/通用接口检查点开展本地开发） | 用 endpointId 路由的可信 provider evidence 推进既有 payment/order、关联早到事件、commit/release reservation，并实现保持订单 locale 的查单 token exchange、成功页 | 最终一致；UNMATCHED 可恢复；迟到成功 ON_HOLD；token 安全；公共 DTO 无内部 intent ID；历史本地化快照不漂移 | R-02, R-03, R-06, R-09, R-17 |
 | P4-06 | P4-05, P1-06 | 实现按订单固化 locale 与不可变 templateVersion 的七语言付款/准备/送达事务通知、英文事故 fallback 告警、重试、幂等及过期 reservation/intent/cart/token 清理 | 七语言 subject/preheader/HTML/text/变量与 review manifest 完整；旧版本可重现；每事件只发一次；fallback 可观测；清理与 webhook 无竞态 | R-02, R-11, R-17 |
 
-## Phase 5 — 运营与支付扩展（7）
+## Phase 5 — 运营与支付扩展（8）
+
+2026-09-18 ADR-015：本地开发仅允许P5-01，其完整验收DONE后才允许P5-02；其余六项P5及后继Phase不由此解锁，原验收条件与直接依赖不变。
+
+2026-09-22 ADR-016：用户接受 P5-04→P5-03/P5-05（Lane A/C）→P5-06→P5-07→P5-08 离线部分的本地顺序。本次仅 P5-04 READY：P1-03 DONE，P4-04 已验收 TEST runtime/connectors 的适用范围经独立核对。P5-03 同样只能消费 P4-04 的已验收本地接口；P5-05/06/07/08 须逐项等全部原直接依赖的本地完整实现与独立验收，不能凭局部切片就绪。任务的完整 DONE 条件、真实 PSP/sandbox 和云验收仍保持。
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
@@ -134,19 +143,24 @@
 | P5-05 | P5-01, P5-04 | 实现含七语言渠道名称/提示的配置 draft/validate/publish/rollback、差异预览、二次确认和缓存传播 | 缺关键本地化文案、非法/空路由拒绝；发布 ≤60 秒；一分钟内回退；完整审计 | R-04, R-05, R-10, R-17 |
 | P5-06 | P5-01, P1-06, P5-03 | 实现 webhook 查询/安全重放、DLQ、UNKNOWN 支付、通知失败待办 | 重放不重复退款/履约/通知；敏感原文仅受控访问 | R-02, R-03, R-11 |
 | P5-07 | P5-04, P5-05, P5-06 | 编写并演练新增 PSP runbook：代码→沙盒→真实小额→灰度；不实际接多余渠道 | 用 fake adapter 完整跑 conformance/灰度；列出商户资格决策门 | R-04, R-05, R-15 |
+| P5-08 | P0-05, P1-05, P3-06, P4-06, P5-05, P5-06, P5-07 | 按 ADR-007 实现 OpenTofu production modules 与 production-like staging：state/locking、VPC、ECR、ECS/ALB、RDS PostgreSQL、S3、CloudFront/WAF、Route 53/ACM、KMS/Secrets 引用、预算/配额/告警和 immutable digest 部署；production apply 仍由 Phase 7 灰度门控制 | `tofu fmt -check/validate/plan`；干净 staging apply/smoke/re-apply；四镜像 digest、private origin/data、pg-boss、S3/presign/checksum、CDN cache/no-store/purge、WAF、KMS/IAM、预算/配额和回退前置证据 | R-02, R-11, R-14, R-15, R-16, R-17 |
 
 ## Phase 6 — 加固与恢复（6）
+
+当前P6-01/02/03本地完整范围及P6-04明确范围本地安全检查已ACCEPT（2026-09-24），保留远端CI、人工/真实用户、CSP/Permissions加固及云部署等原门，仍IN_PROGRESS且Lane D已释放。P6-05原P1-06/P4-06/P5-06完整本地成果和193相关路径再次独立核对后，仅自有LOCAL_TEST故障注入READY、无owner、尚未领取；P6-06 PENDING、Phase7 LOCKED。31 DONE/10 IN_PROGRESS/1 READY/7 PENDING=49。范围与验证计划见phase-6，ADR-016后继仍逐项核对、登记再领取，六项按Lane D串行；恢复和完整Release Gate不以本地工具替代。
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
 | P6-01 | P4-06, P5-07 | 汇总并补齐 unit/i18n/property/schema/contract/integration/七语言 E2E/SEO/cache 测试矩阵与覆盖门禁 | CI 全绿；规范第 18.2 节 14 条 E2E；消息目录/locale cache/hreflang snapshot；失败 seed 可复现 | R-01, R-03, R-17 |
-| P6-02 | P3-06, P4-06, P5-02 | 完成七语言 WCAG 2.2 AA：键盘、VoiceOver/NVDA、200% zoom、320px、断行、reduce motion | critical/serious=0；CJK/Thai/Vietnamese/长西葡语人工记录；核心路径不阻塞 | R-07, R-17 |
+| P6-02 | P3-06, P4-06, P5-02 | 完成七语言 WCAG 2.2 AA：键盘、VoiceOver/NVDA、200% zoom、320px、断行、reduce motion；按 ADR-017 优先纳入首页直接礼物浏览的交互简化 | critical/serious=0；CJK/Thai/Vietnamese/长西葡语人工记录；核心路径不阻塞 | R-07, R-17 |
 | P6-03 | P3-06, P4-06 | 优化 LCP/INP/CLS、按 locale 字体/消息 bundle、图片、缓存与第三方脚本 | 七语言 Lighthouse/bundle；6 视口；RUM dashboard；达到第 16.2 节 | R-07, R-17 |
 | P6-04 | P5-06 | 做明确范围的安全检查：越权、XSS、CSRF、SSRF、重放、token、secret、依赖、PII | High/Critical=0；修复回归；扫描报告路径 | R-02, R-03, R-09, R-10 |
 | P6-05 | P1-06, P4-06, P5-06 | 故障注入：超时、乱序、重复、队列积压、PSP/邮件/对象存储/DB 短暂失败 | 无丢单/重复扣款；backlog 恢复；UNKNOWN 可对账 | R-03, R-11 |
-| P6-06 | P0-05, P1-04, P5-05, P6-05 | 演练 PITR、对象存储恢复、storefront/admin/api/worker OCI 回退、配置回退和 webhook 重放 | RPO/RTO/15 分钟代码回退有时间戳证据；演练问题已闭环 | R-11, R-16 |
+| P6-06 | P0-05, P1-04, P5-05, P5-08, P6-05 | 演练 PITR、对象存储恢复、storefront/admin/api/worker OCI 回退、配置回退和 webhook 重放 | RPO/RTO/15 分钟代码回退有时间戳证据；演练问题已闭环 | R-11, R-16 |
 
 ## Phase 7 — 上线与灰度（6）
+
+当前 LOCKED。ADR-016 仅授权后续决策/UAT/运维/复盘文档、导入及 QA 工具准备；所消费的原直接依赖本地成果先独立验收，先同步有限 ACTIVE 范围再逐项 READY。正式选择/内容、真实交易、发布和上线后观察仍须原门，日常上传不新增复杂导入步骤。
 
 | ID | 依赖 | 工作与产物 | 最低验证/证据 | 风险 |
 |:--|:--|:--|:--|:--|
@@ -162,9 +176,31 @@
 只允许以下值：
 
 - `PENDING`：Phase 尚未激活、依赖未完成或 Lane 正被占用。
-- `READY`：Phase 已激活、依赖完成且 Lane 空闲，可以领取。
-- `IN_PROGRESS`：已有唯一执行者。
+- `READY`：Phase 已激活、依赖完成（或符合 ADR-016 的本地完整验收与非作者复核条件）且 Lane 空闲，可以领取。
+- `IN_PROGRESS`：正在由唯一执行者实施；或本地范围已验收但外部条件待续，明确记录欠项并释放 executor。后一状态不等于完整 DONE。
 - `BLOCKED`：存在具体阻断条件。
 - `REVIEW`：实现完成，等待独立验证。
 - `DONE`：验收与证据全部满足。
 - `DEFERRED`：经用户明确同意移出当前里程碑。
+
+## 2026-09-22 P5-04 本地验收后的接续
+
+P5-04 的全部本地实现、实际PG/HTTP/七语双端与非作者复核通过；正式PSP条件仍保留，Task维持IN_PROGRESS并释放Lane A。P5-03原直接依赖P5-01/P4-05与P4-04已验收本地接口经当前源核对后置READY；P5-05的本地输入已齐，待共享合同与文件归属冻结后按Lane C登记就绪，不同时领取。当前29 DONE / 3 IN_PROGRESS / 1 READY / 16 PENDING=49，Phase6/7仍LOCKED。证据见`output/checks/p5-04-payment-health/final-verification.md`、`final-independent-review.md`和`next-stage-readiness.md`；上方排期登记按当时时点保留，原任务依赖及外部门不变。
+
+## 2026-09-22 P5-03 本地验收后的接续
+
+P5-03取消/全额部分退款/拒付/对账已完成全部本地实现、实际PG/HTTP/七语双端与非作者复核。正式商户sandbox refund等外部条件保留，Task仍IN_PROGRESS、Lane A释放。P5-05原直接依赖P5-01/P5-04本地完整验收已独立核对，选定身份输入17/19与P5-04时相同（两变化仅TEST IdP可选hook及声明，原75tests回归通过），支付输入85/85相同；共享contracts/API/BFF/管理中心入口归属已冻结，现Lane C READY、无owner，下一轮先登记再实施。29 DONE / 4 IN_PROGRESS / 1 READY / 15 PENDING=49；P5-06及后继按原依赖与排期逐项就绪，Phase6/7保持LOCKED。
+
+证据见`output/checks/p5-03-refund-operations/final-verification.md`、`final-gates.json`、`ui-next-stage-readiness.md`。Docker时钟失败与原生18.6隔离全验收范围均保留；不降低权限/金融/上线条件，不push/部署，不触发真实资金。
+
+## 2026-09-22 P5-05 本地验收后的接续
+
+P5-05配置管理、独立审核/继承、差异/二次确认/发布回退、健康策略和双独立进程传播已完成本地完整验收；正式商户能力、关键文案批准和实际配置保留，Task仍IN_PROGRESS、Lane C释放。P5-06原直接依赖P5-01/P1-06/P5-03经非作者核对，身份19/可靠事件31/财务79选中源与accepted一致；11个共享变化和0036由本轮真实PG/原财务HTTP/配置HTTP/七语双端及最终质量门承接，现READY、Lane D空闲，先登记再领取。29 DONE / 5 IN_PROGRESS / 1 READY / 14 PENDING=49，Phase6/7保持LOCKED。完整持久本地体验尚未交付，检查表见`docs/runbooks/local-experience-readiness.md`；不以短暂测试夹具代替用户可持续使用的体验环境。
+
+### 2026-09-22 P5-06 验收与 P5-07 本地就绪
+
+P5-06 原任务四类异常与安全重放已完成实际PG/HTTP/Worker/七语双端、质量门及非作者复核，标DONE、Lane D释放。原任务不要求新商户接入；正式PSP/人工/部署条件留在对应未完任务。P5-07原P5-04/05/06直接依赖的本地完整成果已逐源核对并独立验收，现READY、尚未领取，只做接入runbook与fake conformance/灰度演练；不实际增加多余渠道。证据见`output/checks/p5-06-exception-operations/next-stage-readiness.md`与最终验收。30 DONE /5 IN_PROGRESS /1 READY /13 PENDING=49，Phase6/7仍LOCKED；完整持久本地体验继续按独立检查表交付。
+
+### 2026-09-22 P5-07 验收与 P5-08 有限本地就绪
+
+P5-07 接入手册/商户资格门、完整fake conformance/七阶段TEST灰度、停止回退及旧UNKNOWN恢复已通过统一入口、实际PG/HTTP/双API、质量门与非作者复核，标DONE、Lane D释放。P5-08原P0-05/P1-05/P3-06/P4-06/P5-05/P5-06/P5-07依赖不变；适用本地成果经独立逐源及验收证据核对后，按ADR-016仅离线模块/部署工具READY、尚未领取。该工具范围明确包含持久本地体验：同一PG/媒体、前后台/Worker/本地身份、上传→TEST付款→查单→订单处理→退款和重启保留数据，按`docs/runbooks/local-experience-readiness.md`实测后再告知用户准备服务器。原OpenTofu与AWS staging apply/smoke/re-apply等完整验收不删减，离线通过仍不能把P5-08标DONE。证据见`output/checks/p5-07-psp-onboarding/final-verification.md`和`next-stage-readiness.md`。31 DONE /5 IN_PROGRESS /1 READY /12 PENDING=49，Phase6/7仍LOCKED；原商户/人工/内容/云/真实资金门保留，仅本地提交。

@@ -62,17 +62,61 @@ const expectedWorkflow = {
     TURBO_TELEMETRY_DISABLED: "1",
   },
   jobs: {
-    quality: {
-      name: "Quality",
+    regression: {
+      name: "Regression (${{ matrix.suite }})",
       "runs-on": "ubuntu-24.04",
-      "timeout-minutes": 20,
+      "timeout-minutes": 120,
+      strategy: {
+        "fail-fast": false,
+        matrix: {
+          suite: ["quality", "catalog", "commerce", "operations", "journey"],
+        },
+      },
+      env: {
+        POSTGRES_TEST_BIN: "/usr/lib/postgresql/18/bin",
+      },
       steps: [
         checkoutStep,
         setupStep,
         installStep,
         {
-          name: "Run repository checks",
-          run: "pnpm check",
+          name: "Install browser runtimes",
+          run: "pnpm exec playwright install --with-deps chrome chromium",
+        },
+        {
+          name: "Install isolated PostgreSQL runtime",
+          run: "sudo apt-get update\nsudo apt-get install -y postgresql-common ca-certificates curl xvfb xauth\nsudo install -d /usr/share/postgresql-common/pgdg\nsudo curl --fail --silent --show-error -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc https://www.postgresql.org/media/keys/ACCC4CF8.asc\necho 'deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt noble-pgdg main' | sudo tee /etc/apt/sources.list.d/fan-support-pgdg.list\nsudo apt-get update\nsudo apt-get install -y postgresql-18\n/usr/lib/postgresql/18/bin/postgres --version\n",
+        },
+        {
+          name: "Run isolated regression suite",
+          run: 'xvfb-run --auto-servernum --server-args="-screen 0 1920x1080x24" pnpm verify:regression --suite ${{ matrix.suite }} --output output/checks/p6-01-regression/ci',
+        },
+        {
+          name: "Preserve regression evidence",
+          if: "always()",
+          uses: "actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f",
+          with: {
+            name: "regression-${{ matrix.suite }}",
+            path: "output/checks/p6-01-regression/ci",
+            "if-no-files-found": "error",
+            "retention-days": 14,
+          },
+        },
+      ],
+    },
+    quality: {
+      name: "Quality",
+      "runs-on": "ubuntu-24.04",
+      needs: "regression",
+      if: "always()",
+      "timeout-minutes": 5,
+      steps: [
+        {
+          name: "Require every regression suite",
+          env: {
+            REGRESSION_RESULT: "${{ needs.regression.result }}",
+          },
+          run: 'test "$REGRESSION_RESULT" = success',
         },
       ],
     },
@@ -86,7 +130,11 @@ const expectedWorkflow = {
         installStep,
         {
           name: "Audit dependencies",
-          run: "pnpm audit --registry=https://registry.npmjs.org --audit-level=high",
+          run: "pnpm security:dependencies",
+        },
+        {
+          name: "Check security regressions",
+          run: "pnpm security:regressions",
         },
         {
           name: "Scan repository for secrets",
@@ -189,6 +237,10 @@ async function validateWorkflowDirectory(errors) {
 function validateManifest(manifest, errors) {
   const requiredScripts = {
     "check:ci": "node ./scripts/check-ci.mjs",
+    "security:dependencies":
+      "node --test ./scripts/security-dependencies.test.mjs && corepack pnpm audit --registry=https://registry.npmjs.org --audit-level=high",
+    "security:regressions":
+      "corepack pnpm exec turbo run build --filter=@fan-support/observability... --output-logs=errors-only && node --test ./scripts/security-rate-limit.test.mjs ./apps/api/scripts/local-experience-services.test.mjs ./scripts/render-rum-dashboard.test.mjs",
     "security:secrets": "node ./scripts/scan-secrets.mjs",
   };
 

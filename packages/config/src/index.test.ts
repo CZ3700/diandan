@@ -24,5 +24,8 @@ test("separates browser and server package entry points", async () => {
     "./public",
     "./server",
   ]);
-  expect(manifest.dependencies).toEqual({ zod: "4.5.4" });
+  expect(manifest.dependencies).toEqual({
+    "@fan-support/contracts": "workspace:*",
+    zod: "4.5.4",
+  });
 });

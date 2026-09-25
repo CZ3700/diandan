@@ -1,0 +1,70 @@
+@import "tailwindcss" source(none);
+@import "@fan-support/design-tokens/foundations.css";
+@import "@fan-support/ui/interactions.css";
+@import "@fan-support/ui/motion.css";
+@import "@fan-support/ui/primitives.css";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: var(--layout-min-width);
+  min-height: 100vh;
+  margin: 0;
+  color: var(--color-text);
+  background: var(--color-bg);
+  font-family: var(--font-ui);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-leading);
+}
+
+.runtime-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: var(--layout-gutter);
+}
+
+.runtime-card {
+  width: min(100%, var(--layout-content-max));
+  padding: var(--space-8);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-media);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-raised);
+}
+
+.runtime-kicker {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--type-label-size);
+  font-weight: 700;
+  letter-spacing: var(--type-label-tracking);
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-leading);
+  text-wrap: balance;
+}
+
+.runtime-card > p:not(.runtime-kicker) {
+  max-width: var(--layout-reading-max);
+  margin: var(--space-6) 0;
+  color: var(--color-text-muted);
+}
+
+a {
+  color: var(--color-accent);
+  font-weight: 700;
+  text-underline-offset: var(--link-underline-offset);
+}
+
+a:focus-visible {
+  border-radius: var(--radius-control);
+  outline: var(--focus-ring-width) solid var(--color-accent);
+  outline-offset: var(--focus-ring-offset);
+}

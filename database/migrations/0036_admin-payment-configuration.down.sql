@@ -1,0 +1,27 @@
+SET search_path=public;
+LOCK TABLE public.admin_payment_configuration_revisions,public.admin_payment_configuration_validations,public.admin_payment_configuration_receipts,public.admin_payment_configuration_activations,public.admin_payment_configuration_translation_copies,public.payment_config_publications,public.payment_provider_health_state,public.audit_logs IN ACCESS EXCLUSIVE MODE;
+DO $$ BEGIN
+ IF EXISTS(SELECT 1 FROM public.admin_payment_configuration_revisions) OR EXISTS(SELECT 1 FROM public.admin_payment_configuration_validations) OR EXISTS(SELECT 1 FROM public.admin_payment_configuration_receipts) OR EXISTS(SELECT 1 FROM public.admin_payment_configuration_activations) OR EXISTS(SELECT 1 FROM public.admin_payment_configuration_translation_copies) OR EXISTS(SELECT 1 FROM public.audit_logs WHERE action LIKE 'PAYMENT_CONFIGURATION_%') THEN RAISE EXCEPTION 'managed payment configuration history cannot be downgraded' USING ERRCODE='55000';END IF;
+END;$$;
+DROP TRIGGER managed_payment_health_policy_guard ON public.payment_provider_health_state;
+DROP TRIGGER managed_payment_configuration_publication_receipt ON public.payment_config_publications;
+DROP TRIGGER managed_payment_configuration_review_receipt ON public.payment_provider_config_translation_reviews;
+DROP TRIGGER payment_provider_configs_managed_no_append ON public.payment_provider_configs;
+DROP TRIGGER payment_provider_config_translations_managed_no_append ON public.payment_provider_config_translations;
+DO $$ DECLARE name text;BEGIN FOREACH name IN ARRAY ARRAY['payment_config_publications','payment_route_rules','payment_route_rule_countries','payment_route_rule_markets','payment_route_rule_currencies','payment_route_rule_device_capabilities'] LOOP EXECUTE format('DROP TRIGGER %I ON public.%I',name||'_managed_canonical',name);END LOOP;END;$$;
+DO $$ DECLARE name text;BEGIN FOREACH name IN ARRAY ARRAY['payment_provider_configs','payment_provider_config_translations','payment_route_rules','payment_route_rule_countries','payment_route_rule_markets','payment_route_rule_currencies','payment_route_rule_device_capabilities'] LOOP EXECUTE format('DROP TRIGGER %I ON public.%I',name||'_managed_immutable',name);END LOOP;END;$$;
+DROP TABLE public.admin_payment_configuration_translation_copies;
+DROP TABLE public.admin_payment_configuration_activations;
+DROP TABLE public.admin_payment_configuration_receipts;
+DROP TABLE public.admin_payment_configuration_validations;
+DROP TABLE public.admin_payment_configuration_revisions;
+DROP FUNCTION public.guard_managed_payment_health_policy();
+DROP FUNCTION public.assert_managed_payment_health_activation();
+DROP FUNCTION public.guard_managed_payment_configuration_payload();
+DROP FUNCTION public.assert_managed_payment_configuration_receipt();
+DROP FUNCTION public.assert_managed_payment_configuration_authority();
+DROP FUNCTION public.assert_managed_payment_configuration_canonical();
+DROP FUNCTION public.managed_payment_document_is_safe(jsonb);
+DROP FUNCTION public.assert_managed_payment_translation_copy();
+DELETE FROM public.role_permissions WHERE permission_id IN(SELECT id FROM public.permissions WHERE permission_key IN('payments.read','payments.configure','payments.review','payments.publish'));
+DELETE FROM public.permissions WHERE permission_key IN('payments.read','payments.configure','payments.review','payments.publish');

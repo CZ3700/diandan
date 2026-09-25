@@ -1,0 +1,5 @@
+# P3-06 directory entry isolation fixed comparison
+
+Before production edits: current 92ae73c build and exactly three zh-CN gift Lighthouse captures. After one entry-isolation candidate: same fixture and exactly three captures, unchanged collector/settings/budgets/Chrome flags. No extra browser prewarm or selected retries. Both use existing scoped-shared read implementation (collector mode candidate); entry-isolation-stage.json is the independent before/after label. Keep every failed sample. Image format/quality/TTL/fonts unchanged.
+
+Compare exact downloaded script bodies and request bytes from retained artifacts; bundle removal is the primary hypothesis, LCP is secondary diagnostic and never a formal matrix claim. Candidate then runs existing full seven-locale dual-viewport browser acceptance including directory interactions, SEO, errors, keyboard, reduced motion and content publication. Root alone owns all actual execution. Images remain source-audit-only this checkpoint; no attribution based on cross-request subtraction.

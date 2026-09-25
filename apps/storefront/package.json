@@ -3,16 +3,29 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "sideEffects": false,
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start",
     "test": "vitest run --config ../../vitest.config.ts --root .",
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@fan-support/config": "workspace:*",
+    "@fan-support/contracts": "workspace:*",
+    "@fan-support/design-tokens": "workspace:*",
+    "@fan-support/observability": "workspace:*",
+    "@fan-support/ui": "workspace:*",
+    "next": "16.3.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "server-only": "0.0.1",
+    "@fan-support/i18n": "workspace:*",
+    "web-vitals": "6.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "fan-support-postcss-font-display-optional": "file:./postcss-font-display-optional"
   }
 }

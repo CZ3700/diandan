@@ -1,0 +1,408 @@
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
+import { withAcceptanceBrowser } from "./storefront-acceptance-browser.mjs";
+
+/** Identify emitted export registrations, never guessed hashes or valid-response substitutes. */
+export async function findAcceptanceValidationChunks(directory) {
+  const exports = {
+    gift: "validateGiftFilterDraft",
+    artist: "prepareArtistSearch",
+  };
+  const found = { gift: [], artist: [] };
+  for (const filename of await readdir(directory)) {
+    if (!filename.endsWith(".js")) continue;
+    const bytes = await readFile(path.join(directory, filename));
+    const source = bytes.toString("utf8");
+    for (const [kind, name] of Object.entries(exports)) {
+      if (!source.includes(`.s(["${name}",0,`)) continue;
+      found[kind].push({
+        path: `/_next/static/chunks/${filename}`,
+        sha256: createHash("sha256").update(bytes).digest("hex"),
+        export: name,
+      });
+    }
+  }
+  for (const [kind, chunks] of Object.entries(found))
+    assert.equal(chunks.length, 1, `one emitted ${kind} validation export`);
+  return found;
+}
+
+function createBarrier() {
+  let release;
+  let requested;
+  const pending = new Promise((resolve) => {
+    release = resolve;
+  });
+  const seen = new Promise((resolve) => {
+    requested = resolve;
+  });
+  return { pending, seen, release, requested };
+}
+
+/** Real compiled TEST pages; only the identified script may be delayed or fail. */
+export async function verifyAcceptanceLazyValidation({
+  origin,
+  fixtures,
+  gateway,
+  outputDirectory,
+  sourceSha256,
+  chunksDirectory = path.resolve("apps/storefront/.next/static/chunks"),
+}) {
+  await mkdir(outputDirectory, { recursive: true });
+  const chunks = await findAcceptanceValidationChunks(chunksDirectory);
+  const report = {
+    schemaVersion: 1,
+    status: "RUNNING",
+    sourceSha256,
+    scope:
+      "Compiled TEST Chrome async-validation regression; actual API/script bytes; fault injection only. No Lighthouse, VoiceOver, BFCache or production claim.",
+    startedAt: new Date().toISOString(),
+    chunks,
+    cases: [],
+  };
+  const save = () =>
+    writeFile(
+      path.join(outputDirectory, "results.json"),
+      JSON.stringify(report, null, 2) + "\n",
+    );
+  const scope = new globalThis.URLSearchParams(fixtures.markets[0]);
+  // Start with a real applied sort: the toolbar is submitted separately, while
+  // this suite isolates the advanced form's lazy validation and cancellation.
+  const giftUrl = `${origin}/en/gifts?${scope}&sort=PRICE_DESC`;
+  await withAcceptanceBrowser({ gateway }, async (browser) => {
+    report.browserVersion = browser.version();
+    async function run(name, kind, verify, mobile = false) {
+      const context = await browser.newContext({
+        viewport: mobile
+          ? { width: 390, height: 844 }
+          : { width: 1440, height: 900 },
+        reducedMotion: "reduce",
+      });
+      const page = await context.newPage();
+      const record = {
+        name,
+        kind,
+        status: "RUNNING",
+        assertions: 0,
+        scripts: [],
+        queries: [],
+        observations: {},
+      };
+      report.cases.push(record);
+      page.on("request", (request) => {
+        const url = new globalThis.URL(request.url());
+        if (request.resourceType() === "script")
+          record.scripts.push(url.pathname);
+        if (
+          url.pathname === "/api/storefront/idols" &&
+          url.searchParams.has("q")
+        )
+          record.queries.push(url.searchParams.get("q"));
+      });
+      const check = (condition, message) => {
+        assert.ok(condition, message);
+        record.assertions += 1;
+      };
+      let release = () => {};
+      try {
+        const url = kind === "gift" ? giftUrl : `${origin}/en/idols`;
+        const response = await page.goto(url, { waitUntil: "networkidle" });
+        check(response?.status() === 200, "actual compiled page HTTP 200");
+        check(
+          !record.scripts.includes(chunks[kind][0].path),
+          "validation export is absent from fresh initial traffic",
+        );
+        record.initialScripts = [...record.scripts];
+        const gate = createBarrier();
+        release = gate.release;
+        let mode = "delay";
+        await page.route(`${origin}${chunks[kind][0].path}`, async (route) => {
+          gate.requested();
+          if (mode === "failure")
+            return route.fulfill({
+              status: 503,
+              contentType: "text/plain",
+              body: "TEST injected script failure",
+            });
+          if (mode === "delay") await gate.pending;
+          return route.continue();
+        });
+        const pending = async () => {
+          let timeout;
+          try {
+            await Promise.race([
+              gate.seen,
+              new Promise((_, reject) => {
+                timeout = globalThis.setTimeout(
+                  () =>
+                    reject(
+                      new Error(
+                        "expected validation chunk request not observed",
+                      ),
+                    ),
+                  10_000,
+                );
+              }),
+            ]);
+          } finally {
+            globalThis.clearTimeout(timeout);
+          }
+          check(
+            record.scripts.includes(chunks[kind][0].path),
+            "real first interaction requests identified emitted validation chunk",
+          );
+        };
+        const form = page.locator(
+          `[data-gift-filters="${mobile ? "mobile" : "desktop"}"]`,
+        );
+        if (kind === "gift") {
+          await page.locator("[data-gift-card]").first().waitFor();
+          if (mobile) {
+            await page
+              .locator('.gift-filters__mobile [data-overlay-trigger="drawer"]')
+              .click();
+            await page.getByRole("dialog").waitFor();
+          } else {
+            await page.locator(".gift-filter-disclosure summary").click();
+            await form.waitFor({ state: "visible" });
+          }
+        } else await page.locator("[data-artist-search]").waitFor();
+        await verify({
+          page,
+          form,
+          check,
+          record,
+          pending,
+          release: gate.release,
+          mode: (value) => {
+            mode = value;
+          },
+        });
+        record.status = "PASS";
+      } catch (error) {
+        record.status = "FAIL";
+        record.error = { name: error.name, message: error.message };
+      } finally {
+        release();
+        record.finalUrl = page.url();
+        await page
+          .screenshot({
+            path: path.join(outputDirectory, `${name}.png`),
+            fullPage: true,
+          })
+          .catch(() => {});
+        await context.close();
+        await save();
+      }
+    }
+    async function applied(page, form, check) {
+      if ((await form.getAttribute("data-gift-filters")) === "mobile")
+        await form.locator("[data-gift-sort]").selectOption("PRICE_DESC");
+      else {
+        const disclosure = page.locator(".gift-filter-disclosure");
+        if ((await disclosure.getAttribute("open")) === null)
+          await disclosure.locator("summary").click();
+        await form.waitFor({ state: "visible" });
+      }
+      await form.locator("[data-gift-price-min]").fill("2");
+      await form.locator("[data-gift-apply]").click();
+      await page.waitForURL(
+        (url) =>
+          url.searchParams.get("sort") === "PRICE_DESC" &&
+          url.searchParams.get("priceMinMinor") === "200",
+      );
+      await page.locator("[data-gift-card]").first().waitFor();
+      check(
+        new globalThis.URL(page.url()).searchParams.get("market") ===
+          fixtures.markets[0].market,
+        "successful recovery uses actual schema and preserves TEST market",
+      );
+    }
+    for (const cancel of ["edit", "ime", "close"]) {
+      await run(
+        `gift-delay-${cancel}`,
+        "gift",
+        async ({ page, form, check, pending, release, record }) => {
+          if (cancel === "close")
+            await form.locator("[data-gift-sort]").selectOption("PRICE_DESC");
+          else await form.locator("[data-gift-price-min]").fill("1");
+          await form.locator("[data-gift-apply]").click();
+          await pending();
+          check(
+            await form.locator("[data-gift-apply]").isDisabled(),
+            "pending first apply is visibly disabled",
+          );
+          if (cancel === "edit")
+            await form.locator("[data-gift-price-min]").fill("2");
+          if (cancel === "ime")
+            await form
+              .locator("[data-gift-price-min]")
+              .dispatchEvent("compositionstart", { data: "二" });
+          if (cancel === "close") {
+            await page.keyboard.press("Escape");
+            await page.getByRole("dialog").waitFor({ state: "hidden" });
+          }
+          release();
+          await page.waitForTimeout(800);
+          record.observations.cancelledUrl = page.url();
+          check(
+            page.url() === giftUrl,
+            "cancelled pending import cannot navigate with stale draft",
+          );
+          if (cancel === "ime")
+            await form
+              .locator("[data-gift-price-min]")
+              .dispatchEvent("compositionend", { data: "" });
+          if (cancel === "close") {
+            await page
+              .locator('.gift-filters__mobile [data-overlay-trigger="drawer"]')
+              .click();
+            await page.getByRole("dialog").waitFor();
+          }
+          await applied(page, form, check);
+        },
+        cancel === "close",
+      );
+    }
+    await run(
+      "gift-script-failure-recovery",
+      "gift",
+      async ({ page, form, check, pending, mode, record }) => {
+        mode("failure");
+        await form.locator("[data-gift-apply]").click();
+        await pending();
+        const recovery = form.locator("[data-gift-filter-recovery]");
+        await recovery.getByRole("alert").waitFor();
+        const href = await recovery.locator("a[href]").getAttribute("href");
+        record.observations.recoveryHref = href;
+        check(
+          new globalThis.URL(href, origin).href === giftUrl,
+          "visible recovery link returns the actual applied page context",
+        );
+        mode("real");
+        await recovery.locator("a[href]").click();
+        await page.waitForLoadState("networkidle");
+        await applied(page, form, check);
+      },
+    );
+    for (const cancel of ["escape", "clear", "ime"]) {
+      await run(
+        `artist-delay-${cancel}`,
+        "artist",
+        async ({ page, check, pending, release, record }) => {
+          const search = page.locator("[data-artist-search]");
+          await search.fill("Mira");
+          await pending();
+          if (cancel === "escape") await search.press("Escape");
+          if (cancel === "clear") await search.fill("");
+          if (cancel === "ime")
+            await search.dispatchEvent("compositionstart", { data: "海" });
+          release();
+          await page.waitForTimeout(850);
+          check(
+            !record.queries.includes("Mira"),
+            "cancelled pending import cannot issue obsolete search API request",
+          );
+          check(
+            (await search.getAttribute("aria-expanded")) === "false",
+            "cancelled search does not reopen stale suggestions",
+          );
+          check(
+            new globalThis.URL(page.url()).searchParams.get("anchorId") ===
+              null,
+            "cancelled search does not navigate",
+          );
+        },
+      );
+    }
+    await run(
+      "artist-delay-latest-wins",
+      "artist",
+      async ({ page, check, pending, release, record }) => {
+        const search = page.locator("[data-artist-search]");
+        await search.fill("Mira");
+        await pending();
+        await search.fill("Kai");
+        await page.waitForTimeout(350);
+        release();
+        await page
+          .locator(`[data-artist-result="${fixtures.artists[1].id}"]`)
+          .waitFor();
+        check(
+          !record.queries.includes("Mira") && record.queries.includes("Kai"),
+          "only the newest query reaches the actual API after module loading",
+        );
+        check(
+          (await page
+            .locator(`[data-artist-result="${fixtures.artists[0].id}"]`)
+            .count()) === 0,
+          "obsolete artist cannot become active in suggestions",
+        );
+      },
+    );
+    await run(
+      "artist-script-failure-retry",
+      "artist",
+      async ({ page, check, pending, mode, record }) => {
+        mode("failure");
+        await page.locator("[data-artist-search]").fill("Mira");
+        await pending();
+        const suggestions = page
+          .locator("[data-artist-search-results]")
+          .locator("..");
+        const retry = suggestions.getByRole("button");
+        await retry.waitFor();
+        check(
+          await suggestions.getByRole("status").isVisible(),
+          "module failure is explicitly visible to search user",
+        );
+        mode("real");
+        await retry.click();
+        await page
+          .locator(`[data-artist-result="${fixtures.artists[0].id}"]`)
+          .waitFor({ timeout: 10_000 });
+        check(
+          record.queries.includes("Mira"),
+          "offered retry recovers actual first-import failure with a real API response",
+        );
+      },
+    );
+  });
+  report.status = report.cases.every((item) => item.status === "PASS")
+    ? "PASS"
+    : "FAIL";
+  report.finishedAt = new Date().toISOString();
+  await save();
+  assert.equal(
+    report.status,
+    "PASS",
+    "all actual lazy-validation regressions pass; failures retained in results.json",
+  );
+  return report;
+}
+
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
+) {
+  const [origin, manifest, certificatePath, outputDirectory, sourceManifest] =
+    process.argv.slice(2);
+  assert.ok(
+    origin && manifest && certificatePath && outputDirectory && sourceManifest,
+    "origin fixture certificate output sourceManifest required",
+  );
+  const source = JSON.parse(await readFile(sourceManifest, "utf8"));
+  const result = await verifyAcceptanceLazyValidation({
+    origin,
+    fixtures: JSON.parse(await readFile(manifest, "utf8")),
+    gateway: { certificatePath },
+    outputDirectory,
+    sourceSha256: source.sha256 ?? source.sourceSha256,
+  });
+  globalThis.console.log(
+    `${result.status}: ${result.cases.length} compiled async-validation cases`,
+  );
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "providerAccountId": "3331d8c0-5483-4d35-b4f2-2ae52d22d37e",
+  "environment": "TEST",
+  "providerEventId": "evt_01_early_webhook",
+  "evidence": {
+    "kind": "VERIFIED_WEBHOOK",
+    "webhookInboxId": "e79b50ef-5c3c-4f9f-92a9-88b738df81e1"
+  },
+  "occurredAt": "2026-09-03T00:05:00Z",
+  "association": {
+    "status": "UNMATCHED",
+    "externalReference": "pay_01_early_webhook"
+  },
+  "eventType": "PAYMENT_STATUS",
+  "status": "SUCCEEDED",
+  "amountMinor": 2500,
+  "currency": "USD"
+}

@@ -1,8 +1,8 @@
 # Phase 0 — 基线与可运行骨架
 
-> 状态：ACTIVE  
+> 状态：CLOSED
 > 任务：5  
-> Phase 负责人：未分配
+> Phase 负责人：Codex `/root`
 
 ## 目标与退出门禁
 
@@ -15,8 +15,8 @@
 | P0-01 | DONE | Codex `/root` | 2026-09-02T18:22:00+08:00 | 2026-09-02T19:25:41+08:00 | 根提交 `9234e368e193e967e9e2abd39858f4f3eaf01da9`；两次真实 clean clone、完整门禁和独立验收全绿 |
 | P0-02 | DONE | Codex `/root` | 2026-09-02T19:25:41+08:00 | 2026-09-03T01:29:52+08:00 | [PR #1](https://github.com/CZ3700/diandan/pull/1) 真实 CI 全绿；`Quality`/`Security` 已绑定 GitHub Actions 并作为 `main` 必需检查 |
 | P0-03 | DONE | Codex `/root` | 2026-09-03T00:02:33+08:00 | 2026-09-03T00:47:13+08:00 | 候选 `ba8b8864605e7181a85f2ffc13ca52087e0726e4`；三路独立复核 ACCEPT |
-| P0-04 | READY | — | — | — | P0-02、P0-03 均已 DONE；Phase 0 ACTIVE 且 Lane D 无 executor |
-| P0-05 | PENDING | — | — | — | 依赖 P0-04 |
+| P0-04 | DONE | Codex `/root` | 2026-09-03T01:54:21+08:00 | 2026-09-03T03:16:06+08:00 | [PR #2](https://github.com/CZ3700/diandan/pull/2) Quality/Security 全绿；clean clone 与三路独立复核通过 |
+| P0-05 | DONE | Codex `/root` | 2026-09-03T03:28:17+08:00 | 2026-09-03T05:26:03+08:00 | request/trace、日志隐私、OTel lifecycle、错误边界、preview/浏览器/clean-clone/PR CI 全绿，独立 ACCEPT |
 
 ## P0-01 执行卡
 
@@ -366,6 +366,221 @@ lockfile、NodeNext、三出口与 clean-clone 集成复核，无 blocker。
 | 9 | PASS | public/server subpath 与 server/database fragment 可独立替换、按需组合 |
 | 10 | PASS | config 77/77；整仓 34/34/34；独立 clean clone 0 cached 全绿 |
 
+## P0-04 执行卡
+
+**范围**：建立稳定版 Next.js storefront/admin、NestJS + Fastify API/worker、PostgreSQL 与 S3 兼容对象存储的本地环境，并为四应用提供可重复的 OCI 构建、health 和 preview 证据。
+
+**本次执行登记**：
+
+- Owner：Codex `/root`
+- 开始：`2026-09-03T01:54:21+08:00`（`2026-09-02T17:54:21Z`）
+- 精确范围：四个应用的框架组合根与最小 health/readiness 界面；对象存储配置合同；Docker Compose 本地依赖与四应用 preview；独立 OCI 构建定义；可重复的结构、启动、health 和镜像验收脚本。
+- 明确不做：P1 数据库 schema/migration、业务 API 与队列处理；P2/P3 设计系统与业务页面；P1-01 才冻结的 `SupportedLocale` 常量；P0-05 request ID/OTel/结构化日志；生产域名、凭据、云厂商或正式部署结论。
+- 验证计划：先写并运行会因缺少框架/容器合同而失败的可重复检查；再分层运行四应用单元/类型/构建、整仓 `pnpm check`、secret/audit、Compose 配置与真实服务启动、API/worker health、storefront/admin 390×844 与 1440×900 浏览器验证、四个 OCI 镜像构建/预览/日志，最后在 clean clone 重复门禁。
+- 并发/所有权：P0-04 是 W2 唯一 Lane D executor；Codex `/root` 独占 `apps/*`、`infra/`、容器/启动脚本、`packages/config` 的对象存储扩展、根 manifest/lockfile 和本执行卡。子代理只可执行明确的读取/研究/独立复核，或在不重叠文件所有权下实现。
+- 风险映射：`R-14`；框架、PostgreSQL、S3 兼容服务和容器 base image 必须精确锁定并记录支持矩阵，必须用实际构建/health 而不是静态文件存在代替验证。
+
+**评审候选与实现证据**：
+
+```text
+状态：DONE（2026-09-03T03:16:06+08:00 远端必需检查与独立验收通过）
+实现候选：d4008a9ce35432d609dbfa9639b16f68ef481ed4
+实现提交：
+- 8a4b921 test: define P0-04 runtime contract
+- 46411c9 test: specify runtime health and storage config
+- b673742 feat: add framework runtime foundations
+- 3ead0af feat: add local OCI preview stack
+- f2bbe04 test: capture P0-04 preview evidence
+- 04bd2ec fix: keep preview evidence out of image context
+- d4008a9 fix: harden P0-04 preview readiness
+
+精确版本与升级策略：
+- Web：Next.js 16.3.4、React/React DOM 19.2.8、@types/react 19.2.18、
+  @types/react-dom 19.2.5、@next/eslint-plugin-next 16.3.4。
+- Service：NestJS common/core/platform-fastify 12.0.1、Fastify 5.12.1、
+  reflect-metadata 0.2.2、RxJS 7.8.2、tsx 4.23.13、server-only 0.0.1。
+- OCI/runtime：Node 24.20.0 bookworm-slim、PostgreSQL 18.6 bookworm、
+  VersityGW 1.7.0、Caddy 2.11.4 alpine；所有外部镜像均同时固定 tag 与 sha256 digest。
+- 未采用 eslint-config-next：其传递插件 peer 仍停留在 ESLint 9，严格 peer 会与当前受支持的
+  ESLint 10.9.1 冲突；改为直接启用同版本 @next/eslint-plugin-next 的 recommended 与
+  core-web-vitals 规则，不回退到已停止支持的 ESLint 9。
+- Dockerfile 不使用可变外部 frontend directive；依赖先 frozen fetch、再离线 frozen install。
+  后续升级必须单独更新精确版本/lockfile/digest，并重复整仓、clean clone、四镜像、health、
+  浏览器与 secret/audit 门禁，不能以 tag 漂移替代升级记录。
+
+实现边界：
+- storefront/admin 使用 Next.js App Router standalone，各有最小内部 runtime 页面、icon 与
+  fail-closed `/healthz`；health 在返回 200 前必须加载各自 server-only runtime config。
+- API/worker 使用 NestJS + Fastify 独立组合根与 health controller；四应用均有独立 OCI
+  final target、命令、healthcheck，并以 `node`/uid 1000 运行。
+- 本地依赖为 PostgreSQL 与 S3-compatible VersityGW；对象存储 7070 只在 Compose 网络内，
+  宿主经 Caddy loopback `https://localhost:7443` 访问。
+- API/worker 真实运行 `NODE_ENV=production` + deployment `preview`，通过
+  `https://edge:7443` 与 `NODE_EXTRA_CA_CERTS` 验证内部对象存储 TLS，不使用 test tier 绕过。
+- launcher 生成两天有效的临时 CA + leaf；leaf SAN 为 edge/localhost/127.0.0.1、EKU 为
+  serverAuth。签发后立即删除 CA key、CSR、ext 与 serial。Edge 只读挂载 edge 目录；
+  API/worker 只读挂载仅含 ca.crt 的 clients 目录。凭据、证书私钥和 preview evidence 均不进入镜像上下文。
+
+TDD/失败路径：
+- 初始 runtime contract 检查因四应用框架、Compose、Dockerfile 与 launcher 缺失按预期失败；
+  最小实现后转绿，并由 checker 精确约束服务集合、四 final target、health 与镜像 pin。
+- pnpm 11 首次容器安装拒绝未批准的 esbuild install script；加入最小 `allowBuilds.esbuild`
+  后 frozen install/build 转绿，没有放宽其他脚本。
+- Next/Turbopack 对应用内 `.js` 源导入解析失败；仅在 Next 应用源码使用其可解析导入，
+  package 的 NodeNext `.js` 输出合同保持不变。
+- 4 GiB Docker 在并行构建时 OOM 137；launcher 固定 `COMPOSE_PARALLEL_LIMIT=1` 后四镜像
+  真实构建通过，checker 保留该低资源环境回归合同。
+- PostgreSQL 人类可读版本探针不稳定，改用 `current_setting('server_version_num')`，最终返回
+  `180006:1`；首次页面因缺 favicon 产生控制台 404，增加各应用 icon 后 landing console 为 0。
+- Secret scan 首次命中测试中的合成 credential-bearing PostgreSQL URL；改为测试运行时拼接，
+  不弱化 scanner，secret scan 转绿。
+- 独立框架复核发现 Web `/healthz` 在无配置时仍静态返回 200；先加入各 2 条失败测试，再在
+  route 中加载 runtime config。最终 storefront/admin 各 4/4，缺配置镜像实测均返回 500。
+- 独立容器复核发现 API/worker 原先使用 test tier 与 HTTP S3；改为 production/preview +
+  CA 验证的 TLS edge。首次真实启动因 macOS `/var/folders` 不在 Colima 默认共享范围，
+  Caddy 将单文件 bind 识别为目录而退出；改为 git/docker ignored 的 workspace cache，分离
+  edge/clients 目录级挂载后 7 服务全部 healthy，旧临时 key 目录已精确清理。
+- 新 checker 先以红灯拒绝未固定的 `docker/dockerfile:1.7` frontend，再移除未使用 directive；
+  Compose volume/port 检查已收敛为结构化精确比较，launcher 检查不依赖格式空白。
+
+主门禁与真实运行：
+- `mise exec node@24.20.0 -- corepack pnpm check` -> exit 0；workspace/CI/runtime/format/lint、
+  typecheck 35/35、test 35/35、build 34/34、30 个 package export Node import 全绿。
+- 新鲜受影响测试：config 91/91、storefront 4/4、admin 4/4、API 3/3、worker 3/3；
+  framework 独立复核确认浏览器 bundle 无 DB/S3 secret 或 server resolver 标识。
+- `pnpm security:secrets` -> exit 0；
+  `pnpm audit --audit-level high --registry https://registry.npmjs.org` -> exit 0，
+  `No known vulnerabilities found`。
+- `pnpm preview:config` -> exit 0，精确列出 4 app image 与 3 个 tag+digest 外部镜像；
+  `pnpm preview:up` 在 2 CPU/4095107072-byte/overlayfs/Compose 5.1.3 的 Colima 环境完成
+  四镜像真实串行构建与 7 服务启动。
+- `pnpm preview:verify` 在启动内联与后续独立 state-recovery 两次均 exit 0：storefront/admin、
+  API/worker health，PostgreSQL `180006:1`，经 7443 的 SigV4 PUT/HEAD，以及 API/worker
+  容器内 CA fetch 全部通过；匿名 TLS S3 GET 返回 403。
+- `pnpm preview:logs` 可从 running containers 恢复临时 state，随机凭据按精确值替换为
+  `[REDACTED_SECRET]`；日志无应用异常或 secret 泄漏。
+- 四个最终本地 image ID、size、user、workdir、command 与 health 见
+  `output/playwright/p0-04/image-summary.txt`；这是本地 build ID，不是 registry digest。
+- 真正 `git clone --no-local` 到 `/tmp/fan-support-p004-clean.TF7MRB/repo`，HEAD 精确为候选，
+  安装前生成目录 0；frozen install、完整 check、secret scan、官方 registry audit 全绿，
+  35/35/34、30 exports，最终 working tree clean；临时 clone 已移入系统废纸篓。
+
+浏览器与可持久证据：
+- Playwright CLI / Chromium 152.0.7977.65 对最终镜像重新采集 storefront/admin 的
+  1440×900 与 390×844；四图 SHA-256 分别为：
+  storefront desktop `670c6fbdc98ad87f038b1f8f3de709b01d4b8d326d91d6e1dc0caab7bb2c8c67`，
+  storefront mobile `1780c76b267778b4ac8e07e8ee24718127af0c687464922d0f2fd402a2cd32ce`，
+  admin desktop `9b483393e339090144c551b852fe77f2b8775eaca09b09b0461b0d09f47aef20`，
+  admin mobile `5cf972c98824d5184dc5554dad89614b7a1dbdee7ad9436889a7156b40cceefd`。
+- 两站 landing console 均 0 error/0 warning；首个 Tab 聚焦 health link 且 3px solid outline；
+  reduced-motion matched 且 0 animations；health JSON 200；错误路由 404；两尺寸 scrollWidth
+  等于 innerWidth。四图已目视确认无裁切、溢出或意外重叠。同步 runtime probe 无 loading/empty 状态。
+- 证据路径：`output/playwright/p0-04/browser-summary.txt`、`runtime-summary.txt`、
+  `image-summary.txt`、`container-logs.txt`、`cli.config.json` 与同目录四张 PNG。
+
+范围与剩余风险：
+- 本证据仅是本机 linux/arm64、临时 CA、tmpfs PostgreSQL/S3 的本地 preview；不是
+  multi-architecture、registry push/sign/attestation、staging、生产、备份或发布证据。
+- launcher 新增宿主 OpenSSL 前置条件，本机为 3.6.3；本地 Caddy QUIC buffer/闲置 port-80
+  protocol warning 与 PostgreSQL 容器内 local-socket trust warning 已记录，不外推为生产配置。
+- runtime probe 为内部英文页面；P1 locale 合同与 P2/P3 公共七语言 UI 均未提前实现。
+- 截至 P0-04 验收时，P0-05 的 request ID、OTel、结构化日志与 trace/PII 门禁尚未实现；该历史缺口已由后续 P0-05 关闭。
+
+独立评审：`/root/p004_final_framework_review` 与 `/root/p004_final_container_review` 对最终工作树
+均给出 ACCEPT；`/root/p004_simplify_review` 的两项 checker 清晰度建议已落实；
+`/root/p004_final_acceptance_review` 对候选 SHA、Git/evidence blob、四图、四镜像、7 容器、
+TLS 隔离与静态门禁给出 `ACCEPT for REVIEW`，无代码或证据 blocker。
+
+远端门禁：
+- [PR #2](https://github.com/CZ3700/diandan/pull/2) head
+  `046fb10711d55daf36e19630153a12ad3fbe8fef`，mergeStateStatus=`CLEAN`。
+- [CI run 33672018920](https://github.com/CZ3700/diandan/actions/runs/33672018920) 为
+  pull_request event 且 conclusion=`success`；
+  [Quality job 100387671456](https://github.com/CZ3700/diandan/actions/runs/33672018920/job/100387671456)
+  与 [Security job 100387671203](https://github.com/CZ3700/diandan/actions/runs/33672018920/job/100387671203)
+  均 success。
+- `main` 保护回读：strict=true，必需 checks 精确为 GitHub Actions App `15368` 的
+  Quality/Security，enforce_admins=true，allow_force_pushes=false，allow_deletions=false。
+```
+
+### P0-04 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | Web route、Nest composition、TLS launcher、runtime checker、Compose/Caddy 与证据文件各有单一职责 |
+| 2 | PASS | 生成 TLS、Docker/Compose 执行、state recovery、HTTPS/SigV4 与 health 验证由独立函数组合 |
+| 3 | PASS | Browser/health → app composition → config；对象存储流量 app → TLS edge → S3，无反向依赖 |
+| 4 | PASS | workspace 4 apps + 30 packages 全图检查无循环；Compose depends_on 也无环 |
+| 5 | PASS | health 返回含 schemaVersion 的可序列化合同；对象存储配置由 Zod/server fragment 定义 |
+| 6 | PASS | health/config 与 launcher 状态均为 plain data；无 Fastify/Caddy/S3 provider object 越界 |
+| 7 | PASS | 无生产域名、业务 ID、locale、密钥或凭据；localhost/端口/桶名仅是显式本地 preview 配置 |
+| 8 | PASS | 框架依赖全部精确声明并锁定，外部 OCI 同时固定 tag+digest，宿主 OpenSSL 前置条件已记录 |
+| 9 | PASS | 四应用独立 final image；Caddy、VersityGW 与 PostgreSQL 仅在 Compose adapter 边界可替换 |
+| 10 | PASS | 受影响测试、两次完整 check、secret/audit、真实 OCI/health/browser 与 clean clone 全绿 |
+
+## P0-05 执行卡
+
+**范围**：为 storefront、admin、API 和 Worker 建立可替换的可观测基线；实现可传播的 request/trace 关联、只允许安全字段的结构化 stdout 日志、OpenTelemetry 启动/关闭边界、应用错误边界与本地启动/故障排查文档。
+
+**本次执行登记**：
+
+- Owner：Codex `/root`
+- 开始：`2026-09-03T03:28:17+08:00`（`2026-09-02T19:28:17Z`）
+- 精确范围：`packages/observability` 的可序列化合同/过滤/上下文与 OTel 组合边界；四应用 composition root 的初始化、请求关联和受控错误记录；可重复的结构/日志/trace 故障注入检查；本地运行与排障 README。
+- 明确不做：不引入业务 API、数据库 schema/queue 处理、Sentry 或云端 exporter 供应商锁定；不实现 P1-01 合同或 P1-06 outbox/pg-boss；不修改页面视觉与业务路由。
+- 验证计划：先写会因缺少 request ID 传播、日志 allowlist、OTel lifecycle 和错误边界而失败的单元/集成检查；实现后运行 observability 与四应用受影响测试、根 `format/lint/typecheck/test/build`、secret/audit，再以真实 preview 请求证明 storefront→API 关联、故障日志可排查且合成 PII 不泄露，最后 clean clone 复验。
+- 并发/所有权：P0-05 是 W3 唯一 Lane D executor；Codex `/root` 独占 `packages/observability`、四应用观测集成、根 manifest/lockfile、排障文档与本执行卡。子代理仅做读取研究或独立复核，除非另行分配不重叠文件。
+- 风险映射：`R-02`、`R-11`；日志、span attributes、错误对象、测试输出与故障证据均默认 allowlist，禁止完整 PII、留言、token、密钥、raw payment/provider payload 和偶像地址。
+- Review 请求：`2026-09-03T05:23:04+08:00`；三路只读复核覆盖测试/真实 standalone、Next 信号退出设计和最终差异，代码评审无 P0/P1 阻断。
+
+**实现结果**：
+
+- `packages/observability` 通过根、`./node`、`./fastify` 三个公开出口分离通用合同、Node OTel 和 Fastify adapter；实现 canonical UUID request ID、W3C `traceparent`、带 `schemaVersion` 的严格 queue carrier、安全 public error、请求 span/outcome 和可幂等关闭的 runtime lifecycle。
+- 结构化 stdout 日志只接受固定 service/event/error vocabulary 和 request/trace/http/outcome 字段；未知字段、原始 error、stack、URL query、Authorization、Cookie、完整 PII、token 与 provider payload 均不会进入记录。Next 的 `console.error` runtime boundary 丢弃原始参数并只写固定错误码。
+- API/Worker 在配置解析和应用创建前启动 telemetry/致命错误/信号边界；Nest+Fastify 请求覆盖完成、失败、abort 和 timeout。Storefront/Admin 通过 Node instrumentation、request proxy、health 和 root error boundary 接入；Next standalone 在 SIGINT/SIGTERM 后等待 telemetry shutdown，并保留 130/143 退出码。
+- Storefront 的 `/_internal/observability` 仅在 development/test/preview 开启，使用配置注入的 API origin 与显式 header allowlist 证明 Storefront→API 关联；staging/production 在读取该配置前固定返回 404。
+- 精确新增依赖为 `@opentelemetry/api@1.9.1`、`@opentelemetry/core@2.11.0`、`@opentelemetry/resources@2.11.0`、`@opentelemetry/sdk-trace-node@2.11.0`、`@opentelemetry/semantic-conventions@1.43.0`；无 exporter 或供应商 SDK。`README.md` 记录 frozen install、启动、TLS、request/trace 排障、脱敏日志、关闭与证据范围。
+- preview launcher 现在验证关联、双流日志隐私、API 启动/重复 fatal、Next 重复 runtime failure 与信号退出、Worker shutdown/recovery、PostgreSQL、S3 TLS 和临时 TLS 目录状态；Docker 命令有界，探针容器按 Compose labels 精确清理。
+
+**TDD、命令与结果**：
+
+- 行为测试先于实现建立；red 阶段覆盖缺少 request ID 解析/传播、日志字段过滤、request context、queue carrier、runtime lifecycle、Next instrumentation/proxy/error boundary、Nest 安全异常和实际 socket/fatal 行为。red 输出属于执行会话，未作为长期产物提交；最终 focused green 为 observability 39、storefront 30、admin 22、API 9、Worker 4 项测试。
+- `mise exec node@24.20.0 -- corepack pnpm check`：exit 0；workspace 4 apps/30 packages/34 units、无循环，Quality contracts、format/lint、typecheck `36/36`、test `36/36`、build `34/34`、30 个 package exports 全绿。
+- `mise exec node@24.20.0 -- corepack pnpm security:secrets`：exit 0；合成 PostgreSQL fixture 使用分段构造，未放宽 scanner。官方 registry `pnpm audit --audit-level=high`：exit 0，0 known vulnerabilities。
+- `mise exec node@24.20.0 -- corepack pnpm preview:up` 与 `preview:verify`：exit 0；四个 linux/arm64 final image、七容器 healthy、Storefront/API 相同 request/trace、不同 child span，stdout+stderr 隐私 canary 0 泄漏；API startup/fatal、Storefront SIGTERM 143、Admin SIGINT 130、Worker SIGTERM/restart、PostgreSQL query 和 S3 TLS 均通过；只有一个 active managed TLS directory。
+- Playwright CLI 在 1440×900 与 390×844 验证两站 landing、键盘 health link、health JSON 与 reduced motion；四张截图目视无裁切、横向溢出或意外重叠。正常页面没有新增 console error；直接打开 JSON health 后的 favicon 404 是既有非业务行为。
+- 独立 clone `/tmp/fan-support-p0-05-clean.eQYNCc/repo` 精确检出 `c337db999fc45f629b5bdfc7dbd9b766ff1c0c8d`；frozen install 后以 `TURBO_FORCE=true` 重跑完整 check，typecheck `0 cached, 36/36`、test `0 cached, 36/36`、build `0 cached, 34/34`，secret/audit exit 0，最终 Git working tree clean。该临时 clone 因本机禁止自动递归清理而保留在 `/tmp`，不属于仓库证据。
+- [PR #3](https://github.com/CZ3700/diandan/pull/3) 的候选 head 为上述 SHA；[CI run 33685203128](https://github.com/CZ3700/diandan/actions/runs/33685203128) 中 [Quality](https://github.com/CZ3700/diandan/actions/runs/33685203128/job/100430909860) 与 [Security](https://github.com/CZ3700/diandan/actions/runs/33685203128/job/100430910249) 均 success。
+
+**持久证据与独立接受**：
+
+- `output/playwright/p0-05/browser-summary.txt`、`runtime-summary.txt`、`image-summary.txt`、`cli.config.json` 与同目录四张 PNG 记录浏览器、runtime 和本地 image 证据；截图不含 secret/PII。
+- `/root/p005_test_audit` 独立复验 Storefront/Admin standalone 的三次 rejection、健康存活、130/143、唯一 shutdown 记录、端口和精确 PID 清理；`/root/next_exit_review` 接受 signal-scoped deferred-exit 设计。
+- `/root/p005_final_review` 找到并促成 secret fixture、Docker stderr 探针和 TLS 早期清理三项修复；候选 clean clone 后给出 `P0-05: ACCEPT`，无剩余 P0/P1 阻断。`/root/p005_docs_audit` 独立确认 P0-05 与 Phase 0 退出必须分离。
+
+**剩余范围与风险**：
+
+- OTel 当前没有 exporter/span processor、Sentry、dashboard 或告警；只证明本地初始化、context/correlation 和 shutdown 边界。真实 queue/webhook/notification 关联须在 P1-06/P4 后续实现。
+- route 字段当前按安全字符 allowlist；现有调用全部传 Fastify route template 或固定内部路由，未来 route adapter 仍须禁止把具体含 ID/PII 的 URL 当模板。Next `onRequestError` 固定记录尚无 requestId/traceId；preview-only upstream probe 继承客户端 abort，但没有独立 upstream timeout。这三项为非阻断后续改进。
+- 证据仅覆盖本机 linux/arm64、临时 CA、tmpfs PostgreSQL/S3-compatible preview 和合成 canary；本地 image ID 不是 registry digest/signature/attestation，不证明持久化、备份/PITR、multi-architecture、staging、生产、RPO/RTO 或真实业务流。
+
+### P0-05 S.U.P.E.R 检查
+
+| # | 结果 | 证据 |
+|:--|:--|:--|
+| 1 | PASS | request ID、logging、context、carrier、lifecycle、Node/Fastify adapter、应用边界和 preview probe 均有单一可描述职责 |
+| 2 | PASS | 每个 helper 只做解析、记录、传播、结束 span、关闭或单一探针；大型 preview harness 由独立 TLS/Docker/HTTP/S3/process 函数组合，继续增长列为拆分观察项 |
+| 3 | PASS | Request → proxy/route → observability context → adapter 单向；应用依赖 config/observability，通用合同不反向依赖应用或 Domain |
+| 4 | PASS | 最终 workspace 检查 4 apps/30 packages/34 units，无 dependency cycle |
+| 5 | PASS | public error/log record 使用 Zod + `schemaVersion`；queue carrier 为严格 versioned serializable contract；request context 有显式 type/vocabulary |
+| 6 | PASS | 跨边界只传 plain headers、records、carrier 和 safe error；序列化/额外字段/未来版本/恶意对象测试通过，无 SDK provider object 越界 |
+| 7 | PASS | origin、环境、端口和 preview secret 经 config/launcher 注入；无生产域名、业务 ID、locale、凭据或供应商特判，固定 header/route/timeout 是协议与有界 lifecycle 常量 |
+| 8 | PASS | 所有 OTel/Fastify/Zod 依赖精确声明并锁定；frozen install、lockfile policy、secret 和 audit 通过 |
+| 9 | PASS | `.`, `./node`, `./fastify` 分离公共合同和 runtime adapter；替换 exporter/provider 不要求 Domain 或业务模块持有 OTel SDK 对象 |
+| 10 | PASS | focused tests、完整 check、真实 preview、浏览器、secret/audit、0-cache clean clone、真实 PR Quality/Security 和独立 ACCEPT 全部通过 |
+
 ## Phase 退出证据
 
-尚未开始。
+状态：`CLOSED`（2026-09-03）。P0-01～P0-05 均已完成，代码、浏览器、本地 OCI、观测、clean-clone 与 PR CI 门禁已有证据；[ADR-007](../decisions/007-americas-aws-production-baseline.md) 已由用户给出的“美洲首发、AWS/Akamai 候选、低运维”范围完成供应商决策，冻结 `us-east-1` 的 AWS 单云 origin、ECS Fargate、RDS PostgreSQL Multi-AZ、S3、CloudFront/WAF 及可迁移边界。任务图同时新增 P5-08，明确承担 OpenTofu production-like staging，避免把选型误作部署。
+
+本次只关闭 Phase 0 的**选型门禁**：没有 AWS 账户 apply、staging、生产、PITR/跨区 restore、真实负载、成本账单或发布证据。上述内容分别由 P5-08、P6-05/P6-06 和 Phase 7 验证。按解锁矩阵，Phase 1 与 Phase 2 同时转为 `ACTIVE`，P1-01 与 P2-01 转为 `READY`。

@@ -1,0 +1,27 @@
+{
+  "name": "@fan-support/payment-gateway",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "dependencies": {
+    "@fan-support/contracts": "workspace:*",
+    "@fan-support/payment-port": "workspace:*",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@fan-support/testing": "workspace:*",
+    "@types/node": "24.13.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run --config ../../vitest.config.ts --root .",
+    "typecheck": "tsc -p tsconfig.json"
+  }
+}

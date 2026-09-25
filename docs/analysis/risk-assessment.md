@@ -12,14 +12,14 @@
 | R-03 | 回跳、重复/乱序 webhook 或支付创建超时导致重复扣款、发货、退款、通知 | 4 | 5 | 20 | 两事务幂等 attempt Saga；原始 body 验签；inbox/outbox；reconcile；状态机；重放测试 | Phase 1/4/6，Payments |
 | R-04 | 将“支付适配器”误实现为可上传任意代码的运行时插件 | 3 | 5 | 15 | 代码部署接新 PSP；后台只能发布版本化规则；RBAC/审计 | Phase 5，Architecture |
 | R-05 | 对外承诺全球支付，但商户主体、地区、币种或资格不支持 | 4 | 5 | 20 | capability API 只返回真实能力；决策门；真实小额验收 | Phase 4/7，Business/Finance |
-| R-06 | 并发结账、调价或预占泄漏导致超卖、错价或库存漂移 | 4 | 5 | 20 | 价格 revision；inventory balance/ledger/reservation 同事务；行锁/约束；订单金额快照 | Phase 1/4，Commerce |
+| R-06 | 并发结账、调价或预占泄漏导致超卖、错价或库存漂移 | 4 | 5 | 20 | 完整价格簿 revision/发布回退；礼物分类与库存策略分离，按单准备不伪造余额；库存/交易历史锁定策略；inventory balance/ledger/reservation 同事务；行锁/审计/幂等收据；订单金额快照 | Phase 1/3/4，Commerce |
 | R-07 | 高级动效导致移动卡顿、晕动或结账干扰 | 4 | 3 | 12 | 合成属性、reduced motion、真实设备帧率、性能预算 | Phase 2/6，Frontend |
 | R-08 | 运营自由布局、错误媒体或未本地化素材破坏品牌与转化 | 4 | 3 | 12 | 结构化字段、比例/尺寸/对比/本地化 alt 校验、preview/publish/rollback | Phase 1/2/3/7，Content/Frontend |
 | R-09 | 公开 token、URL 日志或连续订单号泄露订单和 PII | 3 | 5 | 15 | fragment→POST exchange→HttpOnly 会话；摘要、过期/限流、noindex、最小响应 | Phase 4/6，API |
 | R-10 | 自研后台会话或支付/履约权限过宽，无审计可追溯 | 3 | 5 | 15 | OIDC、服务端 session、RBAC、MFA、二次确认、append-only audit | Phase 5/6，Admin |
 | R-11 | PSP、邮件、对象存储故障或队列积压造成已付款订单未推进/未通知 | 3 | 5 | 15 | 持久 inbox/outbox、重试/DLQ、对账、backlog 告警 | Phase 4/6，Worker |
 | R-12 | 正式照片、字体、Logo 或参考站素材无授权 | 3 | 5 | 15 | 资产清单与授权记录；参考站只作研究 | Phase 2/7，Product/Legal |
-| R-13 | 礼物税务、退款、送达承诺或消费者权益表述错误/不同语言不一致 | 3 | 5 | 15 | 经营主体/法律审查；七语言批准门；政策、结账与邮件 revision 一致 | Phase 3/4/5/7，Legal/Operations |
+| R-13 | 礼物税务、退款、送达承诺或消费者权益表述错误/不同语言不一致 | 3 | 5 | 15 | 经营主体/法律审查；虚拟/实体/心愿/周边均按工作室转交艺人，不暗示余额、众筹或自动送达；七语言批准门；政策、结账与邮件 revision 一致 | Phase 3/4/5/7，Legal/Operations |
 | R-14 | 数据库 migration、API schema、框架或供应商 SDK 升级不兼容 | 3 | 4 | 12 | 精确锁版、expand/contract、契约测试、staging restore/rolling upgrade | 全阶段，Platform |
 | R-15 | 过度工程导致 MVP 延期 | 4 | 4 | 16 | 严守非目标；模块化单体；MVP 无 Redis、无多 PSP 表演性接入 | 全阶段，Lead |
 | R-16 | 无恢复证据却认为备份和回滚可用 | 3 | 5 | 15 | PITR、不可变部署、配置回退与实操演练 | Phase 6/7，SRE |

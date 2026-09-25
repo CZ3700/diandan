@@ -4,22 +4,22 @@
 
 ## 开始任何任务前
 
-按顺序完整读取：
+2026-09-26 起，新工作按用户确认的 V2 上线方案推进（规范 §0.2）。按顺序读取：
 
-1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md`
-2. `docs/progress/MASTER.md`
-3. 候选任务所在的 `ACTIVE` phase 文件；Phase 1 与 Phase 2 可能按 `MASTER.md` 同时激活
-4. `docs/plan/task-breakdown.md` 中准备领取的 Task ID
-5. `.agents/skills/fan-support-platform-dev/SKILL.md`
+1. `docs/plan/2026-09-26-v2-launch-plan.md` —— 当前阶段 R0–R3、已确认决策与流程约定
+2. `docs/progress/v2-progress.md` —— 已完成、进行中与受阻事项
+3. `docs/FAN_SUPPORT_PLATFORM_SPEC.md` —— 行为权威（§0.2 汇总 V2 变更）
+4. `.agents/skills/fan-support-platform-dev/SKILL.md`
+5. 当前阶段条目引用的 ADR 与方案附录
 
-只领取一个位于 `ACTIVE` phase、依赖已完成、状态为 `READY` 且对应 Lane 当前无 executor 的任务。先在 phase 文件登记 owner、开始时间、范围和验证计划，再修改代码。
+按方案顺序逐项推进当前阶段的条目，开工前在 `v2-progress.md` 登记范围与验证计划。原 Phase/Task/Lane 文件（`docs/progress/phase-*.md`、`MASTER.md`、`docs/plan/task-breakdown.md`）保留为历史记录与验收参考，不再作为新工作的领取门禁。
 
 ## 权威与范围
 
 - 当前用户要求和 `docs/FAN_SUPPORT_PLATFORM_SPEC.md` 高于其他项目文档。
 - `docs/双站调研与类似平台技术架构规划.md` 与 `research/` 只作参考证据，不能恢复已删除的扩展范围。
-- MVP 只做：浏览偶像、选择礼物、私密留言/署名、游客支付、安全查单、准备与送达、轻量运营、支付适配边界。
-- 禁止自行加入社区、榜单、积分、活动众筹、偶像登录、分账、储值、直播、多租户或原生 App。
+- MVP 只做：浏览偶像、选择礼物（虚拟打赏/实物投喂/艺人心愿/周边四类，ADR-019）、私密留言/署名、游客支付、安全查单、准备与送达、轻量运营、支付适配边界，以及用户确认的榜单与公会赛成绩展示（ADR-018）。
+- 禁止自行加入社区、可兑换积分/等级、活动众筹、偶像登录、分账、储值、直播、多租户或原生 App。
 
 ## 实施纪律
 
@@ -41,6 +41,7 @@
 - 代码任务先写失败测试；文档/基础设施任务提供可重复检查。
 - 先跑受影响测试，再跑 format、lint、typecheck、build 和任务要求的集成/E2E。
 - 前台变化必须在真实浏览器至少验证 390×844 与 1440×900，并检查键盘、错误状态和 reduced motion；涉及文案/布局时覆盖英语、一个 CJK、泰语、越南语和最长西/葡语，Phase 3/7 门禁覆盖全部七语言。
-- 完成前运行 SKILL 中的 S.U.P.E.R 10 项检查。
-- 将命令、结果、证据路径和剩余风险写入 phase 文件；只有全部满足才标 `DONE` 并同步 `MASTER.md` 计数。
+- 完成前运行 SKILL 中的 S.U.P.E.R 10 项检查；日常门禁为 `pnpm check:dev`。
+- 验证产物写入 `output/`（已被 git 忽略，证据不入库）；结论以不超过十行记入 `docs/progress/v2-progress.md`，状态使用 `DONE / LOCAL_ACCEPTED / BLOCKED_EXTERNAL / IN_PROGRESS`。
+- 每个通过的条目提交并推送（用户 2026-09-26 已授权 push）；云 apply、真实资金、正式内容发布与生产发布仍须逐次获得用户确认。
 - 本地通过不等于生产发布；不得省略实际 PostgreSQL、对象存储、PSP sandbox/真实小额支付、staging 或灰度证据的范围说明。

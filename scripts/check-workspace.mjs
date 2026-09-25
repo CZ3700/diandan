@@ -21,11 +21,13 @@ const packageNames = [
   "content",
   "payment-port",
   "payment-fake",
+  "payment-gateway",
   "payment-routing",
   "persistence-port",
   "persistence-postgres",
   "media-port",
   "media-s3",
+  "media-image",
   "identity-port",
   "identity-oidc",
   "notification-port",
@@ -65,9 +67,27 @@ const requiredRootFiles = [
   "package.json",
   "pnpm-lock.yaml",
   "pnpm-workspace.yaml",
+  "provider-fixtures/manifest.json",
+  "provider-fixtures/identity-oidc.v1.json",
+  "provider-fixtures/media-s3.v1.json",
+  "provider-fixtures/notification.v1.json",
+  "provider-fixtures/payment-fake.v1.json",
+  "database/migrations/manifest.json",
+  "database/schema/expected-catalog.json",
+  "scripts/check-adapter-boundaries.mjs",
+  "scripts/check-adapter-boundaries.test.mjs",
   "scripts/check-build-artifacts.mjs",
   "scripts/check-ci.mjs",
+  "scripts/check-contracts.mjs",
+  "scripts/check-design-foundations.mjs",
+  "scripts/check-design-foundations.test.mjs",
+  "scripts/check-ui-composites.mjs",
+  "scripts/check-ui-composites.test.mjs",
+  "scripts/verify-ui-composites-browser.mjs",
+  "scripts/verify-ui-composites-browser.test.mjs",
+  "scripts/generate-contract-artifacts.mjs",
   "scripts/scan-secrets.mjs",
+  "packages/design-tokens/THIRD_PARTY_NOTICES.md",
   "tsconfig.base.json",
   "turbo.json",
   "vitest.config.ts",
@@ -76,13 +96,21 @@ const requiredRootFiles = [
 const requiredRootScripts = [
   "build",
   "check",
+  "check:adapter-boundaries",
   "check:artifacts",
   "check:ci",
+  "check:contracts",
+  "check:design-foundations",
+  "check:ui-composites",
+  "contracts:generate",
   "format:check",
   "lint",
   "security:secrets",
   "test",
+  "test:postgres",
+  "test:s3",
   "typecheck",
+  "verify:ui-composites:browser",
 ];
 
 const requiredUnitFiles = [
@@ -228,6 +256,21 @@ async function validateWorkspace() {
       if (typeof rootManifest.scripts?.[scriptName] !== "string") {
         errors.push(`root package.json is missing script: ${scriptName}`);
       }
+    }
+
+    if (!rootManifest.scripts?.check?.includes("pnpm check:contracts")) {
+      errors.push("root check script must run the contract freshness gate");
+    }
+    if (
+      !rootManifest.scripts?.check?.includes("pnpm check:design-foundations")
+    ) {
+      errors.push("root check script must run the design foundation gate");
+    }
+    if (!rootManifest.scripts?.check?.includes("pnpm test:postgres")) {
+      errors.push("root check script must run the PostgreSQL migration gate");
+    }
+    if (!rootManifest.scripts?.check?.includes("pnpm test:s3")) {
+      errors.push("root check script must run the S3 adapter integration gate");
     }
   }
 

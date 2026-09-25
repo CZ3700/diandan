@@ -2,9 +2,14 @@ packages:
   - apps/*
   - packages/*
 
+allowBuilds:
+  esbuild: true
+
 autoInstallPeers: false
 engineStrict: true
 linkWorkspacePackages: true
+minimumReleaseAgeExclude:
+  - pg-boss@12.30.0
 preferWorkspacePackages: true
 saveExact: true
 sharedWorkspaceLockfile: true

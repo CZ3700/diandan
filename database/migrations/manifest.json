@@ -1,0 +1,375 @@
+{
+  "schemaVersion": 1,
+  "migrations": [
+    {
+      "version": "0001",
+      "name": "foundation-security",
+      "up": "database/migrations/0001_foundation-security.up.sql",
+      "down": "database/migrations/0001_foundation-security.down.sql",
+      "sha256": {
+        "up": "031946426e54c8b569c0f9c26606ca745b5355f957828abc8fb434d1e086759c",
+        "down": "0cb74a20963759606f1226d468e0dc40bec54ed332fa8a5e6f6f58fea381c7c8"
+      }
+    },
+    {
+      "version": "0002",
+      "name": "content-catalog",
+      "up": "database/migrations/0002_content-catalog.up.sql",
+      "down": "database/migrations/0002_content-catalog.down.sql",
+      "sha256": {
+        "up": "af470915b35b21665c4161afb5b76fe40f37065c5b60ed25699ebdde900a243a",
+        "down": "1b8a8e8ec1eee0d2afc4c979b3a6c9463f42ad8e642fb7cc2cdb483e271dfdc6"
+      }
+    },
+    {
+      "version": "0003",
+      "name": "inventory-cart-private-data",
+      "up": "database/migrations/0003_inventory-cart-private-data.up.sql",
+      "down": "database/migrations/0003_inventory-cart-private-data.down.sql",
+      "sha256": {
+        "up": "c6dd6bca8ec23f0503d68ba534fb7074eeb5223e56d1d6fed225f707f7f27d8d",
+        "down": "3f1f186adb53a9c1dd35f610ebac9fa363521f13f7884755a14bf09174481332"
+      }
+    },
+    {
+      "version": "0004",
+      "name": "orders-fulfillment",
+      "up": "database/migrations/0004_orders-fulfillment.up.sql",
+      "down": "database/migrations/0004_orders-fulfillment.down.sql",
+      "sha256": {
+        "up": "d0b6238a69f4cf2e94fc09785921b373fb8ce0904d1c534b80ad920541750867",
+        "down": "b0845dc9a86d2ed382cf9cf06175f55576dfcf2d65af9921eb2be30306438f0c"
+      }
+    },
+    {
+      "version": "0005",
+      "name": "payments-reliable-events",
+      "up": "database/migrations/0005_payments-reliable-events.up.sql",
+      "down": "database/migrations/0005_payments-reliable-events.down.sql",
+      "sha256": {
+        "up": "826cfa3f144db085b22e58227fc3378a95ae02558709e39e4c379c96ae1d4c67",
+        "down": "9b712badfcb7b3e239c426299305bf7bc1995c19d1264fb627fb75a88f21f932"
+      }
+    },
+    {
+      "version": "0006",
+      "name": "publication-heads-outbox",
+      "up": "database/migrations/0006_publication-heads-outbox.up.sql",
+      "down": "database/migrations/0006_publication-heads-outbox.down.sql",
+      "sha256": {
+        "up": "8e41e79536add4cdf33ec39e13284875b8f779bade8b81c16fefaeb5cf531dfc",
+        "down": "a299d1049c9feb66add18c5e05033ec74f8fc30eecdce056736539eda332a004"
+      }
+    },
+    {
+      "version": "0007",
+      "name": "payment-encryption-key-versions",
+      "up": "database/migrations/0007_payment-encryption-key-versions.up.sql",
+      "down": "database/migrations/0007_payment-encryption-key-versions.down.sql",
+      "sha256": {
+        "up": "adc29d08c40bef3ff62c4912ea9360d0a3cfdb8a070b2a41f735a081a899168b",
+        "down": "231f9bc001afa7b35fad9b6cc2f7d04006596a5af77ec905412feeeea89234f9"
+      }
+    },
+    {
+      "version": "0008",
+      "name": "media-object-key-segments",
+      "up": "database/migrations/0008_media-object-key-segments.up.sql",
+      "down": "database/migrations/0008_media-object-key-segments.down.sql",
+      "sha256": {
+        "up": "fc65a995b95ce74b860347024c543d78c0f07bf172d0c7a4e49b899d5e5484e4",
+        "down": "130e10744b078e8b292ec0969ceeaf750df396ac9d7eb86cd47fcbf0bdb17c7d"
+      }
+    },
+    {
+      "version": "0009",
+      "name": "outbox-status-payload",
+      "up": "database/migrations/0009_outbox-status-payload.up.sql",
+      "down": "database/migrations/0009_outbox-status-payload.down.sql",
+      "sha256": {
+        "up": "7d69093002098d2db69c90b3bffa3f3f5a7dc917d97d3bf4ab7bf0be111405cb",
+        "down": "bfe89b7f89a7b78a742a7cd25413b3f7e40b49601d893f697daf8c18d22826a4"
+      }
+    },
+    {
+      "version": "0010",
+      "name": "catalog-search-projection",
+      "up": "database/migrations/0010_catalog-search-projection.up.sql",
+      "down": "database/migrations/0010_catalog-search-projection.down.sql",
+      "sha256": {
+        "up": "3ba337584821ba8264a2bf1b7d5994cd50d03c233a51fd8f3277b0b8440c4393",
+        "down": "cb77b50c8ae7d9515bc58dbed7bba4fb99ccb897e4facf0c84f5e657eb4de3bd"
+      }
+    },
+    {
+      "version": "0011",
+      "name": "price-generated-lifecycle",
+      "up": "database/migrations/0011_price-generated-lifecycle.up.sql",
+      "down": "database/migrations/0011_price-generated-lifecycle.down.sql",
+      "sha256": {
+        "up": "5724bf99236c119746e736df011bd87485a3aa1fd35cd3e8b7bc1a99e5a892e8",
+        "down": "60c8a27f28448d73a44991b3e2a526baf77eaa7fbbe00de0d3e0f23885484d2c"
+      }
+    },
+    {
+      "version": "0012",
+      "name": "media-processing",
+      "up": "database/migrations/0012_media-processing.up.sql",
+      "down": "database/migrations/0012_media-processing.down.sql",
+      "sha256": {
+        "up": "8ea56150eb756ab61bed42936662bbe57abdb521e808d3917afdaf83d03af7a0",
+        "down": "47bf9a5ac9e5077864b5e682a96baf8fa0781987d765c1cb64e17f01e7eec8ac"
+      }
+    },
+    {
+      "version": "0013",
+      "name": "content-drafts",
+      "up": "database/migrations/0013_content-drafts.up.sql",
+      "down": "database/migrations/0013_content-drafts.down.sql",
+      "sha256": {
+        "up": "8f1ea6ca998f63fa1ca8376b0cfabe380a4104e643112eca26c1f695350d9ebe",
+        "down": "88a4b0b10e66bcd2c79e40eebd2aad6fffa87c7dee530d0dd0a41f316ad28da3"
+      }
+    },
+    {
+      "version": "0014",
+      "name": "admin-content",
+      "up": "database/migrations/0014_admin-content.up.sql",
+      "down": "database/migrations/0014_admin-content.down.sql",
+      "sha256": {
+        "up": "5e12869db9582994503a12c5b61f17a7d528ff1772a5ced44d9025f4f8721ff5",
+        "down": "9938abcc0f54aa848241b3e5b02fb3bf20f2b627b702a927fdeba824991f73d4"
+      }
+    },
+    {
+      "version": "0015",
+      "name": "content-authoring",
+      "up": "database/migrations/0015_content-authoring.up.sql",
+      "down": "database/migrations/0015_content-authoring.down.sql",
+      "sha256": {
+        "up": "ee3738effd9fb85e0da2fb31e6ecdcf12650c19383a7a0d620137631bced0f01",
+        "down": "c76946f2cd3828867af78e9946c5967effa6f528dc931c703b1dd90e7a44a8ab"
+      }
+    },
+    {
+      "version": "0016",
+      "name": "base-content",
+      "up": "database/migrations/0016_base-content.up.sql",
+      "down": "database/migrations/0016_base-content.down.sql",
+      "sha256": {
+        "up": "851cb0d745ea6dce706906500dc81443608568d119c1ec9f592bc461d532bc6d",
+        "down": "17ff4cfbc4fee3a4fbb3ae8303c2af2de01b3d238d2c305bdebb2805b124980a"
+      }
+    },
+    {
+      "version": "0017",
+      "name": "resource-management",
+      "up": "database/migrations/0017_resource-management.up.sql",
+      "down": "database/migrations/0017_resource-management.down.sql",
+      "sha256": {
+        "up": "8171ef1a231a14acbf02f8d669f550e97e84fc11a9f66e7588ff8bb8098d8bed",
+        "down": "5bba0d13da7bace1965f0e815fd1883b089873f73b30f5dbb8fd53053cb1d644"
+      }
+    },
+    {
+      "version": "0018",
+      "name": "publication-runtime",
+      "up": "database/migrations/0018_publication-runtime.up.sql",
+      "down": "database/migrations/0018_publication-runtime.down.sql",
+      "sha256": {
+        "up": "91095ca048585748f67ae606522f2a974ea91c6df828641905b70a08d15ec8f4",
+        "down": "36892e4b0c7e4d692a7db4a007e27af0356e9e77cf15a3b6e1896b54027af9f9"
+      }
+    },
+    {
+      "version": "0019",
+      "name": "admin-catalog",
+      "up": "database/migrations/0019_admin-catalog.up.sql",
+      "down": "database/migrations/0019_admin-catalog.down.sql",
+      "sha256": {
+        "up": "4af6c85ffb883740fa4a5003eaf3afb920b573430121d01f6514fc1954944067",
+        "down": "23d7f313f31e3b45a56be38e3ec2ada2810d2dfef5ddfb6f346f4b4fe4148d0f"
+      }
+    },
+    {
+      "version": "0020",
+      "name": "gift-commerce",
+      "up": "database/migrations/0020_gift-commerce.up.sql",
+      "down": "database/migrations/0020_gift-commerce.down.sql",
+      "sha256": {
+        "up": "181324185661d1975f60f8931fb4791997659943f06fcb05b2fbad8ced090204",
+        "down": "9f8eff0d2b50130ef1c9d583adc3e97f4155bafe75b668fe221e53fe843acc89"
+      }
+    },
+    {
+      "version": "0021",
+      "name": "storefront-seo-purge",
+      "up": "database/migrations/0021_storefront-seo-purge.up.sql",
+      "down": "database/migrations/0021_storefront-seo-purge.down.sql",
+      "sha256": {
+        "up": "8b9f8f46e234e337ae734995080a7ce3fb422b15d8fe142e5f3fdae4ed7be88d",
+        "down": "c282bee67699190a62a0a6bcc577435d0f8d830d46bb914c2716265cd7c72080"
+      }
+    },
+    {
+      "version": "0022",
+      "name": "daily-management-publication",
+      "up": "database/migrations/0022_daily-management-publication.up.sql",
+      "down": "database/migrations/0022_daily-management-publication.down.sql",
+      "sha256": {
+        "up": "0ff21a912fc82856b264c0c3529073120348ea08b370ee97ccfe1cc876f2cdc7",
+        "down": "0edeab91d3f283d349c94f0fd41ebfbd0d37a272f275755effb12d7a4cfd23fb"
+      }
+    },
+    {
+      "version": "0023",
+      "name": "cart-runtime-recipient-rules",
+      "up": "database/migrations/0023_cart-runtime-recipient-rules.up.sql",
+      "down": "database/migrations/0023_cart-runtime-recipient-rules.down.sql",
+      "sha256": {
+        "up": "5e64caa4c901d9abcd257a2fa1643e760549c81c6cac71c4cdd8f1bd3d944d4c",
+        "down": "3a49b8e8875ec0edb90a53ac3910f4dd3266844ff277ad3cf26a9eed861dcd39"
+      }
+    },
+    {
+      "version": "0024",
+      "name": "cart-edit-receipts",
+      "up": "database/migrations/0024_cart-edit-receipts.up.sql",
+      "down": "database/migrations/0024_cart-edit-receipts.down.sql",
+      "sha256": {
+        "up": "432bc02ad61b014c44bce315a389cc2a76c9593af53192d1e222bccb6442eb7e",
+        "down": "723b627be9ca985ae7296beaa825054ba9fb8d309b75485f7ccc0948e82e2385"
+      }
+    },
+    {
+      "version": "0025",
+      "name": "checkout-preflight",
+      "up": "database/migrations/0025_checkout-preflight.up.sql",
+      "down": "database/migrations/0025_checkout-preflight.down.sql",
+      "sha256": {
+        "up": "0a585a8849b1537bbea746dc8013673072843323e73bc954393ab42e262e0bd1",
+        "down": "d33f280c6505a5ce460b3c0ff1787ba270e6b935df237a4f800e76071477dcd7"
+      }
+    },
+    {
+      "version": "0026",
+      "name": "payment-runtime",
+      "up": "database/migrations/0026_payment-runtime.up.sql",
+      "down": "database/migrations/0026_payment-runtime.down.sql",
+      "sha256": {
+        "up": "f7d3ba0803f90ff67fa95e6af0b2cf49b6aea95bcb464a5a813be448ceb7d002",
+        "down": "cfd33b7ccce7043417dacb68f813c29ca2cb0356093a907d4fc16cddfc388801"
+      }
+    },
+    {
+      "version": "0027",
+      "name": "order-payment-application",
+      "up": "database/migrations/0027_order-payment-application.up.sql",
+      "down": "database/migrations/0027_order-payment-application.down.sql",
+      "sha256": {
+        "up": "750db6afe5e47760842e964755b4e27172ee2cc3e4d36a1898f3587b87a9966b",
+        "down": "026b13b7aec874baa3617707241ae31612b7b5c394b21e4894958a2fc525b009"
+      }
+    },
+    {
+      "version": "0028",
+      "name": "order-access",
+      "up": "database/migrations/0028_order-access.up.sql",
+      "down": "database/migrations/0028_order-access.down.sql",
+      "sha256": {
+        "up": "12a71cb2fb745920184f1caae286f2cdeb53202bde66a4ec0560d59acb8943a2",
+        "down": "8e6ab1b9bc5efd88c1f0311cdb5f53f697d1d9ff694cfd46e61cfe23877641ea"
+      }
+    },
+    {
+      "version": "0029",
+      "name": "notifications",
+      "up": "database/migrations/0029_notifications.up.sql",
+      "down": "database/migrations/0029_notifications.down.sql",
+      "sha256": {
+        "up": "36197cb238761ac26837d0e54a97d32480186a021302ba9a7d5e2b52bc768a66",
+        "down": "fae422f0ccf28dc2b16afee6c8760431989bf8b4bc418820f4c72d410d9e7cb0"
+      }
+    },
+    {
+      "version": "0030",
+      "name": "admin-access",
+      "up": "database/migrations/0030_admin-access.up.sql",
+      "down": "database/migrations/0030_admin-access.down.sql",
+      "sha256": {
+        "up": "742666f369c2241de916644252635782ba2624661865c4533f8ada685a639016",
+        "down": "d40199305da7ee2142129a98791af75ba4a21ee38742007af8adbf62a7aa8cf0"
+      }
+    },
+    {
+      "version": "0031",
+      "name": "admin-orders",
+      "up": "database/migrations/0031_admin-orders.up.sql",
+      "down": "database/migrations/0031_admin-orders.down.sql",
+      "sha256": {
+        "up": "76dc33ce9529fa108c06d0f73fefd771527c009ab423de197a6d2b805b30bba5",
+        "down": "a5285150e0e18e35d6c43303356de94915e4313554b2c46bc429bed91ff70cac"
+      }
+    },
+    {
+      "version": "0032",
+      "name": "admin-order-resends",
+      "up": "database/migrations/0032_admin-order-resends.up.sql",
+      "down": "database/migrations/0032_admin-order-resends.down.sql",
+      "sha256": {
+        "up": "dea13c99e16e1cd4f46b3b968235c68fd8beb4e38550d92b0b1a4fcc0802923a",
+        "down": "1a0fad13b7d5263d04abe379099451c43d0f586b012c7f2be4ec87f7e8d03523"
+      }
+    },
+    {
+      "version": "0033",
+      "name": "payment-provider-health",
+      "up": "database/migrations/0033_payment-provider-health.up.sql",
+      "down": "database/migrations/0033_payment-provider-health.down.sql",
+      "sha256": {
+        "up": "d8b6f04119b7406f3a6383d66f79a9df125798d9633e7121131204d39cc30bab",
+        "down": "dce0648e0a70cadc3d71fbad09523eaa362f900d3e9fbff91df53861014136ed"
+      }
+    },
+    {
+      "version": "0034",
+      "name": "payment-rollout",
+      "up": "database/migrations/0034_payment-rollout.up.sql",
+      "down": "database/migrations/0034_payment-rollout.down.sql",
+      "sha256": {
+        "up": "4e3348e106b753573ac3465b1d14d3eab65c413c8c079ea01b1a20271761b075",
+        "down": "aa36279d52058631cc948bdd6f5be8df0f57719f1e1467014f513123a3c2c9ba"
+      }
+    },
+    {
+      "version": "0035",
+      "name": "admin-finance",
+      "up": "database/migrations/0035_admin-finance.up.sql",
+      "down": "database/migrations/0035_admin-finance.down.sql",
+      "sha256": {
+        "up": "cfe8caae037ab443a74a35e9b7280e4fece52b9e6c4303c1f02ce3b3c70c6736",
+        "down": "5a9fdc1efddcf67c2fc3d8c0e3b041dee3da6f4bd1b69af59e451aca82033063"
+      }
+    },
+    {
+      "version": "0036",
+      "name": "admin-payment-configuration",
+      "up": "database/migrations/0036_admin-payment-configuration.up.sql",
+      "down": "database/migrations/0036_admin-payment-configuration.down.sql",
+      "sha256": {
+        "up": "bd8f832d4056f6c57b8cb92ca48bd83e9a206d47ff1519fe8485a4f57c0ee43f",
+        "down": "1b1036f84ea1567f8912f490a1c7258439eb1be5823ac962ace99aed6b58cce9"
+      }
+    },
+    {
+      "version": "0037",
+      "name": "admin-exceptions",
+      "up": "database/migrations/0037_admin-exceptions.up.sql",
+      "down": "database/migrations/0037_admin-exceptions.down.sql",
+      "sha256": {
+        "up": "3872323f8b641e4c0f4683e38dee54a18f8694e948714ce24aaaad88530e9970",
+        "down": "d511312cfe601d6cf7fb460b16f666e0b7822bf0653f78b376e1f65b04e29bd6"
+      }
+    }
+  ]
+}

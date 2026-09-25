@@ -1,0 +1,308 @@
+import { createHash } from "node:crypto";
+import {
+  SUPPORTED_LOCALES,
+  orderNotificationRenderCommandSchema,
+  type OrderNotificationEventType,
+  type SupportedLocale,
+} from "@fan-support/contracts";
+import { expect, it } from "vitest";
+
+const events: readonly OrderNotificationEventType[] = [
+  "PAYMENT_CONFIRMED",
+  "PREPARING",
+  "DELIVERED",
+];
+const publicOrderId = "71000000-0000-4000-8000-000000000001";
+const rawToken = "A".repeat(43);
+const variables = {
+  schemaVersion: 1 as const,
+  siteName: "Studio Preview",
+  publicOrderId,
+  orderedAt: "2026-09-15T23:30:00-07:00",
+  currency: "USD",
+  totalMinor: 12345,
+  items: [
+    {
+      idolName: "星の名前",
+      idolLocale: "ja",
+      giftName: "鲜花与心意",
+      giftLocale: "zh-CN",
+      variantName: null,
+      variantLocale: null,
+      quantity: 3,
+      lineTotalMinor: 12345,
+    },
+  ],
+  orderUrl: `https://store.example/en/order-access#token=${rawToken}&order=${publicOrderId}`,
+};
+
+async function api() {
+  const module = await import("./index.js").catch(() => undefined);
+  expect(
+    module,
+    "versioned order notification renderer must exist",
+  ).toBeDefined();
+  return module!;
+}
+
+function command(
+  selection: {
+    eventType: OrderNotificationEventType;
+    requestedLocale: SupportedLocale;
+    resolvedLocale: SupportedLocale;
+    fallbackUsed: boolean;
+    templateKey: string;
+    templateVersion: string;
+  },
+  overrides = {},
+) {
+  const {
+    eventType,
+    requestedLocale,
+    resolvedLocale,
+    fallbackUsed,
+    templateKey,
+    templateVersion,
+  } = selection;
+  return orderNotificationRenderCommandSchema.parse({
+    schemaVersion: 1,
+    eventType,
+    locale: {
+      schemaVersion: 1,
+      requestedLocale,
+      resolvedLocale,
+      fallbackUsed,
+      templateKey,
+      templateVersion,
+      contentRevisionIds: [],
+    },
+    variables: { ...variables, ...overrides },
+  });
+}
+
+it("renders all three events completely in all seven locales with original snapshot language", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  for (const locale of SUPPORTED_LOCALES)
+    for (const event of events) {
+      const selection = templates.select(event, locale);
+      expect(selection.templateVersion).toMatch(/^v1\.[a-f0-9]{64}$/u);
+      expect(selection).toMatchObject({
+        requestedLocale: locale,
+        resolvedLocale: locale,
+        fallbackUsed: false,
+      });
+      const content = templates.render(command(selection));
+      for (const field of ["subject", "preheader", "html", "text"] as const)
+        expect(content[field].length).toBeGreaterThan(10);
+      expect(content.html).toContain(`<html lang="${locale}">`);
+      expect(content.html).toContain('lang="ja"');
+      expect(content.html).toContain('lang="zh-CN"');
+      expect(content.html).toContain("鲜花与心意");
+      expect(content.text).toContain(publicOrderId);
+      expect(content.text).toContain("123");
+      expect(content.subject + content.preheader + content.text).not.toMatch(
+        /\{\w+\}/u,
+      );
+      expect(content.html).not.toContain("undefined");
+    }
+});
+
+it("blocks all draft production templates including English incident fallback", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  expect(() => createOrderNotificationTemplates({ mode: "APPROVED" })).toThrow(
+    "NOTIFICATION_TEMPLATES_UNAPPROVED",
+  );
+  expect(() =>
+    createOrderNotificationTemplates({
+      mode: "APPROVED",
+      incidentFallbackLocales: ["ja"],
+    }),
+  ).toThrow("NOTIFICATION_TEMPLATES_UNAPPROVED");
+});
+
+it("falls back as one whole English template and keeps replay independent of current incident configuration", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const ordinary = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  const incident = createOrderNotificationTemplates({
+    mode: "TEST_DRAFT",
+    incidentFallbackLocales: ["ja"],
+  });
+  const selection = incident.select("PREPARING", "ja");
+  expect(selection).toMatchObject({
+    requestedLocale: "ja",
+    resolvedLocale: "en",
+    fallbackUsed: true,
+    fallbackReasonCode: "LOCALE_TEMPLATE_INCIDENT",
+  });
+  const frozen = command(selection);
+  expect(incident.render(frozen)).toEqual(ordinary.render(frozen));
+  expect(incident.render(frozen).html).toContain('<html lang="en">');
+  expect(incident.render(frozen).text).toContain("started preparing");
+  expect(incident.select("PREPARING", "en").fallbackUsed).toBe(false);
+});
+
+it("rejects changed versions and mismatched event/template identities without printing credentials", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  const frozen = command(templates.select("DELIVERED", "en"));
+  expect(() =>
+    templates.render({
+      ...frozen,
+      locale: { ...frozen.locale, templateVersion: `v1.${"0".repeat(64)}` },
+    }),
+  ).toThrow("NOTIFICATION_TEMPLATE_VERSION_UNAVAILABLE");
+  expect(() => templates.render({ ...frozen, eventType: "PREPARING" })).toThrow(
+    "NOTIFICATION_TEMPLATE_IDENTITY_INVALID",
+  );
+  expect(() =>
+    templates.render({
+      ...frozen,
+      variables: { ...frozen.variables, orderUrl: "javascript:" + rawToken },
+    }),
+  ).toThrow("NOTIFICATION_VARIABLES_INVALID");
+});
+
+it("escapes untrusted historical content in HTML while keeping the exact plain text", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  const unsafe = '<img src=x onerror="alert(1)"> & gift';
+  const output = templates.render(
+    command(templates.select("PAYMENT_CONFIRMED", "en"), {
+      siteName: 'A & "Studio"',
+      items: [
+        {
+          ...variables.items[0],
+          giftName: unsafe,
+          variantName: "Size <L>",
+          variantLocale: "en",
+        },
+      ],
+    }),
+  );
+  expect(output.html).toContain(
+    "&lt;img src=x onerror=&quot;alert(1)&quot;&gt; &amp; gift",
+  );
+  expect(output.html).not.toContain("<img src=x");
+  expect(output.text).toContain(unsafe);
+  expect(output.html).toContain("Size &lt;L&gt;");
+  expect(output.html).toContain("&amp;order=");
+});
+
+it("formats integer minor amounts exactly including maximum safe integer and non-two-decimal currencies", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  const selection = templates.select("PAYMENT_CONFIRMED", "en");
+  for (const [currency, totalMinor, expected] of [
+    ["USD", 9007199254740991, "90,071,992,547,409.91"],
+    ["JPY", 12345, "12,345"],
+    ["KWD", 12345, "12.345"],
+  ] as const) {
+    const output = templates.render(
+      command(selection, {
+        currency,
+        totalMinor,
+        items: [{ ...variables.items[0], lineTotalMinor: totalMinor }],
+      }),
+    );
+    expect(output.text).toContain(expected);
+  }
+});
+
+it("uses the real order date in UTC, deterministic bytes, and a one-time latest-link notice", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  const frozen = command(templates.select("DELIVERED", "en"));
+  const content = templates.render(frozen);
+  expect(content.text).toContain("Sep 16, 2026");
+  expect(content.text).toContain("UTC");
+  expect(content.text).toContain("one-time");
+  expect(content.text).toContain("latest notification");
+  expect(content.text).not.toMatch(
+    /settled|estimated|arrive|delivered at|prepared at/iu,
+  );
+  expect(
+    createHash("sha256").update(JSON.stringify(content)).digest("hex"),
+  ).toBe(
+    createHash("sha256")
+      .update(JSON.stringify(templates.render(frozen)))
+      .digest("hex"),
+  );
+});
+
+it("rejects a credential URL for another order", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  const frozen = command(templates.select("PREPARING", "en"));
+  expect(() =>
+    templates.render({
+      ...frozen,
+      variables: {
+        ...frozen.variables,
+        orderUrl: frozen.variables.orderUrl.replace(
+          publicOrderId,
+          "71000000-0000-4000-8000-000000000002",
+        ),
+      },
+    }),
+  ).toThrow("NOTIFICATION_VARIABLES_INVALID");
+});
+
+it("renders a bounded historical summary for the largest legal order and keeps the full total", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  for (const locale of SUPPORTED_LOCALES) {
+    const items = Array.from({ length: 500 }, (_, index) => ({
+      ...variables.items[0],
+      idolName: '"'.repeat(1000),
+      giftName: `${index.toString().padStart(3, "0")}${"&".repeat(997)}`,
+      variantName: "<".repeat(1000),
+      variantLocale: "en",
+      lineTotalMinor: 100,
+    }));
+    const result = templates.render(
+      command(templates.select("PAYMENT_CONFIRMED", locale), {
+        items,
+        totalMinor: 50000,
+      }),
+    );
+    expect(result.html.match(/data-mail-item /gu)).toHaveLength(10);
+    expect(result.text).toContain(new Intl.NumberFormat(locale).format(490));
+    expect(result.text).toContain("500");
+    expect(result.text).not.toContain(`010${"&".repeat(997)}`);
+    expect(result.html.length).toBeLessThan(250000);
+    expect(result.text.length).toBeLessThan(100000);
+    expect(result.html).toContain("data-mail-summary");
+  }
+});
+
+it("omits a remainder notice for ten or fewer items and handles the singular eleventh item", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  const selection = templates.select("PAYMENT_CONFIRMED", "en");
+  const items = Array.from({ length: 10 }, () => variables.items[0]);
+  expect(templates.render(command(selection, { items })).html).not.toContain(
+    "data-mail-summary",
+  );
+  const eleven = templates.render(
+    command(selection, { items: [...items, variables.items[0]] }),
+  );
+  expect(eleven.text).toContain("1 more item");
+  expect(eleven.text).toContain("complete order");
+});
+
+it("describes historical events without promising the order's current readiness", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  const paid = templates.render(
+    command(templates.select("PAYMENT_CONFIRMED", "en")),
+  );
+  expect(paid.text).not.toContain("ready for the studio");
+  expect(paid.text).toContain("current status");
+  const preparing = templates.render(
+    command(templates.select("PREPARING", "en")),
+  );
+  expect(preparing.subject).toContain("preparation started");
+  expect(preparing.preheader).toContain("has started");
+  expect(preparing.text).not.toContain("is preparing");
+});

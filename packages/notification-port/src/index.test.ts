@@ -1,7 +1,9 @@
 import { expect, test } from "vitest";
 
-import { workspacePackageName } from "./index.js";
+import * as notificationPort from "./index.js";
 
-test("exposes the notification-port workspace boundary", () => {
-  expect(workspacePackageName).toBe("@fan-support/notification-port");
+test("exports provider-neutral notification command and response schemas", () => {
+  const exports = notificationPort as Record<string, unknown>;
+  expect(exports["notificationPortCommandSchema"]).toBeDefined();
+  expect(exports["notificationPortResponseSchema"]).toBeDefined();
 });

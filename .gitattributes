@@ -1,0 +1,6 @@
+# Keep LF in every working tree so Prettier (endOfLine: lf) and source
+# fingerprints agree across macOS, Linux CI and Windows (core.autocrlf=true).
+* text=auto eol=lf
+
+# Raw HTTP captures keep their original CRLF bytes as reference evidence.
+research/root-evidence/** -text

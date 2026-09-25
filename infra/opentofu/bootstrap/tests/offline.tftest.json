@@ -1,0 +1,39 @@
+{
+  "mock_provider": {
+    "aws": {
+      "mock_resource": {
+        "aws_kms_key": {
+          "defaults": {
+            "arn": "arn:aws:kms:us-east-1:000000000000:key/11111111-1111-1111-1111-111111111111",
+            "id": "11111111-1111-1111-1111-111111111111"
+          }
+        }
+      }
+    }
+  },
+  "variables": {
+    "account_id": "000000000000",
+    "state_bucket_name": "offline-fixture-state",
+    "state_operator_role_arns": [
+      "arn:aws:iam::000000000000:role/offline-fixture"
+    ]
+  },
+  "run": {
+    "state_guardrails": {
+      "command": "plan",
+      "plan_options": {
+        "refresh": false
+      },
+      "assert": [
+        {
+          "condition": "${output.backend_config.encrypt && output.backend_config.use_lockfile}",
+          "error_message": "S3 state and native lock objects must be encrypted and locking enabled."
+        },
+        {
+          "condition": "${aws_s3_bucket_versioning.state.versioning_configuration[0].status == \"Enabled\" && aws_s3_bucket_public_access_block.state.block_public_policy}",
+          "error_message": "State must be versioned and private."
+        }
+      ]
+    }
+  }
+}

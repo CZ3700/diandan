@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "synthetic": true,
+  "provider": "fake-payment-webhook",
+  "scenario": "duplicate-and-out-of-order-delivery",
+  "signature": {
+    "algorithm": "HMAC_SHA256",
+    "timestampHeader": "x-fan-support-timestamp",
+    "signatureHeader": "x-fan-support-signature"
+  },
+  "repeatCount": 10,
+  "deliveries": [
+    {
+      "rawBody": "{\"event_id\":\"fake-event-later\",\"created_at\":\"2026-09-04T00:00:02.000Z\",\"resource\":{\"kind\":\"payment\",\"payment_reference\":\"fake-payment/fixture-attempt-1\",\"state\":\"captured\",\"amount_minor\":2500,\"currency\":\"USD\",\"transaction\":{\"kind\":\"capture\",\"reference\":\"fake-capture-1\"}}}",
+      "expected": {
+        "schemaVersion": 1,
+        "providerEventId": "fake-event-later",
+        "occurredAt": "2026-09-04T00:00:02.000Z",
+        "externalReference": "fake-payment/fixture-attempt-1",
+        "transaction": {
+          "type": "CAPTURE",
+          "providerReference": "fake-capture-1"
+        },
+        "eventType": "PAYMENT_STATUS",
+        "status": "SUCCEEDED",
+        "amountMinor": 2500,
+        "currency": "USD"
+      }
+    },
+    {
+      "rawBody": "{\"event_id\":\"fake-event-earlier\",\"created_at\":\"2026-09-04T00:00:01.000Z\",\"resource\":{\"kind\":\"payment\",\"payment_reference\":\"fake-payment/fixture-attempt-1\",\"state\":\"processing\",\"amount_minor\":2500,\"currency\":\"USD\"}}",
+      "expected": {
+        "schemaVersion": 1,
+        "providerEventId": "fake-event-earlier",
+        "occurredAt": "2026-09-04T00:00:01.000Z",
+        "externalReference": "fake-payment/fixture-attempt-1",
+        "eventType": "PAYMENT_STATUS",
+        "status": "PROCESSING",
+        "amountMinor": 2500,
+        "currency": "USD"
+      }
+    }
+  ]
+}

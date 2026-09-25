@@ -24,6 +24,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
+    "@fan-support/contracts": "workspace:*",
     "zod": "4.5.4"
   }
 }

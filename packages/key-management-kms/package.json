@@ -14,5 +14,12 @@
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run --config ../../vitest.config.ts --root .",
     "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@aws-sdk/client-kms": "3.1119.0",
+    "@fan-support/key-management-port": "workspace:*"
+  },
+  "devDependencies": {
+    "@fan-support/testing": "workspace:*"
   }
 }

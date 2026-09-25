@@ -12,7 +12,17 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "build:with-dependencies": "pnpm turbo run build --filter @fan-support/media-s3 --concurrency=1",
     "test": "vitest run --config ../../vitest.config.ts --root .",
+    "test:s3": "pnpm run build:with-dependencies && node scripts/s3-integration.mjs",
     "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.1119.0",
+    "@aws-sdk/s3-request-presigner": "3.1119.0",
+    "@fan-support/media-port": "workspace:*"
+  },
+  "devDependencies": {
+    "@fan-support/testing": "workspace:*"
   }
 }

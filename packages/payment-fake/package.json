@@ -4,10 +4,23 @@
   "private": true,
   "type": "module",
   "sideEffects": false,
+  "dependencies": {
+    "@fan-support/contracts": "workspace:*",
+    "@fan-support/payment-port": "workspace:*",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@fan-support/testing": "workspace:*",
+    "@types/node": "24.13.3"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./persistent-http": {
+      "types": "./dist/persistent-http.d.ts",
+      "import": "./dist/persistent-http.js"
     }
   },
   "scripts": {

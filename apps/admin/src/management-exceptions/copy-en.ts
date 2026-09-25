@@ -1,0 +1,81 @@
+export const exceptionen = {
+  title: "To do",
+  intro: "Review interrupted processing and take the next safe step.",
+  category: "Type",
+  all: "All types",
+  webhook: "Payment events",
+  deadLetter: "Failed jobs",
+  payment: "Unconfirmed payments",
+  notification: "Failed notifications",
+  status: "Status",
+  open: "Needs attention",
+  allStates: "All statuses",
+  filter: "Apply filters",
+  refresh: "Refresh",
+  back: "Back to list",
+  loading: "Loading…",
+  empty: "No matching items.",
+  previous: "Previous",
+  next: "Next",
+  view: "View",
+  order: "Order",
+  attempts: "Attempts",
+  updated: "Updated",
+  nextStep: "Next step",
+  history: "Recent operations",
+  noHistory: "No operations recorded.",
+  reason: "Reason",
+  chooseReason: "Select a reason",
+  retryRepair: "Retry after repair",
+  verifyStatus: "Verify provider status",
+  retryNotificationReason: "Retry a failed notification",
+  reviewReason: "Operator review",
+  confirm: "I checked this item and confirm the action below.",
+  submit: "Confirm action",
+  replay: "Reprocess verified event",
+  retryDeadLetter: "Retry original job",
+  reconcile: "Check with original payment provider",
+  retryNotification: "Retry failed notification",
+  replayHint:
+    "Process the saved verified event again. Existing payment, refund, fulfillment and notification effects remain deduplicated.",
+  deadLetterHint:
+    "Run the original job again with its original event and consumer.",
+  reconcileHint:
+    "Query the original payment provider for this payment. This does not create another charge.",
+  notificationHint:
+    "Request a controlled retry of the failed notification. The server checks delivery history and retry eligibility.",
+  readOnly:
+    "You have read-only access. Ask an authorized operator to take action.",
+  inProgress: "Processing is in progress. Refresh to read the result.",
+  complete: "This item is complete. No further action is needed.",
+  manualReview: "This item needs investigation before another action is safe.",
+  unsupported: "This job type needs technical review.",
+  notificationUncertain:
+    "Delivery is uncertain. Verify the delivery result before any resend.",
+  notificationExpired:
+    "The retry window has expired. Review delivery history with the support team.",
+  notificationSuperseded:
+    "A later notification already exists. Review the latest notification.",
+  notRetryable:
+    "This item cannot be retried in its current state. Refresh or request review.",
+  inconsistent: "The source records do not agree. Request technical review.",
+  pending: "Pending",
+  processing: "Processing",
+  failed: "Failed",
+  unknown: "Unconfirmed",
+  succeeded: "Complete",
+  review: "Needs review",
+  expired: "Expired",
+  requested: "Requested",
+  error: "Could not load this information. Try refreshing.",
+  forbidden:
+    "Your access has changed. Refresh to check your current permissions.",
+  conflict: "This item changed. Refresh and review it before submitting again.",
+  uncertain:
+    "The action result is unconfirmed. Recover the original request before starting another action.",
+  storageUnavailable:
+    "Recovery storage is unavailable. Actions are disabled; restore browser storage and reload.",
+  recover: "Recover original request",
+  queued: "The request was recorded. Refresh to see processing progress.",
+};
+export type ExceptionsCopy = typeof exceptionen;

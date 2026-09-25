@@ -14,5 +14,22 @@
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run --config ../../vitest.config.ts --root .",
     "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@fan-support/cache-purge-port": "workspace:*",
+    "@fan-support/cart": "workspace:*",
+    "@fan-support/catalog": "workspace:*",
+    "@fan-support/content": "workspace:*",
+    "@fan-support/contracts": "workspace:*",
+    "@fan-support/domain": "workspace:*",
+    "@fan-support/identity-port": "workspace:*",
+    "@fan-support/key-management-port": "workspace:*",
+    "@fan-support/media-port": "workspace:*",
+    "@fan-support/notification-port": "workspace:*",
+    "@fan-support/payment-port": "workspace:*",
+    "@fan-support/persistence-port": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3"
   }
 }
