@@ -211,9 +211,18 @@ export async function createCartDailyGiftFixture({
         })
       ).operation;
     }
+    // Enumerated job codes only, so a CI MEDIA_FAILED names its processing cause.
+    const unfinishedMedia =
+      operation.status === "PUBLISHED"
+        ? []
+        : (
+            await client.query(
+              "SELECT role,status,attempt_count,error_code FROM public.media_processing_jobs WHERE status <> 'SUCCEEDED' ORDER BY role",
+            )
+          ).rows;
     check(
       operation.status === "PUBLISHED",
-      `daily cart operation publishes${operation.failure ? ` (${operation.failure.code})` : ""}`,
+      `daily cart operation publishes${operation.failure ? ` (${operation.failure.code})` : ""}${unfinishedMedia.length ? ` ${JSON.stringify(unfinishedMedia)}` : ""}`,
     );
     const giftId = operation.result.targetId;
     const rows = (
