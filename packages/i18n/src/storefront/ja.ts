@@ -74,7 +74,8 @@ const copy = {
   checkoutExpired:
     "お会計の有効期限が切れました。ギフトバッグに戻ってください。",
   checkoutEmpty: "ギフトバッグは空です。",
-  checkoutConsent: "「{policy}」に同意します。",
+  checkoutConsentAll: "{policies}を読み、同意します。",
+  checkoutConsentTitle: "「{title}」",
   checkoutCountry: "支払いを行う国・地域",
   checkoutChooseCountry: "国・地域を選択",
   checkoutMethod: "支払い方法",

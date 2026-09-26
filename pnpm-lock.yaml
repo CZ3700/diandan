@@ -217,6 +217,9 @@ importers:
       '@fan-support/observability':
         specifier: workspace:*
         version: link:../../packages/observability
+      '@fan-support/orders':
+        specifier: workspace:*
+        version: link:../../packages/orders
       '@fan-support/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -615,7 +618,11 @@ importers:
         specifier: 4.5.4
         version: 4.5.4
 
-  packages/orders: {}
+  packages/orders:
+    dependencies:
+      '@fan-support/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   packages/payment-airwallex:
     dependencies:

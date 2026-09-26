@@ -9,9 +9,9 @@ import { Price } from "@fan-support/ui";
 import { Media } from "@fan-support/ui/client";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
 import {
+  fanOrderStatus,
   orderItemStatus,
   orderProgressHelp,
-  orderStatusRows,
 } from "./order-status";
 
 type Presentation = Readonly<{ locale: SupportedLocale; copy: StorefrontCopy }>;
@@ -153,6 +153,7 @@ export function OrderDetail({
 }: Presentation & Readonly<{ order: OrderAccessDetail }>) {
   const amount = order.amount;
   const help = orderProgressHelp(order, copy);
+  const status = fanOrderStatus(order, copy);
   return (
     <div className="order-detail" data-order-detail>
       <dl className="order-metadata">
@@ -195,19 +196,39 @@ export function OrderDetail({
           <p className="order-history-help">{copy.orderHistoryHelp}</p>
         </section>
         <div className="order-sidebar">
-          <section className="order-progress" data-order-timeline>
+          <section
+            className="order-progress"
+            data-order-timeline
+            data-order-stage={status.stage}
+            data-order-order-status={order.orderStatus}
+            data-order-payment-status={order.paymentStatus}
+            data-order-fulfillment-status={order.fulfillmentStatus}
+            data-order-dispute-status={order.disputeStatus}
+          >
             <h2>{copy.orderProgress}</h2>
-            <dl className="order-statuses">
-              {orderStatusRows(order, copy).map((row) => (
-                <div
-                  key={row.axis}
-                  {...{ [`data-order-${row.axis}-status`]: row.state }}
-                >
-                  <dt>{row.label}</dt>
-                  <dd>{row.value}</dd>
-                </div>
-              ))}
-            </dl>
+            {status.timeline.length > 0 ? (
+              <ol className="order-steps">
+                {status.timeline.map((step) => (
+                  <li
+                    key={step.step}
+                    data-order-step={step.step}
+                    data-step-state={step.state}
+                    aria-current={step.state === "CURRENT" ? "step" : undefined}
+                  >
+                    {step.label}
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p className="order-stage" data-order-stage-label>
+                {status.label}
+              </p>
+            )}
+            {status.note && (
+              <p className="order-progress-note" data-order-note>
+                {status.note}
+              </p>
+            )}
             {help && <p className="order-progress-help">{help}</p>}
           </section>
           <section className="order-summary">

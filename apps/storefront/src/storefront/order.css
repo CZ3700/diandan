@@ -124,7 +124,7 @@
 .order-language,
 .order-history-help,
 .order-line-amounts dt,
-.order-statuses dt,
+.order-progress-note,
 .order-progress-help {
   color: var(--color-text-muted);
 }
@@ -209,15 +209,26 @@
 .order-line-status {
   color: var(--color-accent);
 }
-.order-statuses {
+.order-steps {
   display: grid;
   gap: var(--space-4);
+  margin: 0;
   padding-inline-start: var(--space-4);
   border-inline-start: var(--border-width) solid var(--color-accent);
+  list-style: none;
 }
-.order-statuses > div {
-  display: grid;
-  gap: var(--space-1);
+.order-steps > [data-step-state="DONE"]::before {
+  content: "✓ " / "";
+}
+.order-steps > [data-step-state="CURRENT"] {
+  font-weight: 600;
+}
+.order-steps > [data-step-state="UPCOMING"] {
+  color: var(--color-text-muted);
+}
+.order-stage {
+  margin: 0;
+  font-weight: 600;
 }
 .order-summary {
   padding-block-start: var(--space-8);

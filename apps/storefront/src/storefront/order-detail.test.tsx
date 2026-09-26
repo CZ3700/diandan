@@ -155,20 +155,56 @@ describe("protected historical order presentation", () => {
     expect(html).not.toMatch(/>null<|>undefined</u);
   });
 
-  it("keeps paid, dispute and on-hold facts separate without implying preparation or delivery", async () => {
+  it("shows a studio hold as preparing on one timeline, never naming a dispute or promising progress during it", async () => {
     const html = await render({
       ...order,
       disputeStatus: "OPEN",
       fulfillmentStatus: "ON_HOLD",
       items: [{ ...order.items[0]!, fulfillmentStatus: "ON_HOLD" }],
     });
-    expect(html).toContain(copy.orderPaid);
-    expect(html).toContain(copy.orderDisputeOpen);
-    expect(html).toContain(copy.orderOnHold);
-    expect(html).toContain(copy.orderReviewHelp);
-    expect(html).not.toContain(copy.orderPreparing);
-    expect(html).not.toContain(copy.orderDeliveredHelp);
+    expect(html).toContain('data-order-step="PAID" data-step-state="DONE"');
+    expect(html).toContain(
+      'data-order-step="PREPARING" data-step-state="CURRENT" aria-current="step"',
+    );
+    expect(html).toContain(
+      'data-order-step="DELIVERED" data-step-state="UPCOMING"',
+    );
+    for (const hidden of [
+      copy.orderDisputeLabel,
+      copy.orderDisputeOpen,
+      copy.orderOnHold,
+      copy.orderReviewHelp,
+      copy.orderPreparationHelp,
+      copy.orderDeliveredHelp,
+    ])
+      expect(html).not.toContain(hidden);
+    expect(html).toContain('data-order-dispute-status="OPEN"');
     expect(html).not.toContain('data-payment-state="SUCCEEDED"');
+  });
+
+  it("replaces the timeline with one outcome when payment is unconfirmed, refunded or canceled", async () => {
+    for (const [change, label] of [
+      [
+        { orderStatus: "PENDING_PAYMENT", paymentStatus: "PENDING" },
+        copy.orderPaymentProcessing,
+      ],
+      [{ paymentStatus: "REFUNDED" }, copy.orderRefunded],
+      [
+        { orderStatus: "CANCELED", fulfillmentStatus: "CANCELED" },
+        copy.orderCanceled,
+      ],
+    ] as const) {
+      const html = await render({ ...order, ...change });
+      expect(html).toContain("data-order-stage-label");
+      expect(html).toContain(label);
+      expect(html).not.toContain("data-order-step=");
+    }
+    const partial = await render({
+      ...order,
+      paymentStatus: "PARTIALLY_REFUNDED",
+    });
+    expect(partial).toContain("data-order-step=");
+    expect(partial).toContain(copy.orderPartiallyRefunded);
   });
 
   it.each([

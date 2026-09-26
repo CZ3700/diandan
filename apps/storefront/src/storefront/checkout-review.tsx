@@ -6,6 +6,9 @@ import type {
 import { Price } from "@fan-support/ui";
 import type { StorefrontCopy } from "./copy";
 import { PolicyBody } from "./gift-content";
+/** The consent sentence links each policy title to its full text here. */
+export const checkoutPolicyAnchor = (policyKey: string) =>
+  `checkout-policy-${policyKey}`;
 export function CheckoutReview({
   review,
   locale,
@@ -84,7 +87,11 @@ export function CheckoutReview({
       </dl>
       <div className="checkout-policies">
         {review.policies.map((policy) => (
-          <details key={policy.policyKey} lang={policy.locale}>
+          <details
+            key={policy.policyKey}
+            id={checkoutPolicyAnchor(policy.policyKey)}
+            lang={policy.locale}
+          >
             <summary>{policy.title}</summary>
             <PolicyBody body={policy.body} />
           </details>
