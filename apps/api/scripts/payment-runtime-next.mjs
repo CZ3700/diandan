@@ -80,7 +80,8 @@ export function createPaymentRuntimeNext(context) {
       },
       stdio: ["ignore", "pipe", "pipe"],
     });
-    attachLog(build, `next-build-${generation}.log`);
+    // Redacted build output; .txt lets the regression collector keep it for CI diagnosis.
+    attachLog(build, `next-build-${generation}.txt`);
     const [code] = await once(build, "exit");
     await logWrites;
     check(

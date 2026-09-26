@@ -84,6 +84,35 @@ async function clearDeadLock() {
     "An existing supervisor is starting or unhealthy; its data and process were preserved",
   );
 }
+/** Only the supervisor's own structured stage and failure lines, re-picked field by field. */
+async function supervisorOutcome() {
+  const text = await readFile(
+    path.join(stateDirectory, "supervisor.log"),
+    "utf8",
+  ).catch(() => "");
+  const lines = [];
+  for (const line of text.split("\n")) {
+    let value;
+    try {
+      value = JSON.parse(line);
+    } catch {
+      continue;
+    }
+    if (typeof value?.stage !== "string") continue;
+    lines.push(
+      value.outcome === "FAIL"
+        ? {
+            outcome: "FAIL",
+            stage: value.stage.slice(0, 80),
+            errorName: String(value.errorName).slice(0, 80),
+            code: value.code === null ? null : String(value.code).slice(0, 80),
+            message: String(value.message).slice(0, 240),
+          }
+        : { stage: value.stage.slice(0, 80) },
+    );
+  }
+  return lines.slice(-4);
+}
 async function openBrowser() {
   const active = await status();
   if (!active?.ready) throw new Error("Start the local experience first");
@@ -136,7 +165,7 @@ try {
     }
     if (!active?.ready)
       throw new Error(
-        "Local startup did not finish; see the private supervisor log and preserved data",
+        `Local startup did not finish; see the private supervisor log and preserved data ${JSON.stringify(await supervisorOutcome())}`,
       );
     console.log(
       JSON.stringify(

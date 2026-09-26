@@ -63,6 +63,11 @@ export async function startS3(context) {
         "--cap-drop=ALL",
         "--security-opt=no-new-privileges",
         "--pids-limit=128",
+        // Native Linux Docker keeps host ownership on the 0700 bind mount; without
+        // DAC override only the owning user can write it (macOS file sharing maps it).
+        ...(process.platform === "linux"
+          ? ["--user", `${process.getuid()}:${process.getgid()}`]
+          : []),
         S3_IMAGE,
       ]);
     } finally {
