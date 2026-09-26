@@ -1,6 +1,5 @@
 import type { OidcIdentityProviderDependencies } from "@fan-support/identity-oidc";
 import type { StructuredLogger } from "@fan-support/observability";
-import type { PaymentConnectorFactory } from "@fan-support/payment-gateway";
 
 import {
   createApiApplication,
@@ -11,14 +10,13 @@ import { createCartRuntimeComposition } from "./cart-composition.js";
 import { createCatalogDirectoryComposition } from "./catalog-directory-composition.js";
 import { createCheckoutPreflightComposition } from "./checkout-composition.js";
 import { createOrderAccessComposition } from "./order-access-composition.js";
+import { createEnvironmentCredentialResolver } from "./payment-credential-resolver.js";
 import {
   assertDeployedPaymentAdapters,
-  deployedPaymentConnectorFactories,
+  createDeployedPaymentAdapters,
+  type DeployedPaymentAdapters,
 } from "./payment-deployed-adapters.js";
-import {
-  createPaymentWebhookVerifierDirectory,
-  type PaymentWebhookVerifierRegistration,
-} from "./payment-webhook-verifiers.js";
+import { createPaymentWebhookVerifierDirectory } from "./payment-webhook-verifiers.js";
 import { createProductionAdminComposition } from "./production-admin-composition.js";
 import { resolveApiProductionConfig } from "./production-config.js";
 import { createProductionPaymentComposition } from "./production-payment-composition.js";
@@ -37,9 +35,8 @@ type ApiApplicationFactory = typeof createApiApplication;
 
 export type ProductionApiApplicationOptions = Readonly<{
   logger: StructuredLogger;
-  /** Adapter code compiled into this release; defaults to the statically deployed set. */
-  paymentConnectorFactories?: readonly PaymentConnectorFactory[];
-  paymentWebhookVerifiers?: readonly PaymentWebhookVerifierRegistration[];
+  /** Adapter code compiled into this release; tests may substitute sandbox doubles. */
+  paymentAdapters?: DeployedPaymentAdapters;
   factories?: Readonly<{
     createApplication?: ApiApplicationFactory;
     createReliableEvents?: (
@@ -73,11 +70,32 @@ export async function createProductionApiApplication(
 ): ReturnType<ApiApplicationFactory> {
   const { logger } = options;
   const config = resolveApiProductionConfig(environment);
-  const connectorFactories =
-    options.paymentConnectorFactories ?? deployedPaymentConnectorFactories;
+  const adapters =
+    options.paymentAdapters ??
+    createDeployedPaymentAdapters({
+      credentials: createEnvironmentCredentialResolver(environment),
+    });
+  const connectorFactories = adapters.connectorFactories;
   assertDeployedPaymentAdapters(config.payment.connections, connectorFactories);
   const verifiers = createPaymentWebhookVerifierDirectory(
-    options.paymentWebhookVerifiers ?? [],
+    config.payment.webhookEndpoints.map((endpoint) => {
+      const connection = config.payment.connections.find(
+        (candidate) =>
+          candidate.binding.providerAccountId ===
+          endpoint.binding.providerAccountId,
+      );
+      const deployed =
+        connection === undefined
+          ? undefined
+          : adapters.webhookVerifierFor(endpoint, connection);
+      if (connection === undefined || deployed === undefined)
+        throw new TypeError("Webhook endpoint has no deployed verifier");
+      return {
+        adapterKey: connection.binding.providerCode,
+        endpointId: endpoint.endpointId,
+        ...deployed,
+      };
+    }),
   );
   const resources = createApiProductionResources(config, {
     logger,

@@ -1,4 +1,4 @@
-import type { PaymentConnectorFactory } from "@fan-support/payment-gateway";
+import type { PaymentConnectorFactory } from "@fan-support/payment-port";
 
 import type { ApiLifecycleResource } from "./bootstrap.js";
 import { createPaymentConfigurationLifecycle } from "./payment-configuration-lifecycle.js";

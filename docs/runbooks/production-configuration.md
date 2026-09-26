@@ -17,7 +17,7 @@
 | 核心（必填） | `NODE_ENV`、`FAN_SUPPORT_DEPLOYMENT_ENV`、`FAN_SUPPORT_SITE_ORIGIN`、`FAN_SUPPORT_DATABASE_URL`、对象存储组 | 启动失败 | 数据库 URL 走 Secrets Manager，其余为普通变量 |
 | 密钥管理（KMS） | `FAN_SUPPORT_CART_KMS_REGION`、`FAN_SUPPORT_CART_ENCRYPTION_KEY_VERSION`、`FAN_SUPPORT_CART_ENCRYPTION_KEY_IDS_JSON`、`FAN_SUPPORT_CART_BLIND_INDEX_KEY_VERSION`、`FAN_SUPPORT_CART_BLIND_INDEX_KEY_IDS_JSON` | 购物车、结账返回 503 | 普通变量（只含 KMS 密钥 ARN 引用） |
 | 订单查询 | `FAN_SUPPORT_ORDER_ACCESS_CONFIG_JSON` | 查单接口返回 503 | 普通变量 |
-| 支付 | `FAN_SUPPORT_PAYMENT_RUNTIME_CONFIG_JSON`、`FAN_SUPPORT_PAYMENT_ACCOUNT_CONNECTIONS_JSON`、`FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON` | 没有运行时配置时，结账支付接口返回 503；没有账户连接时处于"已部署但休眠" | 普通变量（不含凭据，凭据用 `secret-ref:v1:…` 引用） |
+| 支付 | `FAN_SUPPORT_PAYMENT_RUNTIME_CONFIG_JSON`、`FAN_SUPPORT_PAYMENT_ACCOUNT_CONNECTIONS_JSON`、`FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON`、`FAN_SUPPORT_PAYMENT_WEBHOOK_ENDPOINTS_JSON` | 没有运行时配置时，结账支付接口返回 503；没有账户连接时处于"已部署但休眠" | 普通变量（不含凭据，凭据用 `secret-ref:v1:env:PAYMENT_SECRET_…` 引用，值由 Secrets Manager 注入） |
 | 管理后台 | 普通变量：`FAN_SUPPORT_ADMIN_ORIGIN`、`FAN_SUPPORT_ADMIN_OIDC_ISSUER`、`FAN_SUPPORT_ADMIN_OIDC_CONFIG_JSON`；密钥：`FAN_SUPPORT_ADMIN_ACCESS_KEY`、`FAN_SUPPORT_ADMIN_TOKEN_PEPPER`、`FAN_SUPPORT_ADMIN_SUBJECT_PEPPER`、`FAN_SUPPORT_ADMIN_OIDC_CLIENT_SECRET`（仅机密客户端） | `/api/v1/admin/*` 不注册（404） | 见左列 |
 
 依赖关系：管理后台、订单查询、支付运行时都依赖密钥管理组；缺少它时，这三组中任何一组有配置都会启动失败。
@@ -44,7 +44,8 @@
 
 ## 支付：代码与激活分离
 
-- 支付适配器代码随版本发布，清单在 `apps/api/src/payment-deployed-adapters.ts`。当前版本还没有部署任何适配器，R1-3 起依次加入 Stripe、Airwallex、PayPal。
+- 支付适配器代码随版本发布，清单在 `apps/api/src/payment-deployed-adapters.ts`。当前已部署 Stripe Checkout（`stripe` / `1.0.0` / `stripe-checkout-v1`，只支持托管页刷卡），Airwallex、PayPal 随后加入。实现设计见 `docs/plan/r1-03-stripe-adapter.md`。
+- 凭据：账户连接的 `credentialRef` 与端点的 `secretRef` 写成 `secret-ref:v1:env:<变量名>`，变量名必须以 `PAYMENT_SECRET_` 开头，由 Secrets Manager 注入。Stripe API 密钥的模式必须与账户环境一致（TEST 账户只接受 `sk_test_`/`rk_test_`）；webhook 轮换期可以在同一变量里用逗号并列最多 3 把密钥，新的在前。
 - `FAN_SUPPORT_PAYMENT_ACCOUNT_CONNECTIONS_JSON` 是 `PaymentAccountConnection` 数组，描述不可变的已部署账户：商户号、环境、协议版本、API 源站、凭据引用。每个账户必须在 `FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON` 中有且只有一条健康策略。账户的回跳源站必须等于 `FAN_SUPPORT_SITE_ORIGIN`。
 - 账户找不到对应的已部署适配器代码（按适配器键、版本、协议三者匹配）时，启动失败。
 - 哪些账户可以收款、适用哪些市场、灰度比例是多少，都由管理中心"支付设置"发布到 PostgreSQL（P5-05）。各实例每 10 秒同步一次，不需要重新部署。
@@ -52,7 +53,9 @@
 
 ## Webhook
 
-- 入口是 `POST /api/v1/webhooks/payments/:endpointId`。只有部署了验签代码的端点才会继续做 PostgreSQL 端点预检；其余端点在内存中直接返回 404，不访问数据库。
+- 入口是 `POST /api/v1/webhooks/payments/:endpointId`。`FAN_SUPPORT_PAYMENT_WEBHOOK_ENDPOINTS_JSON` 里的每个端点必须绑定一个已部署账户，并有该适配器的验签代码，否则启动失败。只有这些端点会继续做 PostgreSQL 端点预检；其余端点在内存中直接返回 404，不访问数据库。
+- Stripe 端点需要订阅的事件：`checkout.session.completed`、`checkout.session.async_payment_succeeded`、`checkout.session.async_payment_failed`、`checkout.session.expired`、`refund.created`、`refund.updated`、`refund.failed`、`charge.dispute.created`、`charge.dispute.updated`、`charge.dispute.closed`。
+- 运营约束：退款只能从平台后台发起。在 Stripe 后台直接退款不会带平台引用，会被当作不支持的事件，需要人工处理。
 - webhook 原始报文先用密钥管理组加密再入库。缺少该组时，webhook 入库返回 `CONFIGURATION_ERROR`。
 
 ## 连接池

@@ -5,6 +5,8 @@ import {
   paymentConnection,
   paymentEnvironment,
   paymentHealthPolicy,
+  stripeEnvironment,
+  stripeWebhookEndpoint,
 } from "./test-support/production-environment.js";
 
 const siteOrigin = "https://shop.example.invalid";
@@ -23,6 +25,7 @@ test("absent payment metadata deploys no account and keeps checkout payment unav
     runtime: undefined,
     connections: [],
     healthPolicies: [],
+    webhookEndpoints: [],
   });
 });
 
@@ -91,4 +94,33 @@ test("runtime and account return origins must be the deployment's storefront", (
       siteOrigin,
     ),
   ).toThrow("Payment storefront origin does not match deployment");
+});
+
+test("webhook endpoints must be unique and bound to a deployed account's exact binding", () => {
+  expect(
+    resolvePaymentDeploymentConfig(stripeEnvironment, siteOrigin)
+      .webhookEndpoints,
+  ).toEqual([stripeWebhookEndpoint]);
+  for (const endpoints of [
+    [stripeWebhookEndpoint, stripeWebhookEndpoint],
+    [{ ...stripeWebhookEndpoint, binding: paymentConnection.binding }],
+    [
+      {
+        ...stripeWebhookEndpoint,
+        binding: {
+          ...stripeWebhookEndpoint.binding,
+          allowedActionOrigins: ["https://elsewhere.example.invalid"],
+        },
+      },
+    ],
+  ])
+    expect(() =>
+      resolvePaymentDeploymentConfig(
+        {
+          ...stripeEnvironment,
+          FAN_SUPPORT_PAYMENT_WEBHOOK_ENDPOINTS_JSON: JSON.stringify(endpoints),
+        },
+        siteOrigin,
+      ),
+    ).toThrow("Invalid payment runtime configuration");
 });

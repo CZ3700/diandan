@@ -1,13 +1,53 @@
-import type { PaymentAccountConnection } from "@fan-support/contracts";
-import type { PaymentConnectorFactory } from "@fan-support/payment-gateway";
+import type {
+  PaymentAccountConnection,
+  PaymentGatewayWebhookConfig,
+} from "@fan-support/contracts";
+import type {
+  PaymentConnectorFactory,
+  PaymentCredentialResolver,
+  PaymentWebhookVerifier,
+} from "@fan-support/payment-port";
+import {
+  STRIPE_ADAPTER_KEY,
+  STRIPE_SIGNATURE_HEADER,
+  createStripeAdapter,
+} from "@fan-support/payment-stripe";
+
+export type DeployedWebhookVerifier = Readonly<{
+  verifier: PaymentWebhookVerifier;
+  /** Raw headers the adapter must see; the route forwards nothing else. */
+  headerNames: readonly string[];
+}>;
+
+/** Payment adapter code compiled into this release; accounts activate only through PostgreSQL publication. */
+export type DeployedPaymentAdapters = Readonly<{
+  connectorFactories: readonly PaymentConnectorFactory[];
+  webhookVerifierFor(
+    configuration: PaymentGatewayWebhookConfig,
+    connection: PaymentAccountConnection,
+  ): DeployedWebhookVerifier | undefined;
+}>;
 
 /**
- * Payment adapter code compiled into this release (V2 plan §3.1). The list only states which code
- * exists; deployed accounts activate through the versioned PostgreSQL publication. R1-3 adds
- * Stripe, then Airwallex and PayPal. TEST adapters never belong here.
+ * V2 plan §3.1: static code, configuration activation. Stripe ships first (R1-3); Airwallex
+ * and PayPal follow. TEST adapters never belong here.
  */
-export const deployedPaymentConnectorFactories: readonly PaymentConnectorFactory[] =
-  Object.freeze([]);
+export function createDeployedPaymentAdapters(
+  options: Readonly<{ credentials: PaymentCredentialResolver }>,
+): DeployedPaymentAdapters {
+  const stripe = createStripeAdapter({ credentials: options.credentials });
+  return Object.freeze({
+    connectorFactories: Object.freeze([stripe.connector]),
+    webhookVerifierFor(configuration, connection) {
+      return connection.binding.providerCode === STRIPE_ADAPTER_KEY
+        ? Object.freeze({
+            verifier: stripe.createWebhookVerifier(configuration, connection),
+            headerNames: Object.freeze([STRIPE_SIGNATURE_HEADER]),
+          })
+        : undefined;
+    },
+  });
+}
 
 const adapterIdentity = (key: string, version: string, protocol: string) =>
   `${key}/${version}/${protocol}`;

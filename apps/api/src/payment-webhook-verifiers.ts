@@ -10,6 +10,8 @@ export type PaymentWebhookVerifierRegistration = Readonly<{
   adapterKey: string;
   endpointId: string;
   verifier: PaymentWebhookVerifier;
+  /** Raw headers this adapter verifies; the route forwards only the declared names. */
+  headerNames: readonly string[];
 }>;
 
 export type PaymentWebhookVerifierDirectory = Readonly<{
@@ -39,11 +41,16 @@ export function createPaymentWebhookVerifierDirectory(
     );
     if (
       byEndpoint.has(endpointId) ||
-      typeof registration.verifier?.verifyPaymentWebhook !== "function"
+      typeof registration.verifier?.verifyPaymentWebhook !== "function" ||
+      !Array.isArray(registration.headerNames) ||
+      registration.headerNames.length === 0
     )
       throw new TypeError("Invalid payment webhook verifier registration");
     byEndpoint.set(endpointId, Object.freeze({ ...registration, endpointId }));
   }
+  const headerNames = [
+    ...new Set([...byEndpoint.values()].flatMap((entry) => entry.headerNames)),
+  ].sort();
   return Object.freeze({
     verifierForEndpoint(adapterKey: string, endpointId: string) {
       const registration = byEndpoint.get(endpointId);
@@ -54,6 +61,9 @@ export function createPaymentWebhookVerifierDirectory(
     gate(route: PaymentWebhookRouteOptions): PaymentWebhookRouteOptions {
       return Object.freeze({
         ...route,
+        ...(headerNames.length === 0
+          ? {}
+          : { verificationHeaderNames: Object.freeze(headerNames) }),
         endpointPreflight: async (command) =>
           byEndpoint.has(command.endpointId)
             ? route.endpointPreflight(command)

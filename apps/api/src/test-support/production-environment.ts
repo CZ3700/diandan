@@ -158,3 +158,45 @@ export function createFakeReliableEvents() {
   } as unknown as ApiReliableEventsComposition;
   return { composition, endpointPreflight, receive, stop };
 }
+
+export const stripeConnection = Object.freeze({
+  ...paymentConnection,
+  binding: {
+    ...paymentConnection.binding,
+    providerAccountId: "10000000-0000-4000-8000-00000000000a",
+    providerCode: "stripe",
+    allowedActionOrigins: ["https://checkout.stripe.com"],
+  },
+  protocol: "stripe-checkout-v1",
+  apiOrigin: "https://api.stripe.com",
+  credentialRef: "secret-ref:v1:env:PAYMENT_SECRET_STRIPE_API",
+});
+
+export const stripeHealthPolicy = Object.freeze({
+  ...paymentHealthPolicy,
+  providerAccountId: stripeConnection.binding.providerAccountId,
+});
+
+export const stripeWebhookEndpoint = Object.freeze({
+  schemaVersion: 1,
+  binding: stripeConnection.binding,
+  endpointId: "70000000-0000-4000-8000-000000000007",
+  verificationKeyReferenceHash: "a".repeat(64),
+  secretRef: "secret-ref:v1:env:PAYMENT_SECRET_STRIPE_WEBHOOK",
+  toleranceSeconds: 300,
+  maxBodyBytes: 65_536,
+});
+
+/** A complete deployment with one sandbox Stripe account and its webhook endpoint. */
+export const stripeEnvironment = Object.freeze({
+  ...completeProductionEnvironment,
+  FAN_SUPPORT_PAYMENT_ACCOUNT_CONNECTIONS_JSON: JSON.stringify([
+    stripeConnection,
+  ]),
+  FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON: JSON.stringify([
+    stripeHealthPolicy,
+  ]),
+  FAN_SUPPORT_PAYMENT_WEBHOOK_ENDPOINTS_JSON: JSON.stringify([
+    stripeWebhookEndpoint,
+  ]),
+});

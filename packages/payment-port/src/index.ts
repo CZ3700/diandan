@@ -117,3 +117,9 @@ export type {
   PaymentRuntimeProviderRegistration,
   PaymentRuntimeProviderDirectory,
 } from "./runtime-provider.js";
+export type { PaymentConnectorFactory } from "./connector-factory.js";
+export {
+  resolvePaymentCredentials,
+  type PaymentCredentialRequest,
+  type PaymentCredentialResolver,
+} from "./credentials.js";

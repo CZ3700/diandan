@@ -34,11 +34,21 @@ test("an endpoint without deployed verification code is unavailable without a da
 
 test("a deployed endpoint still defers eligibility to PostgreSQL and only its own adapter may verify it", async () => {
   const directory = createPaymentWebhookVerifierDirectory([
-    { adapterKey: "sandbox-gateway", endpointId, verifier },
+    {
+      adapterKey: "sandbox-gateway",
+      endpointId,
+      verifier,
+      headerNames: ["webhook-signature", "webhook-id"],
+    },
   ]);
   const original = route();
   const gated = directory.gate(original);
   expect(gated.receiver).toBe(original.receiver);
+  // Only the declared signature headers reach the verifier, in a stable order.
+  expect(gated.verificationHeaderNames).toEqual([
+    "webhook-id",
+    "webhook-signature",
+  ]);
   await expect(gated.endpointPreflight(command)).resolves.toEqual({
     schemaVersion: 1,
     outcome: "ELIGIBLE",
@@ -55,11 +65,19 @@ test("a deployed endpoint still defers eligibility to PostgreSQL and only its ow
 test("duplicate, malformed or incomplete verifier registrations stop startup", () => {
   for (const registrations of [
     [
-      { adapterKey: "a", endpointId, verifier },
-      { adapterKey: "b", endpointId, verifier },
+      { adapterKey: "a", endpointId, verifier, headerNames: ["x-sig"] },
+      { adapterKey: "b", endpointId, verifier, headerNames: ["x-sig"] },
     ],
-    [{ adapterKey: "a", endpointId: "not-a-uuid", verifier }],
-    [{ adapterKey: "a", endpointId, verifier: {} }],
+    [
+      {
+        adapterKey: "a",
+        endpointId: "not-a-uuid",
+        verifier,
+        headerNames: ["x-sig"],
+      },
+    ],
+    [{ adapterKey: "a", endpointId, verifier: {}, headerNames: ["x-sig"] }],
+    [{ adapterKey: "a", endpointId, verifier, headerNames: [] }],
   ])
     expect(() =>
       createPaymentWebhookVerifierDirectory(registrations as never),

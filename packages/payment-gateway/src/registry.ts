@@ -2,22 +2,16 @@ import {
   deployedPaymentAdapterSchema,
   paymentConnectorSnapshotSchema,
   paymentRuntimeProviderBindingSchema,
-  type DeployedPaymentAdapter,
   type PaymentAccountConnection,
 } from "@fan-support/contracts";
 import type {
+  PaymentConnectorFactory,
   PaymentProvider,
   PaymentRuntimeProviderDirectory,
   PaymentRuntimeProviderRegistration,
 } from "@fan-support/payment-port";
 
-/** Deployed, synchronous construction only: factories must not perform business I/O. */
-export type PaymentConnectorFactory = Readonly<{
-  descriptor: DeployedPaymentAdapter;
-  create(
-    connection: PaymentAccountConnection,
-  ): PaymentRuntimeProviderRegistration;
-}>;
+export type { PaymentConnectorFactory };
 
 function freeze<Value>(value: Value): Value {
   if (value !== null && typeof value === "object") {

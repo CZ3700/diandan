@@ -1,11 +1,12 @@
 {
-  "name": "@fan-support/payment-port",
+  "name": "@fan-support/payment-stripe",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "sideEffects": false,
   "dependencies": {
     "@fan-support/contracts": "workspace:*",
+    "@fan-support/payment-port": "workspace:*",
     "zod": "4.5.4"
   },
   "devDependencies": {
@@ -20,6 +21,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run --config ../../vitest.config.ts --root .",
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json",
+    "sandbox": "pnpm run build && node ./scripts/stripe-sandbox.mjs"
   }
 }

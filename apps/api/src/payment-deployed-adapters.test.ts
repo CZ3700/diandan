@@ -2,7 +2,7 @@ import { expect, test, vi } from "vitest";
 
 import {
   assertDeployedPaymentAdapters,
-  deployedPaymentConnectorFactories,
+  createDeployedPaymentAdapters,
 } from "./payment-deployed-adapters.js";
 import { paymentConnection } from "./test-support/production-environment.js";
 
@@ -23,12 +23,42 @@ const factory = {
   create: vi.fn(),
 } as never;
 
-test("this release deploys no payment adapter code yet, so no account can activate", () => {
-  expect(deployedPaymentConnectorFactories).toEqual([]);
-  expect(Object.isFrozen(deployedPaymentConnectorFactories)).toBe(true);
-  expect(() =>
-    assertDeployedPaymentAdapters([], deployedPaymentConnectorFactories),
-  ).not.toThrow();
+test("this release deploys Stripe Checkout, and only Stripe accounts get its webhook verifier", () => {
+  const adapters = createDeployedPaymentAdapters({
+    credentials: { resolve: vi.fn() },
+  });
+  expect(
+    adapters.connectorFactories.map(({ descriptor }) => [
+      descriptor.adapterKey,
+      descriptor.adapterVersion,
+      descriptor.protocol,
+    ]),
+  ).toEqual([["stripe", "1.0.0", "stripe-checkout-v1"]]);
+  const stripeAccount = {
+    ...paymentConnection,
+    binding: {
+      ...paymentConnection.binding,
+      providerCode: "stripe",
+      allowedActionOrigins: ["https://checkout.stripe.com"],
+    },
+    protocol: "stripe-checkout-v1",
+    apiOrigin: "https://api.stripe.com",
+  } as never;
+  const endpoint = {
+    schemaVersion: 1,
+    binding: (stripeAccount as { binding: unknown }).binding,
+    endpointId: "70000000-0000-4000-8000-000000000007",
+    verificationKeyReferenceHash: "a".repeat(64),
+    secretRef: "secret-ref:v1:env:PAYMENT_SECRET_STRIPE_WEBHOOK",
+    toleranceSeconds: 300,
+    maxBodyBytes: 65_536,
+  } as never;
+  expect(adapters.webhookVerifierFor(endpoint, stripeAccount)).toMatchObject({
+    headerNames: ["stripe-signature"],
+  });
+  expect(
+    adapters.webhookVerifierFor(endpoint, paymentConnection as never),
+  ).toBeUndefined();
 });
 
 test("an account needs deployed code with the exact adapter key, version and protocol", () => {

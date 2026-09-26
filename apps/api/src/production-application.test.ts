@@ -11,6 +11,9 @@ import {
   paymentConnection,
   paymentHealthPolicy,
   quietLogger,
+  stripeConnection,
+  stripeEnvironment,
+  stripeWebhookEndpoint,
 } from "./test-support/production-environment.js";
 
 type RouteOptionKey = Extract<
@@ -240,4 +243,76 @@ test("a bootstrap failure releases every shared pool and composed lifecycle exac
   expect(createPersistence.mock.calls.length).toBeGreaterThan(0);
   expect(closes).toHaveBeenCalledTimes(createPersistence.mock.calls.length);
   expect(reliable.stop).toHaveBeenCalledTimes(1);
+});
+
+test("a deployed Stripe account joins the payment directory and its endpoint passes the webhook gate", async () => {
+  const reliable = createFakeReliableEvents();
+  let received: CreateApiApplicationOptions | undefined;
+  let verifierForEndpoint:
+    ((adapterKey: string, endpointId: string) => unknown) | undefined;
+  await createProductionApiApplication(stripeEnvironment, {
+    logger: quietLogger,
+    factories: {
+      createReliableEvents: (_environment, options) => {
+        verifierForEndpoint = options.verifierForEndpoint;
+        return reliable.composition;
+      },
+      createApplication: (async (
+        _environment: unknown,
+        options: CreateApiApplicationOptions,
+      ) => {
+        received = options;
+        return { marker: "api" };
+      }) as never,
+    },
+  });
+  const route = received?.paymentWebhookRoute;
+  expect(route?.verificationHeaderNames).toEqual(["stripe-signature"]);
+  const command = {
+    schemaVersion: 1,
+    endpointId: stripeWebhookEndpoint.endpointId,
+    receivedAt: "2026-09-26T00:00:00.000Z",
+  } as never;
+  await route?.endpointPreflight(command);
+  expect(reliable.endpointPreflight).toHaveBeenCalledWith(command);
+  expect(
+    verifierForEndpoint?.("stripe", stripeWebhookEndpoint.endpointId),
+  ).toMatchObject({ verifyPaymentWebhook: expect.any(Function) });
+  expect(
+    verifierForEndpoint?.("paypal", stripeWebhookEndpoint.endpointId),
+  ).toBeUndefined();
+  expect(received?.adminPaymentConfigurationRoute).toBeDefined();
+  expect(stripeConnection.binding.providerCode).toBe("stripe");
+});
+
+test("a webhook endpoint without deployed verification code stops startup", async () => {
+  const { createPersistence } = countingPersistence();
+  await expect(
+    createProductionApiApplication(stripeEnvironment, {
+      logger: quietLogger,
+      paymentAdapters: {
+        connectorFactories: [
+          {
+            descriptor: {
+              schemaVersion: 1,
+              adapterKey: "stripe",
+              adapterVersion: "1.0.0",
+              protocol: "stripe-checkout-v1",
+              supportedOperations: ["GET_CAPABILITIES"],
+              supportedInstrumentKinds: ["CARD"],
+              idempotency: {
+                retention: "DURABLE",
+                minimumRetentionSeconds: 0,
+                referenceLookup: true,
+              },
+            },
+            create: vi.fn() as never,
+          },
+        ],
+        webhookVerifierFor: () => undefined,
+      },
+      factories: { createPersistence },
+    }),
+  ).rejects.toThrow("Webhook endpoint has no deployed verifier");
+  expect(createPersistence).not.toHaveBeenCalled();
 });
