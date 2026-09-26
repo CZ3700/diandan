@@ -525,10 +525,32 @@ export async function verifyOrderStorefrontBrowser(context) {
       await page.goto(`${origin}/pt/orders/lookup`, {
         waitUntil: "networkidle",
       });
+      // Another order's public number cannot be located with this browser's order session.
       await page
         .locator("input[name=orderId]")
-        .fill(dailyHistory.order.publicOrderId.toUpperCase());
+        .fill(history[0].order.publicOrderNo);
       await page.locator("[data-order-open]").click();
+      await page.locator("[data-order-error]").waitFor();
+      check(
+        new globalThis.URL(page.url()).pathname === "/pt/orders/lookup" &&
+          (await page.locator("[data-order-detail]").count()) === 0,
+        "A public number of another order locates nothing without its session",
+      );
+      // The number as a fan reads it out: lowercase, spaced, no prefix.
+      await page
+        .locator("input[name=orderId]")
+        .fill(
+          dailyHistory.order.publicOrderNo
+            .slice(3)
+            .toLowerCase()
+            .split("")
+            .join(" "),
+        );
+      await page.locator("[data-order-open]").click();
+      await page.waitForURL(
+        (url) =>
+          url.pathname === `/pt/orders/${dailyHistory.order.publicOrderId}`,
+      );
       await detail(dailyHistory.order, "pt");
       await verifyOrderStorefrontRecovery({
         context,

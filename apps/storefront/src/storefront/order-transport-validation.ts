@@ -9,7 +9,8 @@ export type OrderOperation =
   | { kind: "exchange" }
   | { kind: "bootstrap" }
   | { kind: "read"; publicOrderId: string }
-  | { kind: "revoke"; publicOrderId: string };
+  | { kind: "revoke"; publicOrderId: string }
+  | { kind: "locate"; publicOrderNo: string };
 export const orderPrivateHeaders = {
   "cache-control": "private, no-store",
   "referrer-policy": "no-referrer",
@@ -81,13 +82,15 @@ export function validateOrderResponse(
         operation.publicOrderId.toLowerCase()
     )
       throw new Error("Invalid order read scope");
+  } else if (operation.kind === "locate") {
+    if (result.action !== "LOCATED") throw new Error("Invalid order locate");
   } else if (
     result.action !== "REVOKED" ||
     result.publicOrderId.toLowerCase() !== operation.publicOrderId.toLowerCase()
   )
     throw new Error("Invalid order revoke scope");
-  if (result.action === "REVOKED") {
-    if (csrf !== null) throw new Error("Unexpected revoked credential");
+  if (result.action === "REVOKED" || result.action === "LOCATED") {
+    if (csrf !== null) throw new Error("Unexpected order credential");
     return { result };
   }
   return { result, csrf: orderAccessRawTokenSchema.parse(csrf) };

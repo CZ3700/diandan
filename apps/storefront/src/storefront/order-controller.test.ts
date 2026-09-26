@@ -22,6 +22,7 @@ function transport() {
     read: vi.fn().mockResolvedValue(denied),
     exchange: vi.fn().mockResolvedValue(grant),
     bootstrap: vi.fn(),
+    locate: vi.fn(),
     revoke: vi.fn().mockResolvedValue({
       schemaVersion: 1,
       outcome: "SUCCESS",
@@ -275,4 +276,31 @@ it("suspension clears private details but preserves a pending close operation ac
   await controller.resume();
   expect(controller.snapshot().revoked).toBe(true);
   expect(api.revoke).toHaveBeenCalledTimes(2);
+});
+
+it("locates a public number without reading or rotating access and reports denial", async () => {
+  const loaded = await load();
+  expect(loaded?.createOrderController).toBeTypeOf("function");
+  if (!loaded) return;
+  const api = transport();
+  api.locate
+    .mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "LOCATED",
+      publicOrderId: id,
+    })
+    .mockResolvedValueOnce(denied);
+  const controller = loaded.createOrderController(() => api);
+  expect(await controller.locate("FS-7K3M9C")).toBe(id);
+  expect(controller.snapshot()).toMatchObject({ busy: false, error: null });
+  expect(await controller.locate("FS-7K3M9C")).toBeNull();
+  expect(controller.snapshot()).toMatchObject({
+    busy: false,
+    error: "ACCESS_DENIED",
+    order: null,
+  });
+  expect(api.locate).toHaveBeenCalledWith("FS-7K3M9C");
+  expect(api.read).not.toHaveBeenCalled();
+  expect(api.exchange).not.toHaveBeenCalled();
 });

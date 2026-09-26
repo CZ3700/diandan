@@ -107838,6 +107838,25 @@
         ],
         "x-fan-support-audience": "public-http"
       },
+      "OrderAccessLocateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "publicOrderNo": {
+            "pattern": "^FS-[0-9A-HJKMNP-TV-Z]{6}$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "publicOrderNo"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
       "OrderAccessResponse": {
         "anyOf": [
           {
@@ -108777,6 +108796,35 @@
             "properties": {
               "action": {
                 "const": "REVOKED",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "publicOrderId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "action",
+              "publicOrderId"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "LOCATED",
                 "type": "string"
               },
               "outcome": {
@@ -189003,6 +189051,427 @@
           }
         },
         "security": []
+      }
+    },
+    "/api/v1/order-access/locate": {
+      "post": {
+        "description": "Resolve a typed public order number to its publicOrderId only when this browser's active order session belongs to that order. Read-only: no lock, credential, rotation or audit; shares the READ rate-limit bucket. A number alone never reveals or authorizes an order.",
+        "operationId": "locateOrderAccess",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderAccessLocateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OrderSession": []
+          }
+        ]
       }
     },
     "/api/v1/order-access/revoke": {

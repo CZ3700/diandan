@@ -1227,6 +1227,16 @@ const registrations = [
     schema: orderAccess.orderAccessReadCommandSchema,
   },
   {
+    name: "OrderAccessLocateCommand",
+    audience: "internal",
+    schema: orderAccess.orderAccessLocateCommandSchema,
+  },
+  {
+    name: "OrderAccessLocated",
+    audience: "internal",
+    schema: orderAccess.orderAccessLocatedSchema,
+  },
+  {
     name: "OrderAccessRevokeCommand",
     audience: "internal",
     schema: orderAccess.orderAccessRevokeCommandSchema,
@@ -1290,6 +1300,11 @@ const registrations = [
     name: "OrderAccessRevokeRequest",
     audience: "public-http",
     schema: orderAccess.orderAccessRevokeRequestSchema,
+  },
+  {
+    name: "OrderAccessLocateRequest",
+    audience: "public-http",
+    schema: orderAccess.orderAccessLocateRequestSchema,
   },
 
   {

@@ -406,6 +406,7 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/idols/{handle}",
     "/api/v1/media/{mediaAssetId}",
     "/api/v1/order-access/exchange",
+    "/api/v1/order-access/locate",
     "/api/v1/order-access/revoke",
     "/api/v1/orders/{publicOrderId}",
     "/api/v1/policies/{policyKey}",

@@ -3,6 +3,7 @@ import {
   publicOrderIdSchema,
   orderAccessBootstrapRequestSchema,
   orderAccessExchangeRequestSchema,
+  orderAccessLocateRequestSchema,
   orderAccessRawTokenSchema,
   orderAccessRevokeRequestSchema,
 } from "@fan-support/contracts";
@@ -23,6 +24,10 @@ export function parseOrderRoute(
   if (path === "/api/storefront/order-access/revoke" && method === "POST") {
     const parsed = orderAccessRevokeRequestSchema.parse(body);
     return { kind: "revoke", publicOrderId: parsed.publicOrderId };
+  }
+  if (path === "/api/storefront/order-access/locate" && method === "POST") {
+    const parsed = orderAccessLocateRequestSchema.parse(body);
+    return { kind: "locate", publicOrderNo: parsed.publicOrderNo };
   }
   const bootstrap =
     /^\/api\/storefront\/checkout\/sessions\/([a-f\d-]+)\/order-access$/iu.exec(

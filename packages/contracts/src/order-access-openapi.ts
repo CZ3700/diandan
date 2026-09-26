@@ -105,6 +105,14 @@ export function orderAccessPaths() {
         responses,
       },
     },
+    "/api/v1/order-access/locate": {
+      post: mutation(
+        "locateOrderAccess",
+        "OrderAccessLocateRequest",
+        "Resolve a typed public order number to its publicOrderId only when this browser's active order session belongs to that order. Read-only: no lock, credential, rotation or audit; shares the READ rate-limit bucket. A number alone never reveals or authorizes an order.",
+        [{ OrderSession: [] }],
+      ),
+    },
     "/api/v1/order-access/revoke": {
       post: mutation(
         "revokeOrderAccess",

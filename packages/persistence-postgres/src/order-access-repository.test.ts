@@ -3,6 +3,7 @@ import {
   orderAccessBootstrapCommandSchema,
   orderAccessExchangeCommandSchema,
   orderAccessIssueCommandSchema,
+  orderAccessLocateCommandSchema,
   orderAccessReadCommandSchema,
   orderAccessRateCommandSchema,
 } from "@fan-support/contracts";
@@ -300,3 +301,35 @@ for (const phase of ["AFTER_LOCKS", "BEFORE_GRANT"] as const) {
       ).toBe(false);
   });
 }
+
+test("locating a public number is a read-only session lookup that never discloses other orders", async () => {
+  const command = orderAccessLocateCommandSchema.parse({
+    schemaVersion: 1,
+    publicOrderNo: "FS-7K3M9C",
+    sessionCandidates: [credential],
+  });
+  const found = setup([[{ public_order_id: id(3) }]]);
+  await expect(found.repo.locate(command)).resolves.toEqual({
+    schemaVersion: 1,
+    publicOrderId: id(3),
+  });
+  expect(found.query).toHaveBeenCalledTimes(1);
+  const [sql, values] = found.query.mock.calls[0]!;
+  expect(sql).toMatch(/o\.public_order_no=\$2::text/u);
+  expect(sql).toMatch(/session\.status='ACTIVE'/u);
+  expect(sql).not.toMatch(/FOR UPDATE|INSERT|UPDATE public/u);
+  expect(values?.[1]).toBe("FS-7K3M9C");
+  const missing = setup([[]]);
+  await expect(missing.repo.locate(command)).rejects.toMatchObject({
+    code: "ACCESS_DENIED",
+  });
+  const ambiguous = setup([
+    [{ public_order_id: id(3) }, { public_order_id: id(4) }],
+  ]);
+  await expect(ambiguous.repo.locate(command)).rejects.toMatchObject({
+    code: "ACCESS_DENIED",
+  });
+  await expect(
+    found.repo.locate({ ...command, publicOrderNo: "7K3M9C" } as never),
+  ).rejects.toMatchObject({ code: "INVALID_REQUEST" });
+});

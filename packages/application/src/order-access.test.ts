@@ -38,6 +38,7 @@ function harness(result: unknown = grant, fault?: unknown) {
       "bootstrap",
       "read",
       "revoke",
+      "locate",
       "consumeRateLimit",
     ].map((method) => [
       method,
@@ -241,4 +242,47 @@ test("rate limit exhaustion commits independently; malformed limiter results fai
     invalid.app.consumeRateLimit({ ...command, maxRequests: 0 }),
   ).rejects.toThrow("Order access unavailable");
   expect(invalid.counts()).toEqual({ commits: 0, rollbacks: 1 });
+});
+
+test("locating a public number returns only the session's order identifier", async () => {
+  const command = {
+    schemaVersion: 1,
+    publicOrderNo: "FS-7K3M9C",
+    sessionCandidates: [proof],
+  };
+  const h = harness({ schemaVersion: 1, publicOrderId: id });
+  expect(await h.app.locate(command)).toEqual({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    action: "LOCATED",
+    publicOrderId: id,
+  });
+  expect(h.calls).toEqual(["locate"]);
+  expect(h.counts()).toEqual({ commits: 1, rollbacks: 0 });
+  for (const invalid of [
+    { ...command, publicOrderNo: "fs-7k3m9c" },
+    { ...command, publicOrderNo: "FS-7K3M9U" },
+    { ...command, sessionCandidates: [] },
+    { ...command, publicOrderId: id },
+  ]) {
+    const rejected = harness({ schemaVersion: 1, publicOrderId: id });
+    expect(await rejected.app.locate(invalid)).toEqual({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "INVALID_REQUEST",
+    });
+    expect(rejected.calls).toEqual([]);
+  }
+  const denied = harness(
+    undefined,
+    new OrderAccessRepositoryError("ACCESS_DENIED"),
+  );
+  expect(await denied.app.locate(command)).toEqual({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "ACCESS_DENIED",
+  });
+  const leaky = harness({ schemaVersion: 1, publicOrderId: id, cartId: id });
+  expect((await leaky.app.locate(command)).outcome).toBe("FAILURE");
+  expect(leaky.counts()).toEqual({ commits: 0, rollbacks: 1 });
 });

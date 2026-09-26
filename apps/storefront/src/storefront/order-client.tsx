@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
+  normalizePublicOrderNo,
   publicOrderIdSchema,
   type SupportedLocale,
 } from "@fan-support/contracts";
@@ -117,14 +118,26 @@ export function OrderClient({
             data-order-lookup
             onSubmit={(event) => {
               event.preventDefault();
-              const id = publicOrderIdSchema.safeParse(lookupId.trim());
-              if (!id.success) {
+              const typed = lookupId.trim();
+              const id = publicOrderIdSchema.safeParse(typed);
+              if (id.success) {
+                window.location.assign(
+                  storefrontHref(locale, `/orders/${id.data}`),
+                );
+                return;
+              }
+              // A public number is resolved through this browser's order session only.
+              const number = normalizePublicOrderNo(typed);
+              if (!number) {
                 setInvalidId(true);
                 return;
               }
-              window.location.assign(
-                storefrontHref(locale, `/orders/${id.data}`),
-              );
+              void controller.locate(number).then((located) => {
+                if (located)
+                  window.location.assign(
+                    storefrontHref(locale, `/orders/${located}`),
+                  );
+              });
             }}
           >
             <label htmlFor="order-id">{copy.orderIdLabel}</label>
@@ -152,6 +165,7 @@ export function OrderClient({
               type="submit"
               className="storefront-primary"
               data-order-open
+              disabled={state.busy}
             >
               {copy.orderOpen}
             </button>

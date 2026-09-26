@@ -73,6 +73,11 @@ export const orderAccessRevokeRequestSchema = z.strictObject({
   schemaVersion: version,
   publicOrderId: publicOrderIdSchema,
 });
+/** Finds the order behind a typed public number; only this browser's order session can answer. */
+export const orderAccessLocateRequestSchema = z.strictObject({
+  schemaVersion: version,
+  publicOrderNo: publicOrderNoSchema,
+});
 export const orderAccessIssueCommandSchema = z.strictObject({
   schemaVersion: version,
   orderId: orderIdSchema,
@@ -105,12 +110,21 @@ export const orderAccessRevokeCommandSchema = z.strictObject({
   ...orderAccessReadCommandSchema.shape,
   ...requestTrace,
 });
+export const orderAccessLocateCommandSchema = z.strictObject({
+  schemaVersion: version,
+  publicOrderNo: publicOrderNoSchema,
+  sessionCandidates: orderAccessCandidatesSchema,
+});
 export const orderAccessGrantSchema = z.strictObject({
   schemaVersion: version,
   publicOrderId: publicOrderIdSchema,
   expiresAt: contentTimestampSchema,
 });
 export const orderAccessRevokedSchema = z.strictObject({
+  schemaVersion: version,
+  publicOrderId: publicOrderIdSchema,
+});
+export const orderAccessLocatedSchema = z.strictObject({
   schemaVersion: version,
   publicOrderId: publicOrderIdSchema,
 });
@@ -268,6 +282,12 @@ export const orderAccessResponseSchema = z.union([
     action: z.literal("REVOKED"),
     publicOrderId: publicOrderIdSchema,
   }),
+  z.strictObject({
+    schemaVersion: version,
+    outcome: z.literal("SUCCESS"),
+    action: z.literal("LOCATED"),
+    publicOrderId: publicOrderIdSchema,
+  }),
 ]);
 export const orderAccessRateCommandSchema = z.strictObject({
   schemaVersion: version,
@@ -317,6 +337,10 @@ export type OrderAccessReadCommand = z.infer<
 export type OrderAccessRevokeCommand = z.infer<
   typeof orderAccessRevokeCommandSchema
 >;
+export type OrderAccessLocateCommand = z.infer<
+  typeof orderAccessLocateCommandSchema
+>;
+export type OrderAccessLocated = z.infer<typeof orderAccessLocatedSchema>;
 export type OrderAccessGrant = z.infer<typeof orderAccessGrantSchema>;
 export type OrderAccessRevoked = z.infer<typeof orderAccessRevokedSchema>;
 export type OrderAccessFailureCode = z.infer<

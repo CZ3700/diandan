@@ -234,6 +234,25 @@ export async function verifyOrderAccessProtocol(context) {
   await api.read(undefined, id, denied);
   await api.read(first.session, second.value.checkout.publicOrderId, denied);
   await api.read(first.session, randomUUID(), denied);
+  progress("public order number resolves only through its own order session");
+  const numberOf = async (session, publicOrderId) =>
+    (await api.read(session, publicOrderId)).data.order.publicOrderNo;
+  const firstNo = await numberOf(first.session, id),
+    secondNo = await numberOf(
+      second.session,
+      second.value.checkout.publicOrderId,
+    );
+  const located = await api.locate(first.session, firstNo);
+  check(
+    located.data.action === "LOCATED" &&
+      located.data.publicOrderId === id &&
+      !located.response.headers.get("set-cookie") &&
+      !located.response.headers.get("x-csrf-token"),
+    "A public number resolves to its order only through that order's session and issues no credential",
+  );
+  await api.locate(first.session, secondNo, denied);
+  await api.locate(undefined, firstNo, denied);
+  await api.locate(first.session, firstNo.toLowerCase(), invalid);
   await api.read(first.value.session, id, denied);
   await api.read(
     { cookie: `__Host-fan-order=${randomBytes(32).toString("base64url")}` },

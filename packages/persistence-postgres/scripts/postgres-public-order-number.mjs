@@ -13,6 +13,7 @@ import {
   EphemeralPostgresError,
   MigrationExecutionError,
   MigrationManifestError,
+  createPostgresPersistence,
   runMigrations,
   withEphemeralPostgres,
 } from "../dist/index.js";
@@ -119,7 +120,7 @@ async function insertDraftOrder(client, publicOrderNo) {
 
 async function readNumbers(client) {
   const result = await client.query(
-    "SELECT id,public_order_no FROM public.orders ORDER BY created_at,id",
+    "SELECT id,public_order_id,public_order_no FROM public.orders ORDER BY created_at,id",
   );
   return result.rows;
 }
@@ -202,6 +203,73 @@ async function assertSupportSearch(client, number) {
   assertEqual(orders.totalItems, 0, "order search without a match");
 }
 
+/** A public number resolves only through an active session of that very order. */
+async function assertSessionLocate(client, clientConfig, [own, other]) {
+  const digest = (byte) => byte.repeat(32);
+  const seed = (order, byte, window) =>
+    client.query(
+      `INSERT INTO public.order_access_sessions(id,order_id,public_order_id,exchanged_token_id,session_token_digest,token_pepper_version,status,expires_at,created_at,last_seen_at)
+       VALUES($1,$2,$3,$4,decode($5,'hex'),'test-v1','ACTIVE',clock_timestamp()+$6::interval,clock_timestamp()+$7::interval,clock_timestamp()+$7::interval)`,
+      [
+        randomUUID(),
+        order.id,
+        order.public_order_id,
+        randomUUID(),
+        digest(byte),
+        window.expires,
+        window.created,
+      ],
+    );
+  await runReplicaTransaction(client, async () => {
+    await seed(own, "0a", { created: "-1 minute", expires: "1 hour" });
+    await seed(other, "0b", { created: "-2 hours", expires: "-1 hour" });
+  });
+  const persistence = createPostgresPersistence(clientConfig);
+  const locate = (publicOrderNo, byte) =>
+    persistence.orderAccessTransactionManager
+      .runInOrderAccessTransaction((repository) =>
+        repository.locate({
+          schemaVersion: 1,
+          publicOrderNo,
+          sessionCandidates: [
+            {
+              schemaVersion: 1,
+              tokenDigest: digest(byte),
+              pepperVersion: "test-v1",
+            },
+          ],
+        }),
+      )
+      .then(
+        (value) => value.publicOrderId,
+        (error) => error?.code ?? "UNEXPECTED",
+      );
+  try {
+    assertEqual(
+      await locate(own.public_order_no, "0a"),
+      own.public_order_id,
+      "own session locates its public number",
+    );
+    assertEqual(
+      await locate(other.public_order_no, "0a"),
+      "ACCESS_DENIED",
+      "another order's number with this session",
+    );
+    assertEqual(
+      await locate(other.public_order_no, "0b"),
+      "ACCESS_DENIED",
+      "an expired session",
+    );
+    assertEqual(
+      await locate(own.public_order_no.toLowerCase(), "0a"),
+      "INVALID_REQUEST",
+      "a non-canonical number",
+    );
+  } finally {
+    await persistence.close();
+  }
+}
+
 async function seedRuntimeState(client) {
   const id = randomUUID();
   await runReplicaTransaction(client, () =>
@@ -250,6 +318,7 @@ async function runHarness(clientConfig) {
     assertWellFormedAndUnique(afterInsert, "default insert");
     await assertGeneratorDistribution(client);
     await assertSupportSearch(client, backfilled[0].public_order_no);
+    await assertSessionLocate(client, clientConfig, backfilled);
 
     const taken = backfilled[0].public_order_no;
     await expectFailure(

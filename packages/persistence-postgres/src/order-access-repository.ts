@@ -4,9 +4,11 @@ import {
   orderAccessBootstrapCommandSchema,
   orderAccessReadCommandSchema,
   orderAccessRevokeCommandSchema,
+  orderAccessLocateCommandSchema,
   orderAccessRateCommandSchema,
   orderAccessGrantSchema,
   orderAccessRevokedSchema,
+  orderAccessLocatedSchema,
 } from "@fan-support/contracts";
 import {
   CartRuntimeRepositoryError,
@@ -19,6 +21,7 @@ import {
   activeAccessSession,
   activeAccessToken,
   confirmBootstrapCart,
+  locatedSessionOrder,
   lockAccessOrder,
   oneAccessRow,
   orderAccessOrderColumns,
@@ -252,6 +255,22 @@ export function createOrderAccessRepository(
         return orderAccessRevokedSchema.parse({
           schemaVersion: 1,
           publicOrderId: command.publicOrderId,
+        });
+      });
+    },
+    locate(input) {
+      return run(async () => {
+        const parsed = orderAccessLocateCommandSchema.safeParse(input);
+        if (!parsed.success) return rejectOrderAccess("INVALID_REQUEST");
+        // Resolves an identifier only; the following read re-authorizes under aggregate locks.
+        const session = await locatedSessionOrder(
+          client,
+          parsed.data.sessionCandidates,
+          parsed.data.publicOrderNo,
+        );
+        return orderAccessLocatedSchema.parse({
+          schemaVersion: 1,
+          publicOrderId: session["public_order_id"],
         });
       });
     },

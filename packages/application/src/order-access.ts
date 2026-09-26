@@ -4,6 +4,8 @@ import {
   orderAccessBootstrapCommandSchema,
   orderAccessReadCommandSchema,
   orderAccessRevokeCommandSchema,
+  orderAccessLocateCommandSchema,
+  orderAccessLocatedSchema,
   orderAccessGrantSchema,
   orderAccessRevokedSchema,
   orderAccessDetailSchema,
@@ -146,6 +148,19 @@ export function createOrderAccessUseCases({
         publicOrderId,
       }),
     );
+  const locate = (input: unknown) =>
+    execute(
+      orderAccessLocateCommandSchema,
+      input,
+      async (repository, command) =>
+        orderAccessLocatedSchema.parse(await repository.locate(command)),
+      ({ publicOrderId }) => ({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        action: "LOCATED",
+        publicOrderId,
+      }),
+    );
   // Always a separate committed call, including rejected guesses. Never roll the
   // limiter back with the following authorization transaction.
   const consumeRateLimit = async (
@@ -170,6 +185,7 @@ export function createOrderAccessUseCases({
     bootstrap,
     read,
     revoke,
+    locate,
     consumeRateLimit,
   });
 }

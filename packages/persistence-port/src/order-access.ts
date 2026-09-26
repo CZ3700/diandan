@@ -4,8 +4,10 @@ import type {
   OrderAccessBootstrapCommand,
   OrderAccessReadCommand,
   OrderAccessRevokeCommand,
+  OrderAccessLocateCommand,
   OrderAccessGrant,
   OrderAccessRevoked,
+  OrderAccessLocated,
   OrderAccessDetail,
   OrderAccessFailureCode,
   OrderAccessRateCommand,
@@ -26,6 +28,7 @@ export interface OrderAccessRepository {
   bootstrap(command: OrderAccessBootstrapCommand): Promise<OrderAccessGrant>;
   read(command: OrderAccessReadCommand): Promise<OrderAccessDetail>;
   revoke(command: OrderAccessRevokeCommand): Promise<OrderAccessRevoked>;
+  locate(command: OrderAccessLocateCommand): Promise<OrderAccessLocated>;
   consumeRateLimit(
     command: OrderAccessRateCommand,
   ): Promise<OrderAccessRateResult>;

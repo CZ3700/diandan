@@ -8,6 +8,8 @@ import {
   orderAccessExchangeCommandSchema,
   orderAccessExchangeRequestSchema,
   orderAccessFailureSchema,
+  orderAccessLocateCommandSchema,
+  orderAccessLocateRequestSchema,
   orderAccessRateResultSchema,
   orderAccessReadCommandSchema,
   orderAccessResponseSchema,
@@ -25,7 +27,7 @@ import {
   type createOrderAccessCredentials,
 } from "./order-access-credentials.js";
 
-type Action = "exchange" | "bootstrap" | "read" | "revoke";
+type Action = "exchange" | "bootstrap" | "read" | "revoke" | "locate";
 export type OrderAccessRouteDependencies = Readonly<{
   configuration: OrderAccessConfiguration;
   credentials: ReturnType<typeof createOrderAccessCredentials>;
@@ -121,6 +123,14 @@ export function registerOrderAccessRoute(
       "REVOKE",
       configuration.rateLimit.revokeMax,
     ],
+    // Locating is a read-class lookup and shares the READ bucket with protected reads.
+    [
+      "POST",
+      "/api/v1/order-access/locate",
+      "locate",
+      "READ",
+      configuration.rateLimit.readMax,
+    ],
   ] as const)
     void app.register(async (scope) => {
       scope.addHook("onRequest", async (request, reply) => {
@@ -191,7 +201,11 @@ export function registerOrderAccessRoute(
         bodyLimit: 1024,
         exposeHeadRoute: false,
         handler: async (request, reply) => {
-          let input: { token: string } | { publicOrderId: string } | undefined;
+          let input:
+            | { token: string }
+            | { publicOrderId: string }
+            | { publicOrderNo: string }
+            | undefined;
           try {
             if (action === "read")
               publicOrderIdSchema.parse(
@@ -208,6 +222,8 @@ export function registerOrderAccessRoute(
               orderAccessBootstrapRequestSchema.parse(request.body);
             else if (action === "revoke")
               input = orderAccessRevokeRequestSchema.parse(request.body);
+            else if (action === "locate")
+              input = orderAccessLocateRequestSchema.parse(request.body);
             else if (request.body !== undefined)
               return fail(reply, "INVALID_REQUEST");
           } catch {
@@ -263,21 +279,28 @@ export function registerOrderAccessRoute(
                 return fail(reply, "ACCESS_DENIED", 403);
               csrfToken = proof.csrfToken;
               command =
-                action === "read"
-                  ? orderAccessReadCommandSchema.parse({
+                action === "locate"
+                  ? orderAccessLocateCommandSchema.parse({
                       schemaVersion: 1,
-                      publicOrderId: (
-                        request.params as { publicOrderId: string }
-                      ).publicOrderId,
+                      publicOrderNo: (input as { publicOrderNo: string })
+                        .publicOrderNo,
                       sessionCandidates: proof.accesses,
                     })
-                  : orderAccessRevokeCommandSchema.parse({
-                      schemaVersion: 1,
-                      publicOrderId: (input as { publicOrderId: string })
-                        .publicOrderId,
-                      sessionCandidates: proof.accesses,
-                      ...trace(request),
-                    });
+                  : action === "read"
+                    ? orderAccessReadCommandSchema.parse({
+                        schemaVersion: 1,
+                        publicOrderId: (
+                          request.params as { publicOrderId: string }
+                        ).publicOrderId,
+                        sessionCandidates: proof.accesses,
+                      })
+                    : orderAccessRevokeCommandSchema.parse({
+                        schemaVersion: 1,
+                        publicOrderId: (input as { publicOrderId: string })
+                          .publicOrderId,
+                        sessionCandidates: proof.accesses,
+                        ...trace(request),
+                      });
             }
             const result = orderAccessResponseSchema.parse(
               await options.useCases[action](command),
@@ -303,6 +326,10 @@ export function registerOrderAccessRoute(
               )
                 throw new Error("Order access response mismatch");
               void reply.header("x-csrf-token", csrfToken!);
+            } else if (action === "locate") {
+              // Only an identifier leaves; no cookie or CSRF proof is issued or echoed.
+              if (result.action !== "LOCATED")
+                throw new Error("Order access response mismatch");
             } else {
               if (
                 result.action !== "REVOKED" ||

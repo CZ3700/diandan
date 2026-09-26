@@ -161,5 +161,11 @@ export function createOrderAccessProtocolClient({
       session,
       ...options,
     });
-  return { request, bootstrap, exchange, read, revoke, events };
+  const locate = (session, publicOrderNo, options = {}) =>
+    request("LOCATE", "/api/v1/order-access/locate", {
+      body: { schemaVersion: 1, publicOrderNo },
+      session,
+      ...options,
+    });
+  return { request, bootstrap, exchange, read, revoke, locate, events };
 }

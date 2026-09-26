@@ -217,3 +217,37 @@ test("deadline covers fetch and stalled response reading without a retry or resu
     transport.dispose();
   }
 });
+
+test("locate posts only the public number, keeps no authority and never dispatches malformed numbers", async () => {
+  const mod = await load();
+  expect(mod?.createOrderTransport).toBeTypeOf("function");
+  const located = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    action: "LOCATED",
+    publicOrderId: orderTestId,
+  };
+  const fetcher = vi
+    .fn<typeof fetch>()
+    .mockResolvedValueOnce(orderTestResponse(located, 200))
+    .mockResolvedValueOnce(
+      orderTestResponse(located, 200, { "x-csrf-token": orderTestCsrf }),
+    );
+  const transport = mod!.createOrderTransport(fetcher);
+  for (const invalid of ["fs-7k3m9c", "7K3M9C", orderTestId])
+    expect((await transport.locate(invalid)).outcome).toBe("FAILURE");
+  expect(fetcher).not.toHaveBeenCalled();
+  expect(await transport.locate("FS-7K3M9C")).toEqual(located);
+  const [path, options] = fetcher.mock.calls[0]!;
+  expect(path).toBe("/api/storefront/order-access/locate");
+  expect(options).toMatchObject({ method: "POST", credentials: "same-origin" });
+  expect(JSON.parse(String(options?.body))).toEqual({
+    schemaVersion: 1,
+    publicOrderNo: "FS-7K3M9C",
+  });
+  expect(new Headers(options?.headers).has("x-csrf-token")).toBe(false);
+  // A located reply grants nothing: revocation still needs a real read's CSRF proof.
+  expect((await transport.revoke(orderTestId)).outcome).toBe("FAILURE");
+  // A locate reply carrying a CSRF proof is forged and becomes UNKNOWN.
+  expect((await transport.locate("FS-7K3M9C")).outcome).toBe("UNKNOWN");
+});

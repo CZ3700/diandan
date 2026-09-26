@@ -49,6 +49,20 @@ export async function sessionOwner(
     ),
   );
 }
+/** Read-only: an active session of this browser whose order carries the typed public number. */
+export async function locatedSessionOrder(
+  client: TransactionClient,
+  candidates: OrderAccessCandidates,
+  publicOrderNo: string,
+) {
+  return oneAccessRow(
+    await draftRows(
+      client,
+      `SELECT session.public_order_id FROM public.order_access_sessions session JOIN public.orders o ON o.id=session.order_id AND o.public_order_id=session.public_order_id WHERE o.public_order_no=$2::text AND session.status='ACTIVE' AND session.created_at<=clock_timestamp() AND session.expires_at>clock_timestamp() AND EXISTS(SELECT 1 FROM jsonb_to_recordset($1::jsonb) AS candidate(digest text,version text) WHERE session.session_token_digest=decode(candidate.digest,'hex') AND session.token_pepper_version=candidate.version) LIMIT 2`,
+      [candidateBindings(candidates), publicOrderNo],
+    ),
+  );
+}
 export async function lockAccessOrder(
   client: TransactionClient,
   orderId: unknown,

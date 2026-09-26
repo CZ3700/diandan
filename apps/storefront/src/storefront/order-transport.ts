@@ -1,6 +1,7 @@
 import {
   checkoutSessionIdSchema,
   publicOrderIdSchema,
+  publicOrderNoSchema,
   orderAccessRawTokenSchema,
   type OrderAccessResponse,
 } from "@fan-support/contracts";
@@ -43,7 +44,7 @@ export function createOrderTransport(fetcher: typeof fetch = fetch) {
     const abort = new AbortController();
     active.add(abort);
     const timer = setTimeout(() => abort.abort(), 15_000);
-    if (call.kind !== "read") authority = undefined;
+    if (call.kind !== "read" && call.kind !== "locate") authority = undefined;
     try {
       const headers = new Headers({ accept: "application/json" });
       if (call.body !== undefined)
@@ -81,7 +82,7 @@ export function createOrderTransport(fetcher: typeof fetch = fetch) {
           };
         }
         if (result.action === "REVOKED") authority = undefined;
-        else
+        else if (result.action !== "LOCATED")
           authority = {
             publicOrderId:
               result.action === "GRANTED"
@@ -135,6 +136,18 @@ export function createOrderTransport(fetcher: typeof fetch = fetch) {
         kind: "read",
         publicOrderId,
         path: `/api/storefront/orders/${encodeURIComponent(publicOrderId)}`,
+      });
+    },
+    /** Resolves a typed public number through this browser's order session; grants nothing. */
+    async locate(publicOrderNo: string): Promise<OrderReply> {
+      if (disposed) return unknown();
+      if (!publicOrderNoSchema.safeParse(publicOrderNo).success)
+        return invalid();
+      return request({
+        kind: "locate",
+        publicOrderNo,
+        path: "/api/storefront/order-access/locate",
+        body: JSON.stringify({ schemaVersion: 1, publicOrderNo }),
       });
     },
     async revoke(publicOrderId: string): Promise<OrderReply> {

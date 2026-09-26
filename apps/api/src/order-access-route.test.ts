@@ -106,6 +106,7 @@ const paths = {
   bootstrap: `/api/v1/checkout/sessions/${checkoutId}/order-access`,
   read: `/api/v1/orders/${publicId}`,
   revoke: "/api/v1/order-access/revoke",
+  locate: "/api/v1/order-access/locate",
 };
 type Action = keyof typeof paths;
 async function setup() {
@@ -156,6 +157,12 @@ async function setup() {
       action: "REVOKED",
       publicOrderId: publicId,
     })),
+    locate: vi.fn<(...args: unknown[]) => Promise<unknown>>(async () => ({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "LOCATED",
+      publicOrderId: publicId,
+    })),
     consumeRateLimit: vi.fn<(...args: unknown[]) => Promise<unknown>>(
       async () => ({ schemaVersion: 1, allowed: true, retryAfterSeconds: 0 }),
     ),
@@ -199,7 +206,9 @@ async function setup() {
                   ? { schemaVersion: 1, token: link.token }
                   : action === "revoke"
                     ? { schemaVersion: 1, publicOrderId: publicId }
-                    : { schemaVersion: 1 }),
+                    : action === "locate"
+                      ? { schemaVersion: 1, publicOrderNo: "FS-7K3M9C" }
+                      : { schemaVersion: 1 }),
             ),
           }),
     });
@@ -433,6 +442,68 @@ test("malformed path identities are invalid requests after persisted rate counti
       expect(useCases[action]).not.toHaveBeenCalled();
     }
     expect(useCases.consumeRateLimit).toHaveBeenCalledTimes(2);
+  } finally {
+    await app.close();
+  }
+});
+
+test("locate resolves a public number through the order cookie and issues no credential", async () => {
+  const { app, send, useCases, session } = await setup();
+  try {
+    const located = await send("locate");
+    expect(located.statusCode).toBe(200);
+    expect(located.json()).toEqual({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "LOCATED",
+      publicOrderId: publicId,
+    });
+    expect(located.headers["set-cookie"]).toBeUndefined();
+    expect(located.headers["x-csrf-token"]).toBeUndefined();
+    expect(located.headers["cache-control"]).toBe("private, no-store");
+    expect(useCases.locate.mock.lastCall![0]).toEqual({
+      schemaVersion: 1,
+      publicOrderNo: "FS-7K3M9C",
+      sessionCandidates: [session.access],
+    });
+    expect(JSON.stringify(useCases.locate.mock.lastCall)).not.toContain(
+      session.token,
+    );
+    expect(useCases.consumeRateLimit.mock.lastCall![0]).toMatchObject({
+      scope: "READ",
+    });
+    for (const options of [
+      { body: { schemaVersion: 1, publicOrderNo: "fs-7k3m9c" } },
+      { body: { schemaVersion: 1, publicOrderNo: "7K3M9C" } },
+      {
+        body: {
+          schemaVersion: 1,
+          publicOrderNo: "FS-7K3M9C",
+          publicOrderId: publicId,
+        },
+      },
+      { headers: { cookie: "" } },
+      { headers: { origin: "https://foreign.invalid" } },
+    ])
+      expect((await send("locate", options)).statusCode).toBeGreaterThanOrEqual(
+        400,
+      );
+    expect(useCases.locate).toHaveBeenCalledTimes(1);
+    useCases.locate.mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "READ",
+      order,
+    });
+    const mismatched = await send("locate");
+    expect(mismatched.statusCode).toBe(503);
+    expect(mismatched.body).not.toContain(order.publicOrderNo);
+    useCases.locate.mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "ACCESS_DENIED",
+    });
+    expect((await send("locate")).statusCode).toBe(401);
   } finally {
     await app.close();
   }

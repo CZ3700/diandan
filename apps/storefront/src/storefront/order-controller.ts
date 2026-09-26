@@ -239,6 +239,26 @@ export function createOrderController(
     async revoke() {
       await closeAccess(false);
     },
+    /** A public number only finds the order this browser already holds a session for. */
+    async locate(publicOrderNo: string): Promise<string | null> {
+      if (state.busy) return null;
+      checkoutGrant = null;
+      epoch++;
+      api.dispose();
+      api = factory();
+      active = true;
+      closing = false;
+      const version = epoch;
+      update({ ...initial(), busy: true });
+      const reply = await invoke(() => api.locate(publicOrderNo), version);
+      if (!reply) return null;
+      if (reply.outcome === "SUCCESS" && reply.action === "LOCATED") {
+        update({ busy: false, initialized: true });
+        return reply.publicOrderId;
+      }
+      fail(reply);
+      return null;
+    },
     suspend() {
       active = false;
       epoch++;

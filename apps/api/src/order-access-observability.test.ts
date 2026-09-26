@@ -87,6 +87,7 @@ async function setup() {
         bootstrap: business,
         read: business,
         revoke: business,
+        locate: business,
         consumeRateLimit: rate,
       },
     },

@@ -124,3 +124,43 @@ test("limits and grant results fail closed on contradictory values", () => {
     }).success,
   ).toBe(false);
 });
+
+test("locating takes only a canonical public number and answers with an identifier", () => {
+  expect(schemas).toBeDefined();
+  const request = { schemaVersion: 1, publicOrderNo: "FS-7K3M9C" };
+  expect(
+    schemas!.orderAccessLocateRequestSchema.safeParse(request).success,
+  ).toBe(true);
+  for (const invalid of [
+    { ...request, publicOrderNo: "fs-7k3m9c" },
+    { ...request, publicOrderNo: "7K3M9C" },
+    { ...request, publicOrderId: id },
+    { ...request, token: "x".repeat(43) },
+  ])
+    expect(
+      schemas!.orderAccessLocateRequestSchema.safeParse(invalid).success,
+    ).toBe(false);
+  expect(
+    schemas!.orderAccessLocateCommandSchema.safeParse({
+      ...request,
+      sessionCandidates: [proof],
+    }).success,
+  ).toBe(true);
+  expect(
+    schemas!.orderAccessResponseSchema.safeParse({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "LOCATED",
+      publicOrderId: id,
+    }).success,
+  ).toBe(true);
+  expect(
+    schemas!.orderAccessResponseSchema.safeParse({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "LOCATED",
+      publicOrderId: id,
+      publicOrderNo: "FS-7K3M9C",
+    }).success,
+  ).toBe(false);
+});
