@@ -17,7 +17,9 @@
 ## 本机环境（Windows）
 
 - 项目锁定 Node 24.20.0，本机使用便携版：运行项目命令前执行 `source /c/Users/admin/.tools/xiadan-env.sh`（把 Node 24.20.0 与 corepack 的 pnpm shim 放到 PATH 最前）。
-- 日常门禁：`corepack pnpm check:dev`。完整 `pnpm check` 依赖 PostgreSQL 18 与 S3 模拟，本机尚未具备，由 CI 承担。
+- 日常门禁：`corepack pnpm check:dev`。
+- 真实 PostgreSQL：便携 PostgreSQL 18.6 在 `C:\Users\admin\.tools\pgsql-18.6\pgsql\bin`，环境脚本已导出 `POSTGRES_TEST_BIN`，测试框架据此启动临时原生集群（无 Docker）。可本机运行 `pnpm --filter @fan-support/persistence-postgres test:postgres`（约 40 分钟）、`migrations:manifest`、`migrations:catalog`。API/浏览器级集成脚本还需要 S3 模拟（versitygw 容器），本机没有，由 CI 承担。
+- Bash 工具的 heredoc 超过约 8KB 会被截断报 `unexpected EOF`；长脚本先写成文件再执行。
 
 ## 阶段交接
 

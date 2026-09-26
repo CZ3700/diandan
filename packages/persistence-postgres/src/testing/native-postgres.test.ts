@@ -54,4 +54,46 @@ describe("native TEST PostgreSQL tools", () => {
       }),
     ).rejects.toThrow("Native TEST PostgreSQL 18 tools unavailable");
   });
+
+  test("accepts the pid file data directory in PostgreSQL's forward-slash form and stops the owned cluster", async () => {
+    const { mkdir, rm, writeFile } = await import("node:fs/promises");
+    const calls: string[] = [];
+    let dataDirectory = "";
+    const run: NativePostgresRun = async (binary, args) => {
+      const tool = path.basename(binary);
+      if (args[0] === "--version")
+        return { stdout: `${tool} (PostgreSQL) 18.6\n` };
+      calls.push(
+        `${tool} ${args.includes("stop") ? "stop" : args.includes("start") ? "start" : args[0]}`,
+      );
+      if (tool === "initdb") {
+        dataDirectory = args[args.indexOf("-D") + 1]!;
+        await mkdir(dataDirectory);
+      } else if (tool === "pg_ctl" && args.includes("start")) {
+        // PostgreSQL always writes this line with forward slashes, even on Windows.
+        const canonical = dataDirectory.split(path.sep).join("/");
+        await writeFile(
+          path.join(dataDirectory, "postmaster.pid"),
+          `4242\n${canonical}\n1790000000\n5432\n\n127.0.0.1\n\nready   \n`,
+        );
+      } else if (tool === "pg_ctl" && args.includes("stop")) {
+        await rm(path.join(dataDirectory, "postmaster.pid"));
+      }
+      return { stdout: "" };
+    };
+    const client = { connect: vi.fn(), query: vi.fn(), end: vi.fn() };
+    const result = await withNativeTestPostgres(
+      async (configuration) => `served:${configuration.database}`,
+      {
+        binDirectory: path.resolve("/owned/postgres/bin"),
+        run,
+        createClient: () => client,
+      },
+    );
+    expect(result).toBe("served:fan_support_test");
+    expect(calls).toEqual(["initdb -D", "pg_ctl start", "pg_ctl stop"]);
+    expect(client.query).toHaveBeenCalledWith(
+      "CREATE DATABASE fan_support_test",
+    );
+  });
 });

@@ -135,10 +135,12 @@ async function cleanOwnedCluster({
   const pidFile = await existing(pidPath);
   if (pidFile) {
     const [pid, ownedData] = (await readFile(pidPath, "utf8")).split("\n");
+    // PostgreSQL writes the data directory with forward slashes on every platform.
     if (
       pidFile.isSymbolicLink() ||
       !/^[1-9]\d*$/u.test(pid ?? "") ||
-      ownedData !== dataDirectory
+      ownedData === undefined ||
+      path.resolve(ownedData) !== path.resolve(dataDirectory)
     ) {
       throw new Error(
         "Native TEST PostgreSQL process ownership verification failed",
