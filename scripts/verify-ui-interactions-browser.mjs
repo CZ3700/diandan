@@ -2,6 +2,7 @@
 
 import { Buffer } from "node:buffer";
 import { spawn } from "node:child_process";
+import { resolveSpawnCommand } from "./spawn-command.mjs";
 import { createHash, randomUUID } from "node:crypto";
 import { once } from "node:events";
 import {
@@ -29,6 +30,11 @@ import {
   readPngDimensions,
   summarizeAxeResult,
 } from "./verify-ui-primitives-browser.mjs";
+
+function spawnArguments(command, arguments_) {
+  const resolved = resolveSpawnCommand(command, arguments_);
+  return [resolved.command, resolved.args];
+}
 
 const scriptPath = fileURLToPath(import.meta.url);
 const defaultWorkspaceRoot = path.resolve(path.dirname(scriptPath), "..");
@@ -1675,7 +1681,7 @@ async function runCommand(
   arguments_,
   { cwd, env = process.env, logPath, stream = true },
 ) {
-  const child = spawn(command, arguments_, {
+  const child = spawn(...spawnArguments(command, arguments_), {
     cwd,
     env,
     stdio: ["ignore", "pipe", "pipe"],

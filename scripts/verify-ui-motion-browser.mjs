@@ -20,6 +20,7 @@ import {
 import { createServer } from "node:net";
 import path from "node:path";
 import { spawn } from "node:child_process";
+import { resolveSpawnCommand } from "./spawn-command.mjs";
 import { fileURLToPath } from "node:url";
 import { inflateSync } from "node:zlib";
 
@@ -30,6 +31,11 @@ import {
   observePage,
   summarizeAxeResult,
 } from "./verify-ui-primitives-browser.mjs";
+
+function spawnArguments(command, arguments_) {
+  const resolved = resolveSpawnCommand(command, arguments_);
+  return [resolved.command, resolved.args];
+}
 
 const scriptPath = fileURLToPath(import.meta.url);
 const defaultWorkspaceRoot = path.resolve(path.dirname(scriptPath), "..");
@@ -2455,7 +2461,7 @@ export async function replaceMotionEvidenceDirectory(candidate, target) {
 }
 
 async function captureCommand(command, arguments_, cwd) {
-  const child = spawn(command, arguments_, {
+  const child = spawn(...spawnArguments(command, arguments_), {
     cwd,
     stdio: ["ignore", "pipe", "pipe"],
   });
@@ -2478,7 +2484,7 @@ async function runCommand(
   { cwd, env = process.env, logPath, registry },
 ) {
   const processGroup = process.platform !== "win32";
-  const child = spawn(command, arguments_, {
+  const child = spawn(...spawnArguments(command, arguments_), {
     cwd,
     detached: processGroup,
     env,
