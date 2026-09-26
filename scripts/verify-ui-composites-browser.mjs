@@ -18,6 +18,7 @@ import { createServer } from "node:net";
 import os from "node:os";
 import path from "node:path";
 import { spawn } from "node:child_process";
+import { resolveSpawnCommand } from "./spawn-command.mjs";
 import { fileURLToPath } from "node:url";
 
 import {
@@ -30,6 +31,11 @@ import {
   readPngDimensions,
   summarizeAxeResult,
 } from "./verify-ui-primitives-browser.mjs";
+
+function spawnArguments(command, arguments_) {
+  const resolved = resolveSpawnCommand(command, arguments_);
+  return [resolved.command, resolved.args];
+}
 
 const scriptPath = fileURLToPath(import.meta.url);
 const defaultWorkspaceRoot = path.resolve(path.dirname(scriptPath), "..");
@@ -1058,7 +1064,7 @@ export function assessCompositeMetrics(metrics) {
     failureStability.requestedSrc.length === 0
   ) {
     errors.push(
-      "Hero failure layout shift must stay within one CSS pixel of the ready frame",
+      `Hero failure layout shift must stay within one CSS pixel of the ready frame: ${JSON.stringify(failureStability)}`,
     );
   }
   if (metrics?.heroFailureOverlap !== false) {
@@ -1410,7 +1416,7 @@ async function runCommand(
   arguments_,
   { cwd, env = process.env, logPath },
 ) {
-  const child = spawn(command, arguments_, {
+  const child = spawn(...spawnArguments(command, arguments_), {
     cwd,
     env,
     stdio: ["ignore", "pipe", "pipe"],
@@ -1441,7 +1447,7 @@ async function runCommand(
 }
 
 async function captureCommand(command, arguments_, cwd) {
-  const child = spawn(command, arguments_, {
+  const child = spawn(...spawnArguments(command, arguments_), {
     cwd,
     stdio: ["ignore", "pipe", "pipe"],
   });
