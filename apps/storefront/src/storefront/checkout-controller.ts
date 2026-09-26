@@ -14,6 +14,14 @@ import {
   type CheckoutReply,
   type CheckoutTransport,
 } from "./checkout-transport";
+import {
+  canLaunchPaymentComponent,
+  type ProviderComponentAction,
+} from "./payment-components";
+/** What the fan's explicit "pay" leads to: a hosted page, or a provider component launch. */
+export type PaymentContinuation =
+  | Readonly<{ type: "REDIRECT"; url: string }>
+  | Readonly<{ type: "PROVIDER_COMPONENT"; action: ProviderComponentAction }>;
 export type CheckoutSnapshot = Readonly<{
   busy: boolean;
   initialized: boolean;
@@ -264,18 +272,26 @@ export function createCheckoutController(
       await run(checkoutCalls.recover(state.checkout.id, state.attempt.id));
     else await initialize();
   }
-  async function continuePayment(): Promise<string | null> {
+  async function continuePayment(): Promise<PaymentContinuation | null> {
     if (pending || state.busy || !state.checkout || !state.attempt) return null;
     if (
       !(await run(checkoutCalls.attempt(state.checkout.id, state.attempt.id)))
     )
       return null;
     const attempt = state.attempt;
-    return attempt?.status === "REQUIRES_ACTION" &&
-      attempt.recovery === "NONE" &&
-      !attempt.actionExpired &&
-      attempt.action?.type === "REDIRECT"
-      ? attempt.action.url
+    const action = attempt?.action;
+    if (
+      attempt?.status !== "REQUIRES_ACTION" ||
+      attempt.recovery !== "NONE" ||
+      attempt.actionExpired ||
+      !action
+    )
+      return null;
+    if (action.type === "REDIRECT")
+      return { type: "REDIRECT", url: action.url };
+    return action.type === "PROVIDER_COMPONENT" &&
+      canLaunchPaymentComponent(action)
+      ? { type: "PROVIDER_COMPONENT", action }
       : null;
   }
   return {

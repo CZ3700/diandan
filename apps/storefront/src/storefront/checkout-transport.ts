@@ -32,6 +32,7 @@ export type CheckoutCall = Readonly<{
   cartVersion?: number;
 }>;
 import type { OrderReply, OrderTransport } from "./order-transport";
+import { PERFORMABLE_ACTION_TYPES } from "./payment-components";
 const base = "/api/storefront/checkout";
 const sessionPath = (id: string) =>
   `${base}/sessions/${encodeURIComponent(id)}`;
@@ -103,7 +104,7 @@ export const checkoutCalls = {
   ): CheckoutCall => {
     const query = new URLSearchParams({
       presentationLocale: locale,
-      supportedActionTypes: "REDIRECT",
+      supportedActionTypes: PERFORMABLE_ACTION_TYPES.join(","),
     });
     if (country) query.set("country", country);
     return {
@@ -131,7 +132,7 @@ export const checkoutCalls = {
         country,
         configVersion: capability.configVersion,
         ruleVersion: capability.ruleVersion,
-        supportedActionTypes: ["REDIRECT"],
+        supportedActionTypes: [...PERFORMABLE_ACTION_TYPES],
       },
     ),
   attempt: (sessionId: string, attemptId: string): CheckoutCall => ({

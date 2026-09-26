@@ -5,9 +5,11 @@ import type { CreateApiApplicationOptions } from "./bootstrap.js";
 import { createProductionApiApplication } from "./production-application.js";
 import {
   adminEnvironment,
+  airwallexWebhookEndpoint,
   completeProductionEnvironment,
   coreEnvironment,
   createFakeReliableEvents,
+  launchPaymentEnvironment,
   paymentConnection,
   paymentHealthPolicy,
   quietLogger,
@@ -283,6 +285,66 @@ test("a deployed Stripe account joins the payment directory and its endpoint pas
   ).toBeUndefined();
   expect(received?.adminPaymentConfigurationRoute).toBeDefined();
   expect(stripeConnection.binding.providerCode).toBe("stripe");
+});
+
+test("both launch PSPs deploy side by side and the webhook gate forwards each adapter's signature headers", async () => {
+  const reliable = createFakeReliableEvents();
+  let received: CreateApiApplicationOptions | undefined;
+  let verifierForEndpoint:
+    ((adapterKey: string, endpointId: string) => unknown) | undefined;
+  await createProductionApiApplication(launchPaymentEnvironment, {
+    logger: quietLogger,
+    factories: {
+      createReliableEvents: (_environment, options) => {
+        verifierForEndpoint = options.verifierForEndpoint;
+        return reliable.composition;
+      },
+      createApplication: (async (
+        _environment: unknown,
+        options: CreateApiApplicationOptions,
+      ) => {
+        received = options;
+        return { marker: "api" };
+      }) as never,
+    },
+  });
+  expect(received?.paymentWebhookRoute?.verificationHeaderNames).toEqual([
+    "stripe-signature",
+    "x-signature",
+    "x-timestamp",
+  ]);
+  expect(
+    verifierForEndpoint?.("airwallex", airwallexWebhookEndpoint.endpointId),
+  ).toMatchObject({ verifyPaymentWebhook: expect.any(Function) });
+  // An endpoint is verified only by the adapter of the account it belongs to.
+  expect(
+    verifierForEndpoint?.("stripe", airwallexWebhookEndpoint.endpointId),
+  ).toBeUndefined();
+  expect(
+    verifierForEndpoint?.("airwallex", stripeWebhookEndpoint.endpointId),
+  ).toBeUndefined();
+});
+
+test("a payment action that would outlive an Airwallex client secret stops startup", async () => {
+  const { createPersistence } = countingPersistence();
+  const runtime = JSON.parse(
+    launchPaymentEnvironment.FAN_SUPPORT_PAYMENT_RUNTIME_CONFIG_JSON,
+  ) as Record<string, unknown>;
+  await expect(
+    createProductionApiApplication(
+      {
+        ...launchPaymentEnvironment,
+        FAN_SUPPORT_PAYMENT_RUNTIME_CONFIG_JSON: JSON.stringify({
+          ...runtime,
+          actionTtlMs: 7_200_000,
+        }),
+      },
+      { logger: quietLogger, factories: { createPersistence } },
+    ),
+  ).rejects.toThrow(
+    "Payment action lifetime exceeds a deployed provider token",
+  );
+  expect(createPersistence).not.toHaveBeenCalled();
 });
 
 test("a webhook endpoint without deployed verification code stops startup", async () => {

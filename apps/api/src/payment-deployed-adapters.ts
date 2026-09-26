@@ -2,6 +2,13 @@ import type {
   PaymentAccountConnection,
   PaymentGatewayWebhookConfig,
 } from "@fan-support/contracts";
+import {
+  AIRWALLEX_ADAPTER_KEY,
+  AIRWALLEX_MAX_ACTION_TTL_MS,
+  AIRWALLEX_SIGNATURE_HEADER,
+  AIRWALLEX_TIMESTAMP_HEADER,
+  createAirwallexAdapter,
+} from "@fan-support/payment-airwallex";
 import type {
   PaymentConnectorFactory,
   PaymentCredentialResolver,
@@ -26,27 +33,67 @@ export type DeployedPaymentAdapters = Readonly<{
     configuration: PaymentGatewayWebhookConfig,
     connection: PaymentAccountConnection,
   ): DeployedWebhookVerifier | undefined;
+  /** The longest a stored payment action may live for this account, when its provider limits it. */
+  maximumActionTtlMs?(connection: PaymentAccountConnection): number | undefined;
 }>;
 
 /**
- * V2 plan §3.1: static code, configuration activation. Stripe ships first (R1-3); Airwallex
- * and PayPal follow. TEST adapters never belong here.
+ * V2 plan §3.1: static code, configuration activation. Stripe and Airwallex ship in R1-3;
+ * PayPal follows. TEST adapters never belong here.
  */
 export function createDeployedPaymentAdapters(
   options: Readonly<{ credentials: PaymentCredentialResolver }>,
 ): DeployedPaymentAdapters {
   const stripe = createStripeAdapter({ credentials: options.credentials });
+  const airwallex = createAirwallexAdapter({
+    credentials: options.credentials,
+  });
   return Object.freeze({
-    connectorFactories: Object.freeze([stripe.connector]),
+    connectorFactories: Object.freeze([stripe.connector, airwallex.connector]),
     webhookVerifierFor(configuration, connection) {
-      return connection.binding.providerCode === STRIPE_ADAPTER_KEY
-        ? Object.freeze({
+      switch (connection.binding.providerCode) {
+        case STRIPE_ADAPTER_KEY:
+          return Object.freeze({
             verifier: stripe.createWebhookVerifier(configuration, connection),
             headerNames: Object.freeze([STRIPE_SIGNATURE_HEADER]),
-          })
+          });
+        case AIRWALLEX_ADAPTER_KEY:
+          return Object.freeze({
+            verifier: airwallex.createWebhookVerifier(
+              configuration,
+              connection,
+            ),
+            headerNames: Object.freeze([
+              AIRWALLEX_SIGNATURE_HEADER,
+              AIRWALLEX_TIMESTAMP_HEADER,
+            ]),
+          });
+        default:
+          return undefined;
+      }
+    },
+    maximumActionTtlMs(connection) {
+      return connection.binding.providerCode === AIRWALLEX_ADAPTER_KEY
+        ? AIRWALLEX_MAX_ACTION_TTL_MS
         : undefined;
     },
   });
+}
+
+/** A stored action that outlives the provider's client token would open a dead payment page. */
+export function assertPaymentActionLifetime(
+  actionTtlMs: number | undefined,
+  connections: readonly PaymentAccountConnection[],
+  adapters: DeployedPaymentAdapters,
+): void {
+  if (actionTtlMs === undefined) return;
+  for (const connection of connections) {
+    const limit = adapters.maximumActionTtlMs?.(connection);
+    if (limit !== undefined && actionTtlMs > limit)
+      throw new TypeError(
+        "Payment action lifetime exceeds a deployed provider token",
+      );
+  }
 }
 
 const adapterIdentity = (key: string, version: string, protocol: string) =>

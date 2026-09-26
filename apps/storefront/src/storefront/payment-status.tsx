@@ -4,6 +4,7 @@ import type {
   SupportedLocale,
 } from "@fan-support/contracts";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
+import { canLaunchPaymentComponent } from "./payment-components";
 function statusMessage(
   attempt: PaymentRuntimeAttemptView,
   copy: StorefrontCopy,
@@ -35,11 +36,14 @@ export function PaymentStatus({
   onContinue: () => void;
 }>) {
   const message = statusMessage(attempt, copy);
+  const action = attempt.action;
   const canContinue =
     attempt.status === "REQUIRES_ACTION" &&
     attempt.recovery === "NONE" &&
     !attempt.actionExpired &&
-    attempt.action?.type === "REDIRECT";
+    (action?.type === "REDIRECT" ||
+      (action?.type === "PROVIDER_COMPONENT" &&
+        canLaunchPaymentComponent(action)));
   return (
     <div
       className="payment-status"

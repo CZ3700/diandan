@@ -13,6 +13,7 @@ import { createOrderAccessComposition } from "./order-access-composition.js";
 import { createEnvironmentCredentialResolver } from "./payment-credential-resolver.js";
 import {
   assertDeployedPaymentAdapters,
+  assertPaymentActionLifetime,
   createDeployedPaymentAdapters,
   type DeployedPaymentAdapters,
 } from "./payment-deployed-adapters.js";
@@ -77,6 +78,11 @@ export async function createProductionApiApplication(
     });
   const connectorFactories = adapters.connectorFactories;
   assertDeployedPaymentAdapters(config.payment.connections, connectorFactories);
+  assertPaymentActionLifetime(
+    config.payment.runtime?.actionTtlMs,
+    config.payment.connections,
+    adapters,
+  );
   const verifiers = createPaymentWebhookVerifierDirectory(
     config.payment.webhookEndpoints.map((endpoint) => {
       const connection = config.payment.connections.find(

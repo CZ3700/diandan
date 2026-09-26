@@ -10,6 +10,11 @@ import {
   canOpenOrderResult,
 } from "./checkout-order-result";
 import { PaymentStatus } from "./payment-status";
+import {
+  browserPaymentComponentHost,
+  isPerformableActionType,
+  launchPaymentComponent,
+} from "./payment-components";
 import { shouldPollPayment, startPaymentPolling } from "./payment-polling";
 import { storefrontHref } from "./navigation";
 import { prepareCheckoutStepFocus } from "./checkout-focus";
@@ -56,6 +61,7 @@ export function CheckoutClient({
     controller.snapshot,
   );
   const [email, setEmail] = useState("");
+  const [launchFailedFor, setLaunchFailedFor] = useState<string | null>(null);
   const mounted = useRef(false);
   const root = useRef<HTMLDivElement>(null);
   const focusFrame = useRef<number | null>(null);
@@ -117,8 +123,20 @@ export function CheckoutClient({
   const review = state.checkout ?? state.preflight;
   const caps = state.capabilities;
   async function continuePayment() {
-    const url = await controller.continuePayment();
-    if (mounted.current && url) window.location.assign(url);
+    setLaunchFailedFor(null);
+    const next = await controller.continuePayment();
+    if (!mounted.current || !next) return;
+    if (next.type === "REDIRECT") {
+      window.location.assign(next.url);
+      return;
+    }
+    // A provider component that cannot load leaves the attempt payable; the fan may retry.
+    const launched = await launchPaymentComponent(
+      next.action,
+      browserPaymentComponentHost(),
+    );
+    if (!launched && mounted.current)
+      setLaunchFailedFor(controller.snapshot().attempt?.id ?? null);
   }
   async function submit(operation: () => Promise<void>) {
     const restore = root.current
@@ -195,6 +213,15 @@ export function CheckoutClient({
             {state.checkout?.expired && (
               <p role="status">{copy.checkoutExpired}</p>
             )}
+            {attempt && launchFailedFor === attempt.id && (
+              <p
+                className="checkout-error"
+                role="alert"
+                data-payment-launch-failed
+              >
+                {copy.checkoutUnavailable}
+              </p>
+            )}
             {attempt && (
               <PaymentStatus
                 attempt={attempt}
@@ -247,14 +274,18 @@ export function CheckoutClient({
                       </label>
                       {((caps.country &&
                         caps.capabilities.filter((capability) =>
-                          capability.supportedActionTypes.includes("REDIRECT"),
+                          capability.supportedActionTypes.some(
+                            isPerformableActionType,
+                          ),
                         ).length === 0) ||
                         caps.countries.length === 0) && (
                         <p>{copy.checkoutNoMethods}</p>
                       )}
                       {caps.capabilities
                         .filter((capability) =>
-                          capability.supportedActionTypes.includes("REDIRECT"),
+                          capability.supportedActionTypes.some(
+                            isPerformableActionType,
+                          ),
                         )
                         .map((capability) => (
                           <div className="checkout-method" key={capability.id}>

@@ -26,6 +26,34 @@ it("renders uncertain payment as pending confirmation and never a success or fre
   expect(html).not.toContain("data-payment-continue");
   expect(html).not.toContain("href=");
 });
+it("offers to continue into a provider component only when this release can launch it", async () => {
+  const loaded = await import("./payment-status").catch(() => null);
+  if (!loaded) throw new Error("Missing payment status");
+  const render = (componentKey: string) =>
+    renderToStaticMarkup(
+      <loaded.PaymentStatus
+        attempt={{
+          ...attemptFixture,
+          status: "REQUIRES_ACTION",
+          recovery: "NONE",
+          action: {
+            schemaVersion: 1,
+            type: "PROVIDER_COMPONENT",
+            componentKey,
+            clientToken: "A".repeat(40),
+          } as never,
+        }}
+        locale="en"
+        copy={copy}
+        busy={false}
+        onRecover={() => {}}
+        onRefresh={() => {}}
+        onContinue={() => {}}
+      />,
+    );
+  expect(render("airwallex-hpp")).toContain("data-payment-continue");
+  expect(render("paypal-buttons")).not.toContain("data-payment-continue");
+});
 it("reviews the exact server amount and text, with per-object lang and no private editor", async () => {
   const loaded = await import("./checkout-review").catch(() => null);
   expect(loaded?.CheckoutReview).toBeTypeOf("function");

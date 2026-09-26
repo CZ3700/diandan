@@ -200,3 +200,63 @@ export const stripeEnvironment = Object.freeze({
     stripeWebhookEndpoint,
   ]),
 });
+
+/** Thai is not a Hosted Payment Page language, so it falls back to English. */
+const airwallexLocales: Readonly<Record<string, string>> = {
+  "zh-CN": "zh",
+  th: "en",
+};
+
+export const airwallexConnection = Object.freeze({
+  ...paymentConnection,
+  binding: {
+    ...paymentConnection.binding,
+    providerAccountId: "10000000-0000-4000-8000-00000000000b",
+    providerCode: "airwallex",
+    localeMapping: Object.fromEntries(
+      SUPPORTED_LOCALES.map((locale) => [
+        locale,
+        {
+          providerLocale: airwallexLocales[locale] ?? locale,
+          fallbackUsed: locale === "th",
+        },
+      ]),
+    ),
+    allowedActionOrigins: ["https://checkout.sandbox.airwallex.com"],
+  },
+  protocol: "airwallex-hpp-v1",
+  apiOrigin: "https://api.sandbox.airwallex.com",
+  credentialRef: "secret-ref:v1:env:PAYMENT_SECRET_AIRWALLEX_API",
+});
+
+export const airwallexHealthPolicy = Object.freeze({
+  ...paymentHealthPolicy,
+  providerAccountId: airwallexConnection.binding.providerAccountId,
+});
+
+export const airwallexWebhookEndpoint = Object.freeze({
+  schemaVersion: 1,
+  binding: airwallexConnection.binding,
+  endpointId: "70000000-0000-4000-8000-000000000008",
+  verificationKeyReferenceHash: "c".repeat(64),
+  secretRef: "secret-ref:v1:env:PAYMENT_SECRET_AIRWALLEX_WEBHOOK",
+  toleranceSeconds: 300,
+  maxBodyBytes: 65_536,
+});
+
+/** A complete deployment with both launch PSPs in sandbox and one endpoint each. */
+export const launchPaymentEnvironment = Object.freeze({
+  ...completeProductionEnvironment,
+  FAN_SUPPORT_PAYMENT_ACCOUNT_CONNECTIONS_JSON: JSON.stringify([
+    stripeConnection,
+    airwallexConnection,
+  ]),
+  FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON: JSON.stringify([
+    stripeHealthPolicy,
+    airwallexHealthPolicy,
+  ]),
+  FAN_SUPPORT_PAYMENT_WEBHOOK_ENDPOINTS_JSON: JSON.stringify([
+    stripeWebhookEndpoint,
+    airwallexWebhookEndpoint,
+  ]),
+});

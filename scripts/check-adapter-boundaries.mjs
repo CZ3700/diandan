@@ -17,6 +17,7 @@ const adapterPackageNames = new Set([
   "payment-fake",
   "payment-gateway",
   "payment-stripe",
+  "payment-airwallex",
   "persistence-postgres",
 ]);
 const legacyWebhookCompatibilityRoots = new Set([

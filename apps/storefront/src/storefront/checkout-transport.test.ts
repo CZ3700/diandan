@@ -71,7 +71,7 @@ it("rejects wrong session, private additions and a forged success status", async
     ).toBe("UNKNOWN");
   }
 });
-it("advertises REDIRECT only, without inferring country or sending schemaVersion as query", async () => {
+it("advertises redirects and provider components, without inferring country or sending schemaVersion as query", async () => {
   const loaded = await load();
   expect(loaded?.checkoutCalls).toBeTruthy();
   if (!loaded) return;
@@ -81,7 +81,7 @@ it("advertises REDIRECT only, without inferring country or sending schemaVersion
   );
   expect([...url.searchParams]).toEqual([
     ["presentationLocale", "ja"],
-    ["supportedActionTypes", "REDIRECT"],
+    ["supportedActionTypes", "REDIRECT,PROVIDER_COMPONENT"],
   ]);
 });
 

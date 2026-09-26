@@ -44,8 +44,14 @@
 
 ## 支付：代码与激活分离
 
-- 支付适配器代码随版本发布，清单在 `apps/api/src/payment-deployed-adapters.ts`。当前已部署 Stripe Checkout（`stripe` / `1.0.0` / `stripe-checkout-v1`，只支持托管页刷卡），Airwallex、PayPal 随后加入。实现设计见 `docs/plan/r1-03-stripe-adapter.md`。
-- 凭据：账户连接的 `credentialRef` 与端点的 `secretRef` 写成 `secret-ref:v1:env:<变量名>`，变量名必须以 `PAYMENT_SECRET_` 开头，由 Secrets Manager 注入。Stripe API 密钥的模式必须与账户环境一致（TEST 账户只接受 `sk_test_`/`rk_test_`）；webhook 轮换期可以在同一变量里用逗号并列最多 3 把密钥，新的在前。
+- 支付适配器代码随版本发布，清单在 `apps/api/src/payment-deployed-adapters.ts`。当前已部署两家，都只支持刷卡：
+  - Stripe Checkout（`stripe` / `1.0.0` / `stripe-checkout-v1`），托管页跳转，设计见 `docs/plan/r1-03-stripe-adapter.md`。
+  - Airwallex 托管支付页（`airwallex` / `1.0.0` / `airwallex-hpp-v1`），前台加载官方 SDK 后跳转，设计见 `docs/plan/r1-03b-airwallex-adapter.md`。
+
+  PayPal 随后加入。
+- 凭据：账户连接的 `credentialRef` 与端点的 `secretRef` 写成 `secret-ref:v1:env:<变量名>`，变量名必须以 `PAYMENT_SECRET_` 开头，由 Secrets Manager 注入。webhook 轮换期可以在同一变量里用逗号并列最多 3 把密钥，新的在前。
+  - Stripe：API 密钥的模式必须与账户环境一致（TEST 账户只接受 `sk_test_`/`rk_test_`）。
+  - Airwallex：API 凭据是一个值 `<client_id>:<api_key>`。API 源站按环境固定：TEST 为 `https://api.sandbox.airwallex.com`，LIVE 为 `https://api.airwallex.com`。`allowedActionOrigins` 写托管页源站：TEST 为 `https://checkout.sandbox.airwallex.com`，LIVE 为 `https://checkout.airwallex.com`。语言映射只能用托管页支持的语言：zh-CN→`zh`，th 回退到 `en` 并标记回退。部署了 Airwallex 账户时，`FAN_SUPPORT_PAYMENT_RUNTIME_CONFIG_JSON` 的 `actionTtlMs` 不能超过 3,300,000（55 分钟）。Airwallex 的 client_secret 只有 60 分钟有效，超过这个值启动失败。
 - `FAN_SUPPORT_PAYMENT_ACCOUNT_CONNECTIONS_JSON` 是 `PaymentAccountConnection` 数组，描述不可变的已部署账户：商户号、环境、协议版本、API 源站、凭据引用。每个账户必须在 `FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON` 中有且只有一条健康策略。账户的回跳源站必须等于 `FAN_SUPPORT_SITE_ORIGIN`。
 - 账户找不到对应的已部署适配器代码（按适配器键、版本、协议三者匹配）时，启动失败。
 - 哪些账户可以收款、适用哪些市场、灰度比例是多少，都由管理中心"支付设置"发布到 PostgreSQL（P5-05）。各实例每 10 秒同步一次，不需要重新部署。
@@ -55,7 +61,20 @@
 
 - 入口是 `POST /api/v1/webhooks/payments/:endpointId`。`FAN_SUPPORT_PAYMENT_WEBHOOK_ENDPOINTS_JSON` 里的每个端点必须绑定一个已部署账户，并有该适配器的验签代码，否则启动失败。只有这些端点会继续做 PostgreSQL 端点预检；其余端点在内存中直接返回 404，不访问数据库。
 - Stripe 端点需要订阅的事件：`checkout.session.completed`、`checkout.session.async_payment_succeeded`、`checkout.session.async_payment_failed`、`checkout.session.expired`、`refund.created`、`refund.updated`、`refund.failed`、`charge.dispute.created`、`charge.dispute.updated`、`charge.dispute.closed`。
-- 运营约束：退款只能从平台后台发起。在 Stripe 后台直接退款不会带平台引用，会被当作不支持的事件，需要人工处理。
+- Airwallex 端点：
+  - 订阅的 API 版本必须选 `2026-08-21`，与适配器调用时钉死的版本一致；旧版本的载荷字段不同。
+  - 需要订阅的事件：
+    - `payment_intent.succeeded`、`payment_intent.cancelled`、`payment_intent.pending`、`payment_intent.pending_review`；
+    - `refund.received`、`refund.accepted`、`refund.settled`、`refund.failed`；
+    - 全部 9 个 `payment_dispute.*` 事件。
+  - 验签头是 `x-timestamp` 和 `x-signature`。
+  - Airwallex 没有内置密钥轮换：新建订阅拿到新密钥，两把并列，确认新密钥生效后再删除旧订阅。
+- 运营约束：退款只能从平台后台发起。在 Stripe 或 Airwallex 后台直接退款不会带平台引用，会被当作不支持的事件，需要人工处理。
+- Airwallex 前台依赖：结账页在粉丝点"去支付"时才加载 `https://static.airwallex.com/components/sdk/v1/index.js`，SDK 再从托管页源站加载支付主包。R1-6 收紧 CSP 时必须放行：
+  - `script-src`：`https://static.airwallex.com` 与两个托管页源站；
+  - `connect-src`：`https://o11y.airwallex.com`。
+
+  这个 SDK 由 Airwallex 原地更新，无法固定 SRI 哈希。
 - webhook 原始报文先用密钥管理组加密再入库。缺少该组时，webhook 入库返回 `CONFIGURATION_ERROR`。
 
 ## 连接池

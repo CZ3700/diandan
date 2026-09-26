@@ -2,9 +2,15 @@ import { expect, test, vi } from "vitest";
 
 import {
   assertDeployedPaymentAdapters,
+  assertPaymentActionLifetime,
   createDeployedPaymentAdapters,
 } from "./payment-deployed-adapters.js";
-import { paymentConnection } from "./test-support/production-environment.js";
+import {
+  airwallexConnection,
+  airwallexWebhookEndpoint,
+  paymentConnection,
+  stripeConnection,
+} from "./test-support/production-environment.js";
 
 const factory = {
   descriptor: {
@@ -23,7 +29,7 @@ const factory = {
   create: vi.fn(),
 } as never;
 
-test("this release deploys Stripe Checkout, and only Stripe accounts get its webhook verifier", () => {
+test("this release deploys Stripe Checkout and the Airwallex Hosted Payment Page, each with its own webhook verifier", () => {
   const adapters = createDeployedPaymentAdapters({
     credentials: { resolve: vi.fn() },
   });
@@ -33,7 +39,16 @@ test("this release deploys Stripe Checkout, and only Stripe accounts get its web
       descriptor.adapterVersion,
       descriptor.protocol,
     ]),
-  ).toEqual([["stripe", "1.0.0", "stripe-checkout-v1"]]);
+  ).toEqual([
+    ["stripe", "1.0.0", "stripe-checkout-v1"],
+    ["airwallex", "1.0.0", "airwallex-hpp-v1"],
+  ]);
+  expect(
+    adapters.webhookVerifierFor(
+      airwallexWebhookEndpoint as never,
+      airwallexConnection as never,
+    ),
+  ).toMatchObject({ headerNames: ["x-signature", "x-timestamp"] });
   const stripeAccount = {
     ...paymentConnection,
     binding: {
@@ -59,6 +74,32 @@ test("this release deploys Stripe Checkout, and only Stripe accounts get its web
   expect(
     adapters.webhookVerifierFor(endpoint, paymentConnection as never),
   ).toBeUndefined();
+});
+
+test("stored actions must expire before an Airwallex client secret does; other accounts set no limit", () => {
+  const adapters = createDeployedPaymentAdapters({
+    credentials: { resolve: vi.fn() },
+  });
+  const airwallex = [airwallexConnection as never];
+  expect(() =>
+    assertPaymentActionLifetime(300_000, airwallex, adapters),
+  ).not.toThrow();
+  expect(() =>
+    assertPaymentActionLifetime(3_300_000, airwallex, adapters),
+  ).not.toThrow();
+  expect(() =>
+    assertPaymentActionLifetime(3_300_001, airwallex, adapters),
+  ).toThrow("Payment action lifetime exceeds a deployed provider token");
+  expect(() =>
+    assertPaymentActionLifetime(
+      86_400_000,
+      [stripeConnection as never],
+      adapters,
+    ),
+  ).not.toThrow();
+  expect(() =>
+    assertPaymentActionLifetime(undefined, airwallex, adapters),
+  ).not.toThrow();
 });
 
 test("an account needs deployed code with the exact adapter key, version and protocol", () => {
