@@ -41,9 +41,9 @@ export function ExceptionsListView({
               >
                 <strong>{categoryLabel(item.target.kind, c)}</strong>
                 <span>{statusLabel(item.status, c)}</span>
-                {item.publicOrderId ? (
+                {item.publicOrderNo ? (
                   <span>
-                    {c.order}: {item.publicOrderId}
+                    {c.order}: {item.publicOrderNo}
                   </span>
                 ) : null}
                 <span>

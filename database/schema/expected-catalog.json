@@ -18245,6 +18245,16 @@
       "generation": ""
     },
     {
+      "table": "orders",
+      "position": 27,
+      "name": "public_order_no",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": "generate_public_order_no()",
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "outbox_dispatch_attempts",
       "position": 1,
       "name": "id",
@@ -48548,6 +48558,30 @@
     },
     {
       "table": "orders",
+      "name": "orders_public_order_no_format_check",
+      "kind": "CHECK",
+      "definition": "CHECK (public_order_no ~ '^FS-[0-9A-HJKMNP-TV-Z]{6}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "orders",
+      "name": "orders_public_order_no_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL public_order_no",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "orders",
+      "name": "orders_public_order_no_unique",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (public_order_no)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "orders",
       "name": "orders_quote_expires_at_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL quote_expires_at",
@@ -61123,6 +61157,15 @@
       "valid": true
     },
     {
+      "table": "orders",
+      "name": "orders_public_order_no_unique",
+      "definition": "CREATE UNIQUE INDEX orders_public_order_no_unique ON public.orders USING btree (public_order_no)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "outbox_dispatch_attempts",
       "name": "outbox_dispatch_attempts_number_unique",
       "definition": "CREATE UNIQUE INDEX outbox_dispatch_attempts_number_unique ON public.outbox_dispatch_attempts USING btree (outbox_event_id, consumer_key, attempt_number)",
@@ -68297,6 +68340,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.derive_outbox_payload_status()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.payload_status IS NULL THEN\n    CASE NEW.event_type\n      WHEN 'PAYMENT_STATUS_CHANGED' THEN\n        SELECT event.to_status INTO NEW.payload_status\n        FROM public.payment_attempt_events event\n        WHERE event.payment_attempt_id = NEW.aggregate_id\n          AND event.sequence = NEW.aggregate_version;\n      WHEN 'REFUND_STATUS_CHANGED' THEN\n        SELECT event.to_status INTO NEW.payload_status\n        FROM public.refund_events event\n        WHERE event.refund_id = NEW.aggregate_id\n          AND event.sequence = NEW.aggregate_version;\n      WHEN 'DISPUTE_STATUS_CHANGED' THEN\n        SELECT event.to_status INTO NEW.payload_status\n        FROM public.dispute_events event\n        WHERE event.dispute_id = NEW.aggregate_id\n          AND event.sequence = NEW.aggregate_version;\n      WHEN 'FULFILLMENT_STATUS_CHANGED' THEN\n        SELECT event.to_status INTO NEW.payload_status\n        FROM public.fulfillment_events event\n        WHERE event.fulfillment_id = NEW.aggregate_id\n          AND event.sequence = NEW.aggregate_version;\n      ELSE\n        NULL;\n    END CASE;\n  END IF;\n\n  RETURN NEW;\nEND;\n$function$"
     },
     {
+      "name": "generate_public_order_no",
+      "identityArguments": "",
+      "resultType": "text",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.generate_public_order_no()\n RETURNS text\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  alphabet constant text := '0123456789ABCDEFGHJKMNPQRSTVWXYZ';\n  entropy bytea;\n  candidate text;\nBEGIN\n  FOR attempt IN 1..16 LOOP\n    entropy := uuid_send(gen_random_uuid());\n    candidate := 'FS-';\n    FOR position IN 0..5 LOOP\n      candidate := candidate || substr(alphabet, (get_byte(entropy, position) & 31) + 1, 1);\n    END LOOP;\n    IF NOT EXISTS (SELECT 1 FROM public.orders WHERE public_order_no = candidate) THEN\n      RETURN candidate;\n    END IF;\n  END LOOP;\n  RAISE EXCEPTION 'public order number space exhausted' USING ERRCODE = '23505';\nEND;\n$function$"
+    },
+    {
       "name": "gift_commerce_price_hash",
       "identityArguments": "book_id uuid, book_revision bigint",
       "resultType": "sha256_hex",
@@ -69074,7 +69127,7 @@
       "kind": "FUNCTION",
       "volatility": "STABLE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.notification_order_snapshot(target_order_id uuid, site_name text)\n RETURNS jsonb\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n  SELECT jsonb_build_object('schemaVersion',1,'siteName',site_name,'publicOrderId',o.public_order_id,\n    'orderedAt',to_char(o.created_at AT TIME ZONE 'UTC','YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"'),\n    'currency',o.currency,'totalMinor',o.total_amount_minor,'items',(\n      SELECT jsonb_agg(jsonb_build_object('idolName',i.idol_display_name,'idolLocale',i.idol_translation_resolved_locale,\n        'giftName',i.gift_title,'giftLocale',i.gift_translation_resolved_locale,\n        'variantName',CASE WHEN i.schema_version=1 THEN NULL ELSE original.line->>'giftVariantLabel' END,\n        'variantLocale',CASE WHEN i.schema_version=1 THEN NULL ELSE i.gift_translation_resolved_locale END,\n        'quantity',i.quantity,'lineTotalMinor',i.line_total_minor,'giftKind',i.gift_kind) ORDER BY i.created_at,i.id)\n      FROM public.order_items i LEFT JOIN public.checkout_preflight_observations observation ON observation.id=i.checkout_preflight_id\n      LEFT JOIN LATERAL(SELECT line FROM jsonb_array_elements(observation.observation#>'{consent,lines}') line\n        WHERE (line->>'cartItemId')::uuid=i.cart_item_id) original ON true WHERE i.order_id=o.id))\n  FROM public.orders o WHERE o.id=target_order_id\n$function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.notification_order_snapshot(target_order_id uuid, site_name text)\n RETURNS jsonb\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n  SELECT jsonb_build_object('schemaVersion',1,'siteName',site_name,'publicOrderId',o.public_order_id,\n    'publicOrderNo',o.public_order_no,\n    'orderedAt',to_char(o.created_at AT TIME ZONE 'UTC','YYYY-MM-DD\"T\"HH24:MI:SS.US\"Z\"'),\n    'currency',o.currency,'totalMinor',o.total_amount_minor,'items',(\n      SELECT jsonb_agg(jsonb_build_object('idolName',i.idol_display_name,'idolLocale',i.idol_translation_resolved_locale,\n        'giftName',i.gift_title,'giftLocale',i.gift_translation_resolved_locale,\n        'variantName',CASE WHEN i.schema_version=1 THEN NULL ELSE original.line->>'giftVariantLabel' END,\n        'variantLocale',CASE WHEN i.schema_version=1 THEN NULL ELSE i.gift_translation_resolved_locale END,\n        'quantity',i.quantity,'lineTotalMinor',i.line_total_minor,'giftKind',i.gift_kind) ORDER BY i.created_at,i.id)\n      FROM public.order_items i LEFT JOIN public.checkout_preflight_observations observation ON observation.id=i.checkout_preflight_id\n      LEFT JOIN LATERAL(SELECT line FROM jsonb_array_elements(observation.observation#>'{consent,lines}') line\n        WHERE (line->>'cartItemId')::uuid=i.cart_item_id) original ON true WHERE i.order_id=o.id))\n  FROM public.orders o WHERE o.id=target_order_id\n$function$"
     },
     {
       "name": "notification_source_authority",

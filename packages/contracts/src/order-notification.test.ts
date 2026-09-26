@@ -46,6 +46,17 @@ describe("transactional notification contracts", () => {
       ).toBe(false);
     }
   });
+  test("carries the public order number and reads archived v1 variables as null", () => {
+    const schema = contracts.orderNotificationVariablesSchema;
+    expect(
+      schema.parse({ ...variables, publicOrderNo: "FS-7K3M9C" }).publicOrderNo,
+    ).toBe("FS-7K3M9C");
+    expect(schema.parse(variables).publicOrderNo).toBeNull();
+    for (const publicOrderNo of ["fs-7k3m9c", "FS-7K3M9U", "7K3M9C"])
+      expect(schema.safeParse({ ...variables, publicOrderNo }).success).toBe(
+        false,
+      );
+  });
   test("requires a reason for a whole-message incident fallback", () => {
     expect(module["orderNotificationTemplateSelectionSchema"]).toBeDefined();
     const selection = {

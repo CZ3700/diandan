@@ -102,7 +102,8 @@ export async function searchAccessibilityOrder({
     const row = workspace.locator("[data-order-id]");
     await expect(row).toHaveCount(1);
     await expect(row).toHaveAttribute("data-order-id", result.items[0].orderId);
-    await expect(row).toContainText(publicOrderId);
+    // Support reads the public number from the row; the UUID stays internal.
+    await expect(row).toContainText(result.items[0].publicOrderNo);
     evidence.completedHeadingFocus = await heading.evaluate(
       (element) => element === globalThis.document.activeElement,
     );

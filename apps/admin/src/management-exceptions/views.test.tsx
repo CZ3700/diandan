@@ -14,6 +14,7 @@ const item = adminExceptionItemSchema.parse({
   version: "a".repeat(64),
   orderId: id,
   publicOrderId: id,
+  publicOrderNo: "FS-7K3M9C",
   status: "UNKNOWN",
   attemptCount: 1,
   updatedAt: "2026-09-22T00:00:00Z",

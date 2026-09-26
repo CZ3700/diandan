@@ -23,6 +23,7 @@ export function detailFixture(): OrdersDetail {
     order: {
       schemaVersion: 1,
       publicOrderId: orderId,
+      publicOrderNo: "FS-7K3M9C",
       presentationLocale: "en",
       orderStatus: "OPEN",
       paymentStatus: "PAID",

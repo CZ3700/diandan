@@ -5,6 +5,7 @@ test("finance list maps canonical public_order_id without leaking row internals"
   const row = {
     id: "11111111-1111-4111-8111-111111111111",
     public_order_id: "22222222-2222-4222-8222-222222222222",
+    public_order_no: "FS-7K3M9C",
     version: 1,
     presentation_locale: "en",
     order_status: "OPEN",
@@ -37,7 +38,37 @@ test("finance list maps canonical public_order_id without leaking row internals"
   expect(result).toMatchObject({
     outcome: "SUCCESS",
     kind: "LIST",
-    items: [{ publicOrderId: row.public_order_id }],
+    items: [{ publicOrderId: row.public_order_id, publicOrderNo: "FS-7K3M9C" }],
   });
   expect(JSON.stringify(result)).not.toContain("public_order_id");
+});
+test("finance search matches a spoken public order number exactly", async () => {
+  const query = vi.fn<
+    (sql: string, values?: unknown[]) => Promise<{ rows: unknown[] }>
+  >(async () => ({ rows: [{ total: 0 }] }));
+  query.mockResolvedValueOnce({ rows: [{ total: 0 }] });
+  query.mockResolvedValueOnce({ rows: [] });
+  await readAdminFinance(
+    { query, release: vi.fn() },
+    {
+      command: {
+        schemaVersion: 1,
+        action: "LIST",
+        page: 2,
+        pageSize: 10,
+        query: "fs 7k3m9o",
+        filter: "ALL",
+      },
+    } as AdminFinanceStoreRequest,
+    true,
+  );
+  expect(query.mock.calls[0]?.[0]).toContain("o.public_order_no=$3::text");
+  expect(query.mock.calls[0]?.[1]).toEqual(["fs 7k3m9o", "ALL", "FS-7K3M90"]);
+  expect(query.mock.calls[1]?.[1]).toEqual([
+    "fs 7k3m9o",
+    "ALL",
+    "FS-7K3M90",
+    10,
+    10,
+  ]);
 });

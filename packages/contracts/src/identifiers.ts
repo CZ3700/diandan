@@ -27,6 +27,11 @@ export const inventoryLedgerEntryIdSchema = z
   .brand<"InventoryLedgerEntryId">();
 export const orderIdSchema = z.uuid().brand<"OrderId">();
 export const publicOrderIdSchema = z.uuid().brand<"PublicOrderId">();
+/** Fan-facing order number (V2 §4-4): FS- plus six Crockford base32 characters. Never an access credential. */
+export const publicOrderNoSchema = z
+  .string()
+  .regex(/^FS-[0-9A-HJKMNP-TV-Z]{6}$/u)
+  .brand<"PublicOrderNo">();
 export const orderItemIdSchema = z.uuid().brand<"OrderItemId">();
 export const paymentAttemptIdSchema = z.uuid().brand<"PaymentAttemptId">();
 export const paymentCapabilityIdSchema = z
@@ -174,6 +179,7 @@ export type InventoryLedgerEntryId = z.infer<
 >;
 export type OrderId = z.infer<typeof orderIdSchema>;
 export type PublicOrderId = z.infer<typeof publicOrderIdSchema>;
+export type PublicOrderNo = z.infer<typeof publicOrderNoSchema>;
 export type OrderItemId = z.infer<typeof orderItemIdSchema>;
 export type PaymentAttemptId = z.infer<typeof paymentAttemptIdSchema>;
 export type PaymentCapabilityId = z.infer<typeof paymentCapabilityIdSchema>;

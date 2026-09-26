@@ -31,6 +31,7 @@ const fallback = {
 const order = orderAccessDetailSchema.parse({
   schemaVersion: 1,
   publicOrderId: "10000000-0000-4000-8000-000000000001",
+  publicOrderNo: "FS-7K3M9C",
   presentationLocale: "ja",
   orderStatus: "OPEN",
   paymentStatus: "PAID",
@@ -105,7 +106,9 @@ async function render(
 describe("protected historical order presentation", () => {
   it("renders the original recipient, gift, complete amount breakdown and only the actual creation date", async () => {
     const html = await render();
-    expect(html).toContain(order.publicOrderId);
+    // Fans see the public number; the UUID stays in the URL and API.
+    expect(html).toMatch(/data-order-number[^>]*><bdi>FS-7K3M9C<\/bdi>/u);
+    expect(html).not.toContain(order.publicOrderId);
     expect(html).toContain("历史艺人");
     expect(html).toContain("注文時のギフト");
     expect(html).toContain("Original option");

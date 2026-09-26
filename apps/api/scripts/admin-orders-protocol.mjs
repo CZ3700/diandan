@@ -287,6 +287,20 @@ export async function verifyAdminOrdersProtocol(context, runtime, payment) {
     search.items.length === 1 && search.items[0].orderId === value.orderId,
     "operator can find exact public order number",
   );
+  // Support hears "7 k 3 m 9 c" without the prefix; the list shows the same FS- number.
+  const spoken = await command(operator, "list", {
+    ...listBody,
+    query: search.items[0].publicOrderNo
+      .slice(3)
+      .toLowerCase()
+      .split("")
+      .join(" "),
+  });
+  check(
+    /^FS-[0-9A-HJKMNP-TV-Z]{6}$/u.test(search.items[0].publicOrderNo) &&
+      spoken.items.some((item) => item.orderId === value.orderId),
+    "operator can find an order by its spoken public number",
+  );
   return {
     values,
     manager,

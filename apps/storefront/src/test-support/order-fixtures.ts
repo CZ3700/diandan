@@ -13,6 +13,7 @@ const language = {
 export const orderFixture = orderAccessDetailSchema.parse({
   schemaVersion: 1,
   publicOrderId: checkoutFixture.publicOrderId,
+  publicOrderNo: "FS-7K3M9C",
   presentationLocale: checkoutFixture.presentationLocale,
   orderStatus: "OPEN",
   paymentStatus: "PAID",

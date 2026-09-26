@@ -129,6 +129,14 @@ export async function verifyOrderStorefrontBrowser(context) {
       (await page.locator("[data-order-line]").count()) === order.items.length,
       "Visible order lines retain exact historical cardinality",
     );
+    check(
+      (await page.locator("[data-order-number]").innerText()).trim() ===
+        order.publicOrderNo &&
+        !(await page.locator("[data-order-detail]").innerText()).includes(
+          order.publicOrderId,
+        ),
+      "Visible order shows its public number and keeps the UUID internal",
+    );
     const total = page.locator("[data-order-total] data");
     check(
       (await total.getAttribute("value")) ===

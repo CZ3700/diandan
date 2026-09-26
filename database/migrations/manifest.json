@@ -380,6 +380,16 @@
         "up": "f309802877b331e0650dcd20aa2adf7b571bb13c09702dbc0e75399e8de3b79c",
         "down": "f665eae614bc322de99036e1f17e2faacb8ca8725ff2f2cf6c448660326a7c9b"
       }
+    },
+    {
+      "version": "0039",
+      "name": "public-order-number",
+      "up": "database/migrations/0039_public-order-number.up.sql",
+      "down": "database/migrations/0039_public-order-number.down.sql",
+      "sha256": {
+        "up": "c1a603cb8d5cbf0e6ff8f120abf3ee312a7a1dc2fae93ad043ec40dc46eadc93",
+        "down": "cefaec5c026f8c9516ed079e91e6e1e71d8312384d64bd6a6b76843232a42d15"
+      }
     }
   ]
 }

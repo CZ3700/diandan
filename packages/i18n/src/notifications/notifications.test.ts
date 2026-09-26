@@ -13,11 +13,13 @@ const events: readonly OrderNotificationEventType[] = [
   "DELIVERED",
 ];
 const publicOrderId = "71000000-0000-4000-8000-000000000001";
+const publicOrderNo = "FS-7K3M9C";
 const rawToken = "A".repeat(43);
 const variables = {
   schemaVersion: 1 as const,
   siteName: "Studio Preview",
   publicOrderId,
+  publicOrderNo,
   orderedAt: "2026-09-15T23:30:00-07:00",
   currency: "USD",
   totalMinor: 12345,
@@ -99,7 +101,7 @@ it("renders all three events completely in all seven locales with original snaps
       expect(content.html).toContain('lang="ja"');
       expect(content.html).toContain('lang="zh-CN"');
       expect(content.html).toContain("鲜花与心意");
-      expect(content.text).toContain(publicOrderId);
+      expect(content.text).toContain(publicOrderNo);
       expect(content.text).toContain("123");
       expect(content.subject + content.preheader + content.text).not.toMatch(
         /\{\w+\}/u,
@@ -135,6 +137,27 @@ it("marks digital support lines and adds the support-record note only when a VIR
   }
 });
 
+it("shows the public order number and keeps the UUID only inside the link", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  for (const locale of SUPPORTED_LOCALES) {
+    const selection = templates.select("PREPARING", locale);
+    const content = templates.render(command(selection));
+    expect(content.html).toMatch(
+      new RegExp(`data-mail-order[^>]*>${publicOrderNo}</div>`, "u"),
+    );
+    const withoutLink = (value: string) =>
+      value
+        .replaceAll(variables.orderUrl.replaceAll("&", "&amp;"), "")
+        .replaceAll(variables.orderUrl, "");
+    expect(withoutLink(content.html)).not.toContain(publicOrderId);
+    expect(withoutLink(content.text)).not.toContain(publicOrderId);
+    expect(() =>
+      templates.render(command(selection, { publicOrderNo: null })),
+    ).toThrow("NOTIFICATION_VARIABLES_INVALID");
+  }
+});
+
 it("still renders archived v1 selections byte-for-byte without a gift kind", async () => {
   const { createOrderNotificationTemplates } = await api();
   const { templateVersionV1, eventTemplateKeys } =
@@ -150,6 +173,14 @@ it("still renders archived v1 selections byte-for-byte without a gift kind", asy
   });
   const content = templates.render(archived);
   expect(content.html).toContain('<html lang="th">');
+  // v1 predates public numbers: it keeps showing the UUID it was reviewed with.
+  expect(content.text).toContain(`: ${publicOrderId}`);
+  expect(
+    templates.render({
+      ...archived,
+      variables: { ...archived.variables, publicOrderNo: null },
+    }).text,
+  ).toBe(content.text);
   expect(content.html).not.toContain("data-mail-digital");
   expect(templates.select("DELIVERED", "th").templateVersion).not.toBe(
     archived.locale.templateVersion,

@@ -4,7 +4,11 @@ import {
   contentTimestampSchema,
   sourceHashSchema,
 } from "./content-lifecycle.js";
-import { idempotencyKeySchema, publicOrderIdSchema } from "./identifiers.js";
+import {
+  idempotencyKeySchema,
+  publicOrderIdSchema,
+  publicOrderNoSchema,
+} from "./identifiers.js";
 import { reliableEventConsumerKeySchema } from "./reliable-events.js";
 
 const uuid = z.uuid().toLowerCase();
@@ -146,6 +150,7 @@ export const adminExceptionItemSchema = z
     version: sourceHashSchema,
     orderId: uuid.nullable(),
     publicOrderId: publicOrderIdSchema.nullable(),
+    publicOrderNo: publicOrderNoSchema.nullable(),
     status: adminExceptionStatusSchema,
     attemptCount: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
     updatedAt: contentTimestampSchema,
@@ -155,6 +160,10 @@ export const adminExceptionItemSchema = z
   .refine(
     (v) => (v.allowedAction !== null) === (v.blockedReason === "NONE"),
     "Action availability must explain its restriction",
+  )
+  .refine(
+    (v) => (v.publicOrderId === null) === (v.publicOrderNo === null),
+    "An order reference carries both its identifier and its public number",
   )
   .refine(
     (v) =>

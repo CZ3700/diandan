@@ -116,6 +116,7 @@ export async function readOrderAccessDetail(
   return orderAccessDetailSchema.parse({
     schemaVersion: 1,
     publicOrderId: order["public_order_id"],
+    publicOrderNo: order["public_order_no"],
     presentationLocale: order["presentation_locale"],
     orderStatus: order["order_status"],
     paymentStatus: order["payment_status"],

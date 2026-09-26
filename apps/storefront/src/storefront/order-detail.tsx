@@ -160,8 +160,8 @@ export function OrderDetail({
       <dl className="order-metadata">
         <div>
           <dt>{copy.orderIdLabel}</dt>
-          <dd data-order-public-id>
-            <bdi>{order.publicOrderId}</bdi>
+          <dd data-order-number>
+            <bdi>{order.publicOrderNo}</bdi>
           </dd>
         </div>
         <div>

@@ -14,6 +14,7 @@ import {
   notificationLocaleSnapshotSchema,
 } from "./fulfillment-notification.js";
 import { giftKindSchema } from "./gift-commerce-profile.js";
+import { publicOrderNoSchema } from "./identifiers.js";
 import { supportedLocaleSchema } from "./locale.js";
 import {
   notificationPortCommandSchema,
@@ -66,6 +67,8 @@ export const orderNotificationBaseVariablesSchema = z.strictObject({
   schemaVersion: version,
   siteName: text.max(120),
   publicOrderId: id,
+  /** Template v2 shows it (F1-2). Archived v1 variables omit it and parse as null. */
+  publicOrderNo: publicOrderNoSchema.nullable().default(null),
   orderedAt: contentTimestampSchema,
   currency: currencySchema,
   totalMinor: minorAmountSchema,

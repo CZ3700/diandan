@@ -35,7 +35,7 @@ UNION ALL
 SELECT 'NOTIFICATION',d.id,NULL,d.order_id,CASE WHEN d.status='SENT' THEN 'SUCCEEDED' WHEN EXISTS(SELECT 1 FROM notification_delivery_attempts x WHERE x.notification_delivery_id=d.id AND x.outcome='UNKNOWN') THEN 'UNKNOWN' WHEN d.status IN('FAILED','CANCELED') THEN 'FAILED' WHEN d.status='PROCESSING' THEN 'PROCESSING' ELSE 'PENDING' END,d.attempt_count::bigint,d.updated_at FROM notification_deliveries d
 UNION ALL
 SELECT 'NOTIFICATION',d.id,NULL,d.order_id,CASE WHEN d.status='SENT' THEN 'SUCCEEDED' WHEN EXISTS(SELECT 1 FROM admin_notification_resend_attempts x WHERE x.resend_id=d.id AND x.outcome='UNKNOWN') THEN 'UNKNOWN' WHEN d.status IN('FAILED','CANCELED') THEN 'FAILED' WHEN d.status='PROCESSING' THEN 'PROCESSING' ELSE 'PENDING' END,d.attempt_count::bigint,d.updated_at FROM admin_notification_resends d`;
-const projection = `WITH sources AS(${sources}) SELECT s.*,o.id canonical_order_id,o.public_order_id,o.version order_version,public.admin_exception_source_version(s.kind,s.id,s.consumer_key) source_version,${adminOrdersTimestamp("s.updated_at")} updated FROM sources s LEFT JOIN orders o ON o.id=s.order_id`;
+const projection = `WITH sources AS(${sources}) SELECT s.*,o.id canonical_order_id,o.public_order_id,o.public_order_no,o.version order_version,public.admin_exception_source_version(s.kind,s.id,s.consumer_key) source_version,${adminOrdersTimestamp("s.updated_at")} updated FROM sources s LEFT JOIN orders o ON o.id=s.order_id`;
 export async function exceptionQueueState(
   client: TransactionClient,
   target: AdminExceptionTarget,
@@ -148,6 +148,7 @@ export async function exceptionItem(
     version: row["source_version"],
     orderId: row["canonical_order_id"] ?? null,
     publicOrderId: row["public_order_id"] ?? null,
+    publicOrderNo: row["public_order_no"] ?? null,
     status,
     attemptCount: Number(row["attempt_count"]),
     updatedAt: row["updated"],

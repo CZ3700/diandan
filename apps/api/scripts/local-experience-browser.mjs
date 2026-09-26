@@ -9,6 +9,7 @@ import {
   managementCenterResponseSchema,
   checkoutPreflightResponseSchema,
   publicOrderIdSchema,
+  publicOrderNoSchema,
   policyKindSchema,
   adminOrdersResponseSchema,
   marketSchema,
@@ -624,13 +625,16 @@ export async function verifyLocalExperienceBrowser({
       () => admin.locator("[data-orders-apply]").click(),
       publicId,
     );
+    const match = result.items.find((item) => item.publicOrderId === publicId);
     check(
-      result.items.some((item) => item.publicOrderId === publicId),
+      match !== undefined,
       "Canonical order list contains the requested order",
     );
-    const row = admin.locator("[data-order-id]").filter({ hasText: publicId });
+    // Rows show the public number support reads out; the UUID stays internal.
+    const row = admin.locator(`[data-order-id="${match.orderId}"]`);
     await expect(row).toHaveCount(1, { timeout: 30000 });
-    const orderId = await row.getAttribute("data-order-id");
+    await expect(row).toContainText(match.publicOrderNo);
+    const orderId = match.orderId;
     await row.click();
     await admin.locator(`[data-orders-detail="${orderId}"]`).waitFor();
     await expect(admin.locator("[data-finance-panel]")).toHaveAttribute(
@@ -1048,14 +1052,23 @@ export async function verifyLocalExperienceBrowser({
           await customer.locator("[data-test-psp-capture]").click();
           stage("PAYMENT_RETURN");
           await customer
-            .locator("[data-order-public-id]")
+            .locator("[data-order-number]")
             .waitFor({ timeout: 90000 });
           report.cases.push(
             "payment-return-automatically-reads-trusted-server-state",
           );
-          publicOrderId = (
-            await customer.locator("[data-order-public-id]").innerText()
-          ).trim();
+          publicOrderId = await customer
+            .locator("[data-order-root]")
+            .getAttribute("data-order-id");
+          check(
+            publicOrderIdSchema.safeParse(publicOrderId).success &&
+              publicOrderNoSchema.safeParse(
+                (
+                  await customer.locator("[data-order-number]").innerText()
+                ).trim(),
+              ).success,
+            "Paid order shows its public number while the UUID stays internal",
+          );
           report.facts.publicOrderId = publicOrderId;
           await expect(
             customer.locator('[data-order-payment-status="PAID"]'),
@@ -1108,10 +1121,10 @@ export async function verifyLocalExperienceBrowser({
           "Mailbox exchanges the fragment for an HTTP-only cookie",
         );
         await mailbox.locator('a[href="/"]').waitFor({ timeout: 30000 });
-        const orderMail = mailbox
-          .locator("article")
-          .filter({ hasText: publicOrderId })
-          .locator('a[href*="/order-access#"]');
+        // Mail shows the public number; the order UUID is only inside the link fragment.
+        const orderMail = mailbox.locator(
+          `article a[href*="/order-access#"][href*="order=${publicOrderId}"]`,
+        );
         await expect
           .poll(
             async () => {
@@ -1123,16 +1136,16 @@ export async function verifyLocalExperienceBrowser({
           .toBeGreaterThan(0);
         await orderMail.first().click();
         await mailbox
-          .locator("[data-order-public-id]")
+          .locator("[data-order-number]")
           .waitFor({ timeout: 30000 });
         check(
           new URL(mailbox.url()).hash === "",
           "Mail order token is cleared from browser address",
         );
         check(
-          (
-            await mailbox.locator("[data-order-public-id]").innerText()
-          ).trim() === publicOrderId,
+          (await mailbox
+            .locator("[data-order-root]")
+            .getAttribute("data-order-id")) === publicOrderId,
           "Mail link opens the same paid order",
         );
         await mailbox.close();

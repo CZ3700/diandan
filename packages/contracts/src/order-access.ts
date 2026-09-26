@@ -19,6 +19,7 @@ import {
   checkoutSessionIdSchema,
   orderIdSchema,
   publicOrderIdSchema,
+  publicOrderNoSchema,
 } from "./identifiers.js";
 import { DEFAULT_LOCALE, supportedLocaleSchema } from "./locale.js";
 import {
@@ -200,6 +201,8 @@ export const orderAccessDetailSchema = z
   .strictObject({
     schemaVersion: version,
     publicOrderId: publicOrderIdSchema,
+    /** Fan-facing number; publicOrderId stays in URLs and APIs. */
+    publicOrderNo: publicOrderNoSchema,
     presentationLocale: supportedLocaleSchema,
     orderStatus: orderStatusSchema,
     paymentStatus: orderPaymentStatusSchema,

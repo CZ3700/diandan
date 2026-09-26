@@ -36,6 +36,8 @@ const variableRefinementsV2 = {
   date: "orderedAt rendered in UTC, never worker local time. No inferred fulfillment timestamp.",
   giftKind:
     "Optional per item; VIRTUAL marks a digital support record (ADR-019) and adds the digital note once per message.",
+  publicOrderNo:
+    "Required by v2 and shown as the order number (F1-2, FS- plus six Crockford base32 characters); publicOrderId only binds the link fragment.",
 };
 
 export function hashMaterial(value: unknown): string {

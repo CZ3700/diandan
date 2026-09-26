@@ -153,7 +153,7 @@ export function OrdersWorkspace({
             </button>
           ) : null}
           <h1 ref={title} tabIndex={-1}>
-            {detail?.order.publicOrderId ?? copy.orders}
+            {detail?.order.publicOrderNo ?? copy.orders}
           </h1>
         </div>
         <Button

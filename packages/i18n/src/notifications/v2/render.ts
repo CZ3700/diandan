@@ -84,6 +84,9 @@ export function renderV2(
   const copy = copyV2[locale];
   const event = copy.events[command.eventType];
   const data = command.variables;
+  // The fan-facing number; the UUID stays inside the link fragment (F1-2).
+  if (data.publicOrderNo === null)
+    throw new Error("NOTIFICATION_VARIABLES_INVALID");
   const subject = message(event.subject, locale, { siteName: data.siteName });
   const preheader = message(event.preheader, locale);
   const heading = message(event.heading, locale);
@@ -107,7 +110,7 @@ export function renderV2(
     HEADING: heading,
     BODY: body,
     ORDER_LABEL: copy.orderLabel,
-    ORDER_ID: data.publicOrderId,
+    ORDER_ID: data.publicOrderNo,
     ORDERED_AT_LABEL: copy.orderedAt,
     ORDERED_AT_ISO: new Date(data.orderedAt).toISOString(),
     ORDERED_AT: date,

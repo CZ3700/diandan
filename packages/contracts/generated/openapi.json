@@ -5847,6 +5847,17 @@
                         }
                       ]
                     },
+                    "publicOrderNo": {
+                      "anyOf": [
+                        {
+                          "pattern": "^FS-[0-9A-HJKMNP-TV-Z]{6}$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
                     "status": {
                       "enum": [
                         "PENDING",
@@ -5973,6 +5984,7 @@
                     "version",
                     "orderId",
                     "publicOrderId",
+                    "publicOrderNo",
                     "status",
                     "attemptCount",
                     "updatedAt",
@@ -6083,6 +6095,17 @@
                       {
                         "format": "uuid",
                         "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "publicOrderNo": {
+                    "anyOf": [
+                      {
+                        "pattern": "^FS-[0-9A-HJKMNP-TV-Z]{6}$",
                         "type": "string"
                       },
                       {
@@ -6216,6 +6239,7 @@
                   "version",
                   "orderId",
                   "publicOrderId",
+                  "publicOrderNo",
                   "status",
                   "attemptCount",
                   "updatedAt",
@@ -7277,6 +7301,10 @@
                       "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
                       "type": "string"
                     },
+                    "publicOrderNo": {
+                      "pattern": "^FS-[0-9A-HJKMNP-TV-Z]{6}$",
+                      "type": "string"
+                    },
                     "refundedAmountMinor": {
                       "maximum": 9007199254740991,
                       "minimum": 0,
@@ -7301,6 +7329,7 @@
                   "required": [
                     "orderId",
                     "publicOrderId",
+                    "publicOrderNo",
                     "version",
                     "presentationLocale",
                     "orderStatus",
@@ -7602,6 +7631,10 @@
                     "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
                     "type": "string"
                   },
+                  "publicOrderNo": {
+                    "pattern": "^FS-[0-9A-HJKMNP-TV-Z]{6}$",
+                    "type": "string"
+                  },
                   "refundedAmountMinor": {
                     "maximum": 9007199254740991,
                     "minimum": 0,
@@ -7626,6 +7659,7 @@
                 "required": [
                   "orderId",
                   "publicOrderId",
+                  "publicOrderNo",
                   "version",
                   "presentationLocale",
                   "orderStatus",
@@ -8690,6 +8724,10 @@
             "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
             "type": "string"
           },
+          "publicOrderNo": {
+            "pattern": "^FS-[0-9A-HJKMNP-TV-Z]{6}$",
+            "type": "string"
+          },
           "totalAmountMinor": {
             "maximum": 9007199254740991,
             "minimum": 0,
@@ -8709,6 +8747,7 @@
         "required": [
           "orderId",
           "publicOrderId",
+          "publicOrderNo",
           "version",
           "presentationLocale",
           "orderStatus",
@@ -9960,6 +9999,10 @@
                       "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
                       "type": "string"
                     },
+                    "publicOrderNo": {
+                      "pattern": "^FS-[0-9A-HJKMNP-TV-Z]{6}$",
+                      "type": "string"
+                    },
                     "totalAmountMinor": {
                       "maximum": 9007199254740991,
                       "minimum": 0,
@@ -9979,6 +10022,7 @@
                   "required": [
                     "orderId",
                     "publicOrderId",
+                    "publicOrderNo",
                     "version",
                     "presentationLocale",
                     "orderStatus",
@@ -11090,6 +11134,10 @@
                     "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
                     "type": "string"
                   },
+                  "publicOrderNo": {
+                    "pattern": "^FS-[0-9A-HJKMNP-TV-Z]{6}$",
+                    "type": "string"
+                  },
                   "schemaVersion": {
                     "const": 1,
                     "type": "number"
@@ -11103,6 +11151,7 @@
                 "required": [
                   "schemaVersion",
                   "publicOrderId",
+                  "publicOrderNo",
                   "presentationLocale",
                   "orderStatus",
                   "paymentStatus",
@@ -106924,6 +106973,10 @@
             "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
             "type": "string"
           },
+          "publicOrderNo": {
+            "pattern": "^FS-[0-9A-HJKMNP-TV-Z]{6}$",
+            "type": "string"
+          },
           "schemaVersion": {
             "const": 1,
             "type": "number"
@@ -106937,6 +106990,7 @@
         "required": [
           "schemaVersion",
           "publicOrderId",
+          "publicOrderNo",
           "presentationLocale",
           "orderStatus",
           "paymentStatus",
@@ -108671,6 +108725,10 @@
                     "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
                     "type": "string"
                   },
+                  "publicOrderNo": {
+                    "pattern": "^FS-[0-9A-HJKMNP-TV-Z]{6}$",
+                    "type": "string"
+                  },
                   "schemaVersion": {
                     "const": 1,
                     "type": "number"
@@ -108684,6 +108742,7 @@
                 "required": [
                   "schemaVersion",
                   "publicOrderId",
+                  "publicOrderNo",
                   "presentationLocale",
                   "orderStatus",
                   "paymentStatus",

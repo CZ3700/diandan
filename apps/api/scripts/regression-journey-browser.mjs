@@ -89,8 +89,9 @@ export async function checkLocaleCycle({
     } else {
       await page.locator('[data-order-payment-status="PAID"]').waitFor();
       assert(
-        (await page.locator("[data-order-public-id]").innerText()).trim() ===
-          purchase.publicOrderId,
+        (await page
+          .locator("[data-order-root]")
+          .getAttribute("data-order-id")) === purchase.publicOrderId,
         "Header switch keeps the same order entity",
       );
     }
@@ -310,9 +311,10 @@ export async function verifyMailAccess({
       `${config.origins.mail}/#token=${config.services.mail.viewerToken}`,
     );
     await page.locator('a[href="/"]').waitFor();
-    const article = page
-      .locator("article")
-      .filter({ hasText: purchase.publicOrderId });
+    // Mail shows the public number; the order UUID is only inside the link fragment.
+    const article = page.locator("article").filter({
+      has: page.locator(`a[href*="order=${purchase.publicOrderId}"]`),
+    });
     await expect
       .poll(
         async () => {

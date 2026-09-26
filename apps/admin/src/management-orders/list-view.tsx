@@ -120,7 +120,7 @@ export function OrdersListView({
                 onClick={() => onSelect(order.orderId)}
               >
                 <span>
-                  <strong>{order.publicOrderId}</strong>
+                  <strong>{order.publicOrderNo}</strong>
                   <span className="mc-item-meta">
                     {new Intl.DateTimeFormat(locale, {
                       dateStyle: "medium",

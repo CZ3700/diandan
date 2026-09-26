@@ -22,6 +22,10 @@ machine-assisted drafts with no human reviewer or approval commit.
 purchase-time `giftKind`, a VIRTUAL line is marked as digital support and one
 support-record note is added when the order contains such a line. New selections
 use v2 identities only; `render` still replays a message by its pinned v1 identity.
+The order section shows the fan-facing `publicOrderNo` (F1-2); `publicOrderId` only
+binds the link fragment. v2 was amended once for that before its first release,
+while no environment had requested a v2 message; from its first release on it is
+frozen like v1.
 
 `v1/` is an archive, not an editable “latest” catalog. Each event's `v1.<sha256>`
 identity covers all seven locales' subject, preheader, body copy, HTML and text

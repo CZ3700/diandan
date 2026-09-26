@@ -371,7 +371,9 @@ export async function accessibilityMailOrder({
   );
   const link = page
     .locator("article")
-    .filter({ hasText: purchase.publicOrderId })
+    .filter({
+      has: page.locator(`a[href*="order=${purchase.publicOrderId}"]`),
+    })
     .locator('a[href*="/order-access#"]');
   await expect(link).toHaveCount(1);
   await tools.activate(page, link, "mail-order-link");

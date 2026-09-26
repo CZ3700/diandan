@@ -22,7 +22,7 @@ export function oneAccessRow(rows: DraftRow[]) {
   if (rows.length !== 1) return rejectOrderAccess("ACCESS_DENIED");
   return rows[0]!;
 }
-export const orderAccessOrderColumns = `o.id,o.cart_id,o.public_order_id,o.presentation_locale,o.order_status,o.payment_status,o.dispute_status,o.fulfillment_status,o.currency,o.subtotal_minor::text,o.tax_amount_minor::text,o.shipping_amount_minor::text,o.fee_amount_minor::text,o.discount_amount_minor::text,o.total_amount_minor::text,${cartTimestamp("o.created_at")} created_at,${cartTimestamp("o.updated_at")} updated_at`;
+export const orderAccessOrderColumns = `o.id,o.cart_id,o.public_order_id,o.public_order_no,o.presentation_locale,o.order_status,o.payment_status,o.dispute_status,o.fulfillment_status,o.currency,o.subtotal_minor::text,o.tax_amount_minor::text,o.shipping_amount_minor::text,o.fee_amount_minor::text,o.discount_amount_minor::text,o.total_amount_minor::text,${cartTimestamp("o.created_at")} created_at,${cartTimestamp("o.updated_at")} updated_at`;
 
 export async function tokenOwner(
   client: TransactionClient,

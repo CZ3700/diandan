@@ -5,6 +5,7 @@ import {
   checkoutPreflightObservationSchema,
   dailyPublicationDocumentSchema,
   giftKindSchema,
+  normalizePublicOrderNo,
   type AdminOrdersPrincipal,
   type AdminOrdersStoreRequest,
 } from "@fan-support/contracts";
@@ -25,10 +26,17 @@ export async function readAdminOrdersList(
   const c = request.command;
   if (c.action !== "LIST") return rejectAdminOrdersIntegrity();
   const pattern = `%${c.query.replace(/[\\%_]/gu, "\\$&")}%`;
-  const condition = `($1::text='' OR o.public_order_id::text ILIKE $2 OR EXISTS(SELECT 1 FROM public.order_items i WHERE i.order_id=o.id AND (i.idol_display_name ILIKE $2 OR i.gift_title ILIKE $2)))
+  // A spoken or retyped public number (any case, spacing, O/I/L) matches exactly; fragments match by substring.
+  const condition = `($1::text='' OR o.public_order_id::text ILIKE $2 OR o.public_order_no ILIKE $2 OR o.public_order_no=$5::text OR EXISTS(SELECT 1 FROM public.order_items i WHERE i.order_id=o.id AND (i.idol_display_name ILIKE $2 OR i.gift_title ILIKE $2)))
  AND ($3::text='ALL' OR o.fulfillment_status=$3)
  AND ($4::text='ALL' OR EXISTS(SELECT 1 FROM public.order_items i JOIN public.support_intents s ON s.id=i.support_intent_id JOIN public.cart_items c ON c.id=i.cart_item_id WHERE i.order_id=o.id AND CASE WHEN $4::text='REJECTED' THEN s.moderation_status IN('REJECTED','REDACTED') ELSE (c.has_fan_message OR s.fan_message_ciphertext IS NOT NULL OR s.display_mode='nickname') AND (s.moderation_status<>'APPROVED' OR s.privacy_state<>'ACTIVE') END))`;
-  const args = [c.query, pattern, c.fulfillment, c.moderation];
+  const args = [
+    c.query,
+    pattern,
+    c.fulfillment,
+    c.moderation,
+    normalizePublicOrderNo(c.query),
+  ];
   const [total] = await draftRows(
     client,
     `SELECT count(*)::text total FROM public.orders o WHERE ${condition}`,
@@ -39,7 +47,7 @@ export async function readAdminOrdersList(
     `SELECT o.*,${adminOrdersTimestamp("o.created_at")} created_at,${adminOrdersTimestamp("o.updated_at")} updated_at,
  (SELECT count(*)::int FROM public.order_items i WHERE i.order_id=o.id) item_count,
  (SELECT count(*)::int FROM public.order_items i JOIN public.support_intents s ON s.id=i.support_intent_id JOIN public.cart_items c ON c.id=i.cart_item_id WHERE i.order_id=o.id AND (c.has_fan_message OR s.fan_message_ciphertext IS NOT NULL OR s.display_mode='nickname') AND (s.moderation_status<>'APPROVED' OR s.privacy_state<>'ACTIVE')) pending_review_count
- FROM public.orders o WHERE ${condition} ORDER BY o.created_at DESC,o.id DESC LIMIT $5 OFFSET $6`,
+ FROM public.orders o WHERE ${condition} ORDER BY o.created_at DESC,o.id DESC LIMIT $6 OFFSET $7`,
     [...args, c.pageSize, (c.page - 1) * c.pageSize],
   );
   return adminOrdersResponseSchema.parse({
@@ -53,6 +61,7 @@ export async function readAdminOrdersList(
       adminOrdersListItemSchema.parse({
         orderId: o["id"],
         publicOrderId: o["public_order_id"],
+        publicOrderNo: o["public_order_no"],
         version: Number(o["version"]),
         presentationLocale: o["presentation_locale"],
         orderStatus: o["order_status"],

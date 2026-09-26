@@ -3,7 +3,11 @@ import { adminOpaqueTokenSchema } from "./admin-content.js";
 import { contentTimestampSchema } from "./content-lifecycle.js";
 import { checkoutText, checkoutVersionSchema } from "./checkout-preflight.js";
 import { currencySchema, minorAmountSchema } from "./commerce.js";
-import { idempotencyKeySchema, publicOrderIdSchema } from "./identifiers.js";
+import {
+  idempotencyKeySchema,
+  publicOrderIdSchema,
+  publicOrderNoSchema,
+} from "./identifiers.js";
 import { supportedLocaleSchema } from "./locale.js";
 import { orderAccessDetailSchema } from "./order-access.js";
 import {
@@ -154,6 +158,7 @@ export const adminOrdersRequestSchema = z.strictObject({
 export const adminOrdersListItemSchema = z.strictObject({
   orderId: uuid,
   publicOrderId: publicOrderIdSchema,
+  publicOrderNo: publicOrderNoSchema,
   version: checkoutVersionSchema,
   presentationLocale: supportedLocaleSchema,
   orderStatus: orderStatusSchema,

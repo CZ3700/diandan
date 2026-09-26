@@ -46,6 +46,7 @@ const locale = {
 const order = {
   schemaVersion: 1,
   publicOrderId: publicId,
+  publicOrderNo: "FS-7K3M9C",
   presentationLocale: "en",
   orderStatus: "OPEN",
   paymentStatus: "PAID",

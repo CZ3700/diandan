@@ -19,6 +19,7 @@ export const financeFixture = () => {
     order: {
       orderId: id,
       publicOrderId: id,
+      publicOrderNo: "FS-7K3M9C",
       version: 1,
       presentationLocale: "en",
       orderStatus: "OPEN",

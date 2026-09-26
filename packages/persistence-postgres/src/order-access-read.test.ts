@@ -149,3 +149,37 @@ test("valid v2 history cannot silently omit its saved variant label", () => {
     ),
   ).toThrow();
 });
+test("the protected detail shows the public order number next to its UUID", async () => {
+  expect(module).toBeDefined();
+  const client = {
+    query: async () => ({ rows: [row] }),
+    release: () => {},
+  };
+  const detail = await module!.readOrderAccessDetail(
+    client,
+    {
+      id,
+      public_order_id: "00000000-0000-4000-8000-000000000002",
+      public_order_no: "FS-7K3M9C",
+      presentation_locale: "en",
+      order_status: "OPEN",
+      payment_status: "PAID",
+      dispute_status: "NONE",
+      fulfillment_status: "PENDING",
+      currency: "USD",
+      subtotal_minor: "100",
+      tax_amount_minor: "0",
+      shipping_amount_minor: "0",
+      fee_amount_minor: "0",
+      discount_amount_minor: "0",
+      total_amount_minor: "100",
+      created_at: "2026-09-26T00:00:00.000Z",
+      updated_at: "2026-09-26T00:00:00.000Z",
+    },
+    "https://cdn.example.invalid/",
+  );
+  expect(detail).toMatchObject({
+    publicOrderId: "00000000-0000-4000-8000-000000000002",
+    publicOrderNo: "FS-7K3M9C",
+  });
+});

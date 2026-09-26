@@ -154,6 +154,7 @@ test("protected historical reads bind the response to the authorized order and r
   const order = {
     schemaVersion: 1,
     publicOrderId: id,
+    publicOrderNo: "FS-7K3M9C",
     presentationLocale: "en",
     orderStatus: "OPEN",
     paymentStatus: "PAID",
@@ -188,6 +189,7 @@ test("protected historical reads bind the response to the authorized order and r
   expect(h.counts()).toEqual({ commits: 1, rollbacks: 0 });
   for (const invalid of [
     { ...order, publicOrderId: other },
+    { ...order, publicOrderNo: "FS-7K3M9U" },
     { ...order, contactEmail: "private-canary" },
     { ...order, items: [{ ...item, message: "private-canary" }] },
     { ...order, items: [{ ...item, lineTotalMinor: 201 }] },
