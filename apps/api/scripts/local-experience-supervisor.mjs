@@ -20,6 +20,31 @@ import { startLocalExperienceServices } from "./local-experience-services.mjs";
 import { startLocalWeb } from "./local-experience-web.mjs";
 import { startLocalMedia } from "./local-experience-media.mjs";
 import { startLocalHomepageBootstrap } from "./local-experience-homepage.mjs";
+import { Client } from "pg";
+// Rolled-back writes report only SQLSTATE, trigger function and constraint names.
+const query = Client.prototype.query;
+Client.prototype.query = function (...args) {
+  const result = query.apply(this, args);
+  if (!result?.catch) return result;
+  return result.catch((error) => {
+    const name = (value) =>
+      /^[a-z_][a-z_0-9]{0,127}$/u.test(value ?? "") ? value : null;
+    process.stdout.write(
+      JSON.stringify({
+        postgresFailure: {
+          code: /^[A-Z0-9]{5}$/u.test(error?.code ?? "") ? error.code : null,
+          guard: name(
+            /PL\/pgSQL function ([a-z_][a-z_0-9]{0,127})\(/u.exec(
+              error?.where ?? "",
+            )?.[1],
+          ),
+          constraint: name(error?.constraint),
+        },
+      }) + "\n",
+    );
+    throw error;
+  });
+};
 const workspaceRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "../../..",

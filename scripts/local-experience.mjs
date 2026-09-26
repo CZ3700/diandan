@@ -84,7 +84,7 @@ async function clearDeadLock() {
     "An existing supervisor is starting or unhealthy; its data and process were preserved",
   );
 }
-/** Only the supervisor's own structured stage and failure lines, re-picked field by field. */
+/** Only the supervisor's own structured stage, failure and PostgreSQL error lines, re-picked field by field. */
 async function supervisorOutcome() {
   const text = await readFile(
     path.join(stateDirectory, "supervisor.log"),
@@ -96,6 +96,19 @@ async function supervisorOutcome() {
     try {
       value = JSON.parse(line);
     } catch {
+      continue;
+    }
+    const failure = value?.postgresFailure;
+    if (failure && typeof failure === "object") {
+      const name = (item) =>
+        /^[a-z_][a-z_0-9]{0,127}$/u.test(item ?? "") ? item : null;
+      lines.push({
+        postgresFailure: {
+          code: /^[A-Z0-9]{5}$/u.test(failure.code ?? "") ? failure.code : null,
+          guard: name(failure.guard),
+          constraint: name(failure.constraint),
+        },
+      });
       continue;
     }
     if (typeof value?.stage !== "string") continue;
@@ -111,7 +124,7 @@ async function supervisorOutcome() {
         : { stage: value.stage.slice(0, 80) },
     );
   }
-  return lines.slice(-4);
+  return lines;
 }
 async function openBrowser() {
   const active = await status();
@@ -165,7 +178,7 @@ try {
     }
     if (!active?.ready)
       throw new Error(
-        `Local startup did not finish; see the private supervisor log and preserved data ${JSON.stringify(await supervisorOutcome())}`,
+        `Local startup did not finish; see the private supervisor log and preserved data ${JSON.stringify((await supervisorOutcome()).slice(-6))}`,
       );
     console.log(
       JSON.stringify(
@@ -221,6 +234,10 @@ try {
     }
     await assertLocalStopSucceeded(state, expectedRunId);
     await clearDeadLock();
+    const failures = (await supervisorOutcome())
+      .filter((line) => line.postgresFailure)
+      .slice(-8);
+    if (failures.length) console.log(JSON.stringify(failures));
     console.log("已停止；图片、商品、订单及配置已保留。");
   } else if (command === "reset") {
     if (await status()) throw new Error("Stop the instance before reset");
