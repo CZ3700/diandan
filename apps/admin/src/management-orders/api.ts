@@ -17,6 +17,18 @@ export type OrdersNotes = Extract<
   AdminOrdersPrivateResponse,
   { kind: "NOTES" }
 >;
+export type ProofUploadGrant = Extract<
+  AdminOrdersResponse,
+  { kind: "PROOF_UPLOAD_GRANT" }
+>;
+export type ProofUpload = Extract<
+  AdminOrdersResponse,
+  { kind: "PROOF_UPLOAD" }
+>;
+export type ProofDownload = Extract<
+  AdminOrdersResponse,
+  { kind: "PROOF_DOWNLOAD" }
+>;
 export type OrderCommand<Action extends AdminOrdersCommand["action"]> = Omit<
   Extract<AdminOrdersCommand, { action: Action }>,
   "schemaVersion" | "action" | "idempotencyKey"
@@ -113,6 +125,47 @@ export function createOrdersApi(client: AdminClient) {
     },
     resend: (command: OrderCommand<"RESEND_NOTIFICATION">) =>
       mutate("notification-resend", command),
+    /** Each photo's reservation is keyed by its own bytes, so a retry reuses its reservation. */
+    async beginProofUpload(
+      command: OrderCommand<"BEGIN_PROOF_UPLOAD">,
+    ): Promise<ProofUploadGrant> {
+      const result = await call("proof-begin", command, true);
+      if (
+        result.kind !== "PROOF_UPLOAD_GRANT" ||
+        result.orderId !== command.orderId
+      )
+        throw invalid();
+      return result;
+    },
+    async completeProofUpload(
+      command: OrderCommand<"COMPLETE_PROOF_UPLOAD">,
+    ): Promise<ProofUpload> {
+      const result = await call("proof-complete", command);
+      if (
+        result.kind !== "PROOF_UPLOAD" ||
+        result.orderId !== command.orderId ||
+        result.uploadId !== command.uploadId
+      )
+        throw invalid();
+      return result;
+    },
+    attachProofs: (command: OrderCommand<"ATTACH_PROOFS">) =>
+      mutate("proofs-attach", command),
+    withdrawProof: (command: OrderCommand<"WITHDRAW_PROOF">) =>
+      mutate("proofs-withdraw", command),
+    async viewProof(
+      command: OrderCommand<"VIEW_PROOF">,
+    ): Promise<ProofDownload> {
+      const result = await call("proofs-view", command);
+      if (
+        result.kind !== "PROOF_DOWNLOAD" ||
+        result.orderId !== command.orderId ||
+        result.proofId !== command.proofId ||
+        result.rendition !== command.rendition
+      )
+        throw invalid();
+      return result;
+    },
   };
 }
 export type OrdersApi = ReturnType<typeof createOrdersApi>;

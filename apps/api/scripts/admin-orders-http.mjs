@@ -64,7 +64,7 @@ async function run(database, s3, ui) {
       check,
       progress,
       verify: async (original) => {
-        const context = { ...original, workspaceRoot };
+        const context = { ...original, workspaceRoot, s3 };
         progress("OIDC and admin orders API composition");
         const runtime = await createAdminOrdersRuntime(context),
           payment = createOrderPaymentProtocolClient(context);

@@ -162,3 +162,53 @@ test("Manager actions require explicit confirmation and note mutations retain bo
   expect(note!.readOnly).toBe(false);
   expect(note!.bodyLimit).toBeLessThanOrEqual(65536);
 });
+
+test("proof operations keep fixed routes; only reservations, attachments and withdrawals are keyed", () => {
+  for (const [name, path] of [
+    ["orders-proof-begin", "/api/v1/admin/orders/proof-uploads/begin"],
+    ["orders-proof-complete", "/api/v1/admin/orders/proof-uploads/complete"],
+    ["orders-proofs-attach", "/api/v1/admin/orders/proofs/attach"],
+    ["orders-proofs-withdraw", "/api/v1/admin/orders/proofs/withdraw"],
+    ["orders-proofs-view", "/api/v1/admin/orders/proofs/view"],
+  ] as const)
+    expect(getAdminOperation(name)?.path).toBe(path);
+  const complete = getAdminOperation("orders-proof-complete")!;
+  expect(
+    complete.parseCommand({ schemaVersion: 1, orderId: id, uploadId: id }),
+  ).toEqual({
+    schemaVersion: 1,
+    orderId: id,
+    uploadId: id,
+    action: "COMPLETE_PROOF_UPLOAD",
+  });
+  const attach = getAdminOperation("orders-proofs-attach")!;
+  const body = {
+    schemaVersion: 1,
+    orderId: id,
+    expectedOrderVersion: 1,
+    fulfillmentId: id,
+    expectedFulfillmentVersion: 1,
+    reasonCode: "DELIVERY_PROOF_CONFIRMED",
+    uploadIds: [id],
+    privacyConfirmed: true,
+  };
+  expect(attach.parseCommand(body, id)).toEqual({
+    ...body,
+    action: "ATTACH_PROOFS",
+    idempotencyKey: id,
+  });
+  expect(() => attach.parseCommand(body)).toThrow();
+  expect(() =>
+    attach.parseCommand({ ...body, privacyConfirmed: false }, id),
+  ).toThrow();
+  expect(() =>
+    getAdminOperation("orders-proofs-view")!.parseResponse({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      kind: "MUTATION",
+      orderId: id,
+      resultId: id,
+      replayed: false,
+    }),
+  ).toThrow();
+});

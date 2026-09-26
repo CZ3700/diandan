@@ -75,5 +75,35 @@ export const copy = {
   studioDelivery: "Studio chuẩn bị và trao mọi món quà đến nghệ sĩ.",
   digitalDelivery:
     "Hồ sơ ủng hộ kỹ thuật số: tự động giao khi thanh toán được xác nhận.",
+  deliverTitle: "Xác nhận đã giao",
+  proofIntro:
+    "Thêm tối đa ba ảnh món quà đã giao. Chỉ người mua xem được, trên trang đơn hàng riêng của họ.",
+  proofPrivacy:
+    "Trước khi tải lên, hãy cắt bỏ khuôn mặt người khác, số nhà, địa chỉ và nhãn vận chuyển.",
+  proofChoose: "Chọn ảnh",
+  proofRemove: "Bỏ ảnh",
+  proofConfirmPrivacy:
+    "Tôi đã cắt bỏ khuôn mặt người khác và mọi thông tin địa chỉ khỏi các ảnh này.",
+  proofOptional: "Ảnh là không bắt buộc. Bạn có thể thêm sau.",
+  confirmDelivery: "Xác nhận đã giao",
+  addProofs: "Thêm ảnh giao hàng",
+  saveProofs: "Lưu ảnh",
+  cancel: "Hủy",
+  proofUploading: "Đang tải ảnh lên…",
+  proofSaving: "Đang lưu ảnh…",
+  proofDelivering: "Đang đánh dấu đã giao…",
+  proofInvalid:
+    "Không dùng được ảnh này. Hãy chọn ảnh JPEG, PNG hoặc WebP, mỗi cạnh ít nhất 320 điểm ảnh.",
+  proofLimit: "Món quà này đã có ba ảnh.",
+  proofFormat: "Chỉ chọn ảnh JPEG, PNG hoặc WebP.",
+  proofs: "Ảnh giao hàng",
+  viewProofs: "Xem ảnh",
+  hideProofs: "Ẩn ảnh",
+  proofAlt: "Ảnh giao hàng",
+  withdrawProof: "Thu hồi ảnh",
+  reasonProofPrivacy: "Lộ thông tin riêng tư",
+  reasonProofWrongOrder: "Thuộc đơn hàng khác",
+  reasonProofQuality: "Ảnh không rõ",
+  confirmWithdraw: "Tôi xác nhận người mua không nên thấy ảnh này nữa.",
   legacy: "Thông tin lịch sử",
 };

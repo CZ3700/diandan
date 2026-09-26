@@ -8,11 +8,14 @@ export function PhotoView({
   alt,
   unavailable,
   lazy = false,
+  referrerPolicy,
 }: {
   src: string;
   alt: string;
   unavailable: string;
   lazy?: boolean;
+  /** Signed private URLs must not carry the admin page as a referrer. */
+  referrerPolicy?: "no-referrer";
 }) {
   const [failed, setFailed] = useState(false);
   useEffect(() => setFailed(false), [src]);
@@ -26,6 +29,7 @@ export function PhotoView({
       src={src}
       alt={alt}
       loading={lazy ? "lazy" : "eager"}
+      referrerPolicy={referrerPolicy}
       onError={() => setFailed(true)}
     />
   );

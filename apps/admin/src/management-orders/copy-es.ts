@@ -81,5 +81,35 @@ export const copy = {
   studioDelivery: "El estudio prepara y entrega todos los regalos al artista.",
   digitalDelivery:
     "Registro de apoyo digital: se entrega automáticamente al confirmarse el pago.",
+  deliverTitle: "Confirmar la entrega",
+  proofIntro:
+    "Añade hasta tres fotos del regalo entregado. Solo el comprador las ve, en su página privada del pedido.",
+  proofPrivacy:
+    "Antes de subirlas, recorta las caras de otras personas, los números de portal, las direcciones y las etiquetas de envío.",
+  proofChoose: "Elegir fotos",
+  proofRemove: "Quitar foto",
+  proofConfirmPrivacy:
+    "He recortado de estas fotos las caras de otras personas y cualquier dato de dirección.",
+  proofOptional: "Las fotos son opcionales. Puedes añadirlas más tarde.",
+  confirmDelivery: "Confirmar la entrega",
+  addProofs: "Añadir fotos de la entrega",
+  saveProofs: "Guardar fotos",
+  cancel: "Cancelar",
+  proofUploading: "Subiendo fotos…",
+  proofSaving: "Guardando fotos…",
+  proofDelivering: "Marcando como entregado…",
+  proofInvalid:
+    "No se pudo usar esta foto. Elige una foto JPEG, PNG o WebP de al menos 320 píxeles por lado.",
+  proofLimit: "Este regalo ya tiene tres fotos.",
+  proofFormat: "Elige solo fotos JPEG, PNG o WebP.",
+  proofs: "Fotos de la entrega",
+  viewProofs: "Ver fotos",
+  hideProofs: "Ocultar fotos",
+  proofAlt: "Foto de la entrega",
+  withdrawProof: "Retirar foto",
+  reasonProofPrivacy: "Muestra datos privados",
+  reasonProofWrongOrder: "Pertenece a otro pedido",
+  reasonProofQuality: "La foto no es clara",
+  confirmWithdraw: "Confirmo que el comprador ya no debe ver esta foto.",
   legacy: "Registro histórico",
 };

@@ -76,5 +76,35 @@ export const copy = {
   studioDelivery: "The studio prepares and delivers every gift to the artist.",
   digitalDelivery:
     "Digital support record: delivered automatically once payment is confirmed.",
+  deliverTitle: "Confirm delivery",
+  proofIntro:
+    "Add up to three photos of the delivered gift. Only the buyer sees them, on their private order page.",
+  proofPrivacy:
+    "Before uploading, crop out other people's faces, house numbers, addresses and shipping labels.",
+  proofChoose: "Choose photos",
+  proofRemove: "Remove photo",
+  proofConfirmPrivacy:
+    "I removed other people's faces and any address details from these photos.",
+  proofOptional: "Photos are optional. You can add them later.",
+  confirmDelivery: "Confirm delivery",
+  addProofs: "Add delivery photos",
+  saveProofs: "Save photos",
+  cancel: "Cancel",
+  proofUploading: "Uploading photos…",
+  proofSaving: "Saving photos…",
+  proofDelivering: "Marking delivered…",
+  proofInvalid:
+    "This photo could not be used. Choose a JPEG, PNG or WebP photo at least 320 pixels on each side.",
+  proofLimit: "This gift already has three photos.",
+  proofFormat: "Choose JPEG, PNG or WebP photos only.",
+  proofs: "Delivery photos",
+  viewProofs: "View photos",
+  hideProofs: "Hide photos",
+  proofAlt: "Delivery photo",
+  withdrawProof: "Withdraw photo",
+  reasonProofPrivacy: "Shows private details",
+  reasonProofWrongOrder: "Belongs to another order",
+  reasonProofQuality: "Photo is unclear",
+  confirmWithdraw: "I confirm the buyer should no longer see this photo.",
   legacy: "Historical record",
 };

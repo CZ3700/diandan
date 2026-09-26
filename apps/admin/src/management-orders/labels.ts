@@ -66,6 +66,10 @@ export function ordersError(error: unknown, copy: OrdersCopy): string {
     case "NOTIFICATION_NOT_READY":
     case "NOTIFICATION_IN_PROGRESS":
       return copy.notificationWaiting;
+    case "PROOF_INVALID":
+      return copy.proofInvalid;
+    case "PROOF_LIMIT_REACHED":
+      return copy.proofLimit;
     default:
       return copy.failure;
   }

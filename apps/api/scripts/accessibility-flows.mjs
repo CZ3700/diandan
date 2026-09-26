@@ -501,6 +501,14 @@ export async function accessibilityAdminFlow({
       page.locator("[data-order-deliver]").first(),
       "deliver-gift",
     );
+    await expect(page.locator('[data-proof-panel="DELIVER"]')).toBeVisible();
+    await tools.inspect(page, cell, "delivery-panel");
+    await tools.activate(
+      page,
+      page.locator('[data-proof-submit="DELIVER"]'),
+      "confirm-delivery",
+    );
+    await expect(page.locator("[data-proof-panel]")).toHaveCount(0);
     await expect(page.locator("[data-order-deliver]")).toHaveCount(0);
     await expect(page.locator("[data-orders-workspace]")).toHaveAttribute(
       "aria-busy",

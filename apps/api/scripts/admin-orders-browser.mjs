@@ -550,7 +550,11 @@ export async function verifyAdminOrdersBrowser({
       prepareKeys.length === 2 && prepareKeys[0] === prepareKeys[1],
       "lost preparation response retries with the same idempotency key",
     );
+    // Delivery opens the photo panel; confirming without photos delivers directly (V2 §4-6).
     await page.locator("[data-order-deliver]").first().click();
+    await page.locator('[data-proof-panel="DELIVER"]').waitFor();
+    await page.locator('[data-proof-submit="DELIVER"]').click();
+    await expect(page.locator("[data-proof-panel]")).toHaveCount(0);
     await expect(page.locator("[data-order-deliver]")).toHaveCount(0);
     report.operationSeconds = (performance.now() - started) / 1000;
     assert(

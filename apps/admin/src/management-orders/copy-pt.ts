@@ -80,5 +80,36 @@ export const copy = {
   studioDelivery: "O estúdio prepara e entrega todos os presentes ao artista.",
   digitalDelivery:
     "Registro de apoio digital: entregue automaticamente após a confirmação do pagamento.",
+  deliverTitle: "Confirmar a entrega",
+  proofIntro:
+    "Adicione até três fotografias do presente entregue. Só o comprador as vê, na página privada do pedido.",
+  proofPrivacy:
+    "Antes de carregar, recorte os rostos de outras pessoas, números de porta, moradas e etiquetas de envio.",
+  proofChoose: "Escolher fotografias",
+  proofRemove: "Remover fotografia",
+  proofConfirmPrivacy:
+    "Recortei destas fotografias os rostos de outras pessoas e quaisquer dados de morada.",
+  proofOptional: "As fotografias são opcionais. Pode adicioná-las mais tarde.",
+  confirmDelivery: "Confirmar a entrega",
+  addProofs: "Adicionar fotografias da entrega",
+  saveProofs: "Guardar fotografias",
+  cancel: "Cancelar",
+  proofUploading: "A carregar fotografias…",
+  proofSaving: "A guardar fotografias…",
+  proofDelivering: "A marcar como entregue…",
+  proofInvalid:
+    "Não foi possível usar esta fotografia. Escolha uma fotografia JPEG, PNG ou WebP com pelo menos 320 píxeis de cada lado.",
+  proofLimit: "Este presente já tem três fotografias.",
+  proofFormat: "Escolha apenas fotografias JPEG, PNG ou WebP.",
+  proofs: "Fotografias da entrega",
+  viewProofs: "Ver fotografias",
+  hideProofs: "Ocultar fotografias",
+  proofAlt: "Fotografia da entrega",
+  withdrawProof: "Retirar fotografia",
+  reasonProofPrivacy: "Mostra dados privados",
+  reasonProofWrongOrder: "Pertence a outro pedido",
+  reasonProofQuality: "A fotografia não está nítida",
+  confirmWithdraw:
+    "Confirmo que o comprador não deve voltar a ver esta fotografia.",
   legacy: "Registo histórico",
 };

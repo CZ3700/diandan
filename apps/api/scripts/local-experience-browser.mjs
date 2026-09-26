@@ -1161,6 +1161,9 @@ export async function verifyLocalExperienceBrowser({
         await admin.locator("[data-order-prepare]").first().click();
         await admin.locator("[data-order-deliver]").first().waitFor();
         await admin.locator("[data-order-deliver]").first().click();
+        await admin.locator('[data-proof-panel="DELIVER"]').waitFor();
+        await admin.locator('[data-proof-submit="DELIVER"]').click();
+        await expect(admin.locator("[data-proof-panel]")).toHaveCount(0);
         await expect(admin.locator("[data-order-deliver]")).toHaveCount(0);
         await capture(admin, "en-1440-delivered-order");
         stage("REFUND");

@@ -13,6 +13,8 @@ import { ordersCopy } from "./copy";
 import { orderStatusLabel } from "./labels";
 import { PrivateMessage } from "./private-message";
 import { PrivateNotes } from "./private-notes";
+import { DeliveryProofPanel } from "./delivery-proof-panel";
+import { DeliveryProofs } from "./delivery-proofs";
 import type { FinanceApi } from "../management-finance/api";
 import { FinancePanel } from "../management-finance/panel";
 export type MutationRunner = (
@@ -59,6 +61,16 @@ function OrderLine({
   );
   const [confirmed, setConfirmed] = useState(false);
   const [reason, setReason] = useState("PREPARATION_DELAYED");
+  const [proofMode, setProofMode] = useState<"DELIVER" | "ATTACH" | null>(null);
+  const proofOpener = useRef<HTMLButtonElement>(null),
+    proofWasOpen = useRef(false);
+  useEffect(() => {
+    if (proofMode === null && proofWasOpen.current)
+      proofOpener.current?.focus();
+    proofWasOpen.current = proofMode !== null;
+  }, [proofMode]);
+  const canDeliver = line.allowedActions.includes("DELIVER"),
+    canAddProofs = line.proofActions.includes("ATTACH") && !canDeliver;
   const canRead =
     context.permissions.includes("orders.message.read") &&
     line.privacyState === "ACTIVE" &&
@@ -201,24 +213,57 @@ function OrderLine({
             {copy.prepare}
           </Button>
         ) : null}
-        {line.allowedActions.includes("DELIVER") ? (
+        {canDeliver && proofMode === null ? (
           <Button
+            ref={proofOpener}
             type="button"
             data-order-deliver
             disabled={busy}
-            onClick={() =>
-              void onMutation(() =>
-                api.deliver({
-                  ...command,
-                  reasonCode: "ORDER_DELIVERY_CONFIRMED",
-                }),
-              )
-            }
+            onClick={() => setProofMode("DELIVER")}
           >
             {copy.deliver}
           </Button>
         ) : null}
+        {canAddProofs && proofMode === null ? (
+          <Button
+            ref={proofOpener}
+            type="button"
+            variant="secondary"
+            data-order-add-proofs
+            disabled={busy}
+            onClick={() => setProofMode("ATTACH")}
+          >
+            {copy.addProofs}
+          </Button>
+        ) : null}
       </div>
+      {proofMode !== null ? (
+        <DeliveryProofPanel
+          mode={proofMode}
+          line={line}
+          detail={detail}
+          api={api}
+          locale={locale}
+          busy={busy}
+          onMutation={onMutation}
+          onClose={() => setProofMode(null)}
+        />
+      ) : null}
+      {line.proofs.length > 0 ? (
+        <DeliveryProofs
+          line={line}
+          detail={detail}
+          api={api}
+          locale={locale}
+          busy={busy}
+          canView={context.permissions.some(
+            (permission) =>
+              permission === "orders.fulfillment" ||
+              permission === "orders.manage",
+          )}
+          onMutation={onMutation}
+        />
+      ) : null}
       {manager ? (
         <details className="mc-options" data-manager-actions>
           <summary>{copy.managerActions}</summary>
