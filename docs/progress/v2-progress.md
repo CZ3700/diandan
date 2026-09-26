@@ -27,6 +27,8 @@
 
 顺序见方案 §6 与 §3：R1-1 生产组合根 → R1-3 Stripe 适配器 → Airwallex → 其余条目；可并行的纯前台减摩擦项见 §4（1/2/4/5 项）。R0 的 Linux CI 基线：草稿 PR #13（`v2/r0-foundation → main`，2026-09-26 用户确认开启）。
 
+**2026-09-26 用户决定**：沙盒与外部配置类工作（PSP 沙盒联调、邮件服务商、OIDC 身份源、云 apply、商户号激活）延后到最后，先完成站点核心功能。范围与顺序见 `docs/handoff/2026-09-26-core-features-first.md`；R1-3/R1-3b 的沙盒联调随之延后。
+
 | 条目 | 状态 | 范围与结论 |
 |:--|:--|:--|
 | R1-1 生产组合根 | LOCAL_ACCEPTED | 生产 API 注册全部路由依赖：admin 18 组、SEO、webhook（已部署验签器目录，未知端点在内存 404、不查库）、P5-05 支付目录（部署账户 + 数据库发布激活）；配置组"全缺=不可用、部分缺=启动失败"，淘汰静态绑定键；API 共享 3 个连接池（引用计数关闭）、单个 KMS/S3；worker 补管理中心任务循环。Test/Local 组合迁入 `src/testing/`，`pnpm deploy` 实测产物不含 `dist/testing`，导入图守卫经变异验证；29 个脚本 50 处导入改路径，静态校验 114 处 dist 导入全部可解析。`check:dev` 通过（api 84 文件/338 测试，worker 14/46；一次重跑前 persistence-postgres 3 个既有慢测试在负载下超时，单跑与重跑均通过）。未覆盖：真实 PostgreSQL 与浏览器集成（本机无 PG，交 CI）。遗留：`pnpm deploy` 安装阶段因 lighthouse→@sentry 缺 `@opentelemetry/core` 对等依赖失败，R0 版本同样复现，Docker 镜像构建会在此处失败 → R1-9 |
