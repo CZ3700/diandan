@@ -74,7 +74,8 @@ RETURNS jsonb LANGUAGE sql STABLE SET search_path=pg_catalog,public,pg_temp AS $
 $$;
 
 -- Frozen rendering variables must equal the snapshot function byte for byte; pre-production rows are re-frozen once.
-ALTER TABLE public.notification_runtime_state DISABLE TRIGGER notification_runtime_immutable;
+-- The deferred consistency check is suspended too, so queued events never block ENABLE (55006).
+ALTER TABLE public.notification_runtime_state DISABLE TRIGGER USER;
 UPDATE public.notification_runtime_state r SET base_variables = public.notification_order_snapshot(d.order_id, r.base_variables->>'siteName')
   FROM public.notification_deliveries d WHERE d.id = r.notification_delivery_id;
-ALTER TABLE public.notification_runtime_state ENABLE TRIGGER notification_runtime_immutable;
+ALTER TABLE public.notification_runtime_state ENABLE TRIGGER USER;

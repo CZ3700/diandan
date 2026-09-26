@@ -6,9 +6,11 @@ ALTER TABLE public.order_items
   ADD COLUMN gift_kind text CHECK (gift_kind IS NULL OR gift_kind IN ('VIRTUAL', 'PHYSICAL', 'WISH', 'MERCHANDISE', 'OTHER'));
 COMMENT ON COLUMN public.order_items.gift_kind IS 'Purchase-time gift classification snapshot (ADR-019); NULL only for pre-profile legacy lines.';
 
--- Backfill from the immutable gift revision every line already references. The append-only guard
--- is suspended for this single schema evolution; the derivation matches the admin read model.
-ALTER TABLE public.order_items DISABLE TRIGGER order_items_append_only_trigger;
+-- Backfill from the immutable gift revision every line already references. User triggers (the
+-- append-only guard and the deferred snapshot/aggregate validators) are suspended for this single
+-- schema evolution: re-enabling a table with queued deferred events fails with SQLSTATE 55006.
+-- The derivation matches the admin read model.
+ALTER TABLE public.order_items DISABLE TRIGGER USER;
 UPDATE public.order_items i SET gift_kind = COALESCE(
   (SELECT d.document->>'giftKind' FROM public.daily_publication_revisions d
     WHERE d.source_translation_id = i.gift_daily_translation_id AND d.document->>'kind' = 'GIFT'),
@@ -16,7 +18,7 @@ UPDATE public.order_items i SET gift_kind = COALESCE(
     JOIN public.gift_revision_profiles p ON p.gift_revision_id = t.gift_revision_id AND p.gift_id = i.gift_id
     WHERE t.id = i.gift_translation_revision_id)
 ) WHERE i.gift_kind IS NULL;
-ALTER TABLE public.order_items ENABLE TRIGGER order_items_append_only_trigger;
+ALTER TABLE public.order_items ENABLE TRIGGER USER;
 
 CREATE OR REPLACE FUNCTION guard_fulfillment_transition()
 RETURNS trigger
@@ -236,7 +238,8 @@ RETURNS jsonb LANGUAGE sql STABLE SET search_path=pg_catalog,public,pg_temp AS $
 $$;
 
 -- Frozen rendering variables must equal the snapshot function byte for byte; pre-production rows are re-frozen once.
-ALTER TABLE public.notification_runtime_state DISABLE TRIGGER notification_runtime_immutable;
+-- The deferred consistency check is suspended too, so queued events never block ENABLE (55006).
+ALTER TABLE public.notification_runtime_state DISABLE TRIGGER USER;
 UPDATE public.notification_runtime_state r SET base_variables = public.notification_order_snapshot(d.order_id, r.base_variables->>'siteName')
   FROM public.notification_deliveries d WHERE d.id = r.notification_delivery_id;
-ALTER TABLE public.notification_runtime_state ENABLE TRIGGER notification_runtime_immutable;
+ALTER TABLE public.notification_runtime_state ENABLE TRIGGER USER;
