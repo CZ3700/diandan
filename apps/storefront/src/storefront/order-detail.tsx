@@ -8,6 +8,7 @@ import {
 import { Price } from "@fan-support/ui";
 import { Media } from "@fan-support/ui/client";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
+import { OrderDeliveryPhotos } from "./order-delivery-photos";
 import {
   fanOrderStatus,
   orderItemStatus,
@@ -52,9 +53,10 @@ function SnapshotLanguages({
 
 function OrderLine({
   item,
+  publicOrderId,
   locale,
   copy,
-}: Presentation & Readonly<{ item: OrderAccessItem }>) {
+}: Presentation & Readonly<{ item: OrderAccessItem; publicOrderId: string }>) {
   return (
     <li className="order-line" data-order-line={item.position}>
       <div className="order-gift-image">
@@ -129,6 +131,12 @@ function OrderLine({
         >
           {orderItemStatus(item, copy)}
         </p>
+        <OrderDeliveryPhotos
+          item={item}
+          publicOrderId={publicOrderId}
+          locale={locale}
+          copy={copy}
+        />
         <div className="order-languages">
           <SnapshotLanguages
             sources={[
@@ -189,6 +197,7 @@ export function OrderDetail({
               <OrderLine
                 key={item.position}
                 item={item}
+                publicOrderId={order.publicOrderId}
                 locale={locale}
                 copy={copy}
               />

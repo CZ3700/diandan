@@ -11,8 +11,10 @@ P4-05 提供订单范围授权、历史只读视图、PostgreSQL 持久限流，
 | `POST /api/v1/checkout/sessions/:checkoutSessionId/order-access` | 原购物车 Cookie 与 CSRF、未过期会话、已付款且购物车已转换；只授予该 checkout 的订单权限。过期报价不会抹除已付款订单。 |
 | `GET /api/v1/orders/:publicOrderId` | 订单 Cookie 与 publicOrderId 精确匹配，读取前后检查实际有效期；只返回购买时快照和当前业务状态。 |
 | `POST /api/v1/order-access/revoke` | 同一订单 Cookie、独立 CSRF 与严格 Origin；撤销自己的活动授权，不能仅凭订单号撤销别人。 |
+| `POST /api/v1/order-access/locate` | 只凭本浏览器该订单的有效会话把公开短号解析为 publicOrderId（F1-2）；只读、不签发凭据。 |
+| `GET /api/v1/orders/:publicOrderId/delivery-proofs/:proofId/:rendition` | 送达照片（F1-4）：无锁确认会话有效且属于该订单，照片属于已送达的实物行且未撤回，再从私有 source 桶读取并核验字节，以 `image/webp` 返回；另加 nosniff、sandbox CSP、同源 CORP。查不到与无权限返回相同的 401。 |
 
-Cookie 为 `__Host-fan-order`，Secure、HttpOnly、SameSite=Strict、Path=/、无 Domain；原始会话凭证不进响应正文；token/CSRF 不进 localStorage 或 sessionStorage。响应包含 private/no-store、no-referrer、noindex/nofollow。四种 API 各有独立限流预算，数据库先独立提交计数，后续授权失败不回滚计数。
+Cookie 为 `__Host-fan-order`，Secure、HttpOnly、SameSite=Strict、Path=/、无 Domain；原始会话凭证不进响应正文；token/CSRF 不进 localStorage 或 sessionStorage。响应包含 private/no-store、no-referrer、noindex/nofollow。限流按 EXCHANGE、BOOTSTRAP、READ、REVOKE 四个桶独立计数；locate 与送达照片读取共用 READ 桶，数据库先独立提交计数，后续授权失败不回滚计数。设置 `readMax` 时要把照片请求算进去：一次查单页展示会读取 1 次详情，外加每张照片 1 次缩略图，打开大图再加 1 次。WAF 在边缘按客户端 IP 另行限流（ORDER_ACCESS 规则已包含 locate 与照片路径）。
 
 原始 token 只出现在明确禁用正文日志的交换请求中。KMS 使用已有 ORDER_ACCESS_TOKEN purpose，再以 ORDER_LINK_V1、ORDER_SESSION_V1、ORDER_CSRF_V1、ORDER_RATE_LIMIT_V1 的固定前缀隔离用途；不会修改旧 purpose 枚举。最多四个 pepper 版本支持受限重叠，签发使用活动版本。
 
@@ -31,7 +33,8 @@ Cookie 为 `__Host-fan-order`，Secure、HttpOnly、SameSite=Strict、Path=/、�
 - `/:locale/orders/lookup`：填写非秘密订单号；必须有该订单的有效浏览器授权才能读取，仅凭订单号不开放详情。
 - `/:locale/orders/:publicOrderId`：订单详情与当前进度；`/:locale/thank-you/:publicOrderId`：同一授权下的付款结果。只有 canonical 已入账历史订单读取成功才显示结果。
 - 当前付款浏览器在可信入账后先尝试已授权读取，必要时使用原 checkout 的购物车 Cookie/CSRF bootstrap；成功读取后清除临时授权回调，刷新不会反复轮换会话。
-- 四个 `/api/storefront/` 入口对应上述四个 `/api/v1/` 接口；BFF拒绝其他路径/查询和错 Origin，严格分开购物车与订单 Cookie/CSRF。BFF总请求截止10秒，浏览器15秒，正文有操作级预算；凭证仅留内存，浏览器存储不保留 token/CSRF。
+- 送达照片经 `/api/storefront/orders/:publicOrderId/delivery-proofs/:proofId/:rendition` 同源代理读取：只接受 GET，只转发订单 Cookie，要求上游 200、`image/webp`、private/no-store 且字节数在上限内（缩略图 512 KiB、大图 4 MiB）。页面不会拿到存储地址或签名地址。
+- 其余 `/api/storefront/` 入口对应上述 `/api/v1/` 接口；BFF拒绝其他路径/查询和错 Origin，严格分开购物车与订单 Cookie/CSRF。BFF总请求截止10秒，浏览器15秒，正文有操作级预算；凭证仅留内存，浏览器存储不保留 token/CSRF。
 - 七语言切换只改变外壳，保留购买时名称、规格、图片、金额与内容来源。DAILY原文明确标识，不伪装成已审核译文。进度显示付款/订单/争议/准备四个当前状态；唯一已有真实时间是下单时间，不能编造准备/送达时刻或承诺日期。
 - 订单HTML及响应为 private/no-store、no-referrer、noindex，订单HTML拒绝外部脚本与连接。链接失效时没有“邮件已重发”的虚假操作；实际重发随后续通知/运营工作接入。
 

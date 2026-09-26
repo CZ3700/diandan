@@ -27,6 +27,12 @@ const cases = {
     ["POST", "/api/v1/order-access/revoke"],
     ["POST", "/api/storefront/checkout/sessions/test-id/order-access"],
     ["GET", "/api/v1/orders/test-order"],
+    ["POST", "/api/v1/order-access/locate"],
+    [
+      "GET",
+      "/api/storefront/orders/test-order/delivery-proofs/test-proof/thumbnail",
+    ],
+    ["GET", "/api/v1/orders/test-order/delivery-proofs/test-proof/display"],
   ],
   CART: [
     ["POST", "/api/storefront/cart"],

@@ -289,3 +289,50 @@ describe("protected historical order presentation", () => {
     },
   );
 });
+
+describe("private delivery photos", () => {
+  const proofIds = [
+    "10000000-0000-4000-8000-0000000000f1",
+    "10000000-0000-4000-8000-0000000000f2",
+  ];
+  const delivered = orderAccessDetailSchema.parse({
+    ...order,
+    fulfillmentStatus: "DELIVERED",
+    items: order.items.map((item, index) =>
+      index === 0
+        ? {
+            ...item,
+            giftKind: "PHYSICAL",
+            fulfillmentStatus: "DELIVERED",
+            deliveryProofs: proofIds.map((proofId) => ({
+              proofId,
+              width: 1600,
+              height: 1200,
+              thumbnailWidth: 480,
+              thumbnailHeight: 360,
+            })),
+          }
+        : { ...item, fulfillmentStatus: "DELIVERED" },
+    ),
+  });
+  it("shows session-bound thumbnails and keeps full photos closed until requested", async () => {
+    const html = await render(delivered);
+    expect(html).toContain("data-order-proofs");
+    expect(html).toContain("Delivery photos");
+    for (const [index, proofId] of proofIds.entries()) {
+      expect(html).toContain(
+        `src="/api/storefront/orders/${delivered.publicOrderId}/delivery-proofs/${proofId}/thumbnail"`,
+      );
+      expect(html).toContain(`alt="View delivery photo ${index + 1} of 2"`);
+    }
+    expect(html).not.toContain("/display");
+    expect(html).not.toMatch(
+      /fulfillment-proofs\/|X-Amz|https:\/\/[^"]*proof/iu,
+    );
+  });
+  it("renders nothing for lines without photos and localizes counts", async () => {
+    expect(await render()).not.toContain("data-order-proofs");
+    const japanese = await render(delivered, "ja");
+    expect(japanese).toContain("お届け写真 1/2 を表示");
+  });
+});

@@ -1,4 +1,6 @@
 import {
+  createDeliveryProofProcessor,
+  createDeliveryProofReader,
   createMediaSourceInspector,
   createMediaImageProcessor,
 } from "@fan-support/media-image";
@@ -28,5 +30,11 @@ export function createLocalExperienceMedia({ config, s3 }) {
     storage,
     inspector: createMediaSourceInspector({ storage, now: () => new Date() }),
     processor: createMediaImageProcessor({ storage, now: () => new Date() }),
+    // Private delivery photos stay in the SOURCE bucket (V2 §4-6).
+    proofProcessor: createDeliveryProofProcessor({
+      storage,
+      now: () => new Date(),
+    }),
+    proofReader: createDeliveryProofReader({ storage, now: () => new Date() }),
   };
 }

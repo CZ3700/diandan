@@ -179,6 +179,7 @@ export async function startLocalExperienceRuntime({
   add(
     createTestOrderAccessComposition({
       ...commerce,
+      proofReader: media.proofReader,
       configuration: {
         schemaVersion: 1,
         publicStorefrontOrigin: config.origins.storefront,
@@ -277,6 +278,7 @@ export async function startLocalExperienceRuntime({
       ...localAdmin,
       keys: kms.adapter,
       publicMediaBaseUrl: config.origins.media,
+      proofs: { storage: media.storage, processor: media.proofProcessor },
     }),
   );
   add(

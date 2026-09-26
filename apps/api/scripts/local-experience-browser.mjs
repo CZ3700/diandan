@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import sharp from "sharp";
 import { createHash, randomUUID, X509Certificate } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
@@ -1162,10 +1163,64 @@ export async function verifyLocalExperienceBrowser({
         await admin.locator("[data-order-deliver]").first().waitFor();
         await admin.locator("[data-order-deliver]").first().click();
         await admin.locator('[data-proof-panel="DELIVER"]').waitFor();
+        // V2 §4-6: one private studio photo uploads, attaches, then the line is delivered.
+        await admin.locator("[data-proof-files]").setInputFiles({
+          name: "delivery.jpg",
+          mimeType: "image/jpeg",
+          buffer: await sharp({
+            create: {
+              width: 1200,
+              height: 900,
+              channels: 3,
+              background: { r: 120, g: 96, b: 150 },
+            },
+          })
+            .jpeg()
+            .toBuffer(),
+        });
+        await admin.locator("[data-proof-privacy-confirm]").check();
         await admin.locator('[data-proof-submit="DELIVER"]').click();
-        await expect(admin.locator("[data-proof-panel]")).toHaveCount(0);
+        await expect(admin.locator("[data-proof-panel]")).toHaveCount(0, {
+          timeout: 60000,
+        });
         await expect(admin.locator("[data-order-deliver]")).toHaveCount(0);
+        await expect(admin.locator("[data-order-proofs]")).toContainText("1/3");
         await capture(admin, "en-1440-delivered-order");
+        stage("FAN_DELIVERY_PHOTO");
+        const photoPage = await customerContext.newPage();
+        await navigate(
+          photoPage,
+          `${config.origins.storefront}/en/orders/${publicOrderId}`,
+        );
+        const thumbnail = photoPage.locator("[data-order-proofs] img").first();
+        await thumbnail.waitFor({ timeout: 30000 });
+        await expect
+          .poll(() =>
+            thumbnail.evaluate(
+              (image) => image.complete && image.naturalWidth > 0,
+            ),
+          )
+          .toBe(true);
+        check(
+          new URL(
+            await thumbnail.getAttribute("src"),
+            config.origins.storefront,
+          ).origin === config.origins.storefront,
+          "Delivery photos load only from the same-origin order session proxy",
+        );
+        await photoPage.locator("[data-order-proofs] button").first().click();
+        const fullPhoto = photoPage.getByRole("dialog").locator("img");
+        await expect
+          .poll(() =>
+            fullPhoto.evaluate(
+              (image) => image.complete && image.naturalWidth > 0,
+            ),
+          )
+          .toBe(true);
+        await capture(photoPage, "en-390-delivery-photo");
+        await photoPage.keyboard.press("Escape");
+        await expect(photoPage.getByRole("dialog")).toHaveCount(0);
+        await photoPage.close();
         stage("REFUND");
         await admin.locator("[data-finance-refund]").click();
         await admin.locator("[data-finance-mode]").selectOption("FULL");

@@ -63,6 +63,12 @@ const copy = {
   orderSnapshotLanguage: "注文時に保存された内容：{language}",
   orderUnitPrice: "単価",
   orderItemTotal: "ギフト合計",
+  orderDeliveryPhotos: "お届け写真",
+  orderDeliveryPhotosHelp:
+    "ギフトをお渡しした際にスタジオが撮影した写真です。ご覧いただけるのはご本人だけです。",
+  orderDeliveryPhotoOpen: "お届け写真 {position}/{count} を表示",
+  orderDeliveryPhotoAlt: "お届け写真 {position}/{count}",
+  orderDeliveryPhotoClose: "写真を閉じる",
 
   checkoutTitle: "お会計",
   checkoutReview: "ギフトを確認",

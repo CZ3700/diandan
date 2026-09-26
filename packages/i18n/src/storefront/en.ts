@@ -62,6 +62,12 @@ const copy = {
   orderSnapshotLanguage: "Saved order content: {language}",
   orderUnitPrice: "Unit price",
   orderItemTotal: "Gift total",
+  orderDeliveryPhotos: "Delivery photos",
+  orderDeliveryPhotosHelp:
+    "Our studio took these when your gift was handed over. Only you can see them.",
+  orderDeliveryPhotoOpen: "View delivery photo {position} of {count}",
+  orderDeliveryPhotoAlt: "Delivery photo {position} of {count}",
+  orderDeliveryPhotoClose: "Close photo",
 
   checkoutTitle: "Checkout",
   checkoutReview: "Review your gifts",

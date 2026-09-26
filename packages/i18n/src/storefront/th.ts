@@ -59,6 +59,12 @@ const copy = {
   orderSnapshotLanguage: "เนื้อหาที่บันทึกเมื่อสั่งซื้อ: {language}",
   orderUnitPrice: "ราคาต่อชิ้น",
   orderItemTotal: "ยอดรวมของขวัญ",
+  orderDeliveryPhotos: "รูปการส่งมอบ",
+  orderDeliveryPhotosHelp:
+    "สตูดิโอถ่ายรูปเหล่านี้ตอนส่งมอบของขวัญของคุณ มีเพียงคุณเท่านั้นที่เห็นได้",
+  orderDeliveryPhotoOpen: "ดูรูปการส่งมอบที่ {position} จาก {count}",
+  orderDeliveryPhotoAlt: "รูปการส่งมอบที่ {position} จาก {count}",
+  orderDeliveryPhotoClose: "ปิดรูป",
 
   checkoutTitle: "ชำระเงิน",
   checkoutReview: "ตรวจสอบของขวัญ",

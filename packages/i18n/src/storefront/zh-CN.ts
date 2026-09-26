@@ -55,6 +55,11 @@ const copy = {
   orderSnapshotLanguage: "下单时保存的内容：{language}",
   orderUnitPrice: "单价",
   orderItemTotal: "礼物合计",
+  orderDeliveryPhotos: "送达照片",
+  orderDeliveryPhotosHelp: "这些照片由工作室在交付礼物时拍摄，只有你能看到。",
+  orderDeliveryPhotoOpen: "查看第 {position} 张送达照片（共 {count} 张）",
+  orderDeliveryPhotoAlt: "第 {position} 张送达照片（共 {count} 张）",
+  orderDeliveryPhotoClose: "关闭照片",
 
   checkoutTitle: "结算",
   checkoutReview: "核对礼物",

@@ -27,11 +27,15 @@ locals {
   "ORDER_ACCESS": [
     {
       "method": "POST",
-      "path": "^/api/(storefront|v1)/(order-access/(exchange|revoke)|checkout/sessions/[^/]+/order-access)/?$"
+      "path": "^/api/(storefront|v1)/(order-access/(exchange|revoke|locate)|checkout/sessions/[^/]+/order-access)/?$"
     },
     {
       "method": "GET",
       "path": "^/api/(storefront|v1)/orders/[^/]+/?$"
+    },
+    {
+      "method": "GET",
+      "path": "^/api/(storefront|v1)/orders/[^/]+/delivery-proofs/[^/]+/(thumbnail|display)/?$"
     }
   ],
   "CART": [

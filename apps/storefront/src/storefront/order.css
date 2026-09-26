@@ -209,6 +209,50 @@
 .order-line-status {
   color: var(--color-accent);
 }
+.order-proofs {
+  display: grid;
+  gap: var(--space-2);
+}
+.order-proofs h4 {
+  margin: 0;
+  font-size: var(--type-body-size);
+}
+.order-proofs-help {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--type-label-size);
+}
+.order-proof-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* The thumbnail is the whole trigger; the shared overlay trigger keeps its focus ring. */
+.order-proof-list .fs-overlay-trigger {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.order-proof-thumbnail {
+  display: block;
+  width: var(--space-24);
+  height: var(--space-24);
+  object-fit: cover;
+}
+.order-proof-display {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 70dvh;
+  object-fit: contain;
+}
 .order-steps {
   display: grid;
   gap: var(--space-4);

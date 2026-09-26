@@ -63,6 +63,12 @@ const copy = {
   orderSnapshotLanguage: "Nội dung đã lưu khi đặt hàng: {language}",
   orderUnitPrice: "Đơn giá",
   orderItemTotal: "Tổng tiền quà",
+  orderDeliveryPhotos: "Ảnh giao quà",
+  orderDeliveryPhotosHelp:
+    "Studio đã chụp những ảnh này khi trao quà của bạn. Chỉ bạn mới xem được.",
+  orderDeliveryPhotoOpen: "Xem ảnh giao quà {position}/{count}",
+  orderDeliveryPhotoAlt: "Ảnh giao quà {position}/{count}",
+  orderDeliveryPhotoClose: "Đóng ảnh",
 
   checkoutTitle: "Thanh toán",
   checkoutReview: "Kiểm tra quà tặng",
