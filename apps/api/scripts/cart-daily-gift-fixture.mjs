@@ -118,6 +118,52 @@ export async function createCartDailyGiftFixture({
     content,
     fixtures,
   });
+  // CI names why processing storage fails: operations, enumerated codes, HTTP statuses and
+  // Node error codes only; no URLs, headers or bytes.
+  const transferFailures = [];
+  const errorCode = (error) =>
+    /^[A-Z][A-Z0-9_]{1,40}$/u.test(error?.cause?.code ?? "")
+      ? error.cause.code
+      : /^[A-Za-z]{1,40}$/u.test(error?.name ?? "")
+        ? error.name
+        : "Error";
+  const observedStorage = new Proxy(media.storage, {
+    get(target, key) {
+      const value = Reflect.get(target, key);
+      if (typeof value !== "function") return value;
+      return async (...args) => {
+        try {
+          const response = await value.apply(target, args);
+          if (response?.outcome === "FAILURE")
+            transferFailures.push({
+              operation: String(key),
+              code: /^[A-Z_]{1,40}$/u.test(response.error?.code ?? "")
+                ? response.error.code
+                : null,
+            });
+          return response;
+        } catch (error) {
+          transferFailures.push({
+            operation: String(key),
+            error: errorCode(error),
+          });
+          throw error;
+        }
+      };
+    },
+  });
+  const observedFetch = async (url, init) => {
+    const method = init?.method === "PUT" ? "PUT" : "GET";
+    try {
+      const response = await globalThis.fetch(url, init);
+      if (response.status >= 300)
+        transferFailures.push({ method, status: response.status });
+      return response;
+    } catch (error) {
+      transferFailures.push({ method, error: errorCode(error) });
+      throw error;
+    }
+  };
   const composition = createTestManagementCenterComposition({
     environment: "TEST",
     database,
@@ -126,7 +172,8 @@ export async function createCartDailyGiftFixture({
     publicMediaBaseUrl: gateway.origin,
     ...media,
     processor: createMediaImageProcessor({
-      storage: media.storage,
+      storage: observedStorage,
+      fetch: observedFetch,
       now: () => new Date(),
     }),
     leaseSeconds: 300,
@@ -222,7 +269,7 @@ export async function createCartDailyGiftFixture({
           ).rows;
     check(
       operation.status === "PUBLISHED",
-      `daily cart operation publishes${operation.failure ? ` (${operation.failure.code})` : ""}${unfinishedMedia.length ? ` ${JSON.stringify(unfinishedMedia)}` : ""}`,
+      `daily cart operation publishes${operation.failure ? ` (${operation.failure.code})` : ""}${unfinishedMedia.length ? ` ${JSON.stringify({ jobs: unfinishedMedia, transfers: transferFailures.slice(-8) })}` : ""}`,
     );
     const giftId = operation.result.targetId;
     const rows = (
