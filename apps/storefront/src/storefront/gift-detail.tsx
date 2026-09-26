@@ -30,6 +30,7 @@ export function GiftDetail({
   contextQuery,
   variantId,
   marketError = false,
+  soleOffer,
 }: Readonly<{
   content: Content | Commerce;
   commerce?: Commerce;
@@ -40,6 +41,10 @@ export function GiftDetail({
   contextQuery: string;
   variantId?: string;
   marketError?: boolean;
+  /** Reads the offer of an unscoped page when exactly one market is published. */
+  soleOffer?: (
+    context: StorefrontContextResponse,
+  ) => Promise<Commerce | undefined>;
 }>) {
   const gift = content.content.view;
   const kindLabels = {
@@ -138,6 +143,25 @@ export function GiftDetail({
                 copy={copy}
                 contextQuery={contextQuery}
                 path={path}
+                {...(soleOffer
+                  ? {
+                      soleOffer: async (
+                        resolved: StorefrontContextResponse,
+                      ) => {
+                        const offer = await soleOffer(resolved);
+                        // The recipient above already reflects the same idol query.
+                        return offer ? (
+                          <GiftPurchase
+                            gift={offer}
+                            locale={locale}
+                            copy={copy}
+                            contextQuery={contextQuery}
+                            {...(variantId ? { variantId } : {})}
+                          />
+                        ) : undefined;
+                      },
+                    }
+                  : {})}
               />
             </>
           )}

@@ -8,6 +8,7 @@ import { notFound } from "next/navigation";
 import {
   slugSchema,
   idolIdSchema,
+  giftVariantIdSchema,
   policyKeySchema,
   type StorefrontContextResponse,
   type SupportedLocale,
@@ -17,7 +18,13 @@ import {
   loadStorefrontPresentationConfig,
 } from "../server/runtime-config";
 import { loadStorefrontCopy } from "../server/storefront-copy";
-import { readCommerceContext, policyRead, artistRead } from "./gift-page-reads";
+import {
+  readCommerceContext,
+  commerceRead,
+  policyRead,
+  artistRead,
+} from "./gift-page-reads";
+import { soleCommerceScope } from "./commerce-scope";
 import { readGiftDetailPage } from "./gift-detail-page-reads";
 import { SiteHeader } from "./site-header";
 import { SiteFooter, PageState } from "./page-parts";
@@ -162,6 +169,8 @@ export function createGiftStorefrontPage(
     } else {
       if (!detail) notFound();
       const { handle, result, scoped, artists, selection } = detail;
+      const soleIdol = idolIdSchema.safeParse(values["idol"]);
+      const soleVariant = giftVariantIdSchema.safeParse(values["variant"]);
       if (result.outcome === "FAILURE" && result.code === "NOT_FOUND")
         notFound();
       if (scoped?.outcome === "FAILURE" && scoped.code === "NOT_FOUND")
@@ -201,8 +210,27 @@ export function createGiftStorefrontPage(
             contextQuery={contextQuery}
             {...(selection.kind === "VALID" && selection.variantId
               ? { variantId: selection.variantId }
-              : {})}
+              : selection.kind === "CONTEXT_REQUIRED" && soleVariant.success
+                ? { variantId: soleVariant.data }
+                : {})}
             marketError={scoped?.outcome === "FAILURE"}
+            {...(selection.kind === "CONTEXT_REQUIRED"
+              ? {
+                  // V2 §4-2: one published market prices the page as its offer streams in.
+                  soleOffer: async (resolved: StorefrontContextResponse) => {
+                    const scope = soleCommerceScope(resolved);
+                    if (!scope) return undefined;
+                    const read = await commerceRead(
+                      locale,
+                      handle,
+                      scope.market,
+                      scope.currency,
+                      soleIdol.success ? soleIdol.data : undefined,
+                    ).catch(() => undefined);
+                    return read?.outcome === "SUCCESS" ? read : undefined;
+                  },
+                }
+              : {})}
           />
         );
     }

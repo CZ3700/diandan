@@ -863,3 +863,69 @@ test.each(["NOT_FOUND", "CONTENT_UNAVAILABLE", "reject"])(
     expect(reads.gift).toHaveBeenCalledExactlyOnceWith("en", "rose-palace");
   },
 );
+
+test("with one published market an unscoped gift streams its content first, then its price in place of region choices", async () => {
+  const data = useFixture("en", true);
+  const context = deferred<unknown>();
+  reads.context.mockReturnValue(context.promise);
+  const Entry = createGiftStorefrontPage("en", "gift");
+  const rendered = stream(
+    <Entry
+      params={Promise.resolve({ handle: "rose-palace" })}
+      searchParams={Promise.resolve({ idol: data.artist.id })}
+    />,
+  );
+  try {
+    await vi.waitFor(
+      () => expect(rendered.html()).toContain("Verified gift before directory"),
+      { timeout: 300 },
+    );
+    // The fan sees the gift before the context decides whether a price can follow.
+    expect(reads.commerce).not.toHaveBeenCalled();
+    expect(rendered.html()).toContain('data-gift-context-pending="true"');
+    expect(rendered.html()).not.toContain('value="1200"');
+  } finally {
+    context.resolve({
+      ...data.context,
+      markets: [{ market: "GLOBAL", currencies: ["USD"] }],
+    });
+    await rendered.ended;
+    rendered.abort();
+  }
+  expect(rendered.errors).toEqual([]);
+  expect(reads.commerce).toHaveBeenCalledWith(
+    "en",
+    "rose-palace",
+    "GLOBAL",
+    "USD",
+    data.artist.id,
+  );
+  expect(rendered.html()).toContain('value="1200"');
+  expect(rendered.html()).toContain("data-gift-purchase");
+  expect(rendered.html()).not.toContain('data-market="GLOBAL"');
+});
+
+test("a sole market whose offer cannot be read falls back to its real region choice", async () => {
+  const data = useFixture("en", true);
+  reads.context.mockResolvedValue({
+    ...data.context,
+    markets: [{ market: "GLOBAL", currencies: ["USD"] }],
+  });
+  reads.commerce.mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "MARKET_UNAVAILABLE",
+  });
+  const Entry = createGiftStorefrontPage("en", "gift");
+  const rendered = stream(
+    <Entry
+      params={Promise.resolve({ handle: "rose-palace" })}
+      searchParams={Promise.resolve({ idol: data.artist.id })}
+    />,
+  );
+  await rendered.ended;
+  rendered.abort();
+  expect(rendered.errors).toEqual([]);
+  expect(rendered.html()).toContain('data-market="GLOBAL"');
+  expect(rendered.html()).not.toContain("data-gift-purchase");
+});
