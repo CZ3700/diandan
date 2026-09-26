@@ -22,6 +22,7 @@ export function GiftFiltersClient({
   query,
   contextQuery,
   basePath,
+  scope = "EXPLICIT",
   initialDraft,
   resetHref,
   recoveryHref,
@@ -141,6 +142,7 @@ export function GiftFiltersClient({
         query,
         basePath,
         contextQuery,
+        scope,
       );
       if (result.kind === "INVALID") {
         const nextErrors = {

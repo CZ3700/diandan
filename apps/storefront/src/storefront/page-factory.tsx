@@ -66,6 +66,7 @@ export function createStorefrontPage(
               basePath="/"
               headingLevel={2}
               initial={gifts}
+              pricing={{}}
             />
           }
           directory={

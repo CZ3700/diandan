@@ -13,7 +13,14 @@ import { storefrontHref } from "./navigation";
 
 /** Prepare stable presentation once; only actual editing needs browser validation. */
 export function GiftFilters(props: GiftFilterProps) {
-  const { query, locale, copy, basePath, contextQuery } = props;
+  const {
+    query,
+    locale,
+    copy,
+    basePath,
+    contextQuery,
+    scope = "EXPLICIT",
+  } = props;
   const categories = {
     FLOWERS: copy.giftCategoryFlowers,
     FOOD: copy.giftCategoryFood,
@@ -57,14 +64,20 @@ export function GiftFilters(props: GiftFilterProps) {
       sortOptions={sortLabels.map(([value, label]) => ({
         value,
         label,
-        href: giftFilterHref(query, basePath, contextQuery, {
-          sort: value,
-          kind: query.kind,
-          category: query.category,
-          availability: query.availability,
-          priceMinMinor: query.priceMinMinor,
-          priceMaxMinor: query.priceMaxMinor,
-        }),
+        href: giftFilterHref(
+          query,
+          basePath,
+          contextQuery,
+          {
+            sort: value,
+            kind: query.kind,
+            category: query.category,
+            availability: query.availability,
+            priceMinMinor: query.priceMinMinor,
+            priceMaxMinor: query.priceMaxMinor,
+          },
+          scope,
+        ),
       }))}
       kindOptions={[
         ...BROWSABLE_GIFT_KINDS,
@@ -86,7 +99,7 @@ export function GiftFilters(props: GiftFilterProps) {
           query.currency,
         ),
       }}
-      resetHref={giftResetHref(query, basePath, contextQuery)}
+      resetHref={giftResetHref(query, basePath, contextQuery, scope)}
       recoveryHref={storefrontHref(locale, basePath, contextQuery)}
       hint={formatStorefrontMessage(copy, "giftPriceInputHint", locale, {
         currency: query.currency,

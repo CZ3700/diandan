@@ -115,15 +115,25 @@ export function prepareGiftQuery(
   };
 }
 
+/**
+ * EXPLICIT: the fan chose this market, so links keep it. IMPLICIT: the sole published market
+ * (ADR-017 addendum) priced the page, so links leave it out and stay canonical.
+ */
+export type GiftScopeInUrl = "EXPLICIT" | "IMPLICIT";
+
 function directoryHref(
   query: GiftDiscoveryQuery,
   basePath: string,
   contextQuery: string,
+  scope: GiftScopeInUrl,
 ): string {
   const context = new URLSearchParams(contextQuery);
   for (const field of fields) context.delete(field);
   for (const [key, value] of serializeQuery(query)) {
-    if (key !== "locale") context.set(key, value);
+    if (key === "locale") continue;
+    if (scope === "IMPLICIT" && (key === "market" || key === "currency"))
+      continue;
+    context.set(key, value);
   }
   return storefrontHref(query.locale, basePath, context.toString());
 }
@@ -133,11 +143,13 @@ export function giftPageHref(
   basePath: string,
   contextQuery: string,
   page: number,
+  scope: GiftScopeInUrl = "EXPLICIT",
 ): string {
   return directoryHref(
     giftDiscoveryQuerySchema.parse({ ...query, page }),
     basePath,
     contextQuery,
+    scope,
   );
 }
 
@@ -146,6 +158,7 @@ export function giftFilterHref(
   basePath: string,
   contextQuery: string,
   filters: GiftFilters,
+  scope: GiftScopeInUrl = "EXPLICIT",
 ): string {
   return directoryHref(
     giftDiscoveryQuerySchema.parse({
@@ -159,6 +172,7 @@ export function giftFilterHref(
     }),
     basePath,
     contextQuery,
+    scope,
   );
 }
 
@@ -166,11 +180,15 @@ export function giftResetHref(
   query: GiftDiscoveryQuery,
   basePath: string,
   contextQuery: string,
+  scope: GiftScopeInUrl = "EXPLICIT",
 ): string {
-  return giftFilterHref(query, basePath, contextQuery, {
-    sort: "RECOMMENDED",
-    availability: "ALL",
-  });
+  return giftFilterHref(
+    query,
+    basePath,
+    contextQuery,
+    { sort: "RECOMMENDED", availability: "ALL" },
+    scope,
+  );
 }
 
 function priceNotation(locale: SupportedLocale, currency: CurrencyCode) {

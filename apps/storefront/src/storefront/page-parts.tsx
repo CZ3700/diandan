@@ -81,12 +81,15 @@ export function SiteFooter({
   name,
   contextQuery,
   policyLinks,
+  region,
 }: Readonly<{
   copy: StorefrontCopy;
   locale: SupportedLocale;
   name: string;
   contextQuery: string;
   policyLinks?: ReactNode;
+  /** Server-decided region entry; a sole published market hides it (ADR-017 addendum). */
+  region?: ReactNode;
 }>) {
   return (
     <footer className="storefront-footer">
@@ -95,9 +98,11 @@ export function SiteFooter({
         <span aria-hidden="true">.</span>
       </span>
       <p>{copy.giftHandover}</p>
-      <a href={storefrontHref(locale, "/region", contextQuery)}>
-        {copy.region}
-      </a>
+      {region ?? (
+        <a href={storefrontHref(locale, "/region", contextQuery)}>
+          {copy.region}
+        </a>
+      )}
       <a href={storefrontHref(locale, "/idols", contextQuery)}>
         {copy.backArtists}
         <Icon name="arrow-right" decorative />

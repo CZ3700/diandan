@@ -19,6 +19,22 @@ vi.mock("./storefront-page-reads", () => ({
   }),
 }));
 import { StorefrontPageShell } from "./storefront-page-shell";
+import { SiteHeader } from "./site-header";
+import { SiteFooter } from "./page-parts";
+import { RegionChoiceEntry } from "./region-entry";
+
+function find(
+  node: ReactNode,
+  type: unknown,
+): ReactElement<Record<string, unknown>> | undefined {
+  for (const child of Children.toArray(node)) {
+    if (!isValidElement<Record<string, unknown>>(child)) continue;
+    if (child.type === type) return child;
+    const found = find(child.props["children"] as ReactNode, type);
+    if (found) return found;
+  }
+  return undefined;
+}
 
 function provider(
   node: ReactNode,
@@ -47,3 +63,23 @@ test.each([false, true])(
     expect(provider(tree)?.props["restoreOnLoad"]).toBe(present);
   },
 );
+
+test("header and footer region entries are streamed slots decided by the commerce context", async () => {
+  request.has.mockReset().mockReturnValue(false);
+  const tree = await StorefrontPageShell({
+    locale: "en",
+    copy,
+    name: "Test studio",
+    contextQuery: "",
+    active: "home",
+    children: <p>Public content</p>,
+  });
+  const header = find(tree, SiteHeader);
+  const footer = find(tree, SiteFooter);
+  for (const slot of [header?.props["regionEntry"], footer?.props["region"]]) {
+    expect(isValidElement(slot)).toBe(true);
+    const entry = (slot as ReactElement<{ children: ReactElement }>).props
+      .children;
+    expect(entry.type).toBe(RegionChoiceEntry);
+  }
+});

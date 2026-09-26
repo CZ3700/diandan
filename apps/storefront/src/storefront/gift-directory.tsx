@@ -7,7 +7,7 @@ import {
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
 import { GiftDirectoryCard } from "./gift-directory-card";
 import { GiftFilters } from "./gift-filters";
-import { giftPageHref, giftResetHref } from "./gift-query";
+import { giftPageHref, giftResetHref, type GiftScopeInUrl } from "./gift-query";
 
 export type GiftDirectoryProps = Readonly<{
   locale: SupportedLocale;
@@ -17,6 +17,7 @@ export type GiftDirectoryProps = Readonly<{
   contextQuery?: string;
   basePath?: string;
   headingLevel?: 1 | 2;
+  scope?: GiftScopeInUrl;
 }>;
 
 export function GiftDirectory({
@@ -27,9 +28,10 @@ export function GiftDirectory({
   contextQuery = "",
   basePath = "/gifts",
   headingLevel = 2,
+  scope = "EXPLICIT",
 }: GiftDirectoryProps) {
   const href = (page: number) =>
-    giftPageHref(query, basePath, contextQuery, page);
+    giftPageHref(query, basePath, contextQuery, page, scope);
   const Heading = headingLevel === 1 ? "h2" : "h3";
   if (initial.outcome === "FAILURE")
     return (
@@ -65,6 +67,7 @@ export function GiftDirectory({
         query={query}
         contextQuery={contextQuery}
         basePath={basePath}
+        scope={scope}
       />
       <p className="gift-directory-count">
         {formatStorefrontMessage(copy, "giftResultsCount", locale, {
@@ -103,7 +106,7 @@ export function GiftDirectory({
             href={
               outOfRange
                 ? href(1)
-                : giftResetHref(query, basePath, contextQuery)
+                : giftResetHref(query, basePath, contextQuery, scope)
             }
           >
             {outOfRange ? copy.giftFirstPage : copy.giftResetFilters}

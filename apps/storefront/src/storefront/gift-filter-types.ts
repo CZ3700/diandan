@@ -3,6 +3,7 @@ import type {
   SupportedLocale,
 } from "@fan-support/contracts";
 import type { StorefrontCopy } from "./copy";
+import type { GiftScopeInUrl } from "./gift-query";
 
 export type GiftFilterDraft = Readonly<{
   sort: GiftDiscoveryQuery["sort"];
@@ -19,6 +20,7 @@ export type GiftFilterProps = Readonly<{
   query: GiftDiscoveryQuery;
   contextQuery: string;
   basePath: string;
+  scope?: GiftScopeInUrl;
 }>;
 
 export type GiftFilterClientProps = GiftFilterProps &

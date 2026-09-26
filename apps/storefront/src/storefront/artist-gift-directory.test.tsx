@@ -27,26 +27,21 @@ const props = (values: Record<string, string>) =>
     basePath: "/idols/aurora",
     headingLevel: 2,
   }) as never;
-const valuesOf = async (values: Record<string, string>) =>
+const propsOf = async (values: Record<string, string>) =>
   (
     (await ArtistGiftDirectory(props(values))) as ReactElement<{
       values: Record<string, string>;
+      implicitScope?: { market: string; currency: string };
     }>
-  ).props.values;
+  ).props;
 
-it("prices an artist's gifts without a region step when one market is published", async () => {
+it("prices an artist's gifts without a region step or a market in the URL when one market is published", async () => {
   reads.context.mockResolvedValue(
     markets([{ market: "US", currencies: ["USD"] }]),
   );
-  expect(await valuesOf({ idol: "artist-1" })).toEqual({
-    idol: "artist-1",
-    market: "US",
-    currency: "USD",
-  });
-  expect(await valuesOf({ idol: "artist-1", market: "US" })).toEqual({
-    idol: "artist-1",
-    market: "US",
-  });
+  const scoped = await propsOf({ idol: "artist-1" });
+  expect(scoped.values).toEqual({ idol: "artist-1" });
+  expect(scoped.implicitScope).toEqual({ market: "US", currency: "USD" });
 });
 
 it("keeps the explicit region choice whenever markets or currencies can differ", async () => {
@@ -59,6 +54,8 @@ it("keeps the explicit region choice whenever markets or currencies can differ",
     { schemaVersion: 1, outcome: "FAILURE", code: "COMMERCE_UNAVAILABLE" },
   ]) {
     reads.context.mockResolvedValue(context);
-    expect(await valuesOf({ idol: "artist-1" })).toEqual({ idol: "artist-1" });
+    const result = await propsOf({ idol: "artist-1" });
+    expect(result.values).toEqual({ idol: "artist-1" });
+    expect(result).not.toHaveProperty("implicitScope");
   }
 });

@@ -7,6 +7,7 @@ import { CartProvider } from "./cart-provider";
 import "./cart.css";
 import { SiteHeader } from "./site-header";
 import { SiteFooter } from "./page-parts";
+import { regionEntries } from "./region-entry";
 
 export type StorefrontPageProps = Readonly<{
   searchParams: Promise<
@@ -29,6 +30,7 @@ export async function StorefrontPageShell({
   ...props
 }: ShellProps) {
   const restoreOnLoad = await readCartRestorationHint();
+  const region = regionEntries(props.locale, props.copy, props.contextQuery);
   return (
     <div className="storefront" lang={props.locale}>
       <CartProvider
@@ -36,13 +38,14 @@ export async function StorefrontPageShell({
         locale={props.locale}
         restoreOnLoad={restoreOnLoad}
       >
-        <SiteHeader {...props} active={active} />
+        <SiteHeader {...props} active={active} regionEntry={region.header} />
         <main id="main-content" tabIndex={-1}>
           {children}
         </main>
       </CartProvider>
       <SiteFooter
         {...props}
+        region={region.footer}
         policyLinks={
           <Suspense fallback={null}>
             <FooterPolicyLinks

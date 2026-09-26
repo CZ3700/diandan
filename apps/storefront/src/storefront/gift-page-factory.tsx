@@ -38,6 +38,7 @@ import { giftRecoveryQuery } from "./gift-selection";
 import { queryString } from "./navigation";
 import { createStorefrontLoading } from "./route-states";
 import { GiftPageSeo, loadGiftSeo } from "./gift-seo";
+import { regionEntries } from "./region-entry";
 
 type Kind = "gifts" | "gift" | "policy" | "region";
 type PageDefinition =
@@ -234,6 +235,7 @@ export function createGiftStorefrontPage(
           />
         );
     }
+    const region = regionEntries(locale, copy, contextQuery);
     return (
       <div className="storefront" lang={locale}>
         <CartProvider
@@ -247,6 +249,7 @@ export function createGiftStorefrontPage(
             name={name}
             contextQuery={contextQuery}
             active={kind === "gifts" || kind === "gift" ? "gifts" : "other"}
+            regionEntry={region.header}
           />
           <main id="main-content" tabIndex={-1}>
             <Suspense fallback={null}>
@@ -265,6 +268,7 @@ export function createGiftStorefrontPage(
           copy={copy}
           name={name}
           contextQuery={contextQuery}
+          region={region.footer}
           policyLinks={
             kind === "gift" || kind === "gifts" ? (
               <GiftDetailPolicyLinks

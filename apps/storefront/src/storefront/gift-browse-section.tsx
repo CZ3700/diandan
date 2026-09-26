@@ -1,7 +1,8 @@
 import "server-only";
-import { Suspense } from "react";
+import { Suspense, type ReactNode } from "react";
 import type {
   GiftBrowseResponse,
+  StorefrontContextResponse,
   SupportedLocale,
 } from "@fan-support/contracts";
 import { readGiftBrowse } from "../server/public-gift-browse";
@@ -9,6 +10,10 @@ import type { StorefrontCopy } from "./copy";
 import { GiftBrowse } from "./gift-browse";
 import { giftBrowseRecovery, prepareGiftBrowse } from "./gift-browse-query";
 import { queryString } from "./navigation";
+import {
+  SoleMarketGiftDirectory,
+  type PricedGiftDirectoryRenderer,
+} from "./sole-market-directory";
 
 type Props = Readonly<{
   locale: SupportedLocale;
@@ -17,16 +22,34 @@ type Props = Readonly<{
   basePath?: string;
   headingLevel?: 1 | 2;
   initial?: Promise<GiftBrowseResponse> | undefined;
+  /**
+   * Price the list in place once one published market is confirmed; the content list streams
+   * first. Without a renderer the priced cards keep this compact list and its toolbar.
+   */
+  pricing?: Readonly<{
+    render?: PricedGiftDirectoryRenderer;
+    context?:
+      | StorefrontContextResponse
+      | Promise<StorefrontContextResponse>
+      | undefined;
+  }>;
 }>;
 
-export async function GiftBrowseBody({
+async function ContentGiftBrowse({
   locale,
   copy,
   values,
-  basePath = "/gifts",
-  headingLevel = 1,
+  basePath,
+  headingLevel,
   initial,
-}: Props) {
+}: Readonly<{
+  locale: SupportedLocale;
+  copy: StorefrontCopy;
+  values: Props["values"];
+  basePath: string;
+  headingLevel: 1 | 2;
+  initial: Props["initial"];
+}>): Promise<ReactNode> {
   const query = prepareGiftBrowse(locale, values);
   if (!query)
     return (
@@ -50,6 +73,54 @@ export async function GiftBrowseBody({
       basePath={basePath}
       headingLevel={headingLevel}
     />
+  );
+}
+
+export async function GiftBrowseBody({
+  locale,
+  copy,
+  values,
+  basePath = "/gifts",
+  headingLevel = 1,
+  initial,
+  pricing,
+}: Props) {
+  const content = await ContentGiftBrowse({
+    locale,
+    copy,
+    values,
+    basePath,
+    headingLevel,
+    initial,
+  });
+  if (!pricing) return content;
+  const query = prepareGiftBrowse(locale, values);
+  const render: PricedGiftDirectoryRenderer | undefined =
+    pricing.render ??
+    (query
+      ? ({ initial, contextQuery }) => (
+          <GiftBrowse
+            query={query}
+            initial={initial}
+            copy={copy}
+            contextQuery={contextQuery}
+            basePath={basePath}
+            headingLevel={headingLevel}
+          />
+        )
+      : undefined);
+  if (!render) return content;
+  // The content list is both the streamed fallback and the result whenever no single market prices it.
+  return (
+    <Suspense fallback={content}>
+      <SoleMarketGiftDirectory
+        locale={locale}
+        values={values}
+        fallback={content}
+        context={pricing.context}
+        render={render}
+      />
+    </Suspense>
   );
 }
 

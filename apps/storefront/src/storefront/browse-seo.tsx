@@ -24,6 +24,7 @@ import { prepareDirectoryQuery } from "./directory-query";
 import { hasFallback } from "./content-safety";
 import { isMarketAvailable } from "./commerce-context";
 import { createSeoIdentity, type SeoSearchValues } from "./seo-identity";
+import { readSoleCommerceScope } from "./sole-scope-read";
 import { buildSeoMetadata, provenSeoLocales } from "./seo-metadata";
 import { createPageJsonLd, JsonLd } from "./seo-structured-data";
 
@@ -36,7 +37,19 @@ const load = cache(
     query: string,
   ) => {
     const values = JSON.parse(query) as SeoSearchValues;
-    const identity = createSeoIdentity(locale, kind, handle, values);
+    // Only an artist URL can carry a market; drop it from the canonical when it is the sole one.
+    const implicitScope =
+      kind === "artist" &&
+      (values["market"] !== undefined || values["currency"] !== undefined)
+        ? await readSoleCommerceScope()
+        : undefined;
+    const identity = createSeoIdentity(
+      locale,
+      kind,
+      handle,
+      values,
+      implicitScope,
+    );
     const origin = loadStorefrontRuntimeConfig().siteOrigin,
       siteName = loadStorefrontPresentationConfig().name;
     const copy = await loadStorefrontCopy(locale);

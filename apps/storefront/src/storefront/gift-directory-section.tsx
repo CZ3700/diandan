@@ -12,7 +12,8 @@ import { GiftDirectory } from "./gift-directory";
 import { isMarketAvailable, MarketChoices } from "./commerce-context";
 import { giftKindLabel } from "./gift-kind-copy";
 import { giftRecoveryQuery } from "./gift-selection";
-import { storefrontHref } from "./navigation";
+import { queryString, storefrontHref } from "./navigation";
+import { withSoleScope, type CommerceScope } from "./commerce-scope";
 import type { StorefrontCopy } from "./copy";
 
 export async function GiftDirectorySection({
@@ -23,6 +24,7 @@ export async function GiftDirectorySection({
   basePath = "/gifts",
   headingLevel = 1,
   artist,
+  implicitScope,
 }: Readonly<{
   locale: SupportedLocale;
   copy: StorefrontCopy;
@@ -31,14 +33,18 @@ export async function GiftDirectorySection({
   basePath?: string;
   headingLevel?: 1 | 2;
   artist?: PublishedIdolView;
+  /** The sole published scope an embedding page already confirmed; an explicit choice wins. */
+  implicitScope?: CommerceScope;
 }>) {
-  const prepared = prepareGiftQuery(locale, values);
+  const explicit =
+    values["market"] !== undefined || values["currency"] !== undefined;
+  const scope = explicit ? undefined : implicitScope;
+  const prepared = prepareGiftQuery(locale, withSoleScope(values, scope));
   const Heading = headingLevel === 1 ? "h1" : "h2";
-  const query = prepared.contextQuery;
+  const query = queryString(values);
   const kind = giftKindSchema.safeParse(values["kind"]);
   let body;
-  const browsing =
-    values["market"] === undefined && values["currency"] === undefined;
+  const browsing = !explicit && scope === undefined;
   const context = browsing ? undefined : await contextRead;
   if (browsing)
     body = await GiftBrowseBody({
@@ -47,6 +53,21 @@ export async function GiftDirectorySection({
       values,
       basePath,
       headingLevel,
+      pricing: {
+        context: contextRead,
+        render: (priced) => (
+          <GiftDirectory
+            locale={locale}
+            copy={copy}
+            query={priced.query}
+            initial={priced.initial}
+            contextQuery={priced.contextQuery}
+            basePath={basePath}
+            headingLevel={headingLevel}
+            scope="IMPLICIT"
+          />
+        ),
+      },
     });
   else if (!context) throw new Error("Missing commerce context");
   else if (!prepared.valid)
@@ -100,6 +121,7 @@ export async function GiftDirectorySection({
         contextQuery={query}
         basePath={basePath}
         headingLevel={headingLevel}
+        scope={scope ? "IMPLICIT" : "EXPLICIT"}
       />
     );
   return (

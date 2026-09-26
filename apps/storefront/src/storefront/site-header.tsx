@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import type { SupportedLocale } from "@fan-support/contracts";
 import { CartHeader } from "./cart-header";
 import { LazyDrawer } from "./lazy-drawer";
@@ -17,12 +18,15 @@ export function SiteHeader({
   name,
   contextQuery,
   active,
+  regionEntry,
 }: Readonly<{
   locale: SupportedLocale;
   copy: StorefrontCopy;
   name: string;
   contextQuery: string;
   active: "home" | "artists" | "gifts" | "other";
+  /** Server-decided region entry; a sole published market hides it (ADR-017 addendum). */
+  regionEntry?: ReactNode;
 }>) {
   const [menu, setMenu] = useState(false),
     [scrolled, setScrolled] = useState(false);
@@ -126,10 +130,14 @@ export function SiteHeader({
               <div className="storefront-drawer-nav">
                 {navigation(true)}
                 {language(true)}
-                <p>{copy.regionHint}</p>
-                <a href={storefrontHref(locale, "/region", contextQuery)}>
-                  {copy.region}
-                </a>
+                {regionEntry ?? (
+                  <>
+                    <p>{copy.regionHint}</p>
+                    <a href={storefrontHref(locale, "/region", contextQuery)}>
+                      {copy.region}
+                    </a>
+                  </>
+                )}
               </div>
             </LazyDrawer>
           </div>

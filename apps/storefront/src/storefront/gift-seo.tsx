@@ -23,6 +23,8 @@ import { parseGiftSelection, selectGiftOffer } from "./gift-selection";
 import { prepareGiftQuery } from "./gift-query";
 import { isMarketAvailable } from "./commerce-context";
 import { createSeoIdentity, type SeoSearchValues } from "./seo-identity";
+import { withSoleScope } from "./commerce-scope";
+import { readSoleCommerceScope } from "./sole-scope-read";
 import { buildSeoMetadata, provenSeoLocales } from "./seo-metadata";
 import {
   createProductJsonLd,
@@ -40,7 +42,17 @@ const load = cache(
     query: string,
   ) => {
     const values = JSON.parse(query) as SeoSearchValues;
-    const identity = createSeoIdentity(locale, kind, rawHandle, values);
+    const implicitScope =
+      kind === "gift" || kind === "gifts"
+        ? await readSoleCommerceScope()
+        : undefined;
+    const identity = createSeoIdentity(
+      locale,
+      kind,
+      rawHandle,
+      values,
+      implicitScope,
+    );
     const origin = loadStorefrontRuntimeConfig().siteOrigin;
     const siteName = loadStorefrontPresentationConfig().name;
     const copy = await loadStorefrontCopy(locale);
@@ -112,7 +124,10 @@ const load = cache(
         }
       }
     } else if (kind === "gifts") {
-      const prepared = prepareGiftQuery(locale, values);
+      const prepared = prepareGiftQuery(
+        locale,
+        withSoleScope(values, implicitScope),
+      );
       if (
         prepared.valid &&
         isMarketAvailable(

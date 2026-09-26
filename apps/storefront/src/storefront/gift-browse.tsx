@@ -1,6 +1,9 @@
 import type {
+  CatalogDirectoryOffer,
   GiftBrowseQuery,
   GiftBrowseResponse,
+  GiftDirectoryResponse,
+  PublishedGiftView,
 } from "@fan-support/contracts";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
 import { GiftCard } from "./gift-card";
@@ -18,7 +21,8 @@ export function GiftBrowse({
   headingLevel,
 }: Readonly<{
   query: GiftBrowseQuery;
-  initial: GiftBrowseResponse;
+  /** A priced response comes from the sole published market (ADR-017 addendum). */
+  initial: GiftBrowseResponse | GiftDirectoryResponse;
   copy: StorefrontCopy;
   contextQuery: string;
   basePath: string;
@@ -45,7 +49,14 @@ export function GiftBrowse({
         </a>
       </div>
     );
-  const { items, pageInfo } = initial;
+  const { pageInfo } = initial;
+  const entries: ReadonlyArray<
+    | PublishedGiftView
+    | Readonly<{ gift: PublishedGiftView; offer: CatalogDirectoryOffer }>
+  > = initial.items;
+  const items = entries.map((entry) =>
+    "offer" in entry ? entry : { gift: entry, offer: undefined },
+  );
   const outOfRange = pageInfo.page > Math.max(1, pageInfo.totalPages);
   const categories = {
     FLOWERS: copy.giftCategoryFlowers,
@@ -72,6 +83,7 @@ export function GiftBrowse({
       id={basePath !== "/" ? "gifts" : undefined}
       className="gift-directory"
       data-gift-browse
+      data-gift-priced={items.some((item) => item.offer) || undefined}
       data-outcome="success"
     >
       <form
@@ -133,10 +145,11 @@ export function GiftBrowse({
       </p>
       {items.length > 0 ? (
         <ul className="gift-directory-grid">
-          {items.map((gift) => (
+          {items.map(({ gift, offer }) => (
             <GiftCard
               key={gift.id}
               gift={gift}
+              offer={offer}
               locale={query.locale}
               copy={copy}
               contextQuery={contextQuery}

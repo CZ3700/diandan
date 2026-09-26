@@ -9,6 +9,7 @@ import {
   supportedLocaleSchema,
   type SupportedLocale,
 } from "@fan-support/contracts";
+import { withSoleScope, type CommerceScope } from "./commerce-scope";
 import { prepareGiftQuery } from "./gift-query";
 
 export type SeoPageKind =
@@ -36,12 +37,16 @@ const directoryFields = [
   "availability",
 ];
 
-/** Only validated public identity enters metadata; navigation retains its own context separately. */
+/**
+ * Only validated public identity enters metadata; navigation retains its own context separately.
+ * A sole published scope (ADR-017 addendum) prices unscoped pages and never appears in canonicals.
+ */
 export function createSeoIdentity(
   locale: SupportedLocale,
   kind: SeoPageKind,
   handle: string | undefined,
   values: SeoSearchValues,
+  implicitScope?: CommerceScope,
 ): SeoIdentity {
   supportedLocaleSchema.parse(locale);
   const detail = kind === "artist" || kind === "gift" || kind === "policy";
@@ -76,12 +81,18 @@ export function createSeoIdentity(
   const canonical = new URLSearchParams();
   const scoped =
     values["market"] !== undefined || values["currency"] !== undefined;
-  const market = marketSchema.safeParse(values["market"]),
-    currency = currencySchema.safeParse(values["currency"]);
+  const effective = withSoleScope(values, implicitScope);
+  const market = marketSchema.safeParse(effective["market"]),
+    currency = currencySchema.safeParse(effective["currency"]);
   if (scoped && (!market.success || !currency.success)) noindex = true;
+  const implicit =
+    implicitScope !== undefined &&
+    market.data === implicitScope.market &&
+    currency.data === implicitScope.currency;
   if (
     market.success &&
     currency.success &&
+    !implicit &&
     ["artist", "gift", "gifts"].includes(kind)
   ) {
     canonical.set("market", market.data);
@@ -94,7 +105,7 @@ export function createSeoIdentity(
     else noindex = true;
   }
   if (kind === "gifts") {
-    const prepared = prepareGiftQuery(locale, values);
+    const prepared = prepareGiftQuery(locale, effective);
     if (!prepared.valid) noindex = true;
     else {
       const query = prepared.query;

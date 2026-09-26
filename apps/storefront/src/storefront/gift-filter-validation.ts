@@ -2,7 +2,11 @@ import type {
   GiftDiscoveryQuery,
   SupportedLocale,
 } from "@fan-support/contracts";
-import { giftFilterHref, parseGiftPriceInput } from "./gift-query";
+import {
+  giftFilterHref,
+  parseGiftPriceInput,
+  type GiftScopeInUrl,
+} from "./gift-query";
 import type { GiftFilterDraft } from "./gift-filter-types";
 
 /** Loaded on submit; both local amounts and the final query use canonical schemas. */
@@ -12,6 +16,7 @@ export function validateGiftFilterDraft(
   query: GiftDiscoveryQuery,
   basePath: string,
   contextQuery: string,
+  scope: GiftScopeInUrl = "EXPLICIT",
 ):
   | Readonly<{ kind: "VALID"; href: string }>
   | Readonly<{
@@ -35,27 +40,33 @@ export function validateGiftFilterDraft(
     return { kind: "INVALID", minimum: false, maximum: "RANGE" };
   return {
     kind: "VALID",
-    href: giftFilterHref(query, basePath, contextQuery, {
-      sort: draft.sort,
-      availability: draft.availability,
-      ...(draft.kind
-        ? {
-            kind: draft.kind as NonNullable<GiftDiscoveryQuery["kind"]>,
-          }
-        : {}),
-      ...(draft.category
-        ? {
-            category: draft.category as NonNullable<
-              GiftDiscoveryQuery["category"]
-            >,
-          }
-        : {}),
-      ...(minimum.amountMinor !== undefined
-        ? { priceMinMinor: minimum.amountMinor }
-        : {}),
-      ...(maximum.amountMinor !== undefined
-        ? { priceMaxMinor: maximum.amountMinor }
-        : {}),
-    }),
+    href: giftFilterHref(
+      query,
+      basePath,
+      contextQuery,
+      {
+        sort: draft.sort,
+        availability: draft.availability,
+        ...(draft.kind
+          ? {
+              kind: draft.kind as NonNullable<GiftDiscoveryQuery["kind"]>,
+            }
+          : {}),
+        ...(draft.category
+          ? {
+              category: draft.category as NonNullable<
+                GiftDiscoveryQuery["category"]
+              >,
+            }
+          : {}),
+        ...(minimum.amountMinor !== undefined
+          ? { priceMinMinor: minimum.amountMinor }
+          : {}),
+        ...(maximum.amountMinor !== undefined
+          ? { priceMaxMinor: maximum.amountMinor }
+          : {}),
+      },
+      scope,
+    ),
   };
 }
