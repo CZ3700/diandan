@@ -234,14 +234,19 @@ export async function verifyGiftStorefrontBrowser({
   }
   try {
     step = "market selection without implicit defaults";
+    // ADR-017 addendum: with two published scopes the directory is readable but never priced.
     await goto("/en/gifts");
     check(
-      (await page.locator("[data-market-choices]").count()) === 1 &&
-        (await page.locator("[data-gift-card]").count()) === 0,
-      "no market scope presents actual region choices without guessed prices",
+      (await page.locator("[data-gift-browse]").count()) === 1 &&
+        (await page.locator("[data-gift-card]").count()) > 0 &&
+        (await page.locator("[data-gift-browse][data-gift-priced]").count()) ===
+          0 &&
+        (await page.locator(".gift-directory-card__price").count()) === 0,
+      "no market scope presents the content directory without guessed prices",
     );
+    await goto("/en/region");
     check(
-      (await page.locator("[data-market]").count()) === 2,
+      (await page.locator("[data-market-choices] [data-market]").count()) === 2,
       "region choices come from both actual enabled TEST scopes",
     );
     await goto(`/${SUPPORTED_LOCALES[0]}/gifts?${params()}`);

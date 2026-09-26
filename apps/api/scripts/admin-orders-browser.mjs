@@ -58,6 +58,9 @@ export function createAdminOrdersBrowserTasks(onFailure) {
 }
 
 /** Search completion is a rendered result, including a reused identical query. */
+// V2 §4-4: rows show the FS- short number; the searched UUID never becomes display text.
+const PUBLIC_ORDER_NO = /^FS-[0-9A-HJKMNP-TV-Z]{6}$/u;
+
 export function adminOrdersSearchReady(snapshot, target) {
   return (
     snapshot.busy === false &&
@@ -65,7 +68,7 @@ export function adminOrdersSearchReady(snapshot, target) {
     snapshot.query === target.publicId &&
     snapshot.rows.length === 1 &&
     snapshot.rows[0].orderId === target.orderId &&
-    snapshot.rows[0].publicId === target.publicId
+    PUBLIC_ORDER_NO.test(snapshot.rows[0].publicOrderNo ?? "")
   );
 }
 
@@ -253,7 +256,7 @@ export async function verifyAdminOrdersBrowser({
               ),
             ].map((row) => ({
               orderId: row.getAttribute("data-order-id"),
-              publicId: row.querySelector("strong")?.textContent?.trim(),
+              publicOrderNo: row.querySelector("strong")?.textContent?.trim(),
             })),
           })),
           { publicId, orderId },

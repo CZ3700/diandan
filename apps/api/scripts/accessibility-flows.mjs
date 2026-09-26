@@ -166,10 +166,16 @@ export async function accessibilityCustomerFlow({
   cell.giftBeforeMarket = true;
   report.stage = `${cell.id}:gift`;
   await tools.inspect(page, cell, "gift");
-  const market = page.locator(
-    `[data-market-choices] [data-market="${facts.commerceContext.market}"][data-currency="${facts.commerceContext.currency}"]`,
-  );
-  await tools.activate(page, market, "purchase-market");
+  // V2 §4-2: a sole published market streams the priced panel in place of the region choice.
+  await expect(
+    page.locator("[data-market-choices], [data-gift-purchase]").first(),
+  ).toBeVisible();
+  if ((await page.locator("[data-market-choices]").count()) > 0) {
+    const market = page.locator(
+      `[data-market-choices] [data-market="${facts.commerceContext.market}"][data-currency="${facts.commerceContext.currency}"]`,
+    );
+    await tools.activate(page, market, "purchase-market");
+  }
   const recipient = page.locator("[data-gift-recipient-picker] button").first();
   await expect(recipient).toBeVisible();
   if (locale === "en") await tools.modal(page, recipient, "recipient-dialog");
