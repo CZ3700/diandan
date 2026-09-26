@@ -104,6 +104,10 @@ test("preserves allowlisted reliable-event infrastructure signals", async () => 
     errorCode: "PAYLOAD_PURGE_FAILED",
     outcome: "failure",
   });
+  logger.error("persistence.pool_failure", {
+    errorCode: "TEMPORARY_UNAVAILABLE",
+    outcome: "failure",
+  });
 
   expect(lines.map((line) => JSON.parse(line) as unknown)).toEqual([
     expect.objectContaining({
@@ -117,6 +121,10 @@ test("preserves allowlisted reliable-event infrastructure signals", async () => 
     expect.objectContaining({
       event: "reliable_events.worker_notice",
       errorCode: "PAYLOAD_PURGE_FAILED",
+    }),
+    expect.objectContaining({
+      event: "persistence.pool_failure",
+      errorCode: "TEMPORARY_UNAVAILABLE",
     }),
   ]);
 });

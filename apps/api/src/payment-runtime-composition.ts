@@ -7,15 +7,6 @@ import {
   type PaymentHealthPolicy,
   type PaymentRuntimeConfiguration,
 } from "@fan-support/contracts";
-import {
-  resolveDatabaseRuntimeConfig,
-  resolveObjectStorageRuntimeConfig,
-  resolveServerRuntimeConfig,
-} from "@fan-support/config/server";
-import {
-  createKmsKeyManagementAdapter,
-  type KmsKeyManagementAdapterConfig,
-} from "@fan-support/key-management-kms";
 import type { KeyManagementPort } from "@fan-support/key-management-port";
 import type {
   PaymentRuntimeProviderRegistration,
@@ -28,7 +19,6 @@ import {
   type PostgresPersistence,
 } from "@fan-support/persistence-postgres";
 import { createCartSessionCredentials } from "./cart-session-credentials.js";
-import { resolveCartRuntimeConfig } from "./cart-runtime-config.js";
 import { createPaymentRecoveryLifecycle } from "./payment-runtime-lifecycle.js";
 import type { ApiLifecycleResource } from "./bootstrap.js";
 import type { PaymentRuntimeRouteDependencies } from "./payment-runtime-route.js";
@@ -44,16 +34,15 @@ type Factories = {
     options: PostgresPersistenceOptions,
   ) => Persistence;
 };
-type Common = {
-  database: PostgresConnectionConfig;
+type ComposeOptions = {
+  /** Called once after validation; stopping the runtime closes what it returned. */
+  openPersistence(): Persistence;
   publicMediaBaseUrl: string;
   configuration: PaymentRuntimeConfiguration;
   providers: readonly PaymentRuntimeProviderRegistration[];
   providerDirectory?: PaymentRuntimeProviderDirectory;
   healthPolicies?: readonly PaymentHealthPolicy[];
   readHealthPolicies?: () => readonly PaymentHealthPolicy[];
-};
-type Injected = Common & {
   keyManagement: KeyManagementPort;
   activePepperVersion: string;
   pepperVersions: readonly string[];
@@ -121,10 +110,7 @@ function healthPolicies(
     throw new TypeError("Invalid payment health policies");
   return policies;
 }
-function compose(
-  options: Injected,
-  factories: Factories,
-): PaymentRuntimeComposition {
+function compose(options: ComposeOptions): PaymentRuntimeComposition {
   const configuration = paymentRuntimeConfigurationSchema.parse(
     options.configuration,
   );
@@ -154,11 +140,7 @@ function compose(
           options.readHealthPolicies !== undefined,
         );
   const credentials = createCartSessionCredentials(options);
-  const persistence = (
-    factories.createPersistence ?? createPostgresPersistence
-  )(options.database, {
-    catalogPublicMediaBaseUrl: options.publicMediaBaseUrl,
-  });
+  const persistence = options.openPersistence();
   let closed: Promise<void> | undefined;
   const close = () =>
     (closed ??= Promise.resolve().then(() => persistence.close()));
@@ -216,7 +198,10 @@ function compose(
   }
 }
 export function createTestPaymentRuntimeComposition(
-  options: Injected & { environment: "TEST" },
+  options: Omit<ComposeOptions, "openPersistence"> & {
+    environment: "TEST";
+    database: PostgresConnectionConfig;
+  },
   factories: Factories = {},
 ): PaymentRuntimeComposition {
   if (
@@ -228,35 +213,37 @@ export function createTestPaymentRuntimeComposition(
   )
     throw new TypeError("Invalid TEST payment environment");
   const directory = options.providerDirectory;
-  return compose(
-    {
-      ...options,
-      ...(directory === undefined
-        ? {}
-        : {
-            providerDirectory: {
-              getRegistrations() {
-                const entries = directory.getRegistrations();
-                if (
-                  entries.some(
-                    (entry) => entry.configuration.environment !== "TEST",
-                  )
+  return compose({
+    ...options,
+    ...(directory === undefined
+      ? {}
+      : {
+          providerDirectory: {
+            getRegistrations() {
+              const entries = directory.getRegistrations();
+              if (
+                entries.some(
+                  (entry) => entry.configuration.environment !== "TEST",
                 )
-                  throw new TypeError("Invalid TEST payment environment");
-                return entries;
-              },
+              )
+                throw new TypeError("Invalid TEST payment environment");
+              return entries;
             },
-          }),
-    },
-    factories,
-  );
+          },
+        }),
+    openPersistence: () =>
+      (factories.createPersistence ?? createPostgresPersistence)(
+        options.database,
+        { catalogPublicMediaBaseUrl: options.publicMediaBaseUrl },
+      ),
+  });
 }
+export type PaymentRuntimeCompositionOptions = ComposeOptions & {
+  healthPolicies: readonly PaymentHealthPolicy[];
+};
+/** Only statically deployed adapters reach this composition; health policies are always explicit. */
 export function createPaymentRuntimeComposition(
-  options: Common & {
-    keyManagementConfig: KmsKeyManagementAdapterConfig;
-    healthPolicies: readonly PaymentHealthPolicy[];
-  },
-  factories: Factories = {},
+  options: PaymentRuntimeCompositionOptions,
 ): PaymentRuntimeComposition {
   healthPolicies(
     options.healthPolicies,
@@ -266,95 +253,5 @@ export function createPaymentRuntimeComposition(
     ],
     options.readHealthPolicies !== undefined,
   );
-  return compose(
-    {
-      ...options,
-      keyManagement: createKmsKeyManagementAdapter(options.keyManagementConfig),
-      activePepperVersion:
-        options.keyManagementConfig.activeBlindIndexKeyVersion,
-      pepperVersions: Object.keys(
-        options.keyManagementConfig.blindIndexKeyIdsByVersion,
-      ),
-    },
-    factories,
-  );
-}
-/** Only statically deployed registrations can activate payment; TEST adapters are never imported here. */
-export function createOptionalPaymentRuntimeComposition(
-  environment: Readonly<Record<string, string | undefined>>,
-  deployedProviders: readonly PaymentRuntimeProviderRegistration[] = [],
-): PaymentRuntimeComposition | undefined {
-  const configText = environment["FAN_SUPPORT_PAYMENT_RUNTIME_CONFIG_JSON"],
-    bindingsText = environment["FAN_SUPPORT_PAYMENT_PROVIDER_BINDINGS_JSON"],
-    healthText = environment["FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON"];
-  if (
-    configText === undefined &&
-    bindingsText === undefined &&
-    healthText === undefined
-  )
-    return undefined;
-  let configuration: PaymentRuntimeConfiguration;
-  let providers: ReturnType<typeof registrations>;
-  let policies: PaymentHealthPolicy[];
-  try {
-    configuration = paymentRuntimeConfigurationSchema.parse(
-      JSON.parse(configText ?? ""),
-    );
-    const raw: unknown = JSON.parse(bindingsText ?? "");
-    if (!Array.isArray(raw) || raw.length > 100)
-      throw new Error("Invalid payment bindings");
-    const bindings = raw.map((entry: unknown) =>
-      paymentRuntimeProviderBindingSchema.parse(entry),
-    );
-    if (
-      new Set(bindings.map((entry) => entry.providerAccountId.toLowerCase()))
-        .size !== bindings.length
-    )
-      throw new Error("Duplicate payment binding");
-    const deployed = registrations(deployedProviders);
-    if (deployed.length === 0) return undefined;
-    providers = bindings.map((binding) => {
-      const entry = deployed.find(
-        (candidate) =>
-          candidate.configuration.providerAccountId ===
-          binding.providerAccountId,
-      );
-      if (
-        !entry ||
-        JSON.stringify(entry.configuration) !== JSON.stringify(binding)
-      )
-        throw new Error("Unregistered payment provider");
-      return entry;
-    });
-    if (providers.length === 0) return undefined;
-    const rawPolicies: unknown = JSON.parse(healthText ?? "");
-    if (!Array.isArray(rawPolicies))
-      throw new TypeError("Invalid payment health policies");
-    policies = healthPolicies(
-      rawPolicies.map((entry: unknown) =>
-        paymentHealthPolicySchema.parse(entry),
-      ),
-      providers,
-    );
-  } catch {
-    throw new TypeError("Invalid payment runtime configuration");
-  }
-  const sources = { environment };
-  if (
-    resolveServerRuntimeConfig(sources).siteOrigin !==
-    configuration.publicStorefrontOrigin
-  )
-    throw new TypeError("Payment storefront origin does not match deployment");
-  return createPaymentRuntimeComposition({
-    database: {
-      connectionString: resolveDatabaseRuntimeConfig(sources).url,
-      application_name: "fan-support-api-payment",
-    },
-    publicMediaBaseUrl:
-      resolveObjectStorageRuntimeConfig(sources).publicMediaOrigin,
-    keyManagementConfig: resolveCartRuntimeConfig(environment),
-    configuration,
-    providers,
-    healthPolicies: policies,
-  });
+  return compose(options);
 }

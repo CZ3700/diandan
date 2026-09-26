@@ -20,11 +20,33 @@ it("accepts declared server payment metadata while retaining environment precede
     configFile: { [key]: "file" },
     environment: {
       [key]: "environment",
-      FAN_SUPPORT_PAYMENT_PROVIDER_BINDINGS_JSON: "[]",
+      FAN_SUPPORT_PAYMENT_ACCOUNT_CONNECTIONS_JSON: "[]",
       FAN_SUPPORT_PAYMENT_ACTION_ORIGINS_JSON: "[]",
     },
   };
   expect(resolveConfigLayers(sources, [key])).toEqual({ [key]: "environment" });
+});
+
+it("rejects the retired static provider binding key so stale deployments fail at startup", () => {
+  expect(() =>
+    resolveConfigLayers(
+      { environment: { FAN_SUPPORT_PAYMENT_PROVIDER_BINDINGS_JSON: "[]" } },
+      [],
+    ),
+  ).toThrow();
+});
+
+it("recognizes the production administration keys", () => {
+  const environment = {
+    FAN_SUPPORT_ADMIN_ORIGIN: "origin",
+    FAN_SUPPORT_ADMIN_TOKEN_PEPPER: "token",
+    FAN_SUPPORT_ADMIN_SUBJECT_PEPPER: "subject",
+    FAN_SUPPORT_ADMIN_OIDC_CONFIG_JSON: "config",
+    FAN_SUPPORT_ADMIN_OIDC_CLIENT_SECRET: "secret",
+  };
+  expect(
+    resolveConfigLayers({ environment }, ["FAN_SUPPORT_ADMIN_ORIGIN"]),
+  ).toEqual({ FAN_SUPPORT_ADMIN_ORIGIN: "origin" });
 });
 
 it("recognizes notification and order access server metadata without permitting misspelled keys", () => {

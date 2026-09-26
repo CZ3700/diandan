@@ -126,9 +126,15 @@ importers:
       '@fan-support/key-management-port':
         specifier: workspace:*
         version: link:../../packages/key-management-port
+      '@fan-support/media-image':
+        specifier: workspace:*
+        version: link:../../packages/media-image
       '@fan-support/media-port':
         specifier: workspace:*
         version: link:../../packages/media-port
+      '@fan-support/media-s3':
+        specifier: workspace:*
+        version: link:../../packages/media-s3
       '@fan-support/observability':
         specifier: workspace:*
         version: link:../../packages/observability
@@ -172,12 +178,6 @@ importers:
       '@fan-support/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
-      '@fan-support/media-image':
-        specifier: workspace:*
-        version: link:../../packages/media-image
-      '@fan-support/media-s3':
-        specifier: workspace:*
-        version: link:../../packages/media-s3
       '@fan-support/payment-fake':
         specifier: workspace:*
         version: link:../../packages/payment-fake

@@ -75,18 +75,3 @@ test("invalid checkout TEST configuration fails before opening a pool", async ()
     ).toThrow(TypeError);
   expect(createPersistence).not.toHaveBeenCalled();
 });
-
-test("unconfigured checkout is explicitly unavailable and partial production KMS references cannot silently disable it", async () => {
-  const module = await load();
-  expect(module?.createOptionalCheckoutPreflightComposition).toBeTypeOf(
-    "function",
-  );
-  expect(
-    module!.createOptionalCheckoutPreflightComposition({}),
-  ).toBeUndefined();
-  expect(() =>
-    module!.createOptionalCheckoutPreflightComposition({
-      FAN_SUPPORT_CART_KMS_REGION: "us-east-1",
-    }),
-  ).toThrow("Invalid cart runtime configuration");
-});

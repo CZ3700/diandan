@@ -15,6 +15,7 @@ const eventSchema = z.enum([
   "next.request.failed",
   "next.runtime.failed",
   "observability.invalid_event",
+  "persistence.pool_failure",
   "reliable_events.persistence_failure",
   "reliable_events.queue_notice",
   "reliable_events.worker_notice",

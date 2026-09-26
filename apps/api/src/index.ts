@@ -46,7 +46,6 @@ export {
 export {
   createPaymentRuntimeComposition,
   createTestPaymentRuntimeComposition,
-  createOptionalPaymentRuntimeComposition,
   type PaymentRuntimeComposition,
 } from "./payment-runtime-composition.js";
 

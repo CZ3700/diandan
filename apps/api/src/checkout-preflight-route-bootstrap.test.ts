@@ -1,6 +1,5 @@
 import { expect, test, vi } from "vitest";
 import { createApiApplication } from "./bootstrap.js";
-import { createProductionApiApplication } from "./production-application.js";
 
 const environment = {
   NODE_ENV: "test",
@@ -53,41 +52,4 @@ test("all three unconfigured checkout endpoints fail closed before processing re
   } finally {
     await app.close();
   }
-});
-
-test("production forwards checkout capability and cleans its owned pool on bootstrap failure", async () => {
-  const stop = vi.fn(async () => {});
-  const checkout = {
-    checkoutPreflightRoute: { marker: "checkout" },
-    checkoutPreflightRuntime: { start: vi.fn(), stop },
-  };
-  const createCheckoutComposition = vi.fn(() => checkout);
-  const createApplication = vi.fn(async () => {
-    throw new Error("TEST bootstrap failed");
-  });
-  await expect(
-    createProductionApiApplication(environment, {
-      logger,
-      factories: {
-        createComposition: (() => ({
-          reliableEventsRuntime: { stop: vi.fn() },
-        })) as never,
-        createCatalogComposition: (() => ({
-          catalogDirectoryRuntime: { stop: vi.fn() },
-        })) as never,
-        createPublishedComposition: (() => ({
-          publishedContentRuntime: { stop: vi.fn() },
-        })) as never,
-        createCartComposition: () => undefined,
-        createCheckoutComposition,
-        createApplication,
-      } as never,
-    }),
-  ).rejects.toThrow("TEST bootstrap failed");
-  expect(createCheckoutComposition).toHaveBeenCalledWith(environment);
-  expect(createApplication).toHaveBeenCalledWith(
-    environment,
-    expect.objectContaining(checkout),
-  );
-  expect(stop).toHaveBeenCalledTimes(1);
 });

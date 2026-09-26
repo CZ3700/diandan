@@ -1,6 +1,5 @@
 import { expect, test, vi } from "vitest";
 import { createApiApplication } from "./bootstrap.js";
-import { createProductionApiApplication } from "./production-application.js";
 
 const environment = {
   NODE_ENV: "test",
@@ -56,43 +55,4 @@ test("all unconfigured order access routes reject before processing raw credenti
   } finally {
     await app.close();
   }
-});
-
-test("production registers order access and stops its resource on construction failure", async () => {
-  const stop = vi.fn(async () => {});
-  const orderAccess = {
-    orderAccessRoute: { marker: "order-access" },
-    orderAccessRuntime: { start: vi.fn(), stop },
-  };
-  const createOrderAccessComposition = vi.fn(() => orderAccess);
-  const createApplication = vi.fn(async () => {
-    throw new Error("TEST construction failure");
-  });
-  await expect(
-    createProductionApiApplication(environment, {
-      logger,
-      factories: {
-        createComposition: (() => ({
-          reliableEventsRuntime: { stop: vi.fn() },
-        })) as never,
-        createCatalogComposition: (() => ({
-          catalogDirectoryRuntime: { stop: vi.fn() },
-        })) as never,
-        createPublishedComposition: (() => ({
-          publishedContentRuntime: { stop: vi.fn() },
-        })) as never,
-        createCartComposition: () => undefined,
-        createCheckoutComposition: () => undefined,
-        createPaymentComposition: () => undefined,
-        createOrderAccessComposition,
-        createApplication,
-      } as never,
-    }),
-  ).rejects.toThrow("TEST construction failure");
-  expect(createOrderAccessComposition).toHaveBeenCalledWith(environment);
-  expect(createApplication).toHaveBeenCalledWith(
-    environment,
-    expect.objectContaining(orderAccess),
-  );
-  expect(stop).toHaveBeenCalledTimes(1);
 });

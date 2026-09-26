@@ -140,6 +140,10 @@ export type CreateApiApplicationOptions = Readonly<{
   checkoutPreflightRuntime?: ApiLifecycleResource;
   paymentRuntimeRoute?: PaymentRuntimeRouteDependencies;
   paymentRuntime?: ApiLifecycleResource;
+  /** Refreshes the published payment directory; starts before payment recovery reads it. */
+  paymentConfigurationRuntime?: ApiLifecycleResource;
+  /** Owner holds on the process-wide pools; each pool closes after its last borrower stops. */
+  sharedResourcesRuntime?: ApiLifecycleResource;
   managementCenterRoute?: ManagementCenterRouteDependencies;
   managementCenterRuntime?: ApiLifecycleResource;
   giftCommerceRoute?: GiftCommerceRouteDependencies;
@@ -190,6 +194,8 @@ function registerApiLifecycle(
   adapter: FastifyAdapter,
   runtime: ApiLifecycleResource | undefined,
   name:
+    | "API shared resources"
+    | "API payment configuration projection"
     | "API admin access"
     | "API admin orders"
     | "API admin finance"
@@ -249,8 +255,18 @@ export async function createApiApplication(
     service: "api",
     logger,
   });
+  registerApiLifecycle(
+    adapter,
+    options.sharedResourcesRuntime,
+    "API shared resources",
+  );
   registerApiLifecycle(adapter, options.cartRuntime, "API cart");
   registerApiLifecycle(adapter, options.orderAccessRuntime, "API order access");
+  registerApiLifecycle(
+    adapter,
+    options.paymentConfigurationRuntime,
+    "API payment configuration projection",
+  );
   registerApiLifecycle(adapter, options.paymentRuntime, "API payment runtime");
   registerApiLifecycle(
     adapter,

@@ -1,5 +1,4 @@
 import { expect, test, vi } from "vitest";
-import { createProductionApiApplication } from "./production-application.js";
 import { createApiApplication } from "./bootstrap.js";
 const testDatabaseUrl = [
   "postgresql://",
@@ -57,31 +56,4 @@ test("unconfigured cart routes fail closed with private responses", async () => 
   } finally {
     await app.close();
   }
-});
-
-test("partial KMS configuration cannot silently disable carts and closes other resources", async () => {
-  const stop = vi.fn(async () => undefined),
-    createApplication = vi.fn();
-  await expect(
-    createProductionApiApplication(
-      { FAN_SUPPORT_CART_KMS_REGION: "us-east-1" },
-      {
-        logger: quietLogger,
-        factories: {
-          createApplication: createApplication as never,
-          createComposition: (() => ({
-            reliableEventsRuntime: { stop },
-          })) as never,
-          createCatalogComposition: (() => ({
-            catalogDirectoryRuntime: { stop },
-          })) as never,
-          createPublishedComposition: (() => ({
-            publishedContentRuntime: { stop },
-          })) as never,
-        },
-      },
-    ),
-  ).rejects.toThrow("Invalid cart runtime configuration");
-  expect(createApplication).not.toHaveBeenCalled();
-  expect(stop).toHaveBeenCalledTimes(3);
 });

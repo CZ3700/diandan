@@ -23,6 +23,10 @@ export type ProductionWorkerApplicationOptions = Readonly<{
       environment: Environment,
       options: CompositionOptions,
     ) => Promise<WorkerLifecycleResource>;
+    createManagementComposition?: (
+      environment: Environment,
+      options: CompositionOptions,
+    ) => Promise<WorkerLifecycleResource>;
   }>;
 }>;
 
@@ -40,6 +44,7 @@ export async function createProductionWorkerApplication(
   const reliable = createReliable(environment, { logger: options.logger });
   let media: WorkerLifecycleResource | undefined;
   let purge: WorkerLifecycleResource | undefined;
+  let management: WorkerLifecycleResource | undefined;
   try {
     const createMedia =
       options.factories?.createMediaComposition ??
@@ -51,17 +56,26 @@ export async function createProductionWorkerApplication(
       (await import("./publication-purge-composition.js"))
         .createWorkerPublicationPurgeComposition;
     purge = await createPurge(environment, { logger: options.logger });
+    const createManagement =
+      options.factories?.createManagementComposition ??
+      (await import("./management-center-composition.js"))
+        .createWorkerManagementCenterComposition;
+    management = await createManagement(environment, {
+      logger: options.logger,
+    });
     return await createApplication(environment, {
       logger: options.logger,
       reliableEventsRuntime: reliable,
       mediaProcessingRuntime: media,
       publicationPurgeRuntime: purge,
+      managementCenterRuntime: management,
     });
   } catch (error) {
     await Promise.allSettled([
       Promise.resolve().then(() => reliable.stop()),
       Promise.resolve().then(() => media?.stop()),
       Promise.resolve().then(() => purge?.stop()),
+      Promise.resolve().then(() => management?.stop()),
     ]);
     throw error;
   }

@@ -1,9 +1,7 @@
 import { orderAccessConfigurationSchema } from "@fan-support/contracts";
 import { expect, test, vi } from "vitest";
-import {
-  createOptionalOrderAccessComposition,
-  createTestOrderAccessComposition,
-} from "./order-access-composition.js";
+import { createTestOrderAccessComposition } from "./order-access-composition.js";
+import { resolveOrderAccessRuntimeConfig } from "./order-access-runtime-config.js";
 
 const configuration = orderAccessConfigurationSchema.parse({
   schemaVersion: 1 as const,
@@ -19,19 +17,34 @@ const configuration = orderAccessConfigurationSchema.parse({
   },
 });
 
-test("unconfigured access is explicitly unavailable and malformed activation never opens a pool", () => {
-  expect(createOptionalOrderAccessComposition({})).toBeUndefined();
+test("unconfigured access is explicitly unavailable and malformed or foreign activation is rejected", () => {
+  const siteOrigin = configuration.publicStorefrontOrigin;
+  expect(resolveOrderAccessRuntimeConfig({}, siteOrigin)).toBeUndefined();
+  expect(
+    resolveOrderAccessRuntimeConfig(
+      { FAN_SUPPORT_ORDER_ACCESS_CONFIG_JSON: JSON.stringify(configuration) },
+      siteOrigin,
+    ),
+  ).toEqual(configuration);
   for (const text of [
     "",
     "{}",
     "invalid",
     JSON.stringify({ ...configuration, sessionTtlSeconds: 0 }),
+    "x".repeat(16_385),
   ])
     expect(() =>
-      createOptionalOrderAccessComposition({
-        FAN_SUPPORT_ORDER_ACCESS_CONFIG_JSON: text,
-      }),
+      resolveOrderAccessRuntimeConfig(
+        { FAN_SUPPORT_ORDER_ACCESS_CONFIG_JSON: text },
+        siteOrigin,
+      ),
     ).toThrow("Invalid order access runtime configuration");
+  expect(() =>
+    resolveOrderAccessRuntimeConfig(
+      { FAN_SUPPORT_ORDER_ACCESS_CONFIG_JSON: JSON.stringify(configuration) },
+      "https://other.example.invalid",
+    ),
+  ).toThrow("Order access origin does not match deployment");
 });
 
 test("TEST composition validates its boundary before creating persistence and owns close exactly once", async () => {
