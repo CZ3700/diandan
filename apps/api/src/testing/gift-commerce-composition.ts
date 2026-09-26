@@ -6,8 +6,8 @@ import {
   type PostgresPersistence,
   type PostgresPersistenceOptions,
 } from "@fan-support/persistence-postgres";
-import type { GiftCommerceRouteDependencies } from "./gift-commerce-route.js";
-import type { ApiLifecycleResource } from "./bootstrap.js";
+import type { GiftCommerceRouteDependencies } from "../gift-commerce-route.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
 
 type CommercePersistence = Pick<
   PostgresPersistence,

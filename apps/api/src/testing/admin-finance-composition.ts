@@ -8,9 +8,9 @@ import {
   type PostgresConnectionConfig,
   type PostgresPersistence,
 } from "@fan-support/persistence-postgres";
-import type { ApiLifecycleResource } from "./bootstrap.js";
-import type { AdminFinanceRouteDependencies } from "./admin-finance-route.js";
-import { createPaymentRecoveryLifecycle } from "./payment-runtime-lifecycle.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
+import type { AdminFinanceRouteDependencies } from "../admin-finance-route.js";
+import { createPaymentRecoveryLifecycle } from "../payment-runtime-lifecycle.js";
 type Persistence = Pick<
   PostgresPersistence,
   "adminFinanceTransactionManager" | "close"

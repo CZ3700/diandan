@@ -10,7 +10,7 @@ import { createApiApplication } from "../dist/bootstrap.js";
 import {
   createLocalAdminPaymentConfigurationComposition,
   createTestPaymentRuntimeComposition,
-} from "../dist/index.js";
+} from "../dist/testing/index.js";
 import { preflightEnvironment } from "./publication-preflight-http-fixtures.mjs";
 import {
   createConfigurationTestFactories,

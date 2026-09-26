@@ -20,8 +20,8 @@ import {
   withEphemeralPostgres,
 } from "@fan-support/persistence-postgres";
 import { createApiApplication } from "../dist/bootstrap.js";
-import { createTestContentAuthoringComposition } from "../dist/content-authoring-composition.js";
-import { createTestAdminContentComposition } from "../dist/admin-content-composition.js";
+import { createTestContentAuthoringComposition } from "../dist/testing/content-authoring-composition.js";
+import { createTestAdminContentComposition } from "../dist/testing/admin-content-composition.js";
 import { seedContentAuthoringFixtures } from "../../../packages/persistence-postgres/scripts/postgres-content-authoring-fixtures.mjs";
 import { revokeAdminContentLocaleGrant } from "../../../packages/persistence-postgres/scripts/postgres-admin-content-fixtures.mjs";
 

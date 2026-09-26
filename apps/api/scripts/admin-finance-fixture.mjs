@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { createLocalAdminFinanceComposition } from "../dist/admin-finance-composition.js";
+import { createLocalAdminFinanceComposition } from "../dist/testing/admin-finance-composition.js";
 import { createAdminOrdersRuntime } from "./admin-orders-runtime.mjs";
 import { createPaidAdminOrder } from "./admin-orders-fixtures.mjs";
 import { observeFinanceBrowserSession } from "./admin-finance-diagnostics.mjs";

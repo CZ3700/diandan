@@ -32,9 +32,9 @@ import {
   withEphemeralPostgres,
 } from "@fan-support/persistence-postgres";
 import { createApiApplication } from "../dist/bootstrap.js";
-import { createTestResourceManagementComposition } from "../dist/resource-management-composition.js";
-import { createTestContentAuthoringComposition } from "../dist/content-authoring-composition.js";
-import { createTestBaseContentComposition } from "../dist/base-content-composition.js";
+import { createTestResourceManagementComposition } from "../dist/testing/resource-management-composition.js";
+import { createTestContentAuthoringComposition } from "../dist/testing/content-authoring-composition.js";
+import { createTestBaseContentComposition } from "../dist/testing/base-content-composition.js";
 import { createWorkerMediaProcessingComposition } from "../../worker/dist/media-processing-composition.js";
 import { createMediaProcessingWorkerRuntime } from "../../worker/dist/media-processing-runtime.js";
 import { mediaProvenanceEligibilitySql } from "../../../packages/persistence-postgres/dist/resource-media-eligibility-sql.js";

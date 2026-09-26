@@ -9,7 +9,7 @@ import { createApiApplication } from "../dist/bootstrap.js";
 import {
   createLocalOidcAdminAccessComposition,
   createLocalAdminOrdersComposition,
-} from "../dist/index.js";
+} from "../dist/testing/index.js";
 import { preflightEnvironment } from "./publication-preflight-http-fixtures.mjs";
 import { seedAdminOrdersRoles } from "./admin-orders-fixtures.mjs";
 import {

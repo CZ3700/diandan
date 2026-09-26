@@ -4,8 +4,8 @@ import {
   type PostgresConnectionConfig,
   type PostgresPersistence,
 } from "@fan-support/persistence-postgres";
-import type { ApiLifecycleResource } from "./bootstrap.js";
-import type { AdminExceptionsRouteDependencies } from "./admin-exceptions-route.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
+import type { AdminExceptionsRouteDependencies } from "../admin-exceptions-route.js";
 export type LocalAdminExceptionsCompositionOptions = Readonly<{
   environment: "LOCAL_OIDC";
   database: PostgresConnectionConfig;

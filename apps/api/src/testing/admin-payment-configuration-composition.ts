@@ -9,10 +9,10 @@ import {
   type PostgresConnectionConfig,
   type PostgresPersistence,
 } from "@fan-support/persistence-postgres";
-import type { AdminPaymentConfigurationRouteDependencies } from "./admin-payment-configuration-route.js";
-import { createPaymentConfigurationRuntime } from "./payment-configuration-runtime.js";
-import { createPaymentConfigurationLifecycle } from "./payment-configuration-lifecycle.js";
-import type { ApiLifecycleResource } from "./bootstrap.js";
+import type { AdminPaymentConfigurationRouteDependencies } from "../admin-payment-configuration-route.js";
+import { createPaymentConfigurationRuntime } from "../payment-configuration-runtime.js";
+import { createPaymentConfigurationLifecycle } from "../payment-configuration-lifecycle.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
 type Persistence = Pick<
   PostgresPersistence,
   "adminPaymentConfigurationTransactionManager" | "close"

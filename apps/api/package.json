@@ -6,6 +6,7 @@
   "sideEffects": false,
   "files": [
     "dist",
+    "!dist/testing",
     "package.json"
   ],
   "exports": {

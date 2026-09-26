@@ -25,7 +25,7 @@ import {
   createTestPublicationPreflightComposition,
   createTestPublicationRuntimeComposition,
   createTestGiftCommerceComposition,
-} from "../dist/index.js";
+} from "../dist/testing/index.js";
 import { createWorkerMediaProcessingComposition } from "../../worker/dist/media-processing-composition.js";
 import { createMediaProcessingWorkerRuntime } from "../../worker/dist/media-processing-runtime.js";
 import {
@@ -49,7 +49,7 @@ import {
   createStorefrontMediaPublisher,
 } from "./storefront-media-fixtures.mjs";
 import { seedGiftStorefront } from "./gift-storefront-fixtures.mjs";
-import { createTestCartRuntimeComposition } from "../dist/cart-composition.js";
+import { createTestCartRuntimeComposition } from "../dist/testing/cart-composition.js";
 import { createCartHttpTestKms } from "./cart-http-kms.mjs";
 import { verifyCartRuntimeRollbackProtection } from "../../../packages/persistence-postgres/scripts/cart-runtime-rollback-proof.mjs";
 import { verifyCartHttpDaily } from "./cart-http-daily.mjs";

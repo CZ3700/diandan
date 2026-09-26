@@ -1,5 +1,5 @@
-import type { AdminSessionRouteDependencies } from "./admin-session-route.js";
-import type { ApiLifecycleResource } from "./bootstrap.js";
+import type { AdminSessionRouteDependencies } from "../admin-session-route.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
 import type {
   PostgresConnectionConfig,
   PostgresPersistence,

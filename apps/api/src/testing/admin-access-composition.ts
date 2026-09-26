@@ -16,9 +16,9 @@ import {
   type PostgresConnectionConfig,
   type PostgresPersistence,
 } from "@fan-support/persistence-postgres";
-import type { ApiLifecycleResource } from "./bootstrap.js";
-import type { AdminAccessRouteDependencies } from "./admin-access-route.js";
-import type { AdminSessionRouteDependencies } from "./admin-session-route.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
+import type { AdminAccessRouteDependencies } from "../admin-access-route.js";
+import type { AdminSessionRouteDependencies } from "../admin-session-route.js";
 type Persistence = Pick<
   PostgresPersistence,
   "adminAccessTransactionManager" | "adminSessionTransactionManager" | "close"

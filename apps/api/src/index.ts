@@ -1,60 +1,28 @@
-export {
-  createLocalAdminOrdersComposition,
-  type LocalAdminOrdersCompositionOptions,
-} from "./admin-orders-composition.js";
-export * from "./publication-preflight-composition.js";
-export {
-  createTestAdminContentComposition,
-  type TestAdminContentCompositionOptions,
-} from "./admin-content-composition.js";
 export const workspacePackageName = "@fan-support/api" as const;
 
-export {
-  createTestContentAuthoringComposition,
-  type TestContentAuthoringCompositionOptions,
-} from "./content-authoring-composition.js";
-export {
-  createTestBaseContentComposition,
-  type TestBaseContentCompositionOptions,
-} from "./base-content-composition.js";
-
-export {
-  createTestResourceManagementComposition,
-  type TestResourceManagementCompositionOptions,
-} from "./resource-management-composition.js";
+// TEST and local-development compositions live in ./testing and are never exported here.
 export * from "./publication-runtime-route.js";
 export * from "./published-content-route.js";
-export * from "./publication-runtime-composition.js";
 export * from "./published-content-composition.js";
 
 export * from "./admin-session-route.js";
-export * from "./admin-session-composition.js";
 export * from "./admin-workspace-route.js";
-export * from "./admin-workspace-composition.js";
 
 export * from "./gift-commerce-route.js";
 
-export * from "./gift-commerce-composition.js";
-
 export * from "./published-gift-commerce-route.js";
 export * from "./management-center-route.js";
-export * from "./test-management-center-composition.js";
 export {
   registerPaymentRuntimeRoute,
   type PaymentRuntimeRouteDependencies,
 } from "./payment-runtime-route.js";
 export {
   createPaymentRuntimeComposition,
-  createTestPaymentRuntimeComposition,
   type PaymentRuntimeComposition,
 } from "./payment-runtime-composition.js";
 
 export * from "./admin-access-route.js";
-export * from "./admin-access-composition.js";
 export * from "./admin-finance-route.js";
-export * from "./admin-finance-composition.js";
 export * from "./admin-payment-configuration-route.js";
-export * from "./admin-payment-configuration-composition.js";
 export * from "./payment-configuration-runtime.js";
 export * from "./admin-exceptions-route.js";
-export * from "./admin-exceptions-composition.js";

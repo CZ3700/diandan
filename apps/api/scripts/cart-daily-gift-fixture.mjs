@@ -5,7 +5,7 @@ import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { createMediaImageProcessor } from "@fan-support/media-image";
 import { managementCenterResponseSchema } from "@fan-support/contracts";
-import { createTestManagementCenterComposition } from "../dist/index.js";
+import { createTestManagementCenterComposition } from "../dist/testing/index.js";
 
 // Only configuration and a real staff grant are seeded. All gift/media/price/rule
 // business rows below are written by the normal authenticated daily publisher.

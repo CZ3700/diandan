@@ -8,8 +8,8 @@ import type {
   MediaStoragePort,
   MediaSourceInspectionPort,
 } from "@fan-support/media-port";
-import type { ApiLifecycleResource } from "./bootstrap.js";
-import type { ResourceManagementRouteDependencies } from "./resource-management-route.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
+import type { ResourceManagementRouteDependencies } from "../resource-management-route.js";
 type ResourcePersistence = Pick<
   PostgresPersistence,
   "resourceManagementTransactionManager" | "close"

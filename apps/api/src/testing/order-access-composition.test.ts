@@ -1,7 +1,7 @@
 import { orderAccessConfigurationSchema } from "@fan-support/contracts";
 import { expect, test, vi } from "vitest";
 import { createTestOrderAccessComposition } from "./order-access-composition.js";
-import { resolveOrderAccessRuntimeConfig } from "./order-access-runtime-config.js";
+import { resolveOrderAccessRuntimeConfig } from "../order-access-runtime-config.js";
 
 const configuration = orderAccessConfigurationSchema.parse({
   schemaVersion: 1 as const,

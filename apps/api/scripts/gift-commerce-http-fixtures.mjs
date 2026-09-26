@@ -4,7 +4,7 @@ import {
   createCatalogDirectoryUseCases,
   createPublishedGiftCommerceUseCases,
 } from "@fan-support/application";
-import { createTestGiftCommerceComposition } from "../dist/gift-commerce-composition.js";
+import { createTestGiftCommerceComposition } from "../dist/testing/gift-commerce-composition.js";
 import { seedGiftCommerceMarket } from "../../../packages/persistence-postgres/scripts/postgres-gift-commerce-fixtures.mjs";
 import { workspaceTranslations } from "./admin-workspace-fixtures.mjs";
 import { verifyGiftCommerceBrowser } from "./gift-commerce-browser.mjs";

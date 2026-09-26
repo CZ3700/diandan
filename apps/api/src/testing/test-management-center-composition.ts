@@ -17,8 +17,8 @@ import type {
   MediaSourceInspectionPort,
   MediaStoragePort,
 } from "@fan-support/media-port";
-import type { ManagementCenterRouteDependencies } from "./management-center-route.js";
-import type { ApiLifecycleResource } from "./bootstrap.js";
+import type { ManagementCenterRouteDependencies } from "../management-center-route.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
 import { createManagementCenterRuntime } from "./management-center-runtime.js";
 
 type ManagementPersistence = Pick<

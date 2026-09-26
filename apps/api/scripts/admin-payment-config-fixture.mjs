@@ -6,7 +6,7 @@ import { setTimeout as delay } from "node:timers/promises";
 import { SUPPORTED_LOCALES } from "@fan-support/contracts";
 import { digestAdminIdentitySubject } from "@fan-support/application";
 import { canonicalPublicationValue } from "@fan-support/content";
-import { createLocalAdminPaymentConfigurationComposition } from "../dist/index.js";
+import { createLocalAdminPaymentConfigurationComposition } from "../dist/testing/index.js";
 import { createAdminOrdersRuntime } from "./admin-orders-runtime.mjs";
 import {
   createFinanceBrowserSessionClock,

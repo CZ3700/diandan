@@ -25,10 +25,8 @@ const observed = vi.hoisted(() => ({
 vi.mock("@fan-support/application", () => ({
   createPaymentRuntimeUseCases: observed.create,
 }));
-import {
-  createTestPaymentRuntimeComposition,
-  createPaymentRuntimeComposition,
-} from "./payment-runtime-composition.js";
+import { createPaymentRuntimeComposition } from "../payment-runtime-composition.js";
+import { createTestPaymentRuntimeComposition } from "./payment-runtime-composition.js";
 const database = { connectionString: "postgresql://fixture.invalid/payment" };
 const keyManagement = {
   computeBlindIndex: vi.fn(),

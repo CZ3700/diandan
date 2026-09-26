@@ -17,7 +17,7 @@ import {
 } from "@fan-support/application";
 import { adminSessionPermissionSchema } from "@fan-support/contracts";
 import { createApiApplication } from "../dist/bootstrap.js";
-import { createLocalOidcAdminAccessComposition } from "../dist/index.js";
+import { createLocalOidcAdminAccessComposition } from "../dist/testing/index.js";
 import { preflightEnvironment } from "./publication-preflight-http-fixtures.mjs";
 import { seedAdminAccessRoles } from "./admin-access-fixtures.mjs";
 import { startTestOidcProvider } from "../../../packages/identity-oidc/src/test-support/https-idp.mjs";

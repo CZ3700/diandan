@@ -6,8 +6,8 @@ import {
   type PostgresPersistence,
   type PostgresPersistenceOptions,
 } from "@fan-support/persistence-postgres";
-import type { AdminOrdersRouteDependencies } from "./admin-orders-route.js";
-import type { ApiLifecycleResource } from "./bootstrap.js";
+import type { AdminOrdersRouteDependencies } from "../admin-orders-route.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
 type Persistence = Pick<
   PostgresPersistence,
   "adminOrdersTransactionManager" | "close"

@@ -21,7 +21,7 @@
 
 **遗留说明**：
 - `output/` 另有约 2 万个被全局规则（`*.log`、`dist/` 等）忽略的历史本地文件，从未入库、不在已确认的删除清单内，未处理。
-- 远端 CI 自 2026-09-04 起未运行；建议 R1 开工前把 `main` 快进到 V2 主线并跑一次 CI（push 到 main 会触发 5 组回归，消耗 Actions 分钟，需用户确认）。
+- Linux CI 基线（草稿 PR #13，run 36202613265）：security、operations 通过；quality、journey、commerce、catalog 失败。失败点分别是 UI 复合组件浏览器校验（360×800 英文 Hero 失败态布局偏移超过 1px）、本地体验在 Linux 上启动失败（supervisor 日志未随产物上传）、订单前台夹具的"每日礼物发布"媒体处理失败（`MEDIA_FAILED`）、catalog 详见产物。这些失败所在的脚本和代码 R0 都没有改动：R0 对回归框架的唯一改动 `resolveSpawnCommand` 在非 Windows 平台原样返回命令。回归矩阵加入 CI 后从未在 GitHub 上跑过，这是首次在 Linux 上运行，暴露的都是既有问题。修复单独立项。
 
 ## R1 生产就绪 + 支付预置 —— IN_PROGRESS（分支 `v2/r1-production`）
 
@@ -29,4 +29,4 @@
 
 | 条目 | 状态 | 范围与结论 |
 |:--|:--|:--|
-| R1-1 生产组合根 | IN_PROGRESS | 范围：生产 API 注册 admin 全部路由、SEO、webhook（已部署验签器注册表，未知端点不查库）与 P5-05 支付目录；admin/支付配置组"全缺=不可用、部分缺=启动失败"；共享连接池（主池/支付配置/webhook）与单个 KMS、S3 实例；worker 补管理中心任务循环；Test/Local 组合迁入 `src/testing/` 并排除出部署产物。验证：先写"完整生产配置注册全部路由"失败测试，再做配置/租约/导入图/真实 Fastify 路由测试、`pnpm deploy` 产物检查、`check:dev`；真实库集成由 CI 承担 |
+| R1-1 生产组合根 | LOCAL_ACCEPTED | 生产 API 注册全部路由依赖：admin 18 组、SEO、webhook（已部署验签器目录，未知端点在内存 404、不查库）、P5-05 支付目录（部署账户 + 数据库发布激活）；配置组"全缺=不可用、部分缺=启动失败"，淘汰静态绑定键；API 共享 3 个连接池（引用计数关闭）、单个 KMS/S3；worker 补管理中心任务循环。Test/Local 组合迁入 `src/testing/`，`pnpm deploy` 实测产物不含 `dist/testing`，导入图守卫经变异验证；29 个脚本 50 处导入改路径，静态校验 114 处 dist 导入全部可解析。`check:dev` 通过（api 84 文件/338 测试，worker 14/46；一次重跑前 persistence-postgres 3 个既有慢测试在负载下超时，单跑与重跑均通过）。未覆盖：真实 PostgreSQL 与浏览器集成（本机无 PG，交 CI）。遗留：`pnpm deploy` 安装阶段因 lighthouse→@sentry 缺 `@opentelemetry/core` 对等依赖失败，R0 版本同样复现，Docker 镜像构建会在此处失败 → R1-9 |

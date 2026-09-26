@@ -12,12 +12,7 @@ import type {
   PaymentRuntimeProviderRegistration,
   PaymentRuntimeProviderDirectory,
 } from "@fan-support/payment-port";
-import {
-  createPostgresPersistence,
-  type PostgresConnectionConfig,
-  type PostgresPersistenceOptions,
-  type PostgresPersistence,
-} from "@fan-support/persistence-postgres";
+import type { PostgresPersistence } from "@fan-support/persistence-postgres";
 import { createCartSessionCredentials } from "./cart-session-credentials.js";
 import { createPaymentRecoveryLifecycle } from "./payment-runtime-lifecycle.js";
 import type { ApiLifecycleResource } from "./bootstrap.js";
@@ -28,13 +23,7 @@ type Persistence = Pick<
 > & {
   paymentHealthTransactionManager?: PostgresPersistence["paymentHealthTransactionManager"];
 };
-type Factories = {
-  createPersistence?: (
-    database: PostgresConnectionConfig,
-    options: PostgresPersistenceOptions,
-  ) => Persistence;
-};
-type ComposeOptions = {
+export type PaymentRuntimeComposeOptions = {
   /** Called once after validation; stopping the runtime closes what it returned. */
   openPersistence(): Persistence;
   publicMediaBaseUrl: string;
@@ -110,7 +99,10 @@ function healthPolicies(
     throw new TypeError("Invalid payment health policies");
   return policies;
 }
-function compose(options: ComposeOptions): PaymentRuntimeComposition {
+/** Wiring shared by the production and TEST roots; each root decides whether health policies are mandatory. */
+export function composePaymentRuntime(
+  options: PaymentRuntimeComposeOptions,
+): PaymentRuntimeComposition {
   const configuration = paymentRuntimeConfigurationSchema.parse(
     options.configuration,
   );
@@ -197,48 +189,7 @@ function compose(options: ComposeOptions): PaymentRuntimeComposition {
     throw new TypeError("Payment runtime construction failed");
   }
 }
-export function createTestPaymentRuntimeComposition(
-  options: Omit<ComposeOptions, "openPersistence"> & {
-    environment: "TEST";
-    database: PostgresConnectionConfig;
-  },
-  factories: Factories = {},
-): PaymentRuntimeComposition {
-  if (
-    options.environment !== "TEST" ||
-    [
-      ...options.providers,
-      ...(options.providerDirectory?.getRegistrations() ?? []),
-    ].some((entry) => entry.configuration.environment !== "TEST")
-  )
-    throw new TypeError("Invalid TEST payment environment");
-  const directory = options.providerDirectory;
-  return compose({
-    ...options,
-    ...(directory === undefined
-      ? {}
-      : {
-          providerDirectory: {
-            getRegistrations() {
-              const entries = directory.getRegistrations();
-              if (
-                entries.some(
-                  (entry) => entry.configuration.environment !== "TEST",
-                )
-              )
-                throw new TypeError("Invalid TEST payment environment");
-              return entries;
-            },
-          },
-        }),
-    openPersistence: () =>
-      (factories.createPersistence ?? createPostgresPersistence)(
-        options.database,
-        { catalogPublicMediaBaseUrl: options.publicMediaBaseUrl },
-      ),
-  });
-}
-export type PaymentRuntimeCompositionOptions = ComposeOptions & {
+export type PaymentRuntimeCompositionOptions = PaymentRuntimeComposeOptions & {
   healthPolicies: readonly PaymentHealthPolicy[];
 };
 /** Only statically deployed adapters reach this composition; health policies are always explicit. */
@@ -253,5 +204,5 @@ export function createPaymentRuntimeComposition(
     ],
     options.readHealthPolicies !== undefined,
   );
-  return compose(options);
+  return composePaymentRuntime(options);
 }

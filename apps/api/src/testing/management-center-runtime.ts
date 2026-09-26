@@ -1,4 +1,4 @@
-import type { ApiLifecycleResource } from "./bootstrap.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
 
 type Scheduled = Readonly<{ cancel(): void }>;
 function scheduleOnce(tick: () => void, delayMs: number): Scheduled {

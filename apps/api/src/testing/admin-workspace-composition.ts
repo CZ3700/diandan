@@ -12,13 +12,13 @@ import {
   type PostgresPersistenceOptions,
 } from "@fan-support/persistence-postgres";
 import type { MediaStoragePort } from "@fan-support/media-port";
-import type { ApiLifecycleResource } from "./bootstrap.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
 import type {
   AdminCatalogRouteDependencies,
   TranslationWorkspaceRouteDependencies,
   TranslationTransferRouteDependencies,
   AdminPreviewMediaRouteDependencies,
-} from "./admin-workspace-route.js";
+} from "../admin-workspace-route.js";
 type WorkspacePersistence = Pick<
   PostgresPersistence,
   | "close"

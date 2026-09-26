@@ -8,7 +8,7 @@ import { createStructuredLogger } from "@fan-support/observability";
 import { startNodeTelemetry } from "@fan-support/observability/node";
 import { createWorkerReliableEventsComposition } from "../../worker/dist/reliable-events-composition.js";
 import { createWorkerMediaProcessingComposition } from "../../worker/dist/media-processing-composition.js";
-import { createTestManagementCenterComposition } from "../dist/test-management-center-composition.js";
+import { createTestManagementCenterComposition } from "../dist/testing/test-management-center-composition.js";
 import { createLocalExperienceKms } from "./local-experience-kms.mjs";
 import { createLocalExperienceMedia } from "./local-experience-runtime-media.mjs";
 import {

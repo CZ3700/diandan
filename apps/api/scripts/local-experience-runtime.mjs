@@ -20,13 +20,13 @@ import {
   createLocalAdminFinanceComposition,
   createLocalAdminPaymentConfigurationComposition,
   createLocalAdminExceptionsComposition,
-} from "../dist/index.js";
+} from "../dist/testing/index.js";
 import { createPublishedContentComposition } from "../dist/published-content-composition.js";
 import { createCatalogDirectoryComposition } from "../dist/catalog-directory-composition.js";
-import { createTestCartRuntimeComposition } from "../dist/cart-composition.js";
-import { createTestCheckoutPreflightComposition } from "../dist/checkout-composition.js";
-import { createTestPaymentRuntimeComposition } from "../dist/payment-runtime-composition.js";
-import { createTestOrderAccessComposition } from "../dist/order-access-composition.js";
+import { createTestCartRuntimeComposition } from "../dist/testing/cart-composition.js";
+import { createTestCheckoutPreflightComposition } from "../dist/testing/checkout-composition.js";
+import { createTestPaymentRuntimeComposition } from "../dist/testing/payment-runtime-composition.js";
+import { createTestOrderAccessComposition } from "../dist/testing/order-access-composition.js";
 import { createApiReliableEventsComposition } from "../dist/reliable-events-composition.js";
 import { createLocalExperienceKms } from "./local-experience-kms.mjs";
 import { createLocalExperienceMedia } from "./local-experience-runtime-media.mjs";

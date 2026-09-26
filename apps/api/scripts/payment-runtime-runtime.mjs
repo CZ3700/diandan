@@ -4,7 +4,7 @@ import { SUPPORTED_LOCALES } from "@fan-support/contracts";
 import { createStructuredLogger } from "@fan-support/observability";
 import { createPersistentTestPaymentProvider } from "@fan-support/payment-fake/persistent-http";
 import { createApiApplication } from "../dist/bootstrap.js";
-import { createTestPaymentRuntimeComposition } from "../dist/payment-runtime-composition.js";
+import { createTestPaymentRuntimeComposition } from "../dist/testing/payment-runtime-composition.js";
 import { publicationMediaEnvironment } from "./publication-runtime-http-media.mjs";
 import { preflightEnvironment } from "./publication-preflight-http-fixtures.mjs";
 import { withCheckoutPreflightFixture } from "./checkout-preflight-runtime.mjs";

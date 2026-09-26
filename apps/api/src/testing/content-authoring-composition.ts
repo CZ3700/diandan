@@ -4,8 +4,8 @@ import {
   type PostgresConnectionConfig,
   type PostgresPersistence,
 } from "@fan-support/persistence-postgres";
-import type { ApiLifecycleResource } from "./bootstrap.js";
-import type { ContentAuthoringRouteDependencies } from "./admin-content-authoring-route.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
+import type { ContentAuthoringRouteDependencies } from "../admin-content-authoring-route.js";
 
 type AuthoringPersistence = Pick<
   PostgresPersistence,

@@ -5,7 +5,7 @@ import {
   publishedGiftViewSchema,
   type GiftBrowseResponse,
 } from "@fan-support/contracts";
-import { storefrontHomepageFixture } from "./storefront-homepage-fixtures.js";
+import { storefrontHomepageFixture } from "./test-support/storefront-homepage-fixtures.js";
 
 const empty = {
   schemaVersion: 1 as const,

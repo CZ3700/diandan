@@ -21,11 +21,11 @@ import {
   withEphemeralPostgres,
 } from "@fan-support/persistence-postgres";
 import { createApiApplication } from "../dist/bootstrap.js";
-import { createTestPublicationPreflightComposition } from "../dist/publication-preflight-composition.js";
-import { createTestContentAuthoringComposition } from "../dist/content-authoring-composition.js";
-import { createTestBaseContentComposition } from "../dist/base-content-composition.js";
-import { createTestAdminContentComposition } from "../dist/admin-content-composition.js";
-import { createTestResourceManagementComposition } from "../dist/resource-management-composition.js";
+import { createTestPublicationPreflightComposition } from "../dist/testing/publication-preflight-composition.js";
+import { createTestContentAuthoringComposition } from "../dist/testing/content-authoring-composition.js";
+import { createTestBaseContentComposition } from "../dist/testing/base-content-composition.js";
+import { createTestAdminContentComposition } from "../dist/testing/admin-content-composition.js";
+import { createTestResourceManagementComposition } from "../dist/testing/resource-management-composition.js";
 import { seedPublicationPreflightFixtures } from "../../../packages/persistence-postgres/scripts/postgres-publication-preflight-fixtures.mjs";
 import { revokeAdminContentLocaleGrant } from "../../../packages/persistence-postgres/scripts/postgres-admin-content-fixtures.mjs";
 import { seedJapaneseReviewer } from "./base-content-http-fixtures.mjs";

@@ -1,4 +1,4 @@
-import type { StorefrontCommerceRouteDependencies } from "./storefront-commerce-route.js";
+import type { StorefrontCommerceRouteDependencies } from "../storefront-commerce-route.js";
 import {
   createPublicationRuntimeUseCases,
   createPublishedContentUseCases,
@@ -12,10 +12,10 @@ import {
   type PostgresPersistence,
   type PostgresPersistenceOptions,
 } from "@fan-support/persistence-postgres";
-import type { PublishedContentRouteDependencies } from "./published-content-route.js";
-import type { StorefrontHomepageRouteDependencies } from "./storefront-homepage-route.js";
-import type { ApiLifecycleResource } from "./bootstrap.js";
-import type { PublicationRuntimeRouteDependencies } from "./publication-runtime-route.js";
+import type { PublishedContentRouteDependencies } from "../published-content-route.js";
+import type { StorefrontHomepageRouteDependencies } from "../storefront-homepage-route.js";
+import type { ApiLifecycleResource } from "../bootstrap.js";
+import type { PublicationRuntimeRouteDependencies } from "../publication-runtime-route.js";
 
 type BasePersistence = Pick<
   PostgresPersistence,
@@ -124,4 +124,4 @@ export function createTestPublicationRuntimeComposition(
     },
   });
 }
-import type { StorefrontSeoRouteDependencies } from "./storefront-seo-route.js";
+import type { StorefrontSeoRouteDependencies } from "../storefront-seo-route.js";
