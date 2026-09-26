@@ -37,6 +37,7 @@ describe("catalog directory SQL boundaries", () => {
       currency: "USD",
       idolId: null,
       category: null,
+      kind: null,
       priceMinMinor: null,
       priceMaxMinor: null,
       availability: "ALL",
@@ -137,6 +138,7 @@ describe("catalog directory SQL boundaries", () => {
       currency: "USD",
       idolId: null,
       category: null,
+      kind: null,
       priceMinMinor: 0,
       priceMaxMinor: 1000,
       availability: "ALL",
@@ -155,6 +157,7 @@ describe("catalog directory SQL boundaries", () => {
       "ALL",
       12,
       12,
+      null,
     ]);
     expect(query.text).toContain("min(price.amount_minor)");
     expect(query.text).toContain("price_minor DESC NULLS LAST, id ASC");
@@ -164,6 +167,36 @@ describe("catalog directory SQL boundaries", () => {
     expect(query.text).toContain("LIMIT $9 OFFSET $10");
   });
 
+  test("gift kind filters the candidates before pagination and travels with each window row", () => {
+    const query = buildGiftDirectoryQuery({
+      locale: "en",
+      market: "TEST",
+      currency: "USD",
+      idolId: null,
+      category: null,
+      kind: "WISH",
+      priceMinMinor: null,
+      priceMaxMinor: null,
+      availability: "ALL",
+      sort: "RECOMMENDED",
+      take: 12,
+      offset: 0,
+    });
+    expect(query.values.at(-1)).toBe("WISH");
+    expect(query.values).toHaveLength(11);
+    expect(query.text).toContain(
+      "LEFT JOIN public.daily_publication_revisions kind_document ON kind_document.gift_revision_id = revision.id",
+    );
+    expect(query.text).toContain(
+      "LEFT JOIN public.gift_revision_profiles kind_profile ON kind_profile.gift_revision_id = revision.id AND kind_profile.gift_id = gift.id",
+    );
+    expect(query.text).toContain(
+      "coalesce(kind_document.document->>'giftKind', kind_profile.gift_kind) AS gift_kind",
+    );
+    expect(query.text).toContain("AND ($11::text IS NULL OR gift_kind = $11)");
+    expect(query.text).toContain("'giftKind', gift_kind");
+  });
+
   test("nontracked variants may omit inventory items but existing paused items remain unavailable", () => {
     const query = buildGiftDirectoryQuery({
       locale: "en",
@@ -171,6 +204,7 @@ describe("catalog directory SQL boundaries", () => {
       currency: "USD",
       idolId: null,
       category: null,
+      kind: null,
       priceMinMinor: null,
       priceMaxMinor: null,
       availability: "ALL",

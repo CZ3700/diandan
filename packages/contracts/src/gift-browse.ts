@@ -11,6 +11,7 @@ import {
   catalogDirectoryFailureSchema,
   catalogVersionSchema,
 } from "./catalog-directory-public.js";
+import { giftKindSchema } from "./gift-commerce-profile.js";
 import { idolIdSchema } from "./identifiers.js";
 import { supportedLocaleSchema } from "./locale.js";
 import { schemaVersionSchema } from "./versioning.js";
@@ -32,6 +33,7 @@ export const giftBrowseQuerySchema = z.strictObject({
     .max(CATALOG_DISCOVERY_LIMITS.giftPageMaximum)
     .default(CATALOG_DISCOVERY_LIMITS.giftPageDefault),
   category: giftCategorySchema.optional(),
+  kind: giftKindSchema.optional(),
   idolId: idolIdSchema.optional(),
 });
 

@@ -183,3 +183,31 @@ test("page limits never offer an invalid next page and expose a filter refinemen
     totalPages: 1001,
   });
 });
+
+test("a gift kind travels in the plan and changing it returns to the first page", () => {
+  expect(
+    createGiftDiscoveryPlan({ ...context, kind: "VIRTUAL", page: 2 }).query,
+  ).toMatchObject({ kind: "VIRTUAL", page: 2 });
+  const query = { ...context, page: 4, kind: "PHYSICAL" };
+  expect(
+    changeGiftDiscoveryQuery({
+      schemaVersion: 1,
+      query,
+      changes: { kind: "WISH" },
+    }),
+  ).toMatchObject({ page: 1, kind: "WISH" });
+  const cleared = changeGiftDiscoveryQuery({
+    schemaVersion: 1,
+    query,
+    changes: { kind: null },
+  });
+  expect(cleared).toMatchObject({ page: 1 });
+  expect(cleared).not.toHaveProperty("kind");
+  expect(
+    changeGiftDiscoveryQuery({
+      schemaVersion: 1,
+      query,
+      changes: { kind: "PHYSICAL" },
+    }).page,
+  ).toBe(4);
+});

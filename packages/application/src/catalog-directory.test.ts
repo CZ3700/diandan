@@ -7,6 +7,7 @@ import type {
 
 import { createCatalogDirectoryUseCases } from "./catalog-directory.js";
 import { createFictionalIdolDirectoryRecord } from "./test-support/catalog-directory-fixture.js";
+import { createFictionalGiftBrowseRecord } from "./test-support/gift-browse-fixture.js";
 
 const catalogVersion = "a".repeat(64);
 const idolQuery = { schemaVersion: 1, locale: "en" };
@@ -318,4 +319,45 @@ test("rejects corrupted approved content, drafts, wrong locale and case-insensit
   await expect(
     valid.readIdols({ ...idolQuery, locale: "ja" }),
   ).resolves.toMatchObject({ code: "CATALOG_UNAVAILABLE" });
+});
+
+test("gift directory items carry their published kind and a kind filter is verified item by item", async () => {
+  const record = createFictionalGiftBrowseRecord();
+  const offer = {
+    schemaVersion: 1 as const,
+    market: "TEST",
+    currency: "USD",
+    priceMinor: 1200,
+    purchasable: true,
+  };
+  const page = (giftKind: unknown) =>
+    harness({
+      readGifts: async () =>
+        ({
+          schemaVersion: 1,
+          outcome: "SUCCESS",
+          catalogVersion,
+          totalItems: 1,
+          items: [
+            {
+              schemaVersion: 1,
+              record,
+              offer,
+              ...(giftKind === undefined ? {} : { giftKind }),
+            },
+          ],
+        }) as never,
+    });
+  const query = { ...giftQuery, locale: "en" };
+  await expect(page("VIRTUAL").readGifts(query)).resolves.toMatchObject({
+    outcome: "SUCCESS",
+    items: [{ gift: { giftKind: "VIRTUAL" }, offer: { priceMinor: 1200 } }],
+  });
+  await expect(
+    page("VIRTUAL").readGifts({ ...query, kind: "VIRTUAL" }),
+  ).resolves.toMatchObject({ outcome: "SUCCESS" });
+  for (const giftKind of ["PHYSICAL", null, undefined])
+    await expect(
+      page(giftKind).readGifts({ ...query, kind: "VIRTUAL" }),
+    ).resolves.toMatchObject({ code: "CATALOG_UNAVAILABLE" });
 });

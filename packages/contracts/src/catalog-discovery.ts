@@ -3,6 +3,7 @@ import { z } from "zod";
 import { giftCategorySchema } from "./catalog-content.js";
 import { sourceHashSchema } from "./content-lifecycle.js";
 import { currencySchema, marketSchema, minorAmountSchema } from "./commerce.js";
+import { giftKindSchema } from "./gift-commerce-profile.js";
 import { idolIdSchema } from "./identifiers.js";
 import { supportedLocaleSchema } from "./locale.js";
 import { schemaVersionSchema } from "./versioning.js";
@@ -117,6 +118,7 @@ export const giftDiscoveryQuerySchema = z
     pageSize: pageSizeSchema.default(CATALOG_DISCOVERY_LIMITS.giftPageDefault),
     sort: giftDiscoverySortSchema.default("RECOMMENDED"),
     category: giftCategorySchema.optional(),
+    kind: giftKindSchema.optional(),
     priceMinMinor: minorAmountSchema.optional(),
     priceMaxMinor: minorAmountSchema.optional(),
     availability: giftDiscoveryAvailabilitySchema.default("ALL"),
@@ -242,6 +244,7 @@ export const changeGiftDiscoveryQuerySchema = z.strictObject({
     sort: giftDiscoverySortSchema.optional(),
     idolId: idolIdSchema.nullable().optional(),
     category: giftCategorySchema.nullable().optional(),
+    kind: giftKindSchema.nullable().optional(),
     priceMinMinor: minorAmountSchema.nullable().optional(),
     priceMaxMinor: minorAmountSchema.nullable().optional(),
     availability: giftDiscoveryAvailabilitySchema.optional(),

@@ -194,6 +194,32 @@ test("serves proven fallback content while rejecting missing provenance, wrong l
         })
       ).statusCode,
     ).toBe(503);
+    for (const [giftKind, status] of [
+      ["VIRTUAL", 200],
+      ["PHYSICAL", 503],
+      [null, 503],
+      [undefined, 503],
+    ] as const) {
+      browseGifts.mockResolvedValueOnce({
+        ...response,
+        items: [giftKind === undefined ? gift : { ...gift, giftKind }],
+      });
+      expect(
+        (
+          await app.inject({
+            url: "/api/v1/gift-browse?locale=th&kind=VIRTUAL",
+          })
+        ).statusCode,
+        String(giftKind),
+      ).toBe(status);
+    }
+    expect(browseGifts).toHaveBeenLastCalledWith(
+      expect.objectContaining({ kind: "VIRTUAL" }),
+    );
+    expect(
+      (await app.inject({ url: "/api/v1/gift-browse?locale=th&kind=TIP" }))
+        .statusCode,
+    ).toBe(400);
     browseGifts.mockResolvedValueOnce({
       ...response,
       items: [

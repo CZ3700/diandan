@@ -12,7 +12,14 @@ import { matchesPublicContentLocale } from "./public-content-locale.js";
 export type GiftBrowseRouteOptions = Readonly<{
   browseGifts(input: unknown): Promise<GiftBrowseResponse>;
 }>;
-const fields = new Set(["locale", "page", "pageSize", "category", "idol"]);
+const fields = new Set([
+  "locale",
+  "page",
+  "pageSize",
+  "category",
+  "kind",
+  "idol",
+]);
 function parseQuery(rawUrl: string) {
   const values: Record<string, unknown> = { schemaVersion: 1 };
   const seen = new Set<string>();
@@ -98,7 +105,9 @@ export function registerGiftBrowseRoute(
                 gift.localeContext.fallbackUsed &&
                 !gift.localeContext.translationRevision?.trim()) ||
               (query.data.category !== undefined &&
-                gift.category !== query.data.category),
+                gift.category !== query.data.category) ||
+              (query.data.kind !== undefined &&
+                gift.giftKind !== query.data.kind),
           )
         )
           return failure(reply, "CATALOG_UNAVAILABLE");

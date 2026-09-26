@@ -81,3 +81,28 @@ test("keeps discovery envelopes bounded, versioned and separate from publication
   ])
     expect(runtimeDependencies("gift-browse.ts")).not.toContain(forbidden);
 });
+
+test("filters by the published gift kind and carries each gift's classification", () => {
+  for (const kind of ["VIRTUAL", "PHYSICAL", "WISH", "MERCHANDISE", "OTHER"])
+    expect(giftBrowseQuerySchema.parse({ ...query, kind })).toMatchObject({
+      kind,
+    });
+  for (const kind of ["virtual", "GIFT", ""])
+    expect(giftBrowseQuerySchema.safeParse({ ...query, kind }).success).toBe(
+      false,
+    );
+  const snapshot = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    catalogVersion: "a".repeat(64),
+    totalItems: 0,
+    items: [],
+  };
+  expect(
+    giftBrowseSnapshotSchema.safeParse({ ...snapshot, giftKinds: [] }).success,
+  ).toBe(true);
+  expect(
+    giftBrowseSnapshotSchema.safeParse({ ...snapshot, giftKinds: [null] })
+      .success,
+  ).toBe(false);
+});

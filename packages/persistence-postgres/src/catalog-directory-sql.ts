@@ -2,6 +2,10 @@ import type {
   GiftDiscoveryQuery,
   SupportedLocale,
 } from "@fan-support/contracts";
+import {
+  publishedGiftKindColumn,
+  publishedGiftKindJoins,
+} from "./published-gift-kind.js";
 
 type DirectoryQuery = Readonly<{ text: string; values: unknown[] }>;
 
@@ -238,6 +242,7 @@ export function buildGiftDirectoryQuery(
     currency: string;
     idolId: string | null;
     category: string | null;
+    kind: string | null;
     priceMinMinor: number | null;
     priceMaxMinor: number | null;
     availability: GiftDiscoveryQuery["availability"];
@@ -270,9 +275,10 @@ export function buildGiftDirectoryQuery(
       input.availability,
       input.take,
       input.offset,
+      input.kind,
     ],
     text: `WITH ${versionState(true)}, candidates AS (
-      SELECT gift.id, publication.published_at, revision.category, offer.price_minor
+      SELECT gift.id, publication.published_at, revision.category, ${publishedGiftKindColumn}, offer.price_minor
       FROM public.gifts gift
       JOIN public.gift_publication_heads head ON head.gift_id = gift.id AND head.gift_revision_id = gift.published_revision_id
       JOIN public.content_publications publication ON publication.id = head.publication_id
@@ -280,6 +286,7 @@ export function buildGiftDirectoryQuery(
       JOIN public.gift_revisions revision ON revision.id = head.gift_revision_id AND revision.gift_id = gift.id
         AND revision.lifecycle = CASE publication.action WHEN 'PUBLISH' THEN 'PUBLISHED' ELSE 'SUPERSEDED' END
       LEFT JOIN public.gift_revision_translations translation ON publication.proof_version IN(1,2) AND translation.gift_revision_id = revision.id AND translation.locale = $1
+      ${publishedGiftKindJoins}
       ${giftOffer}
       WHERE gift.status IN ('active', 'paused')
         AND (publication.proof_version=3 OR translation.id IS NOT NULL)
@@ -296,14 +303,15 @@ export function buildGiftDirectoryQuery(
     ), filtered AS (
       SELECT * FROM candidates
       WHERE ($5::text IS NULL OR category = $5)
+        AND ($11::text IS NULL OR gift_kind = $11)
         AND ($6::bigint IS NULL OR price_minor >= $6) AND ($7::bigint IS NULL OR price_minor <= $7)
         AND ($8 = 'ALL' OR ($8 = 'PURCHASABLE' AND price_minor IS NOT NULL) OR ($8 = 'UNAVAILABLE' AND price_minor IS NULL))
     ), window_rows AS (
-      SELECT id, price_minor, row_number() OVER (ORDER BY ${order}) AS ordinal
+      SELECT id, price_minor, gift_kind, row_number() OVER (ORDER BY ${order}) AS ordinal
       FROM filtered ORDER BY ${order} LIMIT $9 OFFSET $10
     )
     SELECT version_state.catalog_version, (SELECT count(*)::text FROM filtered) AS total_items,
-      coalesce((SELECT jsonb_agg(jsonb_build_object('id', id::text, 'priceMinor', price_minor::text) ORDER BY ordinal) FROM window_rows), '[]'::jsonb) AS items
+      coalesce((SELECT jsonb_agg(jsonb_build_object('id', id::text, 'priceMinor', price_minor::text, 'giftKind', gift_kind) ORDER BY ordinal) FROM window_rows), '[]'::jsonb) AS items
     FROM version_state`,
   };
 }

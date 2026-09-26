@@ -28,6 +28,10 @@ import {
   loadIdolDirectoryRecords,
 } from "./catalog-publication-loader.js";
 import {
+  parsePublishedGiftKind,
+  recordConfirmsGiftKind,
+} from "./published-gift-kind.js";
+import {
   persistenceTransactionFailureFromPostgres,
   type TransactionClient,
   type TransactionScopeControl,
@@ -184,6 +188,7 @@ export function createCatalogDirectoryRepository(
           currency: query.currency,
           idolId: query.idolId ?? null,
           category: query.category ?? null,
+          kind: query.kind ?? null,
           priceMinMinor: query.priceMinMinor ?? null,
           priceMaxMinor: query.priceMaxMinor ?? null,
           availability: query.availability,
@@ -204,6 +209,7 @@ export function createCatalogDirectoryRepository(
             id: giftIdSchema.parse(item["id"]),
             priceMinor:
               item["priceMinor"] === null ? null : integer(item["priceMinor"]),
+            giftKind: parsePublishedGiftKind(item["giftKind"]),
           };
         });
         if (
@@ -227,7 +233,8 @@ export function createCatalogDirectoryRepository(
             (item, index) =>
               (item.schemaVersion === 3
                 ? item.context.current.document.ownerId
-                : item.source.base.id) !== ids[index],
+                : item.source.base.id) !== ids[index] ||
+              !recordConfirmsGiftKind(item, window[index]!.giftKind),
           )
         )
           return failure("CATALOG_UNAVAILABLE");
@@ -246,6 +253,7 @@ export function createCatalogDirectoryRepository(
               priceMinor: window[index]!.priceMinor,
               purchasable: window[index]!.priceMinor !== null,
             },
+            giftKind: window[index]!.giftKind,
           })),
         });
       }),

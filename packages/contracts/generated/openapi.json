@@ -50948,6 +50948,23 @@
                           "maxItems": 12,
                           "type": "array"
                         },
+                        "giftKind": {
+                          "anyOf": [
+                            {
+                              "enum": [
+                                "VIRTUAL",
+                                "PHYSICAL",
+                                "WISH",
+                                "MERCHANDISE",
+                                "OTHER"
+                              ],
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
                         "handle": {
                           "maxLength": 96,
                           "minLength": 1,
@@ -58075,6 +58092,23 @@
                             "maxItems": 12,
                             "type": "array"
                           },
+                          "giftKind": {
+                            "anyOf": [
+                              {
+                                "enum": [
+                                  "VIRTUAL",
+                                  "PHYSICAL",
+                                  "WISH",
+                                  "MERCHANDISE",
+                                  "OTHER"
+                                ],
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
                           "handle": {
                             "maxLength": 96,
                             "minLength": 1,
@@ -63475,6 +63509,23 @@
                         "maxItems": 12,
                         "type": "array"
                       },
+                      "giftKind": {
+                        "anyOf": [
+                          {
+                            "enum": [
+                              "VIRTUAL",
+                              "PHYSICAL",
+                              "WISH",
+                              "MERCHANDISE",
+                              "OTHER"
+                            ],
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
                       "handle": {
                         "maxLength": 96,
                         "minLength": 1,
@@ -65122,6 +65173,23 @@
             },
             "maxItems": 12,
             "type": "array"
+          },
+          "giftKind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "VIRTUAL",
+                  "PHYSICAL",
+                  "WISH",
+                  "MERCHANDISE",
+                  "OTHER"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "handle": {
             "maxLength": 96,
@@ -71703,6 +71771,23 @@
                         },
                         "maxItems": 12,
                         "type": "array"
+                      },
+                      "giftKind": {
+                        "anyOf": [
+                          {
+                            "enum": [
+                              "VIRTUAL",
+                              "PHYSICAL",
+                              "WISH",
+                              "MERCHANDISE",
+                              "OTHER"
+                            ],
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
                       },
                       "handle": {
                         "maxLength": 96,
@@ -79328,6 +79413,23 @@
                                       "maxItems": 12,
                                       "type": "array"
                                     },
+                                    "giftKind": {
+                                      "anyOf": [
+                                        {
+                                          "enum": [
+                                            "VIRTUAL",
+                                            "PHYSICAL",
+                                            "WISH",
+                                            "MERCHANDISE",
+                                            "OTHER"
+                                          ],
+                                          "type": "string"
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    },
                                     "handle": {
                                       "maxLength": 96,
                                       "minLength": 1,
@@ -80721,6 +80823,16 @@
             "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
             "type": "string"
           },
+          "kind": {
+            "enum": [
+              "VIRTUAL",
+              "PHYSICAL",
+              "WISH",
+              "MERCHANDISE",
+              "OTHER"
+            ],
+            "type": "string"
+          },
           "locale": {
             "enum": [
               "en",
@@ -81281,6 +81393,23 @@
                       },
                       "maxItems": 12,
                       "type": "array"
+                    },
+                    "giftKind": {
+                      "anyOf": [
+                        {
+                          "enum": [
+                            "VIRTUAL",
+                            "PHYSICAL",
+                            "WISH",
+                            "MERCHANDISE",
+                            "OTHER"
+                          ],
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
                     },
                     "handle": {
                       "maxLength": 96,
@@ -97423,6 +97552,23 @@
                           "maxItems": 12,
                           "type": "array"
                         },
+                        "giftKind": {
+                          "anyOf": [
+                            {
+                              "enum": [
+                                "VIRTUAL",
+                                "PHYSICAL",
+                                "WISH",
+                                "MERCHANDISE",
+                                "OTHER"
+                              ],
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
                         "handle": {
                           "maxLength": 96,
                           "minLength": 1,
@@ -98295,6 +98441,16 @@
           "idolId": {
             "format": "uuid",
             "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "VIRTUAL",
+              "PHYSICAL",
+              "WISH",
+              "MERCHANDISE",
+              "OTHER"
+            ],
             "type": "string"
           },
           "locale": {
@@ -118095,6 +118251,23 @@
                             "maxItems": 12,
                             "type": "array"
                           },
+                          "giftKind": {
+                            "anyOf": [
+                              {
+                                "enum": [
+                                  "VIRTUAL",
+                                  "PHYSICAL",
+                                  "WISH",
+                                  "MERCHANDISE",
+                                  "OTHER"
+                                ],
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
                           "handle": {
                             "maxLength": 96,
                             "minLength": 1,
@@ -121635,6 +121808,23 @@
                         "maxItems": 12,
                         "type": "array"
                       },
+                      "giftKind": {
+                        "anyOf": [
+                          {
+                            "enum": [
+                              "VIRTUAL",
+                              "PHYSICAL",
+                              "WISH",
+                              "MERCHANDISE",
+                              "OTHER"
+                            ],
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
                       "handle": {
                         "maxLength": 96,
                         "minLength": 1,
@@ -122648,6 +122838,23 @@
             },
             "maxItems": 12,
             "type": "array"
+          },
+          "giftKind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "VIRTUAL",
+                  "PHYSICAL",
+                  "WISH",
+                  "MERCHANDISE",
+                  "OTHER"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "handle": {
             "maxLength": 96,
@@ -127180,6 +127387,23 @@
                         },
                         "maxItems": 12,
                         "type": "array"
+                      },
+                      "giftKind": {
+                        "anyOf": [
+                          {
+                            "enum": [
+                              "VIRTUAL",
+                              "PHYSICAL",
+                              "WISH",
+                              "MERCHANDISE",
+                              "OTHER"
+                            ],
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
                       },
                       "handle": {
                         "maxLength": 96,
@@ -131730,6 +131954,23 @@
                                       },
                                       "maxItems": 12,
                                       "type": "array"
+                                    },
+                                    "giftKind": {
+                                      "anyOf": [
+                                        {
+                                          "enum": [
+                                            "VIRTUAL",
+                                            "PHYSICAL",
+                                            "WISH",
+                                            "MERCHANDISE",
+                                            "OTHER"
+                                          ],
+                                          "type": "string"
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
                                     },
                                     "handle": {
                                       "maxLength": 96,
@@ -186914,6 +187155,21 @@
           },
           {
             "in": "query",
+            "name": "kind",
+            "required": false,
+            "schema": {
+              "enum": [
+                "VIRTUAL",
+                "PHYSICAL",
+                "WISH",
+                "MERCHANDISE",
+                "OTHER"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
             "name": "idol",
             "required": false,
             "schema": {
@@ -187393,6 +187649,21 @@
                 "FOOD",
                 "BEAUTY",
                 "ACCESSORY",
+                "OTHER"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "kind",
+            "required": false,
+            "schema": {
+              "enum": [
+                "VIRTUAL",
+                "PHYSICAL",
+                "WISH",
+                "MERCHANDISE",
                 "OTHER"
               ],
               "type": "string"

@@ -187,14 +187,18 @@ export function createCatalogDirectoryUseCases(
                   ) ||
                   ids.has(projected.value.id.toLowerCase()) ||
                   entry.offer.market !== query.market ||
-                  entry.offer.currency !== query.currency
+                  entry.offer.currency !== query.currency ||
+                  (query.kind !== undefined && entry.giftKind !== query.kind)
                 ) {
                   return failure("CATALOG_UNAVAILABLE");
                 }
                 ids.add(projected.value.id.toLowerCase());
                 items.push({
                   schemaVersion: 1 as const,
-                  gift: projected.value,
+                  gift:
+                    entry.giftKind === undefined
+                      ? projected.value
+                      : { ...projected.value, giftKind: entry.giftKind },
                   offer: entry.offer,
                 });
               }

@@ -1,4 +1,8 @@
 import type { GiftBrowseQuery } from "@fan-support/contracts";
+import {
+  publishedGiftKindColumn,
+  publishedGiftKindJoins,
+} from "./published-gift-kind.js";
 
 /** Compact publication metadata only: prices, markets and stock never affect browsing. */
 function versionState(): string {
@@ -40,9 +44,10 @@ export function buildGiftBrowseQuery(
       input.idolId ?? null,
       input.pageSize,
       (input.page - 1) * input.pageSize,
+      input.kind ?? null,
     ],
-    text: `WITH ${versionState()}, visible AS (
-      SELECT gift.id, publication.published_at
+    text: `WITH ${versionState()}, published AS (
+      SELECT gift.id, publication.published_at, ${publishedGiftKindColumn}
       FROM public.gifts gift
       JOIN public.gift_publication_heads head ON head.gift_id = gift.id
         AND head.gift_revision_id = gift.published_revision_id
@@ -52,6 +57,7 @@ export function buildGiftBrowseQuery(
       JOIN public.gift_revisions revision ON revision.id = head.gift_revision_id
         AND revision.gift_id = gift.id
         AND revision.lifecycle = CASE publication.action WHEN 'PUBLISH' THEN 'PUBLISHED' ELSE 'SUPERSEDED' END
+      ${publishedGiftKindJoins}
       WHERE gift.status IN ('active','paused')
         AND NOT EXISTS (SELECT 1 FROM public.content_publications successor WHERE successor.replaces_publication_id = publication.id)
         AND (publication.proof_version IN (2,3) OR (publication.proof_version = 1 AND EXISTS (
@@ -76,11 +82,13 @@ export function buildGiftBrowseQuery(
               WHERE rule.gift_variant_id = variant.id AND rule.rule = 'ALL_ACTIVE_ARTISTS'
                 AND NOT EXISTS (SELECT 1 FROM public.content_publications successor WHERE successor.replaces_publication_id = recipient_publication.id)))
         ))
+    ), visible AS (
+      SELECT * FROM published WHERE ($6::text IS NULL OR gift_kind = $6::text)
     ), page_window AS (
-      SELECT id,published_at FROM visible ORDER BY published_at DESC, id ASC LIMIT $4::integer OFFSET $5::integer
+      SELECT id,published_at,gift_kind FROM visible ORDER BY published_at DESC, id ASC LIMIT $4::integer OFFSET $5::integer
     )
     SELECT version_state.catalog_version,(SELECT count(*)::text FROM visible) total_items,
-      (SELECT coalesce(jsonb_agg(id ORDER BY published_at DESC,id ASC),'[]'::jsonb) FROM page_window) ids
+      (SELECT coalesce(jsonb_agg(jsonb_build_array(id, gift_kind) ORDER BY published_at DESC,id ASC),'[]'::jsonb) FROM page_window) ids
     FROM version_state`,
   };
 }
