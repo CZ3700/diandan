@@ -193,7 +193,7 @@ export async function verifyAdminOrders({ context }) {
     );
     check(
       inventoryBefore.length === 1 && inventoryBefore[0].status === "COMMITTED",
-      "mixed virtual and finite gifts reserve only the tracked line",
+      "mixed made-to-order and finite gifts reserve only the tracked line",
     );
     const originalVersion = d.version;
     failure(
@@ -675,6 +675,136 @@ export async function verifyAdminOrders({ context }) {
       );
     } finally {
       await shortCheckout.stop();
+    }
+    progress("digital support lines deliver at payment and stay reviewable");
+    {
+      const paidState = async (value, expectedAggregate) => {
+        const row = await payment.state(value);
+        check(
+          row?.payment_status === "PAID" &&
+            row.order_status === "OPEN" &&
+            row.attempt_status === "SUCCEEDED" &&
+            row.fulfillment_status === expectedAggregate,
+          `digital support order settles as PAID with a ${expectedAggregate} aggregate`,
+        );
+        return row;
+      };
+      const mixed = await createPaidAdminOrder(
+        context,
+        { ...payment, assertPaid: (value) => paidState(value, "PREPARING") },
+        {
+          lines: [
+            { gift: context.fixtures.gifts[4] },
+            { gift: context.fixtures.gifts[0] },
+          ],
+        },
+      );
+      const lines = await sql(
+        "SELECT i.gift_kind,f.status,f.version::int version,f.prepared_at IS NOT NULL prepared,f.delivered_at IS NOT NULL delivered FROM order_items i JOIN fulfillments f ON f.order_item_id=i.id AND f.order_id=i.order_id WHERE i.order_id=$1 ORDER BY i.created_at,i.id",
+        [mixed.orderId],
+      );
+      check(
+        JSON.stringify(
+          lines.map((l) => [
+            l.gift_kind,
+            l.status,
+            l.version,
+            l.prepared,
+            l.delivered,
+          ]),
+        ) ===
+          JSON.stringify([
+            ["VIRTUAL", "DELIVERED", 2, true, true],
+            ["PHYSICAL", "PENDING", 1, false, false],
+          ]),
+        "the VIRTUAL line is delivered by the system at payment while the studio line stays pending",
+      );
+      const events = await sql(
+        "SELECT e.from_status,e.authority_kind,e.reason_code,a.actor_type,a.action,a.task_name FROM fulfillment_events e JOIN audit_logs a ON a.id=e.audit_log_id WHERE e.order_id=$1 AND e.to_status='DELIVERED'",
+        [mixed.orderId],
+      );
+      check(
+        events.length === 1 &&
+          events[0].from_status === "PENDING" &&
+          events[0].authority_kind === "SYSTEM" &&
+          events[0].reason_code === "VIRTUAL_GIFT_AUTO_DELIVERED" &&
+          events[0].actor_type === "SYSTEM" &&
+          events[0].action === "VIRTUAL_GIFT_AUTO_DELIVERED" &&
+          typeof events[0].task_name === "string",
+        "digital delivery leaves exactly one SYSTEM fulfillment event with its audit record",
+      );
+      const outbox = await sql(
+        "SELECT x.payload_status,(SELECT count(*)::int FROM notification_source_authority(x.id)) sources FROM outbox_events x WHERE x.event_type='FULFILLMENT_STATUS_CHANGED' AND x.secondary_subject_id=$1",
+        [mixed.orderId],
+      );
+      check(
+        outbox.length === 1 &&
+          outbox[0].payload_status === "DELIVERED" &&
+          outbox[0].sources === 0,
+        "digital delivery publishes its fulfillment event without sourcing a studio delivery e-mail",
+      );
+      const snapshot = await sql(
+        "SELECT jsonb_path_query_array(notification_order_snapshot($1,'TEST'),'$.items[*].giftKind') kinds",
+        [mixed.orderId],
+      );
+      check(
+        JSON.stringify(snapshot[0]?.kinds) ===
+          JSON.stringify(["VIRTUAL", "PHYSICAL"]),
+        "notification variables carry each line's purchase-time gift kind",
+      );
+      let dd = await detail(mixed.orderId);
+      success(dd, "mixed digital order detail is readable");
+      const digitalLine = dd.items.find((i) => i.giftKind === "VIRTUAL"),
+        studioLine = dd.items.find((i) => i.giftKind === "PHYSICAL"),
+        lineView = (kind) =>
+          dd.order.items.find((i) => i.giftKind === kind)?.fulfillmentStatus;
+      check(
+        digitalLine !== undefined &&
+          studioLine !== undefined &&
+          digitalLine.allowedActions.length === 0 &&
+          lineView("VIRTUAL") === "DELIVERED" &&
+          lineView("PHYSICAL") === "PENDING" &&
+          dd.order.fulfillmentStatus === "PREPARING",
+        "the studio gets no preparation or delivery action for a delivered digital line",
+      );
+      const digitalRead = await privateRead(dd, digitalLine);
+      success(
+        await confirm(digitalRead),
+        "a delivered digital support message can still be opened for review",
+      );
+      success(
+        await review(dd, digitalLine, digitalRead),
+        "a delivered digital support message receives explicit HUMAN review",
+      );
+      dd = await detail(mixed.orderId);
+      const reviewed = dd.items.find((i) => i.giftKind === "VIRTUAL");
+      check(
+        reviewed.moderationStatus === "APPROVED" &&
+          reviewed.allowedActions.length === 0 &&
+          dd.order.fulfillmentStatus === "PREPARING",
+        "review of a delivered digital line changes moderation only",
+      );
+      failure(
+        await run(mutate(dd, reviewed, "DELIVER")),
+        "TRANSITION_NOT_ALLOWED",
+        "a delivered digital line cannot be delivered again by the studio",
+      );
+      failure(
+        await run(mutate(dd, reviewed, "HOLD", { confirmed: true })),
+        "TRANSITION_NOT_ALLOWED",
+        "a delivered digital line cannot be held",
+      );
+      const digitalOnly = await createPaidAdminOrder(
+        context,
+        { ...payment, assertPaid: (value) => paidState(value, "DELIVERED") },
+        { lines: [{ gift: context.fixtures.gifts[4] }] },
+      );
+      const only = await detail(digitalOnly.orderId);
+      check(
+        only.order.fulfillmentStatus === "DELIVERED" &&
+          only.items[0].allowedActions.length === 0,
+        "an order of only digital support is delivered as soon as it is paid",
+      );
     }
     return {
       scope:

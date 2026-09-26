@@ -3,6 +3,8 @@ import type {
   AdminOrdersLine,
 } from "@fan-support/contracts";
 import type { DraftRow } from "./content-draft-data.js";
+import { deriveFulfillmentAggregate } from "./fulfillment-aggregate.js";
+import { isDigitalFulfillmentLine } from "./digital-fulfillment.js";
 export function orderIsFulfillable(order: DraftRow): boolean {
   return (
     order["order_status"] === "OPEN" &&
@@ -31,12 +33,23 @@ export function fulfillmentActions(
   )
     return [];
   const actions: AdminOrdersLine["allowedActions"] = [];
-  if (permissions.includes("orders.fulfillment") && privateContentSafe(line)) {
+  // ADR-019: the system delivers digital support lines; the studio only resumes a held one.
+  const digital = isDigitalFulfillmentLine({
+    giftKind: typeof line["gift_kind"] === "string" ? line["gift_kind"] : null,
+  });
+  if (
+    !digital &&
+    permissions.includes("orders.fulfillment") &&
+    privateContentSafe(line)
+  ) {
     if (line["status"] === "PENDING") actions.push("PREPARE");
     if (line["status"] === "PREPARING") actions.push("DELIVER");
   }
   if (permissions.includes("orders.manage")) {
-    if (line["status"] === "PENDING" || line["status"] === "PREPARING")
+    if (
+      !digital &&
+      (line["status"] === "PENDING" || line["status"] === "PREPARING")
+    )
       actions.push("HOLD");
     if (
       line["status"] === "ON_HOLD" &&
@@ -48,12 +61,5 @@ export function fulfillmentActions(
   return actions;
 }
 export function deriveAdminOrderFulfillment(lines: DraftRow[]): string {
-  if (lines.every((l) => l["status"] === "CANCELED")) return "CANCELED";
-  if (lines.every((l) => l["status"] === "DELIVERED")) return "DELIVERED";
-  if (lines.some((l) => l["status"] === "ON_HOLD")) return "ON_HOLD";
-  return lines.some((l) =>
-    ["PREPARING", "DELIVERED"].includes(String(l["status"])),
-  )
-    ? "PREPARING"
-    : "PENDING";
+  return deriveFulfillmentAggregate(lines.map((l) => String(l["status"])));
 }

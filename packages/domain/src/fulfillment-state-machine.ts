@@ -16,8 +16,13 @@ type VersionedCommand = Readonly<{
   reasonCode?: string;
 }>;
 
+/**
+ * OPERATOR_COMMAND is an authenticated studio action. SYSTEM_DIGITAL_DELIVERY is
+ * the ADR-019 direct PENDING → DELIVERED step for a VIRTUAL gift line once its
+ * order payment aggregate reached PAID; only application code constructs it.
+ */
 export type FulfillmentTransitionAuthority = VersionedCommand &
-  Readonly<{ kind: "OPERATOR_COMMAND" }>;
+  Readonly<{ kind: "OPERATOR_COMMAND" | "SYSTEM_DIGITAL_DELIVERY" }>;
 
 const TERMINAL_FULFILLMENT_STATUSES = new Set<FulfillmentStatus>([
   "DELIVERED",
@@ -57,6 +62,21 @@ export function decideFulfillmentTransition(
       target,
       "FULFILLMENT_TERMINAL_STATE_CONFLICT",
     );
+  }
+  if (authority.kind === "SYSTEM_DIGITAL_DELIVERY") {
+    if (current !== "PENDING" || target !== "DELIVERED") {
+      return rejectedTransition(
+        current,
+        target,
+        "FULFILLMENT_TRANSITION_NOT_ALLOWED",
+      );
+    }
+    if (authority.expectedVersion !== authority.currentVersion) {
+      return rejectedTransition(current, target, "FULFILLMENT_STALE_VERSION");
+    }
+    return appliedTransition(current, target, "VIRTUAL_GIFT_AUTO_DELIVERED", [
+      { type: "FULFILLMENT_STATUS_CHANGED" },
+    ]);
   }
   if (!FULFILLMENT_TRANSITIONS[current].includes(target)) {
     return rejectedTransition(

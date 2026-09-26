@@ -2,6 +2,7 @@ import {
   notificationTemplateReviewSchema,
   SUPPORTED_LOCALES,
   type OrderNotificationEventType,
+  type SupportedLocale,
 } from "@fan-support/contracts";
 import {
   eventTemplateKeys,
@@ -11,8 +12,27 @@ import {
   variablesHashV1,
 } from "./v1/identity.js";
 
+/** The material one archived or current template version binds its reviews to. */
+export type TemplateIdentity = Readonly<{
+  templateVersion: (eventType: OrderNotificationEventType) => string;
+  localeMaterial: (
+    eventType: OrderNotificationEventType,
+    locale: SupportedLocale,
+  ) => unknown;
+  variablesHash: string;
+}>;
+
+export const identityV1: TemplateIdentity = {
+  templateVersion: templateVersionV1,
+  localeMaterial: localeMaterialV1,
+  variablesHash: variablesHashV1,
+};
+
 /** Reviews are trusted, checked-in release evidence, never an application/request option. */
-export function assertApprovedReviews(input: readonly unknown[]): void {
+export function assertApprovedReviews(
+  input: readonly unknown[],
+  identity: TemplateIdentity = identityV1,
+): void {
   const reviews = input.map((value) => {
     const parsed = notificationTemplateReviewSchema.safeParse(value);
     if (!parsed.success) throw new Error("NOTIFICATION_TEMPLATES_UNAPPROVED");
@@ -21,8 +41,8 @@ export function assertApprovedReviews(input: readonly unknown[]): void {
   for (const eventType of Object.keys(
     eventTemplateKeys,
   ) as OrderNotificationEventType[]) {
-    const templateVersion = templateVersionV1(eventType);
-    const sourceHash = hashMaterial(localeMaterialV1(eventType, "en"));
+    const templateVersion = identity.templateVersion(eventType);
+    const sourceHash = hashMaterial(identity.localeMaterial(eventType, "en"));
     for (const locale of SUPPORTED_LOCALES) {
       const matches = reviews.filter(
         (review) =>
@@ -38,8 +58,8 @@ export function assertApprovedReviews(input: readonly unknown[]): void {
         !parsed.data.translator.trim() ||
         parsed.data.sourceHash !== sourceHash ||
         parsed.data.translationHash !==
-          hashMaterial(localeMaterialV1(eventType, locale)) ||
-        parsed.data.variablesHash !== variablesHashV1
+          hashMaterial(identity.localeMaterial(eventType, locale)) ||
+        parsed.data.variablesHash !== identity.variablesHash
       )
         throw new Error("NOTIFICATION_TEMPLATES_UNAPPROVED");
     }

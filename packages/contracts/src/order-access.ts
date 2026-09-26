@@ -14,6 +14,7 @@ import {
   sourceHashSchema,
 } from "./content-lifecycle.js";
 import { canonicalRequestIdSchema } from "./envelopes.js";
+import { giftKindSchema } from "./gift-commerce-profile.js";
 import {
   checkoutSessionIdSchema,
   orderIdSchema,
@@ -182,6 +183,8 @@ export const orderAccessItemSchema = z
     lineTotalMinor: minorAmountSchema,
     currency: currencySchema,
     displayMode: z.enum(["anonymous", "nickname"]),
+    /** Purchase-time classification snapshot; null only for pre-profile legacy lines (ADR-019). */
+    giftKind: giftKindSchema.nullable(),
     fulfillmentStatus: fulfillmentStatusSchema,
   })
   .refine(

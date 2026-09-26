@@ -125,8 +125,9 @@ function OrderLine({
         <p
           className="order-line-status"
           data-order-item-status={item.fulfillmentStatus}
+          data-order-item-kind={item.giftKind ?? undefined}
         >
-          {orderItemStatus(item.fulfillmentStatus, copy)}
+          {orderItemStatus(item, copy)}
         </p>
         <div className="order-languages">
           <SnapshotLanguages

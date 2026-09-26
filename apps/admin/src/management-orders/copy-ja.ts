@@ -72,5 +72,6 @@ export const copy = {
   throttled: "少し待ってから再試行してください。",
   waiting: "処理中…",
   studioDelivery: "すべてのギフトはスタジオが準備し、アーティストへ届けます。",
+  digitalDelivery: "デジタル応援記録：決済確認後に自動でお届けします。",
   legacy: "過去の記録",
 };

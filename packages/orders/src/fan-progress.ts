@@ -26,12 +26,27 @@ type OrderAxes = Pick<
   "orderStatus" | "paymentStatus" | "fulfillmentStatus" | "disputeStatus"
 >;
 
+export type FanOrderProgressOptions = Readonly<{
+  /** ADR-019: an order of only VIRTUAL gifts has no studio preparation step. */
+  digitalOnly?: boolean;
+}>;
+
+/** True when every line is a VIRTUAL gift; legacy lines without a kind count as studio work. */
+export function isDigitalOnlyOrder(
+  items: readonly Pick<OrderAccessDetail["items"][number], "giftKind">[],
+): boolean {
+  return items.length > 0 && items.every((item) => item.giftKind === "VIRTUAL");
+}
+
 /**
  * Spec §12.2: the four independent axes stay canonical; fans see one friendly stage. A studio
  * review hold reads as preparing, and dispute state never reaches the fan's timeline. The
  * stage describes only the current state, never when an earlier step happened.
  */
-export function fanOrderProgress(order: OrderAxes): FanOrderProgress {
+export function fanOrderProgress(
+  order: OrderAxes,
+  options: FanOrderProgressOptions = {},
+): FanOrderProgress {
   const stage: FanOrderStage =
     order.paymentStatus === "REFUNDED"
       ? "REFUNDED"
@@ -46,13 +61,16 @@ export function fanOrderProgress(order: OrderAxes): FanOrderProgress {
                 order.fulfillmentStatus === "ON_HOLD"
               ? "PREPARING"
               : "PAID";
-  const current = FAN_ORDER_STEPS.indexOf(stage as FanOrderStep);
+  const steps: readonly FanOrderStep[] = options.digitalOnly
+    ? FAN_ORDER_STEPS.filter((step) => step !== "PREPARING")
+    : FAN_ORDER_STEPS;
+  const current = steps.indexOf(stage as FanOrderStep);
   return Object.freeze({
     stage,
     timeline:
       current < 0
         ? []
-        : FAN_ORDER_STEPS.map((step, index) =>
+        : steps.map((step, index) =>
             Object.freeze({
               step,
               state:

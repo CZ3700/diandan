@@ -52,6 +52,10 @@ const copy = {
     "The studio prepares your gifts and hands them to the artist. Check this page for progress.",
   orderDeliveredHelp:
     "The studio has marked these gifts as delivered to the artist.",
+  orderDigitalDelivered: "Added to the artist's support record",
+  orderDigitalAwaiting: "Support record pending",
+  orderDigitalDeliveredHelp:
+    "Your digital support has been added to the artist's support record. No studio handover is needed.",
   orderHistoryHelp:
     "Gift details and prices are saved from when you placed the order.",
   orderOriginalLanguage: "Original content: {language}",

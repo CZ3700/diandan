@@ -4,6 +4,7 @@ import {
   adminOrdersResponseSchema,
   checkoutPreflightObservationSchema,
   dailyPublicationDocumentSchema,
+  giftKindSchema,
   type AdminOrdersPrincipal,
   type AdminOrdersStoreRequest,
 } from "@fan-support/contracts";
@@ -72,6 +73,9 @@ async function historicalGiftKind(
   client: Parameters<typeof draftRows>[0],
   line: DraftRow,
 ) {
+  // The purchase-time snapshot (migration 0038) is authoritative; derive only for legacy lines.
+  if (typeof line["gift_kind"] === "string")
+    return giftKindSchema.parse(line["gift_kind"]);
   const [row] = await draftRows(
     client,
     `SELECT r.id,r.gift_id,r.profile_version,d.document FROM public.gift_revisions r LEFT JOIN public.gift_revision_translations t ON t.gift_revision_id=r.id LEFT JOIN public.daily_publication_revisions d ON d.gift_revision_id=r.id WHERE r.gift_id=$1 AND (t.id=$2::uuid OR d.source_translation_id=$3::uuid) LIMIT 2`,

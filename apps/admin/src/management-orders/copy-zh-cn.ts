@@ -71,5 +71,6 @@ export const copy = {
   throttled: "请稍候再试。",
   waiting: "正在处理…",
   studioDelivery: "所有礼物均由工作室准备并转交艺人。",
+  digitalDelivery: "数字应援凭证：付款确认后自动送达。",
   legacy: "历史记录",
 };

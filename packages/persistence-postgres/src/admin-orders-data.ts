@@ -154,7 +154,7 @@ export async function readAdminOrderLines(
 ): Promise<DraftRow[]> {
   return draftRows(
     client,
-    `SELECT i.id item_id,i.support_intent_id,i.cart_item_id,i.gift_id,i.gift_translation_revision_id,i.gift_daily_translation_id,i.checkout_preflight_id,
+    `SELECT i.id item_id,i.support_intent_id,i.cart_item_id,i.gift_id,i.gift_kind,i.gift_translation_revision_id,i.gift_daily_translation_id,i.checkout_preflight_id,
  f.id fulfillment_id,f.version fulfillment_version,f.status,f.hold_reason_code,f.prepared_at,f.updated_at fulfillment_updated_at,
  s.version intent_version,s.moderation_status,s.privacy_state,s.fan_message_locale,s.display_mode,s.fan_message_ciphertext,s.display_name_ciphertext,s.encrypted_data_key,s.encryption_key_version,
  (c.has_fan_message OR s.fan_message_ciphertext IS NOT NULL) has_message,(s.display_mode='nickname') has_display_name,

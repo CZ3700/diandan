@@ -10696,6 +10696,23 @@
                           ],
                           "type": "object"
                         },
+                        "giftKind": {
+                          "anyOf": [
+                            {
+                              "enum": [
+                                "VIRTUAL",
+                                "PHYSICAL",
+                                "WISH",
+                                "MERCHANDISE",
+                                "OTHER"
+                              ],
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
                         "idol": {
                           "additionalProperties": false,
                           "properties": {
@@ -11027,6 +11044,7 @@
                         "lineTotalMinor",
                         "currency",
                         "displayMode",
+                        "giftKind",
                         "fulfillmentStatus"
                       ],
                       "type": "object"
@@ -106512,6 +106530,23 @@
                   ],
                   "type": "object"
                 },
+                "giftKind": {
+                  "anyOf": [
+                    {
+                      "enum": [
+                        "VIRTUAL",
+                        "PHYSICAL",
+                        "WISH",
+                        "MERCHANDISE",
+                        "OTHER"
+                      ],
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
                 "idol": {
                   "additionalProperties": false,
                   "properties": {
@@ -106843,6 +106878,7 @@
                 "lineTotalMinor",
                 "currency",
                 "displayMode",
+                "giftKind",
                 "fulfillmentStatus"
               ],
               "type": "object"
@@ -107280,6 +107316,23 @@
             ],
             "type": "object"
           },
+          "giftKind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "VIRTUAL",
+                  "PHYSICAL",
+                  "WISH",
+                  "MERCHANDISE",
+                  "OTHER"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "idol": {
             "additionalProperties": false,
             "properties": {
@@ -107611,6 +107664,7 @@
           "lineTotalMinor",
           "currency",
           "displayMode",
+          "giftKind",
           "fulfillmentStatus"
         ],
         "type": "object",
@@ -108223,6 +108277,23 @@
                           ],
                           "type": "object"
                         },
+                        "giftKind": {
+                          "anyOf": [
+                            {
+                              "enum": [
+                                "VIRTUAL",
+                                "PHYSICAL",
+                                "WISH",
+                                "MERCHANDISE",
+                                "OTHER"
+                              ],
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
                         "idol": {
                           "additionalProperties": false,
                           "properties": {
@@ -108554,6 +108625,7 @@
                         "lineTotalMinor",
                         "currency",
                         "displayMode",
+                        "giftKind",
                         "fulfillmentStatus"
                       ],
                       "type": "object"

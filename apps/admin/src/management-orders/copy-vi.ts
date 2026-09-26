@@ -73,5 +73,7 @@ export const copy = {
   throttled: "Vui lòng chờ trước khi thử lại.",
   waiting: "Đang xử lý…",
   studioDelivery: "Studio chuẩn bị và trao mọi món quà đến nghệ sĩ.",
+  digitalDelivery:
+    "Hồ sơ ủng hộ kỹ thuật số: tự động giao khi thanh toán được xác nhận.",
   legacy: "Thông tin lịch sử",
 };

@@ -5,6 +5,10 @@ import {
   type AdminOrdersPrincipal,
 } from "@fan-support/contracts";
 import { decideFulfillmentTransitionCommand } from "@fan-support/domain";
+import {
+  deliverDigitalFulfillments,
+  isDigitalFulfillmentLine,
+} from "./digital-fulfillment.js";
 import { draftRows, type DraftRow } from "./content-draft-data.js";
 import {
   adminOrdersAudit,
@@ -69,7 +73,14 @@ export async function reviewAdminOrderMessage(
   if (!line) return adminOrdersFailure("NOT_FOUND");
   if (Number(line["intent_version"]) !== c.expectedIntentVersion)
     return adminOrdersFailure("STALE_VERSION");
-  if (!["PENDING", "ON_HOLD"].includes(String(line["status"])))
+  // ADR-019: a delivered digital support record still has its message reviewed.
+  if (
+    !["PENDING", "ON_HOLD"].includes(String(line["status"])) &&
+    !(
+      line["status"] === "DELIVERED" &&
+      isDigitalFulfillmentLine({ giftKind: String(line["gift_kind"]) })
+    )
+  )
     return adminOrdersFailure("TRANSITION_NOT_ALLOWED");
   const valid = await validateAdminOrderPrivateAccess(client, c.accessId, p);
   if (valid.outcome === "FAILURE") return valid;
@@ -223,8 +234,54 @@ export async function mutateAdminOrderFulfillment(
       request.access.correlationId,
     ],
   );
+  // ADR-019: resuming a held digital support line delivers it in the same transaction.
+  let finalStatus: string = target;
+  if (
+    target === "PENDING" &&
+    isDigitalFulfillmentLine({ giftKind: String(line["gift_kind"]) })
+  ) {
+    const [clock] = await draftRows(
+      client,
+      `SELECT to_char(transaction_timestamp() AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') at`,
+    );
+    const delivered = await deliverDigitalFulfillments(client, {
+      orderId: c.orderId,
+      lines: [
+        {
+          fulfillmentId: c.fulfillmentId,
+          orderItemId: String(line["item_id"]),
+          status: "PENDING",
+          version: c.expectedFulfillmentVersion + 1,
+          giftKind: "VIRTUAL",
+        },
+      ],
+      at: String(clock?.["at"]),
+      taskName: "admin-orders:digital-delivery",
+      requestId: request.access.requestId,
+      correlationId: request.access.correlationId,
+      appendOutbox: async (event) => {
+        await client.query(
+          `INSERT INTO public.outbox_events(id,event_type,aggregate_type,aggregate_id,aggregate_version,primary_subject_id,secondary_subject_id,locale,market,currency,idempotency_key,correlation_id,request_id,occurred_at,available_at,payload_status) VALUES($1,'FULFILLMENT_STATUS_CHANGED','FULFILLMENT',$2,$3,$2,$4,$5,$6,$7,$8,$9,$10,$11::timestamptz,$11::timestamptz,'DELIVERED')`,
+          [
+            randomUUID(),
+            event.fulfillmentId,
+            event.version,
+            event.orderId,
+            order["presentation_locale"],
+            order["market"],
+            order["currency"],
+            `digital-fulfillment:${event.eventId}`,
+            request.access.correlationId,
+            request.access.requestId,
+            event.at,
+          ],
+        );
+      },
+    });
+    if (delivered.length === 1) finalStatus = "DELIVERED";
+  }
   const aggregate = deriveAdminOrderFulfillment(
-    lines.map((l) => (l === line ? { ...l, status: target } : l)),
+    lines.map((l) => (l === line ? { ...l, status: finalStatus } : l)),
   );
   if (aggregate !== order["fulfillment_status"]) {
     await client.query(

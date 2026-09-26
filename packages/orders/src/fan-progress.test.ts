@@ -10,6 +10,7 @@ import {
   FAN_ORDER_STEPS,
   fanItemStage,
   fanOrderProgress,
+  isDigitalOnlyOrder,
   type FanOrderStage,
 } from "./fan-progress.js";
 
@@ -128,4 +129,46 @@ test("gift lines read a studio hold as preparing", () => {
     ["ON_HOLD", "PREPARING"],
     ["CANCELED", "CANCELED"],
   ]);
+});
+
+test("an order of only digital support gifts walks paid then delivered without a preparation step", () => {
+  const delivered = fanOrderProgress(
+    { ...paid, fulfillmentStatus: "DELIVERED" },
+    { digitalOnly: true },
+  );
+  expect(delivered.stage).toBe("DELIVERED");
+  expect(delivered.timeline).toEqual([
+    { step: "PAID", state: "DONE" },
+    { step: "DELIVERED", state: "CURRENT" },
+  ]);
+  const awaiting = fanOrderProgress(paid, { digitalOnly: true });
+  expect(awaiting.timeline).toEqual([
+    { step: "PAID", state: "CURRENT" },
+    { step: "DELIVERED", state: "UPCOMING" },
+  ]);
+  // A hold on a digital line is still described as preparing; the stage is unchanged, only the
+  // two-step timeline has no matching step to highlight.
+  expect(
+    fanOrderProgress(
+      { ...paid, fulfillmentStatus: "ON_HOLD" },
+      { digitalOnly: true },
+    ),
+  ).toMatchObject({ stage: "PREPARING", timeline: [] });
+  expect(fanOrderProgress(paid, { digitalOnly: false })).toEqual(
+    fanOrderProgress(paid),
+  );
+});
+
+test("only orders whose every line is VIRTUAL are digital-only; legacy lines count as studio work", () => {
+  expect(isDigitalOnlyOrder([{ giftKind: "VIRTUAL" }])).toBe(true);
+  expect(
+    isDigitalOnlyOrder([{ giftKind: "VIRTUAL" }, { giftKind: "VIRTUAL" }]),
+  ).toBe(true);
+  expect(
+    isDigitalOnlyOrder([{ giftKind: "VIRTUAL" }, { giftKind: "PHYSICAL" }]),
+  ).toBe(false);
+  expect(
+    isDigitalOnlyOrder([{ giftKind: "VIRTUAL" }, { giftKind: null }]),
+  ).toBe(false);
+  expect(isDigitalOnlyOrder([])).toBe(false);
 });

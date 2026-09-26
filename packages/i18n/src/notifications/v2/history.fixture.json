@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "variables": {
+    "schemaVersion": 1,
+    "siteName": "Studio Preview",
+    "publicOrderId": "71000000-0000-4000-8000-000000000001",
+    "orderedAt": "2026-09-15T23:30:00-07:00",
+    "currency": "USD",
+    "totalMinor": 12345,
+    "items": [
+      {
+        "idolName": "星の名前",
+        "idolLocale": "ja",
+        "giftName": "鲜花与心意",
+        "giftLocale": "zh-CN",
+        "variantName": null,
+        "variantLocale": null,
+        "quantity": 3,
+        "lineTotalMinor": 10000,
+        "giftKind": "VIRTUAL"
+      },
+      {
+        "idolName": "Second artist",
+        "idolLocale": "en",
+        "giftName": "Studio gift",
+        "giftLocale": "en",
+        "variantName": "Size L",
+        "variantLocale": "en",
+        "quantity": 1,
+        "lineTotalMinor": 2345,
+        "giftKind": "PHYSICAL"
+      }
+    ]
+  },
+  "messages": [
+    {
+      "eventType": "PAYMENT_CONFIRMED",
+      "locale": "en",
+      "templateKey": "order.payment.confirmed",
+      "templateVersion": "v2.ec3588deaa458908dcfb816b7d169bd30a235c83c58b6e1854b2b1899148812c",
+      "contentHash": "744cedf33e0e3c62bb932efaf494576adc5acdc1f372b2d893ab1923fd1af154"
+    },
+    {
+      "eventType": "PAYMENT_CONFIRMED",
+      "locale": "zh-CN",
+      "templateKey": "order.payment.confirmed",
+      "templateVersion": "v2.ec3588deaa458908dcfb816b7d169bd30a235c83c58b6e1854b2b1899148812c",
+      "contentHash": "cd05b48d797cacef0d145e966b7551411e383b2c610cf8e7a287946f0f40a1ad"
+    },
+    {
+      "eventType": "PAYMENT_CONFIRMED",
+      "locale": "th",
+      "templateKey": "order.payment.confirmed",
+      "templateVersion": "v2.ec3588deaa458908dcfb816b7d169bd30a235c83c58b6e1854b2b1899148812c",
+      "contentHash": "e18136cd8575a23a99e998a2d8fa3d2415e266c8c6430442fe89f2305d54258b"
+    },
+    {
+      "eventType": "PAYMENT_CONFIRMED",
+      "locale": "vi",
+      "templateKey": "order.payment.confirmed",
+      "templateVersion": "v2.ec3588deaa458908dcfb816b7d169bd30a235c83c58b6e1854b2b1899148812c",
+      "contentHash": "69de00a54fd5eaf3f8cbfe85c6d7ae07b94ddf7bada27852f8c845f21bd53ca2"
+    },
+    {
+      "eventType": "PAYMENT_CONFIRMED",
+      "locale": "ja",
+      "templateKey": "order.payment.confirmed",
+      "templateVersion": "v2.ec3588deaa458908dcfb816b7d169bd30a235c83c58b6e1854b2b1899148812c",
+      "contentHash": "ac2060eef1d12c6dbb3e35f018a319f80e175771a4158b83e7056012544cb74d"
+    },
+    {
+      "eventType": "PAYMENT_CONFIRMED",
+      "locale": "es",
+      "templateKey": "order.payment.confirmed",
+      "templateVersion": "v2.ec3588deaa458908dcfb816b7d169bd30a235c83c58b6e1854b2b1899148812c",
+      "contentHash": "ac9758b00197d0209ad6ecc99454f7c2c20d5d8ea492aa960a7213089f279efa"
+    },
+    {
+      "eventType": "PAYMENT_CONFIRMED",
+      "locale": "pt",
+      "templateKey": "order.payment.confirmed",
+      "templateVersion": "v2.ec3588deaa458908dcfb816b7d169bd30a235c83c58b6e1854b2b1899148812c",
+      "contentHash": "5eb8c49b41f9deb51793129ea96aa6b8dee174ff48c22ffae5276f169a09b837"
+    },
+    {
+      "eventType": "PREPARING",
+      "locale": "en",
+      "templateKey": "order.preparing",
+      "templateVersion": "v2.ef0368f6ccfd771a709c08262a8dea171202bece18112637c2437fc5cb6d4125",
+      "contentHash": "f73582edbbad716670874cec49ee14b0469fa8d75c73b6a6248c64d508b70566"
+    },
+    {
+      "eventType": "PREPARING",
+      "locale": "zh-CN",
+      "templateKey": "order.preparing",
+      "templateVersion": "v2.ef0368f6ccfd771a709c08262a8dea171202bece18112637c2437fc5cb6d4125",
+      "contentHash": "da2d818b062ec8074b373119793e1501d5e87b0252b0c6a3c250ba6b214a427e"
+    },
+    {
+      "eventType": "PREPARING",
+      "locale": "th",
+      "templateKey": "order.preparing",
+      "templateVersion": "v2.ef0368f6ccfd771a709c08262a8dea171202bece18112637c2437fc5cb6d4125",
+      "contentHash": "a8dbedac0c49558380269d0b1405a489a9fead35e709820180b05e196784cc51"
+    },
+    {
+      "eventType": "PREPARING",
+      "locale": "vi",
+      "templateKey": "order.preparing",
+      "templateVersion": "v2.ef0368f6ccfd771a709c08262a8dea171202bece18112637c2437fc5cb6d4125",
+      "contentHash": "70d6cb6667f5bf2269fae37696f45783b5d5d0b63601f791b8f1adf246faca61"
+    },
+    {
+      "eventType": "PREPARING",
+      "locale": "ja",
+      "templateKey": "order.preparing",
+      "templateVersion": "v2.ef0368f6ccfd771a709c08262a8dea171202bece18112637c2437fc5cb6d4125",
+      "contentHash": "020149c831b8a518044cd8a6b98ce7465a0bdd5c5820dff399f5d14ad7009db4"
+    },
+    {
+      "eventType": "PREPARING",
+      "locale": "es",
+      "templateKey": "order.preparing",
+      "templateVersion": "v2.ef0368f6ccfd771a709c08262a8dea171202bece18112637c2437fc5cb6d4125",
+      "contentHash": "c70e4cff5993b25aabbb7b1035d15f885b5eb89d43bf93c8bf57b2c786e34d51"
+    },
+    {
+      "eventType": "PREPARING",
+      "locale": "pt",
+      "templateKey": "order.preparing",
+      "templateVersion": "v2.ef0368f6ccfd771a709c08262a8dea171202bece18112637c2437fc5cb6d4125",
+      "contentHash": "c3634eee9c702dfe7cf17953a0b42f99817a5a2341745dc9c9390677ea610272"
+    },
+    {
+      "eventType": "DELIVERED",
+      "locale": "en",
+      "templateKey": "order.delivered",
+      "templateVersion": "v2.c0207d87e3d6ff8049ae75157f99883b7d6b5c8ecb0a206eb4cf02d16685bd42",
+      "contentHash": "b5f9f13902f5ce9d0afe8d82949a1cb745919b8203812499c73897a8c2886171"
+    },
+    {
+      "eventType": "DELIVERED",
+      "locale": "zh-CN",
+      "templateKey": "order.delivered",
+      "templateVersion": "v2.c0207d87e3d6ff8049ae75157f99883b7d6b5c8ecb0a206eb4cf02d16685bd42",
+      "contentHash": "d9d476c228ec0bfb5a363d1087e34e8a298970ed6510f7c702987e5d4f527d32"
+    },
+    {
+      "eventType": "DELIVERED",
+      "locale": "th",
+      "templateKey": "order.delivered",
+      "templateVersion": "v2.c0207d87e3d6ff8049ae75157f99883b7d6b5c8ecb0a206eb4cf02d16685bd42",
+      "contentHash": "98218420cdfc02b3a9f605879e760b579e10fdb9aabf057e898ffb2fd70340cc"
+    },
+    {
+      "eventType": "DELIVERED",
+      "locale": "vi",
+      "templateKey": "order.delivered",
+      "templateVersion": "v2.c0207d87e3d6ff8049ae75157f99883b7d6b5c8ecb0a206eb4cf02d16685bd42",
+      "contentHash": "6d5dc58a0d1c2dcda29100813a2299f9d0d319d655eae30c254aea088c125a42"
+    },
+    {
+      "eventType": "DELIVERED",
+      "locale": "ja",
+      "templateKey": "order.delivered",
+      "templateVersion": "v2.c0207d87e3d6ff8049ae75157f99883b7d6b5c8ecb0a206eb4cf02d16685bd42",
+      "contentHash": "5db20ee1f148c335d33a8a9c7a2bf40b4cc7443994e0c7c6ee87e0ab425573e7"
+    },
+    {
+      "eventType": "DELIVERED",
+      "locale": "es",
+      "templateKey": "order.delivered",
+      "templateVersion": "v2.c0207d87e3d6ff8049ae75157f99883b7d6b5c8ecb0a206eb4cf02d16685bd42",
+      "contentHash": "17b03709533fdc03f76dc8b195167d8ecafe851b931d0b7625bd752768af88a4"
+    },
+    {
+      "eventType": "DELIVERED",
+      "locale": "pt",
+      "templateKey": "order.delivered",
+      "templateVersion": "v2.c0207d87e3d6ff8049ae75157f99883b7d6b5c8ecb0a206eb4cf02d16685bd42",
+      "contentHash": "790228eea0827d9ee1988ca887aa13b0394e866e05ae4d3983578a9ec876356c"
+    }
+  ]
+}

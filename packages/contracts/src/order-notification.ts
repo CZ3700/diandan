@@ -13,6 +13,7 @@ import {
   notificationCommandSchema,
   notificationLocaleSnapshotSchema,
 } from "./fulfillment-notification.js";
+import { giftKindSchema } from "./gift-commerce-profile.js";
 import { supportedLocaleSchema } from "./locale.js";
 import {
   notificationPortCommandSchema,
@@ -56,6 +57,8 @@ export const orderNotificationItemSchema = z
     variantLocale: supportedLocaleSchema.nullable(),
     quantity: z.number().int().min(1).max(2_147_483_647),
     lineTotalMinor: minorAmountSchema,
+    /** ADR-019 (template v2). Archived v1 variables omit it and parse as null; null also marks legacy lines. */
+    giftKind: giftKindSchema.nullable().default(null),
   })
   .refine((v) => (v.variantName === null) === (v.variantLocale === null));
 /** No live catalog lookup or private support-intent fields. Frozen before sending. */

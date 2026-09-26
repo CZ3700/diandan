@@ -50,6 +50,7 @@ export const orderFixture = orderAccessDetailSchema.parse({
     lineTotalMinor: line.lineTotalMinor,
     currency: checkoutFixture.currency,
     displayMode: "anonymous",
+    giftKind: "PHYSICAL",
     fulfillmentStatus: "PENDING",
   })),
   createdAt: "2026-09-01T00:00:00.000Z",

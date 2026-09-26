@@ -18,6 +18,11 @@ machine-assisted drafts with no human reviewer or approval commit.
 
 ## Version and review evidence
 
+`v2/` is the current version (2026-09-26, ADR-019): every item carries its
+purchase-time `giftKind`, a VIRTUAL line is marked as digital support and one
+support-record note is added when the order contains such a line. New selections
+use v2 identities only; `render` still replays a message by its pinned v1 identity.
+
 `v1/` is an archive, not an editable “latest” catalog. Each event's `v1.<sha256>`
 identity covers all seven locales' subject, preheader, body copy, HTML and text
 layouts, the variable JSON schema and custom refinements, and renderer version.
@@ -25,7 +30,7 @@ Email styles are a frozen projection of the existing design tokens; live shared
 token changes must not change previously requested mail. The renderer uses system
 fonts and no external media or trackers.
 
-The 21 records in `v1/reviews.json` bind the exact English source, translation,
+The 21 records in each version's `reviews.json` bind the exact English source, translation,
 variable schema and template version. `APPROVED` requires the full seven-language
 set for all three events, valid human-review evidence and exact hashes. Updating
 hashes does not approve a translation. Never manufacture reviewer names or

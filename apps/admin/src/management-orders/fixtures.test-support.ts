@@ -64,6 +64,7 @@ export function detailFixture(): OrdersDetail {
           lineTotalMinor: 100,
           currency: "USD",
           displayMode: "anonymous",
+          giftKind: "PHYSICAL",
           fulfillmentStatus: "PENDING",
         },
       ],

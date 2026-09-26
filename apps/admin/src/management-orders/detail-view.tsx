@@ -109,6 +109,11 @@ function OrderLine({
                   ? common.preorder
                   : copy.legacy}
           </p>
+          {line.giftKind === "VIRTUAL" ? (
+            <p className="mc-hint" data-order-digital>
+              {copy.digitalDelivery}
+            </p>
+          ) : null}
           <p>
             {new Intl.NumberFormat(locale).format(snapshot.quantity)} ×{" "}
             <Price

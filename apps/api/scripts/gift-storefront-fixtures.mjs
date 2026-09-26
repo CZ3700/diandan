@@ -289,7 +289,9 @@ async function seedGifts({
     const image = media[index % media.length];
     const name = `${image.name} ${String(index + 1).padStart(2, "0")}`;
     const category = ["FLOWERS", "ACCESSORY", "OTHER"][index % 3];
-    const giftKind = ["VIRTUAL", "PHYSICAL", "WISH", "MERCHANDISE", "OTHER"][
+    // ADR-019 delivers VIRTUAL lines at payment; the default checkout gift (index 0) stays a
+    // studio-fulfilled kind so payment, notification and admin flows keep their PENDING baseline.
+    const giftKind = ["PHYSICAL", "WISH", "MERCHANDISE", "OTHER", "VIRTUAL"][
       index % 5
     ];
     const value = contentAuthoringContentSchema.parse({

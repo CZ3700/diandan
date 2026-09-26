@@ -78,6 +78,7 @@ const order = orderAccessDetailSchema.parse({
       lineTotalMinor: 14000,
       currency: "USD",
       displayMode: "nickname",
+      giftKind: "PHYSICAL",
       fulfillmentStatus: "PENDING",
     },
   ],
@@ -180,6 +181,56 @@ describe("protected historical order presentation", () => {
       expect(html).not.toContain(hidden);
     expect(html).toContain('data-order-dispute-status="OPEN"');
     expect(html).not.toContain('data-payment-state="SUCCEEDED"');
+  });
+
+  it("describes a digital support gift as the artist's record and drops the preparation step for digital-only orders", async () => {
+    const digital = {
+      ...order,
+      fulfillmentStatus: "DELIVERED" as const,
+      items: [
+        {
+          ...order.items[0]!,
+          giftKind: "VIRTUAL" as const,
+          fulfillmentStatus: "DELIVERED" as const,
+        },
+      ],
+    };
+    const html = await render(digital);
+    const escaped = (value: string) => value.replaceAll("'", "&#x27;");
+    expect(html).toContain('data-order-item-kind="VIRTUAL"');
+    expect(html).toContain(escaped(copy.orderDigitalDelivered));
+    expect(html).toContain(escaped(copy.orderDigitalDeliveredHelp));
+    expect(html).not.toContain(copy.orderDeliveredHelp);
+    expect(html).not.toContain('data-order-step="PREPARING"');
+    expect(html).toContain('data-order-step="PAID" data-step-state="DONE"');
+    expect(html).toContain(
+      'data-order-step="DELIVERED" data-step-state="CURRENT" aria-current="step"',
+    );
+    // A mixed order keeps the studio timeline; only the digital line reads as a record.
+    const mixed = {
+      ...order,
+      fulfillmentStatus: "PREPARING" as const,
+      items: [
+        digital.items[0]!,
+        {
+          ...order.items[0]!,
+          position: 2,
+          fulfillmentStatus: "PENDING" as const,
+        },
+      ],
+    };
+    const mixedHtml = await render(mixed);
+    expect(mixedHtml).toContain('data-order-step="PREPARING"');
+    expect(mixedHtml).toContain(escaped(copy.orderDigitalDelivered));
+    expect(mixedHtml).toContain(copy.orderPending);
+    expect(mixedHtml).toContain(copy.orderPreparationHelp);
+    // Before payment settles, a digital line is a pending record, never "awaiting preparation".
+    const awaiting = await render({
+      ...order,
+      items: [{ ...digital.items[0]!, fulfillmentStatus: "PENDING" as const }],
+    });
+    expect(awaiting).toContain(copy.orderDigitalAwaiting);
+    expect(awaiting).not.toContain(copy.orderPending);
   });
 
   it("replaces the timeline with one outcome when payment is unconfirmed, refunded or canceled", async () => {

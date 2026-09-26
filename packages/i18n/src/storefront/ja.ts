@@ -54,6 +54,10 @@ const copy = {
     "スタジオがギフトを準備し、アーティストへお届けします。このページで進捗をご確認いただけます。",
   orderDeliveredHelp:
     "スタジオは、これらのギフトをアーティストにお届け済みとして記録しています。",
+  orderDigitalDelivered: "アーティストの応援記録に追加されました",
+  orderDigitalAwaiting: "応援記録の反映待ち",
+  orderDigitalDeliveredHelp:
+    "デジタル応援はアーティストの応援記録に追加されました。スタジオからのお届けは不要です。",
   orderHistoryHelp: "ギフト情報と価格は、ご注文時の内容を保持しています。",
   orderOriginalLanguage: "原文：{language}",
   orderSnapshotLanguage: "注文時に保存された内容：{language}",

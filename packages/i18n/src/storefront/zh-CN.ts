@@ -46,6 +46,10 @@ const copy = {
   orderReviewHelp: "工作室需要先核查此订单，再继续准备礼物。",
   orderPreparationHelp: "工作室会准备礼物并转交给艺人，你可以在此查看进度。",
   orderDeliveredHelp: "工作室已将这些礼物标记为已交付艺人。",
+  orderDigitalDelivered: "已计入艺人的应援记录",
+  orderDigitalAwaiting: "应援记录待生成",
+  orderDigitalDeliveredHelp:
+    "你的数字应援已计入艺人的应援记录，无需工作室转交。",
   orderHistoryHelp: "礼物信息与价格保留你下单时的内容。",
   orderOriginalLanguage: "原文：{language}",
   orderSnapshotLanguage: "下单时保存的内容：{language}",

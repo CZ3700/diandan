@@ -44,3 +44,12 @@
 | §4-1 同意框合一 | LOCAL_ACCEPTED | 一个勾选框，旁边一句带全部政策链接的同意语（链接展开结账概要里的政策全文，点击不会勾选）；每个政策的 key/版本仍分别提交，合同与同意哈希不变；七语文案 DRAFT，审校哈希已更新；回归脚本选择器兼容。欧盟 extraConsents、德国付款按钮文案延后到对应市场上线。浏览器实测交 CI |
 | §4-5 状态四态化 | LOCAL_ACCEPTED | `@fan-support/orders` 新增粉丝映射（全部 500 种状态组合穷举测试）：已付款→准备中→已送达时间线，付款确认中/已退款/已取消替换时间线，部分退款附说明；核查暂停显示"准备中"，争议不出现在文案中，争议期间不给进度承诺；四个规范状态轴保留为 data 属性，回归脚本不用改。"退款中"需要读模型提供进行中退款标记，列为后续 |
 | §4-2 价格直显（第一阶段） | LOCAL_ACCEPTED | ADR-017 增补：只有一个已发布市场且只有一个币种时即为作用域，显式选择优先，不从语言推导。礼物详情先流式输出内容，价格与加购面板在原市场选择的 Suspense 位置流入，读价格失败时回退为市场选择；艺人页目录唯一市场时直接显示价格。保持"页壳/内容先于商业上下文"的流式保障（首版入口等待方案破坏了它，已回退）。第二阶段（/gifts 与首页目录带价、规范 URL、页眉/页脚隐藏地区入口）随第 3 项首页改版处理 |
+
+## R2 站点核心功能 —— IN_PROGRESS（2026-09-26 起，顺序 F1→F2→F3，分支 `v2/r1-production`）
+
+范围与顺序见 `docs/handoff/2026-09-26-core-features-first.md`；沙盒与外部配置类工作延后到最后。
+
+| 条目 | 状态 | 范围与结论 |
+|:--|:--|:--|
+| F0 本机 PostgreSQL 验证能力 | DONE | 便携 PostgreSQL 18.6（EDB zip，SHA256 `fbe23da2…52f8c`，EDB 不发布校验和且 zip 内二进制未签名，信任锚为 HTTPS 官方源）解压到 `C:\Users\admin\.tools\pgsql-18.6\pgsql`，`POSTGRES_TEST_BIN` 写入 `xiadan-env.sh`。修复原生框架真缺陷：PostgreSQL 在所有平台用正斜杠写 `postmaster.pid` 的数据目录行，原代码逐字节比较导致 Windows 上拒绝清理集群；改为 `path.resolve` 归一化比较并补单测。`postgres-integration.mjs` 在 Windows 通过；persistence-postgres 完整 `test:postgres` 链 47 段全部通过（约 40 分钟，日志在 `output/checks/f1-postgres-windows/`）。API/浏览器级集成仍需 S3 模拟，交 CI |
+| F1-1 虚拟礼物自动履约 | LOCAL_ACCEPTED | 设计 `docs/plan/f1-01-virtual-gift-fulfillment.md`。迁移 0038：`order_items.gift_kind` 购买时快照（结账写入 + 回填）；两个履约触发器放开 VIRTUAL 行 SYSTEM 直达 PENDING→DELIVERED（留言审核独立）；`notification_source_authority` 排除系统送达、`notification_order_snapshot` 带 giftKind。领域新增 `SYSTEM_DIGITAL_DELIVERY`；支付写入同事务数字送达并写审计/事件/outbox，自身预占失效的数字行随实物行 ON_HOLD；聚合推导抽成共享模块。后台：数字行无 PREPARE/DELIVER/HOLD，RESUME 即送达，已送达仍可审核留言，详情显示数字凭证提示（七语言）。查单 API 与邮件变量带 giftKind；前台纯虚拟订单两步时间线与三条七语言文案（审校哈希更新）；通知模板 v2（v1 归档按字节可复现，历史/身份/审校夹具齐全）。夹具默认礼物改为实物，`admin-orders-fixture.mjs` 新增混合与纯虚拟用例。验证：domain 222、persistence 752、i18n 62、contracts 527、storefront/admin/api/application 相关套件通过；本机真实 PG：迁移往返 + 目录快照（38 迁移）、回滚前缀守卫 53/53（含 0038 down/up）、支付 SQL 参数推断；`check:dev` 前五段通过，test 段因并行负载 5 个既有慢测试超时，`turbo run test --concurrency=1` 69/69 与 build 38/38 通过。未覆盖：API 混合订单用例与七语言浏览器验收（需 S3），交 CI 草稿 PR |

@@ -148,6 +148,7 @@ test("protected historical reads bind the response to the authorized order and r
     lineTotalMinor: 200,
     currency: "USD",
     displayMode: "anonymous",
+    giftKind: "PHYSICAL",
     fulfillmentStatus: "PENDING",
   };
   const order = {

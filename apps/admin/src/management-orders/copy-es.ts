@@ -79,5 +79,7 @@ export const copy = {
   throttled: "Espera un momento antes de volver a intentarlo.",
   waiting: "Procesando…",
   studioDelivery: "El estudio prepara y entrega todos los regalos al artista.",
+  digitalDelivery:
+    "Registro de apoyo digital: se entrega automáticamente al confirmarse el pago.",
   legacy: "Registro histórico",
 };

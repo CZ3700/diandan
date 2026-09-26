@@ -86,7 +86,7 @@ it("renders all three events completely in all seven locales with original snaps
   for (const locale of SUPPORTED_LOCALES)
     for (const event of events) {
       const selection = templates.select(event, locale);
-      expect(selection.templateVersion).toMatch(/^v1\.[a-f0-9]{64}$/u);
+      expect(selection.templateVersion).toMatch(/^v2\.[a-f0-9]{64}$/u);
       expect(selection).toMatchObject({
         requestedLocale: locale,
         resolvedLocale: locale,
@@ -106,6 +106,54 @@ it("renders all three events completely in all seven locales with original snaps
       );
       expect(content.html).not.toContain("undefined");
     }
+});
+
+it("marks digital support lines and adds the support-record note only when a VIRTUAL line exists", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  for (const locale of SUPPORTED_LOCALES) {
+    const selection = templates.select("PAYMENT_CONFIRMED", locale);
+    const studio = templates.render(
+      command(selection, {
+        items: [{ ...variables.items[0], giftKind: "PHYSICAL" }],
+      }),
+    );
+    expect(studio.html).not.toContain("data-mail-digital");
+    const mixed = templates.render(
+      command(selection, {
+        items: [
+          { ...variables.items[0], giftKind: "VIRTUAL" },
+          { ...variables.items[0], giftName: "Studio gift", giftKind: null },
+        ],
+      }),
+    );
+    expect(mixed.html.match(/data-mail-digital-note/gu)).toHaveLength(1);
+    expect(mixed.html.match(/data-mail-digital\s/gu)).toHaveLength(1);
+    expect(mixed.text).not.toContain("undefined");
+    expect(mixed.text.length).toBeGreaterThan(studio.text.length);
+    expect(mixed.subject).toBe(studio.subject);
+  }
+});
+
+it("still renders archived v1 selections byte-for-byte without a gift kind", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const { templateVersionV1, eventTemplateKeys } =
+    await import("./v1/identity.js");
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  const archived = command({
+    eventType: "DELIVERED",
+    requestedLocale: "th",
+    resolvedLocale: "th",
+    fallbackUsed: false,
+    templateKey: eventTemplateKeys.DELIVERED,
+    templateVersion: templateVersionV1("DELIVERED"),
+  });
+  const content = templates.render(archived);
+  expect(content.html).toContain('<html lang="th">');
+  expect(content.html).not.toContain("data-mail-digital");
+  expect(templates.select("DELIVERED", "th").templateVersion).not.toBe(
+    archived.locale.templateVersion,
+  );
 });
 
 it("blocks all draft production templates including English incident fallback", async () => {

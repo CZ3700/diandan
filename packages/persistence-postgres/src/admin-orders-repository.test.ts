@@ -233,6 +233,43 @@ describe("admin orders persistence boundary", () => {
       ]),
     ).toEqual([]);
   });
+  test("digital support lines are never prepared, delivered or held by the studio; a hold only resumes", () => {
+    const digital = {
+      ...line,
+      moderation_status: "APPROVED",
+      gift_kind: "VIRTUAL",
+    };
+    expect(
+      fulfillmentActions(order, digital, [
+        "orders.fulfillment",
+        "orders.manage",
+      ]),
+    ).toEqual([]);
+    expect(
+      fulfillmentActions(order, { ...digital, status: "PREPARING" }, [
+        "orders.fulfillment",
+        "orders.manage",
+      ]),
+    ).toEqual([]);
+    expect(
+      fulfillmentActions(
+        order,
+        { ...digital, status: "ON_HOLD", resume_status: "PENDING" },
+        ["orders.fulfillment", "orders.manage"],
+      ),
+    ).toEqual(["RESUME"]);
+    expect(
+      fulfillmentActions(order, { ...digital, gift_kind: "PHYSICAL" }, [
+        "orders.fulfillment",
+        "orders.manage",
+      ]),
+    ).toEqual(["PREPARE", "HOLD"]);
+    expect(
+      fulfillmentActions(order, { ...digital, gift_kind: null }, [
+        "orders.fulfillment",
+      ]),
+    ).toEqual(["PREPARE"]);
+  });
   test.each([
     [["PENDING", "PENDING"], "PENDING"],
     [["PREPARING", "PENDING"], "PREPARING"],

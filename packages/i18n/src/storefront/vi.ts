@@ -53,6 +53,10 @@ const copy = {
     "Studio chuẩn bị quà và bàn giao cho nghệ sĩ. Bạn có thể theo dõi tiến độ tại đây.",
   orderDeliveredHelp:
     "Studio đã đánh dấu những món quà này là đã giao cho nghệ sĩ.",
+  orderDigitalDelivered: "Đã ghi vào hồ sơ ủng hộ của nghệ sĩ",
+  orderDigitalAwaiting: "Đang chờ ghi nhận ủng hộ",
+  orderDigitalDeliveredHelp:
+    "Phần ủng hộ kỹ thuật số của bạn đã được ghi vào hồ sơ ủng hộ của nghệ sĩ. Không cần studio chuyển giao.",
   orderHistoryHelp:
     "Thông tin và giá quà tặng được giữ nguyên như khi bạn đặt hàng.",
   orderOriginalLanguage: "Nội dung gốc: {language}",

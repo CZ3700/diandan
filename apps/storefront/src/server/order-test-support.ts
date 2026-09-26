@@ -70,6 +70,7 @@ export const orderTestDetail = orderAccessDetailSchema.parse({
       lineTotalMinor: 100,
       currency: "USD",
       displayMode: "anonymous",
+      giftKind: "PHYSICAL",
       fulfillmentStatus: "PENDING",
     },
   ],

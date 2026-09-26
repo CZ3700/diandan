@@ -74,5 +74,7 @@ export const copy = {
   throttled: "Please wait before trying again.",
   waiting: "Working…",
   studioDelivery: "The studio prepares and delivers every gift to the artist.",
+  digitalDelivery:
+    "Digital support record: delivered automatically once payment is confirmed.",
   legacy: "Historical record",
 };

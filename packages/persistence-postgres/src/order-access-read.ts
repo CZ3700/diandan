@@ -80,6 +80,7 @@ export function orderAccessItem(
     lineTotalMinor: Number(row["line_total_minor"]),
     currency: row["currency"],
     displayMode: row["display_mode"],
+    giftKind: row["gift_kind"] ?? null,
     fulfillmentStatus: row["fulfillment_status"],
   });
 }
@@ -96,7 +97,7 @@ export async function readOrderAccessDetail(
       i.idol_portrait_object_key,i.idol_portrait_alt,i.idol_portrait_alt_requested_locale,i.idol_portrait_alt_resolved_locale,i.idol_portrait_alt_fallback_used,i.idol_portrait_alt_daily_translation_id,
       i.gift_image_object_key,i.gift_image_alt,i.gift_image_alt_requested_locale,i.gift_image_alt_resolved_locale,i.gift_image_alt_fallback_used,i.gift_image_alt_daily_translation_id,
       portrait.object_key idol_portrait_public_object_key,gift_image.object_key gift_image_public_object_key,
-      i.quantity,i.unit_amount_minor::text,i.line_subtotal_minor::text,i.tax_amount_minor::text,i.discount_amount_minor::text,i.line_total_minor::text,i.currency,i.display_mode,f.status fulfillment_status,
+      i.quantity,i.unit_amount_minor::text,i.line_subtotal_minor::text,i.tax_amount_minor::text,i.discount_amount_minor::text,i.line_total_minor::text,i.currency,i.display_mode,i.gift_kind,f.status fulfillment_status,
       original.line->>'giftVariantLabel' variant_label
       FROM public.order_items i LEFT JOIN public.fulfillments f ON f.order_item_id=i.id AND f.order_id=i.order_id
       LEFT JOIN public.checkout_preflight_observations observation ON observation.id=i.checkout_preflight_id

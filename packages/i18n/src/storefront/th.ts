@@ -50,6 +50,10 @@ const copy = {
   orderPreparationHelp:
     "สตูดิโอจะเตรียมของขวัญและส่งมอบให้ศิลปิน ติดตามความคืบหน้าได้ที่หน้านี้",
   orderDeliveredHelp: "สตูดิโอระบุว่าส่งมอบของขวัญเหล่านี้ให้ศิลปินแล้ว",
+  orderDigitalDelivered: "บันทึกในประวัติการสนับสนุนศิลปินแล้ว",
+  orderDigitalAwaiting: "รอบันทึกการสนับสนุน",
+  orderDigitalDeliveredHelp:
+    "การสนับสนุนดิจิทัลของคุณถูกบันทึกในประวัติการสนับสนุนศิลปินแล้ว ไม่ต้องส่งมอบผ่านสตูดิโอ",
   orderHistoryHelp: "รายละเอียดและราคาของขวัญถูกบันทึกไว้ตามเวลาที่คุณสั่งซื้อ",
   orderOriginalLanguage: "เนื้อหาต้นฉบับ: {language}",
   orderSnapshotLanguage: "เนื้อหาที่บันทึกเมื่อสั่งซื้อ: {language}",

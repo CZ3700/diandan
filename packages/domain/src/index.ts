@@ -23,6 +23,10 @@ export { advancePaymentHealthWindow } from "./payment-health.js";
 export { selectEffectivePrice } from "./price-selection.js";
 export { evaluateRefundCapacity } from "./refund-capacity.js";
 export {
+  decideFulfillmentTransition,
+  type FulfillmentTransitionAuthority,
+} from "./fulfillment-state-machine.js";
+export {
   decideDisputeTransitionCommand,
   decideFulfillmentTransitionCommand,
   decideOrderLifecycleTransitionCommand,

@@ -54,6 +54,10 @@ const copy = {
     "O estúdio prepara seus presentes e os entrega ao artista. Acompanhe o progresso nesta página.",
   orderDeliveredHelp:
     "O estúdio marcou estes presentes como entregues ao artista.",
+  orderDigitalDelivered: "Adicionado ao registro de apoio do artista",
+  orderDigitalAwaiting: "Registro de apoio pendente",
+  orderDigitalDeliveredHelp:
+    "Seu apoio digital foi adicionado ao registro de apoio do artista. Não é necessária entrega pelo estúdio.",
   orderHistoryHelp:
     "Os detalhes e preços dos presentes são mantidos como estavam quando você fez o pedido.",
   orderOriginalLanguage: "Conteúdo original: {language}",
