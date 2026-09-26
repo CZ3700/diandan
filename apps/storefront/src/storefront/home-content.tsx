@@ -7,6 +7,7 @@ import { Icon } from "@fan-support/ui";
 import { PublishedHeroImage } from "./published-image";
 import { storefrontHref } from "./navigation";
 import type { StorefrontCopy } from "./copy";
+import { HomeKinds } from "./home-kinds";
 import { HowItWorks, PageState, StudioPromise } from "./page-parts";
 
 export function HomeContent({
@@ -42,6 +43,7 @@ export function HomeContent({
           }
           contextQuery={contextQuery}
         />
+        <HomeKinds locale={locale} copy={copy} contextQuery={contextQuery} />
         {giftDirectory}
       </>
     );
@@ -115,6 +117,7 @@ export function HomeContent({
           fallbackLabel={copy.mediaFallback}
         />
       </section>
+      <HomeKinds locale={locale} copy={copy} contextQuery={contextQuery} />
       <section
         className="storefront-section"
         id="artists"

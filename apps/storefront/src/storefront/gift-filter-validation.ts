@@ -38,6 +38,11 @@ export function validateGiftFilterDraft(
     href: giftFilterHref(query, basePath, contextQuery, {
       sort: draft.sort,
       availability: draft.availability,
+      ...(draft.kind
+        ? {
+            kind: draft.kind as NonNullable<GiftDiscoveryQuery["kind"]>,
+          }
+        : {}),
       ...(draft.category
         ? {
             category: draft.category as NonNullable<

@@ -97,6 +97,7 @@ test.each([
       basePath: "/gifts",
       initialDraft: {
         sort: "PRICE_DESC",
+        kind: "",
         category: "",
         availability: "ALL",
         minimum: "",
@@ -113,6 +114,7 @@ test.each([
         },
       ],
       appliedFilters: [],
+      kindOptions: [],
     });
     const cleanups = hooks.effects.map((effect) => effect());
     const form = propsFor(tree, "data-gift-filters", "desktop")!;
@@ -207,6 +209,7 @@ test("an invalid amount opens the desktop disclosure before focusing the invalid
     basePath: "/gifts",
     initialDraft: {
       sort: "RECOMMENDED",
+      kind: "",
       category: "",
       availability: "ALL",
       minimum: "invalid",
@@ -217,6 +220,7 @@ test("an invalid amount opens the desktop disclosure before focusing the invalid
     hint: "USD",
     sortOptions: [],
     appliedFilters: [],
+    kindOptions: [],
   });
   const disclosure = propsFor(tree, "data-gift-filter-disclosure", true)!;
   const element = { open: false };
@@ -266,6 +270,7 @@ test("toolbar sorting waits for explicit submission, blocks composition Enter, a
     basePath: "/gifts",
     initialDraft: {
       sort: "RECOMMENDED",
+      kind: "",
       category: "",
       availability: "ALL",
       minimum: "",
@@ -283,6 +288,7 @@ test("toolbar sorting waits for explicit submission, blocks composition Enter, a
       },
     ],
     appliedFilters: [],
+    kindOptions: [],
   });
   const cleanups = hooks.effects.map((effect) => effect());
   const form = propsFor(tree, "data-gift-toolbar-form", true);

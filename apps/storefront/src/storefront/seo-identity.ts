@@ -30,6 +30,7 @@ const directoryFields = [
   "pageSize",
   "sort",
   "category",
+  "kind",
   "priceMinMinor",
   "priceMaxMinor",
   "availability",
@@ -108,6 +109,10 @@ export function createSeoIdentity(
       }
       if (query.category !== undefined) {
         canonical.set("category", query.category);
+        noindex = true;
+      }
+      if (query.kind !== undefined) {
+        canonical.set("kind", query.kind);
         noindex = true;
       }
       for (const key of ["priceMinMinor", "priceMaxMinor"] as const)

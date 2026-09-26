@@ -17,6 +17,7 @@ const query = giftDiscoveryQuerySchema.parse({
 });
 const draft: GiftFilterDraft = {
   sort: "PRICE_DESC",
+  kind: "",
   category: "",
   availability: "PURCHASABLE",
   minimum: "",

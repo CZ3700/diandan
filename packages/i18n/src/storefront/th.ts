@@ -285,6 +285,15 @@ const copy = {
   giftKindWish: "ของขวัญตามความปรารถนา",
   giftKindMerchandise: "สินค้าที่ระลึก",
   giftKindOther: "ของขวัญ",
+  homeKindsTitle: "สี่วิธีในการส่งกำลังใจ",
+  giftKindVirtualBody:
+    "เพิ่มลงในบันทึกการสนับสนุนของศิลปินทันทีที่ยืนยันการชำระเงิน",
+  giftKindPhysicalBody: "ของขวัญจริงที่สตูดิโอเตรียมและส่งมอบให้ศิลปิน",
+  giftKindWishBody:
+    "เลือกจากรายการของขวัญที่ศิลปินอยากได้ และสตูดิโอเป็นผู้จัดหา",
+  giftKindMerchandiseBody: "สินค้าธีมพิเศษที่สตูดิโอเตรียมและส่งถึงศิลปิน",
+  giftKindLabel: "ประเภทของขวัญ",
+  giftKindAll: "ทุกประเภท",
   policyUnavailable: "นโยบายนี้ยังไม่มีในภาษานี้",
   policyEffective: "มีผลตั้งแต่ {date}",
   policyTerms: "ข้อกำหนดการให้บริการ",

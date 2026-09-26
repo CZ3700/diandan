@@ -44,6 +44,19 @@
   line-height: var(--type-body-leading);
   overflow-wrap: anywhere;
 }
+.gift-directory-card__kind {
+  margin: 0 0 var(--space-1);
+  color: var(--color-accent);
+  font-size: var(--type-label-size);
+  font-weight: 600;
+}
+.gift-directory-card__kind:lang(en),
+.gift-directory-card__kind:lang(es),
+.gift-directory-card__kind:lang(pt),
+.gift-directory-card__kind:lang(vi) {
+  text-transform: uppercase;
+  letter-spacing: var(--type-label-tracking);
+}
 .gift-directory-card__price {
   display: flex;
   align-items: baseline;
@@ -323,7 +336,11 @@
   margin: 0;
   overflow-wrap: anywhere;
 }
+.gift-browse-filters {
+  justify-content: flex-start;
+}
 .gift-browse-filters button {
+  margin-inline-start: auto;
   color: var(--color-text);
   background: transparent;
   border: var(--border-width) solid var(--color-border);

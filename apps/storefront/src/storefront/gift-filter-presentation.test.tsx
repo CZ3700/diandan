@@ -34,6 +34,7 @@ test.each(SUPPORTED_LOCALES)(
     });
     expect(boundary.props.initialDraft).toEqual({
       sort: query.sort,
+      kind: "",
       category: "",
       availability: query.availability,
       minimum: formatGiftPriceInput(

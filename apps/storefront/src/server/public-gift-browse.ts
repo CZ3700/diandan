@@ -88,7 +88,8 @@ export async function fetchGiftBrowse(
         (item) =>
           !matchesLocale(item.localeContext, command.locale) ||
           (command.category !== undefined &&
-            item.category !== command.category),
+            item.category !== command.category) ||
+          (command.kind !== undefined && item.giftKind !== command.kind),
       )
     )
       return unavailable;

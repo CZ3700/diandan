@@ -297,6 +297,16 @@ const copy = {
   giftKindWish: "ウィッシュギフト",
   giftKindMerchandise: "グッズ",
   giftKindOther: "ギフト",
+  homeKindsTitle: "4つの応援のかたち",
+  giftKindVirtualBody:
+    "お支払いの確認後すぐに、アーティストの応援記録に加わります。",
+  giftKindPhysicalBody: "スタジオが準備し、アーティストへ手渡す実物のギフト。",
+  giftKindWishBody:
+    "アーティストのウィッシュリストから選び、スタジオが手配します。",
+  giftKindMerchandiseBody:
+    "スタジオが用意し、アーティストへ届けるテーマグッズ。",
+  giftKindLabel: "ギフトの種類",
+  giftKindAll: "すべての種類",
   policyUnavailable: "この言語のポリシーはまだ公開されていません。",
   policyEffective: "施行日：{date}",
   policyTerms: "利用規約",

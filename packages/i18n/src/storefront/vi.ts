@@ -294,6 +294,16 @@ const copy = {
   giftKindWish: "Quà theo nguyện vọng",
   giftKindMerchandise: "Quà lưu niệm",
   giftKindOther: "Quà tặng",
+  homeKindsTitle: "Bốn cách để ủng hộ.",
+  giftKindVirtualBody:
+    "Được ghi vào hồ sơ ủng hộ của nghệ sĩ ngay khi thanh toán được xác nhận.",
+  giftKindPhysicalBody: "Món quà thật do studio chuẩn bị và trao đến nghệ sĩ.",
+  giftKindWishBody:
+    "Chọn từ danh sách mong muốn của nghệ sĩ, do studio tìm mua.",
+  giftKindMerchandiseBody:
+    "Vật phẩm theo chủ đề do studio chuẩn bị và gửi đến nghệ sĩ.",
+  giftKindLabel: "Loại quà",
+  giftKindAll: "Tất cả loại quà",
   policyUnavailable: "Chính sách này chưa có bằng ngôn ngữ này.",
   policyEffective: "Có hiệu lực từ {date}",
   policyTerms: "Điều khoản dịch vụ",

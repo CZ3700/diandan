@@ -1,18 +1,33 @@
 import {
   giftBrowseQuerySchema,
   type GiftBrowseQuery,
+  type GiftKind,
   type SupportedLocale,
 } from "@fan-support/contracts";
 import { queryString, storefrontHref } from "./navigation";
 
 type Values = Readonly<Record<string, string | string[] | undefined>>;
-const fields = ["page", "pageSize", "category", "idol"] as const;
+const fields = ["page", "pageSize", "category", "kind", "idol"] as const;
+/** Every parameter that belongs to one directory view rather than to navigation context. */
+const directoryFields = [
+  ...fields,
+  "sort",
+  "priceMinMinor",
+  "priceMaxMinor",
+  "availability",
+  "anchorId",
+  "variant",
+] as const;
 
 export function prepareGiftBrowse(locale: SupportedLocale, values: Values) {
   const input: Record<string, unknown> = { schemaVersion: 1, locale };
   for (const key of fields) {
     const value = values[key];
-    if (value === undefined || (key === "category" && value === "")) continue;
+    if (
+      value === undefined ||
+      ((key === "category" || key === "kind") && value === "")
+    )
+      continue;
     if (typeof value !== "string") return undefined;
     if (key === "page" || key === "pageSize") {
       if (!/^[1-9]\d{0,4}$/u.test(value)) return undefined;
@@ -36,7 +51,20 @@ export function giftBrowseHref(
   values.set("pageSize", String(query.pageSize));
   if (query.idolId) values.set("idol", query.idolId);
   if (query.category && !reset) values.set("category", query.category);
+  if (query.kind && !reset) values.set("kind", query.kind);
   return `${storefrontHref(query.locale, basePath, values.toString())}#gifts`;
+}
+
+/** A kind entry opens the first page of that kind, keeping only navigation context. */
+export function giftKindEntryHref(
+  locale: SupportedLocale,
+  kind: GiftKind,
+  contextQuery: string,
+) {
+  const values = new URLSearchParams(contextQuery);
+  for (const field of directoryFields) values.delete(field);
+  values.set("kind", kind);
+  return storefrontHref(locale, "/gifts", values.toString());
 }
 
 export function giftBrowseRecovery(

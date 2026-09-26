@@ -1,14 +1,16 @@
 import "server-only";
-import type {
-  PublishedIdolView,
-  StorefrontContextResponse,
-  SupportedLocale,
+import {
+  giftKindSchema,
+  type PublishedIdolView,
+  type StorefrontContextResponse,
+  type SupportedLocale,
 } from "@fan-support/contracts";
 import { GiftBrowseBody } from "./gift-browse-section";
 import { giftDirectoryRead } from "./gift-page-reads";
 import { prepareGiftQuery } from "./gift-query";
 import { GiftDirectory } from "./gift-directory";
 import { isMarketAvailable, MarketChoices } from "./commerce-context";
+import { giftKindLabel } from "./gift-kind-copy";
 import { giftRecoveryQuery } from "./gift-selection";
 import { storefrontHref } from "./navigation";
 import type { StorefrontCopy } from "./copy";
@@ -33,6 +35,7 @@ export async function GiftDirectorySection({
   const prepared = prepareGiftQuery(locale, values);
   const Heading = headingLevel === 1 ? "h1" : "h2";
   const query = prepared.contextQuery;
+  const kind = giftKindSchema.safeParse(values["kind"]);
   let body;
   const browsing =
     values["market"] === undefined && values["currency"] === undefined;
@@ -107,7 +110,9 @@ export async function GiftDirectorySection({
     >
       <div className="storefront-section-heading">
         <div>
-          <p className="storefront-eyebrow">{copy.giftEyebrow}</p>
+          <p className="storefront-eyebrow" data-gift-kind-heading={kind.data}>
+            {kind.success ? giftKindLabel(copy, kind.data) : copy.giftEyebrow}
+          </p>
           <Heading>{copy.giftTitle}</Heading>
         </div>
         <p>{copy.giftBody}</p>

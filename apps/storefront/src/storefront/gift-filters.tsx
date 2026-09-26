@@ -7,6 +7,7 @@ import {
   giftResetHref,
 } from "./gift-query";
 import { GiftFiltersClient } from "./gift-filters-client";
+import { BROWSABLE_GIFT_KINDS, giftKindLabel } from "./gift-kind-copy";
 import type { GiftFilterProps } from "./gift-filter-types";
 import { storefrontHref } from "./navigation";
 
@@ -21,6 +22,10 @@ export function GiftFilters(props: GiftFilterProps) {
     OTHER: copy.giftCategoryOther,
   };
   const appliedFilters: string[] = [];
+  if (query.kind)
+    appliedFilters.push(
+      `${copy.giftKindLabel}: ${giftKindLabel(copy, query.kind)}`,
+    );
   if (query.category)
     appliedFilters.push(
       `${copy.giftCategoryLabel}: ${categories[query.category]}`,
@@ -54,14 +59,20 @@ export function GiftFilters(props: GiftFilterProps) {
         label,
         href: giftFilterHref(query, basePath, contextQuery, {
           sort: value,
+          kind: query.kind,
           category: query.category,
           availability: query.availability,
           priceMinMinor: query.priceMinMinor,
           priceMaxMinor: query.priceMaxMinor,
         }),
       }))}
+      kindOptions={[
+        ...BROWSABLE_GIFT_KINDS,
+        ...(query.kind === "OTHER" ? (["OTHER"] as const) : []),
+      ].map((value) => ({ value, label: giftKindLabel(copy, value) }))}
       initialDraft={{
         sort: query.sort,
+        kind: query.kind ?? "",
         category: query.category ?? "",
         availability: query.availability,
         minimum: formatGiftPriceInput(

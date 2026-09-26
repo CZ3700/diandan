@@ -3,10 +3,10 @@ import type {
   GiftBrowseResponse,
 } from "@fan-support/contracts";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
-import { PublishedImage } from "./published-image";
+import { GiftCard } from "./gift-card";
 import { GiftPagination } from "./gift-pagination";
 import { giftBrowseHref } from "./gift-browse-query";
-import { giftDetailHref } from "./gift-query";
+import { BROWSABLE_GIFT_KINDS, giftKindLabel } from "./gift-kind-copy";
 import { storefrontHref } from "./navigation";
 
 export function GiftBrowse({
@@ -58,6 +58,7 @@ export function GiftBrowse({
     ([key]) =>
       ![
         "category",
+        "kind",
         "page",
         "pageSize",
         "sort",
@@ -89,6 +90,24 @@ export function GiftBrowse({
         <input type="hidden" name="page" value="1" />
         <input type="hidden" name="pageSize" value={query.pageSize} />
         <label className="gift-filter-sort">
+          <span>{copy.giftKindLabel}</span>
+          <select
+            name="kind"
+            defaultValue={query.kind ?? ""}
+            data-gift-browse-kind
+          >
+            <option value="">{copy.giftKindAll}</option>
+            {[
+              ...BROWSABLE_GIFT_KINDS,
+              ...(query.kind === "OTHER" ? (["OTHER"] as const) : []),
+            ].map((kind) => (
+              <option key={kind} value={kind}>
+                {giftKindLabel(copy, kind)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="gift-filter-sort">
           <span>{copy.giftCategoryLabel}</span>
           <select
             name="category"
@@ -115,41 +134,15 @@ export function GiftBrowse({
       {items.length > 0 ? (
         <ul className="gift-directory-grid">
           {items.map((gift) => (
-            <li
-              className="gift-directory-card"
+            <GiftCard
               key={gift.id}
-              data-gift-card={gift.id}
-            >
-              <a
-                href={giftDetailHref(query.locale, gift.handle, contextQuery)}
-                data-gift-link={gift.id}
-              >
-                <div className="gift-directory-card__media">
-                  <PublishedImage
-                    media={gift.primaryMedia}
-                    fallbackLabel={copy.mediaFallback}
-                    sizes="(max-width: 48rem) 45vw, (max-width: 90rem) 30vw, 432px"
-                  />
-                </div>
-                <div className="gift-directory-card__body">
-                  <Heading lang={gift.localeContext.resolvedLocale}>
-                    {gift.title}
-                  </Heading>
-                  <p
-                    className="gift-browse-description"
-                    lang={gift.localeContext.resolvedLocale}
-                  >
-                    {gift.shortDescription}
-                  </p>
-                  {gift.localeContext.schemaVersion === 1 &&
-                    gift.localeContext.fallbackUsed && (
-                      <p className="gift-directory-card__fallback">
-                        {copy.fallbackNotice}
-                      </p>
-                    )}
-                </div>
-              </a>
-            </li>
+              gift={gift}
+              locale={query.locale}
+              copy={copy}
+              contextQuery={contextQuery}
+              headingLevel={headingLevel === 1 ? 2 : 3}
+              description
+            />
           ))}
         </ul>
       ) : (

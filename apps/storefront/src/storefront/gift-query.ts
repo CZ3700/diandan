@@ -42,7 +42,12 @@ export type PreparedGiftQuery =
 export type GiftFilters = Readonly<
   Pick<
     GiftDiscoveryQuery,
-    "sort" | "category" | "priceMinMinor" | "priceMaxMinor" | "availability"
+    | "sort"
+    | "category"
+    | "kind"
+    | "priceMinMinor"
+    | "priceMaxMinor"
+    | "availability"
   >
 >;
 
@@ -54,6 +59,7 @@ const fields = [
   "pageSize",
   "sort",
   "category",
+  "kind",
   "priceMinMinor",
   "priceMaxMinor",
   "availability",
@@ -146,6 +152,7 @@ export function giftFilterHref(
       ...query,
       ...filters,
       category: filters.category,
+      kind: filters.kind,
       priceMinMinor: filters.priceMinMinor,
       priceMaxMinor: filters.priceMaxMinor,
       page: 1,

@@ -300,6 +300,17 @@ const copy = {
   giftKindWish: "Presente desejado",
   giftKindMerchandise: "Produtos colecionáveis",
   giftKindOther: "Presente",
+  homeKindsTitle: "Quatro formas de mostrar seu apoio.",
+  giftKindVirtualBody:
+    "Entra no registro de apoio do artista assim que seu pagamento é confirmado.",
+  giftKindPhysicalBody:
+    "Um presente real que o estúdio prepara e entrega ao artista.",
+  giftKindWishBody:
+    "Escolhido da lista de desejos do artista e providenciado pelo estúdio.",
+  giftKindMerchandiseBody:
+    "Produtos temáticos que o estúdio prepara e entrega ao artista.",
+  giftKindLabel: "Tipo de presente",
+  giftKindAll: "Todos os tipos de presente",
   policyUnavailable: "Esta política ainda não está disponível neste idioma.",
   policyEffective: "Em vigor desde {date}",
   policyTerms: "Termos de serviço",

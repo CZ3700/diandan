@@ -6,6 +6,7 @@ import type { StorefrontCopy } from "./copy";
 
 export type GiftFilterDraft = Readonly<{
   sort: GiftDiscoveryQuery["sort"];
+  kind: string;
   category: string;
   availability: GiftDiscoveryQuery["availability"];
   minimum: string;
@@ -34,4 +35,10 @@ export type GiftFilterClientProps = GiftFilterProps &
       }>
     >;
     appliedFilters: ReadonlyArray<string>;
+    kindOptions: ReadonlyArray<
+      Readonly<{
+        value: NonNullable<GiftDiscoveryQuery["kind"]>;
+        label: string;
+      }>
+    >;
   }>;

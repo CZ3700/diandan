@@ -28,6 +28,7 @@ export function GiftFiltersClient({
   hint,
   sortOptions,
   appliedFilters,
+  kindOptions,
 }: GiftFilterClientProps) {
   const id = useId();
   const [open, setOpen] = useState(false);
@@ -206,6 +207,24 @@ export function GiftFiltersClient({
               </select>
             </label>
           )}
+          <label className="gift-filter-select" htmlFor={`${prefix}-kind`}>
+            <span>{copy.giftKindLabel}</span>
+            <select
+              id={`${prefix}-kind`}
+              data-gift-kind
+              value={draft.kind}
+              onChange={(event) =>
+                updateDraft({ ...draft, kind: event.target.value })
+              }
+            >
+              <option value="">{copy.giftKindAll}</option>
+              {kindOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
           <label className="gift-filter-select" htmlFor={`${prefix}-category`}>
             <span>{copy.giftCategoryLabel}</span>
             <select

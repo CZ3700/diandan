@@ -298,6 +298,17 @@ const copy = {
   giftKindWish: "Wish gift",
   giftKindMerchandise: "Merchandise",
   giftKindOther: "Gift",
+  homeKindsTitle: "Four ways to show your support.",
+  giftKindVirtualBody:
+    "Added to the artist's support record as soon as your payment is confirmed.",
+  giftKindPhysicalBody:
+    "A real gift the studio prepares and hands over to the artist.",
+  giftKindWishBody:
+    "Chosen from the artist's wish list and sourced by the studio.",
+  giftKindMerchandiseBody:
+    "Themed goods the studio prepares and delivers to the artist.",
+  giftKindLabel: "Gift type",
+  giftKindAll: "All gift types",
   policyUnavailable: "This policy is not available in this language yet.",
   policyEffective: "Effective {date}",
   policyTerms: "Terms of service",

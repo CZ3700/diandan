@@ -8,6 +8,7 @@ import type {
 } from "@fan-support/contracts";
 import { Icon } from "@fan-support/ui";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
+import { giftKindLabel } from "./gift-kind-copy";
 import { PublishedImage } from "./published-image";
 import { GiftDescription } from "./gift-content";
 import { GiftPurchase } from "./gift-purchase";
@@ -47,13 +48,6 @@ export function GiftDetail({
   ) => Promise<Commerce | undefined>;
 }>) {
   const gift = content.content.view;
-  const kindLabels = {
-    VIRTUAL: copy.giftKindVirtual,
-    PHYSICAL: copy.giftKindPhysical,
-    WISH: copy.giftKindWish,
-    MERCHANDISE: copy.giftKindMerchandise,
-    OTHER: copy.giftKindOther,
-  };
   const path = `/gifts/${gift.handle}`;
   const estimate = gift.deliveryEstimate;
   const recipient = (
@@ -108,7 +102,7 @@ export function GiftDetail({
         <div className="gift-detail-summary">
           <p className="storefront-eyebrow">
             {content.classification.kind === "CLASSIFIED"
-              ? kindLabels[content.classification.giftKind]
+              ? giftKindLabel(copy, content.classification.giftKind)
               : copy.giftEyebrow}
           </p>
           <h1 lang={gift.localeContext.resolvedLocale}>{gift.title}</h1>
