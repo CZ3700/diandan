@@ -15,7 +15,8 @@ import {
   readAdminOrderLines,
   rejectAdminOrdersIntegrity,
 } from "./admin-orders-data.js";
-import { fulfillmentActions } from "./admin-orders-rules.js";
+import { fulfillmentActions, proofActions } from "./admin-orders-rules.js";
+import { readActiveLineProofs } from "./admin-order-proofs-read.js";
 import { readOrderAccessDetail } from "./order-access-read.js";
 import { readGiftRevisionProfile } from "./gift-commerce-gift-profile.js";
 import { readAdminOrderNotification } from "./admin-notification-resend-read.js";
@@ -138,9 +139,11 @@ export async function readAdminOrdersDetail(
   base: string,
 ) {
   const orderId = String(order["id"]),
-    lines = await readAdminOrderLines(client, orderId);
+    lines = await readAdminOrderLines(client, orderId),
+    proofs = await readActiveLineProofs(client, orderId);
   const items = [];
-  for (const [index, line] of lines.entries())
+  for (const [index, line] of lines.entries()) {
+    const lineProofs = proofs.get(String(line["fulfillment_id"])) ?? [];
     items.push(
       adminOrdersLineSchema.parse({
         itemId: line["item_id"],
@@ -162,8 +165,15 @@ export async function readAdminOrdersDetail(
         giftKind: await historicalGiftKind(client, line),
         inventoryPolicy: await historicalInventory(client, line),
         allowedActions: fulfillmentActions(order, line, principal.permissions),
+        proofs: lineProofs,
+        proofActions: proofActions(
+          line,
+          lineProofs.length,
+          principal.permissions,
+        ),
       }),
     );
+  }
   const notes = await draftRows(
     client,
     `SELECT id,actor_id,${adminOrdersTimestamp("created_at")} created_at FROM public.admin_order_notes WHERE order_id=$1 ORDER BY created_at DESC,id DESC LIMIT 50`,

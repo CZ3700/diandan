@@ -63,6 +63,8 @@ test("a failed administration construction returns every hold it borrowed", () =
             createDownloadGrant: vi.fn(),
           } as never,
           inspector: { inspect: vi.fn() },
+          proofProcessor: { process: vi.fn() },
+          proofReader: { read: vi.fn() },
         },
       },
       payment: {

@@ -130,6 +130,26 @@ test.each([
     "RESEND_NOTIFICATION",
     { expectedLatestNotificationId: itemId },
   ],
+  [
+    "proofs/attach",
+    "ATTACH_PROOFS",
+    {
+      fulfillmentId: itemId,
+      expectedFulfillmentVersion: 1,
+      uploadIds: [id],
+      privacyConfirmed: true,
+    },
+  ],
+  [
+    "proofs/withdraw",
+    "WITHDRAW_PROOF",
+    {
+      fulfillmentId: itemId,
+      expectedFulfillmentVersion: 1,
+      proofId: id,
+      confirmed: true,
+    },
+  ],
 ])(
   "%s requires explicit mutation key and routes exact action",
   async (path, action, fields) => {
@@ -287,6 +307,118 @@ test("failures are schema-safe, origin-bound and never expose private input", as
       });
       expect(r.statusCode).toBe(status);
       privacy(r);
+    }
+  } finally {
+    await app.close();
+  }
+});
+test("proof uploads are keyed, while completion and viewing are exact state reads", async () => {
+  const { app, execute } = setup();
+  const proofResponse = (kind: string, fields: Record<string, unknown>) => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind,
+    orderId: id,
+    ...fields,
+  });
+  const grant = {
+    method: "PUT",
+    url: "https://storage.example.invalid/private?X-Amz-Signature=fixture",
+    headers: {},
+    expiresAt: "2026-09-27T00:05:00.000Z",
+  };
+  try {
+    const begin = {
+      ...base,
+      fulfillmentId: itemId,
+      expectedFulfillmentVersion: 1,
+      checksumSha256: "a".repeat(64),
+      byteSize: 4096,
+      mimeType: "image/jpeg",
+    };
+    const url = "/api/v1/admin/orders/proof-uploads/begin";
+    expect(
+      (await app.inject({ method: "POST", url, headers, payload: begin }))
+        .statusCode,
+    ).toBe(400);
+    execute.mockResolvedValueOnce(
+      proofResponse("PROOF_UPLOAD_GRANT", {
+        uploadId: itemId,
+        replayed: false,
+        grant,
+      }),
+    );
+    const granted = await app.inject({
+      method: "POST",
+      url,
+      headers: { ...headers, "idempotency-key": "proof-upload-key-0001" },
+      payload: begin,
+    });
+    expect(granted.statusCode).toBe(200);
+    privacy(granted);
+    expect(execute).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        command: {
+          ...begin,
+          action: "BEGIN_PROOF_UPLOAD",
+          idempotencyKey: "proof-upload-key-0001",
+        },
+      }),
+    );
+    execute.mockResolvedValueOnce(
+      proofResponse("PROOF_UPLOAD", {
+        uploadId: itemId,
+        width: 1600,
+        height: 1200,
+      }),
+    );
+    const completed = await app.inject({
+      method: "POST",
+      url: "/api/v1/admin/orders/proof-uploads/complete",
+      headers,
+      payload: { schemaVersion: 1, orderId: id, uploadId: itemId },
+    });
+    expect(completed.statusCode).toBe(200);
+    expect(execute).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        command: {
+          schemaVersion: 1,
+          action: "COMPLETE_PROOF_UPLOAD",
+          orderId: id,
+          uploadId: itemId,
+        },
+      }),
+    );
+    const view = {
+      schemaVersion: 1,
+      orderId: id,
+      proofId: itemId,
+      rendition: "thumbnail",
+    };
+    for (const [returned, status] of [
+      [itemId, 200],
+      [id, 503],
+    ] as const) {
+      execute.mockResolvedValueOnce(
+        proofResponse("PROOF_DOWNLOAD", {
+          proofId: returned,
+          rendition: "thumbnail",
+          width: 480,
+          height: 360,
+          download: { ...grant, method: "GET" },
+        }),
+      );
+      expect(
+        (
+          await app.inject({
+            method: "POST",
+            url: "/api/v1/admin/orders/proofs/view",
+            headers,
+            payload: view,
+          })
+        ).statusCode,
+        "a grant for another proof is never relayed",
+      ).toBe(status);
     }
   } finally {
     await app.close();

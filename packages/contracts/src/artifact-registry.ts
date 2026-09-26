@@ -28,6 +28,7 @@ import * as adminOrders from "./admin-orders.js";
 import * as adminAccess from "./admin-access.js";
 import * as orderNotification from "./order-notification.js";
 import * as orderAccess from "./order-access.js";
+import * as deliveryProof from "./delivery-proof.js";
 import * as orderPaymentApplication from "./order-payment-application.js";
 import * as paymentRuntimeInternal from "./payment-runtime-internal.js";
 import * as paymentRuntime from "./payment-runtime.js";
@@ -674,6 +675,8 @@ const unversionedValueObjectNames = new Set([
   "AdminOrdersNotification",
   "AdminOrdersPrincipal",
   "AdminOrdersNoteEnvelope",
+  "AdminOrdersProof",
+  "OrderAccessDeliveryProof",
 
   "OrderNotificationUrl",
   "CheckoutPolicyAcceptance",
@@ -962,6 +965,11 @@ const registrations = [
     schema: adminOrders.adminOrdersLineSchema,
   },
   {
+    name: "AdminOrdersProof",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersProofSchema,
+  },
+  {
     name: "AdminOrdersNoteMetadata",
     audience: "admin-http",
     schema: adminOrders.adminOrdersNoteMetadataSchema,
@@ -1025,6 +1033,26 @@ const registrations = [
     name: "AdminOrdersPrivateConfirmation",
     audience: "internal",
     schema: adminOrdersPersistence.adminOrdersPrivateConfirmationSchema,
+  },
+  {
+    name: "AdminOrdersProofReservation",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersProofReservationSchema,
+  },
+  {
+    name: "AdminOrdersProofUploadState",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersProofUploadStateSchema,
+  },
+  {
+    name: "AdminOrdersProofCompletion",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersProofCompletionSchema,
+  },
+  {
+    name: "AdminOrdersProofRenditionLocation",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersProofRenditionLocationSchema,
   },
   {
     name: "AdminOrderNoteEncryptCommand",
@@ -1240,6 +1268,21 @@ const registrations = [
     name: "OrderAccessRevokeCommand",
     audience: "internal",
     schema: orderAccess.orderAccessRevokeCommandSchema,
+  },
+  {
+    name: "OrderAccessProofCommand",
+    audience: "internal",
+    schema: orderAccess.orderAccessProofCommandSchema,
+  },
+  {
+    name: "OrderAccessProofLocation",
+    audience: "internal",
+    schema: orderAccess.orderAccessProofLocationSchema,
+  },
+  {
+    name: "OrderAccessDeliveryProof",
+    audience: "public-http",
+    schema: orderAccess.orderAccessDeliveryProofSchema,
   },
   {
     name: "OrderAccessGrant",
@@ -2848,6 +2891,21 @@ const registrations = [
     name: "MediaImageProcessingResult",
     audience: "internal",
     schema: mediaImageProcessingResultSchema,
+  },
+  {
+    name: "DeliveryProofProcessingCommand",
+    audience: "internal",
+    schema: deliveryProof.deliveryProofProcessingCommandSchema,
+  },
+  {
+    name: "DeliveryProofProcessingResult",
+    audience: "internal",
+    schema: deliveryProof.deliveryProofProcessingResultSchema,
+  },
+  {
+    name: "DeliveryProofReadCommand",
+    audience: "internal",
+    schema: deliveryProof.deliveryProofReadCommandSchema,
   },
   {
     name: "MediaProcessingEnqueueCommand",

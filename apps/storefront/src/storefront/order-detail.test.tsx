@@ -81,6 +81,7 @@ const order = orderAccessDetailSchema.parse({
       displayMode: "nickname",
       giftKind: "PHYSICAL",
       fulfillmentStatus: "PENDING",
+      deliveryProofs: [],
     },
   ],
   createdAt: "2026-09-01T12:34:00.000Z",

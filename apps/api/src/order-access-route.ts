@@ -1,6 +1,8 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { z } from "zod";
 import {
   checkoutSessionIdSchema,
+  deliveryProofRenditionNameSchema,
   publicOrderIdSchema,
   orderAccessBootstrapCommandSchema,
   orderAccessBootstrapRequestSchema,
@@ -10,6 +12,7 @@ import {
   orderAccessFailureSchema,
   orderAccessLocateCommandSchema,
   orderAccessLocateRequestSchema,
+  orderAccessProofCommandSchema,
   orderAccessRateResultSchema,
   orderAccessReadCommandSchema,
   orderAccessResponseSchema,
@@ -36,7 +39,36 @@ export type OrderAccessRouteDependencies = Readonly<{
     Action | "consumeRateLimit",
     (command: unknown) => Promise<unknown>
   >;
+  /** Session-authorized private delivery photo bytes; absent deployments answer 503. */
+  readProof?: ((command: unknown) => Promise<unknown>) | undefined;
 }>;
+const proofResultSchema = z.union([
+  z.strictObject({
+    outcome: z.literal("FAILURE"),
+    code: orderAccessFailureSchema.shape.code,
+  }),
+  z.strictObject({
+    outcome: z.literal("SUCCESS"),
+    mimeType: z.literal("image/webp"),
+    bytes: z
+      .instanceof(Uint8Array)
+      .refine((bytes) => bytes.byteLength > 0 && bytes.byteLength <= 4194304),
+  }),
+]);
+const proofParamsSchema = z.strictObject({
+  publicOrderId: publicOrderIdSchema,
+  proofId: z.uuid(),
+  rendition: deliveryProofRenditionNameSchema,
+});
+// Direct navigation to a photo renders an inert image document: no scripts, framing or sniffing.
+const proofHeaders = {
+  "content-type": "image/webp",
+  "content-disposition": 'inline; filename="delivery-photo.webp"',
+  "content-security-policy":
+    "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; frame-ancestors 'none'; sandbox",
+  "cross-origin-resource-policy": "same-origin",
+  "x-content-type-options": "nosniff",
+} as const;
 const cookieName = "__Host-fan-order";
 const attributes = "Path=/; HttpOnly; Secure; SameSite=Strict";
 function status(code: OrderAccessFailureCode) {
@@ -131,6 +163,14 @@ export function registerOrderAccessRoute(
       "READ",
       configuration.rateLimit.readMax,
     ],
+    // Each delivery photo read is a protected read of the same order.
+    [
+      "GET",
+      "/api/v1/orders/:publicOrderId/delivery-proofs/:proofId/:rendition",
+      "proof",
+      "READ",
+      configuration.rateLimit.readMax,
+    ],
   ] as const)
     void app.register(async (scope) => {
       scope.addHook("onRequest", async (request, reply) => {
@@ -201,6 +241,45 @@ export function registerOrderAccessRoute(
         bodyLimit: 1024,
         exposeHeadRoute: false,
         handler: async (request, reply) => {
+          if (action === "proof") {
+            const params = proofParamsSchema.safeParse(request.params);
+            if (!params.success || request.body !== undefined)
+              return fail(reply, "INVALID_REQUEST");
+            try {
+              const token = orderCookie(request);
+              if (!token) return fail(reply, "ACCESS_DENIED");
+              if (!options.readProof)
+                return fail(reply, "TEMPORARY_UNAVAILABLE");
+              const proof = await options.credentials.resolveSession(
+                token,
+                undefined,
+              );
+              const result = proofResultSchema.parse(
+                await options.readProof(
+                  orderAccessProofCommandSchema.parse({
+                    schemaVersion: 1,
+                    ...params.data,
+                    sessionCandidates: proof.accesses,
+                  }),
+                ),
+              );
+              if (result.outcome === "FAILURE") return fail(reply, result.code);
+              const bytes = Buffer.from(
+                result.bytes.buffer,
+                result.bytes.byteOffset,
+                result.bytes.byteLength,
+              );
+              return reply
+                .code(200)
+                .headers({
+                  ...proofHeaders,
+                  "content-length": String(bytes.byteLength),
+                })
+                .send(bytes);
+            } catch {
+              return fail(reply, "TEMPORARY_UNAVAILABLE");
+            }
+          }
           let input:
             | { token: string }
             | { publicOrderId: string }

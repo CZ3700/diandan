@@ -12,6 +12,8 @@ import type {
   OrderAccessFailureCode,
   OrderAccessRateCommand,
   OrderAccessRateResult,
+  OrderAccessProofCommand,
+  OrderAccessProofLocation,
 } from "@fan-support/contracts";
 import type { JsonValue } from "./index.js";
 
@@ -29,6 +31,10 @@ export interface OrderAccessRepository {
   read(command: OrderAccessReadCommand): Promise<OrderAccessDetail>;
   revoke(command: OrderAccessRevokeCommand): Promise<OrderAccessRevoked>;
   locate(command: OrderAccessLocateCommand): Promise<OrderAccessLocated>;
+  /** Lock-free: an active session of this order and a proof visible to its fan, or ACCESS_DENIED. */
+  locateProof(
+    command: OrderAccessProofCommand,
+  ): Promise<OrderAccessProofLocation>;
   consumeRateLimit(
     command: OrderAccessRateCommand,
   ): Promise<OrderAccessRateResult>;

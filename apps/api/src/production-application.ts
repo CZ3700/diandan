@@ -175,6 +175,7 @@ export async function createProductionApiApplication(
                     publicMediaBaseUrl,
                     configuration: config.orderAccess,
                     ...keys,
+                    proofReader: resources.media?.proofReader,
                   }),
                 )),
           };

@@ -8435,6 +8435,283 @@
               "expectedLatestNotificationId"
             ],
             "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "BEGIN_PROOF_UPLOAD",
+                "type": "string"
+              },
+              "byteSize": {
+                "maximum": 26214400,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "checksumSha256": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              },
+              "expectedFulfillmentVersion": {
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991,
+                "type": "integer"
+              },
+              "expectedOrderVersion": {
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991,
+                "type": "integer"
+              },
+              "fulfillmentId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "mimeType": {
+                "enum": [
+                  "image/jpeg",
+                  "image/png",
+                  "image/webp"
+                ],
+                "type": "string"
+              },
+              "orderId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "reasonCode": {
+                "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "orderId",
+              "expectedOrderVersion",
+              "idempotencyKey",
+              "reasonCode",
+              "fulfillmentId",
+              "expectedFulfillmentVersion",
+              "checksumSha256",
+              "byteSize",
+              "mimeType"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "COMPLETE_PROOF_UPLOAD",
+                "type": "string"
+              },
+              "orderId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "uploadId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "orderId",
+              "uploadId"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "ATTACH_PROOFS",
+                "type": "string"
+              },
+              "expectedFulfillmentVersion": {
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991,
+                "type": "integer"
+              },
+              "expectedOrderVersion": {
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991,
+                "type": "integer"
+              },
+              "fulfillmentId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "orderId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "privacyConfirmed": {
+                "const": true,
+                "type": "boolean"
+              },
+              "reasonCode": {
+                "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "uploadIds": {
+                "items": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "maxItems": 3,
+                "minItems": 1,
+                "type": "array"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "orderId",
+              "expectedOrderVersion",
+              "idempotencyKey",
+              "reasonCode",
+              "fulfillmentId",
+              "expectedFulfillmentVersion",
+              "uploadIds",
+              "privacyConfirmed"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "WITHDRAW_PROOF",
+                "type": "string"
+              },
+              "confirmed": {
+                "const": true,
+                "type": "boolean"
+              },
+              "expectedFulfillmentVersion": {
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991,
+                "type": "integer"
+              },
+              "expectedOrderVersion": {
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991,
+                "type": "integer"
+              },
+              "fulfillmentId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "orderId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "proofId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "reasonCode": {
+                "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "orderId",
+              "expectedOrderVersion",
+              "idempotencyKey",
+              "reasonCode",
+              "fulfillmentId",
+              "expectedFulfillmentVersion",
+              "proofId",
+              "confirmed"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "VIEW_PROOF",
+                "type": "string"
+              },
+              "orderId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "proofId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "rendition": {
+                "enum": [
+                  "thumbnail",
+                  "display"
+                ],
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "orderId",
+              "proofId",
+              "rendition"
+            ],
+            "type": "object"
           }
         ],
         "x-fan-support-audience": "admin-http"
@@ -8461,7 +8738,9 @@
               "NOTIFICATION_NOT_READY",
               "NOTIFICATION_IN_PROGRESS",
               "RATE_LIMITED",
-              "TEMPORARY_UNAVAILABLE"
+              "TEMPORARY_UNAVAILABLE",
+              "PROOF_INVALID",
+              "PROOF_LIMIT_REACHED"
             ],
             "type": "string"
           },
@@ -8601,6 +8880,71 @@
             ],
             "type": "string"
           },
+          "proofActions": {
+            "items": {
+              "enum": [
+                "ATTACH",
+                "WITHDRAW"
+              ],
+              "type": "string"
+            },
+            "maxItems": 2,
+            "type": "array"
+          },
+          "proofs": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "createdAt": {
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                  "type": "string"
+                },
+                "height": {
+                  "maximum": 1600,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "proofId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "sequence": {
+                  "maximum": 32767,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "thumbnailHeight": {
+                  "maximum": 1600,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "thumbnailWidth": {
+                  "maximum": 1600,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "width": {
+                  "maximum": 1600,
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "proofId",
+                "sequence",
+                "createdAt",
+                "width",
+                "height",
+                "thumbnailWidth",
+                "thumbnailHeight"
+              ],
+              "type": "object"
+            },
+            "maxItems": 3,
+            "type": "array"
+          },
           "reviewedLocale": {
             "anyOf": [
               {
@@ -8636,7 +8980,9 @@
           "privacyState",
           "giftKind",
           "inventoryPolicy",
-          "allowedActions"
+          "allowedActions",
+          "proofs",
+          "proofActions"
         ],
         "type": "object",
         "x-fan-support-audience": "admin-http"
@@ -8924,7 +9270,9 @@
                   "NOTIFICATION_NOT_READY",
                   "NOTIFICATION_IN_PROGRESS",
                   "RATE_LIMITED",
-                  "TEMPORARY_UNAVAILABLE"
+                  "TEMPORARY_UNAVAILABLE",
+                  "PROOF_INVALID",
+                  "PROOF_LIMIT_REACHED"
                 ],
                 "type": "string"
               },
@@ -9178,6 +9526,57 @@
             "type": "object"
           }
         ],
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminOrdersProof": {
+        "additionalProperties": false,
+        "properties": {
+          "createdAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+            "type": "string"
+          },
+          "height": {
+            "maximum": 1600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "proofId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "sequence": {
+            "maximum": 32767,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "thumbnailHeight": {
+            "maximum": 1600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "thumbnailWidth": {
+            "maximum": 1600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "width": {
+            "maximum": 1600,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "proofId",
+          "sequence",
+          "createdAt",
+          "width",
+          "height",
+          "thumbnailWidth",
+          "thumbnailHeight"
+        ],
+        "type": "object",
         "x-fan-support-audience": "admin-http"
       },
       "AdminOrdersRequest": {
@@ -9773,6 +10172,283 @@
                   "expectedLatestNotificationId"
                 ],
                 "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "BEGIN_PROOF_UPLOAD",
+                    "type": "string"
+                  },
+                  "byteSize": {
+                    "maximum": 26214400,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "checksumSha256": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "expectedFulfillmentVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "expectedOrderVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "fulfillmentId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "mimeType": {
+                    "enum": [
+                      "image/jpeg",
+                      "image/png",
+                      "image/webp"
+                    ],
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "orderId",
+                  "expectedOrderVersion",
+                  "idempotencyKey",
+                  "reasonCode",
+                  "fulfillmentId",
+                  "expectedFulfillmentVersion",
+                  "checksumSha256",
+                  "byteSize",
+                  "mimeType"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "COMPLETE_PROOF_UPLOAD",
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "uploadId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "orderId",
+                  "uploadId"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "ATTACH_PROOFS",
+                    "type": "string"
+                  },
+                  "expectedFulfillmentVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "expectedOrderVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "fulfillmentId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "privacyConfirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "reasonCode": {
+                    "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "uploadIds": {
+                    "items": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "maxItems": 3,
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "orderId",
+                  "expectedOrderVersion",
+                  "idempotencyKey",
+                  "reasonCode",
+                  "fulfillmentId",
+                  "expectedFulfillmentVersion",
+                  "uploadIds",
+                  "privacyConfirmed"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "WITHDRAW_PROOF",
+                    "type": "string"
+                  },
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedFulfillmentVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "expectedOrderVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "fulfillmentId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "proofId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "orderId",
+                  "expectedOrderVersion",
+                  "idempotencyKey",
+                  "reasonCode",
+                  "fulfillmentId",
+                  "expectedFulfillmentVersion",
+                  "proofId",
+                  "confirmed"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "VIEW_PROOF",
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "proofId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "rendition": {
+                    "enum": [
+                      "thumbnail",
+                      "display"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "orderId",
+                  "proofId",
+                  "rendition"
+                ],
+                "type": "object"
               }
             ]
           },
@@ -9828,7 +10504,9 @@
                   "NOTIFICATION_NOT_READY",
                   "NOTIFICATION_IN_PROGRESS",
                   "RATE_LIMITED",
-                  "TEMPORARY_UNAVAILABLE"
+                  "TEMPORARY_UNAVAILABLE",
+                  "PROOF_INVALID",
+                  "PROOF_LIMIT_REACHED"
                 ],
                 "type": "string"
               },
@@ -10203,6 +10881,71 @@
                       ],
                       "type": "string"
                     },
+                    "proofActions": {
+                      "items": {
+                        "enum": [
+                          "ATTACH",
+                          "WITHDRAW"
+                        ],
+                        "type": "string"
+                      },
+                      "maxItems": 2,
+                      "type": "array"
+                    },
+                    "proofs": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "createdAt": {
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                            "type": "string"
+                          },
+                          "height": {
+                            "maximum": 1600,
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "proofId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "sequence": {
+                            "maximum": 32767,
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "thumbnailHeight": {
+                            "maximum": 1600,
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "thumbnailWidth": {
+                            "maximum": 1600,
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "width": {
+                            "maximum": 1600,
+                            "minimum": 1,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "proofId",
+                          "sequence",
+                          "createdAt",
+                          "width",
+                          "height",
+                          "thumbnailWidth",
+                          "thumbnailHeight"
+                        ],
+                        "type": "object"
+                      },
+                      "maxItems": 3,
+                      "type": "array"
+                    },
                     "reviewedLocale": {
                       "anyOf": [
                         {
@@ -10238,7 +10981,9 @@
                     "privacyState",
                     "giftKind",
                     "inventoryPolicy",
-                    "allowedActions"
+                    "allowedActions",
+                    "proofs",
+                    "proofActions"
                   ],
                   "type": "object"
                 },
@@ -10425,6 +11170,48 @@
                         "currency": {
                           "pattern": "^[A-Z]{3}$",
                           "type": "string"
+                        },
+                        "deliveryProofs": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "height": {
+                                "maximum": 1600,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "proofId": {
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                "type": "string"
+                              },
+                              "thumbnailHeight": {
+                                "maximum": 1600,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "thumbnailWidth": {
+                                "maximum": 1600,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "width": {
+                                "maximum": 1600,
+                                "minimum": 1,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "proofId",
+                              "width",
+                              "height",
+                              "thumbnailWidth",
+                              "thumbnailHeight"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 3,
+                          "type": "array"
                         },
                         "discountAmountMinor": {
                           "maximum": 9007199254740991,
@@ -11089,7 +11876,8 @@
                         "currency",
                         "displayMode",
                         "giftKind",
-                        "fulfillmentStatus"
+                        "fulfillmentStatus",
+                        "deliveryProofs"
                       ],
                       "type": "object"
                     },
@@ -11232,6 +12020,229 @@
               "orderId",
               "resultId",
               "replayed"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "grant": {
+                "additionalProperties": false,
+                "properties": {
+                  "expiresAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "headers": {
+                    "additionalProperties": {
+                      "maxLength": 4096,
+                      "type": "string"
+                    },
+                    "propertyNames": {
+                      "maxLength": 128,
+                      "minLength": 1,
+                      "pattern": "^[!#$%&'*+.^_`|~0-9a-z-]+$",
+                      "type": "string"
+                    },
+                    "type": "object"
+                  },
+                  "method": {
+                    "const": "PUT",
+                    "type": "string"
+                  },
+                  "url": {
+                    "format": "uri",
+                    "maxLength": 8192,
+                    "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "method",
+                  "url",
+                  "headers",
+                  "expiresAt"
+                ],
+                "type": "object"
+              },
+              "kind": {
+                "const": "PROOF_UPLOAD_GRANT",
+                "type": "string"
+              },
+              "orderId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "replayed": {
+                "type": "boolean"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "uploadId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "orderId",
+              "uploadId",
+              "replayed",
+              "grant"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "height": {
+                "maximum": 1600,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "kind": {
+                "const": "PROOF_UPLOAD",
+                "type": "string"
+              },
+              "orderId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "uploadId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "width": {
+                "maximum": 1600,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "orderId",
+              "uploadId",
+              "width",
+              "height"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "download": {
+                "additionalProperties": false,
+                "properties": {
+                  "expiresAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "headers": {
+                    "additionalProperties": {
+                      "maxLength": 4096,
+                      "type": "string"
+                    },
+                    "propertyNames": {
+                      "maxLength": 128,
+                      "minLength": 1,
+                      "pattern": "^[!#$%&'*+.^_`|~0-9a-z-]+$",
+                      "type": "string"
+                    },
+                    "type": "object"
+                  },
+                  "method": {
+                    "const": "GET",
+                    "type": "string"
+                  },
+                  "url": {
+                    "format": "uri",
+                    "maxLength": 8192,
+                    "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "method",
+                  "url",
+                  "headers",
+                  "expiresAt"
+                ],
+                "type": "object"
+              },
+              "height": {
+                "maximum": 1600,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "kind": {
+                "const": "PROOF_DOWNLOAD",
+                "type": "string"
+              },
+              "orderId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "proofId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "rendition": {
+                "enum": [
+                  "thumbnail",
+                  "display"
+                ],
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "width": {
+                "maximum": 1600,
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "orderId",
+              "proofId",
+              "rendition",
+              "width",
+              "height",
+              "download"
             ],
             "type": "object"
           }
@@ -106329,6 +107340,45 @@
         "type": "object",
         "x-fan-support-audience": "public-http"
       },
+      "OrderAccessDeliveryProof": {
+        "additionalProperties": false,
+        "properties": {
+          "height": {
+            "maximum": 1600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "proofId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "thumbnailHeight": {
+            "maximum": 1600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "thumbnailWidth": {
+            "maximum": 1600,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "width": {
+            "maximum": 1600,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "proofId",
+          "width",
+          "height",
+          "thumbnailWidth",
+          "thumbnailHeight"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
       "OrderAccessDetail": {
         "additionalProperties": false,
         "properties": {
@@ -106420,6 +107470,48 @@
                 "currency": {
                   "pattern": "^[A-Z]{3}$",
                   "type": "string"
+                },
+                "deliveryProofs": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "height": {
+                        "maximum": 1600,
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "proofId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "thumbnailHeight": {
+                        "maximum": 1600,
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "thumbnailWidth": {
+                        "maximum": 1600,
+                        "minimum": 1,
+                        "type": "integer"
+                      },
+                      "width": {
+                        "maximum": 1600,
+                        "minimum": 1,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "proofId",
+                      "width",
+                      "height",
+                      "thumbnailWidth",
+                      "thumbnailHeight"
+                    ],
+                    "type": "object"
+                  },
+                  "maxItems": 3,
+                  "type": "array"
                 },
                 "discountAmountMinor": {
                   "maximum": 9007199254740991,
@@ -107084,7 +108176,8 @@
                 "currency",
                 "displayMode",
                 "giftKind",
-                "fulfillmentStatus"
+                "fulfillmentStatus",
+                "deliveryProofs"
               ],
               "type": "object"
             },
@@ -107211,6 +108304,48 @@
           "currency": {
             "pattern": "^[A-Z]{3}$",
             "type": "string"
+          },
+          "deliveryProofs": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "height": {
+                  "maximum": 1600,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "proofId": {
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                  "type": "string"
+                },
+                "thumbnailHeight": {
+                  "maximum": 1600,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "thumbnailWidth": {
+                  "maximum": 1600,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "width": {
+                  "maximum": 1600,
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "proofId",
+                "width",
+                "height",
+                "thumbnailWidth",
+                "thumbnailHeight"
+              ],
+              "type": "object"
+            },
+            "maxItems": 3,
+            "type": "array"
           },
           "discountAmountMinor": {
             "maximum": 9007199254740991,
@@ -107875,7 +109010,8 @@
           "currency",
           "displayMode",
           "giftKind",
-          "fulfillmentStatus"
+          "fulfillmentStatus",
+          "deliveryProofs"
         ],
         "type": "object",
         "x-fan-support-audience": "public-http"
@@ -108191,6 +109327,48 @@
                         "currency": {
                           "pattern": "^[A-Z]{3}$",
                           "type": "string"
+                        },
+                        "deliveryProofs": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "height": {
+                                "maximum": 1600,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "proofId": {
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                "type": "string"
+                              },
+                              "thumbnailHeight": {
+                                "maximum": 1600,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "thumbnailWidth": {
+                                "maximum": 1600,
+                                "minimum": 1,
+                                "type": "integer"
+                              },
+                              "width": {
+                                "maximum": 1600,
+                                "minimum": 1,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "proofId",
+                              "width",
+                              "height",
+                              "thumbnailWidth",
+                              "thumbnailHeight"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 3,
+                          "type": "array"
                         },
                         "discountAmountMinor": {
                           "maximum": 9007199254740991,
@@ -108855,7 +110033,8 @@
                         "currency",
                         "displayMode",
                         "giftKind",
-                        "fulfillmentStatus"
+                        "fulfillmentStatus",
+                        "deliveryProofs"
                       ],
                       "type": "object"
                     },
@@ -169078,7 +170257,7 @@
     },
     "/api/v1/admin/orders/context": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersContext",
         "parameters": [
           {
@@ -169395,7 +170574,7 @@
     },
     "/api/v1/admin/orders/deliver": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersDeliver",
         "parameters": [
           {
@@ -169752,7 +170931,7 @@
     },
     "/api/v1/admin/orders/detail": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersDetail",
         "parameters": [
           {
@@ -170075,7 +171254,7 @@
     },
     "/api/v1/admin/orders/hold": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersHold",
         "parameters": [
           {
@@ -170437,7 +171616,7 @@
     },
     "/api/v1/admin/orders/list": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersList",
         "parameters": [
           {
@@ -170799,7 +171978,7 @@
     },
     "/api/v1/admin/orders/message/read": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersReadMessage",
         "parameters": [
           {
@@ -171147,7 +172326,7 @@
     },
     "/api/v1/admin/orders/message/review": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersReviewMessage",
         "parameters": [
           {
@@ -171536,7 +172715,7 @@
     },
     "/api/v1/admin/orders/note/add": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersAddNote",
         "parameters": [
           {
@@ -171890,7 +173069,7 @@
     },
     "/api/v1/admin/orders/notes/read": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersReadNotes",
         "parameters": [
           {
@@ -172213,7 +173392,7 @@
     },
     "/api/v1/admin/orders/notification/resend": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersResendNotification",
         "parameters": [
           {
@@ -172564,7 +173743,7 @@
     },
     "/api/v1/admin/orders/prepare": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersPrepare",
         "parameters": [
           {
@@ -172919,9 +174098,1793 @@
         "summary": "prepare"
       }
     },
+    "/api/v1/admin/orders/proof-uploads/begin": {
+      "post": {
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "operationId": "adminOrdersBeginProofUpload",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "byteSize": {
+                    "maximum": 26214400,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "checksumSha256": {
+                    "pattern": "^[a-f0-9]{64}$",
+                    "type": "string"
+                  },
+                  "expectedFulfillmentVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "expectedOrderVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "fulfillmentId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "mimeType": {
+                    "enum": [
+                      "image/jpeg",
+                      "image/png",
+                      "image/webp"
+                    ],
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "orderId",
+                  "expectedOrderVersion",
+                  "reasonCode",
+                  "fulfillmentId",
+                  "expectedFulfillmentVersion",
+                  "checksumSha256",
+                  "byteSize",
+                  "mimeType"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 65536
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Strict authorized order operation result; private plaintext is confined to explicit read endpoints.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "begin proof upload"
+      }
+    },
+    "/api/v1/admin/orders/proof-uploads/complete": {
+      "post": {
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "operationId": "adminOrdersCompleteProofUpload",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "orderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "uploadId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "orderId",
+                  "uploadId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 65536
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Strict authorized order operation result; private plaintext is confined to explicit read endpoints.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "complete proof upload"
+      }
+    },
+    "/api/v1/admin/orders/proofs/attach": {
+      "post": {
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "operationId": "adminOrdersAttachProofs",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "expectedFulfillmentVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "expectedOrderVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "fulfillmentId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "privacyConfirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "reasonCode": {
+                    "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "uploadIds": {
+                    "items": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "maxItems": 3,
+                    "minItems": 1,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "orderId",
+                  "expectedOrderVersion",
+                  "reasonCode",
+                  "fulfillmentId",
+                  "expectedFulfillmentVersion",
+                  "uploadIds",
+                  "privacyConfirmed"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 65536
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Strict authorized order operation result; private plaintext is confined to explicit read endpoints.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "attach proofs"
+      }
+    },
+    "/api/v1/admin/orders/proofs/view": {
+      "post": {
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "operationId": "adminOrdersViewProof",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "orderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "proofId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "rendition": {
+                    "enum": [
+                      "thumbnail",
+                      "display"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "orderId",
+                  "proofId",
+                  "rendition"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 65536
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Strict authorized order operation result; private plaintext is confined to explicit read endpoints.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "view proof"
+      }
+    },
+    "/api/v1/admin/orders/proofs/withdraw": {
+      "post": {
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "operationId": "adminOrdersWithdrawProof",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "confirmed": {
+                    "const": true,
+                    "type": "boolean"
+                  },
+                  "expectedFulfillmentVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "expectedOrderVersion": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991,
+                    "type": "integer"
+                  },
+                  "fulfillmentId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "orderId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "proofId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "reasonCode": {
+                    "pattern": "^[A-Z][A-Z0-9_]{1,127}$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "orderId",
+                  "expectedOrderVersion",
+                  "reasonCode",
+                  "fulfillmentId",
+                  "expectedFulfillmentVersion",
+                  "proofId",
+                  "confirmed"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 65536
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Strict authorized order operation result; private plaintext is confined to explicit read endpoints.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOrdersResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "withdraw proof"
+      }
+    },
     "/api/v1/admin/orders/resume": {
       "post": {
-        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "description": "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
         "operationId": "adminOrdersResume",
         "parameters": [
           {
@@ -190230,6 +193193,441 @@
               "X-Robots-Tag": {
                 "schema": {
                   "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderAccessResponse"
+                }
+              }
+            },
+            "description": "Minimal protected historical order or stable privacy-safe failure. Ordinary reads have no payment or notification side effects.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "description": "Present when the durable rate limit denies the request.",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              },
+              "X-CSRF-Token": {
+                "description": "Order-session-bound proof. Retain only in memory, never browser storage.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OrderSession": []
+          }
+        ]
+      }
+    },
+    "/api/v1/orders/{publicOrderId}/delivery-proofs/{proofId}/{rendition}": {
+      "get": {
+        "description": "Stream one private studio delivery photo of this order after authorizing the exact order session. Only proofs attached to delivered physical lines and not withdrawn are readable; unknown and foreign proofs are indistinguishable. Shares the READ rate-limit bucket. Bytes come from private storage, never from a public or signed URL.",
+        "operationId": "readDeliveryProof",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": false,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "publicOrderId",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "proofId",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "rendition",
+            "required": true,
+            "schema": {
+              "enum": [
+                "thumbnail",
+                "display"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "image/webp": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Metadata-free WebP rendition. Never cached, sniffed, framed or referred.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Cross-Origin-Resource-Policy": {
+                "schema": {
+                  "const": "same-origin",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "const": "nosniff",
                   "type": "string"
                 }
               }

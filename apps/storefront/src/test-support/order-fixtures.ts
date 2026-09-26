@@ -53,6 +53,7 @@ export const orderFixture = orderAccessDetailSchema.parse({
     displayMode: "anonymous",
     giftKind: "PHYSICAL",
     fulfillmentStatus: "PENDING",
+    deliveryProofs: [],
   })),
   createdAt: "2026-09-01T00:00:00.000Z",
   updatedAt: "2026-09-16T00:00:00.000Z",

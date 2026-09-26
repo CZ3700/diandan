@@ -150,7 +150,13 @@ export async function mutateAdminOrderFulfillment(
   order: DraftRow,
 ) {
   const c = request.command;
-  if (!("fulfillmentId" in c)) return rejectAdminOrdersIntegrity();
+  if (
+    c.action !== "PREPARE" &&
+    c.action !== "DELIVER" &&
+    c.action !== "HOLD" &&
+    c.action !== "RESUME"
+  )
+    return rejectAdminOrdersIntegrity();
   const lines = await readAdminOrderLines(client, c.orderId, true),
     line = lines.find((l) => l["fulfillment_id"] === c.fulfillmentId);
   if (!line) return adminOrdersFailure("NOT_FOUND");

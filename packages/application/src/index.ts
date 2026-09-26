@@ -107,6 +107,7 @@ export {
   type AdminOrdersDependencies,
   type AdminOrdersUseCases,
 } from "./admin-orders.js";
+export type { AdminOrderProofDependencies } from "./admin-order-proofs.js";
 export {
   createAdminFinanceUseCases,
   type AdminFinanceDependencies,

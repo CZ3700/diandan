@@ -1,6 +1,7 @@
-import type {
-  AdminOrdersPermission,
-  AdminOrdersLine,
+import {
+  DELIVERY_PROOF_PROFILE,
+  type AdminOrdersPermission,
+  type AdminOrdersLine,
 } from "@fan-support/contracts";
 import type { DraftRow } from "./content-draft-data.js";
 import { deriveFulfillmentAggregate } from "./fulfillment-aggregate.js";
@@ -58,6 +59,27 @@ export function fulfillmentActions(
     )
       actions.push("RESUME");
   }
+  return actions;
+}
+/** V2 §4-6: studio photos document physical lines being prepared or delivered; digital lines never carry them. */
+export function proofActions(
+  line: DraftRow,
+  activeProofs: number,
+  permissions: AdminOrdersPermission[],
+): AdminOrdersLine["proofActions"] {
+  const actions: AdminOrdersLine["proofActions"] = [];
+  if (
+    permissions.includes("orders.fulfillment") &&
+    !isDigitalFulfillmentLine({
+      giftKind:
+        typeof line["gift_kind"] === "string" ? line["gift_kind"] : null,
+    }) &&
+    ["PREPARING", "DELIVERED"].includes(String(line["status"])) &&
+    activeProofs < DELIVERY_PROOF_PROFILE.maxActiveProofsPerLine
+  )
+    actions.push("ATTACH");
+  if (permissions.includes("orders.manage") && activeProofs > 0)
+    actions.push("WITHDRAW");
   return actions;
 }
 export function deriveAdminOrderFulfillment(lines: DraftRow[]): string {

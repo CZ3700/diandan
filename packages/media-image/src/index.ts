@@ -117,3 +117,8 @@ export {
   createMediaSourceInspector,
   type MediaSourceInspectorOptions,
 } from "./source-inspection.js";
+export {
+  createDeliveryProofProcessor,
+  createDeliveryProofReader,
+  type DeliveryProofMediaOptions,
+} from "./delivery-proof.js";

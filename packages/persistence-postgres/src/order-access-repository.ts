@@ -5,6 +5,7 @@ import {
   orderAccessReadCommandSchema,
   orderAccessRevokeCommandSchema,
   orderAccessLocateCommandSchema,
+  orderAccessProofCommandSchema,
   orderAccessRateCommandSchema,
   orderAccessGrantSchema,
   orderAccessRevokedSchema,
@@ -30,7 +31,10 @@ import {
   sessionOwner,
   tokenOwner,
 } from "./order-access-data.js";
-import { readOrderAccessDetail } from "./order-access-read.js";
+import {
+  locateOrderAccessProof,
+  readOrderAccessDetail,
+} from "./order-access-read.js";
 import { consumeOrderAccessRate } from "./order-access-rate.js";
 import {
   auditOrderAccess,
@@ -272,6 +276,13 @@ export function createOrderAccessRepository(
           schemaVersion: 1,
           publicOrderId: session["public_order_id"],
         });
+      });
+    },
+    locateProof(input) {
+      return run(async () => {
+        const parsed = orderAccessProofCommandSchema.safeParse(input);
+        if (!parsed.success) return rejectOrderAccess("INVALID_REQUEST");
+        return locateOrderAccessProof(client, parsed.data);
       });
     },
     consumeRateLimit(input) {

@@ -238,6 +238,7 @@ export function createProductionAdminComposition(
           transactions: persistence.adminOrdersTransactionManager,
           keys: keys.keyManagement,
           tokenPepper,
+          proofs: { storage: media.storage, processor: media.proofProcessor },
         }),
       },
       adminFinanceRoute: { allowedOrigin, useCases: finance },

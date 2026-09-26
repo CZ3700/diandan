@@ -12,6 +12,8 @@ import {
   orderAccessFailureCodeSchema,
   orderAccessRateCommandSchema,
   orderAccessRateResultSchema,
+  orderAccessProofCommandSchema,
+  orderAccessProofLocationSchema,
   type OrderAccessFailureCode,
   type OrderAccessResponse,
   type OrderAccessRateResult,
@@ -22,6 +24,12 @@ import {
   type OrderAccessRepository,
   type OrderAccessTransactionManager,
 } from "@fan-support/persistence-port";
+import type { DeliveryProofReadPort } from "@fan-support/media-port";
+
+/** Bytes are returned only after the session authorized this exact proof. */
+export type OrderAccessProofResult =
+  | Readonly<{ outcome: "FAILURE"; code: OrderAccessFailureCode }>
+  | Readonly<{ outcome: "SUCCESS"; mimeType: "image/webp"; bytes: Uint8Array }>;
 
 export class OrderAccessApplicationError extends Error {
   constructor() {
@@ -44,8 +52,11 @@ const fail = (code: OrderAccessFailureCode): OrderAccessResponse => ({
 /** Raw credentials never cross this boundary. Validate every result before COMMIT. */
 export function createOrderAccessUseCases({
   transactions,
+  proofReader,
 }: {
   transactions: OrderAccessTransactionManager;
+  /** Private delivery-proof bytes; absent deployments report proofs as unavailable. */
+  proofReader?: DeliveryProofReadPort | undefined;
 }) {
   async function execute<Command, Result extends JsonValue>(
     schema: CommandSchema<Command>,
@@ -161,6 +172,45 @@ export function createOrderAccessUseCases({
         publicOrderId,
       }),
     );
+  // Lock-free authorization commits before any storage I/O; bytes never enter a transaction.
+  const readProof = async (input: unknown): Promise<OrderAccessProofResult> => {
+    const denied = (code: OrderAccessFailureCode) =>
+      ({ outcome: "FAILURE", code }) as const;
+    const parsed = orderAccessProofCommandSchema.safeParse(input);
+    if (!parsed.success) return denied("INVALID_REQUEST");
+    if (!proofReader) return denied("TEMPORARY_UNAVAILABLE");
+    const command = parsed.data;
+    let location;
+    try {
+      location = await transactions.runInOrderAccessTransaction(
+        async (repository) =>
+          orderAccessProofLocationSchema.parse(
+            await repository.locateProof(command),
+          ),
+      );
+    } catch (error) {
+      const known =
+        error instanceof OrderAccessRepositoryError
+          ? orderAccessFailureCodeSchema.safeParse(error.code)
+          : undefined;
+      return denied(known?.success ? known.data : "TEMPORARY_UNAVAILABLE");
+    }
+    if (
+      location.publicOrderId.toLowerCase() !==
+        command.publicOrderId.toLowerCase() ||
+      location.proofId.toLowerCase() !== command.proofId.toLowerCase()
+    )
+      return denied("TEMPORARY_UNAVAILABLE");
+    const read = await proofReader
+      .read({ schemaVersion: 1, rendition: location.rendition })
+      .catch(() => ({ outcome: "FAILURE" as const }));
+    if (
+      read.outcome !== "SUCCESS" ||
+      read.bytes.byteLength !== location.rendition.byteSize
+    )
+      return denied("TEMPORARY_UNAVAILABLE");
+    return { outcome: "SUCCESS", mimeType: "image/webp", bytes: read.bytes };
+  };
   // Always a separate committed call, including rejected guesses. Never roll the
   // limiter back with the following authorization transaction.
   const consumeRateLimit = async (
@@ -186,6 +236,7 @@ export function createOrderAccessUseCases({
     read,
     revoke,
     locate,
+    readProof,
     consumeRateLimit,
   });
 }

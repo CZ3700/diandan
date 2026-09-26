@@ -38,7 +38,12 @@ test("all unconfigured order access routes reject before processing raw credenti
         "/api/v1/checkout/sessions/10000000-0000-4000-8000-000000000001/order-access",
       ],
       ["POST", "/api/v1/order-access/revoke"],
+      ["POST", "/api/v1/order-access/locate"],
       ["GET", "/api/v1/orders/10000000-0000-4000-8000-000000000001"],
+      [
+        "GET",
+        "/api/v1/orders/10000000-0000-4000-8000-000000000001/delivery-proofs/10000000-0000-4000-8000-000000000002/thumbnail",
+      ],
     ] as const) {
       const response = await app.inject({ method, url });
       expect(response.statusCode).toBe(503);

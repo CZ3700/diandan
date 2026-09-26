@@ -11,6 +11,12 @@ import {
 import { encryptedValueSchema, keyVersionSchema } from "./commerce.js";
 import { checkoutVersionSchema } from "./checkout-preflight.js";
 import { supportedLocaleSchema } from "./locale.js";
+import {
+  deliveryProofProcessingSuccessSchema,
+  deliveryProofRenditionNameSchema,
+  deliveryProofRenditionSchema,
+  deliveryProofSourceSchema,
+} from "./delivery-proof.js";
 
 const uuid = z.uuid();
 export const adminOrdersAccessSchema = z.strictObject({
@@ -51,6 +57,11 @@ export const adminOrdersStoreCommandSchema = z.discriminatedUnion("action", [
     .extend({ envelope: adminOrdersNoteEnvelopeSchema }),
   commands[10],
   commands[11],
+  commands[12],
+  commands[13],
+  commands[14],
+  commands[15],
+  commands[16],
 ]);
 /** The optional keyed digest is required on mutations; no plaintext notes or raw credentials cross the persistence boundary. */
 export const adminOrdersStoreRequestSchema = z
@@ -105,7 +116,77 @@ export const adminOrdersPrivateConfirmationSchema = z.strictObject({
   kind: z.literal("PRIVATE_CONFIRMED"),
   accessId: uuid,
 });
+const success = {
+  schemaVersion: z.literal(1),
+  outcome: z.literal("SUCCESS"),
+};
+/** A committed source reservation; signing its upload grant happens after commit. */
+export const adminOrdersProofReservationSchema = z.strictObject({
+  ...success,
+  kind: z.literal("PROOF_RESERVATION"),
+  orderId: uuid,
+  fulfillmentId: uuid,
+  uploadId: uuid,
+  replayed: z.boolean(),
+  source: deliveryProofSourceSchema,
+  createdAt: contentTimestampSchema,
+  expiresAt: contentTimestampSchema,
+  authorizedAt: contentTimestampSchema,
+  sessionExpiresAt: contentTimestampSchema,
+});
+export const adminOrdersProofUploadStateSchema = z
+  .strictObject({
+    ...success,
+    kind: z.literal("PROOF_UPLOAD_STATE"),
+    orderId: uuid,
+    fulfillmentId: uuid,
+    uploadId: uuid,
+    status: z.enum(["RESERVED", "READY"]),
+    source: deliveryProofSourceSchema,
+    expiresAt: contentTimestampSchema,
+    display: deliveryProofRenditionSchema.nullable(),
+    thumbnail: deliveryProofRenditionSchema.nullable(),
+  })
+  .refine(
+    (value) =>
+      (value.status === "READY") ===
+        (value.display !== null && value.thumbnail !== null) &&
+      (value.display === null) === (value.thumbnail === null),
+  );
+/** Records verified renditions; the stored source identity must still match exactly. */
+export const adminOrdersProofCompletionSchema = z
+  .strictObject({
+    schemaVersion: z.literal(1),
+    access: adminOrdersAccessSchema,
+    orderId: uuid,
+    uploadId: uuid,
+    source: deliveryProofSourceSchema,
+    result: deliveryProofProcessingSuccessSchema,
+  })
+  .refine((value) => value.result.uploadId === value.uploadId);
+export const adminOrdersProofRenditionLocationSchema = z.strictObject({
+  ...success,
+  kind: z.literal("PROOF_RENDITION"),
+  orderId: uuid,
+  proofId: uuid,
+  rendition: deliveryProofRenditionNameSchema,
+  identity: deliveryProofRenditionSchema,
+  authorizedAt: contentTimestampSchema,
+  sessionExpiresAt: contentTimestampSchema,
+});
 export type AdminOrdersAccess = z.infer<typeof adminOrdersAccessSchema>;
+export type AdminOrdersProofReservation = z.infer<
+  typeof adminOrdersProofReservationSchema
+>;
+export type AdminOrdersProofUploadState = z.infer<
+  typeof adminOrdersProofUploadStateSchema
+>;
+export type AdminOrdersProofCompletion = z.infer<
+  typeof adminOrdersProofCompletionSchema
+>;
+export type AdminOrdersProofRenditionLocation = z.infer<
+  typeof adminOrdersProofRenditionLocationSchema
+>;
 export type AdminOrdersPrincipal = z.infer<typeof adminOrdersPrincipalSchema>;
 export type AdminOrdersStoreRequest = z.infer<
   typeof adminOrdersStoreRequestSchema

@@ -26,6 +26,11 @@ const routes = [
   ["note/add", "ADD_NOTE", true],
   ["notes/read", "READ_NOTES", false],
   ["notification/resend", "RESEND_NOTIFICATION", true],
+  ["proof-uploads/begin", "BEGIN_PROOF_UPLOAD", true],
+  ["proof-uploads/complete", "COMPLETE_PROOF_UPLOAD", false],
+  ["proofs/attach", "ATTACH_PROOFS", true],
+  ["proofs/withdraw", "WITHDRAW_PROOF", true],
+  ["proofs/view", "VIEW_PROOF", false],
 ] as const;
 function matches(
   command: AdminOrdersCommand,
@@ -53,6 +58,24 @@ function matches(
       );
     case "READ_NOTES":
       return result.kind === "NOTES" && result.orderId === command.orderId;
+    case "BEGIN_PROOF_UPLOAD":
+      return (
+        result.kind === "PROOF_UPLOAD_GRANT" &&
+        result.orderId === command.orderId
+      );
+    case "COMPLETE_PROOF_UPLOAD":
+      return (
+        result.kind === "PROOF_UPLOAD" &&
+        result.orderId === command.orderId &&
+        result.uploadId === command.uploadId
+      );
+    case "VIEW_PROOF":
+      return (
+        result.kind === "PROOF_DOWNLOAD" &&
+        result.orderId === command.orderId &&
+        result.proofId === command.proofId &&
+        result.rendition === command.rendition
+      );
     default:
       return result.kind === "MUTATION" && result.orderId === command.orderId;
   }

@@ -390,6 +390,16 @@
         "up": "c1a603cb8d5cbf0e6ff8f120abf3ee312a7a1dc2fae93ad043ec40dc46eadc93",
         "down": "cefaec5c026f8c9516ed079e91e6e1e71d8312384d64bd6a6b76843232a42d15"
       }
+    },
+    {
+      "version": "0040",
+      "name": "delivery-proofs",
+      "up": "database/migrations/0040_delivery-proofs.up.sql",
+      "down": "database/migrations/0040_delivery-proofs.down.sql",
+      "sha256": {
+        "up": "5476c0b4f45f1fcdb45f686ac2d3b7ac2aed19dd9c5cd86cce2e3e49ca41363d",
+        "down": "3899ad9fd5aac68640277a322c9a9621a762d2513d1f0537bb713ec9dc08a67c"
+      }
     }
   ]
 }

@@ -1,4 +1,7 @@
-import { createAdminOrdersUseCases } from "@fan-support/application";
+import {
+  createAdminOrdersUseCases,
+  type AdminOrderProofDependencies,
+} from "@fan-support/application";
 import type { KeyManagementPort } from "@fan-support/key-management-port";
 import {
   createPostgresPersistence,
@@ -19,6 +22,8 @@ export type LocalAdminOrdersCompositionOptions = Readonly<{
   allowedOrigin: string;
   publicMediaBaseUrl: string;
   keys: KeyManagementPort;
+  /** Private delivery-proof storage for local runs that exercise photo uploads. */
+  proofs?: AdminOrderProofDependencies | undefined;
 }>;
 function httpsOrigin(value: unknown): boolean {
   if (typeof value !== "string") return false;
@@ -68,6 +73,7 @@ export function createLocalAdminOrdersComposition(
           transactions: persistence.adminOrdersTransactionManager,
           keys: options.keys,
           tokenPepper: options.tokenPepper,
+          proofs: options.proofs,
         }),
       },
       adminOrdersRuntime: { start: async () => undefined, stop },

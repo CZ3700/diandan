@@ -151,6 +151,7 @@ test("protected historical reads bind the response to the authorized order and r
     displayMode: "anonymous",
     giftKind: "PHYSICAL",
     fulfillmentStatus: "PENDING",
+    deliveryProofs: [],
   };
   const order = {
     schemaVersion: 1,
@@ -285,4 +286,102 @@ test("locating a public number returns only the session's order identifier", asy
   const leaky = harness({ schemaVersion: 1, publicOrderId: id, cartId: id });
   expect((await leaky.app.locate(command)).outcome).toBe("FAILURE");
   expect(leaky.counts()).toEqual({ commits: 0, rollbacks: 1 });
+});
+
+test("delivery proofs return verified bytes only after the session located the exact proof", async () => {
+  const proofId = "10000000-0000-4000-8000-000000000003";
+  const checksum = "c".repeat(64);
+  const location = {
+    schemaVersion: 1,
+    publicOrderId: id,
+    proofId,
+    rendition: {
+      objectKey: `fulfillment-proofs/v1/renditions/${other}/${checksum}.webp`,
+      checksumSha256: checksum,
+      byteSize: 4,
+      width: 480,
+      height: 360,
+      mimeType: "image/webp",
+    },
+  };
+  const command = {
+    schemaVersion: 1,
+    publicOrderId: id,
+    proofId,
+    rendition: "thumbnail",
+    sessionCandidates: [proof],
+  };
+  const reads: unknown[] = [];
+  const reader = (bytes: Uint8Array | null) => ({
+    async read(input: unknown) {
+      reads.push(input);
+      return bytes
+        ? ({ outcome: "SUCCESS", bytes } as const)
+        : ({ outcome: "FAILURE", code: "NOT_FOUND" } as const);
+    },
+  });
+  const located = (value: unknown, fault?: unknown) => {
+    const transactions: OrderAccessTransactionManager = {
+      async runInOrderAccessTransaction(work) {
+        return work({
+          async locateProof() {
+            if (fault) throw fault;
+            return value;
+          },
+        } as unknown as OrderAccessRepository);
+      },
+    };
+    return transactions;
+  };
+  const ok = module!.createOrderAccessUseCases({
+    transactions: located(location),
+    proofReader: reader(new Uint8Array([1, 2, 3, 4])),
+  });
+  expect(await ok.readProof(command)).toEqual({
+    outcome: "SUCCESS",
+    mimeType: "image/webp",
+    bytes: new Uint8Array([1, 2, 3, 4]),
+  });
+  expect(reads).toEqual([{ schemaVersion: 1, rendition: location.rendition }]);
+  for (const [app, code] of [
+    [
+      module!.createOrderAccessUseCases({
+        transactions: located(
+          undefined,
+          new OrderAccessRepositoryError("ACCESS_DENIED"),
+        ),
+        proofReader: reader(new Uint8Array([1])),
+      }),
+      "ACCESS_DENIED",
+    ],
+    [
+      module!.createOrderAccessUseCases({
+        transactions: located({ ...location, proofId: other }),
+        proofReader: reader(new Uint8Array([1, 2, 3, 4])),
+      }),
+      "TEMPORARY_UNAVAILABLE",
+    ],
+    [
+      module!.createOrderAccessUseCases({
+        transactions: located(location),
+        proofReader: reader(null),
+      }),
+      "TEMPORARY_UNAVAILABLE",
+    ],
+    [
+      module!.createOrderAccessUseCases({
+        transactions: located(location),
+        proofReader: reader(new Uint8Array([1, 2])),
+      }),
+      "TEMPORARY_UNAVAILABLE",
+    ],
+    [
+      module!.createOrderAccessUseCases({ transactions: located(location) }),
+      "TEMPORARY_UNAVAILABLE",
+    ],
+  ] as const)
+    expect(await app.readProof(command)).toEqual({ outcome: "FAILURE", code });
+  expect(
+    await ok.readProof({ ...command, objectKey: location.rendition.objectKey }),
+  ).toEqual({ outcome: "FAILURE", code: "INVALID_REQUEST" });
 });

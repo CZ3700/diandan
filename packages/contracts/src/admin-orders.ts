@@ -18,6 +18,13 @@ import {
 import { orderPaymentStatusSchema } from "./payment.js";
 import { giftKindSchema } from "./gift-commerce-profile.js";
 import { cartEditorContentSchema } from "./cart-edit.js";
+import { sourceHashSchema } from "./content-lifecycle.js";
+import {
+  DELIVERY_PROOF_PROFILE,
+  deliveryProofRenditionNameSchema,
+  deliveryProofSourceMimeTypeSchema,
+} from "./delivery-proof.js";
+import { mediaPortResponseSchema } from "./media-port-contracts.js";
 
 const uuid = z.uuid();
 const version = z.literal(1);
@@ -54,6 +61,8 @@ export const adminOrdersFailureSchema = z.strictObject({
     "NOTIFICATION_IN_PROGRESS",
     "RATE_LIMITED",
     "TEMPORARY_UNAVAILABLE",
+    "PROOF_INVALID",
+    "PROOF_LIMIT_REACHED",
   ]),
 });
 const mutation = {
@@ -147,6 +156,51 @@ export const adminOrdersCommandSchema = z.discriminatedUnion("action", [
     ...mutation,
     expectedLatestNotificationId: uuid,
   }),
+  // V2 §4-6 delivery proofs. Appended so positional store references above stay unchanged.
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("BEGIN_PROOF_UPLOAD"),
+    ...lineMutation,
+    checksumSha256: sourceHashSchema,
+    byteSize: z
+      .number()
+      .int()
+      .min(1)
+      .max(DELIVERY_PROOF_PROFILE.sourceByteLimit),
+    mimeType: deliveryProofSourceMimeTypeSchema,
+  }),
+  /** Idempotent by upload state: processing either already produced READY renditions or runs again. */
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("COMPLETE_PROOF_UPLOAD"),
+    orderId: uuid,
+    uploadId: uuid,
+  }),
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("ATTACH_PROOFS"),
+    ...lineMutation,
+    uploadIds: z
+      .array(uuid)
+      .min(1)
+      .max(DELIVERY_PROOF_PROFILE.maxActiveProofsPerLine)
+      .refine((ids) => new Set(ids).size === ids.length),
+    privacyConfirmed: z.literal(true),
+  }),
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("WITHDRAW_PROOF"),
+    ...lineMutation,
+    proofId: uuid,
+    confirmed: z.literal(true),
+  }),
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("VIEW_PROOF"),
+    orderId: uuid,
+    proofId: uuid,
+    rendition: deliveryProofRenditionNameSchema,
+  }),
 ]);
 export const adminOrdersRequestSchema = z.strictObject({
   schemaVersion: version,
@@ -172,6 +226,20 @@ export const adminOrdersListItemSchema = z.strictObject({
   createdAt: contentTimestampSchema,
   updatedAt: contentTimestampSchema,
 });
+const proofEdge = z
+  .number()
+  .int()
+  .min(1)
+  .max(DELIVERY_PROOF_PROFILE.renditions.display.maxEdge);
+export const adminOrdersProofSchema = z.strictObject({
+  proofId: uuid,
+  sequence: z.number().int().min(1).max(32767),
+  createdAt: contentTimestampSchema,
+  width: proofEdge,
+  height: proofEdge,
+  thumbnailWidth: proofEdge,
+  thumbnailHeight: proofEdge,
+});
 export const adminOrdersLineSchema = z.strictObject({
   itemId: uuid,
   position: z.number().int().min(1).max(500),
@@ -195,6 +263,11 @@ export const adminOrdersLineSchema = z.strictObject({
   allowedActions: z
     .array(z.enum(["PREPARE", "DELIVER", "HOLD", "RESUME"]))
     .max(4),
+  /** Active (not withdrawn) studio photos, including ones attached before delivery. */
+  proofs: z
+    .array(adminOrdersProofSchema)
+    .max(DELIVERY_PROOF_PROFILE.maxActiveProofsPerLine),
+  proofActions: z.array(z.enum(["ATTACH", "WITHDRAW"])).max(2),
 });
 export const adminOrdersNoteMetadataSchema = z.strictObject({
   noteId: uuid,
@@ -257,6 +330,43 @@ export const adminOrdersResponseSchema = z.union([
     notification: adminOrdersNotificationSchema,
   }),
   adminOrdersMutationResponseSchema,
+  z.strictObject({
+    ...success,
+    kind: z.literal("PROOF_UPLOAD_GRANT"),
+    orderId: uuid,
+    uploadId: uuid,
+    replayed: z.boolean(),
+    grant: mediaPortResponseSchema.options[0].shape.value.pick({
+      method: true,
+      url: true,
+      headers: true,
+      expiresAt: true,
+    }),
+  }),
+  z.strictObject({
+    ...success,
+    kind: z.literal("PROOF_UPLOAD"),
+    orderId: uuid,
+    uploadId: uuid,
+    width: proofEdge,
+    height: proofEdge,
+  }),
+  /** A short-lived private GET for one rendition; never embedded in ordinary reads. */
+  z.strictObject({
+    ...success,
+    kind: z.literal("PROOF_DOWNLOAD"),
+    orderId: uuid,
+    proofId: uuid,
+    rendition: deliveryProofRenditionNameSchema,
+    width: proofEdge,
+    height: proofEdge,
+    download: mediaPortResponseSchema.options[2].shape.value.pick({
+      method: true,
+      url: true,
+      headers: true,
+      expiresAt: true,
+    }),
+  }),
 ]);
 export const adminOrdersPrivateResponseSchema = z.union([
   adminOrdersFailureSchema,
@@ -290,6 +400,7 @@ export type AdminOrdersPrivateResponse = z.infer<
 export type AdminOrdersFailure = z.infer<typeof adminOrdersFailureSchema>;
 export type AdminOrdersListItem = z.infer<typeof adminOrdersListItemSchema>;
 export type AdminOrdersLine = z.infer<typeof adminOrdersLineSchema>;
+export type AdminOrdersProof = z.infer<typeof adminOrdersProofSchema>;
 export type AdminOrdersMutationResponse = z.infer<
   typeof adminOrdersMutationResponseSchema
 >;

@@ -13,6 +13,11 @@ import {
   contentTimestampSchema,
   sourceHashSchema,
 } from "./content-lifecycle.js";
+import {
+  DELIVERY_PROOF_PROFILE,
+  deliveryProofRenditionNameSchema,
+  deliveryProofRenditionSchema,
+} from "./delivery-proof.js";
 import { canonicalRequestIdSchema } from "./envelopes.js";
 import { giftKindSchema } from "./gift-commerce-profile.js";
 import {
@@ -115,6 +120,21 @@ export const orderAccessLocateCommandSchema = z.strictObject({
   publicOrderNo: publicOrderNoSchema,
   sessionCandidates: orderAccessCandidatesSchema,
 });
+/** One private delivery photo of this order; the session, not the identifiers, authorizes it. */
+export const orderAccessProofCommandSchema = z.strictObject({
+  schemaVersion: version,
+  publicOrderId: publicOrderIdSchema,
+  proofId: z.uuid(),
+  rendition: deliveryProofRenditionNameSchema,
+  sessionCandidates: orderAccessCandidatesSchema,
+});
+/** Internal: the authorized storage identity handed to the private reader, never to browsers. */
+export const orderAccessProofLocationSchema = z.strictObject({
+  schemaVersion: version,
+  publicOrderId: publicOrderIdSchema,
+  proofId: z.uuid(),
+  rendition: deliveryProofRenditionSchema,
+});
 export const orderAccessGrantSchema = z.strictObject({
   schemaVersion: version,
   publicOrderId: publicOrderIdSchema,
@@ -174,6 +194,27 @@ export const orderAccessMediaSchema = z.strictObject({
   alt: checkoutText(300),
   locale: orderAccessLocaleSchema,
 });
+const proofEdge = z
+  .number()
+  .int()
+  .min(1)
+  .max(DELIVERY_PROOF_PROFILE.renditions.display.maxEdge);
+/** Opaque reference only: bytes are served by the session-bound proof route. */
+export const orderAccessDeliveryProofSchema = z
+  .strictObject({
+    proofId: z.uuid(),
+    width: proofEdge,
+    height: proofEdge,
+    thumbnailWidth: proofEdge,
+    thumbnailHeight: proofEdge,
+  })
+  .refine(
+    (value) =>
+      value.thumbnailWidth <= value.width &&
+      value.thumbnailHeight <= value.height &&
+      Math.max(value.thumbnailWidth, value.thumbnailHeight) <=
+        DELIVERY_PROOF_PROFILE.renditions.thumbnail.maxEdge,
+  );
 export const orderAccessItemSchema = z
   .strictObject({
     schemaVersion: version,
@@ -201,7 +242,20 @@ export const orderAccessItemSchema = z
     /** Purchase-time classification snapshot; null only for pre-profile legacy lines (ADR-019). */
     giftKind: giftKindSchema.nullable(),
     fulfillmentStatus: fulfillmentStatusSchema,
+    /** Studio photos shown only after a physical line is delivered (V2 §4-6). */
+    deliveryProofs: z
+      .array(orderAccessDeliveryProofSchema)
+      .max(DELIVERY_PROOF_PROFILE.maxActiveProofsPerLine),
   })
+  .refine(
+    (value) =>
+      value.deliveryProofs.length === 0 ||
+      (value.fulfillmentStatus === "DELIVERED" &&
+        value.giftKind !== "VIRTUAL" &&
+        new Set(value.deliveryProofs.map((proof) => proof.proofId)).size ===
+          value.deliveryProofs.length),
+    { message: "Only delivered physical lines carry distinct delivery proofs" },
+  )
   .refine(
     (value) =>
       BigInt(value.unitAmountMinor) * BigInt(value.quantity) ===
@@ -341,6 +395,15 @@ export type OrderAccessLocateCommand = z.infer<
   typeof orderAccessLocateCommandSchema
 >;
 export type OrderAccessLocated = z.infer<typeof orderAccessLocatedSchema>;
+export type OrderAccessProofCommand = z.infer<
+  typeof orderAccessProofCommandSchema
+>;
+export type OrderAccessProofLocation = z.infer<
+  typeof orderAccessProofLocationSchema
+>;
+export type OrderAccessDeliveryProof = z.infer<
+  typeof orderAccessDeliveryProofSchema
+>;
 export type OrderAccessGrant = z.infer<typeof orderAccessGrantSchema>;
 export type OrderAccessRevoked = z.infer<typeof orderAccessRevokedSchema>;
 export type OrderAccessFailureCode = z.infer<

@@ -71,7 +71,7 @@ function isAnimatedPng(bytes: Buffer): boolean {
   return false;
 }
 
-async function codec<T>(operation: () => Promise<T>): Promise<T> {
+export async function codec<T>(operation: () => Promise<T>): Promise<T> {
   try {
     return await operation();
   } catch (error) {

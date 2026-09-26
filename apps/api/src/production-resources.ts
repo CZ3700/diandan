@@ -3,8 +3,14 @@ import type {
   KeyManagementPort,
   SupportIntentKeyPort,
 } from "@fan-support/key-management-port";
-import { createMediaSourceInspector } from "@fan-support/media-image";
+import {
+  createDeliveryProofProcessor,
+  createDeliveryProofReader,
+  createMediaSourceInspector,
+} from "@fan-support/media-image";
 import type {
+  DeliveryProofProcessingPort,
+  DeliveryProofReadPort,
   MediaSourceInspectionPort,
   MediaStoragePort,
 } from "@fan-support/media-port";
@@ -31,6 +37,9 @@ export type ApiKeyResources = Readonly<{
 export type ApiMediaResources = Readonly<{
   storage: MediaStoragePort;
   inspector: MediaSourceInspectionPort;
+  /** Private delivery photos: SOURCE-bucket renditions only (V2 §4-6). */
+  proofProcessor: DeliveryProofProcessingPort;
+  proofReader: DeliveryProofReadPort;
 }>;
 export type ApiProductionResources = Readonly<{
   /** The request-serving pool shared by public, commerce and administration use cases. */
@@ -120,6 +129,14 @@ export function createApiProductionResources(
       : Object.freeze({
           storage,
           inspector: createMediaSourceInspector({
+            storage,
+            now: () => new Date(),
+          }),
+          proofProcessor: createDeliveryProofProcessor({
+            storage,
+            now: () => new Date(),
+          }),
+          proofReader: createDeliveryProofReader({
             storage,
             now: () => new Date(),
           }),

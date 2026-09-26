@@ -5,6 +5,7 @@ import {
   type OrderAccessConfiguration,
 } from "@fan-support/contracts";
 import type { KeyManagementPort } from "@fan-support/key-management-port";
+import type { DeliveryProofReadPort } from "@fan-support/media-port";
 import type { PostgresPersistence } from "@fan-support/persistence-postgres";
 import type { ApiLifecycleResource } from "./bootstrap.js";
 import { createCartSessionCredentials } from "./cart-session-credentials.js";
@@ -23,6 +24,8 @@ export type OrderAccessCompositionOptions = Readonly<{
   keyManagement: KeyManagementPort;
   activePepperVersion: string;
   pepperVersions: readonly string[];
+  /** Private delivery photos; without storage the photo route answers 503. */
+  proofReader?: DeliveryProofReadPort | undefined;
 }>;
 export type OrderAccessComposition = Readonly<{
   orderAccessRoute: OrderAccessRouteDependencies;
@@ -46,6 +49,7 @@ export function createOrderAccessComposition(
   try {
     const useCases = createOrderAccessUseCases({
       transactions: persistence.orderAccessTransactionManager,
+      proofReader: options.proofReader,
     });
     return Object.freeze({
       orderAccessRoute: {
@@ -53,6 +57,7 @@ export function createOrderAccessComposition(
         credentials,
         cartCredentials,
         useCases,
+        readProof: useCases.readProof,
       },
       orderAccessRuntime: { start: async () => undefined, stop },
     });

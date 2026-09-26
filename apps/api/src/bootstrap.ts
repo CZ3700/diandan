@@ -291,7 +291,12 @@ export async function createApiApplication(
       ["/api/v1/order-access/exchange", "POST"],
       ["/api/v1/checkout/sessions/:checkoutSessionId/order-access", "POST"],
       ["/api/v1/order-access/revoke", "POST"],
+      ["/api/v1/order-access/locate", "POST"],
       ["/api/v1/orders/:publicOrderId", "GET"],
+      [
+        "/api/v1/orders/:publicOrderId/delivery-proofs/:proofId/:rendition",
+        "GET",
+      ],
     ] as const)
       adapter.getInstance().route({
         url,

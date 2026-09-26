@@ -41,6 +41,7 @@ export * from "./gift-browse.js";
 export * from "./gift-browse-internal.js";
 
 export * from "./media-processing.js";
+export * from "./delivery-proof.js";
 export * from "./content-drafts.js";
 
 export * from "./content-authoring.js";

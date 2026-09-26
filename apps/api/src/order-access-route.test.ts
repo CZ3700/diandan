@@ -96,6 +96,7 @@ const order = {
       displayMode: "anonymous",
       giftKind: "PHYSICAL",
       fulfillmentStatus: "PENDING",
+      deliveryProofs: [],
     },
   ],
   createdAt: "2026-09-15T00:00:00Z",
@@ -109,7 +110,7 @@ const paths = {
   locate: "/api/v1/order-access/locate",
 };
 type Action = keyof typeof paths;
-async function setup() {
+async function setup(readProof?: (command: unknown) => Promise<unknown>) {
   const app = Fastify({ logger: false });
   const keyManagement = {
     async computeBlindIndex(command: ComputeBlindIndexCommand) {
@@ -172,6 +173,7 @@ async function setup() {
     credentials,
     cartCredentials,
     useCases,
+    readProof,
   });
   const send = (
     action: Action,
@@ -506,5 +508,93 @@ test("locate resolves a public number through the order cookie and issues no cre
     expect((await send("locate")).statusCode).toBe(401);
   } finally {
     await app.close();
+  }
+});
+
+test("delivery photos stream only to this order's session with inert image headers", async () => {
+  const proofId = "10000000-0000-4000-8000-0000000000f1";
+  const url = `/api/v1/orders/${publicId}/delivery-proofs/${proofId}/thumbnail`;
+  const bytes = new Uint8Array([82, 73, 70, 70, 1, 2, 3, 4]);
+  const readProof = vi.fn<(command: unknown) => Promise<unknown>>(async () => ({
+    outcome: "SUCCESS",
+    mimeType: "image/webp",
+    bytes,
+  }));
+  const { app, useCases, session } = await setup(readProof);
+  const get = (target: string, headers: Record<string, string> = {}) =>
+    app.inject({
+      method: "GET",
+      url: target,
+      remoteAddress: "127.0.0.1",
+      headers: {
+        cookie: `__Host-fan-order=${session.token}`,
+        "sec-fetch-site": "same-origin",
+        ...headers,
+      },
+    });
+  try {
+    const response = await get(url);
+    expect(response.statusCode).toBe(200);
+    expect(Buffer.from(response.rawPayload).equals(Buffer.from(bytes))).toBe(
+      true,
+    );
+    expect(response.headers).toMatchObject({
+      "content-type": "image/webp",
+      "content-length": String(bytes.byteLength),
+      "cache-control": "private, no-store",
+      "referrer-policy": "no-referrer",
+      "x-content-type-options": "nosniff",
+      "cross-origin-resource-policy": "same-origin",
+    });
+    expect(response.headers["content-security-policy"]).toContain("sandbox");
+    expect(response.headers["set-cookie"]).toBeUndefined();
+    expect(readProof).toHaveBeenCalledWith({
+      schemaVersion: 1,
+      publicOrderId: publicId,
+      proofId,
+      rendition: "thumbnail",
+      sessionCandidates: expect.any(Array),
+    });
+    expect(JSON.stringify(readProof.mock.calls)).not.toContain(session.token);
+    expect(useCases.consumeRateLimit).toHaveBeenLastCalledWith(
+      expect.objectContaining({ scope: "READ" }),
+    );
+    readProof.mockClear();
+    for (const [target, headers, status] of [
+      [url, { cookie: "" }, 401],
+      [url.replace("thumbnail", "original"), {}, 400],
+      [`${url}?width=10`, {}, 400],
+      [url, { "sec-fetch-site": "cross-site" }, 403],
+    ] as const) {
+      const denied = await get(target, headers);
+      expect(denied.statusCode, target).toBe(status);
+      expect(denied.headers["content-type"]).toMatch(/^application\/json/u);
+    }
+    expect(readProof).not.toHaveBeenCalled();
+    readProof.mockResolvedValueOnce({
+      outcome: "FAILURE",
+      code: "ACCESS_DENIED",
+    });
+    expect((await get(url)).statusCode).toBe(401);
+    readProof.mockResolvedValueOnce({
+      outcome: "SUCCESS",
+      mimeType: "image/png",
+      bytes,
+    });
+    expect((await get(url)).statusCode).toBe(503);
+  } finally {
+    await app.close();
+  }
+  const unconfigured = await setup();
+  try {
+    const response = await unconfigured.app.inject({
+      method: "GET",
+      url,
+      remoteAddress: "127.0.0.1",
+      headers: { cookie: `__Host-fan-order=${unconfigured.session.token}` },
+    });
+    expect(response.statusCode).toBe(503);
+  } finally {
+    await unconfigured.app.close();
   }
 });
