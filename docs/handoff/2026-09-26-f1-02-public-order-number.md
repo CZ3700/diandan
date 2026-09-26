@@ -24,7 +24,7 @@
 | 提交 | 内容 | 验证 |
 |:--|:--|:--|
 | `bb447dd` | **F1-2a**：迁移 0039（`orders.public_order_no` 列、`generate_public_order_no()` 默认值、既有订单回填、通知快照带短号）；合同 `publicOrderNoSchema` 与 `normalizePublicOrderNo`；查单详情、后台订单/财务/异常读模型与视图；后台订单与财务搜索；邮件 v2 原地修订；CI 脚本改用 `data-order-id` 与链接片段 | 合同 532；持久化/应用/API/前台/后台/i18n/worker 套件通过。本机真实 PG：迁移往返与目录快照（39 个迁移），回滚前缀守卫 54/54，新脚本 `postgres-public-order-number.mjs`。`check:dev` 前五段通过，test 段串行复跑 69/69，build 38/38 |
-| `PENDING_F12B` | **F1-2b**：`POST /api/v1/order-access/locate` 全链路（合同与 OpenAPI → 端口 → 持久化 → 应用 → API 路由 → 前台代理/传输/控制器）；查单入口同时接受短号和 UUID | contracts 533；持久化/应用/API/前台定位用例通过；真实 PG：`postgres-public-order-number.mjs` 增加会话定位语义（本单会话能定位，他单号与过期会话被拒，非规范号为 INVALID_REQUEST），查单 SQL 参数推断 18 条。`check:dev` 前五段通过（typecheck 69/69），test 段串行复跑 69/69，build 38/38 |
+| `6d3dbda` | **F1-2b**：`POST /api/v1/order-access/locate` 全链路（合同与 OpenAPI → 端口 → 持久化 → 应用 → API 路由 → 前台代理/传输/控制器）；查单入口同时接受短号和 UUID | contracts 533；持久化/应用/API/前台定位用例通过；真实 PG：`postgres-public-order-number.mjs` 增加会话定位语义（本单会话能定位，他单号与过期会话被拒，非规范号为 INVALID_REQUEST），查单 SQL 参数推断 18 条。`check:dev` 前五段通过（typecheck 69/69），test 段串行复跑 69/69，build 38/38 |
 
 未覆盖（需要 S3 模拟，本机没有）：API 级协议脚本与浏览器验收，包括 `order-access-protocol.mjs` 新增的定位用例、`order-storefront-browser.mjs` 的按短号查单用例、`admin-orders-protocol.mjs` 的口述短号搜索用例，以及 `local-experience-browser.mjs` 等改过的定位方式。这些脚本已按新界面修改，**从未实际运行过**，要等 CI。
 
