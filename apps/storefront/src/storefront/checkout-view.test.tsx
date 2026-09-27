@@ -100,6 +100,61 @@ it("offers to continue into a provider component only when this release can laun
   expect(render("airwallex-hpp")).toContain("data-payment-continue");
   expect(render("paypal-buttons")).not.toContain("data-payment-continue");
 });
+it("lists payment methods without a country question unless the country changes which methods apply", async () => {
+  const loaded = await import("./payment-methods").catch(() => null);
+  if (!loaded) throw new Error("Missing payment methods");
+  const method = {
+    schemaVersion: 1,
+    id: "30000000-0000-4000-8000-000000000001",
+    paymentMethod: "fake_card",
+    displayName: "Pay with TEST",
+    customerHint: "Test funds only",
+    environment: "TEST",
+    configVersion: 1,
+    ruleVersion: 1,
+    supportedActionTypes: ["REDIRECT"],
+  };
+  const view = {
+    schemaVersion: 1,
+    checkoutSessionId: "30000000-0000-4000-8000-000000000002",
+    presentationLocale: "en",
+    market: "GLOBAL",
+    currency: "USD",
+    amountMinor: 1500,
+    countries: ["US"],
+    country: "US",
+    countrySelectionRequired: false,
+    capabilities: [method],
+  };
+  const render = (capabilities: object) =>
+    renderToStaticMarkup(
+      <loaded.PaymentMethods
+        capabilities={capabilities as never}
+        locale="en"
+        copy={copy}
+        busy={false}
+        retrying={false}
+        onCountry={() => {}}
+        onStart={() => {}}
+        onRefresh={() => {}}
+      />,
+    );
+  const direct = render(view);
+  expect(direct).not.toContain("data-payment-country");
+  expect(direct).not.toContain(copy.checkoutCountry);
+  expect(direct).toContain(`data-payment-create="${method.id}"`);
+  const regional = render({
+    ...view,
+    countries: ["TH", "US"],
+    country: null,
+    countrySelectionRequired: true,
+    capabilities: [],
+  });
+  expect(regional).toContain("data-payment-country");
+  expect(regional).toContain(copy.checkoutCountry);
+  expect(regional).not.toContain("data-payment-create");
+  expect(regional).not.toContain(copy.checkoutNoMethods);
+});
 it("reviews the exact server amount and text, with per-object lang and no private editor", async () => {
   const loaded = await import("./checkout-review").catch(() => null);
   expect(loaded?.CheckoutReview).toBeTypeOf("function");

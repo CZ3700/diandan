@@ -324,14 +324,16 @@ export async function verifyPaymentRuntimeBrowser(context) {
             checkoutPreflightResponseSchema,
           );
           const sessionId = created.checkout.id;
-          await page.locator("[data-payment-country]").waitFor();
+          const button = page.locator("[data-payment-create]");
+          await button.waitFor();
           check(
             (await page.locator("[data-checkout-email]").count()) === 0,
             "Confirmed checkout clears and unmounts private email",
           );
-          await page.locator("[data-payment-country]").selectOption("US");
-          const button = page.locator("[data-payment-create]");
-          await button.waitFor();
+          check(
+            (await page.locator("[data-payment-country]").count()) === 0,
+            "Checkout lists methods without asking for a country",
+          );
           const unknownCase = locale === "en" && width === 390;
           if (unknownCase)
             await psp.arm({ operation: "CREATE_PAYMENT", mode: "AFTER" });

@@ -306,19 +306,11 @@ export async function verifyRegressionJourneys({
           .locator(`[data-payment-state="${outcome}"]`)
           .waitFor({ timeout: 90000 });
         await page.locator("[data-payment-method-refresh]").click();
-        const countryControl = page.locator("[data-payment-country]");
-        await countryControl.waitFor();
-        const retryCountry = await countryControl
-          .locator("option")
-          .evaluateAll(
-            (options) => options.find((option) => option.value)?.value,
-          );
-        assert(
-          retryCountry,
-          "Failed payment retains configured retry countries",
-        );
-        await countryControl.selectOption(retryCountry);
         await page.locator("[data-payment-create]").first().waitFor();
+        assert(
+          (await page.locator("[data-payment-country]").count()) === 0,
+          "Retry lists methods again without asking for a country",
+        );
         const current = await readCurrentPurchase(page);
         assert(
           current.attempt.status === outcome && current.attempt.canRetry,

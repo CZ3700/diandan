@@ -132,7 +132,7 @@ export async function verifyLocalCancellation({
       checkout.outcome === "SUCCESS" && "checkout" in checkout,
       "Created checkout satisfies its canonical contract",
     );
-    await page.locator("[data-payment-country]").waitFor();
+    await page.locator("[data-payment-create]").first().waitFor();
     return await cancelLocalExistingOrder({
       admin,
       config,

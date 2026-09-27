@@ -1,6 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
+import { countrySchema } from "@fan-support/contracts";
 import { PaymentRuntimeRepositoryError } from "@fan-support/persistence-port";
+import { id } from "./checkout-preflight.test-fixtures.js";
 import { paymentHarness } from "./payment-runtime.harness.js";
+
+const countries = (...codes: string[]) =>
+  codes.map((code) => countrySchema.parse(code));
 
 const load = () => import("./payment-runtime.js").catch(() => null);
 async function harness() {
@@ -307,27 +312,78 @@ describe("persistent payment application orchestration", () => {
     });
     expect(h.provider.createPayment).toHaveBeenCalledOnce();
   });
-  it("does not infer country or call the provider until an explicit eligible country is selected", async () => {
+  const readCapabilities = (
+    h: Awaited<ReturnType<typeof harness>>,
+    presentationLocale: "en" | "ja",
+    country?: string,
+  ) =>
+    h.app.capabilities(
+      {
+        schemaVersion: 1,
+        operation: "READ_PAYMENT_CAPABILITIES",
+        checkoutSessionId: h.create.checkoutSessionId,
+        presentationLocale,
+        ...(country === undefined ? {} : { country }),
+        supportedActionTypes: ["REDIRECT"],
+      } as Parameters<typeof h.app.capabilities>[0],
+      h.context,
+    );
+  it("resolves the country from published rules alone when every country sees the same methods", async () => {
     const h = await harness();
-    expect(
-      await h.app.capabilities(
-        {
-          schemaVersion: 1,
-          operation: "READ_PAYMENT_CAPABILITIES",
-          checkoutSessionId: h.create.checkoutSessionId,
-          presentationLocale: "ja",
-          supportedActionTypes: ["REDIRECT"],
-        },
-        h.context,
-      ),
-    ).toMatchObject({
+    h.state().current.routing!.routes[0]!.rule.countries = countries(
+      "US",
+      "TH",
+    );
+    expect(await readCapabilities(h, "en")).toMatchObject({
       action: "CAPABILITIES",
-      capabilities: { country: null, countries: ["US"], capabilities: [] },
+      capabilities: {
+        country: "TH",
+        countries: ["TH", "US"],
+        countrySelectionRequired: false,
+        capabilities: [{ id: h.create.capabilityId }],
+      },
     });
-    expect(h.provider.getCapabilities).not.toHaveBeenCalled();
+    expect(h.provider.getCapabilities).toHaveBeenCalledWith(
+      expect.objectContaining({ country: "TH" }),
+    );
+    expect(await readCapabilities(h, "ja")).toMatchObject({
+      capabilities: { country: "TH", countrySelectionRequired: false },
+    });
     expect(
       h.state().current.checkout.observation.consent.presentationLocale,
     ).toBe("en");
+  });
+  it("asks for a country, without inferring one or calling the provider, only when countries see different methods", async () => {
+    const h = await harness();
+    const routes = h.state().current.routing!.routes;
+    const regional = structuredClone(routes[0]!);
+    regional.providerConfigId = id(208) as typeof regional.providerConfigId;
+    regional.rule.id = id(207) as typeof regional.rule.id;
+    regional.rule.countries = countries("TH");
+    routes.push(regional);
+    routes[0]!.rule.countries = countries("TH", "US");
+    expect(await readCapabilities(h, "ja")).toMatchObject({
+      action: "CAPABILITIES",
+      capabilities: {
+        country: null,
+        countries: ["TH", "US"],
+        countrySelectionRequired: true,
+        capabilities: [],
+      },
+    });
+    expect(h.provider.getCapabilities).not.toHaveBeenCalled();
+    const thailand = await readCapabilities(h, "en", "TH");
+    expect(thailand).toMatchObject({
+      capabilities: { country: "TH", countrySelectionRequired: true },
+    });
+    expect(
+      "capabilities" in thailand &&
+        thailand.capabilities.capabilities.map((entry) => entry.id),
+    ).toEqual([h.create.capabilityId, id(207)]);
+    expect(await readCapabilities(h, "en", "JP")).toMatchObject({
+      outcome: "FAILURE",
+      code: "CAPABILITY_UNAVAILABLE",
+    });
   });
   it("rechecks authorization and version after decrypting an action, withholding a stale result", async () => {
     const h = await harness();

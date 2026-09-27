@@ -213,10 +213,7 @@ export async function walkRemoteTestInstance({
     for (const policy of await customer.locator("[data-checkout-policy]").all())
       await policy.check();
     await customer.locator("[data-checkout-confirm]").click();
-    await customer
-      .locator("[data-payment-country]")
-      .waitFor({ timeout: 60000 });
-    await customer.locator("[data-payment-country]").selectOption("US");
+    await customer.locator("[data-payment-create]").waitFor({ timeout: 60000 });
     await customer.locator("[data-payment-create]").click();
     await customer
       .locator("[data-payment-continue]")

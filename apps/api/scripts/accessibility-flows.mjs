@@ -285,20 +285,9 @@ export async function accessibilityCustomerFlow({
     result.outcome === "SUCCESS" && "checkout" in result,
     "Keyboard checkout satisfies the canonical contract",
   );
-  await expect(page.locator("[data-payment-country]")).toBeVisible();
-  const country = await page
-    .locator("[data-payment-country] option")
-    .evaluateAll(
-      (options) =>
-        options.find((option) => option.value && !option.disabled)?.value,
-    );
-  assert(country, "A configured payment country exists");
-  await tools.select(
-    page,
-    page.locator("[data-payment-country]"),
-    country,
-    "payment-country",
-  );
+  // One published country: methods appear directly, without a country question.
+  await expect(page.locator("[data-payment-create]").first()).toBeVisible();
+  await expect(page.locator("[data-payment-country]")).toHaveCount(0);
   const observer = observeLocalBrowserPayment({
     page,
     config,

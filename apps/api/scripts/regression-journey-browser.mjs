@@ -212,12 +212,11 @@ export async function beginJourney({
     "Checkout freezes chosen locale and commerce context",
   );
   mark("checkout");
-  await page.locator("[data-payment-country]").waitFor();
-  const country = await page
-    .locator("[data-payment-country] option")
-    .evaluateAll((options) => options.find((option) => option.value)?.value);
-  assert(country, "Configured payment country exists");
-  await page.locator("[data-payment-country]").selectOption(country);
+  await page.locator("[data-payment-create]").first().waitFor();
+  assert(
+    (await page.locator("[data-payment-country]").count()) === 0,
+    "Checkout lists methods without asking for a country",
+  );
   await page.locator("[data-payment-create]").first().click();
   await page.locator("[data-payment-continue]").waitFor();
   return { checkout: result.checkout };

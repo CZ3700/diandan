@@ -403,6 +403,7 @@ it("invalidates old capabilities after a configuration conflict instead of offer
         amountMinor: 1500,
         countries: ["US"],
         country: "US",
+        countrySelectionRequired: false,
         capabilities: [capability],
       },
     })
@@ -430,8 +431,9 @@ it("keeps the country control mounted while new methods are loading", async () =
     market: "TEST",
     currency: "USD",
     amountMinor: 1500,
-    countries: ["US"],
+    countries: ["TH", "US"],
     country: null,
+    countrySelectionRequired: true,
     capabilities: [],
   };
   let resolve!: (value: unknown) => void;
@@ -458,7 +460,11 @@ it("keeps the country control mounted while new methods are loading", async () =
   const reading = controller.capabilities("US");
   expect(controller.snapshot()).toMatchObject({
     busy: true,
-    capabilities: { country: "US", countries: ["US"], capabilities: [] },
+    capabilities: {
+      country: "US",
+      countries: ["TH", "US"],
+      capabilities: [],
+    },
   });
   resolve({
     schemaVersion: 1,

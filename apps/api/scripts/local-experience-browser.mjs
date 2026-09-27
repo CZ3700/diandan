@@ -1038,9 +1038,12 @@ export async function verifyLocalExperienceBrowser({
           report.facts.checkoutSessionId = checkout.checkout.id;
           stage("TEST_PAYMENT");
           await customer
-            .locator("[data-payment-country]")
+            .locator("[data-payment-create]")
             .waitFor({ timeout: 30000 });
-          await customer.locator("[data-payment-country]").selectOption("US");
+          check(
+            (await customer.locator("[data-payment-country]").count()) === 0,
+            "Checkout lists methods without asking for a country",
+          );
           await customer.locator("[data-payment-create]").click();
           await customer
             .locator("[data-payment-continue]")

@@ -10,9 +10,9 @@ import {
   canOpenOrderResult,
 } from "./checkout-order-result";
 import { PaymentStatus } from "./payment-status";
+import { PaymentMethods } from "./payment-methods";
 import {
   browserPaymentComponentHost,
-  isPerformableActionType,
   launchPaymentComponent,
 } from "./payment-components";
 import { shouldPollPayment, startPaymentPolling } from "./payment-polling";
@@ -243,87 +243,22 @@ export function CheckoutClient({
               !state.checkout.expired &&
               (!attempt || attempt.canRetry) &&
               !state.uncertain && (
-                <div className="checkout-methods" data-payment-methods>
-                  <h2>
-                    {attempt ? copy.checkoutRetryPayment : copy.checkoutMethod}
-                  </h2>
-                  {caps ? (
-                    <>
-                      <label className="checkout-field">
-                        {copy.checkoutCountry}
-                        <select
-                          data-payment-country
-                          value={caps.country ?? ""}
-                          disabled={state.busy}
-                          onChange={(event) => {
-                            if (event.currentTarget.value)
-                              void controller.capabilities(
-                                event.currentTarget.value,
-                              );
-                          }}
-                        >
-                          <option value="">{copy.checkoutChooseCountry}</option>
-                          {caps.countries.map((country) => (
-                            <option key={country} value={country}>
-                              {new Intl.DisplayNames([locale], {
-                                type: "region",
-                              }).of(country) ?? country}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                      {((caps.country &&
-                        caps.capabilities.filter((capability) =>
-                          capability.supportedActionTypes.some(
-                            isPerformableActionType,
-                          ),
-                        ).length === 0) ||
-                        caps.countries.length === 0) && (
-                        <p>{copy.checkoutNoMethods}</p>
-                      )}
-                      {caps.capabilities
-                        .filter((capability) =>
-                          capability.supportedActionTypes.some(
-                            isPerformableActionType,
-                          ),
-                        )
-                        .map((capability) => (
-                          <div className="checkout-method" key={capability.id}>
-                            {capability.environment === "TEST" && (
-                              <p className="checkout-test">
-                                {copy.checkoutTest}
-                              </p>
-                            )}
-                            <p>{capability.customerHint}</p>
-                            <button
-                              className="storefront-primary"
-                              type="button"
-                              data-payment-create={capability.id}
-                              disabled={state.busy}
-                              onClick={() => {
-                                void submit(() => controller.start(capability));
-                              }}
-                            >
-                              {capability.displayName}
-                            </button>
-                          </div>
-                        ))}
-                    </>
-                  ) : (
-                    !state.busy && (
-                      <button
-                        type="button"
-                        className="storefront-secondary"
-                        data-payment-method-refresh
-                        onClick={() => {
-                          void controller.capabilities();
-                        }}
-                      >
-                        {copy.checkoutRefresh}
-                      </button>
-                    )
-                  )}
-                </div>
+                <PaymentMethods
+                  capabilities={caps}
+                  locale={locale}
+                  copy={copy}
+                  busy={state.busy}
+                  retrying={!!attempt}
+                  onCountry={(country) => {
+                    void controller.capabilities(country);
+                  }}
+                  onStart={(capability) => {
+                    void submit(() => controller.start(capability));
+                  }}
+                  onRefresh={() => {
+                    void controller.capabilities();
+                  }}
+                />
               )}
           </div>
         </div>
