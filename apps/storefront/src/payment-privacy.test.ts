@@ -60,7 +60,10 @@ test("order pages allow no third-party scripts or frames, and strip forged early
     new NextRequest("https://shop.example.invalid/en/order-access"),
   );
   expect(entry.headers.get("content-security-policy")).toContain(
-    "script-src 'self' 'unsafe-inline'",
+    "script-src 'self' 'unsafe-inline';",
+  );
+  expect(entry.headers.get("content-security-policy")).not.toContain(
+    "unsafe-eval",
   );
   expect(entry.headers.get("content-security-policy")).toContain(
     "frame-src 'none'",
@@ -76,4 +79,24 @@ test("order pages allow no third-party scripts or frames, and strip forged early
   expect(
     other.headers.get("x-middleware-request-x-storefront-order-access"),
   ).toBeNull();
+});
+
+test("only a development server lets React's debugging eval() run on order pages", () => {
+  vi.stubEnv("NODE_ENV", "development");
+  try {
+    const policy = proxy(
+      new NextRequest("https://shop.example.invalid/en/orders/abc"),
+    ).headers.get("content-security-policy");
+    expect(policy).toContain(
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
+    );
+    expect(policy).toContain("frame-src 'none'");
+  } finally {
+    vi.unstubAllEnvs();
+  }
+  expect(
+    proxy(
+      new NextRequest("https://shop.example.invalid/en/orders/abc"),
+    ).headers.get("content-security-policy"),
+  ).not.toContain("unsafe-eval");
 });

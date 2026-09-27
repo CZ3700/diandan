@@ -46,9 +46,12 @@ function checkoutPrivacy(response: NextResponse, pathname: string) {
   response.headers.set("cache-control", "private, no-store");
   response.headers.set("x-robots-tag", "noindex, nofollow");
   response.headers.set("referrer-policy", "no-referrer");
+  // React's development build reconstructs call stacks with eval(); production never does.
+  const developmentEval =
+    process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
   response.headers.set(
     "content-security-policy",
-    `${orderPage ? "script-src 'self' 'unsafe-inline'; connect-src 'self'; " : ""}frame-ancestors 'none'; frame-src ${!orderPage && !orderApi && origins.length ? origins.join(" ") : "'none'"}; object-src 'none'; base-uri 'self'; form-action 'self'`,
+    `${orderPage ? `script-src 'self' 'unsafe-inline'${developmentEval}; connect-src 'self'; ` : ""}frame-ancestors 'none'; frame-src ${!orderPage && !orderApi && origins.length ? origins.join(" ") : "'none'"}; object-src 'none'; base-uri 'self'; form-action 'self'`,
   );
   return response;
 }
