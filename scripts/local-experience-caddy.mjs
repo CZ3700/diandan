@@ -36,8 +36,10 @@ export function renderLocalExperienceCaddyfile({
     throw new Error("Invalid CA path");
   const auth = (matcher = "") =>
     `\tbasic_auth ${matcher}{\n\t\t${authUser} ${authHash}\n\t}\n`;
+  // Caddy rewrites Host to the upstream address for HTTPS upstreams; owned services and SigV4
+  // presigned requests need the public Host exactly as the browser sent it.
   const upstream = (port, serverName) =>
-    `\treverse_proxy https://127.0.0.1:${port} {\n\t\ttransport http {\n\t\t\ttls_trust_pool file ${caPath}\n\t\t\ttls_server_name ${serverName}\n\t\t}\n\t}\n`;
+    `\treverse_proxy https://127.0.0.1:${port} {\n\t\theader_up Host {host}\n\t\ttransport http {\n\t\t\ttls_trust_pool file ${caPath}\n\t\t\ttls_server_name ${serverName}\n\t\t}\n\t}\n`;
   const sites = LOCAL_SERVICE_KEYS.map((key) => {
     const host = new URL(config.origins[key]).hostname;
     const guard =

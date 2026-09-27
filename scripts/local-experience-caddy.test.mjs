@@ -51,6 +51,20 @@ test("the edge guards only the TEST identity picker, admin and captured mail", (
     site(text, "s3.stg.example.com"),
     /https:\/\/127\.0\.0\.1:41007[\s\S]*tls_server_name localhost/u,
   );
+  for (const host of [
+    "storefront",
+    "admin",
+    "oidc",
+    "payments",
+    "mail",
+    "media",
+    "s3",
+  ])
+    assert.match(
+      site(text, `${host}.stg.example.com`),
+      /reverse_proxy https:\/\/127\.0\.0\.1:\d+ \{\n\t\theader_up Host \{host\}\n/u,
+      `${host} keeps the public Host`,
+    );
   assert.doesNotMatch(text, /password/iu);
 });
 
