@@ -113,11 +113,19 @@ export async function startLocalTlsServer({ origin, port, tls, handle }) {
 export async function createLocalExperienceFetch({
   origins,
   caCertificatePath,
-  ports = {},
+  targets = {},
 }) {
   const approved = new Set(origins.map(localServiceOrigin));
   // Public origins have no port: owned services are reached directly, never through the edge.
-  const portFor = (url) => ports[url.origin] ?? Number(url.port);
+  const targetFor = (url) => {
+    const target = targets[url.origin] ?? {
+      address: "127.0.0.1",
+      port: Number(url.port),
+    };
+    if (!/^127\.\d{1,3}\.\d{1,3}\.\d{1,3}$/u.test(target.address))
+      throw new TypeError("Owned services are reached only on loopback");
+    return target;
+  };
   const ca = await readFile(caCertificatePath);
   return async (input, init = {}) => {
     const url = new URL(
@@ -125,11 +133,12 @@ export async function createLocalExperienceFetch({
     );
     if (!approved.has(url.origin) || url.username || url.password || url.hash)
       throw new TypeError("Unapproved local service target");
+    const target = targetFor(url);
     return new Promise((resolve, reject) => {
       const outgoing = request(
         {
-          hostname: "127.0.0.1",
-          port: portFor(url),
+          hostname: target.address,
+          port: target.port,
           servername: url.hostname,
           ca,
           rejectUnauthorized: true,

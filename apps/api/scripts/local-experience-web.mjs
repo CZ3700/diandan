@@ -5,7 +5,10 @@ import { setTimeout as delay } from "node:timers/promises";
 import path from "node:path";
 import { preserveManagementNextDeclarations } from "./management-center-runtime-config.mjs";
 import { createLocalExperienceFetch } from "./local-experience-services-common.mjs";
-import { localServicePorts } from "./local-experience-config.mjs";
+import {
+  localServiceTarget,
+  localServiceTargets,
+} from "./local-experience-config.mjs";
 import { localStorefrontIdentity } from "./local-experience-web-config.mjs";
 import {
   regressionWebMode,
@@ -19,10 +22,12 @@ export async function startLocalWeb(context) {
   const fetcher = await createLocalExperienceFetch({
     origins: Object.values(config.origins),
     caCertificatePath: config.tls.caCertificatePath,
-    ports: localServicePorts(config),
+    targets: localServiceTargets(config),
   });
   for (const app of ["storefront", "admin"]) {
-    const port = config.ports[app],
+    // Next builds request URLs from --hostname:--port, so a public instance serves each app on
+    // 443 of its own loopback address (the DNS preload maps the hostname there).
+    const { port } = localServiceTarget(config, app),
       origin = config.origins[app];
     const env = Object.fromEntries(
       Object.entries(process.env).filter(

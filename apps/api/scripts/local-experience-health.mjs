@@ -1,5 +1,5 @@
 import { createLocalExperienceFetch } from "./local-experience-services-common.mjs";
-import { localServicePorts } from "./local-experience-config.mjs";
+import { localServiceTargets } from "./local-experience-config.mjs";
 /** Probe each actual application, without treating a live supervisor as a healthy platform. */
 export async function probeLocalApplications(
   config,
@@ -15,7 +15,7 @@ export async function probeLocalApplications(
     ? await createLocalExperienceFetch({
         origins: [config.origins.storefront, config.origins.admin],
         caCertificatePath: config.tls.caCertificatePath,
-        ports: localServicePorts(config),
+        targets: localServiceTargets(config),
       })
     : undefined;
   const entries = await Promise.all(

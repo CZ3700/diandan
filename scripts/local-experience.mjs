@@ -57,9 +57,9 @@ const state = await loadLocalState(workspaceRoot, instance, {
     publicBaseDomain,
   }),
   { config, stateDirectory } = state;
-const { localPublicHosts } =
+const { localDnsHosts } =
   await import("../apps/api/scripts/local-experience-config.mjs");
-const publicHosts = localPublicHosts(config);
+const dnsHosts = localDnsHosts(config);
 async function status() {
   try {
     const r = await globalThis.fetch(
@@ -180,10 +180,10 @@ try {
             ...process.env,
             NODE_EXTRA_CA_CERTS: config.tls.caCertificatePath,
             NODE_TLS_REJECT_UNAUTHORIZED: "1",
-            // Public hostnames resolve to this host's edge for server-side calls (media processing).
-            ...(publicHosts.length
+            // Public hostnames resolve to owned loopback addresses: web servers or the local edge.
+            ...(dnsHosts.length
               ? {
-                  LOCAL_EXPERIENCE_DNS_HOSTS: publicHosts.join(","),
+                  LOCAL_EXPERIENCE_DNS_HOSTS: dnsHosts.join(","),
                   NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --import=${new globalThis.URL("../apps/api/scripts/local-experience-dns.mjs", import.meta.url).href}`,
                 }
               : {}),

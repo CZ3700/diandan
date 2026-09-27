@@ -34,6 +34,7 @@ test("the edge guards only the TEST identity picker, admin and captured mail", (
     authUser: "tester",
     authHash: hash,
     caPath: "/etc/caddy/fan-support-local-ca.crt",
+    bindAddresses: ["172.26.5.34"],
   });
   for (const host of ["admin", "mail"])
     assert.match(site(text, `${host}.stg.example.com`), /basic_auth \{/u);
@@ -62,9 +63,19 @@ test("the edge guards only the TEST identity picker, admin and captured mail", (
   ])
     assert.match(
       site(text, `${host}.stg.example.com`),
-      /reverse_proxy https:\/\/127\.0\.0\.1:\d+ \{\n\t\theader_up Host \{host\}\n/u,
+      /reverse_proxy https:\/\/127\.0\.0\.\d:\d+ \{\n\t\theader_up Host \{host\}\n/u,
       `${host} keeps the public Host`,
     );
+  // Web servers own 443 on their loopback addresses; the edge binds only explicit addresses.
+  assert.match(text, /^\{\n\tdefault_bind 127\.0\.0\.1 172\.26\.5\.34\n\}/mu);
+  assert.match(
+    site(text, "storefront.stg.example.com"),
+    /reverse_proxy https:\/\/127\.0\.0\.2:443 /u,
+  );
+  assert.match(
+    site(text, "admin.stg.example.com"),
+    /reverse_proxy https:\/\/127\.0\.0\.3:443 /u,
+  );
   assert.doesNotMatch(text, /password/iu);
 });
 
@@ -74,6 +85,7 @@ test("the edge refuses loopback instances, plaintext secrets and odd paths", () 
     authUser: "tester",
     authHash: hash,
     caPath: "/etc/caddy/ca.crt",
+    bindAddresses: ["172.26.5.34"],
   };
   assert.throws(
     () =>
@@ -91,4 +103,9 @@ test("the edge refuses loopback instances, plaintext secrets and odd paths", () 
     () => renderLocalExperienceCaddyfile({ ...input, caPath: "relative/ca" }),
     /CA path/u,
   );
+  for (const bindAddresses of [[], ["0.0.0.0"], ["127.0.0.2"], ["::"]])
+    assert.throws(
+      () => renderLocalExperienceCaddyfile({ ...input, bindAddresses }),
+      /explicit non-loopback/u,
+    );
 });

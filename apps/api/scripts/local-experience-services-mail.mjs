@@ -16,7 +16,7 @@ import {
   secretEquals,
   startLocalTlsServer,
 } from "./local-experience-services-common.mjs";
-import { localServicePorts } from "./local-experience-config.mjs";
+import { localServiceTargets } from "./local-experience-config.mjs";
 import { createLocalMailStore } from "./local-experience-services-mail-store.mjs";
 
 const sha = (value) => createHash("sha256").update(value).digest("hex");
@@ -32,7 +32,7 @@ export async function createLocalExperienceMailTransport({ config }) {
   const fetcher = await createLocalExperienceFetch({
     origins: [profile.apiOrigin],
     caCertificatePath: config.tls.caCertificatePath,
-    ports: localServicePorts(config),
+    targets: localServiceTargets(config),
   });
   return {
     profile,

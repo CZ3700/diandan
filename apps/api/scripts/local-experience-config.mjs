@@ -54,22 +54,43 @@ export function localObjectStoragePresignEndpoint(config) {
     ? `https://s3.${config.exposure.baseDomain}`
     : `https://localhost:${config.ports.s3}`;
 }
-/** Hostnames a publicly exposed instance answers on; empty for loopback instances. */
-export function localPublicHosts(config) {
-  return config.exposure?.mode === "PUBLIC"
-    ? [
-        ...LOCAL_SERVICE_KEYS.map(
-          (key) => new URL(config.origins[key]).hostname,
-        ),
-        new URL(localObjectStoragePresignEndpoint(config)).hostname,
-      ]
-    : [];
+/**
+ * A public instance runs each development server on its own loopback address and 443, so its
+ * --hostname:--port is exactly the public origin (Next builds request URLs from them). The edge
+ * binds only 127.0.0.1 and the host's private address, leaving these to the web servers.
+ */
+export const LOCAL_PUBLIC_WEB_ADDRESSES = Object.freeze({
+  storefront: "127.0.0.2",
+  admin: "127.0.0.3",
+});
+/** Where an owned service listens: loopback instances use 127.0.0.1 and their assigned port. */
+export function localServiceTarget(config, key) {
+  return config.exposure?.mode === "PUBLIC" && key in LOCAL_PUBLIC_WEB_ADDRESSES
+    ? { address: LOCAL_PUBLIC_WEB_ADDRESSES[key], port: 443 }
+    : { address: "127.0.0.1", port: config.ports[key] };
 }
-/** Owned TLS services listen on their configured loopback port whatever their public origin. */
-export function localServicePorts(config) {
+/** Owned origins mapped to their listening address, for direct internal calls. */
+export function localServiceTargets(config) {
   return Object.fromEntries(
-    LOCAL_SERVICE_KEYS.map((key) => [config.origins[key], config.ports[key]]),
+    LOCAL_SERVICE_KEYS.map((key) => [
+      config.origins[key],
+      localServiceTarget(config, key),
+    ]),
   );
+}
+/**
+ * Hostname -> loopback address for the owned processes of a public instance: web servers resolve
+ * to their own address, every other public host to the local edge. Empty for loopback instances.
+ */
+export function localDnsHosts(config) {
+  if (config.exposure?.mode !== "PUBLIC") return [];
+  return [
+    ...LOCAL_SERVICE_KEYS.map((key) => [
+      new URL(config.origins[key]).hostname,
+      LOCAL_PUBLIC_WEB_ADDRESSES[key] ?? "127.0.0.1",
+    ]),
+    [new URL(localObjectStoragePresignEndpoint(config)).hostname, "127.0.0.1"],
+  ].map(([host, address]) => `${host}=${address}`);
 }
 export const localExperienceConfigSchema = z
   .strictObject({

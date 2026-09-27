@@ -8,6 +8,10 @@
 - 实例 `stg`，基础域名 `stg.kikikong.com`。Cloudflare 上配一条通配记录 `*.stg` A → 服务器 IP，**仅 DNS（灰色云朵）**。
 - Caddy 负责 Let's Encrypt 证书，并把 `https://<服务>.stg.kikikong.com` 反向代理到本机的 TLS 服务。Basic Auth 保护后台、收件箱和 OIDC 身份选择页。
 - 服务器上已安装：Node 24.20.0（`/opt`，经 SHA256 校验）、pnpm 11.25.0（corepack）、PostgreSQL 18（PGDG，只用二进制，集群由实例自己管理）、Docker、Caddy；另有 4GB swap。
+- 两个 Next 开发服务器分别监听 `127.0.0.2:443`（商城）和 `127.0.0.3:443`（后台）。Next 用启动时的 `--hostname:--port` 构造请求地址，只有监听 443，这个地址才会等于公网地址。
+  - 为此 `/etc/sysctl.d/99-xiadan.conf` 设置了 `net.ipv4.ip_unprivileged_port_start=443`；
+  - Caddy 只绑定 `127.0.0.1` 和本机内网 IP（`default_bind`），不占用这两个地址。
+- 主机防火墙 ufw 只放行 22、80、443。云防火墙（Lightsail 联网页）同样只开这三个端口，其中 443 需要手动添加。
 
 ## 首次搭建（服务器已装好软件后）
 
@@ -24,12 +28,14 @@
 3. **配置 Caddy**（root 执行）：
    - 把实例 CA 复制到 `/etc/caddy/fan-support-local-ca.crt`（CA 是公开证书，不是密钥）；
    - 用 `caddy hash-password` 从标准输入读取访问密码，生成 bcrypt 哈希；
-   - 以 `xiadan` 身份执行 `pnpm local:caddy --instance stg --auth-user tester --auth-hash-file <哈希文件>`，把输出写入 `/etc/caddy/Caddyfile`；
-   - 依次执行 `caddy validate`、`systemctl enable --now caddy`。
+   - 以 `xiadan` 身份执行 `pnpm local:caddy --instance stg --auth-user tester --auth-hash-file <哈希文件> --bind <本机内网 IP>`（用 `hostname -I` 查看），把输出写入 `/etc/caddy/Caddyfile`；
+   - 依次执行 `caddy validate`、`systemctl enable --now caddy`（修改绑定地址后要用 `restart`，不能只 `reload`）。
    - 等证书签发完成（`journalctl -u caddy` 里出现 "certificate obtained"）再启动实例：首页初始化时会经过 Caddy 访问 `s3.` 主机。
 4. **启动**：把 `infra/remote-test/fan-support-remote-test@.service` 复制到 `/etc/systemd/system/`，然后执行 `systemctl enable --now fan-support-remote-test@stg`。首次启动要初始化数据，并让 Next 首次编译，大约需要 10–20 分钟。
 
 ## 日常
+
+- **走查**：在开发机上执行 `node apps/api/scripts/remote-test-walkthrough.mjs`（位于 `apps/api` 下）。所需环境变量为 `REMOTE_TEST_BASE_DOMAIN`、`REMOTE_TEST_AUTH_PASSWORD`、`REMOTE_TEST_MAIL_TOKEN`，值从本机凭据文件读取。它会检查商城、后台登录、创建内容、下单、模拟支付和收件箱，截图写到 `output/checks/remote-test/`。加 `--no-seed` 则不创建新内容。
 
 - **更新代码**：推送后在服务器上执行 `git reset --hard`、`pnpm install`、构建，再 `systemctl restart fan-support-remote-test@stg`。
 - **状态**：`pnpm local:status --instance stg`；supervisor 日志在 `~/app/node_modules/.cache/fan-support-local-experience/stg/supervisor.log`，只含结构化阶段。
