@@ -218,3 +218,55 @@ test("contains a smaller image at its actual pixel size instead of requiring an 
     },
   });
 });
+
+test.each([
+  // A small square fills the portrait: crop the centred 4:5 column, then enlarge it.
+  [540, 540, { x: 0.5, y: 0.5 }, { x: 54, y: 0, width: 432, height: 540 }],
+  // A small portrait fills the desktop hero around an upper focal point.
+  [
+    1_080,
+    1_350,
+    { x: 0.5, y: 0.3 },
+    { x: 4, y: 104, width: 1_072, height: 603 },
+  ],
+])(
+  "fills the role canvas from a %sx%s source by enlarging its covering crop",
+  (sourceWidth, sourceHeight, focalPoint, sourceCrop) => {
+    const role = sourceWidth === 540 ? "PORTRAIT" : "HERO_DESKTOP";
+    const target =
+      role === "PORTRAIT"
+        ? { width: 1_600, height: 2_000 }
+        : { width: 2_400, height: 1_350 };
+    expect(
+      framing?.planMediaFraming({
+        ...source,
+        sourceWidth,
+        sourceHeight,
+        role,
+        fit: "COVER_ALLOW_ENLARGE",
+        focalPoint,
+      }),
+    ).toMatchObject({
+      outcome: "SUCCESS",
+      plan: {
+        target,
+        sourceCrop,
+        destination: { x: 0, y: 0, ...target },
+        background: "NONE",
+      },
+    });
+  },
+);
+
+test("fills from a large source exactly like cover, without enlarging", () => {
+  const cover = framing?.planMediaFraming(source);
+  const fill = framing?.planMediaFraming({
+    ...source,
+    fit: "COVER_ALLOW_ENLARGE",
+  });
+  expect(fill).toMatchObject({ outcome: "SUCCESS" });
+  expect(cover).toMatchObject({ outcome: "SUCCESS" });
+  if (fill?.outcome !== "SUCCESS" || cover?.outcome !== "SUCCESS") return;
+  expect(fill.plan.sourceCrop).toEqual(cover.plan.sourceCrop);
+  expect(fill.plan.destination).toEqual(cover.plan.destination);
+});

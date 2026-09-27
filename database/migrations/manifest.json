@@ -400,6 +400,16 @@
         "up": "5476c0b4f45f1fcdb45f686ac2d3b7ac2aed19dd9c5cd86cce2e3e49ca41363d",
         "down": "3899ad9fd5aac68640277a322c9a9621a762d2513d1f0537bb713ec9dc08a67c"
       }
+    },
+    {
+      "version": "0041",
+      "name": "daily-image-fill",
+      "up": "database/migrations/0041_daily-image-fill.up.sql",
+      "down": "database/migrations/0041_daily-image-fill.down.sql",
+      "sha256": {
+        "up": "696b5bc58c15b12318c64c4e1a9ea330a7cb3dc900f9013a287d8eec8228f1d2",
+        "down": "a9a056ef6334cb2f001b471215883735a98c2d07042a570ae67555bca3785845"
+      }
     }
   ]
 }

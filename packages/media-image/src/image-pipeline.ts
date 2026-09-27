@@ -236,7 +236,9 @@ export async function createImageMaster(
       })
       .resize(destination.width, destination.height, {
         fit: "fill",
-        withoutEnlargement: true,
+        // The validated plan already fixed the geometry; only the daily fill policy
+        // may map a smaller crop onto the full canvas.
+        withoutEnlargement: plan.request.fit !== "COVER_ALLOW_ENLARGE",
       })
       .extend({
         left: destination.x,

@@ -467,6 +467,34 @@ describe("management media confirmed transaction aborts", () => {
     },
   );
 
+  test("daily artist images fill every role around the upper-third focus", async () => {
+    const f = transactionFixture(-1);
+    expect((await f.preparation.prepare(f.input)).outcome).toBe("READY");
+    const enqueued = f.resources.enqueueMedia.mock.calls.map(
+      ([command]) => command as unknown as { role: string; fit: string },
+    );
+    expect(enqueued.map(({ role, fit }) => [role, fit])).toEqual([
+      ["PORTRAIT", "COVER_ALLOW_ENLARGE"],
+      ["HERO_DESKTOP", "COVER_ALLOW_ENLARGE"],
+      ["HERO_MOBILE", "COVER_ALLOW_ENLARGE"],
+    ]);
+    const metadata = f.publication.prepareMediaMetadata.mock.calls.map(
+      (call) =>
+        (call as unknown[])[0] as {
+          processingJobId: string | null;
+          focalPoint: { x: number; y: number };
+        },
+    );
+    // The source revision drives the crop; masters are already framed around it.
+    expect(metadata[0]).toMatchObject({
+      processingJobId: null,
+      focalPoint: { x: 0.5, y: 0.3 },
+    });
+    expect(metadata.slice(1)).toHaveLength(3);
+    for (const derivative of metadata.slice(1))
+      expect(derivative.focalPoint).toEqual({ x: 0.5, y: 0.5 });
+  });
+
   test("a derivative retry reloads old job IDs and the retry flag after rollback", async () => {
     vi.useFakeTimers();
     const f = transactionFixture(2);

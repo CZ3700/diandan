@@ -80,6 +80,8 @@ export interface ManagementCenterPublicationRepository {
         schemaVersion: 1;
         assetId: string;
         processingJobId: string | null;
+        /** Structural focus every derivative of this revision is framed around. */
+        focalPoint: Readonly<{ x: number; y: number }>;
       }>,
   ): Promise<
     | ManagementCenterFailure

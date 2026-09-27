@@ -15,6 +15,7 @@ import {
   type ManagementCenterFailure,
   type MediaUploadTicket,
 } from "@fan-support/contracts";
+import { dailyManagementFraming } from "@fan-support/content";
 import type { MediaSourceInspectionPort } from "@fan-support/media-port";
 import type {
   ManagementCenterMediaPreparationPort,
@@ -66,6 +67,11 @@ function roles(
     : claim.intent.kind === "SAVE_GIFT"
       ? ["GIFT_PRIMARY"]
       : ["HERO_DESKTOP", "HERO_MOBILE"];
+}
+function framing(claim: ManagementCenterClaim) {
+  if (claim.intent.kind === "RESTORE_POSTER")
+    throw new PreparationFailure("INVALID_CONTENT");
+  return dailyManagementFraming(claim.intent.kind);
 }
 function audit(claim: ManagementCenterClaim) {
   return {
@@ -229,6 +235,7 @@ export function createManagementMediaPreparation(
                 ...fence(claim),
                 assetId: claim.checkpoint.sourceAssetId,
                 processingJobId: null,
+                focalPoint: framing(claim).focalPoint,
               }),
             );
             for (const role of roles(claim)) {
@@ -240,7 +247,7 @@ export function createManagementMediaPreparation(
                       sourceAssetId: claim.checkpoint.sourceAssetId,
                       metadataRevisionId: metadata.metadataRevisionId,
                       role,
-                      fit: "CONTAIN",
+                      fit: framing(claim).fit,
                       expectedVersion: 0,
                       jobId: randomUUID(),
                       receiptId: randomUUID(),
@@ -333,6 +340,8 @@ export function createManagementMediaPreparation(
                   ...fence(claim),
                   assetId,
                   processingJobId: job.jobId,
+                  // Each master is already cropped around the source focus.
+                  focalPoint: { x: 0.5, y: 0.5 },
                 }),
               );
               assets.push({

@@ -232,10 +232,11 @@ function rendition(uploadId, fill, width, height) {
 
 async function main() {
   await withEphemeralPostgres(async (clientConfig) => {
+    // Pin the scenario to its own migration so the rollback refusal below exercises 0040.
     await runMigrations({
       clientConfig,
       workspaceRoot,
-      command: { direction: "up" },
+      command: { direction: "up", targetVersion: "0040" },
     });
     const client = new Client(clientConfig);
     await client.connect();

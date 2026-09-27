@@ -180237,7 +180237,8 @@
                   "fit": {
                     "enum": [
                       "COVER",
-                      "CONTAIN"
+                      "CONTAIN",
+                      "COVER_ALLOW_ENLARGE"
                     ],
                     "type": "string"
                   },

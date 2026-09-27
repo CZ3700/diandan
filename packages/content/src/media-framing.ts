@@ -107,23 +107,27 @@ export function planMediaFraming(input: unknown): MediaFramingResult {
   }
   const request = parsed.data;
   const target = MEDIA_FRAMING_MASTER_SIZES[request.role];
-  const sourceCrop =
-    request.fit === "COVER"
-      ? coveringCrop(request, target)
-      : {
-          x: 0,
-          y: 0,
-          width: request.sourceWidth,
-          height: request.sourceHeight,
-        };
-  const destination =
-    request.fit === "COVER"
-      ? { x: 0, y: 0, ...target }
-      : containedPlacement(request, target);
+  const covers = request.fit !== "CONTAIN";
+  const sourceCrop = covers
+    ? coveringCrop(request, target)
+    : {
+        x: 0,
+        y: 0,
+        width: request.sourceWidth,
+        height: request.sourceHeight,
+      };
+  const destination = covers
+    ? { x: 0, y: 0, ...target }
+    : containedPlacement(request, target);
+  // Only the daily fill policy may enlarge a crop that is smaller than the canvas.
+  const enlargementAllowed = request.fit === "COVER_ALLOW_ENLARGE";
 
   if (
-    sourceCrop.width < destination.width ||
-    sourceCrop.height < destination.height ||
+    (!enlargementAllowed &&
+      (sourceCrop.width < destination.width ||
+        sourceCrop.height < destination.height)) ||
+    sourceCrop.width < 1 ||
+    sourceCrop.height < 1 ||
     destination.width < 1 ||
     destination.height < 1
   ) {
@@ -146,7 +150,7 @@ export function planMediaFraming(input: unknown): MediaFramingResult {
       target,
       sourceCrop,
       destination,
-      background: request.fit === "CONTAIN" ? "NEUTRAL" : "NONE",
+      background: covers ? "NONE" : "NEUTRAL",
     },
   });
 }

@@ -45188,7 +45188,7 @@
       "table": "media_processing_jobs",
       "name": "media_processing_jobs_fit_check",
       "kind": "CHECK",
-      "definition": "CHECK (fit = ANY (ARRAY['COVER'::text, 'CONTAIN'::text]))",
+      "definition": "CHECK (fit = ANY (ARRAY['COVER'::text, 'CONTAIN'::text, 'COVER_ALLOW_ENLARGE'::text]))",
       "deferrable": false,
       "initiallyDeferred": false
     },

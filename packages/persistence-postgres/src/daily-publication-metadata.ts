@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import {
   dailyMediaMetadataDocumentSchema,
+  mediaFocalPointSchema,
   supportedLocaleSchema,
   type ManagementCenterClaim,
   type ManagementCenterFailure,
@@ -51,6 +52,8 @@ export async function prepareDailyMediaMetadata(
   | ManagementCenterFailure
   | { schemaVersion: 1; outcome: "SUCCESS"; metadataRevisionId: string }
 > {
+  const focal = mediaFocalPointSchema.safeParse(input.focalPoint);
+  if (!focal.success) return managementFailure("INVALID_COMMAND");
   const claim = await loadDailyClaim(client, input);
   if (!claim) return managementFailure("NEEDS_AUTHORIZATION");
   if (!("image" in claim.intent) || claim.intent.image === null)
@@ -125,13 +128,21 @@ export async function prepareDailyMediaMetadata(
     },
     structure: {
       presentationKind: "INFORMATIVE",
-      focalPoint: { x: 0.5, y: 0.5 },
+      focalPoint: focal.data,
     },
   });
   await insertDailyDocument(client, claim, document, input.processingJobId);
   await client.query(
-    `INSERT INTO public.media_metadata_revisions(id,media_asset_id,revision,lifecycle,presentation_kind,focal_x,focal_y,created_by,created_at) VALUES($1,$2,$3,'DRAFT','INFORMATIVE',0.5,0.5,$4,$5)`,
-    [revisionId, input.assetId, document.revisionNumber, claim.actorId, at],
+    `INSERT INTO public.media_metadata_revisions(id,media_asset_id,revision,lifecycle,presentation_kind,focal_x,focal_y,created_by,created_at) VALUES($1,$2,$3,'DRAFT','INFORMATIVE',$6,$7,$4,$5)`,
+    [
+      revisionId,
+      input.assetId,
+      document.revisionNumber,
+      claim.actorId,
+      at,
+      focal.data.x,
+      focal.data.y,
+    ],
   );
   return {
     schemaVersion: 1,
