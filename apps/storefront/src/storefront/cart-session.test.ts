@@ -139,3 +139,40 @@ it("refreshes after a successful write that was overtaken by a read", async () =
   await mutation;
   expect(session.snapshot().cart?.version).toBe(2);
 });
+
+it("starts a new cart in one step after a paid cart, retrying the create only once", async () => {
+  const expired = () =>
+    new Response(
+      JSON.stringify({
+        schemaVersion: 1,
+        outcome: "FAILURE",
+        code: "CART_EXPIRED",
+      }),
+      { status: 409, headers: { "content-type": "application/json" } },
+    );
+  const created = reply({ ...empty, action: "INITIALIZED" });
+  const fetcher = vi
+    .fn()
+    .mockResolvedValueOnce(expired())
+    .mockResolvedValueOnce(expired())
+    .mockResolvedValueOnce(created);
+  const session = createCartSession("en", fetcher);
+  expect(await session.initialize("TEST", "USD")).toMatchObject({
+    outcome: "SUCCESS",
+    action: "INITIALIZED",
+  });
+  expect(fetcher.mock.calls.map(([, init]) => init.method)).toEqual([
+    "GET",
+    "POST",
+    "POST",
+  ]);
+  const stuck = vi
+    .fn()
+    .mockResolvedValueOnce(expired())
+    .mockResolvedValueOnce(expired())
+    .mockResolvedValueOnce(expired());
+  expect(
+    await createCartSession("en", stuck).initialize("TEST", "USD"),
+  ).toMatchObject({ outcome: "FAILURE", code: "CART_EXPIRED" });
+  expect(stuck).toHaveBeenCalledTimes(3);
+});

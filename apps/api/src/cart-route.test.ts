@@ -294,6 +294,29 @@ test("expired established session is cleared once without an implicit replacemen
   }
 });
 
+test("reading a finished cart keeps the session a paid checkout still needs to open its order", async () => {
+  const { app, initialize, useCases } = setup();
+  try {
+    const first = await initialize();
+    const cookie = (first.headers["set-cookie"] as string).split(";")[0]!;
+    useCases.read.mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "CART_EXPIRED",
+    });
+    const result = await app.inject({
+      method: "GET",
+      url: "/api/v1/cart?presentationLocale=en",
+      headers: { cookie },
+    });
+    expect(result.statusCode).toBe(409);
+    expect(result.json()).toMatchObject({ code: "CART_EXPIRED" });
+    expect(result.headers["set-cookie"]).toBeUndefined();
+  } finally {
+    await app.close();
+  }
+});
+
 test("malformed JSON and oversized private input fail before Application with only safe errors", async () => {
   const { app, useCases } = setup();
   try {
