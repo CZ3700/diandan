@@ -21,7 +21,15 @@ export const copy = {
   addAndPublish: "Añadir y publicar",
   upload: "Elegir imagen",
   changeImage: "Cambiar imagen",
-  imageHint: "JPEG, PNG o WebP. Se conservan las proporciones.",
+  imageHint:
+    "JPEG, PNG o WebP. La foto se recorta para llenar cada espacio de visualización.",
+  imageBestSize: "Recomendado: al menos {width} × {height} px.",
+  imageTipArtist: "Coloca el rostro en la parte superior.",
+  imageTipGift: "Coloca el regalo en el centro.",
+  imageTipPoster:
+    "Coloca el motivo en el centro; en móviles solo se ve la parte central.",
+  imageTooSmall:
+    "Esta imagen mide {width} × {height} px, menos de lo recomendado, y puede verse borrosa en pantallas grandes.",
   name: "Nombre",
   description: "Descripción",
   price: "Precio",

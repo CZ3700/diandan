@@ -21,7 +21,14 @@ export const copy = {
   addAndPublish: "เพิ่มและเผยแพร่",
   upload: "เลือกรูปภาพ",
   changeImage: "เปลี่ยนรูปภาพ",
-  imageHint: "JPEG, PNG หรือ WebP โดยคงสัดส่วนเดิม",
+  imageHint:
+    "รองรับ JPEG, PNG หรือ WebP ภาพจะถูกครอปให้เต็มแต่ละตำแหน่งที่แสดง",
+  imageBestSize: "แนะนำอย่างน้อย {width} × {height} พิกเซล",
+  imageTipArtist: "ให้ใบหน้าอยู่ช่วงบนของภาพ",
+  imageTipGift: "ให้ของขวัญอยู่กลางภาพ",
+  imageTipPoster: "ให้จุดเด่นอยู่กลางภาพ บนมือถือจะแสดงเฉพาะส่วนกลาง",
+  imageTooSmall:
+    "ภาพนี้มีขนาด {width} × {height} พิกเซล เล็กกว่าที่แนะนำ อาจดูไม่คมบนจอใหญ่",
   name: "ชื่อ",
   description: "คำอธิบาย",
   price: "ราคา",

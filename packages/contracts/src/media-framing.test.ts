@@ -206,3 +206,23 @@ test("rejects malformed plan geometry without throwing from arithmetic refinemen
     expect(success).toBe(false);
   }
 });
+
+test("daily images recommend the smallest source that fills every role without enlargement", () => {
+  expect(framing?.DAILY_MANAGEMENT_IMAGE_ROLES).toEqual({
+    SAVE_ARTIST: ["PORTRAIT", "HERO_DESKTOP", "HERO_MOBILE"],
+    SAVE_GIFT: ["GIFT_PRIMARY"],
+    REPLACE_POSTER: ["HERO_DESKTOP", "HERO_MOBILE"],
+  });
+  // A cover crop reaches a role's master only when both source sides do.
+  expect(framing?.dailyManagementRecommendedSourceSize("SAVE_ARTIST")).toEqual({
+    width: 2_400,
+    height: 2_000,
+  });
+  expect(framing?.dailyManagementRecommendedSourceSize("SAVE_GIFT")).toEqual({
+    width: 1_200,
+    height: 1_200,
+  });
+  expect(
+    framing?.dailyManagementRecommendedSourceSize("REPLACE_POSTER"),
+  ).toEqual({ width: 2_400, height: 1_350 });
+});

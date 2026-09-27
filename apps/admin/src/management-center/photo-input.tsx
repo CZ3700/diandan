@@ -1,8 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Icon } from "@fan-support/ui";
-import type { PublicMediaView } from "@fan-support/contracts";
+import type {
+  DailyManagementImageKind,
+  PublicMediaView,
+} from "@fan-support/contracts";
 import type { ManagementCopy } from "./copy";
+import { imageSizeHint, measureImage, smallImageWarning } from "./image-size";
 import { imageSelectionIssue } from "./inputs";
 import { PhotoView } from "./photo-view";
 
@@ -13,7 +17,7 @@ export function PhotoInput({
   onChange,
   error,
   onError,
-  poster = false,
+  kind,
 }: {
   copy: ManagementCopy;
   current?: PublicMediaView | null | undefined;
@@ -21,7 +25,7 @@ export function PhotoInput({
   onChange: (file: File | null) => void;
   error?: string | undefined;
   onError: (error: keyof ManagementCopy | null) => void;
-  poster?: boolean;
+  kind: DailyManagementImageKind;
 }) {
   const [preview, setPreview] = useState<string | null>(null);
   useEffect(() => {
@@ -33,12 +37,25 @@ export function PhotoInput({
     setPreview(url);
     return () => URL.revokeObjectURL(url);
   }, [file]);
+  // A small image still uploads; the note explains why it may look soft once enlarged.
+  const [warning, setWarning] = useState<string | null>(null);
+  useEffect(() => {
+    let current = true;
+    setWarning(null);
+    if (file)
+      void measureImage(file).then((size) => {
+        if (current) setWarning(smallImageWarning(copy, kind, size));
+      });
+    return () => {
+      current = false;
+    };
+  }, [copy, file, kind]);
   const source = preview ?? current?.url;
   return (
     <div className="mc-photo-field">
       <label
         className="mc-photo-picker"
-        data-poster={poster || undefined}
+        data-poster={kind === "REPLACE_POSTER" || undefined}
         htmlFor="management-image"
       >
         {source ? (
@@ -74,8 +91,13 @@ export function PhotoInput({
         }}
       />
       <p id="management-image-hint" className="mc-hint">
-        {copy.imageHint}
+        {imageSizeHint(copy, kind)}
       </p>
+      {warning ? (
+        <p className="mc-hint" data-image-size-warning role="status">
+          {warning}
+        </p>
+      ) : null}
       {error ? (
         <p id="management-image-error" className="mc-error" role="alert">
           {error}

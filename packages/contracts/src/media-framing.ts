@@ -23,6 +23,35 @@ export const MEDIA_FRAMING_MASTER_SIZES = Object.freeze({
   GIFT_PRIMARY: Object.freeze({ width: 1_200, height: 1_200 }),
 });
 
+/** Roles each image of the daily management center produces. */
+export const DAILY_MANAGEMENT_IMAGE_ROLES = Object.freeze({
+  SAVE_ARTIST: Object.freeze([
+    "PORTRAIT",
+    "HERO_DESKTOP",
+    "HERO_MOBILE",
+  ] as const),
+  SAVE_GIFT: Object.freeze(["GIFT_PRIMARY"] as const),
+  REPLACE_POSTER: Object.freeze(["HERO_DESKTOP", "HERO_MOBILE"] as const),
+});
+export type DailyManagementImageKind =
+  keyof typeof DAILY_MANAGEMENT_IMAGE_ROLES;
+
+/**
+ * Smallest source that fills every role of the kind without enlargement: a covering crop
+ * reaches a role's master only when both source sides are at least the master's sides.
+ */
+export function dailyManagementRecommendedSourceSize(
+  kind: DailyManagementImageKind,
+): Readonly<{ width: number; height: number }> {
+  const masters = DAILY_MANAGEMENT_IMAGE_ROLES[kind].map(
+    (role) => MEDIA_FRAMING_MASTER_SIZES[role],
+  );
+  return Object.freeze({
+    width: Math.max(...masters.map((size) => size.width)),
+    height: Math.max(...masters.map((size) => size.height)),
+  });
+}
+
 const dimensionSchema = z
   .number()
   .int()

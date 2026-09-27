@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import {
+  DAILY_MANAGEMENT_IMAGE_ROLES,
   adminMutationResponseSchema,
   managementCenterClaimSchema,
   managementCenterPreparedMediaSchema,
@@ -62,11 +63,11 @@ function image(claim: ManagementCenterClaim) {
 function roles(
   claim: ManagementCenterClaim,
 ): readonly ("PORTRAIT" | "HERO_DESKTOP" | "HERO_MOBILE" | "GIFT_PRIMARY")[] {
-  return claim.intent.kind === "SAVE_ARTIST"
-    ? ["PORTRAIT", "HERO_DESKTOP", "HERO_MOBILE"]
-    : claim.intent.kind === "SAVE_GIFT"
-      ? ["GIFT_PRIMARY"]
-      : ["HERO_DESKTOP", "HERO_MOBILE"];
+  return DAILY_MANAGEMENT_IMAGE_ROLES[
+    claim.intent.kind === "RESTORE_POSTER"
+      ? "REPLACE_POSTER"
+      : claim.intent.kind
+  ];
 }
 function framing(claim: ManagementCenterClaim) {
   if (claim.intent.kind === "RESTORE_POSTER")

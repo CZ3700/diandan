@@ -21,7 +21,14 @@ export const copy = {
   addAndPublish: "Thêm và hiển thị",
   upload: "Chọn ảnh",
   changeImage: "Đổi ảnh",
-  imageHint: "JPEG, PNG hoặc WebP. Giữ nguyên tỷ lệ ảnh.",
+  imageHint:
+    "Hỗ trợ JPEG, PNG hoặc WebP. Ảnh sẽ được cắt để lấp đầy từng vị trí hiển thị.",
+  imageBestSize: "Nên tối thiểu {width} × {height} px.",
+  imageTipArtist: "Đặt khuôn mặt ở phần trên của ảnh.",
+  imageTipGift: "Đặt món quà ở giữa ảnh.",
+  imageTipPoster: "Đặt chủ thể ở giữa; điện thoại chỉ hiển thị phần giữa.",
+  imageTooSmall:
+    "Ảnh này {width} × {height} px, nhỏ hơn kích thước khuyến nghị nên có thể bị mờ trên màn hình lớn.",
   name: "Tên",
   description: "Mô tả",
   price: "Giá bán",

@@ -69,6 +69,7 @@ export function ContentForm({
       <fieldset className="mc-form-layout" disabled={busy}>
         <PhotoInput
           copy={copy}
+          kind={kind}
           current={item?.image}
           file={file}
           onChange={setFile}

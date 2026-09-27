@@ -22,7 +22,15 @@ export const copy = {
   addAndPublish: "追加して公開",
   upload: "画像を選ぶ",
   changeImage: "画像を変更",
-  imageHint: "JPEG・PNG・WebP。画像の縦横比を保ちます。",
+  imageHint:
+    "JPEG・PNG・WebPに対応。各表示枠いっぱいに合わせて切り抜かれます。",
+  imageBestSize: "推奨サイズは {width} × {height} px 以上です。",
+  imageTipArtist: "顔は画像の上部に配置してください。",
+  imageTipGift: "ギフトは画像の中央に配置してください。",
+  imageTipPoster:
+    "被写体は中央に。スマートフォンでは中央部分のみ表示されます。",
+  imageTooSmall:
+    "この画像は {width} × {height} px で推奨サイズより小さいため、大きな画面ではぼやけて見える場合があります。",
   name: "名前",
   description: "説明",
   price: "価格",

@@ -48,7 +48,7 @@ export function PosterForm({
           onChange={setFile}
           onError={setError}
           error={error ? copy[error] : undefined}
-          poster
+          kind="REPLACE_POSTER"
         />
         <details className="mc-options">
           <summary>{copy.options}</summary>
