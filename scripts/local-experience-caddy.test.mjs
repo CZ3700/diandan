@@ -76,7 +76,39 @@ test("the edge guards only the TEST identity picker, admin and captured mail", (
     site(text, "admin.stg.example.com"),
     /reverse_proxy https:\/\/127\.0\.0\.3:443 /u,
   );
+  // The admin root placeholder sends operators to the management center.
+  assert.match(
+    site(text, "admin.stg.example.com"),
+    /basic_auth \{[\s\S]*\}\n\t@root path \/\n\tredir @root \/en 302\n/u,
+  );
   assert.doesNotMatch(text, /password/iu);
+});
+
+test("bare domains redirect temporarily to the storefront, keeping the path", () => {
+  const text = renderLocalExperienceCaddyfile({
+    config,
+    authUser: "tester",
+    authHash: hash,
+    caPath: "/etc/caddy/ca.crt",
+    bindAddresses: ["172.26.5.34"],
+    redirectHosts: ["example.com"],
+  });
+  assert.match(
+    text,
+    /\nexample\.com \{\n\tredir https:\/\/storefront\.stg\.example\.com\{uri\} 302\n\}\n/u,
+  );
+  assert.throws(
+    () =>
+      renderLocalExperienceCaddyfile({
+        config,
+        authUser: "tester",
+        authHash: hash,
+        caPath: "/etc/caddy/ca.crt",
+        bindAddresses: ["172.26.5.34"],
+        redirectHosts: ["bad host"],
+      }),
+    /redirect host/u,
+  );
 });
 
 test("the edge refuses loopback instances, plaintext secrets and odd paths", () => {

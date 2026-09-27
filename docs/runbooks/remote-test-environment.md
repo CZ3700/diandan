@@ -28,7 +28,7 @@
 3. **配置 Caddy**（root 执行）：
    - 把实例 CA 复制到 `/etc/caddy/fan-support-local-ca.crt`（CA 是公开证书，不是密钥）；
    - 用 `caddy hash-password` 从标准输入读取访问密码，生成 bcrypt 哈希；
-   - 以 `xiadan` 身份执行 `pnpm local:caddy --instance stg --auth-user tester --auth-hash-file <哈希文件> --bind <本机内网 IP>`（用 `hostname -I` 查看），把输出写入 `/etc/caddy/Caddyfile`；
+   - 以 `xiadan` 身份执行 `pnpm local:caddy --instance stg --auth-user tester --auth-hash-file <哈希文件> --bind <本机内网 IP> --redirect-to-storefront kikikong.com`（内网 IP 用 `hostname -I` 查看；主域名 302 跳转到商城，后台根路径 `/` 302 跳转到 `/en`），把输出写入 `/etc/caddy/Caddyfile`；
    - 依次执行 `caddy validate`、`systemctl enable --now caddy`（修改绑定地址后要用 `restart`，不能只 `reload`）。
    - 等证书签发完成（`journalctl -u caddy` 里出现 "certificate obtained"）再启动实例：首页初始化时会经过 Caddy 访问 `s3.` 主机。
 4. **启动**：把 `infra/remote-test/fan-support-remote-test@.service` 复制到 `/etc/systemd/system/`，然后执行 `systemctl enable --now fan-support-remote-test@stg`。首次启动要初始化数据，并让 Next 首次编译，大约需要 10–20 分钟。
@@ -47,7 +47,8 @@
 | 地址 | 用途 | 密码 |
 |:--|:--|:--|
 | `https://storefront.stg.kikikong.com/en` | 商城 | 否 |
-| `https://admin.stg.kikikong.com` | 后台（TEST 身份登录） | 是 |
+| `https://kikikong.com` | 302 跳转到商城 | 否 |
+| `https://admin.stg.kikikong.com` | 后台（TEST 身份登录；根路径会跳转到 `/en`） | 是 |
 | `https://mail.stg.kikikong.com` | TEST 收件箱 | 是 |
 | `https://payments.stg.kikikong.com` | TEST 支付页，由结账流程跳转 | 否 |
 
