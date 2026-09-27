@@ -7,14 +7,14 @@ description: Implement and maintain this repository's fully source-owned global 
 
 ## 1. Cross-Conversation Continuity Protocol
 
-Since 2026-09-26 new work follows the user-approved V2 launch plan (SPEC §0.2). Read, in order:
+Since 2026-09-28 new work follows the user-approved configurable storefront and lean launch plan (SPEC §0.3, ADR-020). Read, in order:
 
-1. `docs/plan/2026-09-26-v2-launch-plan.md` — current stages R0–R3, decisions and conventions
-2. `docs/progress/v2-progress.md` — what is done, in progress and blocked
-3. `docs/FAN_SUPPORT_PLATFORM_SPEC.md` — authoritative behavior (§0.2 lists the V2 changes)
-4. The ADRs and plan appendices the current stage item references
+1. `docs/FAN_SUPPORT_PLATFORM_SPEC.md` — authoritative behavior
+2. `docs/progress/MASTER.md` — current entry point
+3. `docs/plan/2026-09-28-flexible-storefront-launch.md` — L0–L4 scope and acceptance
+4. `docs/progress/launch-progress.md` and the ADRs referenced by the current item
 
-Resume from recorded progress; do not repeat completed work or infer completion from files alone. Work the current stage's items in plan order, one item at a time, and record each item in `v2-progress.md`. The original Phase/Task/Lane files in `docs/progress/` and `docs/plan/task-breakdown.md` remain historical records and acceptance references; they no longer gate new V2 work.
+Resume from recorded progress; do not repeat completed work or infer completion from files alone. Record each item in `launch-progress.md`. V2 and Phase/Task/Lane files remain historical evidence, not current activation gates. Build bounded theme configuration and a complete commerce loop; do not grow a general website builder. External payment, mail and identity preparation runs alongside storefront work, not at the end.
 
 ## S.U.P.E.R Architecture — Mandatory Coding Standard
 
@@ -95,7 +95,7 @@ Before marking any task as complete, verify ALL of the following:
 
 - PostgreSQL owns idols, content revisions, gifts/variants, eligibility, price books, inventory, carts, orders and fulfillment.
 - Content/product/price publication uses immutable revisions and an atomic published pointer; rollback publishes a prior revision without rewriting history.
-- Dynamic localized content uses explicit revision translation rows with `(revision, locale)` uniqueness, source-hash stale detection and human approval. Publish/rollback the whole seven-locale revision atomically; do not use a generic JSON translation table or external CMS.
+- Strict localized content uses explicit revision translation rows with `(revision, locale)` uniqueness, source-hash stale detection and human approval; publish/rollback its seven-locale revision atomically. Daily artist/gift/poster content and images use SPEC §9.0 / ADR-012 original-language direct publication. Non-linguistic layout settings need no translation approval. Do not use a generic JSON translation table or external CMS.
 - Inventory uses append-only ledger plus reservations; never update availability without a reasoned, idempotent transaction.
 - Re-read canonical catalog, price and inventory rows during add-to-cart and checkout preflight; browser fields are untrusted hints.
 - Keep message/display name envelope-encrypted in `support_intent`; public cart/order DTOs expose only the minimum authorized view.
@@ -118,7 +118,7 @@ Before marking any task as complete, verify ALL of the following:
 - Prefer CSS/WAAPI for micro-interactions and one motion library for presence/layout. Animate transform/opacity/clip-path only where practical.
 - Every pointer interaction has keyboard/touch parity, visible focus, semantic state and reduced-motion behavior.
 - Public HTML routes use `/:locale/...`; language switching preserves the equivalent route/entity, cart, market, currency, amount and payment attempt. Cache/SEO/publication keys include canonical locale.
-- Verify changed UI in a real browser at 390×844 and 1440×900; include loading, empty, error, CJK/Thai/Vietnamese/long Spanish-Portuguese copy and pseudo-locale expansion. Phase 3/7 gates cover all seven public locales.
+- Verify changed UI in a real browser at 390×844 and 1440×900; include loading, empty, error, CJK/Thai/Vietnamese/long Spanish-Portuguese copy and pseudo-locale expansion. Current launch acceptance covers all seven public locales.
 
 ### Tests, errors and observability
 
@@ -142,15 +142,15 @@ Primary violation hotspots to prevent:
 - implementing payment extensibility as runtime code upload;
 - hardcoding market, currency, site/primary-domain, idol or provider production exceptions;
 - hardcoding locale production exceptions, using English sentences as message keys, coupling locale to market/currency, or caching localized content without locale;
-- introducing Shopify/hosted commerce/CMS, Redis, microservices or extra PSPs without a demonstrated need (the Airwallex/Stripe/PayPal adapters pre-deployed by the V2 plan §3 are user-approved).
+- introducing Shopify/hosted commerce/CMS, Redis, microservices or extra PSPs without a demonstrated need (ADR-020 requires one approved PSP for launch; retain existing adapters and defer additional channels).
 
 Key contracts: `SupportedLocale`, `LocaleContext`, translation/fallback provenance, `CartGiftContext`, `support_intent`, `CheckoutQuote`, `OrderAmountSnapshot`, `InventoryReservation`, `InternalOrderItemSnapshot`, `PublicOrderItemView`, `NotificationCommand`, `ProviderEvent`, `PaymentProvider`, cart/payment/refund/dispute/order/fulfillment state machines and versioned payment route config. Read specification sections 8–14 before changing any of them.
 
 ## 6. Progress Update Instructions
 
-For each V2 stage item:
+For each current launch item:
 
-1. Before starting, add one line to `docs/progress/v2-progress.md`: item, scope, verification plan.
+1. Before starting, add one line to `docs/progress/launch-progress.md`: item, owner, start date, scope, verification plan.
 2. Begin behavior changes with a failing test; run affected tests, then `pnpm check:dev` (the daily gate).
 3. Run item-required browser, integration, security or recovery checks. Write their artifacts under `output/` (ignored by git); record only the conclusion.
 4. Record the result in at most ten lines: commands, pass/fail, remaining risks.
@@ -161,7 +161,7 @@ Do not write “done” without observable evidence. A local pass is not product
 
 ## 7. Parallel Execution Protocol
 
-- Follow the V2 plan's stage order; parallelize only items the plan marks as independent (for example the pure-frontend friction fixes alongside R1).
+- Follow the current launch plan; parallelize independent theme work and payment/production readiness with disjoint ownership. Do not resume superseded V2 sequencing.
 - Git push is authorized (user, 2026-09-26). Cloud apply, real funds, formal content publication, production release and formal business decisions still require explicit user confirmation each time. Keep SPEC §9.0/ADR-012's simple management center and original-language daily publication; strict policy/payment/order/email/key-UI approval remains unchanged.
 - Run at most one executor per independent lane; assign explicit Task IDs and exclusive file ownership.
 - Freeze shared contracts before parallel consumers begin.
@@ -171,7 +171,7 @@ Do not write “done” without observable evidence. A local pass is not product
 
 ## 8. Archive Trigger
 
-After the V2 plan's R3 launch is complete:
+After the current plan's L4 launch is complete:
 
 1. Create `docs/archives/fan-support-platform-v1/`.
 2. Snapshot the completed analysis, plan, progress and accepted decision records there.

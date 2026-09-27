@@ -1,5 +1,7 @@
 # V2 进度记录
 
+> 2026-09-28 起转入 [当前上线进度](launch-progress.md) 与 [装修/完整交易计划](../plan/2026-09-28-flexible-storefront-launch.md)（ADR-020）。下文保留历史成果及欠项；“外部配置放到最后”和多 PSP 首发要求已被替代。
+
 > 方案：[2026-09-26-v2-launch-plan.md](../plan/2026-09-26-v2-launch-plan.md)
 > 状态：`DONE`（完整验收）· `LOCAL_ACCEPTED`（本地完成，等外部条件）· `BLOCKED_EXTERNAL`（等外部决策/资源）· `IN_PROGRESS`
 > 规则：每条不超过十行；验证产物在 `output/`（git 忽略），这里只记结论。

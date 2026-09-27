@@ -1,6 +1,6 @@
 # Progress Master
 
-> **2026-09-26 起按 V2 上线方案推进**：当前进度见 [v2-progress.md](v2-progress.md)，方案见 [2026-09-26-v2-launch-plan.md](../plan/2026-09-26-v2-launch-plan.md)，规范变更见 SPEC §0.2。本文件以下内容为 V2 之前的 49 项 Phase/Task 体系记录，保留作历史与验收参考，不再作为新工作的领取门禁。
+> **2026-09-28 起按可配置装修与精简上线方案推进**：当前进度见 [launch-progress.md](launch-progress.md)，方案见 [2026-09-28-flexible-storefront-launch.md](../plan/2026-09-28-flexible-storefront-launch.md)，决策见 ADR-020、SPEC §0.3。V2 成果保留在 [v2-progress.md](v2-progress.md)。以下 49 项 Phase/Task 及状态均是历史记录，不是当前领取门禁或整站完成率。
 
 > 最后更新：2026-09-24（Asia/Bangkok）
 > 当前里程碑：完整本地 TEST 体验已交付，进入 Phase 6 质量加固；M3/M4 未完外部验收保留（M1/M2 已完成）

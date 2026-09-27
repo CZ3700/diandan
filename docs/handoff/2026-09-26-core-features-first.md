@@ -1,5 +1,7 @@
 # 交接：转入"站点核心功能优先"，沙盒与外部配置放到最后
 
+> 历史交接：2026-09-28 用户已采纳 ADR-020，外部接入改为与装修并行；榜单已取消。当前入口为 [上线计划](../plan/2026-09-28-flexible-storefront-launch.md) 与 [当前进度](../progress/launch-progress.md)，不得按下文恢复旧排期或范围。
+
 > 日期：2026-09-26
 > 项目：`C:\Users\admin\Desktop\下单\下单`
 > 分支：`v2/r1-production`（已推送 origin，工作区干净）

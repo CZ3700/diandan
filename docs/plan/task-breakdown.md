@@ -1,5 +1,7 @@
 # Task Breakdown
 
+> 历史任务分解。2026-09-28 起按 [当前上线计划](2026-09-28-flexible-storefront-launch.md) 与 [当前进度](../progress/launch-progress.md) 推进；以下 49 项与领取规则不作为新工作门禁。
+
 > 总任务数：49
 > 状态真相源：`docs/progress/phase-*.md`  
 > 领取规则：所在 Phase 已为 `ACTIVE`、依赖全部 `DONE`（或满足 ADR-016 明确记录的本地完整验收及非作者复核条件）且对应 Lane 当前无 executor 后，任务才可从 `PENDING` 改为 `READY/IN_PROGRESS`。本地例外不删除下列原直接依赖或完整验收。

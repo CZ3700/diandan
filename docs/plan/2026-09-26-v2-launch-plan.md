@@ -1,5 +1,7 @@
 # V2 上线总体方案
 
+> 2026-09-28：本文件保留为历史方案。当前执行 [可配置装修与完整交易上线计划](2026-09-28-flexible-storefront-launch.md)（ADR-020）；三家 PSP 首发、外部接入后置及完整云平台上线前置已收敛。原完成证据不变，未完成事项按新计划归并。
+
 > 日期：2026-09-26
 > 依据：`docs/analysis/2026-09-26-architecture-review.md`（全仓审查）、`docs/analysis/2026-09-26-competitor-benchmark-and-launch-gaps.md`（四站对标）、三家 PSP 官方文档调研、仓库实测
 > 目标（用户 2026-09-26 确认）：给粉丝最好的交互感受（去掉不必要的繁琐操作），同时尽快上线

@@ -1,0 +1,66 @@
+# Stripe 沙盒验证
+
+本入口只验证现有 Stripe adapter；不会创建本站订单，也不会经过本站 Inbox、Worker、通知和查单。报告始终保留 `siteOrderFlowVerified=false`。本站交易验收另按当前上线计划 L3 进行。
+
+## 本地准备
+
+在项目根目录、Node 24.20.0 / pnpm 11.25.0 下执行。当前 Mac 可在命令前加 `mise exec node@24.20.0 --`；其他环境使用仓库已有 Node 配置。
+
+测试凭据保存在被 Git 忽略的根目录 `.env`，或通过进程环境变量注入（优先于文件）。不要粘贴到聊天、源码或命令参数里：
+
+```dotenv
+STRIPE_TEST_SECRET_KEY=
+STRIPE_TEST_WEBHOOK_SECRET=
+```
+
+API 凭据支持 `rk_test_` 受限密钥或 `sk_test_` 测试密钥，拒绝正式密钥和可公开密钥。受限密钥需具备脚本所用 Checkout、PaymentIntent 查询、退款等权限；配置检查仅核对本地格式，不证明远端权限。Webhook 签名密钥与 API 密钥不同，使用对应 CLI 转发会话提供的 `whsec_` 值。参考 [Stripe API keys](https://docs.stripe.com/keys)。
+
+## 先检查配置（零网络）
+
+```sh
+corepack pnpm --filter @fan-support/payment-stripe sandbox:check-config
+node packages/payment-stripe/scripts/stripe-sandbox.mjs --check-config --webhook-port 4242
+```
+
+只输出缺失/非法变量的名称与状态，不输出值。退出码 0 表示格式齐全，1 表示尚未准备好；不会创建付款、加载 adapter 或联系 Stripe。
+
+## 分级验证
+
+| 命令模式 | 能证明 | 不能证明 |
+|:--|:--|:--|
+| `--no-wait` | 创建、幂等重放、查询与取消的连接烟测 | 扣款、退款、webhook 或本站订单闭环 |
+| 不加参数 | 人工完成托管支付后的 adapter 查询、退款与对账 | webhook 实收或本站订单闭环 |
+| `--webhook-port 4242` | 上述 adapter 行为，加本次付款和本次退款的已验签成功回调 | 本站入账、通知、查单与生产收款 |
+
+网络模式先构建依赖及 adapter：
+
+```sh
+corepack pnpm exec turbo run build --filter=@fan-support/payment-stripe...
+```
+
+完整 adapter webhook 验证需启动 Stripe CLI 转发；选择与 API 凭据相同的沙盒，按 [Stripe CLI 官方说明](https://docs.stripe.com/cli) 登录，或安全注入 `STRIPE_API_KEY` 进程环境变量（不要放入命令参数）。本机已验证可通过 `npm exec --yes --package=@stripe/cli@1.51.1 -- stripe` 临时执行官方 CLI，无需加入项目依赖。CLI 输出的签名密钥保存到本地 `STRIPE_TEST_WEBHOOK_SECRET`；禁止把完整终端输出复制进普通证据，重启转发后核对对应密钥。
+
+```sh
+stripe listen --forward-to localhost:4242/webhook
+node packages/payment-stripe/scripts/stripe-sandbox.mjs --webhook-port 4242
+```
+
+转发与验证脚本分别运行在两个终端。验收完成后停止本次转发；CLI 本地签名密钥不可代替随后本站 API endpoint 的正式签名密钥。
+
+按脚本提示打开 `output/checks/r1-03-stripe-sandbox/` 下的私有链接文件，在 Stripe 托管测试页完成付款；使用 Stripe 官方测试方式，不输入真实卡信息。链接不写入普通日志或 JSON 报告。脚本会对同一笔测试付款执行部分退款及退款幂等验证。
+
+零回调、其他付款/退款的事件、验签失败、金额或币种不符均不能通过 webhook 验收。回调默认最多等待 30 秒，可用 `--webhook-timeout-ms` 显式设为 1–300000 毫秒；超时仍失败，不改写为已通过。`--no-wait` 不能与 webhook 模式混用。
+
+## 如何读结果
+
+- `result` 是本轮整体结果，退出码必须同时成功；不能只挑某条 PASS。
+- `evidenceLevel` 区分 `CONNECTION_SMOKE / ADAPTER_TRANSACTION / ADAPTER_TRANSACTION_AND_WEBHOOK`。
+- 部分检查成功但整轮失败时，保留实际部分证据，不升级为完整验收。
+- 报告不保存秘密、原始 webhook、Checkout URL 或客户资料。
+- 取得上述 adapter 证据后，仍须在隔离实例使用本站 API webhook 入口完成订单入账、邮件查单和后台退款；现有公开 TEST 实例不会因填入密钥而自动切换。
+
+本地回归（无 Stripe 网络）：
+
+```sh
+corepack pnpm --filter @fan-support/payment-stripe test
+```
