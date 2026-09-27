@@ -850,5 +850,6 @@ export function resolveAdminRuntimeConfig(
 }
 
 export { resolveStorefrontConfig } from "./storefront-config.js";
+export { resolveStorefrontPreviewConfig } from "./storefront-preview-config.js";
 
 export { resolveRumConfig, type RumConfig } from "./rum-config.js";

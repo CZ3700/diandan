@@ -5,6 +5,7 @@ import type { ManagementSection } from "./api";
 import { managementCopy } from "./copy";
 import { paymentCopy } from "../management-payments/copy";
 import { ordersCopy } from "../management-orders/copy";
+import { decorationCopy } from "../management-decoration/copy";
 
 export function ManagementShell({
   locale,
@@ -17,11 +18,14 @@ export function ManagementShell({
   ordersAvailable = false,
   paymentsAvailable = false,
   exceptionsAvailable = false,
+  decorationAvailable = false,
 }: {
   locale: SupportedLocale;
-  section: ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS";
+  section:
+    ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS" | "DECORATION";
   onSection: (
-    section: ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS",
+    section:
+      ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS" | "DECORATION",
   ) => void;
   children: ReactNode;
   disabled?: boolean;
@@ -30,6 +34,7 @@ export function ManagementShell({
   ordersAvailable?: boolean;
   paymentsAvailable?: boolean;
   exceptionsAvailable?: boolean;
+  decorationAvailable?: boolean;
 }) {
   const copy = managementCopy(locale);
   return (
@@ -68,6 +73,17 @@ export function ManagementShell({
               </button>
             </>
           ) : null}
+          {decorationAvailable && (
+            <button
+              type="button"
+              data-management-section="DECORATION"
+              aria-current={section === "DECORATION" ? "page" : undefined}
+              disabled={disabled}
+              onClick={() => onSection("DECORATION")}
+            >
+              {decorationCopy(locale).title}
+            </button>
+          )}
           {ordersAvailable ? (
             <button
               type="button"

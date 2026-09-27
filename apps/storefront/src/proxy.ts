@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { resolveStorefrontPreviewConfig } from "@fan-support/config/server";
 import {
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
@@ -63,6 +64,7 @@ export function proxy(request: NextRequest): NextResponse {
 
   requestHeaders.delete("x-storefront-locale");
   requestHeaders.delete("x-storefront-order-access");
+  requestHeaders.delete("x-storefront-layout-preview");
   const segment = request.nextUrl.pathname.split("/")[1];
   const locale = SUPPORTED_LOCALES.find(
     (value) => value.toLowerCase() === segment?.toLowerCase(),
@@ -92,10 +94,31 @@ export function proxy(request: NextRequest): NextResponse {
   if (locale) requestHeaders.set("x-storefront-locale", locale);
   if (locale && request.nextUrl.pathname === `/${locale}/order-access`)
     requestHeaders.set("x-storefront-order-access", "1");
+  const layoutPreview = Boolean(
+    locale && request.nextUrl.pathname === `/${locale}/layout-preview`,
+  );
+  if (layoutPreview) requestHeaders.set("x-storefront-layout-preview", "1");
   const response = NextResponse.next({
     request: { headers: requestHeaders },
   });
   response.headers.set(REQUEST_ID_HEADER, requestId);
   if (locale) response.headers.set("content-language", locale);
+  if (layoutPreview) {
+    let adminOrigin: string | null = null;
+    try {
+      adminOrigin = resolveStorefrontPreviewConfig({
+        environment: process.env,
+      }).adminOrigin;
+    } catch {
+      /* Invalid configuration cannot broaden embedding. */
+    }
+    response.headers.set("cache-control", "private, no-store");
+    response.headers.set("x-robots-tag", "noindex, nofollow");
+    response.headers.set("referrer-policy", "no-referrer");
+    response.headers.set(
+      "content-security-policy",
+      `frame-ancestors ${adminOrigin ?? "'none'"}; form-action 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; sandbox allow-scripts allow-same-origin`,
+    );
+  }
   return checkoutPrivacy(response, request.nextUrl.pathname);
 }

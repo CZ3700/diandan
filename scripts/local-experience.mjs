@@ -19,6 +19,7 @@ const option = (name) => {
 };
 // Fixed when the instance is created: a public instance is served by an edge on its base domain.
 const publicBaseDomain = option("--public-base-domain");
+const paymentProvider = option("--payment-provider");
 const startupTimeoutSeconds = Number(
   option("--startup-timeout-seconds") ?? 120,
 );
@@ -55,6 +56,7 @@ const { prepareLocalTls } =
   await import("../apps/api/scripts/local-experience-infrastructure.mjs");
 const state = await loadLocalState(workspaceRoot, instance, {
     publicBaseDomain,
+    paymentProvider,
   }),
   { config, stateDirectory } = state;
 const { localDnsHosts } =

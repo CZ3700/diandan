@@ -1,5 +1,6 @@
 import { URL } from "node:url";
 import { z } from "zod";
+import { localPaymentProfile } from "./local-experience-payment-profile.mjs";
 import {
   paymentRuntimeProviderBindingSchema,
   notificationGatewayProfileSchema,
@@ -96,6 +97,7 @@ export const localExperienceConfigSchema = z
   .strictObject({
     schemaVersion: z.literal(1),
     environment: z.literal("LOCAL_TEST"),
+    paymentProvider: z.enum(["fake", "stripe-test"]).optional(),
     instance: z.string().regex(/^[a-z][a-z0-9-]{0,31}$/u),
     instanceId: z.uuid(),
     workspaceRoot: file,
@@ -183,6 +185,14 @@ export const localExperienceConfigSchema = z
     }),
   })
   .superRefine((v, ctx) => {
+    try {
+      localPaymentProfile(v);
+    } catch {
+      ctx.addIssue({
+        code: "custom",
+        message: "Invalid local payment profile",
+      });
+    }
     if (new Set(Object.values(v.ports)).size !== Object.keys(v.ports).length)
       ctx.addIssue({ code: "custom", message: "Duplicate configured port" });
     for (const [key, value] of Object.entries(v.origins))

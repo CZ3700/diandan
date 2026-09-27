@@ -1,3 +1,4 @@
+import { homeLayoutPaths } from "./home-layout-openapi.js";
 import { rumPaths } from "./rum-openapi.js";
 import { adminPaymentConfigurationPaths } from "./admin-payment-configuration-openapi.js";
 import { adminExceptionsPaths } from "./admin-exceptions-openapi.js";
@@ -222,6 +223,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...adminExceptionsPaths(),
         ...orderAccessPaths(),
         ...managementCenterPaths(),
+        ...homeLayoutPaths(),
         ...storefrontHomepagePaths(),
         ...storefrontCommercePaths(),
         ...storefrontSeoPaths(),

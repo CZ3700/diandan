@@ -48,6 +48,7 @@ export function ManagementWorkspace({
   onOrders,
   onPayments,
   onExceptions,
+  onDecoration,
   initialSection = "ARTISTS",
   accessNotice,
   canDeleteArtists = false,
@@ -59,6 +60,7 @@ export function ManagementWorkspace({
   onOrders?: (() => void) | undefined;
   onPayments?: (() => void) | undefined;
   onExceptions?: (() => void) | undefined;
+  onDecoration?: (() => void) | undefined;
   initialSection?: ManagementSection;
   accessNotice?: ReactNode;
   canDeleteArtists?: boolean;
@@ -243,13 +245,16 @@ export function ManagementWorkspace({
           ? onOrders?.()
           : next === "PAYMENTS"
             ? onPayments?.()
-            : next === "EXCEPTIONS"
-              ? onExceptions?.()
-              : chooseSection(next)
+            : next === "DECORATION"
+              ? onDecoration?.()
+              : next === "EXCEPTIONS"
+                ? onExceptions?.()
+                : chooseSection(next)
       }
       ordersAvailable={Boolean(onOrders)}
       paymentsAvailable={Boolean(onPayments)}
       exceptionsAvailable={Boolean(onExceptions)}
+      decorationAvailable={Boolean(onDecoration)}
       disabled={busy}
       accountAction={
         onLogout ? (

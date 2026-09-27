@@ -1,3 +1,8 @@
+import { createHomeLayoutRepository } from "./home-layout-repository.js";
+import type {
+  HomeLayoutRepositories,
+  HomeLayoutTransactionManager,
+} from "@fan-support/persistence-port";
 import { createAdminExceptionsRepository } from "./admin-exceptions-repository.js";
 import type {
   AdminExceptionsRepository,
@@ -144,7 +149,10 @@ import { createResourceManagementRepository } from "./resource-management-reposi
 import { createResourceAuthorizationRepository } from "./resource-authorization-repository.js";
 import { createBaseContentReviewRepository } from "./base-content-review-repository.js";
 import { createBaseContentPreviewRepository } from "./base-content-preview-repository.js";
-import { createAdminAuthorizationRepository } from "./admin-authorization-repository.js";
+import {
+  createAdminAuthorizationRepository,
+  createHomeLayoutAuthorizationRepository,
+} from "./admin-authorization-repository.js";
 import { createContentReviewRepository } from "./content-review-repository.js";
 import { createContentPreviewRepository } from "./content-preview-repository.js";
 import { createMediaProcessingRepository } from "./media-processing-repository.js";
@@ -203,6 +211,7 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly homeLayoutTransactionManager: HomeLayoutTransactionManager;
   readonly adminPaymentConfigurationTransactionManager: AdminPaymentConfigurationTransactionManager;
   readonly adminExceptionsTransactionManager: AdminExceptionsTransactionManager;
   readonly adminFinanceTransactionManager: AdminFinanceTransactionManager;
@@ -605,6 +614,13 @@ export function createPostgresPersistenceWithPoolFactory(
     acquireClient: async () => pool.connect(),
     createRepositories: (client, transactionScope) => ({
       contentDrafts: createContentDraftRepository(client, transactionScope),
+    }),
+  });
+  const homeLayoutRunner = createTransactionRunner<HomeLayoutRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      authorization: createHomeLayoutAuthorizationRepository(client, scope),
+      homeLayout: createHomeLayoutRepository(client, scope),
     }),
   });
   const adminContentRunner = createTransactionRunner<AdminContentRepositories>({
@@ -1478,6 +1494,19 @@ export function createPostgresPersistenceWithPoolFactory(
     },
     baseContentTransactionManager,
     contentAuthoringTransactionManager,
+    homeLayoutTransactionManager: {
+      async runInHomeLayoutTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return homeLayoutRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
     adminContentTransactionManager,
     transactionManager,
     reliableEventTransactionManager,

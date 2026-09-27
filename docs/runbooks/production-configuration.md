@@ -24,6 +24,10 @@
 
 管理后台组由 API 专属的键决定是否启用（源站、两个 pepper、OIDC 配置、客户端密钥）。`FAN_SUPPORT_ADMIN_ACCESS_KEY` 和 `FAN_SUPPORT_ADMIN_OIDC_ISSUER` 与 Admin 应用共用，单独出现不会启用 API 的后台接口。三个 64 位十六进制密钥（访问密钥、会话 pepper、主体 pepper）必须互不相同。
 
+### 商城装修预览
+
+Storefront 进程单独接收公开的 `FAN_SUPPORT_ADMIN_ORIGIN`（准确 HTTPS origin，不带路径），用于限制预览的嵌入来源和消息来源；不要将 API/Admin 的访问密钥、pepper 或 OIDC 凭据一起传入商城。缺省时预览路由不可用，正常首页仍可读取已发布布局。代理/CDN 必须保留预览的 `private, no-store`、`noindex` 和限定 `frame-ancestors`；首页布局数据接口也不得缓存。数据库先升级到迁移 0044，再部署依赖该接口的前后台/API。参见 [本地操作](local-experience.md)。
+
 ### OIDC 配置示例（不含任何密钥）
 
 ```json

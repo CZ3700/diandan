@@ -10,7 +10,7 @@ import {
 } from "node:fs/promises";
 import { createServer } from "node:net";
 import path from "node:path";
-import { SUPPORTED_LOCALES } from "../packages/contracts/dist/index.js";
+import { createLocalPaymentBinding } from "../apps/api/scripts/local-experience-payment-profile.mjs";
 import {
   LOCAL_SERVICE_KEYS,
   localExperienceConfigSchema,
@@ -92,8 +92,19 @@ async function ports() {
 export async function loadLocalState(
   workspaceRoot,
   instance = "default",
-  { publicBaseDomain } = {},
+  { publicBaseDomain, paymentProvider } = {},
 ) {
+  if (
+    paymentProvider !== undefined &&
+    !["fake", "stripe-test"].includes(paymentProvider)
+  )
+    throw new Error("Invalid local payment provider");
+  if (
+    paymentProvider === "stripe-test" &&
+    (publicBaseDomain !== undefined ||
+      !/^(?:test|acceptance)-[a-z0-9-]+$/u.test(instance))
+  )
+    throw new Error("Stripe TEST requires an isolated loopback test instance");
   if (
     publicBaseDomain !== undefined &&
     !publicBaseDomainSchema.safeParse(publicBaseDomain).success
@@ -144,6 +155,13 @@ export async function loadLocalState(
       throw new Error(
         "This instance was created with a different exposure; create a new instance for another domain",
       );
+    if (
+      paymentProvider !== undefined &&
+      (parsed.data.paymentProvider ?? "fake") !== paymentProvider
+    )
+      throw new Error(
+        "This instance has a different payment provider; create a new instance",
+      );
     return { stateDirectory, config: parsed.data };
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
@@ -178,6 +196,7 @@ export async function loadLocalState(
     instance,
     instanceId,
     workspaceRoot: await realpath(workspaceRoot),
+    ...(paymentProvider === "stripe-test" ? { paymentProvider } : {}),
     ports: assigned,
     origins,
     ...(exposure ? { exposure } : {}),
@@ -218,19 +237,11 @@ export async function loadLocalState(
       psp: {
         databaseName: "p404_psp_" + randomBytes(16).toString("hex"),
         authorizationToken: token(),
-        binding: {
-          schemaVersion: 1,
-          providerAccountId: randomUUID(),
-          providerCode: "fake",
-          environment: "TEST",
-          allowedActionOrigins: [origins.psp],
-          localeMapping: Object.fromEntries(
-            SUPPORTED_LOCALES.map((locale) => [
-              locale,
-              { providerLocale: locale, fallbackUsed: false },
-            ]),
-          ),
-        },
+        binding: createLocalPaymentBinding(
+          paymentProvider ?? "fake",
+          randomUUID(),
+          origins,
+        ),
         webhookEndpointId: randomUUID(),
       },
       mail: {

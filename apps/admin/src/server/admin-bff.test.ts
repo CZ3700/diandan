@@ -1,6 +1,7 @@
 import { expect, test, vi } from "vitest";
 vi.mock("server-only", () => ({}));
 import { createAdminBff } from "./admin-bff";
+import { createDefaultHomeLayout } from "@fan-support/contracts";
 const siteOrigin = "http://localhost:3100";
 const session = "s".repeat(43),
   csrf = "c".repeat(43);
@@ -226,4 +227,55 @@ test("exception discovery tolerates an absent capability and mismatched receipts
   );
   expect(mismatch.status).toBe(503);
   expect(await mismatch.json()).toMatchObject({ code: "CONTENT_UNAVAILABLE" });
+});
+
+test("home layout BFF keeps mutations behind session, CSRF and an idempotency header, and uses a fixed API route", async () => {
+  const layout = createDefaultHomeLayout();
+  const id = "a0000000-0000-4000-8000-000000000001";
+  const value = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "STATE",
+    replayed: false,
+    state: {
+      schemaVersion: 1,
+      version: 1,
+      published: null,
+      draft: { revisionId: id, createdAt: "2026-09-28T00:00:00Z", layout },
+    },
+  };
+  const fetcher = vi.fn(async () => Response.json(value));
+  const bff = createAdminBff({ config, fetch: fetcher });
+  const make = (headers: Record<string, string> = {}) =>
+    request("home-layout-draft", {
+      method: "POST",
+      headers: {
+        origin: siteOrigin,
+        "content-type": "application/json",
+        "x-csrf-token": csrf,
+        ...headers,
+      },
+      body: JSON.stringify({ schemaVersion: 1, layout, expectedVersion: 0 }),
+    });
+  expect((await bff.operation(make(), "home-layout-draft")).status).toBe(400);
+  expect(fetcher).not.toHaveBeenCalled();
+  const result = await bff.operation(
+    make({ "idempotency-key": id }),
+    "home-layout-draft",
+  );
+  expect(result.status).toBe(200);
+  expect(await result.json()).toEqual(value);
+  const [path, init] = fetcher.mock.calls[0]! as unknown as [
+    string,
+    RequestInit,
+  ];
+  expect(path).toBe(
+    `${config.internalApiOrigin}/api/v1/admin/home-layout/draft`,
+  );
+  expect(new Headers(init.headers).get("idempotency-key")).toBe(id);
+  expect(JSON.parse(String(init.body))).toEqual({
+    schemaVersion: 1,
+    layout,
+    expectedVersion: 0,
+  });
 });

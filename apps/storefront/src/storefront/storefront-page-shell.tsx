@@ -17,7 +17,7 @@ export type StorefrontPageProps = Readonly<{
 }>;
 
 type ShellProps = ComponentProps<typeof SiteHeader> &
-  Readonly<{ children: ReactNode }>;
+  Readonly<{ children: ReactNode; preview?: boolean }>;
 type PolicyProps = Pick<ShellProps, "locale" | "copy" | "contextQuery">;
 
 async function FooterPolicyLinks(props: PolicyProps) {
@@ -27,22 +27,37 @@ async function FooterPolicyLinks(props: PolicyProps) {
 export async function StorefrontPageShell({
   children,
   active,
+  preview = false,
   ...props
 }: ShellProps) {
-  const restoreOnLoad = await readCartRestorationHint();
+  const restoreOnLoad = preview ? false : await readCartRestorationHint();
   const region = regionEntries(props.locale, props.copy, props.contextQuery);
+  const body = (
+    <>
+      <SiteHeader {...props} active={active} regionEntry={region.header} />
+      <main id="main-content" tabIndex={-1}>
+        {children}
+      </main>
+    </>
+  );
   return (
-    <div className="storefront" lang={props.locale}>
-      <CartProvider
-        key={props.locale}
-        locale={props.locale}
-        restoreOnLoad={restoreOnLoad}
-      >
-        <SiteHeader {...props} active={active} regionEntry={region.header} />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-      </CartProvider>
+    <div
+      className="storefront"
+      lang={props.locale}
+      inert={preview || undefined}
+      data-layout-preview={preview || undefined}
+    >
+      {preview ? (
+        body
+      ) : (
+        <CartProvider
+          key={props.locale}
+          locale={props.locale}
+          restoreOnLoad={restoreOnLoad}
+        >
+          {body}
+        </CartProvider>
+      )}
       <SiteFooter
         {...props}
         region={region.footer}

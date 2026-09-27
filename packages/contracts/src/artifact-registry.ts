@@ -1,3 +1,4 @@
+import * as homeLayout from "./home-layout.js";
 import {
   rumIntakeSchema,
   rumObservationSchema,
@@ -697,6 +698,51 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "HomeLayoutAuthorizationCommand",
+    audience: "internal",
+    schema: homeLayout.homeLayoutAuthorizationCommandSchema,
+  },
+  {
+    name: "HomeLayout",
+    audience: "public-http",
+    schema: homeLayout.homeLayoutSchema,
+  },
+  {
+    name: "HomeLayoutState",
+    audience: "admin-http",
+    schema: homeLayout.homeLayoutStateSchema,
+  },
+  {
+    name: "HomeLayoutCommand",
+    audience: "internal",
+    schema: homeLayout.homeLayoutCommandSchema,
+  },
+  {
+    name: "HomeLayoutRequest",
+    audience: "internal",
+    schema: homeLayout.homeLayoutRequestSchema,
+  },
+  {
+    name: "HomeLayoutResponse",
+    audience: "admin-http",
+    schema: homeLayout.homeLayoutResponseSchema,
+  },
+  {
+    name: "PublicHomeLayoutResponse",
+    audience: "public-http",
+    schema: homeLayout.publicHomeLayoutResponseSchema,
+  },
+  {
+    name: "HomeLayoutPreviewMessage",
+    audience: "admin-http",
+    schema: homeLayout.homeLayoutPreviewMessageSchema,
+  },
+  {
+    name: "HomeLayoutPreviewReady",
+    audience: "admin-http",
+    schema: homeLayout.homeLayoutPreviewReadySchema,
+  },
   { name: "RumIntake", audience: "public-http", schema: rumIntakeSchema },
   {
     name: "RumObservation",

@@ -137,6 +137,44 @@ function exceptionOperation(
   });
 }
 const entries = {
+  "home-layout-read": operation(
+    "/api/v1/admin/home-layout/read",
+    contract.homeLayoutCommandSchema,
+    contract.homeLayoutResponseSchema,
+    "READ",
+    "STATE",
+  ),
+  "home-layout-draft": operation(
+    "/api/v1/admin/home-layout/draft",
+    contract.homeLayoutCommandSchema,
+    contract.homeLayoutResponseSchema,
+    "SAVE_DRAFT",
+    "STATE",
+    true,
+  ),
+  "home-layout-publish": operation(
+    "/api/v1/admin/home-layout/publish",
+    contract.homeLayoutCommandSchema,
+    contract.homeLayoutResponseSchema,
+    "PUBLISH",
+    "STATE",
+    true,
+  ),
+  "home-layout-restore": operation(
+    "/api/v1/admin/home-layout/restore",
+    contract.homeLayoutCommandSchema,
+    contract.homeLayoutResponseSchema,
+    "RESTORE",
+    "STATE",
+    true,
+  ),
+  "home-layout-history": operation(
+    "/api/v1/admin/home-layout/history",
+    contract.homeLayoutCommandSchema,
+    contract.homeLayoutResponseSchema,
+    "HISTORY",
+    "HISTORY",
+  ),
   "exceptions-context": exceptionOperation("CONTEXT", "CONTEXT"),
   "exceptions-list": exceptionOperation("LIST", "LIST"),
   "exceptions-detail": exceptionOperation("DETAIL", "DETAIL"),

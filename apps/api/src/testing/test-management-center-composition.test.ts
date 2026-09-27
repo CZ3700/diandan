@@ -71,6 +71,7 @@ test("management composition owns its pool and continuously drives real use case
         close,
       }) as never,
   });
+  expect(composition).toHaveProperty("homeLayoutRoute.useCases.execute");
   await composition.managementCenterRuntime.start();
   const stopped = composition.managementCenterRuntime.stop();
   expect(close).not.toHaveBeenCalled();

@@ -32,10 +32,13 @@ export default async function RootLayout({
     requestHeaders.get("x-storefront-locale"),
   );
   const locale = parsed.success ? parsed.data : DEFAULT_LOCALE;
-  const rumCollector = await renderRumCollector(
-    locale,
-    requestHeaders.get("x-storefront-order-access") === "1",
-  );
+  const rumCollector =
+    requestHeaders.get("x-storefront-layout-preview") === "1"
+      ? null
+      : await renderRumCollector(
+          locale,
+          requestHeaders.get("x-storefront-order-access") === "1",
+        );
   // In-app browsers (for example WeChat on iOS) inject attributes on <html>/<body> before
   // React hydrates. Every attribute we set here is server-derived, so ignoring foreign ones
   // on these two elements hides no mismatch of ours; descendants are still checked.

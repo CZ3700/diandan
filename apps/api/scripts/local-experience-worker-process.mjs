@@ -1,6 +1,7 @@
 import { fork } from "node:child_process";
 import { setTimeout, clearTimeout } from "node:timers";
 import { fileURLToPath } from "node:url";
+import { withoutLocalPaymentCredentials } from "./local-experience-payment-profile.mjs";
 
 /** Configuration travels only through local IPC; the worker owns a distinct process and database pools. */
 export async function startLocalExperienceWorkerProcess(
@@ -14,7 +15,7 @@ export async function startLocalExperienceWorkerProcess(
       execArgv: [],
       env: {
         ...Object.fromEntries(
-          Object.entries(process.env).filter(
+          Object.entries(withoutLocalPaymentCredentials(process.env)).filter(
             ([key]) => !key.startsWith("FAN_SUPPORT_"),
           ),
         ),

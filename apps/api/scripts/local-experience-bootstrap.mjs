@@ -15,6 +15,7 @@ import { writePrivateJson } from "../../../scripts/local-experience-state.mjs";
 import path from "node:path";
 import { prepareOrderPaymentQueue } from "./order-payment-queue.mjs";
 import { parseLocalBusiness } from "./local-experience-bootstrap-state.mjs";
+import { localPaymentProfile } from "./local-experience-payment-profile.mjs";
 
 export async function bootstrapLocalBusiness({
   workspaceRoot,
@@ -191,6 +192,7 @@ export async function bootstrapLocalBusiness({
   }
 }
 async function finishPaymentBootstrap({ client, config, stateDirectory }) {
+  const profile = localPaymentProfile(config);
   const business = parseLocalBusiness(
     (
       await client.query(
@@ -213,6 +215,8 @@ async function finishPaymentBootstrap({ client, config, stateDirectory }) {
           identities: { identities: { manager: business.managerId } },
         },
         bindings: [config.services.psp.binding],
+        paymentMethod: profile.paymentMethod,
+        credentialRef: profile.connection.credentialRef,
         configuration: business.paymentConfiguration,
         scope: { country: "US", market: "GLOBAL", currency: "USD" },
         check: assert.ok,
@@ -229,7 +233,7 @@ async function finishPaymentBootstrap({ client, config, stateDirectory }) {
         accounts.length !== 1 ||
         accounts[0].id !== config.services.psp.binding.providerAccountId ||
         accounts[0].environment !== "TEST" ||
-        accounts[0].adapter_key !== "fake"
+        accounts[0].adapter_key !== profile.connection.binding.providerCode
       )
         throw new Error(
           "Existing payment configuration was preserved; bootstrap identity differs",
@@ -246,7 +250,7 @@ async function finishPaymentBootstrap({ client, config, stateDirectory }) {
     }
     const endpointId = config.services.psp.webhookEndpointId,
       providerAccountId = config.services.psp.binding.providerAccountId,
-      secretRef = "secret-ref:v1:test:local/webhook/" + endpointId,
+      secretRef = profile.webhook.secretRef,
       audit = randomUUID();
     const verificationKeyReferenceHash = createHash("sha256")
       .update(secretRef)
@@ -306,6 +310,13 @@ async function finishPaymentBootstrap({ client, config, stateDirectory }) {
     }
   }
   parseLocalBusiness(business, config);
+  if (
+    business.endpoint.verificationKeyReferenceHash !==
+    profile.webhook.verificationKeyReferenceHash
+  )
+    throw new Error(
+      "Existing webhook endpoint was preserved; payment profile differs",
+    );
   await writePrivateJson(path.join(stateDirectory, "business.json"), business);
   return business;
 }

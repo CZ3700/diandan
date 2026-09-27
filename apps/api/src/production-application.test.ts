@@ -30,6 +30,8 @@ const everyRoute = {
   checkoutPreflightRoute: true,
   paymentRuntimeRoute: true,
   managementCenterRoute: true,
+  homeLayoutRoute: true,
+  publicHomeLayoutRoute: true,
   giftCommerceRoute: true,
   publishedGiftCommerceRoute: true,
   adminOrdersRoute: true,
@@ -120,6 +122,19 @@ test("the production application answers admin, SEO, payment and webhook request
       outcome: "FAILURE",
       code: "ACCESS_DENIED",
     });
+    const layoutAdmin = await app.inject({
+      method: "POST",
+      url: "/api/v1/admin/home-layout/read",
+      headers: { "content-type": "application/json" },
+      payload: { schemaVersion: 1 },
+    });
+    expect(layoutAdmin.statusCode).toBe(403);
+    const layoutPublic = await app.inject({
+      method: "GET",
+      url: "/api/v1/storefront/home-layout?unexpected=1",
+    });
+    expect(layoutPublic.statusCode).toBe(400);
+    expect(layoutPublic.headers["cache-control"]).toBe("no-store");
     const seo = await app.inject({
       method: "GET",
       url: "/api/v1/storefront-seo/entity",

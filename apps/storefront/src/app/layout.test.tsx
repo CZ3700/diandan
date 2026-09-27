@@ -1,12 +1,21 @@
 import { isValidElement, type ReactElement } from "react";
 import { expect, test, vi } from "vitest";
 
+const runtime = vi.hoisted(() => ({
+  preview: false,
+  collector: vi.fn(async () => null),
+}));
+
 vi.mock("server-only", () => ({}));
 vi.mock("next/headers", () => ({
-  headers: async () => new Headers({ "x-storefront-locale": "zh-CN" }),
+  headers: async () =>
+    new Headers({
+      "x-storefront-locale": "zh-CN",
+      ...(runtime.preview ? { "x-storefront-layout-preview": "1" } : {}),
+    }),
 }));
 vi.mock("../server/rum-bootstrap", () => ({
-  renderRumCollector: async () => null,
+  renderRumCollector: runtime.collector,
 }));
 
 type ElementProps = Readonly<{
@@ -40,3 +49,15 @@ test("keeps phone browsers from rewriting server HTML before hydration", async (
     (body as ReactElement<ElementProps>).props.suppressHydrationWarning,
   ).toBe(true);
 }, 30_000);
+
+test("layout preview does not initialize telemetry collection", async () => {
+  runtime.preview = true;
+  runtime.collector.mockClear();
+  try {
+    const { default: RootLayout } = await import("./layout");
+    await RootLayout({ children: null });
+    expect(runtime.collector).not.toHaveBeenCalled();
+  } finally {
+    runtime.preview = false;
+  }
+});

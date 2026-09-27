@@ -11,6 +11,10 @@ import {
 } from "./local-experience-config.mjs";
 import { localStorefrontIdentity } from "./local-experience-web-config.mjs";
 import {
+  localPaymentProfile,
+  withoutLocalPaymentCredentials,
+} from "./local-experience-payment-profile.mjs";
+import {
   regressionWebMode,
   startRegressionStorefront,
 } from "./regression-journey-web.mjs";
@@ -30,7 +34,7 @@ export async function startLocalWeb(context) {
     const { port } = localServiceTarget(config, app),
       origin = config.origins[app];
     const env = Object.fromEntries(
-      Object.entries(process.env).filter(
+      Object.entries(withoutLocalPaymentCredentials(process.env)).filter(
         ([key]) => !key.startsWith("FAN_SUPPORT_"),
       ),
     );
@@ -42,8 +46,9 @@ export async function startLocalWeb(context) {
       FAN_SUPPORT_INTERNAL_API_ORIGIN: `http://127.0.0.1:${config.ports.api}`,
       FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN: config.origins.media,
       FAN_SUPPORT_PAYMENT_ACTION_ORIGINS_JSON: JSON.stringify([
-        config.origins.psp,
+        ...localPaymentProfile(config).actionOrigins,
       ]),
+      FAN_SUPPORT_ADMIN_ORIGIN: config.origins.admin,
       FAN_SUPPORT_ADMIN_MODE: "LOCAL_OIDC",
       FAN_SUPPORT_ADMIN_ACCESS_KEY: Buffer.from(
         config.secrets.accessKey,

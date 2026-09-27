@@ -3,6 +3,7 @@ import { localExperienceConfigSchema } from "./local-experience-config.mjs";
 import { startLocalExperienceOidc } from "./local-experience-services-oidc.mjs";
 import { startLocalExperiencePsp } from "./local-experience-services-psp.mjs";
 import { startLocalExperienceMail } from "./local-experience-services-mail.mjs";
+import { localPaymentProfile } from "./local-experience-payment-profile.mjs";
 
 /** Separate durable TEST provider state; stopping closes connections and never drops data. */
 export async function startLocalExperienceServices({
@@ -47,12 +48,14 @@ export async function startLocalExperienceServices({
   try {
     const oidc = await startLocalExperienceOidc({ config });
     resources.push(() => oidc.close());
-    const psp = await startLocalExperiencePsp({
-      config,
-      database: providerDatabase,
-      pool,
-    });
-    resources.push(() => psp.close());
+    const psp = localPaymentProfile(config).startFakePsp
+      ? await startLocalExperiencePsp({
+          config,
+          database: providerDatabase,
+          pool,
+        })
+      : undefined;
+    if (psp) resources.push(() => psp.close());
     const mail = await startLocalExperienceMail({ config, pool });
     resources.push(() => mail.close());
     own?.("local TEST identity/payment/mail services", close);

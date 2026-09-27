@@ -12,6 +12,7 @@ import {
   createContentAuthoringUseCases,
   createGiftCommerceUseCases,
   createManagementCenterUseCases,
+  createHomeLayoutUseCases,
   createPublicationPreflightUseCases,
   createPublicationRuntimeUseCases,
   createResourceManagementUseCases,
@@ -43,6 +44,7 @@ import type { ApiLifecycleResource } from "./bootstrap.js";
 import type { ContentAuthoringRouteDependencies } from "./admin-content-authoring-route.js";
 import type { GiftCommerceRouteDependencies } from "./gift-commerce-route.js";
 import type { ManagementCenterRouteDependencies } from "./management-center-route.js";
+import type { HomeLayoutRouteDependencies } from "./home-layout-route.js";
 import { createPaymentRecoveryLifecycle } from "./payment-runtime-lifecycle.js";
 import type { PaymentConfigurationRuntime } from "./payment-configuration-runtime.js";
 import type { ApiProductionResources } from "./production-resources.js";
@@ -75,6 +77,7 @@ export type ProductionAdminComposition = Readonly<{
   adminContentRoute: AdminContentRouteOptions;
   resourceManagementRoute: ResourceManagementRouteDependencies;
   managementCenterRoute: ManagementCenterRouteDependencies;
+  homeLayoutRoute: HomeLayoutRouteDependencies;
   publicationPreflightRoute: PublicationPreflightRouteDependencies;
   publicationRuntimeRoute: PublicationRuntimeRouteDependencies;
   giftCommerceRoute: GiftCommerceRouteDependencies;
@@ -208,6 +211,13 @@ export function createProductionAdminComposition(
         useCases: createManagementCenterUseCases({
           transactions: persistence.managementCenterTransactionManager,
           resourceManagement,
+          tokenPepper,
+        }),
+      },
+      homeLayoutRoute: {
+        allowedOrigin,
+        useCases: createHomeLayoutUseCases({
+          transactions: persistence.homeLayoutTransactionManager,
           tokenPepper,
         }),
       },

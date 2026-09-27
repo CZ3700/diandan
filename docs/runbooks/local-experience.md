@@ -1,8 +1,10 @@
 # 持久本地体验
 
-本地 TEST 环境让前台、管理中心、API 与独立 Worker 使用同一 PostgreSQL 和媒体存储。它不扣真实款、不发送外部邮件；本地身份选择页只模拟身份提供商，不能作为生产身份服务。
+本地 TEST 环境让前台、管理中心、API 与独立 Worker 使用同一 PostgreSQL 和媒体存储。默认使用本地模拟支付，不扣真实款、不发送外部邮件；本地身份选择页只模拟身份提供商，不能作为生产身份服务。
 
 ## 本次已验收示例
+
+2026-09-28 首页装修样板已在新的隔离实例验收，保留了示例艺人、礼物、海报和测试订单。当前运行时可直接打开：`pnpm local:open --instance test-regression-layout-0928`，登录后选择“店铺装修”。停止后可用 `pnpm local:start --instance test-regression-layout-0928 --open` 重新体验；重验正式构建时在启动命令前加 `FAN_SUPPORT_REGRESSION_WEB_MODE=production`。该实例使用本地模拟支付，与旧体验数据分开。
 
 2026-09-23 完整购买及重启验收通过，保留了一个可直接体验的示例。打开它：
 
@@ -28,6 +30,10 @@ mise exec node@24.20.0 -- corepack pnpm local:start --open
 
 管理中心点击登录，在明确标记 Local TEST 的身份页选择管理人员。艺人上传图片并填写名字、描述；礼物上传图片并填写名字、描述、价格和分类；首页海报上传替换。礼物类型与库存策略分开，默认按需采购，所有收礼方均为工作室转交艺人。
 
+“店铺装修”管理首页区块：上下移动调整顺序，勾选控制显示；海报、艺人和礼物三个核心区块保留。右侧可以切换手机/电脑预览，预览不会购买或改动公开页面。“保存草稿”后才可“发布”；“恢复默认布局”只改变待保存草稿。“发布历史”可恢复以前的布局，并保留最新海报、商品与订单。退出或切换工作区前会提示尚未保存的修改；如果提示版本冲突，先重新载入当前版本再调整。
+
+预览与真实首页使用同一个渲染器，只展示已发布的图片和内容。部署时商城必须配置准确的 `FAN_SUPPORT_ADMIN_ORIGIN` 才能启用嵌入预览；本地启动器自动设置。布局读取失败会显示可重试错误，不将默认版式冒充已发布结果。
+
 前台选择艺人、礼物、署名/留言后结账，支付页面明确为 TEST，无须输入卡号。付款结果由服务端签名回调确认。测试邮件进入本地收件箱，使用其中的安全链接查看订单；管理中心可审核留言、准备、送达和按权限退款。独立复核身份用于需要第二人审核的配置和内容流程。
 
 ## 停止、重启与状态
@@ -52,4 +58,6 @@ pnpm local:start --open
 
 本轮已通过 FULL799 + RESTART109 断言和55次axe，权威结果见 `output/checks/p5-08-local-deployment/final-verification.md`。专项入口：`pnpm verify:local-experience`；浏览器与重启验收在独立实例执行，不能清空用户实例。
 
-本地 TEST 并非 PSP sandbox 或真实资金验收。AWS staging plan/apply、DNS/TLS、IAM/KMS、实际云对象存储、CloudFront/WAF/预算/配额、真实身份与邮件、正式内容与支付批准仍是原有外部验收项；生产 runtime 的配置装配须逐项验证。离线基础设施操作见 [infrastructure-offline.md](infrastructure-offline.md)。
+默认本地模拟支付并非 PSP sandbox 或真实资金验收。AWS staging plan/apply、DNS/TLS、IAM/KMS、实际云对象存储、CloudFront/WAF/预算/配额、真实身份与邮件、正式内容与支付批准仍是原有外部验收项；生产 runtime 的配置装配须逐项验证。离线基础设施操作见 [infrastructure-offline.md](infrastructure-offline.md)。
+
+2026-09-28 新增独立 Stripe TEST 接线选项：仅新建 `test-` / `acceptance-` 实例可使用 `--payment-provider stripe-test`，已存在实例不能更换提供商。默认实例仍使用本地模拟支付。Stripe 模式需独立启动官方 CLI 转发，并仅在 API 进程环境提供 `PAYMENT_SECRET_STRIPE_API` 和当前转发器对应的 `PAYMENT_SECRET_STRIPE_WEBHOOK`；不要把密钥放进命令参数或实例配置。接线测试不等于本站 Stripe 订单链路已经验收，当前结论以 [上线进度](../progress/launch-progress.md) 为准。

@@ -531,6 +531,22 @@
       "kind": "TABLE"
     },
     {
+      "name": "homepage_layout_heads",
+      "kind": "TABLE"
+    },
+    {
+      "name": "homepage_layout_publications",
+      "kind": "TABLE"
+    },
+    {
+      "name": "homepage_layout_receipts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "homepage_layout_revisions",
+      "kind": "TABLE"
+    },
+    {
       "name": "homepage_publication_heads",
       "kind": "TABLE"
     },
@@ -11603,6 +11619,336 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_heads",
+      "position": 1,
+      "name": "singleton",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": "true",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_heads",
+      "position": 2,
+      "name": "version",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_heads",
+      "position": 3,
+      "name": "draft_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_heads",
+      "position": 4,
+      "name": "published_publication_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_heads",
+      "position": 5,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_publications",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_publications",
+      "position": 2,
+      "name": "revision_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_publications",
+      "position": 3,
+      "name": "version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_publications",
+      "position": 4,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_publications",
+      "position": 5,
+      "name": "restored_from_publication_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_publications",
+      "position": 6,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_publications",
+      "position": 7,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_publications",
+      "position": 8,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_publications",
+      "position": 9,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_publications",
+      "position": 10,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "position": 2,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "position": 3,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "position": 4,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "position": 5,
+      "name": "idempotency_key",
+      "dataType": "idempotency_key_value",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "position": 6,
+      "name": "request_hash",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "position": 7,
+      "name": "response",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "position": 8,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "position": 9,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "position": 10,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "position": 3,
+      "name": "layout",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "position": 4,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "position": 5,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "position": 6,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "position": 7,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "position": 8,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
       "identity": "",
       "generation": ""
     },
@@ -39913,6 +40259,486 @@
       "initiallyDeferred": false
     },
     {
+      "table": "homepage_layout_heads",
+      "name": "homepage_layout_heads_draft_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (draft_revision_id) REFERENCES homepage_layout_revisions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_heads",
+      "name": "homepage_layout_heads_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (singleton)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_heads",
+      "name": "homepage_layout_heads_published_publication_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (published_publication_id) REFERENCES homepage_layout_publications(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_heads",
+      "name": "homepage_layout_heads_singleton_check",
+      "kind": "CHECK",
+      "definition": "CHECK (singleton)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_heads",
+      "name": "homepage_layout_heads_singleton_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL singleton",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_heads",
+      "name": "homepage_layout_heads_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_heads",
+      "name": "homepage_layout_heads_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (version >= 0 AND version <= '9007199254740991'::bigint)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_heads",
+      "name": "homepage_layout_heads_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['PUBLISH'::text, 'RESTORE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_check",
+      "kind": "CHECK",
+      "definition": "CHECK ((action = 'RESTORE'::text) = (restored_from_publication_id IS NOT NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_restored_from_publication_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (restored_from_publication_id) REFERENCES homepage_layout_publications(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (revision_id) REFERENCES homepage_layout_revisions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_revision_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL revision_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_version_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['SAVE_DRAFT'::text, 'PUBLISH'::text, 'RESTORE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_actor_id_action_idempotency_key_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (actor_id, action, idempotency_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_idempotency_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idempotency_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_request_hash_check",
+      "kind": "CHECK",
+      "definition": "CHECK (request_hash ~ '^[a-f0-9]{64}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_request_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_response_check",
+      "kind": "CHECK",
+      "definition": "CHECK (jsonb_typeof(response) = 'object'::text AND (response ->> 'outcome'::text) = 'SUCCESS'::text AND (response ->> 'kind'::text) = 'STATE'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_response_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL response",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_layout_check",
+      "kind": "CHECK",
+      "definition": "CHECK (valid_homepage_layout(layout))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_layout_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL layout",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "homepage_publication_heads",
       "name": "homepage_publication_heads_consistency_trigger",
       "kind": "CONSTRAINT_TRIGGER",
@@ -60899,6 +61725,78 @@
       "valid": true
     },
     {
+      "table": "homepage_layout_heads",
+      "name": "homepage_layout_heads_pkey",
+      "definition": "CREATE UNIQUE INDEX homepage_layout_heads_pkey ON public.homepage_layout_heads USING btree (singleton)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX homepage_layout_publications_audit_log_id_key ON public.homepage_layout_publications USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_pkey",
+      "definition": "CREATE UNIQUE INDEX homepage_layout_publications_pkey ON public.homepage_layout_publications USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_version_key",
+      "definition": "CREATE UNIQUE INDEX homepage_layout_publications_version_key ON public.homepage_layout_publications USING btree (version)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_actor_id_action_idempotency_key_key",
+      "definition": "CREATE UNIQUE INDEX homepage_layout_receipts_actor_id_action_idempotency_key_key ON public.homepage_layout_receipts USING btree (actor_id, action, idempotency_key)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX homepage_layout_receipts_audit_log_id_key ON public.homepage_layout_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX homepage_layout_receipts_pkey ON public.homepage_layout_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_pkey",
+      "definition": "CREATE UNIQUE INDEX homepage_layout_revisions_pkey ON public.homepage_layout_revisions USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "homepage_publication_heads",
       "name": "homepage_publication_heads_pkey",
       "definition": "CREATE UNIQUE INDEX homepage_publication_heads_pkey ON public.homepage_publication_heads USING btree (id)",
@@ -65701,6 +66599,54 @@
       "enabled": "O"
     },
     {
+      "table": "homepage_layout_heads",
+      "name": "homepage_layout_heads_guard",
+      "definition": "CREATE TRIGGER homepage_layout_heads_guard BEFORE DELETE OR UPDATE ON homepage_layout_heads FOR EACH ROW EXECUTE FUNCTION guard_homepage_layout_head()",
+      "enabled": "O"
+    },
+    {
+      "table": "homepage_layout_heads",
+      "name": "homepage_layout_heads_no_truncate",
+      "definition": "CREATE TRIGGER homepage_layout_heads_no_truncate BEFORE TRUNCATE ON homepage_layout_heads FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_immutable",
+      "definition": "CREATE TRIGGER homepage_layout_publications_immutable BEFORE DELETE OR UPDATE ON homepage_layout_publications FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "homepage_layout_publications",
+      "name": "homepage_layout_publications_no_truncate",
+      "definition": "CREATE TRIGGER homepage_layout_publications_no_truncate BEFORE TRUNCATE ON homepage_layout_publications FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_immutable",
+      "definition": "CREATE TRIGGER homepage_layout_receipts_immutable BEFORE DELETE OR UPDATE ON homepage_layout_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "homepage_layout_receipts",
+      "name": "homepage_layout_receipts_no_truncate",
+      "definition": "CREATE TRIGGER homepage_layout_receipts_no_truncate BEFORE TRUNCATE ON homepage_layout_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_immutable",
+      "definition": "CREATE TRIGGER homepage_layout_revisions_immutable BEFORE DELETE OR UPDATE ON homepage_layout_revisions FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "homepage_layout_revisions",
+      "name": "homepage_layout_revisions_no_truncate",
+      "definition": "CREATE TRIGGER homepage_layout_revisions_no_truncate BEFORE TRUNCATE ON homepage_layout_revisions FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "homepage_publication_heads",
       "name": "homepage_publication_heads_consistency_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER homepage_publication_heads_consistency_trigger AFTER INSERT OR DELETE OR UPDATE ON homepage_publication_heads DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_content_publication_heads()",
@@ -70047,6 +70993,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_gift_variant_change()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF TG_OP='DELETE' THEN RAISE EXCEPTION 'variant history is retained by archival' USING ERRCODE='55000'; END IF;\n PERFORM id FROM public.gifts WHERE id=NEW.gift_id FOR UPDATE;\n IF TG_OP='UPDATE' AND (NEW.id IS DISTINCT FROM OLD.id OR NEW.gift_id IS DISTINCT FROM OLD.gift_id OR NEW.created_at IS DISTINCT FROM OLD.created_at OR NEW.schema_version IS DISTINCT FROM OLD.schema_version OR NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at OR OLD.status='archived') THEN RAISE EXCEPTION 'variant identity and version are immutable' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND; $function$"
     },
     {
+      "name": "guard_homepage_layout_head",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_homepage_layout_head()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF TG_OP<>'UPDATE' THEN RAISE EXCEPTION 'layout head cannot be removed' USING ERRCODE='55000'; END IF;\n IF NEW.singleton<>OLD.singleton OR NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at OR\n    (NEW.draft_revision_id IS NOT DISTINCT FROM OLD.draft_revision_id AND NEW.published_publication_id IS NOT DISTINCT FROM OLD.published_publication_id) THEN\n  RAISE EXCEPTION 'layout head requires a new fenced revision' USING ERRCODE='23514'; END IF;\n IF NEW.published_publication_id IS DISTINCT FROM OLD.published_publication_id AND NOT EXISTS(SELECT 1 FROM homepage_layout_publications p WHERE p.id=NEW.published_publication_id AND p.version=NEW.version) THEN\n  RAISE EXCEPTION 'layout head publication version mismatch' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
       "name": "guard_idempotency_record_mutation",
       "identityArguments": "",
       "resultType": "trigger",
@@ -70615,6 +71571,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.require_admin_order_human_review()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NEW.status='CONVERTED' AND NEW.moderation_decision_kind='HUMAN'\n AND ROW(NEW.moderation_status,NEW.moderation_reason_code,NEW.moderation_decision_kind,NEW.moderation_reviewer_id,NEW.reviewed_at)\n IS DISTINCT FROM ROW(OLD.moderation_status,OLD.moderation_reason_code,OLD.moderation_decision_kind,OLD.moderation_reviewer_id,OLD.reviewed_at)\n AND NOT EXISTS(SELECT 1 FROM public.admin_order_message_reviews r WHERE r.support_intent_id=NEW.id AND r.expected_intent_version=OLD.version AND r.result_intent_version=NEW.version AND r.actor_id=NEW.moderation_reviewer_id AND r.decision=NEW.moderation_status AND r.created_at=NEW.reviewed_at) THEN\n  RAISE EXCEPTION 'converted human moderation requires an exact audited review receipt' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "valid_homepage_layout",
+      "identityArguments": "value jsonb",
+      "resultType": "boolean",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.valid_homepage_layout(value jsonb)\n RETURNS boolean\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE item jsonb; ids text[] := ARRAY[]::text[];\nBEGIN\n IF jsonb_typeof(value) IS DISTINCT FROM 'object' OR value->'schemaVersion' IS DISTINCT FROM '1'::jsonb OR\n    (SELECT count(*) FROM jsonb_object_keys(value))<>2 OR jsonb_typeof(value->'sections') IS DISTINCT FROM 'array' OR jsonb_array_length(value->'sections')<>8 THEN RETURN false; END IF;\n FOR item IN SELECT jsonb_array_elements(value->'sections') LOOP\n  IF jsonb_typeof(item) IS DISTINCT FROM 'object' OR (SELECT count(*) FROM jsonb_object_keys(item))<>2 OR\n     jsonb_typeof(item->'visible') IS DISTINCT FROM 'boolean' OR jsonb_typeof(item->'id') IS DISTINCT FROM 'string' OR NOT (item->>'id'=ANY(ARRAY['HERO','KINDS','ARTISTS','GIFTS','POLICIES','HOW_IT_WORKS','STUDIO_PROMISE','FINAL_CTA'])) OR\n     item->>'id'=ANY(ids) OR (item->>'id'=ANY(ARRAY['HERO','ARTISTS','GIFTS']) AND item->'visible'<>'true'::jsonb) THEN RETURN false; END IF;\n  ids := array_append(ids,item->>'id');\n END LOOP;\n RETURN cardinality(ids)=8 AND array_position(ids,NULL) IS NULL;\nEXCEPTION WHEN OTHERS THEN RETURN false;\nEND $function$"
     },
     {
       "name": "validate_cart_item_commerce_context",

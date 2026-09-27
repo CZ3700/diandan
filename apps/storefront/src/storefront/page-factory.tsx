@@ -11,6 +11,8 @@ import { loadStorefrontCopy } from "../server/storefront-copy";
 import type { StorefrontCopy } from "./copy";
 import { queryString } from "./navigation";
 import { HomeContent } from "./home-content";
+import { PageState } from "./page-parts";
+import { readPublicHomeLayout } from "../server/public-home-layout";
 import { GiftBrowseSection } from "./gift-browse-section";
 import { prepareGiftBrowse } from "./gift-browse-query";
 import { readGiftBrowse } from "../server/public-gift-browse";
@@ -46,50 +48,65 @@ export function createStorefrontPage(
       const browseQuery = prepareGiftBrowse(locale, values);
       const gifts = browseQuery ? readGiftBrowse(browseQuery) : undefined;
       const homepage = readStorefrontHomepage(locale);
+      const layout = readPublicHomeLayout();
       const directory = readStorefrontDirectory(
         directoryQuery.query,
         directoryQuery.valid,
       );
-      const [resolvedCopy, data] = await Promise.all([copyPromise, homepage]);
+      const [resolvedCopy, data, layoutResult] = await Promise.all([
+        copyPromise,
+        homepage,
+        layout,
+      ]);
       copy = resolvedCopy;
-      content = (
-        <HomeContent
-          locale={locale}
-          copy={copy}
-          contextQuery={contextQuery}
-          data={data}
-          giftDirectory={
-            <GiftBrowseSection
-              locale={locale}
-              copy={copy}
-              values={values}
-              basePath="/"
-              headingLevel={2}
-              initial={gifts}
-              pricing={{}}
-            />
-          }
-          directory={
-            <Suspense
-              fallback={
-                <p role="status" aria-busy="true">
-                  {copy.artistLoading}
-                </p>
-              }
-            >
-              <HomepageDirectory
+      content =
+        layoutResult.outcome === "FAILURE" ? (
+          <PageState
+            locale={locale}
+            copy={copy}
+            contextQuery={contextQuery}
+            title={copy.contentError}
+            body={copy.contentErrorBody}
+          />
+        ) : (
+          <HomeContent
+            locale={locale}
+            copy={copy}
+            contextQuery={contextQuery}
+            data={data}
+            layout={layoutResult.layout}
+            giftDirectory={
+              <GiftBrowseSection
                 locale={locale}
                 copy={copy}
-                initial={directory}
-                contextQuery={contextQuery}
-                {...(directoryQuery.anchor
-                  ? { initialAnchor: directoryQuery.anchor }
-                  : {})}
+                values={values}
+                basePath="/"
+                headingLevel={2}
+                initial={gifts}
+                pricing={{}}
               />
-            </Suspense>
-          }
-        />
-      );
+            }
+            directory={
+              <Suspense
+                fallback={
+                  <p role="status" aria-busy="true">
+                    {copy.artistLoading}
+                  </p>
+                }
+              >
+                <HomepageDirectory
+                  locale={locale}
+                  copy={copy}
+                  initial={directory}
+                  contextQuery={contextQuery}
+                  {...(directoryQuery.anchor
+                    ? { initialAnchor: directoryQuery.anchor }
+                    : {})}
+                />
+              </Suspense>
+            }
+          />
+        );
     } else if (kind === "artists") {
       const [resolvedCopy, initial] = await Promise.all([
         copyPromise,

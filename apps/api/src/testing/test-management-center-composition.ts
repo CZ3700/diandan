@@ -1,6 +1,7 @@
 import { randomBytes, randomUUID } from "node:crypto";
 import {
   createManagementCenterUseCases,
+  createHomeLayoutUseCases,
   createManagementCenterWorker,
   createManagementMediaPreparation,
   createResourceManagementUseCases,
@@ -18,12 +19,14 @@ import type {
   MediaStoragePort,
 } from "@fan-support/media-port";
 import type { ManagementCenterRouteDependencies } from "../management-center-route.js";
+import type { HomeLayoutRouteDependencies } from "../home-layout-route.js";
 import type { ApiLifecycleResource } from "../bootstrap.js";
 import { createManagementCenterRuntime } from "./management-center-runtime.js";
 
 type ManagementPersistence = Pick<
   PostgresPersistence,
   | "managementCenterTransactionManager"
+  | "homeLayoutTransactionManager"
   | "managementMediaTransactionManager"
   | "resourceManagementTransactionManager"
   | "mediaProcessingTransactionManager"
@@ -66,6 +69,7 @@ export function createTestManagementCenterComposition(
   }> = {},
 ): Readonly<{
   managementCenterRoute: ManagementCenterRouteDependencies;
+  homeLayoutRoute: HomeLayoutRouteDependencies;
   managementCenterRuntime: ApiLifecycleResource;
 }> {
   const pollIntervalMs = options.pollIntervalMs ?? 250,
@@ -122,6 +126,13 @@ export function createTestManagementCenterComposition(
     });
     return Object.freeze({
       managementCenterRoute: { allowedOrigin: options.allowedOrigin, useCases },
+      homeLayoutRoute: {
+        allowedOrigin: options.allowedOrigin,
+        useCases: createHomeLayoutUseCases({
+          transactions: persistence.homeLayoutTransactionManager,
+          tokenPepper: options.tokenPepper,
+        }),
+      },
       managementCenterRuntime: createManagementCenterRuntime({
         pollIntervalMs,
         processNext: async () => {

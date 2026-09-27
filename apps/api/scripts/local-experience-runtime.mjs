@@ -1,9 +1,5 @@
-import { Buffer } from "node:buffer";
 import { createStructuredLogger } from "@fan-support/observability";
 import { startNodeTelemetry } from "@fan-support/observability/node";
-import { PAYMENT_PROVIDER_OPERATIONS } from "@fan-support/payment-port";
-import { createFakePaymentWebhookVerifier } from "@fan-support/payment-fake";
-import { createPersistentTestPaymentProvider } from "@fan-support/payment-fake/persistent-http";
 import { createApiApplication } from "../dist/bootstrap.js";
 import {
   createTestAdminWorkspaceComposition,
@@ -37,6 +33,7 @@ import {
 import { startLocalExperienceWorkerProcess } from "./local-experience-worker-process.mjs";
 import { localExperienceConfigSchema } from "./local-experience-config.mjs";
 import { parseLocalBusiness } from "./local-experience-bootstrap-state.mjs";
+import { createLocalPaymentRuntime } from "./local-experience-payment-runtime.mjs";
 
 /** One canonical API shares PostgreSQL and real media with every local application. It never seeds or replaces business rows. */
 export async function startLocalExperienceRuntime({
@@ -195,70 +192,14 @@ export async function startLocalExperienceRuntime({
       },
     }),
   );
-  const binding = services.psp.binding;
-  const paymentFactory = {
-    descriptor: {
-      schemaVersion: 1,
-      adapterKey: "fake",
-      adapterVersion: "1.0.0",
-      protocol: "persistent-test-v1",
-      supportedOperations: [...PAYMENT_PROVIDER_OPERATIONS],
-      supportedInstrumentKinds: ["CARD"],
-      idempotency: {
-        retention: "DURABLE",
-        minimumRetentionSeconds: 0,
-        referenceLookup: true,
-      },
-    },
-    create: (connection) => ({
-      configuration: connection.binding,
-      provider: createPersistentTestPaymentProvider({
-        binding: connection.binding,
-        endpointOrigin: services.psp.origin,
-        returnOrigin: config.origins.storefront,
-        authorizationToken: config.services.psp.authorizationToken,
-        fetcher: services.psp.fetcher,
-        timeoutMs: 5000,
-      }),
-    }),
-  };
-  const healthPolicy = {
-    schemaVersion: 1,
-    providerAccountId: binding.providerAccountId,
-    environment: "TEST",
-    version: 1,
-    failureThreshold: 3,
-    failureWindowMs: 60000,
-    openDurationMs: 30000,
-    probeLeaseMs: 5000,
-    probeRetryMs: 1000,
-  };
+  const paymentProfile = createLocalPaymentRuntime({ config, services });
+  own("local payment credential resources", paymentProfile.close);
+  const healthPolicy = paymentProfile.healthPolicy;
   const configuration = add(
     createLocalAdminPaymentConfigurationComposition({
       ...localAdmin,
-      connections: [
-        {
-          schemaVersion: 1,
-          binding,
-          adapterVersion: "1.0.0",
-          protocol: "persistent-test-v1",
-          apiOrigin: services.psp.origin,
-          returnOrigin: config.origins.storefront,
-          merchantAccount: `local-test-${config.instanceId}`,
-          credentialRef: `secret-ref:v1:test:local/${binding.providerAccountId}`,
-          timeoutMs: 5000,
-          instruments: [
-            {
-              kind: "CARD",
-              paymentMethod: "fake_card",
-              brands: ["VISA", "MASTERCARD"],
-              authentication: "PSP_MANAGED_3DS",
-              capture: "AUTOMATIC",
-            },
-          ],
-        },
-      ],
-      factories: [paymentFactory],
+      connections: [paymentProfile.connection],
+      factories: [paymentProfile.factory],
       healthPolicies: [healthPolicy],
       refreshDelayMs: 1000,
     }),
@@ -291,23 +232,17 @@ export async function startLocalExperienceRuntime({
     }),
   );
   add(createLocalAdminExceptionsComposition(localAdmin));
-  const secret = Buffer.from(config.secrets.webhookSecret, "base64url");
-  own("local webhook verifier key", async () => secret.fill(0));
-  const verifier = createFakePaymentWebhookVerifier({
-    ...business.endpoint,
-    environment: "TEST",
-    verificationSecret: secret,
+  const reliable = createApiReliableEventsComposition(environment, {
+    logger,
+    keyManagement: kms.adapter,
+    verifierForEndpoint: paymentProfile.verifiers.verifierForEndpoint,
   });
-  add(
-    createApiReliableEventsComposition(environment, {
-      logger,
-      keyManagement: kms.adapter,
-      verifierForEndpoint: (adapterKey, endpointId) =>
-        adapterKey === "fake" && endpointId === business.endpoint.endpointId
-          ? verifier
-          : undefined,
-    }),
-  );
+  add({
+    ...reliable,
+    paymentWebhookRoute: paymentProfile.verifiers.gate(
+      reliable.paymentWebhookRoute,
+    ),
+  });
   progress("Starting canonical local API");
   const app = await createApiApplication(
     environment,

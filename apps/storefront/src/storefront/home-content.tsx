@@ -1,7 +1,9 @@
-import type { ReactNode } from "react";
-import type {
-  StorefrontHomepageResponse,
-  SupportedLocale,
+import { Fragment, type ReactNode } from "react";
+import {
+  createDefaultHomeLayout,
+  type HomeLayout,
+  type StorefrontHomepageResponse,
+  type SupportedLocale,
 } from "@fan-support/contracts";
 import { Icon } from "@fan-support/ui";
 import { PublishedHeroImage } from "./published-image";
@@ -17,6 +19,7 @@ export function HomeContent({
   contextQuery,
   directory,
   giftDirectory,
+  layout = createDefaultHomeLayout(),
 }: Readonly<{
   data: StorefrontHomepageResponse;
   locale: SupportedLocale;
@@ -24,6 +27,7 @@ export function HomeContent({
   contextQuery: string;
   directory?: ReactNode;
   giftDirectory?: ReactNode;
+  layout?: HomeLayout;
 }>) {
   if (data.outcome === "FAILURE")
     return (
@@ -43,7 +47,9 @@ export function HomeContent({
           }
           contextQuery={contextQuery}
         />
-        <HomeKinds locale={locale} copy={copy} contextQuery={contextQuery} />
+        {layout.sections.find((section) => section.id === "KINDS")?.visible && (
+          <HomeKinds locale={locale} copy={copy} contextQuery={contextQuery} />
+        )}
         {giftDirectory}
       </>
     );
@@ -56,20 +62,8 @@ export function HomeContent({
     hero?.status === "AVAILABLE" && hero.content.content.kind === "IDOL"
       ? hero.content.content.view
       : undefined;
-  return (
-    <>
-      {view.announcement && (
-        <p
-          className="storefront-announcement"
-          lang={view.localeContext.resolvedLocale}
-        >
-          {view.announcement}
-        </p>
-      )}
-      {view.localeContext.schemaVersion === 1 &&
-        view.localeContext.fallbackUsed && (
-          <p className="storefront-announcement">{copy.fallbackNotice}</p>
-        )}
+  const sections: Record<HomeLayout["sections"][number]["id"], ReactNode> = {
+    HERO: (
       <section className="storefront-hero" aria-labelledby="hero-title">
         <div className="storefront-hero-copy">
           <p className="storefront-eyebrow">{copy.artistEyebrow}</p>
@@ -117,7 +111,11 @@ export function HomeContent({
           fallbackLabel={copy.mediaFallback}
         />
       </section>
+    ),
+    KINDS: (
       <HomeKinds locale={locale} copy={copy} contextQuery={contextQuery} />
+    ),
+    ARTISTS: (
       <section
         className="storefront-section"
         id="artists"
@@ -159,7 +157,9 @@ export function HomeContent({
         )}
         {directory}
       </section>
-      {giftDirectory}
+    ),
+    GIFTS: giftDirectory,
+    POLICIES: (
       <nav className="storefront-policy-links" aria-label={copy.trustTitle}>
         {view.slots
           .filter((slot) => slot.kind === "POLICY_LINK")
@@ -177,8 +177,10 @@ export function HomeContent({
             </a>
           ))}
       </nav>
-      <HowItWorks copy={copy} />
-      <StudioPromise copy={copy} />
+    ),
+    HOW_IT_WORKS: <HowItWorks copy={copy} />,
+    STUDIO_PROMISE: <StudioPromise copy={copy} />,
+    FINAL_CTA: (
       <section className="storefront-section storefront-final">
         <h2>{copy.finalTitle}</h2>
         <a
@@ -189,6 +191,27 @@ export function HomeContent({
           <Icon name="arrow-right" decorative />
         </a>
       </section>
+    ),
+  };
+  return (
+    <>
+      {view.announcement && (
+        <p
+          className="storefront-announcement"
+          lang={view.localeContext.resolvedLocale}
+        >
+          {view.announcement}
+        </p>
+      )}
+      {view.localeContext.schemaVersion === 1 &&
+        view.localeContext.fallbackUsed && (
+          <p className="storefront-announcement">{copy.fallbackNotice}</p>
+        )}
+      {layout.sections.map((section) =>
+        section.visible ? (
+          <Fragment key={section.id}>{sections[section.id]}</Fragment>
+        ) : null,
+      )}
     </>
   );
 }

@@ -6,6 +6,8 @@ import {
   marketSchema,
   paymentRuntimeConfigurationSchema,
   paymentRuntimeProviderBindingSchema,
+  paymentMethodSchema,
+  paymentAccountConnectionSchema,
 } from "@fan-support/contracts";
 import { canonicalPublicationValue } from "@fan-support/content";
 import { loadStorefrontCopy } from "@fan-support/i18n";
@@ -21,8 +23,13 @@ export async function seedPaymentRuntimeConfiguration({
   configuration: inputConfiguration,
   scope: inputScope,
   rollout = { providerBasisPoints: 10000, ruleBasisPoints: 10000 },
+  paymentMethod = "fake_card",
+  credentialRef,
   check,
 }) {
+  paymentMethodSchema.parse(paymentMethod);
+  if (credentialRef !== undefined)
+    paymentAccountConnectionSchema.shape.credentialRef.parse(credentialRef);
   if (
     !rollout ||
     Object.keys(rollout).sort().join(",") !==
@@ -123,7 +130,8 @@ export async function seedPaymentRuntimeConfiguration({
           merchantId,
           binding.providerCode,
           randomBytes(32),
-          `secret-ref:v1:aws-sm:test/payment/${binding.providerAccountId}`,
+          credentialRef ??
+            `secret-ref:v1:aws-sm:test/payment/${binding.providerAccountId}`,
         ],
       );
       await client.query(
@@ -179,7 +187,7 @@ export async function seedPaymentRuntimeConfiguration({
       }
       stage = "explicit TEST routing scope";
       await client.query(
-        "INSERT INTO payment_route_rules(id,config_version_id,provider_config_id,provider_account_id,rule_key,rule_version,payment_method,enabled,minimum_amount_minor,maximum_amount_minor,priority,rollout_basis_points) VALUES($1,$2,$3,$4,$5,$6,'fake_card',true,0,100000000,10,$7)",
+        "INSERT INTO payment_route_rules(id,config_version_id,provider_config_id,provider_account_id,rule_key,rule_version,payment_method,enabled,minimum_amount_minor,maximum_amount_minor,priority,rollout_basis_points) VALUES($1,$2,$3,$4,$5,$6,$8,true,0,100000000,10,$7)",
         [
           capabilityId,
           configVersionId,
@@ -188,6 +196,7 @@ export async function seedPaymentRuntimeConfiguration({
           `test.${capabilityId}`,
           ruleVersion,
           rollout.ruleBasisPoints,
+          paymentMethod,
         ],
       );
       await client.query(

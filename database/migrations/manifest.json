@@ -430,6 +430,16 @@
         "up": "a898608973dd8f5e514f1e0ac944c6be03b2dc5276b424e30b32f1c3dd8f4cea",
         "down": "adfe63b23e19d077d065985253f5cc9c93259f2a040343259028d8aee8888e35"
       }
+    },
+    {
+      "version": "0044",
+      "name": "home-layout",
+      "up": "database/migrations/0044_home-layout.up.sql",
+      "down": "database/migrations/0044_home-layout.down.sql",
+      "sha256": {
+        "up": "17fda365695ac84bd828630b65d099d71d295150760aa1ed820f59b6591e438c",
+        "down": "cbac0ace139cbba527e58b311fbe36b9ce8ff98132b3abc473add1282d7da1a9"
+      }
     }
   ]
 }

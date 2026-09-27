@@ -23,6 +23,12 @@ import {
   type ManagementCenterRouteDependencies,
 } from "./management-center-route.js";
 import {
+  registerHomeLayoutRoute,
+  registerPublicHomeLayoutRoute,
+  type HomeLayoutRouteDependencies,
+  type PublicHomeLayoutRouteDependencies,
+} from "./home-layout-route.js";
+import {
   registerGiftCommerceRoute,
   type GiftCommerceRouteDependencies,
 } from "./gift-commerce-route.js";
@@ -146,6 +152,8 @@ export type CreateApiApplicationOptions = Readonly<{
   sharedResourcesRuntime?: ApiLifecycleResource;
   managementCenterRoute?: ManagementCenterRouteDependencies;
   managementCenterRuntime?: ApiLifecycleResource;
+  homeLayoutRoute?: HomeLayoutRouteDependencies;
+  publicHomeLayoutRoute?: PublicHomeLayoutRouteDependencies;
   giftCommerceRoute?: GiftCommerceRouteDependencies;
   giftCommerceRuntime?: ApiLifecycleResource;
   publishedGiftCommerceRoute?: PublishedGiftCommerceRouteDependencies;
@@ -500,6 +508,13 @@ export async function createApiApplication(
     registerManagementCenterRoute(
       adapter.getInstance(),
       options.managementCenterRoute,
+    );
+  if (options.homeLayoutRoute !== undefined)
+    registerHomeLayoutRoute(adapter.getInstance(), options.homeLayoutRoute);
+  if (options.publicHomeLayoutRoute !== undefined)
+    registerPublicHomeLayoutRoute(
+      adapter.getInstance(),
+      options.publicHomeLayoutRoute,
     );
   if (options.resourceManagementRoute !== undefined)
     registerResourceManagementRoute(

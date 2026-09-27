@@ -4,6 +4,7 @@ import { renderToPipeableStream, renderToStaticMarkup } from "react-dom/server";
 import { beforeAll, beforeEach, expect, test, vi } from "vitest";
 import {
   SUPPORTED_LOCALES,
+  createDefaultHomeLayout,
   storefrontContextResponseSchema,
   storefrontHomepageResponseSchema,
   giftDirectoryResponseSchema,
@@ -23,6 +24,10 @@ const reads = vi.hoisted(() => ({
   seo: vi.fn(),
   gifts: vi.fn(),
   browse: vi.fn(),
+  layout: vi.fn(),
+}));
+vi.mock("../server/public-home-layout", () => ({
+  readPublicHomeLayout: reads.layout,
 }));
 vi.mock("server-only", () => ({}));
 vi.mock("next/headers", () => ({
@@ -182,6 +187,36 @@ function publishedArtist(locale: (typeof SUPPORTED_LOCALES)[number]) {
   return { ...slot.content, content: slot.content.content };
 }
 
+test("homepage renders configured section order and visibility without losing required entry anchors", async () => {
+  const ids = [
+    "HERO",
+    "GIFTS",
+    "ARTISTS",
+    "KINDS",
+    "POLICIES",
+    "HOW_IT_WORKS",
+    "STUDIO_PROMISE",
+    "FINAL_CTA",
+  ] as const;
+  const html = renderToStaticMarkup(
+    <HomeContent
+      locale="en"
+      copy={await loadStorefrontCopy("en")}
+      contextQuery="currency=USD"
+      data={publishedHome("en")}
+      layout={{
+        schemaVersion: 1,
+        sections: ids.map((id) => ({ id, visible: id !== "HOW_IT_WORKS" })),
+      }}
+      giftDirectory={<section id="gifts">Published gifts</section>}
+    />,
+  );
+  expect(html.indexOf('id="gifts"')).toBeLessThan(html.indexOf('id="artists"'));
+  expect(html).not.toContain('id="how-title"');
+  expect(html).toContain('id="hero-title"');
+  expect(html).toContain("/en/idols/fictional-1?currency=USD");
+});
+
 function giftPage(locale: (typeof SUPPORTED_LOCALES)[number]) {
   const artist = publishedArtist(locale).content.view;
   return giftDirectoryResponseSchema.parse({
@@ -280,6 +315,15 @@ function stream(element: ReactElement) {
 }
 
 beforeEach(() => {
+  reads.layout.mockReset().mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "HOME_LAYOUT",
+    source: "DEFAULT",
+    layout: createDefaultHomeLayout(),
+    version: 0,
+    publicationId: null,
+  });
   reads.catalog
     .mockReset()
     .mockImplementation(async (_path, _query, kind) =>
@@ -715,4 +759,38 @@ test("published gifts remain browsable when the homepage poster is unavailable",
   expect(streamed.errors).toEqual([]);
   expect(streamed.html()).toContain("Gift from the server directory");
   expect(streamed.html()).not.toContain("data-market-choices");
+});
+
+test("public homepage reads the published layout and never substitutes defaults after layout failure", async () => {
+  reads.catalog.mockImplementation(async (_path, _query, kind) =>
+    kind === "homepage" ? publishedHome("en") : directoryFixturePage([]),
+  );
+  reads.layout.mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "CONTENT_UNAVAILABLE",
+  });
+  const unavailablePage = await streamHome("en");
+  await unavailablePage.ended;
+  expect(unavailablePage.html()).not.toContain('id="hero-title"');
+  expect(unavailablePage.html()).not.toContain('id="how-title"');
+  expect(unavailablePage.html()).toContain("temporarily unavailable");
+  unavailablePage.abort();
+  const layout = createDefaultHomeLayout();
+  layout.sections.reverse();
+  reads.layout.mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "HOME_LAYOUT",
+    source: "PUBLISHED",
+    layout,
+    version: 2,
+    publicationId: "b0000000-0000-4000-8000-000000000001",
+  });
+  const published = await streamHome("en");
+  await published.ended;
+  expect(published.html().indexOf('id="gifts"')).toBeLessThan(
+    published.html().indexOf('id="artists"'),
+  );
+  published.abort();
 });

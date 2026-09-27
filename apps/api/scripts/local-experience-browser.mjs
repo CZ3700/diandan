@@ -31,6 +31,7 @@ import {
 import { waitForLocalGiftForm } from "./local-experience-browser-checkout.mjs";
 import { readLocalRefundResult } from "./local-experience-browser-refund.mjs";
 import { observeLocalBrowserPayment } from "./local-experience-browser-payment-observer.mjs";
+import { readCurrentPurchase } from "./regression-journey-browser.mjs";
 
 const require = createRequire(
   new URL("../../../package.json", import.meta.url),
@@ -259,6 +260,9 @@ export async function verifyLocalExperienceBrowser({
     page: customer,
     config,
     report,
+    // Cross-document navigation can evict CDP bodies; the explicit read below
+    // verifies departure, while every HTTP failure and all return bodies remain checked.
+    readBodyForStage: (value) => value === "PAYMENT_RETURN",
   });
   for (const [surface, page] of [
     ["admin", admin],
@@ -1048,13 +1052,26 @@ export async function verifyLocalExperienceBrowser({
           await customer
             .locator("[data-payment-continue]")
             .waitFor({ timeout: 30000 });
+          const departure = await readCurrentPurchase(customer);
+          check(
+            departure.checkout.id === checkout.checkout.id &&
+              departure.checkout.publicOrderId ===
+                checkout.checkout.publicOrderId &&
+              departure.attempt.checkoutSessionId === checkout.checkout.id &&
+              departure.attempt.status === "REQUIRES_ACTION" &&
+              departure.checkout.currency === checkout.checkout.currency &&
+              departure.checkout.market === checkout.checkout.market &&
+              departure.checkout.amount.totalAmountMinor ===
+                checkout.checkout.amount.totalAmountMinor,
+            "Before departure the authorized attempt preserves checkout, order and price",
+          );
           await capture(customer, "en-390-test-payment-ready");
           await customer.locator("[data-payment-continue]").click();
           await customer
             .locator("[data-test-psp-capture]")
             .waitFor({ timeout: 30000 });
-          await customer.locator("[data-test-psp-capture]").click();
           stage("PAYMENT_RETURN");
+          await customer.locator("[data-test-psp-capture]").click();
           await customer
             .locator("[data-order-number]")
             .waitFor({ timeout: 90000 });
@@ -1066,6 +1083,7 @@ export async function verifyLocalExperienceBrowser({
             .getAttribute("data-order-id");
           check(
             publicOrderIdSchema.safeParse(publicOrderId).success &&
+              publicOrderId === departure.checkout.publicOrderId &&
               publicOrderNoSchema.safeParse(
                 (
                   await customer.locator("[data-order-number]").innerText()
@@ -1085,7 +1103,7 @@ export async function verifyLocalExperienceBrowser({
             returnReads.length > 0 &&
               returnReads.every(
                 (entry) =>
-                  entry.attemptId === returnReads[0].attemptId &&
+                  entry.attemptId === departure.attempt.id &&
                   entry.checkoutSessionId === report.facts.checkoutSessionId,
               ),
             "Automatic return polling reads only the original checkout and attempt",

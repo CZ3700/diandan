@@ -1,5 +1,6 @@
 import { expect, test, vi } from "vitest";
 import { createPublishedContentComposition } from "./published-content-composition.js";
+import { createDefaultHomeLayout } from "@fan-support/contracts";
 const environment = Object.freeze({
   NODE_ENV: "test",
   FAN_SUPPORT_DEPLOYMENT_ENV: "test",
@@ -27,12 +28,26 @@ const logger = { info: vi.fn(), warn: vi.fn(), error: vi.fn() };
 
 test("binds production public reads to configured PostgreSQL and trusted media origin without admin authority", async () => {
   const close = vi.fn(async () => undefined);
+  const readLayout = vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "HOME_LAYOUT",
+    source: "DEFAULT",
+    layout: createDefaultHomeLayout(),
+    version: 0,
+    publicationId: null,
+  }));
   const load = vi.fn(async () => ({
     schemaVersion: 1,
     outcome: "FAILURE",
     code: "NOT_FOUND",
   }));
   const createPersistence = vi.fn(() => ({
+    homeLayoutTransactionManager: {
+      runInHomeLayoutTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ homeLayout: { readPublished: readLayout } }),
+    },
     storefrontSeoTransactionManager: {
       runInStorefrontSeoTransaction: async (
         work: (repositories: unknown) => unknown,
@@ -72,6 +87,7 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     factories: { createPersistence: createPersistence as never },
   });
   expect(Object.keys(composition).sort()).toEqual([
+    "publicHomeLayoutRoute",
     "publishedContentRoute",
     "publishedContentRuntime",
     "publishedGiftCommerceRoute",
@@ -103,6 +119,10 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     }),
   ).resolves.toMatchObject({ code: "NOT_FOUND" });
   expect(load).toHaveBeenCalledTimes(2);
+  await expect(
+    composition.publicHomeLayoutRoute.useCases.execute(),
+  ).resolves.toMatchObject({ source: "DEFAULT", publicationId: null });
+  expect(readLayout).toHaveBeenCalledOnce();
   await expect(
     composition.storefrontCommerceRoute.useCases.readContext({
       schemaVersion: 1,

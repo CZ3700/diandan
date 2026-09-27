@@ -15,6 +15,9 @@ import { ManagementWorkspace } from "./workspace";
 import { ManagementShell } from "./shell";
 import { ManagementLogout } from "./logout";
 import { managementCopy } from "./copy";
+import type { HomeLayoutApi } from "../management-decoration/api";
+import { DecorationWorkspace } from "../management-decoration/workspace";
+import { decorationCopy } from "../management-decoration/copy";
 import {
   resolveManagementAccess,
   managementSectionUnavailable,
@@ -25,6 +28,8 @@ export function ManagementHub({
   financeApi,
   paymentsApi,
   exceptionsApi,
+  layoutApi,
+  layoutPermissions,
   locale,
   storefrontOrigin,
   onLogout,
@@ -35,6 +40,9 @@ export function ManagementHub({
   financeApi?: FinanceApi | undefined;
   paymentsApi?: PaymentConfigurationApi | undefined;
   exceptionsApi?: ExceptionsApi | undefined;
+  layoutApi?: HomeLayoutApi | undefined;
+  layoutPermissions?:
+    { read: boolean; edit: boolean; publish: boolean } | undefined;
   locale: SupportedLocale;
   storefrontOrigin?: string | undefined;
   onLogout?: (() => Promise<void>) | undefined;
@@ -45,9 +53,15 @@ export function ManagementHub({
   > | null>(null);
   const [attempt, setAttempt] = useState(0),
     [section, setSection] = useState<
-      ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS" | null
+      | ManagementSection
+      | "ORDERS"
+      | "PAYMENTS"
+      | "EXCEPTIONS"
+      | "DECORATION"
+      | null
     >(null),
     [busy, setBusy] = useState(false);
+  const [layoutDirty, setLayoutDirty] = useState(false);
   const copy = ordersCopy(locale),
     common = managementCopy(locale);
   useEffect(() => {
@@ -90,9 +104,19 @@ export function ManagementHub({
         : access?.orders
           ? "ORDERS"
           : "EXCEPTIONS");
+  function canLeaveLayout() {
+    return !layoutDirty || window.confirm(decorationCopy(locale).discard);
+  }
+  const logout = onLogout
+    ? async () => {
+        if (canLeaveLayout()) await onLogout();
+      }
+    : undefined;
   function chooseSection(
-    next: ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS",
+    next:
+      ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS" | "DECORATION",
   ) {
+    if (next !== "DECORATION" && !canLeaveLayout()) return;
     setSection(next);
     if (next === "PAYMENTS" || next === "EXCEPTIONS")
       setAttempt((value) => value + 1);
@@ -108,16 +132,18 @@ export function ManagementHub({
       {common.retry}
     </Button>
   );
-  const notice = managementSectionUnavailable(access, active) ? (
-    <div className="mc-error-state" role="alert">
-      <p>{copy.loadError}</p>
-      {retry}
-    </div>
-  ) : null;
+  const notice =
+    active !== "DECORATION" && managementSectionUnavailable(access, active) ? (
+      <div className="mc-error-state" role="alert">
+        <p>{copy.loadError}</p>
+        {retry}
+      </div>
+    ) : null;
   if (
     access?.contentAllowed &&
     active !== "ORDERS" &&
     active !== "PAYMENTS" &&
+    active !== "DECORATION" &&
     active !== "EXCEPTIONS"
   )
     return (
@@ -125,7 +151,7 @@ export function ManagementHub({
         api={api}
         locale={locale}
         storefrontOrigin={storefrontOrigin}
-        onLogout={onLogout}
+        onLogout={logout}
         initialSection={active}
         onOrders={access.orders ? () => setSection("ORDERS") : undefined}
         onPayments={
@@ -133,6 +159,11 @@ export function ManagementHub({
         }
         onExceptions={
           access.exceptions ? () => chooseSection("EXCEPTIONS") : undefined
+        }
+        onDecoration={
+          layoutPermissions?.read && layoutApi
+            ? () => chooseSection("DECORATION")
+            : undefined
         }
         accessNotice={notice}
         canDeleteArtists={canDeleteArtists}
@@ -146,20 +177,27 @@ export function ManagementHub({
       ordersAvailable={Boolean(access?.orders)}
       paymentsAvailable={Boolean(access?.payments)}
       exceptionsAvailable={Boolean(access?.exceptions)}
+      decorationAvailable={Boolean(layoutPermissions?.read && layoutApi)}
       disabled={busy || !access}
       onSection={chooseSection}
       accountAction={
-        onLogout ? (
-          <ManagementLogout
-            locale={locale}
-            onLogout={onLogout}
-            disabled={busy}
-          />
+        logout ? (
+          <ManagementLogout locale={locale} onLogout={logout} disabled={busy} />
         ) : undefined
       }
     >
       {notice}
-      {active === "EXCEPTIONS" && access?.exceptions && exceptionsApi ? (
+      {active === "DECORATION" && layoutPermissions?.read && layoutApi ? (
+        <DecorationWorkspace
+          api={layoutApi}
+          locale={locale}
+          storefrontOrigin={storefrontOrigin}
+          canEdit={layoutPermissions.edit}
+          canPublish={layoutPermissions.publish}
+          onBusy={setBusy}
+          onDirtyChange={setLayoutDirty}
+        />
+      ) : active === "EXCEPTIONS" && access?.exceptions && exceptionsApi ? (
         <ExceptionsWorkspace
           api={exceptionsApi}
           initial={access.exceptions}

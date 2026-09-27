@@ -80,3 +80,4 @@ export { rebuildIdolSearchProjections } from "./catalog-search-projection.js";
 export { createCatalogDirectoryRepository } from "./catalog-directory-repository.js";
 export { createManagementCenterOperationRepository } from "./management-center-operation-repository.js";
 export { createDailyPublicationRepository } from "./daily-publication-repository.js";
+export { createHomeLayoutRepository } from "./home-layout-repository.js";

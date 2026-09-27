@@ -5,6 +5,7 @@ import {
   createStorefrontHomepageUseCases,
   createStorefrontCommerceUseCases,
   createStorefrontSeoUseCases,
+  createPublicHomeLayoutUseCases,
 } from "@fan-support/application";
 import {
   resolveDatabaseRuntimeConfig,
@@ -22,6 +23,7 @@ import type { ApiLifecycleResource } from "./bootstrap.js";
 import type { PublishedContentRouteDependencies } from "./published-content-route.js";
 import type { PublishedGiftCommerceRouteDependencies } from "./published-gift-commerce-route.js";
 import type { StorefrontHomepageRouteDependencies } from "./storefront-homepage-route.js";
+import type { PublicHomeLayoutRouteDependencies } from "./home-layout-route.js";
 
 type PublishedPersistence = Pick<
   PostgresPersistence,
@@ -30,6 +32,7 @@ type PublishedPersistence = Pick<
   | "storefrontHomepageTransactionManager"
   | "storefrontCommerceTransactionManager"
   | "storefrontSeoTransactionManager"
+  | "homeLayoutTransactionManager"
   | "close"
 >;
 type PersistenceFactory = (
@@ -47,6 +50,7 @@ export type PublishedContentComposition = Readonly<{
   storefrontHomepageRoute: StorefrontHomepageRouteDependencies;
   storefrontCommerceRoute: StorefrontCommerceRouteDependencies;
   storefrontSeoRoute: StorefrontSeoRouteDependencies;
+  publicHomeLayoutRoute: PublicHomeLayoutRouteDependencies;
   publishedContentRuntime: ApiLifecycleResource;
 }>;
 
@@ -74,6 +78,11 @@ export function createPublishedContentComposition(
   );
   let closePromise: Promise<void> | undefined;
   return Object.freeze({
+    publicHomeLayoutRoute: {
+      useCases: createPublicHomeLayoutUseCases({
+        transactions: persistence.homeLayoutTransactionManager,
+      }),
+    },
     storefrontSeoRoute: {
       useCases: createStorefrontSeoUseCases({
         transactions: persistence.storefrontSeoTransactionManager,

@@ -343,6 +343,11 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/gift-commerce/prices/read",
     "/api/v1/admin/gift-commerce/prices/rollback",
     "/api/v1/admin/gift-commerce/variants/save",
+    "/api/v1/admin/home-layout/draft",
+    "/api/v1/admin/home-layout/history",
+    "/api/v1/admin/home-layout/publish",
+    "/api/v1/admin/home-layout/read",
+    "/api/v1/admin/home-layout/restore",
     "/api/v1/admin/management/context",
     "/api/v1/admin/management/list",
     "/api/v1/admin/management/operations/read",
@@ -422,6 +427,7 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/storefront-seo/catalog",
     "/api/v1/storefront-seo/entity",
     "/api/v1/storefront-seo/index",
+    "/api/v1/storefront/home-layout",
     "/api/v1/webhooks/payments/{endpointId}",
   ]);
   expect(operation["operationId"]).toBe("receivePaymentWebhook");

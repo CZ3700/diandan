@@ -16,6 +16,7 @@ import { createExceptionsApi } from "../management-exceptions/api";
 import { createFinanceApi } from "../management-finance/api";
 import { ManagementLogin } from "./login";
 import "./management-center.css";
+import { createHomeLayoutApi } from "../management-decoration/api";
 
 export function ManagementCenter({
   locale,
@@ -36,6 +37,7 @@ export function ManagementCenter({
   );
   const exceptionsApi = useMemo(() => createExceptionsApi(client), [client]);
   const financeApi = useMemo(() => createFinanceApi(client), [client]);
+  const layoutApi = useMemo(() => createHomeLayoutApi(client), [client]);
   const copy = managementCopy(locale);
   const [loginFailed, setLoginFailed] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -92,6 +94,12 @@ export function ManagementCenter({
       financeApi={financeApi}
       paymentsApi={paymentsApi}
       exceptionsApi={exceptionsApi}
+      layoutApi={layoutApi}
+      layoutPermissions={{
+        read: session.permissions.includes("content.read"),
+        edit: session.permissions.includes("content.edit"),
+        publish: session.permissions.includes("content.publish"),
+      }}
       locale={locale}
       storefrontOrigin={storefrontOrigin}
       onLogout={authenticationAvailable ? logout : undefined}

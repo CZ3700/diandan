@@ -100302,6 +100302,765 @@
         "type": "object",
         "x-fan-support-audience": "admin-http"
       },
+      "HomeLayout": {
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "sections": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "enum": [
+                    "HERO",
+                    "KINDS",
+                    "ARTISTS",
+                    "GIFTS",
+                    "POLICIES",
+                    "HOW_IT_WORKS",
+                    "STUDIO_PROMISE",
+                    "FINAL_CTA"
+                  ],
+                  "type": "string"
+                },
+                "visible": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "visible"
+              ],
+              "type": "object"
+            },
+            "maxItems": 8,
+            "minItems": 8,
+            "type": "array"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "sections"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "HomeLayoutPreviewMessage": {
+        "additionalProperties": false,
+        "properties": {
+          "channel": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "layout": {
+            "additionalProperties": false,
+            "properties": {
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "sections": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "enum": [
+                        "HERO",
+                        "KINDS",
+                        "ARTISTS",
+                        "GIFTS",
+                        "POLICIES",
+                        "HOW_IT_WORKS",
+                        "STUDIO_PROMISE",
+                        "FINAL_CTA"
+                      ],
+                      "type": "string"
+                    },
+                    "visible": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "visible"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 8,
+                "minItems": 8,
+                "type": "array"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "sections"
+            ],
+            "type": "object"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "type": {
+            "const": "HOME_LAYOUT_PREVIEW",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "type",
+          "channel",
+          "layout"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "HomeLayoutPreviewReady": {
+        "additionalProperties": false,
+        "properties": {
+          "channel": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "type": {
+            "const": "HOME_LAYOUT_PREVIEW_READY",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "type",
+          "channel"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "HomeLayoutResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "STATE",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "replayed": {
+                "type": "boolean"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "state": {
+                "additionalProperties": false,
+                "properties": {
+                  "draft": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "createdAt": {
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                            "type": "string"
+                          },
+                          "layout": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "sections": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "id": {
+                                      "enum": [
+                                        "HERO",
+                                        "KINDS",
+                                        "ARTISTS",
+                                        "GIFTS",
+                                        "POLICIES",
+                                        "HOW_IT_WORKS",
+                                        "STUDIO_PROMISE",
+                                        "FINAL_CTA"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "visible": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "visible"
+                                  ],
+                                  "type": "object"
+                                },
+                                "maxItems": 8,
+                                "minItems": 8,
+                                "type": "array"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "sections"
+                            ],
+                            "type": "object"
+                          },
+                          "revisionId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "revisionId",
+                          "layout",
+                          "createdAt"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "published": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "action": {
+                            "enum": [
+                              "PUBLISH",
+                              "RESTORE"
+                            ],
+                            "type": "string"
+                          },
+                          "layout": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              },
+                              "sections": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "id": {
+                                      "enum": [
+                                        "HERO",
+                                        "KINDS",
+                                        "ARTISTS",
+                                        "GIFTS",
+                                        "POLICIES",
+                                        "HOW_IT_WORKS",
+                                        "STUDIO_PROMISE",
+                                        "FINAL_CTA"
+                                      ],
+                                      "type": "string"
+                                    },
+                                    "visible": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "visible"
+                                  ],
+                                  "type": "object"
+                                },
+                                "maxItems": 8,
+                                "minItems": 8,
+                                "type": "array"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "sections"
+                            ],
+                            "type": "object"
+                          },
+                          "publicationId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "publishedAt": {
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                            "type": "string"
+                          },
+                          "restoredFromPublicationId": {
+                            "anyOf": [
+                              {
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "revisionId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "version": {
+                            "maximum": 9007199254740991,
+                            "minimum": 1,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "publicationId",
+                          "revisionId",
+                          "version",
+                          "layout",
+                          "publishedAt",
+                          "action",
+                          "restoredFromPublicationId"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "version": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "version",
+                  "draft",
+                  "published"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "state",
+              "replayed"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "entries": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "action": {
+                      "enum": [
+                        "PUBLISH",
+                        "RESTORE"
+                      ],
+                      "type": "string"
+                    },
+                    "layout": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "schemaVersion": {
+                          "const": 1,
+                          "type": "number"
+                        },
+                        "sections": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "id": {
+                                "enum": [
+                                  "HERO",
+                                  "KINDS",
+                                  "ARTISTS",
+                                  "GIFTS",
+                                  "POLICIES",
+                                  "HOW_IT_WORKS",
+                                  "STUDIO_PROMISE",
+                                  "FINAL_CTA"
+                                ],
+                                "type": "string"
+                              },
+                              "visible": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "visible"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 8,
+                          "minItems": 8,
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "schemaVersion",
+                        "sections"
+                      ],
+                      "type": "object"
+                    },
+                    "publicationId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "publishedAt": {
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                      "type": "string"
+                    },
+                    "restoredFromPublicationId": {
+                      "anyOf": [
+                        {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "revisionId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "version": {
+                      "maximum": 9007199254740991,
+                      "minimum": 1,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "publicationId",
+                    "revisionId",
+                    "version",
+                    "layout",
+                    "publishedAt",
+                    "action",
+                    "restoredFromPublicationId"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 20,
+                "type": "array"
+              },
+              "hasMore": {
+                "type": "boolean"
+              },
+              "kind": {
+                "const": "HISTORY",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "page": {
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991,
+                "type": "integer"
+              },
+              "pageSize": {
+                "maximum": 20,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "entries",
+              "page",
+              "pageSize",
+              "hasMore"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "INVALID_COMMAND",
+                  "UNAUTHENTICATED",
+                  "FORBIDDEN",
+                  "CSRF_INVALID",
+                  "NOT_FOUND",
+                  "REVISION_NOT_DRAFT",
+                  "ALREADY_EXISTS",
+                  "INVALID_CONTENT",
+                  "CONTENT_UNAVAILABLE",
+                  "STALE_CONTENT",
+                  "STALE_VERSION",
+                  "SELF_REVIEW",
+                  "INVALID_REVIEW_STATE",
+                  "IDEMPOTENCY_CONFLICT",
+                  "CONFLICT",
+                  "PREVIEW_UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "admin-http"
+      },
+      "HomeLayoutState": {
+        "additionalProperties": false,
+        "properties": {
+          "draft": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "createdAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "layout": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      },
+                      "sections": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "id": {
+                              "enum": [
+                                "HERO",
+                                "KINDS",
+                                "ARTISTS",
+                                "GIFTS",
+                                "POLICIES",
+                                "HOW_IT_WORKS",
+                                "STUDIO_PROMISE",
+                                "FINAL_CTA"
+                              ],
+                              "type": "string"
+                            },
+                            "visible": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "visible"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 8,
+                        "minItems": 8,
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "sections"
+                    ],
+                    "type": "object"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "revisionId",
+                  "layout",
+                  "createdAt"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "published": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "enum": [
+                      "PUBLISH",
+                      "RESTORE"
+                    ],
+                    "type": "string"
+                  },
+                  "layout": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      },
+                      "sections": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "id": {
+                              "enum": [
+                                "HERO",
+                                "KINDS",
+                                "ARTISTS",
+                                "GIFTS",
+                                "POLICIES",
+                                "HOW_IT_WORKS",
+                                "STUDIO_PROMISE",
+                                "FINAL_CTA"
+                              ],
+                              "type": "string"
+                            },
+                            "visible": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "visible"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 8,
+                        "minItems": 8,
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "sections"
+                    ],
+                    "type": "object"
+                  },
+                  "publicationId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "publishedAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "restoredFromPublicationId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "version": {
+                    "maximum": 9007199254740991,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "publicationId",
+                  "revisionId",
+                  "version",
+                  "layout",
+                  "publishedAt",
+                  "action",
+                  "restoredFromPublicationId"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "version": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "version",
+          "draft",
+          "published"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
       "HomepageRevision": {
         "additionalProperties": false,
         "properties": {
@@ -114284,6 +115043,130 @@
           "requestId"
         ],
         "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "PublicHomeLayoutResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "HOME_LAYOUT",
+                "type": "string"
+              },
+              "layout": {
+                "additionalProperties": false,
+                "properties": {
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "sections": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "enum": [
+                            "HERO",
+                            "KINDS",
+                            "ARTISTS",
+                            "GIFTS",
+                            "POLICIES",
+                            "HOW_IT_WORKS",
+                            "STUDIO_PROMISE",
+                            "FINAL_CTA"
+                          ],
+                          "type": "string"
+                        },
+                        "visible": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "visible"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 8,
+                    "minItems": 8,
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "sections"
+                ],
+                "type": "object"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "publicationId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "source": {
+                "enum": [
+                  "DEFAULT",
+                  "PUBLISHED"
+                ],
+                "type": "string"
+              },
+              "version": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "source",
+              "layout",
+              "version",
+              "publicationId"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "CONTENT_UNAVAILABLE",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          }
+        ],
         "x-fan-support-audience": "public-http"
       },
       "PublicOrderItemView": {
@@ -168078,6 +168961,1087 @@
         "x-fan-support-rbac": "gift.manage"
       }
     },
+    "/api/v1/admin/home-layout/draft": {
+      "post": {
+        "description": "Exact Origin, CSRF and current MFA session required. Layout is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
+        "operationId": "homeLayoutDraft",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "expectedVersion": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "layout": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      },
+                      "sections": {
+                        "items": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "id": {
+                              "enum": [
+                                "HERO",
+                                "KINDS",
+                                "ARTISTS",
+                                "GIFTS",
+                                "POLICIES",
+                                "HOW_IT_WORKS",
+                                "STUDIO_PROMISE",
+                                "FINAL_CTA"
+                              ],
+                              "type": "string"
+                            },
+                            "visible": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "visible"
+                          ],
+                          "type": "object"
+                        },
+                        "maxItems": 8,
+                        "minItems": 8,
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "sections"
+                    ],
+                    "type": "object"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "layout"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 8192
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "save draft homepage layout",
+        "x-fan-support-rbac": "content.edit"
+      }
+    },
+    "/api/v1/admin/home-layout/history": {
+      "post": {
+        "description": "Exact Origin, CSRF and current MFA session required. Layout is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
+        "operationId": "homeLayoutHistory",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "page": {
+                    "maximum": 100000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "pageSize": {
+                    "maximum": 20,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "page",
+                  "pageSize"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 8192
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "history homepage layout",
+        "x-fan-support-rbac": "content.read"
+      }
+    },
+    "/api/v1/admin/home-layout/publish": {
+      "post": {
+        "description": "Exact Origin, CSRF and current MFA session required. Layout is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
+        "operationId": "homeLayoutPublish",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "draftRevisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "expectedVersion": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "draftRevisionId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 8192
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "publish homepage layout",
+        "x-fan-support-rbac": "content.publish"
+      }
+    },
+    "/api/v1/admin/home-layout/read": {
+      "post": {
+        "description": "Exact Origin, CSRF and current MFA session required. Layout is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
+        "operationId": "homeLayoutRead",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 8192
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "read homepage layout",
+        "x-fan-support-rbac": "content.read"
+      }
+    },
+    "/api/v1/admin/home-layout/restore": {
+      "post": {
+        "description": "Exact Origin, CSRF and current MFA session required. Layout is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
+        "operationId": "homeLayoutRestore",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "expectedVersion": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "publicationId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "publicationId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 8192
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "restore homepage layout",
+        "x-fan-support-rbac": "content.publish"
+      }
+    },
     "/api/v1/admin/management/context": {
       "post": {
         "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
@@ -195191,6 +197155,69 @@
         },
         "security": [],
         "summary": "Read one bounded publication-verified sitemap window"
+      }
+    },
+    "/api/v1/storefront/home-layout": {
+      "get": {
+        "operationId": "readPublicHomeLayout",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicHomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicHomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicHomeLayoutResponse"
+                }
+              }
+            },
+            "description": "Versioned layout result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Read the current published homepage layout"
       }
     },
     "/api/v1/webhooks/payments/{endpointId}": {

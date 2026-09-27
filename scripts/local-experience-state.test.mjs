@@ -127,3 +127,45 @@ test("a public instance fixes its base domain and serves every origin on 443", a
       /Invalid public base domain/u,
     );
 });
+
+test("Stripe sandbox is an explicit immutable choice for a new isolated instance", async (t) => {
+  const root = await fixture(t);
+  const first = await loadLocalState(root, "test-stripe", {
+    paymentProvider: "stripe-test",
+  });
+  assert.equal(first.config.paymentProvider, "stripe-test");
+  assert.equal(first.config.services.psp.binding.providerCode, "stripe");
+  assert.equal(first.config.services.psp.binding.environment, "TEST");
+  assert.deepEqual(first.config.services.psp.binding.allowedActionOrigins, [
+    "https://checkout.stripe.com",
+  ]);
+  assert.deepEqual(
+    (await loadLocalState(root, "test-stripe")).config,
+    first.config,
+  );
+  await assert.rejects(
+    loadLocalState(root, "test-stripe", { paymentProvider: "fake" }),
+    /payment provider/u,
+  );
+  await loadLocalState(root, "test-fake");
+  await assert.rejects(
+    loadLocalState(root, "test-fake", { paymentProvider: "stripe-test" }),
+    /payment provider/u,
+  );
+  for (const instance of ["default", "production"])
+    await assert.rejects(
+      loadLocalState(root, instance, { paymentProvider: "stripe-test" }),
+      /isolated/u,
+    );
+  await assert.rejects(
+    loadLocalState(root, "test-public", {
+      paymentProvider: "stripe-test",
+      publicBaseDomain: "stg.example.com",
+    }),
+    /isolated/u,
+  );
+  await assert.rejects(
+    loadLocalState(root, "test-live", { paymentProvider: "stripe-live" }),
+    /payment provider/u,
+  );
+});
