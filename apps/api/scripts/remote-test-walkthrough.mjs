@@ -19,6 +19,7 @@ export async function walkRemoteTestInstance({
   authPassword,
   mailToken,
   seed = true,
+  giftKind = "PHYSICAL",
   output,
 }) {
   const origin = (label) => `https://${label}.${baseDomain}`;
@@ -101,6 +102,8 @@ export async function walkRemoteTestInstance({
         admin.locator(`[data-management-list="${section}"]`),
       ).toContainText(name, { timeout: 240000 });
     }
+    // The purchase below buys the gift seeded here, so its kind decides which path is exercised.
+    let seededGiftName = null;
     if (seed) {
       const suffix = new Date().toISOString().slice(5, 16).replace(/\D/gu, "");
       const artistName = `Demo artist ${suffix}`;
@@ -118,7 +121,8 @@ export async function walkRemoteTestInstance({
         artistName,
       );
       step("ARTIST_PUBLISHED");
-      const giftName = `Demo bouquet ${suffix}`;
+      const giftName = `Demo ${giftKind.toLowerCase()} gift ${suffix}`;
+      seededGiftName = giftName;
       await create(
         "GIFTS",
         async () => {
@@ -129,12 +133,12 @@ export async function walkRemoteTestInstance({
           await admin
             .locator(field("description"))
             .fill("A synthetic gift for the remote TEST environment.");
-          await admin.locator(field("giftKind")).selectOption("PHYSICAL");
+          await admin.locator(field("giftKind")).selectOption(giftKind);
           await admin.locator(field("price")).fill("24");
         },
         giftName,
       );
-      step("GIFT_PUBLISHED");
+      step("GIFT_PUBLISHED", { giftKind });
       // The server publishes the initial homepage once an artist exists; the workspace only
       // reflects it after a reload, so poll the posters list like the acceptance script does.
       await expect
@@ -171,7 +175,11 @@ export async function walkRemoteTestInstance({
     await customer.goto(`${origin("storefront")}/en/gifts`, {
       timeout: 120000,
     });
-    const giftLink = customer.locator("[data-gift-link]").first();
+    const giftLink = (
+      seededGiftName
+        ? customer.locator("[data-gift-link]", { hasText: seededGiftName })
+        : customer.locator("[data-gift-link]")
+    ).first();
     await giftLink.waitFor({ timeout: 120000 });
     await giftLink.click();
     await customer
@@ -313,6 +321,10 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
       authPassword: env.REMOTE_TEST_AUTH_PASSWORD,
       mailToken: env.REMOTE_TEST_MAIL_TOKEN,
       seed: !process.argv.includes("--no-seed"),
+      giftKind:
+        process.argv
+          .find((arg) => arg.startsWith("--gift-kind="))
+          ?.slice("--gift-kind=".length) ?? "PHYSICAL",
       output,
     });
     console.log(`PASS remote TEST walkthrough; ${output}`);
