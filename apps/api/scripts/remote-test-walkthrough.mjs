@@ -57,7 +57,7 @@ export async function walkRemoteTestInstance({
         timeout: 120000,
       });
       expect(response?.status()).toBe(200);
-      await page.locator("main").waitFor();
+      await page.locator("main").first().waitFor();
       await shot(page, `storefront-home-${viewport.width}`);
       step("STOREFRONT_HOME", { width: viewport.width });
       await ctx.close();
@@ -135,11 +135,23 @@ export async function walkRemoteTestInstance({
         giftName,
       );
       step("GIFT_PUBLISHED");
-      await admin.locator('[data-management-section="POSTERS"]').click();
-      await admin.locator('[data-management-list="POSTERS"]').waitFor();
-      await expect(admin.locator("[data-management-new]")).toBeEnabled({
-        timeout: 240000,
-      });
+      // The server publishes the initial homepage once an artist exists; the workspace only
+      // reflects it after a reload, so poll the posters list like the acceptance script does.
+      await expect
+        .poll(
+          async () => {
+            await admin.goto(`${origin("admin")}/en`, { timeout: 120000 });
+            await admin
+              .locator("[data-management-section]:enabled")
+              .first()
+              .waitFor({ timeout: 120000 });
+            await admin.locator('[data-management-section="POSTERS"]').click();
+            await admin.locator('[data-management-list="POSTERS"]').waitFor();
+            return admin.locator("[data-management-new]").isEnabled();
+          },
+          { timeout: 300000, intervals: [2000, 5000] },
+        )
+        .toBe(true);
       await admin.locator("[data-management-new]").click();
       await admin.locator("[data-management-form]").waitFor();
       await admin
@@ -241,6 +253,13 @@ export async function walkRemoteTestInstance({
     report.status = "PASS";
   } catch (error) {
     report.status = "FAIL";
+    // Screenshots of every open page show where the journey stopped; private fields stay empty.
+    let index = 0;
+    for (const context of browser.contexts())
+      for (const page of context.pages())
+        await page
+          .screenshot({ path: path.join(output, `failure-${index++}.png`) })
+          .catch(() => undefined);
     report.failure = {
       name: error?.name ?? "Error",
       // Playwright messages hold selectors and timeouts, never field values or secrets.
