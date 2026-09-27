@@ -38,6 +38,9 @@
 - **走查**：在开发机上执行 `node apps/api/scripts/remote-test-walkthrough.mjs`（位于 `apps/api` 下）。所需环境变量为 `REMOTE_TEST_BASE_DOMAIN`、`REMOTE_TEST_AUTH_PASSWORD`、`REMOTE_TEST_MAIL_TOKEN`，值从本机凭据文件读取。它会检查商城、后台登录、创建内容、下单、模拟支付和收件箱，截图写到 `output/checks/remote-test/`。加 `--no-seed` 则不创建新内容。
 
 - **更新代码**：推送后在服务器上执行 `git reset --hard`、`pnpm install`、构建，再 `systemctl restart fan-support-remote-test@stg`。
+  - 共享包改动会导致全量重建，重启后 Next 首次编译较慢。每个网页应用的健康等待是 10 分钟，整体仍受 `--startup-timeout-seconds 1500` 限制。
+  - 2026-09-27 之前健康等待只有约 90 秒，一次全量重建后的重启曾因"admin did not become healthy"失败，再次重启即可。
+  - 重启命令会等到就绪才返回，可放后台执行，再用 `pnpm local:status --instance stg` 查看。
 - **状态**：`pnpm local:status --instance stg`；supervisor 日志在 `~/app/node_modules/.cache/fan-support-local-experience/stg/supervisor.log`，只含结构化阶段。
 - **重置测试数据**：先停止实例，再执行 `pnpm local:reset --instance stg --confirm <instanceId>`。这会删除本实例的全部数据和图片，属于不可逆操作，需要用户确认。
 - **换域名**：必须新建实例（配置、身份源、支付绑定和证书都绑定在对外地址上），然后重新生成 Caddyfile。

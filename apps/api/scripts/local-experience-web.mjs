@@ -104,7 +104,10 @@ export async function startLocalWeb(context) {
       await closed;
     });
     let ready = false;
-    for (let i = 0; i < 180; i++) {
+    // A cold Next compile after a full workspace rebuild can outlast 90 seconds on a small
+    // server; the supervisor's --startup-timeout-seconds remains the operator's overall limit.
+    const deadline = Date.now() + 10 * 60_000;
+    while (Date.now() < deadline) {
       try {
         const result = await fetcher(origin + "/healthz");
         await result.body?.cancel();
