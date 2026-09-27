@@ -410,6 +410,16 @@
         "up": "696b5bc58c15b12318c64c4e1a9ea330a7cb3dc900f9013a287d8eec8228f1d2",
         "down": "a9a056ef6334cb2f001b471215883735a98c2d07042a570ae67555bca3785845"
       }
+    },
+    {
+      "version": "0042",
+      "name": "virtual-payment-application",
+      "up": "database/migrations/0042_virtual-payment-application.up.sql",
+      "down": "database/migrations/0042_virtual-payment-application.down.sql",
+      "sha256": {
+        "up": "6e9349d81e3b140d8f71a315a962cd18d8a78cd90d7a264882f0fc638af966fb",
+        "down": "6fda4c09f451d4024284c19a7aee91aa6bad36196f439bb584fa8209a095f6a0"
+      }
     }
   ]
 }
