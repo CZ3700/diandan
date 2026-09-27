@@ -9,6 +9,7 @@ import {
   PutBucketCorsCommand,
 } from "@aws-sdk/client-s3";
 import { startLocalProxy } from "./local-experience-tls.mjs";
+import { localObjectStoragePresignEndpoint } from "./local-experience-config.mjs";
 const execute = promisify(execFile);
 const S3_IMAGE =
   "versity/versitygw:v1.7.0@sha256:c4cbd9d9cb8dedbb055ac788dbd02635651b9b1cebac95b095b3217231aa87ad";
@@ -99,16 +100,18 @@ export async function startS3(context) {
     await delay(100);
   }
   if (!ready) throw new Error("Object storage did not become healthy");
-  const endpoint = `https://localhost:${config.ports.s3}`;
+  const endpoint = `https://localhost:${config.ports.s3}`,
+    presignEndpoint = localObjectStoragePresignEndpoint(config);
   await startLocalProxy({
     config,
     port: config.ports.s3,
     origin: endpoint,
+    additionalOrigins: presignEndpoint === endpoint ? [] : [presignEndpoint],
     target: `http://127.0.0.1:${config.ports.s3Backend}`,
     own,
     name: "object storage TLS",
   });
-  const s3 = { schemaVersion: 1, endpoint, ...config.s3 };
+  const s3 = { schemaVersion: 1, endpoint, presignEndpoint, ...config.s3 };
   const client = new S3Client({
     region: "us-east-1",
     endpoint,

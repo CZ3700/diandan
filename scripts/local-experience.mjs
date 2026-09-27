@@ -13,6 +13,21 @@ const args = process.argv.slice(2),
   command = args[0] ?? "status";
 const index = args.indexOf("--instance"),
   instance = index < 0 ? "default" : args[index + 1];
+const option = (name) => {
+  const at = args.indexOf(name);
+  return at < 0 ? undefined : args[at + 1];
+};
+// Fixed when the instance is created: a public instance is served by an edge on its base domain.
+const publicBaseDomain = option("--public-base-domain");
+const startupTimeoutSeconds = Number(
+  option("--startup-timeout-seconds") ?? 120,
+);
+if (
+  !Number.isInteger(startupTimeoutSeconds) ||
+  startupTimeoutSeconds < 30 ||
+  startupTimeoutSeconds > 3600
+)
+  throw new Error("Startup timeout must be 30-3600 seconds");
 if (command === "start" && !args.includes("--skip-build"))
   await promisify(execFile)(
     "corepack",
@@ -38,8 +53,13 @@ const { assertLocalStopSucceeded } =
   await import("./local-experience-stop-result.mjs");
 const { prepareLocalTls } =
   await import("../apps/api/scripts/local-experience-infrastructure.mjs");
-const state = await loadLocalState(workspaceRoot, instance),
+const state = await loadLocalState(workspaceRoot, instance, {
+    publicBaseDomain,
+  }),
   { config, stateDirectory } = state;
+const { localPublicHosts } =
+  await import("../apps/api/scripts/local-experience-config.mjs");
+const publicHosts = localPublicHosts(config);
 async function status() {
   try {
     const r = await globalThis.fetch(
@@ -160,12 +180,19 @@ try {
             ...process.env,
             NODE_EXTRA_CA_CERTS: config.tls.caCertificatePath,
             NODE_TLS_REJECT_UNAUTHORIZED: "1",
+            // Public hostnames resolve to this host's edge for server-side calls (media processing).
+            ...(publicHosts.length
+              ? {
+                  LOCAL_EXPERIENCE_DNS_HOSTS: publicHosts.join(","),
+                  NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --import=${new globalThis.URL("../apps/api/scripts/local-experience-dns.mjs", import.meta.url).href}`,
+                }
+              : {}),
           },
         },
       );
       child.unref();
       await log.close();
-      for (let i = 0; i < 240; i++) {
+      for (let i = 0; i < startupTimeoutSeconds * 2; i++) {
         active = await status();
         if (
           active?.ready ||

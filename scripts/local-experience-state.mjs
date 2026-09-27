@@ -11,7 +11,12 @@ import {
 import { createServer } from "node:net";
 import path from "node:path";
 import { SUPPORTED_LOCALES } from "../packages/contracts/dist/index.js";
-import { localExperienceConfigSchema } from "../apps/api/scripts/local-experience-config.mjs";
+import {
+  LOCAL_SERVICE_KEYS,
+  localExperienceConfigSchema,
+  localServiceOriginFor,
+  publicBaseDomainSchema,
+} from "../apps/api/scripts/local-experience-config.mjs";
 const token = () => randomBytes(32).toString("base64url");
 export async function localStateDirectory(workspaceRoot, instance) {
   if (!/^[a-z][a-z0-9-]{0,31}$/u.test(instance))
@@ -83,7 +88,17 @@ async function ports() {
     );
   }
 }
-export async function loadLocalState(workspaceRoot, instance = "default") {
+/** A public base domain is fixed when the instance is first created; later starts must repeat it or omit it. */
+export async function loadLocalState(
+  workspaceRoot,
+  instance = "default",
+  { publicBaseDomain } = {},
+) {
+  if (
+    publicBaseDomain !== undefined &&
+    !publicBaseDomainSchema.safeParse(publicBaseDomain).success
+  )
+    throw new Error("Invalid public base domain");
   const stateDirectory = await localStateDirectory(workspaceRoot, instance),
     file = path.join(stateDirectory, "config.json");
   for (const relative of [
@@ -122,6 +137,13 @@ export async function loadLocalState(workspaceRoot, instance = "default") {
       throw new Error(
         "Invalid local state configuration; existing data was preserved",
       );
+    if (
+      publicBaseDomain !== undefined &&
+      parsed.data.exposure?.baseDomain !== publicBaseDomain
+    )
+      throw new Error(
+        "This instance was created with a different exposure; create a new instance for another domain",
+      );
     return { stateDirectory, config: parsed.data };
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
@@ -129,10 +151,14 @@ export async function loadLocalState(workspaceRoot, instance = "default") {
   const assigned = await ports(),
     instanceId = randomUUID(),
     suffix = randomBytes(6).toString("hex");
+  const exposure =
+    publicBaseDomain === undefined
+      ? undefined
+      : { mode: "PUBLIC", baseDomain: publicBaseDomain };
   const origins = Object.fromEntries(
-    ["storefront", "admin", "oidc", "psp", "mail", "media"].map((key) => [
+    LOCAL_SERVICE_KEYS.map((key) => [
       key,
-      `https://${key === "psp" ? "payments" : key}.example.invalid:${assigned[key]}`,
+      localServiceOriginFor(key, { exposure, port: assigned[key] }),
     ]),
   );
   const secrets = Object.fromEntries(
@@ -154,6 +180,7 @@ export async function loadLocalState(workspaceRoot, instance = "default") {
     workspaceRoot: await realpath(workspaceRoot),
     ports: assigned,
     origins,
+    ...(exposure ? { exposure } : {}),
     secrets,
     database: {
       user: "fan_support_local",

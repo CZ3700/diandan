@@ -20,7 +20,8 @@ export function createLocalExperienceMedia({ config, s3 }) {
     authentication: {
       mode: "static",
       endpoint: s3.endpoint,
-      presignEndpoint: s3.endpoint,
+      // Browsers and the processor use the public presign host; SDK calls stay on loopback.
+      presignEndpoint: s3.presignEndpoint ?? s3.endpoint,
       accessKeyId: s3.accessKeyId,
       secretAccessKey: s3.secretAccessKey,
       forcePathStyle: true,

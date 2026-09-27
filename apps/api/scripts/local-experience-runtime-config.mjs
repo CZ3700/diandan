@@ -30,7 +30,8 @@ export function localExperienceEnvironment({ config, database, s3 }) {
     FAN_SUPPORT_DATABASE_URL: url.toString(),
     FAN_SUPPORT_OBJECT_STORAGE_AUTH_MODE: "static",
     FAN_SUPPORT_OBJECT_STORAGE_ENDPOINT: s3.endpoint,
-    FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT: s3.endpoint,
+    FAN_SUPPORT_OBJECT_STORAGE_PRESIGN_ENDPOINT:
+      s3.presignEndpoint ?? s3.endpoint,
     FAN_SUPPORT_OBJECT_STORAGE_SOURCE_BUCKET: s3.sourceBucket,
     FAN_SUPPORT_OBJECT_STORAGE_DERIVATIVE_BUCKET: s3.derivativeBucket,
     FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN: config.origins.media,

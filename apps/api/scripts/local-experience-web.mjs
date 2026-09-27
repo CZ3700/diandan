@@ -5,6 +5,7 @@ import { setTimeout as delay } from "node:timers/promises";
 import path from "node:path";
 import { preserveManagementNextDeclarations } from "./management-center-runtime-config.mjs";
 import { createLocalExperienceFetch } from "./local-experience-services-common.mjs";
+import { localServicePorts } from "./local-experience-config.mjs";
 import { localStorefrontIdentity } from "./local-experience-web-config.mjs";
 import {
   regressionWebMode,
@@ -18,6 +19,7 @@ export async function startLocalWeb(context) {
   const fetcher = await createLocalExperienceFetch({
     origins: Object.values(config.origins),
     caCertificatePath: config.tls.caCertificatePath,
+    ports: localServicePorts(config),
   });
   for (const app of ["storefront", "admin"]) {
     const port = config.ports[app],

@@ -25,8 +25,16 @@ test("local service transport refuses every destination outside its exact owned 
     "https://oidc.example.invalid:9443/path",
     "https://user@oidc.example.invalid:9443",
     "https://localhost:9443",
+    "https://oidc.example.com:8443",
+    "https://unknown.stg.example.com",
+    "http://oidc.stg.example.com",
   ])
     assert.throws(() => module.localServiceOrigin(value), /local service/iu);
+  // A publicly exposed instance serves each owned service label under its base domain on 443.
+  assert.equal(
+    module.localServiceOrigin("https://payments.stg.example.com"),
+    "https://payments.stg.example.com",
+  );
 });
 
 test("OIDC signing identity survives restart and existing invalid keys are never overwritten", async () => {

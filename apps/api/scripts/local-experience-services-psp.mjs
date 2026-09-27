@@ -11,6 +11,7 @@ import {
   secretEquals,
   startLocalTlsServer,
 } from "./local-experience-services-common.mjs";
+import { localServicePorts } from "./local-experience-config.mjs";
 
 /** Durable provider facts are the retry source; acknowledgement receipts prevent unnecessary delivery. */
 export async function createLocalPspDelivery({ config, pool, store }) {
@@ -126,6 +127,7 @@ export async function startLocalExperiencePsp({ config, database, pool }) {
   try {
     server = await startLocalTlsServer({
       origin,
+      port: config.ports.psp,
       tls: config.tls,
       async handle(request, response) {
         const url = new URL(request.url, origin);
@@ -206,6 +208,7 @@ export async function startLocalExperiencePsp({ config, database, pool }) {
     const fetcher = await createLocalExperienceFetch({
       origins: [origin],
       caCertificatePath: config.tls.caCertificatePath,
+      ports: localServicePorts(config),
     });
     let closing;
     return {

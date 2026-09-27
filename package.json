@@ -66,6 +66,7 @@
     "local:status": "node ./scripts/local-experience.mjs status",
     "local:open": "node ./scripts/local-experience.mjs open",
     "local:reset": "node ./scripts/local-experience.mjs reset",
+    "local:caddy": "node ./scripts/local-experience-caddy.mjs",
     "check:infrastructure": "node ./scripts/check-infrastructure.mjs",
     "verify:local-experience": "node ./scripts/verify-local-experience.mjs",
     "verify:regression": "node ./scripts/verify-regression.mjs",
