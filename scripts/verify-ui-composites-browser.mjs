@@ -750,7 +750,11 @@ function assessCompositeScenarioEvidence(result, expected) {
     if (!String(result.metrics.heroCurrentSrc).endsWith(expectedHeroSource)) {
       errors.push("scenario metrics must prove responsive Hero art direction");
     }
-    errors.push(...assessCompositeMetrics(result.metrics));
+    errors.push(
+      ...assessCompositeMetrics(result.metrics, {
+        stress: expected.group === "stress",
+      }),
+    );
   }
   errors.push(
     ...assessCompositeDiagnosticsEvidence(
@@ -1000,19 +1004,29 @@ const heroFrameMeasurementFields = Object.freeze([
   "Width",
 ]);
 
-function isStableHeroFrame(stability) {
+// Stress cells carry exaggerated copy whose wrapping depends on platform fonts: the ready Hero
+// may only grow downward there, while its position and width stay put (2026-09-27 decision).
+const heroGrowthFields = Object.freeze([
+  "AnchorTop",
+  "DocumentHeight",
+  "Height",
+]);
+
+function isStableHeroFrame(stability, { allowGrowth = false } = {}) {
   return heroFrameMeasurementFields.every((field) => {
     const before = stability?.[`before${field}`];
     const after = stability?.[`after${field}`];
     return (
       Number.isFinite(before) &&
       Number.isFinite(after) &&
-      Math.abs(before - after) <= 1
+      (allowGrowth && heroGrowthFields.includes(field)
+        ? after >= before - 1
+        : Math.abs(before - after) <= 1)
     );
   });
 }
 
-export function assessCompositeMetrics(metrics) {
+export function assessCompositeMetrics(metrics, { stress = false } = {}) {
   const errors = [...assessPageMetrics(metrics?.base)];
   for (const [component, minimum] of Object.entries(expectedComponentCounts)) {
     if (Number(metrics?.componentCounts?.[component] ?? 0) < minimum) {
@@ -1045,7 +1059,7 @@ export function assessCompositeMetrics(metrics) {
   }
   const transitionStability = metrics?.heroTransitionStability;
   if (
-    !isStableHeroFrame(transitionStability) ||
+    !isStableHeroFrame(transitionStability, { allowGrowth: stress }) ||
     transitionStability?.beforeState !== "loading" ||
     transitionStability?.afterState !== "ready"
   ) {
@@ -2666,7 +2680,9 @@ async function runScenario({ AxeBuilder, browser, candidate, origin, entry }) {
       heroFailureStability,
       heroTransitionStability,
     };
-    const errors = assessCompositeMetrics(metrics);
+    const errors = assessCompositeMetrics(metrics, {
+      stress: entry.group === "stress",
+    });
     const expectedMedia =
       entry.viewport.width < 768 ? "hero-mobile.png" : "hero-desktop.png";
     if (!String(metrics.heroCurrentSrc).endsWith(expectedMedia)) {
