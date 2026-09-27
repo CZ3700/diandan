@@ -66,6 +66,8 @@ export function memoryStorage(
   const uploads: string[] = [];
   const controls = {
     failPut: 0,
+    // Some S3-compatible stores cut off a large create-only PUT onto an existing key with a 5xx.
+    existingPutStatus: 412,
     conflict: false,
     corruptHead: false,
     downloadMime: command.source.mimeType as string,
@@ -176,7 +178,8 @@ export function memoryStorage(
     uploads.push(path);
     if (controls.failPut > 0 && uploads.length === controls.failPut)
       return new Response(null, { status: 503 });
-    if (objects.has(path)) return new Response(null, { status: 412 });
+    if (objects.has(path))
+      return new Response(null, { status: controls.existingPutStatus });
     const bytes = Buffer.from(await new Response(init.body).arrayBuffer());
     const headers = new Headers(init.headers);
     const mimeType = headers.get("content-type") as StoredObject["mimeType"];

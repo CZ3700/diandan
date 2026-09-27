@@ -55,7 +55,11 @@ export function createStorageTransfer(
     return new Date(expiresAt).getTime() > now().getTime();
   }
 
-  async function inspect(expected: Identity, source: boolean): Promise<void> {
+  async function inspect(
+    expected: Identity,
+    source: boolean,
+    missingAllowed = false,
+  ): Promise<boolean> {
     const response = checkedResponse(
       await budget.request(() =>
         storage.inspectObject({
@@ -68,6 +72,8 @@ export function createStorageTransfer(
       "INSPECT_OBJECT",
     );
     if (response.outcome === "FAILURE") {
+      if (missingAllowed && response.error.code === "OBJECT_NOT_FOUND")
+        return false;
       if (source && response.error.code === "OBJECT_NOT_FOUND")
         throw new ProcessingFailure("SOURCE_NOT_FOUND");
       throw new ProcessingFailure("STORAGE_UNAVAILABLE");
@@ -78,6 +84,7 @@ export function createStorageTransfer(
       throw new ProcessingFailure(
         source ? "SOURCE_CHANGED" : "OBJECT_CONFLICT",
       );
+    return true;
   }
 
   async function download(
@@ -181,6 +188,10 @@ export function createStorageTransfer(
   }
 
   async function upload(bytes: Buffer, expected: Identity): Promise<void> {
+    // Outputs are content-addressed, so processing the same original again yields objects that are
+    // already stored. A create-only PUT of a large body onto an existing key can be cut off mid-upload
+    // (a dropped connection or 5xx instead of a clean 412), so reuse the identical object instead.
+    if (await inspect(expected, false, true)) return;
     const response = checkedResponse(
       await budget.request(() =>
         storage.createUploadGrant({

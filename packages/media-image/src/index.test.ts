@@ -238,6 +238,19 @@ describe("real image processing and immutable storage", () => {
     expect(fixture.objects.size).toBe(14);
   }, 30000);
 
+  it("reprocessing the same original reuses its stored outputs instead of another create-only upload", async () => {
+    const command = commandFor(source);
+    const fixture = memoryStorage(source, command);
+    const processor = createMediaImageProcessor({ ...fixture, now: testNow });
+    const first = await processor.process(command);
+    expect(first.outcome).toBe("SUCCESS");
+    const uploaded = fixture.uploads.length;
+    // The remote S3-compatible store answered these PUTs with 502/503 instead of 412 (2026-09-28).
+    fixture.controls.existingPutStatus = 503;
+    expect(await processor.process(command)).toEqual(first);
+    expect(fixture.uploads).toHaveLength(uploaded);
+  }, 30000);
+
   it.each(["conflict", "corruptHead"] as const)(
     "rejects %s without returning a successful receipt",
     async (control) => {
