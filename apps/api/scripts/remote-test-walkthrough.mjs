@@ -177,11 +177,15 @@ export async function walkRemoteTestInstance({
     await customer
       .locator("[data-gift-detail] h1")
       .waitFor({ timeout: 120000 });
+    // Development servers compile on first visit; act only after the page has hydrated,
+    // otherwise the recipient dialog falls back to its no-JavaScript navigation.
+    await customer.waitForLoadState("networkidle", { timeout: 120000 });
     const recipient = customer
       .locator("[data-gift-recipient-picker] button")
       .first();
     await recipient.click();
     await customer.locator("[data-recipient-option]").first().click();
+    await customer.waitForLoadState("networkidle", { timeout: 120000 });
     await customer.locator("[data-cart-message]").waitFor({ timeout: 60000 });
     await customer
       .locator("[data-cart-message]")
@@ -224,8 +228,18 @@ export async function walkRemoteTestInstance({
     const publicOrderId = await customer
       .locator("[data-order-root]")
       .getAttribute("data-order-id");
+    await customer.waitForLoadState("networkidle");
     await shot(customer, "order-paid-390");
-    step("ORDER_PAID");
+    // Development servers surface console errors as an "Issues" badge testers can see.
+    const devIssues = await customer.evaluate(() =>
+      Number(
+        [...globalThis.document.querySelectorAll("nextjs-portal")]
+          .map((portal) => portal.shadowRoot?.textContent ?? "")
+          .join(" ")
+          .match(/(\d+)\s*Issues?/u)?.[1] ?? 0,
+      ),
+    );
+    step("ORDER_PAID", { devIssues });
 
     // 4. Captured mail behind Basic Auth; its secure link opens the same order.
     const mailContext = await context({ width: 1440, height: 900 }, true);
