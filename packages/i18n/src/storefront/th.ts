@@ -115,6 +115,8 @@ const copy = {
   cartAdded: "เพิ่มลงถุงของขวัญแล้ว",
   cartAdd: "เพิ่มลงถุงของขวัญ",
   cartAdding: "กำลังเพิ่ม…",
+  cartBuyNow: "ซื้อเลย",
+  cartBuyingNow: "กำลังไปที่การชำระเงิน…",
   cartMessage: "ข้อความส่วนตัว",
   cartMessageHint: "เฉพาะสตูดิโอและผู้รับเท่านั้นที่อ่านข้อความได้",
   cartAnonymous: "ไม่ระบุชื่อ",

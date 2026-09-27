@@ -119,6 +119,8 @@ const copy = {
   cartAdded: "Added to your gift bag",
   cartAdd: "Add to gift bag",
   cartAdding: "Adding…",
+  cartBuyNow: "Buy now",
+  cartBuyingNow: "Going to checkout…",
   cartMessage: "Private message",
   cartMessageHint: "Only the studio and the recipient can read your message.",
   cartAnonymous: "Anonymous",

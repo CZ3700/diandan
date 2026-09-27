@@ -122,6 +122,8 @@ const copy = {
   cartAdded: "Añadido a tu bolsa",
   cartAdd: "Añadir a la bolsa",
   cartAdding: "Añadiendo…",
+  cartBuyNow: "Comprar ahora",
+  cartBuyingNow: "Yendo al pago…",
   cartMessage: "Mensaje privado",
   cartMessageHint:
     "Solo el estudio y la persona destinataria pueden leer tu mensaje.",

@@ -122,6 +122,8 @@ const copy = {
   cartAdded: "ギフトバッグに追加しました",
   cartAdd: "ギフトバッグに追加",
   cartAdding: "追加中…",
+  cartBuyNow: "今すぐ購入",
+  cartBuyingNow: "購入手続きへ移動中…",
   cartMessage: "非公開メッセージ",
   cartMessageHint: "メッセージはスタジオと受取人だけが閲覧できます。",
   cartAnonymous: "匿名",

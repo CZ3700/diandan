@@ -24,6 +24,10 @@ export type GiftAddProps = Readonly<{
   currency: string;
   max: number;
 }>;
+/** Buying now adds the gift to the bag, then checks out the whole bag in the same locale. */
+export function giftCheckoutHref(locale: SupportedLocale): string {
+  return storefrontHref(locale, "/checkout");
+}
 export function GiftAdd(props: GiftAddProps) {
   const { locale, copy, max, market, currency } = props;
   const session = useCartSession();
@@ -34,6 +38,7 @@ export function GiftAdd(props: GiftAddProps) {
     "idle" | "pending" | "confirmed" | "error"
   >("idle");
   const [error, setError] = useState<string | null>(null);
+  const [intent, setIntent] = useState<"add" | "buy">("add");
   const pending = useRef<CartMutation | null>(null);
   const mounted = useRef(true);
   const running = useRef(false);
@@ -55,7 +60,7 @@ export function GiftAdd(props: GiftAddProps) {
       window.removeEventListener("pagehide", hide);
     };
   }, [locale]);
-  async function add() {
+  async function add(buyNow = false) {
     if (running.current) return;
     if (!session || !validCartDraft(draft)) {
       setError(copy.cartInvalid);
@@ -63,6 +68,7 @@ export function GiftAdd(props: GiftAddProps) {
     }
     const generation = epoch.current;
     running.current = true;
+    setIntent(buyNow ? "buy" : "add");
     setStatus("pending");
     setError(null);
     try {
@@ -96,7 +102,9 @@ export function GiftAdd(props: GiftAddProps) {
       if (result.outcome === "SUCCESS") {
         pending.current = null;
         setDraft(emptyCartDraft(locale));
-        setStatus("confirmed");
+        // Stay pending while the browser leaves for checkout.
+        if (buyNow) window.location.assign(giftCheckoutHref(locale));
+        else setStatus("confirmed");
       } else {
         if (!isUncertain(result)) pending.current = null;
         setStatus("error");
@@ -138,21 +146,35 @@ export function GiftAdd(props: GiftAddProps) {
         copy={copy}
         disabled={status === "pending" || pending.current !== null}
       />
-      <button
-        className="storefront-primary cart-add-button"
-        type="submit"
-        disabled={status === "pending"}
-        aria-busy={status === "pending"}
-        data-cart-add-state={status}
-      >
-        {status === "pending"
-          ? copy.cartAdding
-          : pending.current
-            ? copy.cartRetry
-            : status === "confirmed"
-              ? copy.cartAdded
-              : copy.cartAdd}
-      </button>
+      <div className="gift-add-actions">
+        <button
+          className="storefront-primary gift-buy-now"
+          type="button"
+          data-cart-buy-now
+          disabled={status === "pending"}
+          aria-busy={status === "pending" && intent === "buy"}
+          onClick={() => void add(true)}
+        >
+          {status === "pending" && intent === "buy"
+            ? copy.cartBuyingNow
+            : copy.cartBuyNow}
+        </button>
+        <button
+          className="gift-add-secondary cart-add-button"
+          type="submit"
+          disabled={status === "pending"}
+          aria-busy={status === "pending" && intent === "add"}
+          data-cart-add-state={status}
+        >
+          {status === "pending" && intent === "add"
+            ? copy.cartAdding
+            : pending.current
+              ? copy.cartRetry
+              : status === "confirmed"
+                ? copy.cartAdded
+                : copy.cartAdd}
+        </button>
+      </div>
       <div className="cart-feedback" role="status" aria-live="polite">
         {status === "confirmed" ? copy.cartAdded : ""}
       </div>

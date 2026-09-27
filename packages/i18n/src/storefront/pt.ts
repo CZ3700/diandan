@@ -123,6 +123,8 @@ const copy = {
   cartAdded: "Adicionado à sacola",
   cartAdd: "Adicionar à sacola",
   cartAdding: "Adicionando…",
+  cartBuyNow: "Comprar agora",
+  cartBuyingNow: "Indo para o pagamento…",
   cartMessage: "Mensagem privada",
   cartMessageHint: "Somente o estúdio e o destinatário podem ler a mensagem.",
   cartAnonymous: "Anônimo",

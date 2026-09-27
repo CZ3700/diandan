@@ -121,6 +121,8 @@ const copy = {
   cartAdded: "Đã thêm vào túi quà",
   cartAdd: "Thêm vào túi quà",
   cartAdding: "Đang thêm…",
+  cartBuyNow: "Mua ngay",
+  cartBuyingNow: "Đang chuyển đến thanh toán…",
   cartMessage: "Lời nhắn riêng tư",
   cartMessageHint: "Chỉ studio và người nhận mới có thể đọc lời nhắn.",
   cartAnonymous: "Ẩn danh",

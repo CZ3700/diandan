@@ -109,6 +109,8 @@ const copy = {
   cartAdded: "已加入购物袋",
   cartAdd: "加入购物袋",
   cartAdding: "正在加入…",
+  cartBuyNow: "立即购买",
+  cartBuyingNow: "正在前往结账…",
   cartMessage: "私密留言",
   cartMessageHint: "只有工作室和收礼艺人可以查看留言。",
   cartAnonymous: "匿名",
