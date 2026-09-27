@@ -47,13 +47,6 @@ export async function startLocalWeb(context) {
       FAN_SUPPORT_ADMIN_OIDC_ISSUER: config.origins.oidc,
       FAN_SUPPORT_STOREFRONT_ORIGIN: config.origins.storefront,
       NEXT_TELEMETRY_DISABLED: "1",
-      // A public instance sits behind its edge: request URLs follow the forwarded public Host.
-      ...(config.exposure?.mode === "PUBLIC"
-        ? {
-            LOCAL_EXPERIENCE_TRUST_HOST_HEADER: "1",
-            LOCAL_EXPERIENCE_ALLOWED_DEV_ORIGINS: new URL(origin).hostname,
-          }
-        : {}),
       NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --import=${new URL("./local-experience-dns.mjs", import.meta.url).href}`,
     });
     if (app === "storefront" && mode === "production") {
@@ -74,11 +67,8 @@ export async function startLocalWeb(context) {
           "node_modules/next/dist/bin/next",
         ),
         "dev",
-        // Next builds request URLs from --hostname:--port before trusting Host, so a public
-        // instance omits it; the host firewall admits only the edge ports.
-        ...(config.exposure?.mode === "PUBLIC"
-          ? []
-          : ["--hostname", new URL(origin).hostname]),
+        "--hostname",
+        new URL(origin).hostname,
         "--port",
         String(port),
         "--experimental-https",
