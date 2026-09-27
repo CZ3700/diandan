@@ -49,7 +49,10 @@ export async function startLocalWeb(context) {
       NEXT_TELEMETRY_DISABLED: "1",
       // A public instance sits behind its edge: request URLs follow the forwarded public Host.
       ...(config.exposure?.mode === "PUBLIC"
-        ? { LOCAL_EXPERIENCE_TRUST_HOST_HEADER: "1" }
+        ? {
+            LOCAL_EXPERIENCE_TRUST_HOST_HEADER: "1",
+            LOCAL_EXPERIENCE_ALLOWED_DEV_ORIGINS: new URL(origin).hostname,
+          }
         : {}),
       NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --import=${new URL("./local-experience-dns.mjs", import.meta.url).href}`,
     });
@@ -71,8 +74,11 @@ export async function startLocalWeb(context) {
           "node_modules/next/dist/bin/next",
         ),
         "dev",
-        "--hostname",
-        new URL(origin).hostname,
+        // Next builds request URLs from --hostname:--port before trusting Host, so a public
+        // instance omits it; the host firewall admits only the edge ports.
+        ...(config.exposure?.mode === "PUBLIC"
+          ? []
+          : ["--hostname", new URL(origin).hostname]),
         "--port",
         String(port),
         "--experimental-https",
