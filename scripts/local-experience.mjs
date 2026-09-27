@@ -229,7 +229,22 @@ try {
       JSON.stringify((await status()) ?? { ready: false, instance }, null, 2),
     );
   else if (command === "open") await openBrowser();
-  else if (command === "stop") {
+  else if (command === "prepare") {
+    // Creates the instance and its CA without starting it, so an edge can be configured first.
+    await prepareLocalTls(state);
+    console.log(
+      JSON.stringify(
+        {
+          prepared: true,
+          instance,
+          exposure: config.exposure ?? null,
+          origins: config.origins,
+        },
+        null,
+        2,
+      ),
+    );
+  } else if (command === "stop") {
     const active = await status();
     let expectedRunId = active?.runId;
     if (!expectedRunId) {
@@ -276,7 +291,7 @@ try {
       confirmation: args[args.indexOf("--confirm") + 1],
     });
     console.log("已清除该本地实例。");
-  } else throw new Error("Use start, status, open, stop or reset");
+  } else throw new Error("Use prepare, start, status, open, stop or reset");
 } catch (error) {
   console.error(error.message);
   process.exitCode = 1;
