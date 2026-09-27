@@ -420,6 +420,16 @@
         "up": "6e9349d81e3b140d8f71a315a962cd18d8a78cd90d7a264882f0fc638af966fb",
         "down": "6fda4c09f451d4024284c19a7aee91aa6bad36196f439bb584fa8209a095f6a0"
       }
+    },
+    {
+      "version": "0043",
+      "name": "virtual-payment-success-plan",
+      "up": "database/migrations/0043_virtual-payment-success-plan.up.sql",
+      "down": "database/migrations/0043_virtual-payment-success-plan.down.sql",
+      "sha256": {
+        "up": "a898608973dd8f5e514f1e0ac944c6be03b2dc5276b424e30b32f1c3dd8f4cea",
+        "down": "adfe63b23e19d077d065985253f5cc9c93259f2a040343259028d8aee8888e35"
+      }
     }
   ]
 }
