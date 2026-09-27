@@ -162,6 +162,8 @@ test("gift resolution binds both identifiers without guessing a default variant"
   expect(await repo.resolveGiftHandle(command)).toBeNull();
   expect(query.mock.calls[0]?.[1]).toEqual([id(3), id(4)]);
   expect(query.mock.calls[0]?.[0]).toContain("FOR SHARE OF gift,variant");
+  // A deleted (archived) gift resolves to nothing, so only its cart line becomes unavailable.
+  expect(query.mock.calls[0]?.[0]).toContain("gift.status<>'archived'");
 });
 
 test("credential lookup retains PostgreSQL expiry and microseconds without exposing credential columns", async () => {

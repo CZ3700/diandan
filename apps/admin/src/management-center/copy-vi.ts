@@ -100,4 +100,10 @@ export const copy = {
   archived: "Đã lưu trữ",
   imageUnavailable: "Ảnh không khả dụng",
   readOnly: "Chỉ xem",
+  deleteTitle: "Xóa vĩnh viễn",
+  deleteWarning:
+    "Mục này sẽ bị gỡ khỏi trang web và khỏi danh sách này, không thể hoàn tác. Các đơn hàng hiện có vẫn giữ nguyên hồ sơ.",
+  deleteTypeName: "Nhập chính xác tên để xác nhận",
+  deleteConfirm: "Xóa vĩnh viễn",
+  deleted: "Đã xóa. Mục này không còn hiển thị trên trang web.",
 } satisfies ManagementCopy;

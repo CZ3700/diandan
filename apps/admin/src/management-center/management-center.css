@@ -342,6 +342,26 @@
 .mc-editor {
   animation: mc-enter var(--motion-control-effective) var(--ease-out);
 }
+.mc-delete {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+  margin-top: var(--space-8);
+  padding: var(--space-4);
+  border: var(--border-width) solid var(--color-danger);
+  border-radius: var(--radius-control);
+}
+.mc-delete h2 {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: var(--type-body-size);
+}
+.mc-delete p {
+  margin: 0;
+}
+.mc-delete .mc-field {
+  width: 100%;
+}
 @keyframes mc-enter {
   from {
     opacity: 0;

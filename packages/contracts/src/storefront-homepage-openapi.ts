@@ -22,7 +22,7 @@ export function storefrontHomepagePaths() {
         summary:
           "Read the current published homepage and its bounded artist and gift references",
         description:
-          "One PostgreSQL snapshot verifies every returned publication. A missing hero fails closed; unavailable featured slots retain their published identities. No prices or market are inferred from locale. Unknown or duplicate query parameters are rejected.",
+          "One PostgreSQL snapshot verifies every returned publication. A hero whose publication cannot be verified fails closed; a hero artist deleted (archived) by operators is returned UNAVAILABLE so the poster renders without an artist link; unavailable featured slots retain their published identities. No prices or market are inferred from locale. Unknown or duplicate query parameters are rejected.",
         security: [],
         parameters: [
           publicRevalidationParameter(),

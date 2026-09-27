@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { createManagementApi } from "./api";
+import { createManagementApi, type DeletableItem } from "./api";
 import { createAdminClient } from "../workspace/client";
 
 const id = "10000000-0000-4000-8000-000000000001";
@@ -72,4 +72,89 @@ it("rejects a valid operation belonging to another requested update", async () =
   await expect(
     api.read("10000000-0000-4000-8000-000000000002"),
   ).rejects.toThrow("INVALID_RESPONSE");
+});
+const deletable = (kind: "ARTIST" | "GIFT", version: number) =>
+  ({ kind, id, version }) as unknown as DeletableItem;
+it("deletes an artist as a permanent archive through the audited identity write", async () => {
+  const { api, calls } = setup({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "MUTATION",
+    resultId: id,
+    idolId: id,
+    baseVersion: 4,
+    authoringVersion: 1,
+    publicationHeadVersion: 1,
+    handle: "test-artist",
+    status: "archived",
+    acceptingGifts: false,
+    draftRevisionId: null,
+    publishedRevisionId: id,
+    replayed: false,
+  });
+  await api.remove(deletable("ARTIST", 3));
+  expect(calls[0]?.url).toBe("/api/admin/idol-status");
+  expect(JSON.parse(String(calls[0]?.init.body))).toEqual({
+    schemaVersion: 1,
+    idolId: id,
+    status: "archived",
+    acceptingGifts: false,
+    expectedBaseVersion: 3,
+    reasonCode: "DAILY_CENTER_DELETE",
+  });
+  expect(
+    new Headers(calls[0]?.init.headers).get("Idempotency-Key"),
+  ).toBeTruthy();
+});
+it("deletes a gift through the gift status write and refuses another gift's result", async () => {
+  const response = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "MUTATION",
+    resultId: id,
+    replayed: false,
+    action: "SET_GIFT_STATUS",
+    giftId: id,
+    baseVersion: 6,
+  };
+  const { api, calls } = setup(response);
+  await api.remove(deletable("GIFT", 5));
+  expect(calls[0]?.url).toBe("/api/admin/gift-status");
+  expect(JSON.parse(String(calls[0]?.init.body))).toMatchObject({
+    giftId: id,
+    expectedBaseVersion: 5,
+    status: "archived",
+    reasonCode: "DAILY_CENTER_DELETE",
+  });
+  const other = setup({
+    ...response,
+    giftId: "10000000-0000-4000-8000-000000000009",
+  });
+  await expect(other.api.remove(deletable("GIFT", 5))).rejects.toMatchObject({
+    code: "INVALID_RESPONSE",
+  });
+});
+it("offers gift deletion only with gift.manage and treats a failed context as no permission", async () => {
+  const context = (permissions: string[]) => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "COMMERCE_CONTEXT",
+    markets: [],
+    inventoryLocations: [],
+    permissions,
+    localeScopes: ["en"],
+  });
+  expect(
+    await setup(context(["commerce.read", "gift.manage"])).api.canDeleteGifts(),
+  ).toBe(true);
+  expect(await setup(context(["commerce.read"])).api.canDeleteGifts()).toBe(
+    false,
+  );
+  expect(
+    await setup({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "FORBIDDEN",
+    }).api.canDeleteGifts(),
+  ).toBe(false);
 });

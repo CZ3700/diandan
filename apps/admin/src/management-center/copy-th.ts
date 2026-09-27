@@ -99,4 +99,10 @@ export const copy = {
   archived: "เก็บถาวรแล้ว",
   imageUnavailable: "รูปภาพไม่พร้อมใช้งาน",
   readOnly: "ดูได้อย่างเดียว",
+  deleteTitle: "ลบถาวร",
+  deleteWarning:
+    "รายการนี้จะถูกนำออกจากเว็บไซต์และจากรายการนี้ และไม่สามารถกู้คืนได้ คำสั่งซื้อที่มีอยู่ยังคงเก็บบันทึกไว้",
+  deleteTypeName: "พิมพ์ชื่อให้ตรงกันเพื่อยืนยัน",
+  deleteConfirm: "ลบถาวร",
+  deleted: "ลบแล้ว จะไม่แสดงบนเว็บไซต์อีก",
 } satisfies ManagementCopy;

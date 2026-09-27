@@ -11,3 +11,9 @@ it("explains why an existing inventory policy cannot change without blocking oth
     ),
   ).toContain("已有库存记录，售卖方式需保持不变");
 });
+it("asks to reload when a delete meets a version changed elsewhere", () => {
+  const copy = managementCopy("en");
+  expect(managementError(new AdminClientError("STALE_VERSION"), copy)).toBe(
+    copy.conflict,
+  );
+});

@@ -98,4 +98,10 @@ export const copy = {
   archived: "已归档",
   imageUnavailable: "图片暂不可用",
   readOnly: "暂不可编辑",
+  deleteTitle: "永久删除",
+  deleteWarning:
+    "删除后将从网站和此列表中移除，无法恢复。已有订单的记录不受影响。",
+  deleteTypeName: "请输入完整名称以确认",
+  deleteConfirm: "永久删除",
+  deleted: "已删除，网站上不再显示。",
 } satisfies ManagementCopy;

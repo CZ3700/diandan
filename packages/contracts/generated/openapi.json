@@ -194529,7 +194529,7 @@
     },
     "/api/v1/storefront-homepage": {
       "get": {
-        "description": "One PostgreSQL snapshot verifies every returned publication. A missing hero fails closed; unavailable featured slots retain their published identities. No prices or market are inferred from locale. Unknown or duplicate query parameters are rejected.",
+        "description": "One PostgreSQL snapshot verifies every returned publication. A hero whose publication cannot be verified fails closed; a hero artist deleted (archived) by operators is returned UNAVAILABLE so the poster renders without an artist link; unavailable featured slots retain their published identities. No prices or market are inferred from locale. Unknown or duplicate query parameters are rejected.",
         "operationId": "readStorefrontHomepage",
         "parameters": [
           {

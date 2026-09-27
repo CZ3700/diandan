@@ -74,13 +74,24 @@ export function createStorefrontHomepageRepository(
         ];
         const rows = await draftRows(
           client,
-          `SELECT 'IDOL' AS kind,id,handle FROM public.idols WHERE id=ANY($1::uuid[]) AND status IN ('active','paused') AND published_revision_id IS NOT NULL
-          UNION ALL SELECT 'GIFT' AS kind,id,handle FROM public.gifts WHERE id=ANY($2::uuid[]) AND status IN ('active','paused') AND published_revision_id IS NOT NULL`,
+          `SELECT 'IDOL' AS kind,id,handle,status='archived' AS deleted FROM public.idols WHERE id=ANY($1::uuid[]) AND (status='archived' OR (status IN ('active','paused') AND published_revision_id IS NOT NULL))
+          UNION ALL SELECT 'GIFT' AS kind,id,handle,false AS deleted FROM public.gifts WHERE id=ANY($2::uuid[]) AND status IN ('active','paused') AND published_revision_id IS NOT NULL`,
           [idolIds, giftIds],
         );
         const identities = new Map<string, string>();
+        // Artists deleted (archived) by operators; only these may leave the hero without an artist.
+        const deleted = new Set<string>();
         for (const row of rows) {
           const kind = row["kind"];
+          if (row["deleted"] === true && kind === "IDOL") {
+            if (
+              typeof row["id"] !== "string" ||
+              !idolIds.includes(row["id"].toLowerCase())
+            )
+              return unavailable;
+            deleted.add(`IDOL:${row["id"].toLowerCase()}`);
+            continue;
+          }
           const locator = publishedContentReadCommandSchema.parse({
             schemaVersion: 1,
             locale: command.data.locale,
@@ -127,7 +138,9 @@ export function createStorefrontHomepageRepository(
             );
           const content = loaded.get(key);
           if (content?.outcome !== "SUCCESS") {
-            if (slot.kind === "HERO_IDOL") return unavailable;
+            // Any other hero failure still fails closed: the poster must never show unverified content.
+            if (slot.kind === "HERO_IDOL" && !deleted.has(key))
+              return unavailable;
             hydrated.push({ ...reference, status: "UNAVAILABLE" });
           } else
             hydrated.push({

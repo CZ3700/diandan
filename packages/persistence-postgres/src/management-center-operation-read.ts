@@ -169,7 +169,8 @@ export async function readManagementCenterList(
     revision = artist ? "idol" : "gift";
   const [count] = await draftRows(
     client,
-    `SELECT count(*)::text total FROM public.${table}`,
+    // Deleted (archived) artists and gifts leave the daily list; orders keep their own snapshots.
+    `SELECT count(*)::text total FROM public.${table} WHERE status<>'archived'`,
   );
   const rows = await draftRows(
     client,
@@ -182,6 +183,7 @@ export async function readManagementCenterList(
     LEFT JOIN public.${revision}_revision_translations t ON t.${revision}_revision_id=r.id AND t.locale='en'
     LEFT JOIN LATERAL(SELECT media_asset_id FROM public.${revision}_revision_media m WHERE m.${revision}_revision_id=r.id AND m.role='${artist ? "PORTRAIT" : "PRIMARY"}' ORDER BY m.sort_order LIMIT 1) media ON true
     ${artist ? "" : "LEFT JOIN public.gift_revision_profiles profile ON profile.gift_revision_id=r.id"}
+    WHERE o.status<>'archived'
     ORDER BY o.created_at DESC,o.id DESC LIMIT $1 OFFSET $2`,
     [command.pageSize, (command.page - 1) * command.pageSize],
   );

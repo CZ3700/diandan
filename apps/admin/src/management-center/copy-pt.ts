@@ -103,4 +103,10 @@ export const copy = {
   archived: "Arquivado",
   imageUnavailable: "Imagem indisponível",
   readOnly: "Apenas leitura",
+  deleteTitle: "Excluir definitivamente",
+  deleteWarning:
+    "Será removido do site e desta lista. Não é possível desfazer. Os pedidos existentes mantêm seu registro.",
+  deleteTypeName: "Digite o nome exato para confirmar",
+  deleteConfirm: "Excluir definitivamente",
+  deleted: "Excluído. Não aparece mais no site.",
 } satisfies ManagementCopy;

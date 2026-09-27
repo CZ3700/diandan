@@ -239,6 +239,22 @@ test("artist list returns the actual source language and a safe processed image 
   });
   expect(JSON.stringify(result)).not.toContain("object_key");
 });
+test.each(["ARTISTS", "GIFTS"] as const)(
+  "deleted (archived) entries leave both the %s count and page",
+  async (section) => {
+    const db = client([[{ total: "0" }], []]);
+    await readManagementCenterList(
+      db,
+      { schemaVersion: 1, action: "LIST", section, page: 1, pageSize: 10 },
+      "https://media.example.test/",
+    );
+    const [count, page] = vi
+      .mocked(db.query)
+      .mock.calls.map(([sql]) => String(sql));
+    expect(count).toContain("WHERE status<>'archived'");
+    expect(page).toContain("WHERE o.status<>'archived'");
+  },
+);
 test("corrupt thumbnail keys cannot turn into a foreign private response URL", async () => {
   const db = client([
     [{ total: "1" }],

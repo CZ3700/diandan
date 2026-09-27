@@ -103,4 +103,10 @@ export const copy = {
   archived: "アーカイブ済み",
   imageUnavailable: "画像を表示できません",
   readOnly: "閲覧のみ",
+  deleteTitle: "完全に削除",
+  deleteWarning:
+    "サイトとこの一覧から削除され、元に戻せません。既存の注文の記録はそのまま残ります。",
+  deleteTypeName: "確認のため名前を正確に入力してください",
+  deleteConfirm: "完全に削除",
+  deleted: "削除しました。サイトには表示されなくなりました。",
 } satisfies ManagementCopy;

@@ -28,6 +28,7 @@ export function ManagementHub({
   locale,
   storefrontOrigin,
   onLogout,
+  canDeleteArtists = false,
 }: {
   api: ManagementApi;
   ordersApi: OrdersApi;
@@ -37,6 +38,7 @@ export function ManagementHub({
   locale: SupportedLocale;
   storefrontOrigin?: string | undefined;
   onLogout?: (() => Promise<void>) | undefined;
+  canDeleteArtists?: boolean;
 }) {
   const [access, setAccess] = useState<ReturnType<
     typeof resolveManagementAccess
@@ -133,6 +135,7 @@ export function ManagementHub({
           access.exceptions ? () => chooseSection("EXCEPTIONS") : undefined
         }
         accessNotice={notice}
+        canDeleteArtists={canDeleteArtists}
       />
     );
   return (

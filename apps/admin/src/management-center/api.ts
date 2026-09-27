@@ -1,10 +1,19 @@
 import {
+  adminCatalogResponseSchema,
   managementCenterResponseSchema,
   type ManagementCenterCommand,
   type ManagementCenterIntent,
+  type ManagementCenterListItem,
   type ManagementCenterResponse,
 } from "@fan-support/contracts";
 import { AdminClientError, type AdminClient } from "../workspace/client";
+import { callCommerce } from "../workspace/gift-commerce-client";
+
+export type DeletableItem = Extract<
+  ManagementCenterListItem,
+  { kind: "ARTIST" | "GIFT" }
+>;
+const DELETE_REASON = "DAILY_CENTER_DELETE";
 
 export type ManagementContext = Extract<
   ManagementCenterResponse,
@@ -83,6 +92,62 @@ export function createManagementApi(client: AdminClient) {
       )
         throw invalid();
       return result.operation;
+    },
+    /** The daily session carries content permissions only; gift deletion needs gift.manage. */
+    async canDeleteGifts(): Promise<boolean> {
+      try {
+        const result = await callCommerce(client, {
+          schemaVersion: 1,
+          action: "CONTEXT",
+        });
+        return (
+          result.kind === "COMMERCE_CONTEXT" &&
+          result.permissions.includes("gift.manage")
+        );
+      } catch {
+        return false;
+      }
+    },
+    /**
+     * Delete = permanent archive through the audited identity status write, not a daily
+     * operation: it has no image work, the database keeps archived final and orders keep
+     * their own snapshots.
+     */
+    async remove(item: DeletableItem): Promise<void> {
+      if (item.kind === "ARTIST") {
+        const result = await client.call(
+          "idol-status",
+          {
+            schemaVersion: 1,
+            idolId: item.id,
+            status: "archived",
+            acceptingGifts: false,
+            expectedBaseVersion: item.version,
+            reasonCode: DELETE_REASON,
+          },
+          adminCatalogResponseSchema,
+          true,
+        );
+        if (
+          result.kind !== "MUTATION" ||
+          result.idolId.toLowerCase() !== item.id.toLowerCase() ||
+          result.status !== "archived"
+        )
+          throw invalid();
+        return;
+      }
+      const result = await callCommerce(client, {
+        schemaVersion: 1,
+        action: "SET_GIFT_STATUS",
+        giftId: item.id,
+        expectedBaseVersion: item.version,
+        status: "archived",
+        reasonCode: DELETE_REASON,
+      });
+      if (!("action" in result) || result.action !== "SET_GIFT_STATUS")
+        throw invalid();
+      if (result.giftId.toLowerCase() !== item.id.toLowerCase())
+        throw invalid();
     },
     async retry(operationId: string, expectedVersion: number) {
       const result = await call(

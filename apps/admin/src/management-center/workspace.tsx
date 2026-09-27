@@ -50,6 +50,7 @@ export function ManagementWorkspace({
   onExceptions,
   initialSection = "ARTISTS",
   accessNotice,
+  canDeleteArtists = false,
 }: {
   api: ManagementApi;
   locale: SupportedLocale;
@@ -60,6 +61,7 @@ export function ManagementWorkspace({
   onExceptions?: (() => void) | undefined;
   initialSection?: ManagementSection;
   accessNotice?: ReactNode;
+  canDeleteArtists?: boolean;
 }) {
   const copy = managementCopy(locale);
   const [section, setSection] = useState<ManagementSection>(initialSection);
@@ -75,6 +77,8 @@ export function ManagementWorkspace({
   const [success, setSuccess] = useState<ManagementCenterOperation | null>(
     null,
   );
+  const [deleted, setDeleted] = useState(false);
+  const [canDeleteGifts, setCanDeleteGifts] = useState(false);
   const restoreActive = useRef(false);
   const writeBlocked = !canStartManagementWrite(busy, operations);
   const title = useRef<HTMLHeadingElement>(null);
@@ -111,8 +115,29 @@ export function ManagementWorkspace({
       canceled = true;
     };
   }, [api, section, page, refresh]);
+  useEffect(() => {
+    let canceled = false;
+    void api.canDeleteGifts().then((allowed) => {
+      if (!canceled) setCanDeleteGifts(allowed);
+    });
+    return () => {
+      canceled = true;
+    };
+  }, [api]);
+  const removed = useCallback(() => {
+    setSuccess(null);
+    setDeleted(true);
+    setSelection(null);
+    setPage(1);
+    setRefresh((value) => value + 1);
+    setBusy(false);
+    focusTarget(() =>
+      document.querySelector<HTMLElement>("[data-management-deleted]"),
+    );
+  }, [focusTarget]);
   const published = useCallback(
     (operation: ManagementCenterOperation) => {
+      setDeleted(false);
       setSuccess(operation);
       setSelection(null);
       setPage(1);
@@ -141,6 +166,7 @@ export function ManagementWorkspace({
     setSection(next);
     setPage(1);
     setSuccess(null);
+    setDeleted(false);
     focusTitle();
   }
   async function restore(
@@ -182,6 +208,7 @@ export function ManagementWorkspace({
   function select(item: ManagementCenterListItem) {
     if (writeBlocked) return;
     setSuccess(null);
+    setDeleted(false);
     if (item.kind === "POSTER") {
       void restore(item);
       return;
@@ -267,6 +294,7 @@ export function ManagementWorkspace({
             }
             onClick={() => {
               setSuccess(null);
+              setDeleted(false);
               setSelection(
                 section === "POSTERS"
                   ? {
@@ -320,6 +348,17 @@ export function ManagementWorkspace({
           ) : null}
         </div>
       ) : null}
+      {deleted ? (
+        <div
+          className="mc-success"
+          role="status"
+          tabIndex={-1}
+          data-management-deleted
+        >
+          <Icon name="check" decorative />
+          <span>{copy.deleted}</span>
+        </div>
+      ) : null}
       {selection && context ? (
         <ManagementEditor
           key={`${selection.kind}-${selection.item?.id ?? "new"}`}
@@ -328,6 +367,12 @@ export function ManagementWorkspace({
           context={context}
           selection={selection}
           onPublished={published}
+          onDeleted={removed}
+          canDelete={
+            selection.kind === "SAVE_ARTIST"
+              ? canDeleteArtists
+              : selection.kind === "SAVE_GIFT" && canDeleteGifts
+          }
           onBusy={setBusy}
         />
       ) : (

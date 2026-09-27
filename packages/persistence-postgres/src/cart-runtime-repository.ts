@@ -161,7 +161,7 @@ export function createCartRuntimeRepository(
         const rows = await draftRows(
           client,
           `SELECT gift.id,gift.handle FROM public.gifts gift JOIN public.gift_variants variant ON variant.gift_id=gift.id
-         WHERE gift.id=$1 AND variant.id=$2 FOR SHARE OF gift,variant`,
+         WHERE gift.id=$1 AND variant.id=$2 AND gift.status<>'archived' FOR SHARE OF gift,variant`,
           [parsed.data.giftId, parsed.data.giftVariantId],
         );
         if (rows.length > 1) return reject("CONTENT_UNAVAILABLE");

@@ -1,7 +1,10 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@fan-support/ui";
-import type { SupportedLocale } from "@fan-support/contracts";
+import {
+  SUPPORTED_LOCALES,
+  type SupportedLocale,
+} from "@fan-support/contracts";
 import { useAdminSession } from "../workspace/client";
 import { createManagementApi } from "./api";
 import { managementCopy } from "./copy";
@@ -92,6 +95,11 @@ export function ManagementCenter({
       locale={locale}
       storefrontOrigin={storefrontOrigin}
       onLogout={authenticationAvailable ? logout : undefined}
+      canDeleteArtists={
+        // Artist identity status writes need content.edit in every published locale.
+        session.permissions.includes("content.edit") &&
+        SUPPORTED_LOCALES.every((value) => session.localeScopes.includes(value))
+      }
     />
   );
 }

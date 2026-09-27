@@ -9,8 +9,9 @@ import {
   type ManagementCenterOperation,
   type SupportedLocale,
 } from "@fan-support/contracts";
-import type { ManagementApi, ManagementContext } from "./api";
+import type { DeletableItem, ManagementApi, ManagementContext } from "./api";
 import { ContentForm } from "./content-form";
+import { DeletePanel } from "./delete-panel";
 import { PosterForm } from "./poster-form";
 import { OperationProgress } from "./operation-progress";
 import {
@@ -36,6 +37,8 @@ export function ManagementEditor({
   context,
   selection,
   onPublished,
+  onDeleted,
+  canDelete = false,
   onBusy,
 }: {
   api: ManagementApi;
@@ -43,6 +46,8 @@ export function ManagementEditor({
   context: ManagementContext;
   selection: EditorSelection;
   onPublished: (operation: ManagementCenterOperation) => void;
+  onDeleted?: ((item: DeletableItem) => void) | undefined;
+  canDelete?: boolean;
   onBusy: (busy: boolean) => void;
 }) {
   const copy = managementCopy(locale);
@@ -52,6 +57,7 @@ export function ManagementEditor({
     null,
   );
   const [error, setError] = useState<unknown>(null);
+  const [deleting, setDeleting] = useState(false);
   const active = useRef(false);
   const mounted = useRef(true);
   useEffect(() => {
@@ -83,6 +89,25 @@ export function ManagementEditor({
       active.current = false;
       if (mounted.current) {
         setPhase(null);
+        onBusy(false);
+      }
+    }
+  }
+  async function remove(item: DeletableItem) {
+    if (active.current || operation) return;
+    active.current = true;
+    setDeleting(true);
+    onBusy(true);
+    setError(null);
+    try {
+      await api.remove(item);
+      if (mounted.current) onDeleted?.(item);
+    } catch (failure) {
+      if (mounted.current) setError(failure);
+    } finally {
+      active.current = false;
+      if (mounted.current) {
+        setDeleting(false);
         onBusy(false);
       }
     }
@@ -128,6 +153,8 @@ export function ManagementEditor({
       setError(failure);
     }
   }
+  const deletable: DeletableItem | null =
+    selection.kind === "REPLACE_POSTER" ? null : selection.item;
   return (
     <section className="mc-editor" data-management-editor>
       {phase ? (
@@ -175,6 +202,17 @@ export function ManagementEditor({
           onSubmit={submitContent}
         />
       )}
+      {deletable && canDelete ? (
+        <DeletePanel
+          locale={locale}
+          name={deletable.name}
+          nameLocale={deletable.sourceLocale}
+          disabled={phase !== null || operation !== null || deleting}
+          onDelete={() => {
+            void remove(deletable);
+          }}
+        />
+      ) : null}
     </section>
   );
 }

@@ -100,4 +100,10 @@ export const copy = {
   archived: "Archived",
   imageUnavailable: "Image unavailable",
   readOnly: "View only",
+  deleteTitle: "Delete permanently",
+  deleteWarning:
+    "This removes it from the website and from this list. It cannot be undone. Existing orders keep their records.",
+  deleteTypeName: "Type the name exactly to confirm",
+  deleteConfirm: "Delete permanently",
+  deleted: "Deleted. It no longer appears on the website.",
 };

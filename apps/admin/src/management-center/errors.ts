@@ -11,6 +11,7 @@ export function managementError(error: unknown, copy: ManagementCopy): string {
       return copy.sessionMissing;
     case "TARGET_CONFLICT":
     case "VERSION_CONFLICT":
+    case "STALE_VERSION":
       return copy.conflict;
     case "INVENTORY_POLICY_LOCKED":
       return copy.inventoryPolicyLocked;
