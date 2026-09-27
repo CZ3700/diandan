@@ -20,8 +20,9 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "test": "vitest run --config ../../vitest.config.ts --root .",
+    "test": "vitest run --config ../../vitest.config.ts --root . && node --test ./scripts/*.test.mjs",
     "typecheck": "tsc -p tsconfig.json",
-    "sandbox": "pnpm run build && node ./scripts/stripe-sandbox.mjs"
+    "sandbox": "pnpm run build && node ./scripts/stripe-sandbox.mjs",
+    "sandbox:check-config": "node ./scripts/stripe-sandbox.mjs --check-config"
   }
 }
