@@ -40,6 +40,34 @@
 .storefront-header[data-scrolled="true"] {
   background: var(--color-surface);
 }
+/* Frosted glass: photos scroll softly under the bar; colours follow the published theme. */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .storefront-header {
+    background: color-mix(in srgb, var(--color-bg) 70%, transparent);
+    border-bottom-color: color-mix(in srgb, var(--color-text) 10%, transparent);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  .storefront-header[data-scrolled="true"] {
+    background: color-mix(in srgb, var(--color-surface) 62%, transparent);
+    box-shadow: 0 var(--border-width) 0
+      color-mix(in srgb, var(--color-text) 4%, transparent);
+  }
+  .storefront-header .fs-menu-trigger,
+  .storefront-header .fs-button--secondary {
+    background: color-mix(in srgb, var(--color-surface) 45%, transparent);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .storefront-header {
+    background: var(--color-bg);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .storefront-header[data-scrolled="true"] {
+    background: var(--color-surface);
+  }
+}
 .storefront-wordmark {
   font-size: var(--type-body-size);
   font-weight: 700 !important;
