@@ -52,7 +52,9 @@ test("OIDC signing identity survives restart and existing invalid keys are never
     const first = await module.readLocalOidcKey(path);
     const second = await module.readLocalOidcKey(path);
     assert.deepEqual(first.jwk, second.jwk);
-    assert.equal((await stat(path)).mode & 0o777, 0o600);
+    // Windows has no POSIX permission bits: stat always reports 0o666 there.
+    if (process.platform !== "win32")
+      assert.equal((await stat(path)).mode & 0o777, 0o600);
     await writeFile(path, "invalid key", { mode: 0o600 });
     await assert.rejects(module.readLocalOidcKey(path));
   } finally {
