@@ -322,6 +322,8 @@ test("Checkout link is saved to an ignored local file with owner-only permission
   const file = await writeCheckoutLink(root, checkoutUrl);
   assert.ok(file.startsWith(path.join(root, "output", "checks")));
   assert.equal(await readFile(file, "utf8"), `${checkoutUrl}\n`);
+  // Windows has no POSIX permission bits: stat always reports 0o666/0o777 there.
+  if (process.platform === "win32") return;
   assert.equal((await stat(file)).mode & 0o777, 0o600);
   assert.equal((await stat(path.dirname(file))).mode & 0o777, 0o700);
 });
