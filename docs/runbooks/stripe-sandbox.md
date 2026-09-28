@@ -64,3 +64,15 @@ node packages/payment-stripe/scripts/stripe-sandbox.mjs --webhook-port 4242
 ```sh
 corepack pnpm --filter @fan-support/payment-stripe test
 ```
+
+## 本站完整沙盒链路（L3-04）
+
+2026-09-28 已通过独立实例的本站交易验收：正常后台上传内容，粉丝选艺人/礼物并结账，在Stripe官方托管页测试付款USD48；正式API验签Inbox/Worker关联原订单，邮件查单使用新浏览器；管理中心部分退款USD5，粉丝与管理端状态一致。两种成功回调原签名重放后不重复入账、退款、履约或通知。这里的邮件和身份仍为明确标记的本地TEST服务。
+
+证据是同一订单的分段组合，入口 `output/checks/l3-04-site-stripe/acceptance-summary.json` 与 `independent-l3-04-review.md`。原run的失败和恢复报告保留，最终只读恢复没有再次付款或退款；不能把单个PARTIAL_PASS脱离组合证据当成完整结论。此处不改变上方adapter命令的 `siteOrderFlowVerified=false` 边界。
+
+复验时创建独立 `test-regression-` 实例并显式选择 `--payment-provider stripe-test`，保持单仓库一次一个Next运行实例。官方CLI选择同一沙盒，API只接收当前签名密钥；不复制到Web/Worker，不输出托管URL、客户信息或原始回调。完成后停止专用监听与实例，保留订单和数据库；原体验不迁移、不清空。
+
+托管页测试表单使用逐键输入，并以真实页面字段/提交状态为准；发现hcaptcha脚本或iframe并不代表有可见人工挑战。平台跳转action现有有效期为300秒，过期后不能重签延长或盲目新建付款：先核对原attempt/PSP状态。支付中断后的安全恢复体验仍按L3异常路径后续验收。
+
+退款可能先由已认证的PSP响应形成canonical退款事件，后续已验签webhook通过canonical关联去重；应核对原账户/TEST、订单/attempt、退款reference、金额/币种、账本与canonical关联，不能只要求每个回调都有直接attempt association，也不能跳过归属核对。原签名重放必须在有效期内，超期保留缺口，禁止自行重签冒充原回调。

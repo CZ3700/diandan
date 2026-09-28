@@ -12,9 +12,9 @@
 | L2-01 全站主题 | DONE | root 协调，2026-09-28；独立主题、后台双端预览/草稿/发布/恢复与所有公开页接通。PG 41 + 旧布局35、45迁移往返、浏览器发布23/七语573/重启9、200%缩放、交易252、check:dev与独立复核通过；未改变原体验或服务器。详见下方验收。 |
 | L3-01 沙盒验证结果可信性 | DONE | root 协调、独立执行与复核，2026-09-28 开始并完成；零回调/错配/验签失败均不通过；配置检查不联网、秘密与付款链接不入普通输出。29 个 adapter 测试及 43 个脚本测试、check:dev、独立真实 adapter/HMAC 检查通过。 |
 | L3-02 Stripe adapter 实际沙盒 | DONE | root，2026-09-28；受限本地配置 + 官方 CLI 转发 + Playwright 托管测试页：USD 25 测试付款、USD 5 部分退款、重放、查询、取消及对应验签回调通过；12 项检查全通过。仅 adapter 验收，`siteOrderFlowVerified=false`，没有真实资金交易。 |
-| L3-03 本站 Stripe 接线准备 | LOCAL_ACCEPTED | stripe_site_audit / root，2026-09-28；新隔离实例可显式选 stripe-test，统一账户/方法/凭据引用/验签头/托管源站，旧 fake 实例不可切换，Web/Worker 不接收支付密钥。75 项相关测试及独立复核通过；本站实际 Stripe 付款、Inbox/Worker、查单和后台退款仍待下一项联调，未冒充完成。 |
-| L3-04 本站 Stripe 实际沙盒 | IN_PROGRESS | stripe_preparation / root，2026-09-28 06:50 +07:00；复用既有本站购买/查单/退款 UI 与只读 PG 证据，准备独立 Stripe 浏览器联调。与 L2 实现并行，运行时/浏览器串行；要求实际签名回调、Inbox/Worker、原订单入账、部分退款与去重，旧 fake 验收不代替。 |
-| L3 正式交易与运营 | IN_PROGRESS | Stripe 测试凭据已配置，adapter 实际沙盒通过；下一步为隔离实例的本站 checkout→API webhook→Inbox/Worker→查单→后台退款。Airwallex 收单号申请中，邮件/正式 OIDC 资源待落实；生产商户尚未批准。 |
+| L3-03 本站 Stripe 接线准备 | DONE | 新隔离实例显式stripe-test、旧fake实例不可切换、Web/Worker不接收支付密钥；75项接线测试及独立复核通过。L3-04已补实际本站沙盒验证，正式生产配置仍不在本项范围。 |
+| L3-04 本站 Stripe 实际沙盒 | DONE | root / stripe_preparation，2026-09-28；同一原订单USD48测试收款、USD5部分退款、验签Inbox/Worker、TEST邮件查单、原签名重放、粉丝和管理端退款回读通过；组合验收与独立审查通过，原失败报告保留。两笔未付款测试订单已正常取消，未用真实资金。 |
+| L3 正式交易与运营 | IN_PROGRESS | Stripe adapter及本站实际沙盒已完成；继续正式邮件/OIDC、四类礼物与混合/异常交易、支付中断安全恢复、内容政策审校。Airwallex申请中，生产商户尚未批准。 |
 | L4 发布验收 | PENDING | 依赖 L1–L3 首发范围；当前服务器仍为公开 TEST，尚未转正。实际资金/正式发布需单独授权。 |
 
 ## 当前外部条件
@@ -54,3 +54,13 @@
 6. 修复检查发现的后台文案组织违规；重新生成既有漂移的中日字体字集，并将L1已有尺寸/层级写法接回设计令牌。原始失败日志保留。最终check:dev（69/69/38任务，含缓存）、check:contracts、57项设计基础检查、源码秘密扫描3761文件通过。
 7. 独立审查无P1/P2，S.U.P.E.R十项与小范围收敛通过；完整入口 `output/checks/l2-theme/final-verification.md`。无新增第三方运行依赖，未部署服务器或使用真实资金。
 8. 下一项图片焦点的媒体链路分析已完成：`output/checks/l2-theme/focal-readiness.md`；将复用原图和现有处理队列，不用CSS位移冒充已丢失像素的裁切。
+
+## L3-04 本轮组合验收（2026-09-28）
+
+1. 新隔离正式构建实例 `test-regression-stripe-0928`，官方CLI当前签名原样转发至正式API webhook→Inbox/Worker；API key/whsec只经受限文件和进程环境使用，未改根.env、原体验或服务器。后台内容专项39项通过。
+2. 原订单在Stripe托管页实际测试付款USD48，回到同一checkout/attempt只读确认；1条付款成功回调验签、Worker匹配并单次入账，TEST邮件新浏览器查单通过。管理中心发起一次USD5部分退款，2条原退款回调验签/Worker通过；粉丝端PARTIALLY_REFUNDED、管理端SUCCEEDED/500最终回读通过。
+3. 付款原签名重放1条、退款原签名重放2条，均202；始终1 capture4800、1 refund500、1退款账本、1付款通知，Inbox/履约/effect数量不增。退款回调通过canonical event关联到后台已认证成功的退款，实际只读PG正例及错订单/attempt/reference/状态等负例共20项通过。
+4. 这是同一订单的组合验收：原run在已提交退款后财务刷新等待失败，其FAIL不改写；只读恢复核对原order/checkout/attempt及退款，无新付款、无再次退款。报告 `output/checks/l3-04-site-stripe/acceptance-summary.json` 为PASS、`siteOrderFlowVerified=true`，记录11个步骤与全部源报告hash；独立复核见同目录 `independent-l3-04-review.md`。
+5. 两笔早期未付款测试订单先确认0收款/退款，再通过正常管理中心各取消一次；两条原Stripe expired回调均验签/Worker成功，UI CANCELED、attempt EXPIRED，无资金/通知。取消证据 `cancel-1790555317274/report.json`。
+6. 原失败完整保留：填写器缺邮箱、程序化fill未形成托管页有效提交（逐键输入后成功）、中文文件路径截图错误、300秒action过期、财务刷新等待及退款callback关联口径误报。只发现hcaptcha组件不等于展示人工挑战，早先验证提示已撤回。没有修改产品TTL、付款规则或重签旧回调。
+7. 可复用入口：[Stripe沙盒说明](../runbooks/stripe-sandbox.md)。本轮只补验收工具与运行证据，不改正式支付adapter或订单实现。CLI/Stripe实例完成后停止，数据库保留；恢复主题体验实例。真实邮件/OIDC、生产收单资格、真实资金与发布验收仍待后续，整个L3没有关闭。

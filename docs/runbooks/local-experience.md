@@ -62,4 +62,4 @@ pnpm local:start --open
 
 默认本地模拟支付并非 PSP sandbox 或真实资金验收。AWS staging plan/apply、DNS/TLS、IAM/KMS、实际云对象存储、CloudFront/WAF/预算/配额、真实身份与邮件、正式内容与支付批准仍是原有外部验收项；生产 runtime 的配置装配须逐项验证。离线基础设施操作见 [infrastructure-offline.md](infrastructure-offline.md)。
 
-2026-09-28 新增独立 Stripe TEST 接线选项：仅新建 `test-` / `acceptance-` 实例可使用 `--payment-provider stripe-test`，已存在实例不能更换提供商。默认实例仍使用本地模拟支付。Stripe 模式需独立启动官方 CLI 转发，并仅在 API 进程环境提供 `PAYMENT_SECRET_STRIPE_API` 和当前转发器对应的 `PAYMENT_SECRET_STRIPE_WEBHOOK`；不要把密钥放进命令参数或实例配置。接线测试不等于本站 Stripe 订单链路已经验收，当前结论以 [上线进度](../progress/launch-progress.md) 为准。
+2026-09-28 新增独立 Stripe TEST 接线选项：仅新建 `test-` / `acceptance-` 实例可使用 `--payment-provider stripe-test`，已存在实例不能更换提供商。默认实例仍使用本地模拟支付。Stripe 模式需独立启动官方 CLI 转发，并仅在 API 进程环境提供 `PAYMENT_SECRET_STRIPE_API` 和当前转发器对应的 `PAYMENT_SECRET_STRIPE_WEBHOOK`；不要把密钥放进命令参数或实例配置。2026-09-28 已在独立实例完成本站 Stripe 测试付款、验签入账、TEST邮件查单、后台部分退款与重复回调验收；这仍不代表正式商户、真实邮件或生产收款通过。详细范围以 [上线进度](../progress/launch-progress.md) 为准。
