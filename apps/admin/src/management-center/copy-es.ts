@@ -61,6 +61,7 @@ export const copy = {
   processing: "Procesando y publicando…",
   published: "Publicado",
   retry: "Reintentar",
+  dismiss: "Cerrar",
   loadFailed: "No se pudo cargar la lista. Inténtalo de nuevo.",
   emptyArtists: "Añade tu primer artista.",
   emptyGifts: "Añade tu primer regalo.",

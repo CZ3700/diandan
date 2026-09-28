@@ -10,17 +10,20 @@ import type { ManagementApi } from "./api";
 import { managementCopy } from "./copy";
 import { managementError } from "./errors";
 import { watchManagementOperation } from "./watch-operation";
+import { isDismissibleOperation } from "./workspace-state";
 
 export function OperationProgress({
   api,
   operation,
   locale,
   onChange,
+  onDismiss,
 }: {
   api: ManagementApi;
   operation: ManagementCenterOperation;
   locale: SupportedLocale;
   onChange: (operation: ManagementCenterOperation) => void;
+  onDismiss?: () => void;
 }) {
   const copy = managementCopy(locale);
   const [error, setError] = useState<unknown>(null);
@@ -82,6 +85,15 @@ export function OperationProgress({
           }}
         >
           {copy.retry}
+        </Button>
+      ) : failed && onDismiss && isDismissibleOperation(operation) ? (
+        <Button
+          data-management-dismiss
+          variant="quiet"
+          type="button"
+          onClick={onDismiss}
+        >
+          {copy.dismiss}
         </Button>
       ) : null}
     </div>

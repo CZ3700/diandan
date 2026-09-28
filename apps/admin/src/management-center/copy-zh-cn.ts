@@ -57,6 +57,7 @@ export const copy = {
   processing: "正在处理并发布…",
   published: "已显示",
   retry: "重试",
+  dismiss: "知道了",
   loadFailed: "列表暂时无法加载，请重试。",
   emptyArtists: "添加第一位艺人。",
   emptyGifts: "添加第一件礼物。",

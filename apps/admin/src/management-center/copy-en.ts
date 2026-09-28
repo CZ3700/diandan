@@ -58,6 +58,7 @@ export const copy = {
   processing: "Preparing your update…",
   published: "Published",
   retry: "Try again",
+  dismiss: "Dismiss",
   loadFailed: "We could not load the list. Try again.",
   emptyArtists: "Add your first artist.",
   emptyGifts: "Add your first gift.",

@@ -60,6 +60,7 @@ export const copy = {
   processing: "Đang xử lý và đăng…",
   published: "Đã hiển thị",
   retry: "Thử lại",
+  dismiss: "Đóng",
   loadFailed: "Chưa tải được danh sách. Vui lòng thử lại.",
   emptyArtists: "Thêm nghệ sĩ đầu tiên.",
   emptyGifts: "Thêm quà tặng đầu tiên.",

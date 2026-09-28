@@ -59,6 +59,7 @@ export const copy = {
   processing: "กำลังเตรียมและเผยแพร่…",
   published: "เผยแพร่แล้ว",
   retry: "ลองอีกครั้ง",
+  dismiss: "ปิด",
   loadFailed: "โหลดรายการไม่ได้ โปรดลองอีกครั้ง",
   emptyArtists: "เพิ่มศิลปินคนแรก",
   emptyGifts: "เพิ่มของขวัญชิ้นแรก",

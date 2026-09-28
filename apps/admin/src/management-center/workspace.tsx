@@ -25,7 +25,12 @@ import { ManagementListView } from "./list-view";
 import { ManagementEditor, type EditorSelection } from "./editor";
 import { OperationProgress } from "./operation-progress";
 import { managementError } from "./errors";
-import { canStartManagementWrite } from "./workspace-state";
+import {
+  canStartManagementWrite,
+  readDismissedOperations,
+  rememberDismissedOperation,
+  visibleManagementOperations,
+} from "./workspace-state";
 import { scheduleManagementFocus } from "./focus";
 import { canLeaveDecoration } from "../management-decoration/navigation";
 import { ManagementLogout } from "./logout";
@@ -126,8 +131,9 @@ export function ManagementWorkspace({
         setContext(nextContext);
         setList(nextList);
         setOperations(
-          nextContext.operations.filter(
-            (operation) => operation.status !== "PUBLISHED",
+          visibleManagementOperations(
+            nextContext.operations,
+            readDismissedOperations(browserStorage()),
           ),
         );
       })
@@ -177,6 +183,12 @@ export function ManagementWorkspace({
     },
     [focusTarget],
   );
+  const dismissOperation = useCallback((operationId: string) => {
+    rememberDismissedOperation(browserStorage(), operationId);
+    setOperations((current) =>
+      current.filter((operation) => operation.operationId !== operationId),
+    );
+  }, []);
   const operationChanged = useCallback(
     (next: ManagementCenterOperation) => {
       setOperations((current) =>
@@ -431,6 +443,7 @@ export function ManagementWorkspace({
               locale={locale}
               operation={operation}
               onChange={operationChanged}
+              onDismiss={() => dismissOperation(operation.operationId)}
             />
           ))}
           {error ? (
@@ -469,4 +482,13 @@ export function ManagementWorkspace({
       )}
     </ManagementShell>
   );
+}
+
+/** Reading window.localStorage itself throws when site data is blocked. */
+function browserStorage(): Storage | null {
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
 }

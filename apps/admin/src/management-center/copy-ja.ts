@@ -63,6 +63,7 @@ export const copy = {
   processing: "処理して公開しています…",
   published: "公開済み",
   retry: "再試行",
+  dismiss: "閉じる",
   loadFailed: "一覧を読み込めませんでした。再試行してください。",
   emptyArtists: "最初のアーティストを追加しましょう。",
   emptyGifts: "最初のギフトを追加しましょう。",
