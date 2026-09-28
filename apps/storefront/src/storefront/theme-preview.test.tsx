@@ -61,6 +61,7 @@ test("preview applies presets, restores legacy defaults and cleans up every pres
   const legacy = createDefaultStorefrontTheme();
   const updated = {
     ...legacy,
+    detailTemplates: { artist: "SPLIT", gift: "IMAGE_RIGHT" },
     presentation: {
       heroLayout: "SPLIT",
       giftLayout: "SHOWCASE",
@@ -73,6 +74,8 @@ test("preview applies presets, restores legacy defaults and cleans up every pres
   send(updated);
   expect(attributes.get("data-storefront-hero-layout")).toBe("SPLIT");
   expect(attributes.get("data-storefront-motion")).toBe("SUBTLE");
+  expect(attributes.get("data-storefront-artist-template")).toBe("SPLIT");
+  expect(attributes.get("data-storefront-gift-template")).toBe("IMAGE_RIGHT");
   expect(play).toHaveBeenCalledTimes(1);
   expect(cancel).toHaveBeenCalledTimes(1);
   send(updated);
@@ -83,6 +86,8 @@ test("preview applies presets, restores legacy defaults and cleans up every pres
   expect(attributes.get("data-storefront-gift-layout")).toBe("GRID");
   expect(attributes.get("data-storefront-motion")).toBe("STANDARD");
   expect(attributes.get("data-storefront-motion-speed")).toBe("STANDARD");
+  expect(attributes.get("data-storefront-artist-template")).toBe("IMMERSIVE");
+  expect(attributes.get("data-storefront-gift-template")).toBe("IMAGE_LEFT");
   cleanup?.();
   expect([...attributes]).toEqual([
     ["data-storefront-motion", "NONE"],

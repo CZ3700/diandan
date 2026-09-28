@@ -28,10 +28,17 @@ test.each(SUPPORTED_LOCALES)(
       />,
     );
     expect(html.match(/type="radio"/gu)).toHaveLength(3);
-    expect(html.match(/<select/gu)).toHaveLength(7);
+    expect(html.match(/<select/gu)).toHaveLength(9);
     expect(html.match(/<details/gu)).toHaveLength(1);
     expect(html).not.toMatch(/<details[^>]*\bopen/u);
-    for (const field of ["heroLayout", "giftLayout", "motion", "motionSpeed"])
+    for (const field of [
+      "heroLayout",
+      "giftLayout",
+      "artistTemplate",
+      "giftTemplate",
+      "motion",
+      "motionSpeed",
+    ])
       expect(html).toMatch(
         new RegExp(`data-theme-setting="${field}"[^>]*disabled`, "u"),
       );
@@ -121,3 +128,34 @@ test("motion off disables only its speed and preserves the chosen speed", () => 
     presentation: { ...theme.presentation, motion: "SUBTLE" },
   });
 });
+
+test.each([
+  ["artistTemplate", "SPLIT", { artist: "SPLIT", gift: "IMAGE_LEFT" }],
+  ["giftTemplate", "IMAGE_RIGHT", { artist: "IMMERSIVE", gift: "IMAGE_RIGHT" }],
+] as const)(
+  "%s changes only detail templates and keeps legacy presentation absent",
+  (field, value, detailTemplates) => {
+    const theme = createDefaultStorefrontTheme();
+    const onChange = vi.fn();
+    const result = editor!.ThemeEditor({
+      theme,
+      onChange,
+      disabled: false,
+      copy: copyModule!.themeCopy("zh-CN"),
+    });
+    const html = renderToStaticMarkup(result);
+    expect(html).toContain("艺人详情布局");
+    expect(html).toContain("礼物详情布局");
+    expect(html).toContain('value="IMAGE_LEFT" selected=""');
+    expect(onChange).not.toHaveBeenCalled();
+    expect(theme).not.toHaveProperty("detailTemplates");
+    expect(control(result, field)).toBeDefined();
+    control(result, field)!.props.onChange({ currentTarget: { value } });
+    expect(onChange).toHaveBeenCalledExactlyOnceWith({
+      ...theme,
+      detailTemplates,
+    });
+    expect(theme).not.toHaveProperty("detailTemplates");
+    expect(onChange.mock.calls[0]?.[0]).not.toHaveProperty("presentation");
+  },
+);

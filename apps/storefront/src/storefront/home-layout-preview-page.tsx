@@ -25,6 +25,7 @@ import {
   type StorefrontPageProps,
 } from "./storefront-page-shell";
 import { PageState } from "./page-parts";
+import { DetailPreviewContent } from "./detail-preview-content";
 
 export function createHomeLayoutPreviewPage(locale: SupportedLocale) {
   return async function HomeLayoutPreviewPage({
@@ -40,10 +41,40 @@ export function createHomeLayoutPreviewPage(locale: SupportedLocale) {
     if (
       !adminOrigin ||
       !query.success ||
-      Object.keys(values).some((key) => key !== "channel" && key !== "mode") ||
-      (values["mode"] !== undefined && values["mode"] !== "theme")
+      Object.keys(values).some(
+        (key) => !["channel", "mode", "page"].includes(key),
+      ) ||
+      (values["mode"] !== undefined && values["mode"] !== "theme") ||
+      (values["page"] !== undefined &&
+        (values["mode"] !== "theme" ||
+          (values["page"] !== "home" &&
+            values["page"] !== "artist" &&
+            values["page"] !== "gift")))
     )
       notFound();
+    if (values["page"] === "artist" || values["page"] === "gift") {
+      const copy = await loadStorefrontCopy(locale);
+      return (
+        <StorefrontPageShell
+          preview
+          locale={locale}
+          copy={copy}
+          name={loadStorefrontPresentationConfig().name}
+          active={values["page"] === "artist" ? "artists" : "gifts"}
+          contextQuery=""
+        >
+          <ThemePreview
+            adminOrigin={adminOrigin}
+            channel={query.data.channel}
+          />
+          <DetailPreviewContent
+            page={values["page"]}
+            locale={locale}
+            copy={copy}
+          />
+        </StorefrontPageShell>
+      );
+    }
     const directoryQuery = prepareDirectoryQuery(locale, undefined);
     const directory = readStorefrontDirectory(
       directoryQuery.query,

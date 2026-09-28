@@ -1,5 +1,6 @@
 import type {
   StorefrontPresentation,
+  StorefrontDetailTemplates,
   StorefrontTheme,
   SupportedLocale,
 } from "@fan-support/contracts";
@@ -25,6 +26,15 @@ type ThemeLabels = {
   corners: string;
   heroLayout: string;
   giftLayout: string;
+  artistTemplate: string;
+  giftTemplate: string;
+  artistTemplateOptions: Record<StorefrontDetailTemplates["artist"], string>;
+  giftTemplateOptions: Record<StorefrontDetailTemplates["gift"], string>;
+  previewPages: {
+    label: string;
+    options: Record<"home" | "artist" | "gift", string>;
+    sampleHint: string;
+  };
   motion: string;
   motionSpeed: string;
   motionHint: string;
@@ -43,8 +53,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
     case "en":
       return {
         title: "Storewide theme",
-        intro:
-          "Choose the storewide appearance, homepage and gift layouts, and motion.",
+        intro: "Choose the storewide appearance, page layouts and motion.",
         reset: "Use default theme",
         history: "Theme publication history",
         noHistory: "Your published themes will appear here.",
@@ -57,7 +66,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         restoreConfirm:
           "Restore this theme? The current theme and its draft will be replaced. Homepage section order and visibility, images, gifts and orders stay as they are.",
         previewHint:
-          "Preview the theme with published content and homepage layout. Browsing and purchases are disabled here.",
+          "Preview the theme with published content. Links and purchases are disabled inside the preview.",
         palette: "Color palette",
         advanced: "Layout, text and motion",
         typography: "Text size",
@@ -65,6 +74,22 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         corners: "Corners",
         heroLayout: "Homepage hero layout",
         giftLayout: "Gift display",
+        artistTemplate: "Artist detail layout",
+        giftTemplate: "Gift detail layout",
+        artistTemplateOptions: {
+          IMMERSIVE: "Immersive",
+          SPLIT: "Image and text side by side",
+        },
+        giftTemplateOptions: {
+          IMAGE_LEFT: "Image on the left",
+          IMAGE_RIGHT: "Image on the right",
+        },
+        previewPages: {
+          label: "Preview page",
+          options: { home: "Home", artist: "Artist", gift: "Gift" },
+          sampleHint:
+            "Artist and gift pages automatically use the first published item as a sample. Availability and prices reflect the actual configuration.",
+        },
         motion: "Motion",
         motionSpeed: "Motion speed",
         motionHint:
@@ -93,7 +118,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
     case "zh-CN":
       return {
         title: "全站主题",
-        intro: "统一调整全站外观，以及首页海报、礼物展示与动效。",
+        intro: "统一调整全站外观、页面布局、详情模板与动效。",
         reset: "使用默认主题",
         history: "主题发布历史",
         noHistory: "发布后的主题会保存在这里。",
@@ -104,8 +129,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         discard: "离开并放弃尚未保存的主题修改？",
         restoreConfirm:
           "恢复这个主题？当前主题和主题草稿将被替换，首页区块顺序与显隐、图片、礼物和订单保持原样。",
-        previewHint:
-          "使用已发布的内容和首页布局预览当前主题，预览中无法跳转或购买。",
+        previewHint: "使用已发布内容预览当前主题，预览画面内无法跳转或购买。",
         palette: "配色",
         advanced: "布局、文字与动效",
         typography: "文字大小",
@@ -113,6 +137,19 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         corners: "圆角",
         heroLayout: "首页海报布局",
         giftLayout: "礼物展示",
+        artistTemplate: "艺人详情布局",
+        giftTemplate: "礼物详情布局",
+        artistTemplateOptions: { IMMERSIVE: "沉浸海报", SPLIT: "图文分栏" },
+        giftTemplateOptions: {
+          IMAGE_LEFT: "图片在左",
+          IMAGE_RIGHT: "图片在右",
+        },
+        previewPages: {
+          label: "预览页面",
+          options: { home: "首页", artist: "艺人", gift: "礼物" },
+          sampleHint:
+            "艺人和礼物页自动选取首个已发布内容作预览样本，选购状态与价格以实际配置为准。",
+        },
         motion: "动效",
         motionSpeed: "动效速度",
         motionHint: "设备开启“减少动态效果”时，会优先遵循设备设置。",
@@ -133,7 +170,8 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
     case "ja":
       return {
         title: "ストア全体のテーマ",
-        intro: "ストア全体の外観、ホームとギフトの配置、動きを調整します。",
+        intro:
+          "ストア全体の外観、ページの配置、詳細テンプレートと動きを調整します。",
         reset: "標準テーマに戻す",
         history: "テーマの公開履歴",
         noHistory: "公開したテーマがここに表示されます。",
@@ -146,7 +184,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         restoreConfirm:
           "このテーマを復元しますか？現在のテーマと下書きが置き換わります。ホームのセクション順序と表示設定、画像、ギフト、注文は変わりません。",
         previewHint:
-          "公開中のコンテンツとホームの構成でテーマを確認できます。ページ移動や購入はできません。",
+          "公開中のコンテンツでテーマを確認できます。プレビュー内のリンクや購入操作は無効です。",
         palette: "配色",
         advanced: "配置・文字・動き",
         typography: "文字サイズ",
@@ -154,6 +192,22 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         corners: "角の形",
         heroLayout: "ホームのメイン画像の配置",
         giftLayout: "ギフトの表示",
+        artistTemplate: "アーティスト詳細の配置",
+        giftTemplate: "ギフト詳細の配置",
+        artistTemplateOptions: {
+          IMMERSIVE: "没入型",
+          SPLIT: "画像と文字を横に配置",
+        },
+        giftTemplateOptions: {
+          IMAGE_LEFT: "画像を左に配置",
+          IMAGE_RIGHT: "画像を右に配置",
+        },
+        previewPages: {
+          label: "プレビューページ",
+          options: { home: "ホーム", artist: "アーティスト", gift: "ギフト" },
+          sampleHint:
+            "アーティストとギフトのページには、最初の公開済みコンテンツを自動で使用します。購入可否と価格は実際の設定を反映します。",
+        },
         motion: "動き",
         motionSpeed: "動きの速さ",
         motionHint: "端末の「視差効果を減らす」設定が常に優先されます。",
@@ -182,7 +236,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
       return {
         title: "ธีมทั้งร้าน",
         intro:
-          "ปรับรูปลักษณ์ทั้งร้าน รูปแบบหน้าแรกและของขวัญ รวมถึงการเคลื่อนไหว",
+          "ปรับรูปลักษณ์ทั้งร้าน รูปแบบหน้าเว็บ หน้ารายละเอียด และการเคลื่อนไหว",
         reset: "ใช้ธีมเริ่มต้น",
         history: "ประวัติการเผยแพร่ธีม",
         noHistory: "ธีมที่เผยแพร่แล้วจะแสดงที่นี่",
@@ -194,7 +248,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         restoreConfirm:
           "คืนค่าธีมนี้หรือไม่? ธีมและฉบับร่างปัจจุบันจะถูกแทนที่ ลำดับและการแสดงส่วนต่าง ๆ ของหน้าแรก รูปภาพ ของขวัญ และคำสั่งซื้อจะไม่เปลี่ยนแปลง",
         previewHint:
-          "ดูธีมกับเนื้อหาและรูปแบบหน้าแรกที่เผยแพร่แล้ว ไม่สามารถเปลี่ยนหน้าหรือซื้อสินค้าในตัวอย่างได้",
+          "ดูธีมกับเนื้อหาที่เผยแพร่แล้ว ลิงก์และการซื้อสินค้าในภาพตัวอย่างถูกปิดไว้",
         palette: "ชุดสี",
         advanced: "รูปแบบ ข้อความ และการเคลื่อนไหว",
         typography: "ขนาดข้อความ",
@@ -202,6 +256,22 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         corners: "รูปแบบมุม",
         heroLayout: "รูปแบบภาพหลักหน้าแรก",
         giftLayout: "การแสดงของขวัญ",
+        artistTemplate: "รูปแบบหน้ารายละเอียดศิลปิน",
+        giftTemplate: "รูปแบบหน้ารายละเอียดของขวัญ",
+        artistTemplateOptions: {
+          IMMERSIVE: "ภาพเด่นเต็มพื้นที่",
+          SPLIT: "ภาพและข้อความเคียงกัน",
+        },
+        giftTemplateOptions: {
+          IMAGE_LEFT: "รูปภาพทางซ้าย",
+          IMAGE_RIGHT: "รูปภาพทางขวา",
+        },
+        previewPages: {
+          label: "หน้าตัวอย่าง",
+          options: { home: "หน้าแรก", artist: "ศิลปิน", gift: "ของขวัญ" },
+          sampleHint:
+            "หน้าศิลปินและของขวัญใช้เนื้อหาที่เผยแพร่รายการแรกเป็นตัวอย่างโดยอัตโนมัติ สถานะการซื้อและราคาเป็นไปตามการตั้งค่าจริง",
+        },
         motion: "การเคลื่อนไหว",
         motionSpeed: "ความเร็วการเคลื่อนไหว",
         motionHint: "การตั้งค่าลดการเคลื่อนไหวของอุปกรณ์จะมีผลก่อนเสมอ",
@@ -230,7 +300,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
       return {
         title: "Giao diện toàn cửa hàng",
         intro:
-          "Chỉnh giao diện toàn cửa hàng, bố cục trang chủ và quà tặng, cùng hiệu ứng chuyển động.",
+          "Chỉnh giao diện toàn cửa hàng, bố cục trang, mẫu trang chi tiết và hiệu ứng chuyển động.",
         reset: "Dùng giao diện mặc định",
         history: "Lịch sử xuất bản giao diện",
         noHistory: "Giao diện đã xuất bản sẽ hiển thị ở đây.",
@@ -243,7 +313,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         restoreConfirm:
           "Khôi phục giao diện này? Giao diện và bản nháp hiện tại sẽ được thay thế. Thứ tự và trạng thái hiển thị các mục trang chủ, hình ảnh, quà tặng và đơn hàng giữ nguyên.",
         previewHint:
-          "Xem giao diện với nội dung và bố cục trang chủ đã xuất bản. Không thể chuyển trang hoặc mua hàng tại đây.",
+          "Xem giao diện với nội dung đã xuất bản. Liên kết và thao tác mua hàng trong bản xem trước bị vô hiệu hóa.",
         palette: "Bảng màu",
         advanced: "Bố cục, chữ và chuyển động",
         typography: "Cỡ chữ",
@@ -251,6 +321,22 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         corners: "Góc",
         heroLayout: "Bố cục ảnh chính trang chủ",
         giftLayout: "Hiển thị quà tặng",
+        artistTemplate: "Bố cục chi tiết nghệ sĩ",
+        giftTemplate: "Bố cục chi tiết quà tặng",
+        artistTemplateOptions: {
+          IMMERSIVE: "Ảnh nổi bật",
+          SPLIT: "Ảnh và chữ cạnh nhau",
+        },
+        giftTemplateOptions: {
+          IMAGE_LEFT: "Ảnh bên trái",
+          IMAGE_RIGHT: "Ảnh bên phải",
+        },
+        previewPages: {
+          label: "Trang xem trước",
+          options: { home: "Trang chủ", artist: "Nghệ sĩ", gift: "Quà tặng" },
+          sampleHint:
+            "Trang nghệ sĩ và quà tặng tự động dùng mục đã xuất bản đầu tiên làm mẫu. Khả năng mua và giá phản ánh cấu hình thực tế.",
+        },
         motion: "Chuyển động",
         motionSpeed: "Tốc độ chuyển động",
         motionHint: "Cài đặt giảm chuyển động của thiết bị luôn được ưu tiên.",
@@ -283,7 +369,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
       return {
         title: "Tema de toda la tienda",
         intro:
-          "Ajusta la apariencia de la tienda, la presentación de inicio y regalos, y el movimiento.",
+          "Ajusta la apariencia de la tienda, los diseños de página, las plantillas de detalle y el movimiento.",
         reset: "Usar tema predeterminado",
         history: "Historial de temas publicados",
         noHistory: "Los temas publicados aparecerán aquí.",
@@ -296,7 +382,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         restoreConfirm:
           "¿Restaurar este tema? Sustituirá el tema y su borrador actuales. El orden y la visibilidad de las secciones de inicio, las imágenes, los regalos y los pedidos no cambiarán.",
         previewHint:
-          "Tema con el contenido y la estructura de inicio publicados. Aquí no se puede navegar ni comprar.",
+          "Vista del tema con contenido publicado. Los enlaces y las compras están desactivados dentro de la vista previa.",
         palette: "Paleta de colores",
         advanced: "Diseño, texto y movimiento",
         typography: "Tamaño del texto",
@@ -304,6 +390,22 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         corners: "Esquinas",
         heroLayout: "Presentación de la imagen principal",
         giftLayout: "Presentación de regalos",
+        artistTemplate: "Diseño del detalle del artista",
+        giftTemplate: "Diseño del detalle del regalo",
+        artistTemplateOptions: {
+          IMMERSIVE: "Inmersivo",
+          SPLIT: "Imagen y texto en columnas",
+        },
+        giftTemplateOptions: {
+          IMAGE_LEFT: "Imagen a la izquierda",
+          IMAGE_RIGHT: "Imagen a la derecha",
+        },
+        previewPages: {
+          label: "Página de vista previa",
+          options: { home: "Inicio", artist: "Artista", gift: "Regalo" },
+          sampleHint:
+            "Las páginas de artista y regalo usan automáticamente el primer contenido publicado como muestra. La disponibilidad y los precios reflejan la configuración real.",
+        },
         motion: "Movimiento",
         motionSpeed: "Velocidad del movimiento",
         motionHint:
@@ -344,7 +446,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
       return {
         title: "Tema de toda a loja",
         intro:
-          "Ajuste a aparência da loja, a apresentação da página inicial e dos presentes, e o movimento.",
+          "Ajuste a aparência da loja, os layouts de página, os modelos de detalhes e o movimento.",
         reset: "Usar tema padrão",
         history: "Histórico de temas publicados",
         noHistory: "Os temas publicados aparecerão aqui.",
@@ -357,7 +459,7 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         restoreConfirm:
           "Restaurar este tema? O tema e seu rascunho atuais serão substituídos. A ordem e a visibilidade das seções da página inicial, as imagens, os presentes e os pedidos permanecerão iguais.",
         previewHint:
-          "Tema com o conteúdo e layout da página inicial publicados. A navegação e as compras estão desativadas aqui.",
+          "Veja o tema com conteúdo publicado. Os links e as compras estão desativados dentro da prévia.",
         palette: "Paleta de cores",
         advanced: "Layout, texto e movimento",
         typography: "Tamanho do texto",
@@ -365,6 +467,22 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
         corners: "Cantos",
         heroLayout: "Apresentação da imagem principal",
         giftLayout: "Apresentação dos presentes",
+        artistTemplate: "Layout dos detalhes do artista",
+        giftTemplate: "Layout dos detalhes do presente",
+        artistTemplateOptions: {
+          IMMERSIVE: "Imersivo",
+          SPLIT: "Imagem e texto em colunas",
+        },
+        giftTemplateOptions: {
+          IMAGE_LEFT: "Imagem à esquerda",
+          IMAGE_RIGHT: "Imagem à direita",
+        },
+        previewPages: {
+          label: "Página de prévia",
+          options: { home: "Início", artist: "Artista", gift: "Presente" },
+          sampleHint:
+            "As páginas de artista e presente usam automaticamente o primeiro conteúdo publicado como amostra. A disponibilidade e os preços refletem a configuração real.",
+        },
         motion: "Movimento",
         motionSpeed: "Velocidade do movimento",
         motionHint:

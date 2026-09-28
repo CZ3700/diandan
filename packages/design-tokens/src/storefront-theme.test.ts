@@ -30,6 +30,8 @@ test("theme exposes only deployed presentation attributes and rejects arbitrary 
     "data-storefront-gift-layout": "GRID",
     "data-storefront-motion": "STANDARD",
     "data-storefront-motion-speed": "STANDARD",
+    "data-storefront-artist-template": "IMMERSIVE",
+    "data-storefront-gift-template": "IMAGE_LEFT",
   });
   expect(() =>
     storefrontThemeAttributes({ ...theme, css: "display:none" }),
@@ -37,6 +39,24 @@ test("theme exposes only deployed presentation attributes and rejects arbitrary 
   expect(() =>
     storefrontThemeAttributes({ ...theme, palette: "url(example)" }),
   ).toThrow();
+});
+test("detail templates are independent of home presets and reset for legacy themes", () => {
+  const { storefrontThemeAttributes } = subject();
+  expect(
+    storefrontThemeAttributes({
+      ...theme,
+      detailTemplates: { artist: "SPLIT", gift: "IMAGE_RIGHT" },
+    }),
+  ).toMatchObject({
+    "data-storefront-artist-template": "SPLIT",
+    "data-storefront-gift-template": "IMAGE_RIGHT",
+    "data-storefront-hero-layout": "IMMERSIVE",
+    "data-storefront-gift-layout": "GRID",
+  });
+  expect(storefrontThemeAttributes(theme)).toMatchObject({
+    "data-storefront-artist-template": "IMMERSIVE",
+    "data-storefront-gift-template": "IMAGE_LEFT",
+  });
 });
 test("layout and motion attributes use one complete set and legacy themes reset them", () => {
   const { storefrontThemeAttributes } = subject();

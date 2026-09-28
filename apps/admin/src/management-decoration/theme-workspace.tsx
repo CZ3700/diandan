@@ -254,6 +254,7 @@ export function ThemeWorkspace({
               origin={storefrontOrigin}
               copy={copy}
               replayLabel={copy.replayPreview}
+              pageCopy={copy.previewPages}
             />
           </div>
           <details className="decoration-history" data-theme-history>

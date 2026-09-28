@@ -1,6 +1,7 @@
 import {
   createDefaultStorefrontTheme,
   resolveStorefrontPresentation,
+  resolveStorefrontDetailTemplates,
   type StorefrontTheme,
   type StorefrontThemeState,
 } from "@fan-support/contracts";
@@ -18,6 +19,8 @@ export function sameTheme(
 ): boolean {
   const leftPresentation = resolveStorefrontPresentation(left);
   const rightPresentation = resolveStorefrontPresentation(right);
+  const leftDetails = resolveStorefrontDetailTemplates(left);
+  const rightDetails = resolveStorefrontDetailTemplates(right);
   return (
     left.palette === right.palette &&
     left.typography === right.typography &&
@@ -26,6 +29,8 @@ export function sameTheme(
     leftPresentation.heroLayout === rightPresentation.heroLayout &&
     leftPresentation.giftLayout === rightPresentation.giftLayout &&
     leftPresentation.motion === rightPresentation.motion &&
-    leftPresentation.motionSpeed === rightPresentation.motionSpeed
+    leftPresentation.motionSpeed === rightPresentation.motionSpeed &&
+    leftDetails.artist === rightDetails.artist &&
+    leftDetails.gift === rightDetails.gift
   );
 }

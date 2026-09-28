@@ -9,6 +9,7 @@ import {
 } from "@fan-support/contracts";
 import { Button } from "@fan-support/ui";
 import type { DecorationCopy } from "./copy";
+import type { ThemeCopy } from "./theme-copy";
 
 type PreviewFrameProps = {
   locale: SupportedLocale;
@@ -29,16 +30,19 @@ export function LayoutPreviewFrame({
 export function ThemePreviewFrame({
   theme,
   replayLabel,
+  pageCopy,
   ...props
 }: PreviewFrameProps & {
   theme: StorefrontTheme;
   replayLabel?: string | undefined;
+  pageCopy?: ThemeCopy["previewPages"] | undefined;
 }) {
   return (
     <DecorationPreviewFrame
       {...props}
       configuration={{ mode: "theme", theme }}
       replayLabel={replayLabel}
+      pageCopy={pageCopy}
     />
   );
 }
@@ -48,27 +52,45 @@ function DecorationPreviewFrame({
   origin,
   copy,
   replayLabel,
+  pageCopy,
 }: PreviewFrameProps & {
   configuration:
     | { mode: "layout"; layout: HomeLayout }
     | { mode: "theme"; theme: StorefrontTheme };
   replayLabel?: string | undefined;
+  pageCopy?: ThemeCopy["previewPages"] | undefined;
 }) {
   const mode = configuration.mode;
   const frame = useRef<HTMLIFrameElement>(null);
   const container = useRef<HTMLDivElement>(null);
-  const [channel, setChannel] = useState<string | null>(null);
+  const [navigation, setNavigation] = useState<{
+    channel: string | null;
+    page: "home" | "artist" | "gift";
+  }>({ channel: null, page: "home" });
+  const { channel, page } = navigation;
   const [viewport, setViewport] = useState<"mobile" | "desktop">("mobile");
   const [width, setWidth] = useState(0);
-  const [ready, setReady] = useState(false);
+  const [readyChannel, setReadyChannel] = useState<string | null>(null);
+  const ready = channel !== null && readyChannel === channel;
   const [failed, setFailed] = useState(false);
   const dimensions =
     viewport === "mobile"
       ? { width: 390, height: 844 }
       : { width: 1440, height: 900 };
   const scale = width ? Math.min(1, width / dimensions.width) : 1;
+  const previewQuery = new URLSearchParams();
+  if (channel) previewQuery.set("channel", channel);
+  if (mode === "theme") {
+    previewQuery.set("mode", "theme");
+    if (page !== "home") previewQuery.set("page", page);
+  }
+  function restart(nextPage = page) {
+    setReadyChannel(null);
+    setFailed(false);
+    setNavigation({ page: nextPage, channel: crypto.randomUUID() });
+  }
   useEffect(() => {
-    setChannel(crypto.randomUUID());
+    setNavigation((current) => ({ ...current, channel: crypto.randomUUID() }));
   }, [locale, origin]);
   useEffect(() => {
     const element = container.current;
@@ -80,7 +102,7 @@ function DecorationPreviewFrame({
     return () => observer.disconnect();
   }, [origin, channel, mode]);
   useEffect(() => {
-    setReady(false);
+    setReadyChannel(null);
     setFailed(false);
     if (!origin || !channel) return;
     const timer = setTimeout(() => setFailed(true), 30_000);
@@ -97,7 +119,7 @@ function DecorationPreviewFrame({
       ).safeParse(event.data);
       if (!message.success || message.data.channel !== channel) return;
       clearTimeout(timer);
-      setReady(true);
+      setReadyChannel(channel);
       setFailed(false);
     };
     window.addEventListener("message", receive);
@@ -146,13 +168,44 @@ function DecorationPreviewFrame({
         </div>
       </div>
       <p className="mc-hint">{copy.previewHint}</p>
+      {mode === "theme" && pageCopy && (
+        <>
+          <label className="decoration-preview-page">
+            <span>{pageCopy.label}</span>
+            <select
+              data-theme-preview-page
+              value={page}
+              disabled={!origin}
+              aria-describedby="theme-preview-sample"
+              onChange={(event) => {
+                const value = event.currentTarget.value;
+                if (value === "home" || value === "artist" || value === "gift")
+                  restart(value);
+              }}
+            >
+              {Object.entries(pageCopy.options).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <p
+            className="mc-hint"
+            id="theme-preview-sample"
+            data-theme-preview-sample
+          >
+            {pageCopy.sampleHint}
+          </p>
+        </>
+      )}
       {mode === "theme" && origin && replayLabel && (
         <Button
           type="button"
           variant="quiet"
           data-theme-preview-replay
           disabled={!channel}
-          onClick={() => setChannel(crypto.randomUUID())}
+          onClick={() => restart()}
         >
           {replayLabel}
         </Button>
@@ -165,10 +218,7 @@ function DecorationPreviewFrame({
             <p role={failed ? "alert" : "status"}>
               {failed ? copy.previewFailed : copy.loading}
               {failed && (
-                <Button
-                  variant="quiet"
-                  onClick={() => setChannel(crypto.randomUUID())}
-                >
+                <Button variant="quiet" onClick={() => restart()}>
                   {copy.reload}
                 </Button>
               )}
@@ -186,8 +236,8 @@ function DecorationPreviewFrame({
                 key={channel}
                 data-layout-preview-frame={mode === "layout" || undefined}
                 data-theme-preview-frame={mode === "theme" || undefined}
-                title={`${copy.preview} — ${copy[viewport]}`}
-                src={`${origin}/${locale}/layout-preview?channel=${channel}${mode === "theme" ? "&mode=theme" : ""}`}
+                title={`${copy.preview}${mode === "theme" && pageCopy ? ` — ${pageCopy.options[page]}` : ""} — ${copy[viewport]}`}
+                src={`${origin}/${locale}/layout-preview?${previewQuery}`}
                 sandbox="allow-scripts allow-same-origin"
                 referrerPolicy="no-referrer"
                 style={{

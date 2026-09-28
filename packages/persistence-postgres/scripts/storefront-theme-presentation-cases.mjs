@@ -202,7 +202,7 @@ export async function verifyStorefrontPresentation({
       .every((value) => value.rows.length > 0),
     "protected commerce fixture has real gift, variant, price and stock rows",
   );
-  await migrate({ direction: "up" });
+  await migrate({ direction: "up", targetVersion: "0046" });
   check(
     (
       await client.query("SELECT valid_storefront_theme($1::jsonb) valid", [

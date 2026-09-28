@@ -258,3 +258,78 @@ test("theme history rejects a different page and stale writes stay explicit fail
     "STALE_VERSION",
   );
 });
+
+test.each([
+  { artist: "SPLIT" as const, gift: "IMAGE_LEFT" as const },
+  { artist: "IMMERSIVE" as const, gift: "IMAGE_RIGHT" as const },
+])(
+  "theme save rejects a different detail-template-only receipt: %j",
+  async (detailTemplates) => {
+    const theme = createDefaultStorefrontTheme();
+    const api = subject!.createStorefrontThemeApi(
+      createAdminClient(
+        () => "csrf",
+        () => {},
+        async () =>
+          Response.json({
+            schemaVersion: 1,
+            outcome: "SUCCESS",
+            kind: "STATE",
+            replayed: false,
+            state: {
+              schemaVersion: 1,
+              version: 1,
+              published: null,
+              draft: {
+                revisionId: "a0000000-0000-4000-8000-000000000001",
+                createdAt: "2026-09-28T00:00:00Z",
+                theme: { ...theme, detailTemplates },
+              },
+            },
+          }),
+      ),
+    );
+    await expect(api.save(theme, 0)).rejects.toThrow("INVALID_RESPONSE");
+  },
+);
+
+test("theme save sends both new detail settings alongside presentation in the unchanged envelope", async () => {
+  const theme = {
+    ...createDefaultStorefrontTheme(),
+    presentation: createDefaultStorefrontPresentation(),
+    detailTemplates: { artist: "SPLIT" as const, gift: "IMAGE_RIGHT" as const },
+  };
+  const state = {
+    schemaVersion: 1,
+    version: 1,
+    published: null,
+    draft: {
+      revisionId: "a0000000-0000-4000-8000-000000000001",
+      createdAt: "2026-09-28T00:00:00Z",
+      theme,
+    },
+  };
+  const requests: RequestInit[] = [];
+  const api = subject!.createStorefrontThemeApi(
+    createAdminClient(
+      () => "csrf",
+      () => {},
+      async (_path, init) => {
+        requests.push(init!);
+        return Response.json({
+          schemaVersion: 1,
+          outcome: "SUCCESS",
+          kind: "STATE",
+          replayed: false,
+          state,
+        });
+      },
+    ),
+  );
+  expect(await api.save(theme, 0)).toEqual(state);
+  expect(JSON.parse(String(requests[0]?.body))).toEqual({
+    schemaVersion: 1,
+    expectedVersion: 0,
+    theme,
+  });
+});

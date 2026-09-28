@@ -2,6 +2,8 @@
 import {
   storefrontThemeSchema,
   resolveStorefrontPresentation,
+  resolveStorefrontDetailTemplates,
+  type StorefrontDetailTemplates,
   type StorefrontPresentation,
   type StorefrontTheme,
 } from "@fan-support/contracts";
@@ -19,6 +21,7 @@ export function ThemeEditor({
   copy: ThemeCopy;
 }) {
   const presentation = resolveStorefrontPresentation(theme);
+  const detailTemplates = resolveStorefrontDetailTemplates(theme);
   function change(field: keyof StorefrontTheme, value: string) {
     const next = storefrontThemeSchema.safeParse({ ...theme, [field]: value });
     if (next.success) onChange(next.data);
@@ -30,6 +33,16 @@ export function ThemeEditor({
     const next = storefrontThemeSchema.safeParse({
       ...theme,
       presentation: { ...presentation, [field]: value },
+    });
+    if (next.success) onChange(next.data);
+  }
+  function changeDetailTemplate(
+    field: keyof StorefrontDetailTemplates,
+    value: string,
+  ) {
+    const next = storefrontThemeSchema.safeParse({
+      ...theme,
+      detailTemplates: { ...detailTemplates, [field]: value },
     });
     if (next.success) onChange(next.data);
   }
@@ -67,6 +80,40 @@ export function ThemeEditor({
               value={presentation[field]}
               onChange={(event) =>
                 changePresentation(field, event.currentTarget.value)
+              }
+            >
+              {Object.entries(options).map(([value, text]) => (
+                <option key={value} value={value}>
+                  {text}
+                </option>
+              ))}
+            </select>
+          </label>
+        ))}
+        {(
+          [
+            [
+              "artist",
+              "artistTemplate",
+              copy.artistTemplate,
+              copy.artistTemplateOptions,
+            ],
+            [
+              "gift",
+              "giftTemplate",
+              copy.giftTemplate,
+              copy.giftTemplateOptions,
+            ],
+          ] as const
+        ).map(([field, setting, label, options]) => (
+          <label key={field}>
+            <span>{label}</span>
+            <select
+              data-theme-setting={setting}
+              disabled={disabled}
+              value={detailTemplates[field]}
+              onChange={(event) =>
+                changeDetailTemplate(field, event.currentTarget.value)
               }
             >
               {Object.entries(options).map(([value, text]) => (

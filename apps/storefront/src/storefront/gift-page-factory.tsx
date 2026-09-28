@@ -8,7 +8,6 @@ import { notFound } from "next/navigation";
 import {
   slugSchema,
   idolIdSchema,
-  giftVariantIdSchema,
   policyKeySchema,
   type StorefrontContextResponse,
   type SupportedLocale,
@@ -18,23 +17,16 @@ import {
   loadStorefrontPresentationConfig,
 } from "../server/runtime-config";
 import { loadStorefrontCopy } from "../server/storefront-copy";
-import {
-  readCommerceContext,
-  commerceRead,
-  policyRead,
-  artistRead,
-} from "./gift-page-reads";
-import { soleCommerceScope } from "./commerce-scope";
+import { readCommerceContext, policyRead, artistRead } from "./gift-page-reads";
 import { readGiftDetailPage } from "./gift-detail-page-reads";
 import { SiteHeader } from "./site-header";
 import { SiteFooter, PageState } from "./page-parts";
 import { MarketChoices, PolicyLinks } from "./commerce-context";
 import type { GiftDirectorySection } from "./gift-directory-section";
-import { GiftDetail } from "./gift-detail";
+import { giftDetailBody } from "./gift-detail-body";
 import { GiftDetailPolicyLinks } from "./gift-detail-context-section";
 import { PolicyBody } from "./gift-content";
 import { formatStorefrontMessage } from "./copy";
-import { giftRecoveryQuery } from "./gift-selection";
 import { queryString } from "./navigation";
 import { createStorefrontLoading } from "./route-states";
 import { GiftPageSeo, loadGiftSeo } from "./gift-seo";
@@ -169,71 +161,23 @@ export function createGiftStorefrontPage(
       }
     } else {
       if (!detail) notFound();
-      const { handle, result, scoped, artists, selection } = detail;
-      const soleIdol = idolIdSchema.safeParse(values["idol"]);
-      const soleVariant = giftVariantIdSchema.safeParse(values["variant"]);
-      if (result.outcome === "FAILURE" && result.code === "NOT_FOUND")
-        notFound();
-      if (scoped?.outcome === "FAILURE" && scoped.code === "NOT_FOUND")
+      if (
+        detail.result.outcome === "FAILURE" &&
+        detail.result.code === "NOT_FOUND"
+      )
         notFound();
       if (
-        result.outcome !== "SUCCESS" ||
-        selection.kind === "INVALID_QUERY" ||
-        (scoped?.outcome === "FAILURE" && scoped.code !== "MARKET_UNAVAILABLE")
+        detail.scoped?.outcome === "FAILURE" &&
+        detail.scoped.code === "NOT_FOUND"
       )
-        content = (
-          <PageState
-            locale={locale}
-            copy={copy}
-            title={copy.contentError}
-            body={
-              selection.kind === "INVALID_QUERY"
-                ? copy.marketInvalid
-                : copy.contentErrorBody
-            }
-            contextQuery={
-              selection.kind === "INVALID_QUERY"
-                ? giftRecoveryQuery(contextQuery)
-                : contextQuery
-            }
-            retryPath={`/gifts/${handle}`}
-          />
-        );
-      else
-        content = (
-          <GiftDetail
-            locale={locale}
-            copy={copy}
-            content={scoped?.outcome === "SUCCESS" ? scoped : result}
-            {...(scoped?.outcome === "SUCCESS" ? { commerce: scoped } : {})}
-            context={contextRead}
-            artists={artists}
-            contextQuery={contextQuery}
-            {...(selection.kind === "VALID" && selection.variantId
-              ? { variantId: selection.variantId }
-              : selection.kind === "CONTEXT_REQUIRED" && soleVariant.success
-                ? { variantId: soleVariant.data }
-                : {})}
-            marketError={scoped?.outcome === "FAILURE"}
-            {...(selection.kind === "CONTEXT_REQUIRED"
-              ? {
-                  // V2 §4-2: one published market prices the page as its offer streams in.
-                  soleOffer: async (resolved: StorefrontContextResponse) => {
-                    const scope = soleCommerceScope(resolved);
-                    if (!scope) return undefined;
-                    const read = await commerceRead(
-                      locale,
-                      handle,
-                      scope.market,
-                      scope.currency,
-                      soleIdol.success ? soleIdol.data : undefined,
-                    ).catch(() => undefined);
-                    return read?.outcome === "SUCCESS" ? read : undefined;
-                  },
-                }
-              : {})}
-          />
-        );
+        notFound();
+      content = giftDetailBody({
+        locale,
+        copy,
+        detail,
+        values,
+        context: contextRead,
+      });
     }
     const region = regionEntries(locale, copy, contextQuery);
     return (

@@ -118579,6 +118579,194 @@
                       "presentation"
                     ],
                     "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "corners": {
+                        "enum": [
+                          "SOFT",
+                          "SHARP",
+                          "ROUND"
+                        ],
+                        "type": "string"
+                      },
+                      "density": {
+                        "enum": [
+                          "STANDARD",
+                          "COMPACT",
+                          "AIRY"
+                        ],
+                        "type": "string"
+                      },
+                      "detailTemplates": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "artist": {
+                            "enum": [
+                              "IMMERSIVE",
+                              "SPLIT"
+                            ],
+                            "type": "string"
+                          },
+                          "gift": {
+                            "enum": [
+                              "IMAGE_LEFT",
+                              "IMAGE_RIGHT"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "artist",
+                          "gift"
+                        ],
+                        "type": "object"
+                      },
+                      "palette": {
+                        "enum": [
+                          "BLACK_GOLD",
+                          "GRAPHITE_PEARL",
+                          "MIDNIGHT_BLUE"
+                        ],
+                        "type": "string"
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      },
+                      "typography": {
+                        "enum": [
+                          "STANDARD",
+                          "LARGE"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "palette",
+                      "typography",
+                      "density",
+                      "corners",
+                      "detailTemplates"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "corners": {
+                        "enum": [
+                          "SOFT",
+                          "SHARP",
+                          "ROUND"
+                        ],
+                        "type": "string"
+                      },
+                      "density": {
+                        "enum": [
+                          "STANDARD",
+                          "COMPACT",
+                          "AIRY"
+                        ],
+                        "type": "string"
+                      },
+                      "detailTemplates": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "artist": {
+                            "enum": [
+                              "IMMERSIVE",
+                              "SPLIT"
+                            ],
+                            "type": "string"
+                          },
+                          "gift": {
+                            "enum": [
+                              "IMAGE_LEFT",
+                              "IMAGE_RIGHT"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "artist",
+                          "gift"
+                        ],
+                        "type": "object"
+                      },
+                      "palette": {
+                        "enum": [
+                          "BLACK_GOLD",
+                          "GRAPHITE_PEARL",
+                          "MIDNIGHT_BLUE"
+                        ],
+                        "type": "string"
+                      },
+                      "presentation": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "giftLayout": {
+                            "enum": [
+                              "GRID",
+                              "SHOWCASE"
+                            ],
+                            "type": "string"
+                          },
+                          "heroLayout": {
+                            "enum": [
+                              "IMMERSIVE",
+                              "SPLIT"
+                            ],
+                            "type": "string"
+                          },
+                          "motion": {
+                            "enum": [
+                              "STANDARD",
+                              "SUBTLE",
+                              "NONE"
+                            ],
+                            "type": "string"
+                          },
+                          "motionSpeed": {
+                            "enum": [
+                              "STANDARD",
+                              "QUICK"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "heroLayout",
+                          "giftLayout",
+                          "motion",
+                          "motionSpeed"
+                        ],
+                        "type": "object"
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      },
+                      "typography": {
+                        "enum": [
+                          "STANDARD",
+                          "LARGE"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "palette",
+                      "typography",
+                      "density",
+                      "corners",
+                      "presentation",
+                      "detailTemplates"
+                    ],
+                    "type": "object"
                   }
                 ]
               },
@@ -138496,6 +138684,194 @@
               "presentation"
             ],
             "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "corners": {
+                "enum": [
+                  "SOFT",
+                  "SHARP",
+                  "ROUND"
+                ],
+                "type": "string"
+              },
+              "density": {
+                "enum": [
+                  "STANDARD",
+                  "COMPACT",
+                  "AIRY"
+                ],
+                "type": "string"
+              },
+              "detailTemplates": {
+                "additionalProperties": false,
+                "properties": {
+                  "artist": {
+                    "enum": [
+                      "IMMERSIVE",
+                      "SPLIT"
+                    ],
+                    "type": "string"
+                  },
+                  "gift": {
+                    "enum": [
+                      "IMAGE_LEFT",
+                      "IMAGE_RIGHT"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "artist",
+                  "gift"
+                ],
+                "type": "object"
+              },
+              "palette": {
+                "enum": [
+                  "BLACK_GOLD",
+                  "GRAPHITE_PEARL",
+                  "MIDNIGHT_BLUE"
+                ],
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "typography": {
+                "enum": [
+                  "STANDARD",
+                  "LARGE"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "palette",
+              "typography",
+              "density",
+              "corners",
+              "detailTemplates"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "corners": {
+                "enum": [
+                  "SOFT",
+                  "SHARP",
+                  "ROUND"
+                ],
+                "type": "string"
+              },
+              "density": {
+                "enum": [
+                  "STANDARD",
+                  "COMPACT",
+                  "AIRY"
+                ],
+                "type": "string"
+              },
+              "detailTemplates": {
+                "additionalProperties": false,
+                "properties": {
+                  "artist": {
+                    "enum": [
+                      "IMMERSIVE",
+                      "SPLIT"
+                    ],
+                    "type": "string"
+                  },
+                  "gift": {
+                    "enum": [
+                      "IMAGE_LEFT",
+                      "IMAGE_RIGHT"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "artist",
+                  "gift"
+                ],
+                "type": "object"
+              },
+              "palette": {
+                "enum": [
+                  "BLACK_GOLD",
+                  "GRAPHITE_PEARL",
+                  "MIDNIGHT_BLUE"
+                ],
+                "type": "string"
+              },
+              "presentation": {
+                "additionalProperties": false,
+                "properties": {
+                  "giftLayout": {
+                    "enum": [
+                      "GRID",
+                      "SHOWCASE"
+                    ],
+                    "type": "string"
+                  },
+                  "heroLayout": {
+                    "enum": [
+                      "IMMERSIVE",
+                      "SPLIT"
+                    ],
+                    "type": "string"
+                  },
+                  "motion": {
+                    "enum": [
+                      "STANDARD",
+                      "SUBTLE",
+                      "NONE"
+                    ],
+                    "type": "string"
+                  },
+                  "motionSpeed": {
+                    "enum": [
+                      "STANDARD",
+                      "QUICK"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "heroLayout",
+                  "giftLayout",
+                  "motion",
+                  "motionSpeed"
+                ],
+                "type": "object"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "typography": {
+                "enum": [
+                  "STANDARD",
+                  "LARGE"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "palette",
+              "typography",
+              "density",
+              "corners",
+              "presentation",
+              "detailTemplates"
+            ],
+            "type": "object"
           }
         ],
         "x-fan-support-audience": "public-http"
@@ -138649,6 +139025,194 @@
                   "density",
                   "corners",
                   "presentation"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "corners": {
+                    "enum": [
+                      "SOFT",
+                      "SHARP",
+                      "ROUND"
+                    ],
+                    "type": "string"
+                  },
+                  "density": {
+                    "enum": [
+                      "STANDARD",
+                      "COMPACT",
+                      "AIRY"
+                    ],
+                    "type": "string"
+                  },
+                  "detailTemplates": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "artist": {
+                        "enum": [
+                          "IMMERSIVE",
+                          "SPLIT"
+                        ],
+                        "type": "string"
+                      },
+                      "gift": {
+                        "enum": [
+                          "IMAGE_LEFT",
+                          "IMAGE_RIGHT"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "artist",
+                      "gift"
+                    ],
+                    "type": "object"
+                  },
+                  "palette": {
+                    "enum": [
+                      "BLACK_GOLD",
+                      "GRAPHITE_PEARL",
+                      "MIDNIGHT_BLUE"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "typography": {
+                    "enum": [
+                      "STANDARD",
+                      "LARGE"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "palette",
+                  "typography",
+                  "density",
+                  "corners",
+                  "detailTemplates"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "corners": {
+                    "enum": [
+                      "SOFT",
+                      "SHARP",
+                      "ROUND"
+                    ],
+                    "type": "string"
+                  },
+                  "density": {
+                    "enum": [
+                      "STANDARD",
+                      "COMPACT",
+                      "AIRY"
+                    ],
+                    "type": "string"
+                  },
+                  "detailTemplates": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "artist": {
+                        "enum": [
+                          "IMMERSIVE",
+                          "SPLIT"
+                        ],
+                        "type": "string"
+                      },
+                      "gift": {
+                        "enum": [
+                          "IMAGE_LEFT",
+                          "IMAGE_RIGHT"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "artist",
+                      "gift"
+                    ],
+                    "type": "object"
+                  },
+                  "palette": {
+                    "enum": [
+                      "BLACK_GOLD",
+                      "GRAPHITE_PEARL",
+                      "MIDNIGHT_BLUE"
+                    ],
+                    "type": "string"
+                  },
+                  "presentation": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "giftLayout": {
+                        "enum": [
+                          "GRID",
+                          "SHOWCASE"
+                        ],
+                        "type": "string"
+                      },
+                      "heroLayout": {
+                        "enum": [
+                          "IMMERSIVE",
+                          "SPLIT"
+                        ],
+                        "type": "string"
+                      },
+                      "motion": {
+                        "enum": [
+                          "STANDARD",
+                          "SUBTLE",
+                          "NONE"
+                        ],
+                        "type": "string"
+                      },
+                      "motionSpeed": {
+                        "enum": [
+                          "STANDARD",
+                          "QUICK"
+                        ],
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "heroLayout",
+                      "giftLayout",
+                      "motion",
+                      "motionSpeed"
+                    ],
+                    "type": "object"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "typography": {
+                    "enum": [
+                      "STANDARD",
+                      "LARGE"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "palette",
+                  "typography",
+                  "density",
+                  "corners",
+                  "presentation",
+                  "detailTemplates"
                 ],
                 "type": "object"
               }
@@ -138870,6 +139434,194 @@
                                   "presentation"
                                 ],
                                 "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "corners": {
+                                    "enum": [
+                                      "SOFT",
+                                      "SHARP",
+                                      "ROUND"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "density": {
+                                    "enum": [
+                                      "STANDARD",
+                                      "COMPACT",
+                                      "AIRY"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "detailTemplates": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "artist": {
+                                        "enum": [
+                                          "IMMERSIVE",
+                                          "SPLIT"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "gift": {
+                                        "enum": [
+                                          "IMAGE_LEFT",
+                                          "IMAGE_RIGHT"
+                                        ],
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "artist",
+                                      "gift"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "palette": {
+                                    "enum": [
+                                      "BLACK_GOLD",
+                                      "GRAPHITE_PEARL",
+                                      "MIDNIGHT_BLUE"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "typography": {
+                                    "enum": [
+                                      "STANDARD",
+                                      "LARGE"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "palette",
+                                  "typography",
+                                  "density",
+                                  "corners",
+                                  "detailTemplates"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "corners": {
+                                    "enum": [
+                                      "SOFT",
+                                      "SHARP",
+                                      "ROUND"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "density": {
+                                    "enum": [
+                                      "STANDARD",
+                                      "COMPACT",
+                                      "AIRY"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "detailTemplates": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "artist": {
+                                        "enum": [
+                                          "IMMERSIVE",
+                                          "SPLIT"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "gift": {
+                                        "enum": [
+                                          "IMAGE_LEFT",
+                                          "IMAGE_RIGHT"
+                                        ],
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "artist",
+                                      "gift"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "palette": {
+                                    "enum": [
+                                      "BLACK_GOLD",
+                                      "GRAPHITE_PEARL",
+                                      "MIDNIGHT_BLUE"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "presentation": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "giftLayout": {
+                                        "enum": [
+                                          "GRID",
+                                          "SHOWCASE"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "heroLayout": {
+                                        "enum": [
+                                          "IMMERSIVE",
+                                          "SPLIT"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "motion": {
+                                        "enum": [
+                                          "STANDARD",
+                                          "SUBTLE",
+                                          "NONE"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "motionSpeed": {
+                                        "enum": [
+                                          "STANDARD",
+                                          "QUICK"
+                                        ],
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "heroLayout",
+                                      "giftLayout",
+                                      "motion",
+                                      "motionSpeed"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "typography": {
+                                    "enum": [
+                                      "STANDARD",
+                                      "LARGE"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "palette",
+                                  "typography",
+                                  "density",
+                                  "corners",
+                                  "presentation",
+                                  "detailTemplates"
+                                ],
+                                "type": "object"
                               }
                             ]
                           }
@@ -139062,6 +139814,194 @@
                                   "density",
                                   "corners",
                                   "presentation"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "corners": {
+                                    "enum": [
+                                      "SOFT",
+                                      "SHARP",
+                                      "ROUND"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "density": {
+                                    "enum": [
+                                      "STANDARD",
+                                      "COMPACT",
+                                      "AIRY"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "detailTemplates": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "artist": {
+                                        "enum": [
+                                          "IMMERSIVE",
+                                          "SPLIT"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "gift": {
+                                        "enum": [
+                                          "IMAGE_LEFT",
+                                          "IMAGE_RIGHT"
+                                        ],
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "artist",
+                                      "gift"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "palette": {
+                                    "enum": [
+                                      "BLACK_GOLD",
+                                      "GRAPHITE_PEARL",
+                                      "MIDNIGHT_BLUE"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "typography": {
+                                    "enum": [
+                                      "STANDARD",
+                                      "LARGE"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "palette",
+                                  "typography",
+                                  "density",
+                                  "corners",
+                                  "detailTemplates"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "corners": {
+                                    "enum": [
+                                      "SOFT",
+                                      "SHARP",
+                                      "ROUND"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "density": {
+                                    "enum": [
+                                      "STANDARD",
+                                      "COMPACT",
+                                      "AIRY"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "detailTemplates": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "artist": {
+                                        "enum": [
+                                          "IMMERSIVE",
+                                          "SPLIT"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "gift": {
+                                        "enum": [
+                                          "IMAGE_LEFT",
+                                          "IMAGE_RIGHT"
+                                        ],
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "artist",
+                                      "gift"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "palette": {
+                                    "enum": [
+                                      "BLACK_GOLD",
+                                      "GRAPHITE_PEARL",
+                                      "MIDNIGHT_BLUE"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "presentation": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "giftLayout": {
+                                        "enum": [
+                                          "GRID",
+                                          "SHOWCASE"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "heroLayout": {
+                                        "enum": [
+                                          "IMMERSIVE",
+                                          "SPLIT"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "motion": {
+                                        "enum": [
+                                          "STANDARD",
+                                          "SUBTLE",
+                                          "NONE"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "motionSpeed": {
+                                        "enum": [
+                                          "STANDARD",
+                                          "QUICK"
+                                        ],
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "heroLayout",
+                                      "giftLayout",
+                                      "motion",
+                                      "motionSpeed"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  "schemaVersion": {
+                                    "const": 1,
+                                    "type": "number"
+                                  },
+                                  "typography": {
+                                    "enum": [
+                                      "STANDARD",
+                                      "LARGE"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "schemaVersion",
+                                  "palette",
+                                  "typography",
+                                  "density",
+                                  "corners",
+                                  "presentation",
+                                  "detailTemplates"
                                 ],
                                 "type": "object"
                               }
@@ -139295,6 +140235,194 @@
                             "density",
                             "corners",
                             "presentation"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "corners": {
+                              "enum": [
+                                "SOFT",
+                                "SHARP",
+                                "ROUND"
+                              ],
+                              "type": "string"
+                            },
+                            "density": {
+                              "enum": [
+                                "STANDARD",
+                                "COMPACT",
+                                "AIRY"
+                              ],
+                              "type": "string"
+                            },
+                            "detailTemplates": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "artist": {
+                                  "enum": [
+                                    "IMMERSIVE",
+                                    "SPLIT"
+                                  ],
+                                  "type": "string"
+                                },
+                                "gift": {
+                                  "enum": [
+                                    "IMAGE_LEFT",
+                                    "IMAGE_RIGHT"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "artist",
+                                "gift"
+                              ],
+                              "type": "object"
+                            },
+                            "palette": {
+                              "enum": [
+                                "BLACK_GOLD",
+                                "GRAPHITE_PEARL",
+                                "MIDNIGHT_BLUE"
+                              ],
+                              "type": "string"
+                            },
+                            "schemaVersion": {
+                              "const": 1,
+                              "type": "number"
+                            },
+                            "typography": {
+                              "enum": [
+                                "STANDARD",
+                                "LARGE"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "schemaVersion",
+                            "palette",
+                            "typography",
+                            "density",
+                            "corners",
+                            "detailTemplates"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "corners": {
+                              "enum": [
+                                "SOFT",
+                                "SHARP",
+                                "ROUND"
+                              ],
+                              "type": "string"
+                            },
+                            "density": {
+                              "enum": [
+                                "STANDARD",
+                                "COMPACT",
+                                "AIRY"
+                              ],
+                              "type": "string"
+                            },
+                            "detailTemplates": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "artist": {
+                                  "enum": [
+                                    "IMMERSIVE",
+                                    "SPLIT"
+                                  ],
+                                  "type": "string"
+                                },
+                                "gift": {
+                                  "enum": [
+                                    "IMAGE_LEFT",
+                                    "IMAGE_RIGHT"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "artist",
+                                "gift"
+                              ],
+                              "type": "object"
+                            },
+                            "palette": {
+                              "enum": [
+                                "BLACK_GOLD",
+                                "GRAPHITE_PEARL",
+                                "MIDNIGHT_BLUE"
+                              ],
+                              "type": "string"
+                            },
+                            "presentation": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "giftLayout": {
+                                  "enum": [
+                                    "GRID",
+                                    "SHOWCASE"
+                                  ],
+                                  "type": "string"
+                                },
+                                "heroLayout": {
+                                  "enum": [
+                                    "IMMERSIVE",
+                                    "SPLIT"
+                                  ],
+                                  "type": "string"
+                                },
+                                "motion": {
+                                  "enum": [
+                                    "STANDARD",
+                                    "SUBTLE",
+                                    "NONE"
+                                  ],
+                                  "type": "string"
+                                },
+                                "motionSpeed": {
+                                  "enum": [
+                                    "STANDARD",
+                                    "QUICK"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "heroLayout",
+                                "giftLayout",
+                                "motion",
+                                "motionSpeed"
+                              ],
+                              "type": "object"
+                            },
+                            "schemaVersion": {
+                              "const": 1,
+                              "type": "number"
+                            },
+                            "typography": {
+                              "enum": [
+                                "STANDARD",
+                                "LARGE"
+                              ],
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "schemaVersion",
+                            "palette",
+                            "typography",
+                            "density",
+                            "corners",
+                            "presentation",
+                            "detailTemplates"
                           ],
                           "type": "object"
                         }
@@ -139557,6 +140685,194 @@
                           "presentation"
                         ],
                         "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "corners": {
+                            "enum": [
+                              "SOFT",
+                              "SHARP",
+                              "ROUND"
+                            ],
+                            "type": "string"
+                          },
+                          "density": {
+                            "enum": [
+                              "STANDARD",
+                              "COMPACT",
+                              "AIRY"
+                            ],
+                            "type": "string"
+                          },
+                          "detailTemplates": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artist": {
+                                "enum": [
+                                  "IMMERSIVE",
+                                  "SPLIT"
+                                ],
+                                "type": "string"
+                              },
+                              "gift": {
+                                "enum": [
+                                  "IMAGE_LEFT",
+                                  "IMAGE_RIGHT"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artist",
+                              "gift"
+                            ],
+                            "type": "object"
+                          },
+                          "palette": {
+                            "enum": [
+                              "BLACK_GOLD",
+                              "GRAPHITE_PEARL",
+                              "MIDNIGHT_BLUE"
+                            ],
+                            "type": "string"
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          },
+                          "typography": {
+                            "enum": [
+                              "STANDARD",
+                              "LARGE"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "palette",
+                          "typography",
+                          "density",
+                          "corners",
+                          "detailTemplates"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "corners": {
+                            "enum": [
+                              "SOFT",
+                              "SHARP",
+                              "ROUND"
+                            ],
+                            "type": "string"
+                          },
+                          "density": {
+                            "enum": [
+                              "STANDARD",
+                              "COMPACT",
+                              "AIRY"
+                            ],
+                            "type": "string"
+                          },
+                          "detailTemplates": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artist": {
+                                "enum": [
+                                  "IMMERSIVE",
+                                  "SPLIT"
+                                ],
+                                "type": "string"
+                              },
+                              "gift": {
+                                "enum": [
+                                  "IMAGE_LEFT",
+                                  "IMAGE_RIGHT"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artist",
+                              "gift"
+                            ],
+                            "type": "object"
+                          },
+                          "palette": {
+                            "enum": [
+                              "BLACK_GOLD",
+                              "GRAPHITE_PEARL",
+                              "MIDNIGHT_BLUE"
+                            ],
+                            "type": "string"
+                          },
+                          "presentation": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "giftLayout": {
+                                "enum": [
+                                  "GRID",
+                                  "SHOWCASE"
+                                ],
+                                "type": "string"
+                              },
+                              "heroLayout": {
+                                "enum": [
+                                  "IMMERSIVE",
+                                  "SPLIT"
+                                ],
+                                "type": "string"
+                              },
+                              "motion": {
+                                "enum": [
+                                  "STANDARD",
+                                  "SUBTLE",
+                                  "NONE"
+                                ],
+                                "type": "string"
+                              },
+                              "motionSpeed": {
+                                "enum": [
+                                  "STANDARD",
+                                  "QUICK"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "heroLayout",
+                              "giftLayout",
+                              "motion",
+                              "motionSpeed"
+                            ],
+                            "type": "object"
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          },
+                          "typography": {
+                            "enum": [
+                              "STANDARD",
+                              "LARGE"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "palette",
+                          "typography",
+                          "density",
+                          "corners",
+                          "presentation",
+                          "detailTemplates"
+                        ],
+                        "type": "object"
                       }
                     ]
                   }
@@ -139749,6 +141065,194 @@
                           "density",
                           "corners",
                           "presentation"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "corners": {
+                            "enum": [
+                              "SOFT",
+                              "SHARP",
+                              "ROUND"
+                            ],
+                            "type": "string"
+                          },
+                          "density": {
+                            "enum": [
+                              "STANDARD",
+                              "COMPACT",
+                              "AIRY"
+                            ],
+                            "type": "string"
+                          },
+                          "detailTemplates": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artist": {
+                                "enum": [
+                                  "IMMERSIVE",
+                                  "SPLIT"
+                                ],
+                                "type": "string"
+                              },
+                              "gift": {
+                                "enum": [
+                                  "IMAGE_LEFT",
+                                  "IMAGE_RIGHT"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artist",
+                              "gift"
+                            ],
+                            "type": "object"
+                          },
+                          "palette": {
+                            "enum": [
+                              "BLACK_GOLD",
+                              "GRAPHITE_PEARL",
+                              "MIDNIGHT_BLUE"
+                            ],
+                            "type": "string"
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          },
+                          "typography": {
+                            "enum": [
+                              "STANDARD",
+                              "LARGE"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "palette",
+                          "typography",
+                          "density",
+                          "corners",
+                          "detailTemplates"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "corners": {
+                            "enum": [
+                              "SOFT",
+                              "SHARP",
+                              "ROUND"
+                            ],
+                            "type": "string"
+                          },
+                          "density": {
+                            "enum": [
+                              "STANDARD",
+                              "COMPACT",
+                              "AIRY"
+                            ],
+                            "type": "string"
+                          },
+                          "detailTemplates": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artist": {
+                                "enum": [
+                                  "IMMERSIVE",
+                                  "SPLIT"
+                                ],
+                                "type": "string"
+                              },
+                              "gift": {
+                                "enum": [
+                                  "IMAGE_LEFT",
+                                  "IMAGE_RIGHT"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artist",
+                              "gift"
+                            ],
+                            "type": "object"
+                          },
+                          "palette": {
+                            "enum": [
+                              "BLACK_GOLD",
+                              "GRAPHITE_PEARL",
+                              "MIDNIGHT_BLUE"
+                            ],
+                            "type": "string"
+                          },
+                          "presentation": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "giftLayout": {
+                                "enum": [
+                                  "GRID",
+                                  "SHOWCASE"
+                                ],
+                                "type": "string"
+                              },
+                              "heroLayout": {
+                                "enum": [
+                                  "IMMERSIVE",
+                                  "SPLIT"
+                                ],
+                                "type": "string"
+                              },
+                              "motion": {
+                                "enum": [
+                                  "STANDARD",
+                                  "SUBTLE",
+                                  "NONE"
+                                ],
+                                "type": "string"
+                              },
+                              "motionSpeed": {
+                                "enum": [
+                                  "STANDARD",
+                                  "QUICK"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "heroLayout",
+                              "giftLayout",
+                              "motion",
+                              "motionSpeed"
+                            ],
+                            "type": "object"
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          },
+                          "typography": {
+                            "enum": [
+                              "STANDARD",
+                              "LARGE"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "palette",
+                          "typography",
+                          "density",
+                          "corners",
+                          "presentation",
+                          "detailTemplates"
                         ],
                         "type": "object"
                       }
@@ -189605,6 +191109,194 @@
                           "density",
                           "corners",
                           "presentation"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "corners": {
+                            "enum": [
+                              "SOFT",
+                              "SHARP",
+                              "ROUND"
+                            ],
+                            "type": "string"
+                          },
+                          "density": {
+                            "enum": [
+                              "STANDARD",
+                              "COMPACT",
+                              "AIRY"
+                            ],
+                            "type": "string"
+                          },
+                          "detailTemplates": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artist": {
+                                "enum": [
+                                  "IMMERSIVE",
+                                  "SPLIT"
+                                ],
+                                "type": "string"
+                              },
+                              "gift": {
+                                "enum": [
+                                  "IMAGE_LEFT",
+                                  "IMAGE_RIGHT"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artist",
+                              "gift"
+                            ],
+                            "type": "object"
+                          },
+                          "palette": {
+                            "enum": [
+                              "BLACK_GOLD",
+                              "GRAPHITE_PEARL",
+                              "MIDNIGHT_BLUE"
+                            ],
+                            "type": "string"
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          },
+                          "typography": {
+                            "enum": [
+                              "STANDARD",
+                              "LARGE"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "palette",
+                          "typography",
+                          "density",
+                          "corners",
+                          "detailTemplates"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "corners": {
+                            "enum": [
+                              "SOFT",
+                              "SHARP",
+                              "ROUND"
+                            ],
+                            "type": "string"
+                          },
+                          "density": {
+                            "enum": [
+                              "STANDARD",
+                              "COMPACT",
+                              "AIRY"
+                            ],
+                            "type": "string"
+                          },
+                          "detailTemplates": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "artist": {
+                                "enum": [
+                                  "IMMERSIVE",
+                                  "SPLIT"
+                                ],
+                                "type": "string"
+                              },
+                              "gift": {
+                                "enum": [
+                                  "IMAGE_LEFT",
+                                  "IMAGE_RIGHT"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "artist",
+                              "gift"
+                            ],
+                            "type": "object"
+                          },
+                          "palette": {
+                            "enum": [
+                              "BLACK_GOLD",
+                              "GRAPHITE_PEARL",
+                              "MIDNIGHT_BLUE"
+                            ],
+                            "type": "string"
+                          },
+                          "presentation": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "giftLayout": {
+                                "enum": [
+                                  "GRID",
+                                  "SHOWCASE"
+                                ],
+                                "type": "string"
+                              },
+                              "heroLayout": {
+                                "enum": [
+                                  "IMMERSIVE",
+                                  "SPLIT"
+                                ],
+                                "type": "string"
+                              },
+                              "motion": {
+                                "enum": [
+                                  "STANDARD",
+                                  "SUBTLE",
+                                  "NONE"
+                                ],
+                                "type": "string"
+                              },
+                              "motionSpeed": {
+                                "enum": [
+                                  "STANDARD",
+                                  "QUICK"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "heroLayout",
+                              "giftLayout",
+                              "motion",
+                              "motionSpeed"
+                            ],
+                            "type": "object"
+                          },
+                          "schemaVersion": {
+                            "const": 1,
+                            "type": "number"
+                          },
+                          "typography": {
+                            "enum": [
+                              "STANDARD",
+                              "LARGE"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "palette",
+                          "typography",
+                          "density",
+                          "corners",
+                          "presentation",
+                          "detailTemplates"
                         ],
                         "type": "object"
                       }

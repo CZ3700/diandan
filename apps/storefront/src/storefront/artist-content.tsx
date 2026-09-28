@@ -25,7 +25,7 @@ export function ArtistContent({
   const query = new URLSearchParams(contextQuery);
   query.set("idol", artist.id);
   return (
-    <>
+    <article data-artist-detail={artist.id}>
       <section
         className="storefront-hero storefront-artist-hero"
         aria-labelledby="artist-title"
@@ -113,6 +113,6 @@ export function ArtistContent({
           <Icon name="arrow-right" decorative />
         </a>
       </section>
-    </>
+    </article>
   );
 }

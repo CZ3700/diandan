@@ -9,8 +9,7 @@ import {
   loadStorefrontPresentationConfig,
 } from "../server/runtime-config";
 import { loadStorefrontCopy } from "../server/storefront-copy";
-import { ArtistContent } from "./artist-content";
-import { ArtistGiftDirectory } from "./artist-gift-directory";
+import { ArtistDetailBody } from "./artist-detail-body";
 import { PageState } from "./page-parts";
 import { queryString } from "./navigation";
 import { readStorefrontIdol } from "./storefront-page-reads";
@@ -39,33 +38,11 @@ export function createArtistStorefrontPage(locale: SupportedLocale) {
     const contextQuery = queryString(values);
     const content =
       result.outcome === "SUCCESS" && result.content.kind === "IDOL" ? (
-        <ArtistContent
-          gifts={
-            <Suspense
-              fallback={
-                <section
-                  className="storefront-section storefront-directory storefront-gifts"
-                  id="artist-gifts"
-                  aria-busy="true"
-                >
-                  <p role="status">{copy.loading}</p>
-                </section>
-              }
-            >
-              <ArtistGiftDirectory
-                locale={locale}
-                copy={copy}
-                values={{ ...values, idol: result.content.view.id }}
-                basePath={`/idols/${handle.data}`}
-                headingLevel={2}
-                artist={result.content.view}
-              />
-            </Suspense>
-          }
+        <ArtistDetailBody
           artist={result.content.view}
           locale={locale}
           copy={copy}
-          contextQuery={contextQuery}
+          values={values}
         />
       ) : (
         <PageState

@@ -6,6 +6,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Client } from "pg";
 import { verifyStorefrontPresentation } from "./storefront-theme-presentation-cases.mjs";
+import { verifyStorefrontDetailTemplates } from "./storefront-theme-detail-template-cases.mjs";
 import {
   createDefaultStorefrontTheme,
   createDefaultHomeLayout,
@@ -415,7 +416,7 @@ await runtime(async (config) => {
       refused = true;
     }
     check(refused, "downgrade refuses existing theme history");
-    const finalVersion = await verifyStorefrontPresentation({
+    const previousVersion = await verifyStorefrontPresentation({
       client,
       migrate,
       execute,
@@ -426,6 +427,18 @@ await runtime(async (config) => {
       published,
       check,
       actorId,
+    });
+    const finalVersion = await verifyStorefrontDetailTemplates({
+      client,
+      migrate,
+      execute,
+      publicApp,
+      publicLayout,
+      priorLayout,
+      saveCommand,
+      published,
+      previousVersion,
+      check,
     });
     await persistence.close();
     persistence = createPostgresPersistence(config);

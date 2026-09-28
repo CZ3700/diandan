@@ -91,6 +91,21 @@ root 负责 API/BFF/存储缓存语义与现场验收；focal_backend_audit 独�
 
 分工：root 独占 design-tokens、storefront、运行验收和文档；focal_backend_audit 独占 contracts/application/persistence-postgres/database 与生成合同；focal_ui_audit 独占 admin 装修编辑器及文案；launch_gap_audit 只读规范与代码复核。共享合同先冻结，禁止并行修改同一文件。
 
+## L2-04：艺人与礼物详情模板
+
+在既有全站主题折叠面板内增加艺人沉浸/图文分栏、礼物图片在左/图片在右两种结构；手机始终按图片→内容的顺序展示。照片、简介、图库、礼物目录、完整选购组件、履约和政策均保留，不加入悬浮购买区、隐藏字段或第二套商品逻辑。
+
+冻结合同：可选顶层 `detailTemplates:{artist:IMMERSIVE|SPLIT,gift:IMAGE_LEFT|IMAGE_RIGHT}`，原schemaVersion1、五字段主题与带presentation的六字段主题保持原JSON/hash；不默认回填。默认IMMERSIVE/IMAGE_LEFT，新增0047只扩主题validator；历史有新字段时拒绝降级，0046保持不变。显示投影增加两项html属性；恢复旧主题明确复原默认。
+
+预览仍使用受限 `/:locale/layout-preview`，theme模式增加 `page=home|artist|gift`（省略仍为首页），不接受任意URL、购物车、订单或私密上下文。页面类型仅当前预览状态，不写进主题、不使草稿dirty；切换时新channel并保留当前主题草稿。本项只调整全局模板，预览自动读取首个已发布艺人/礼物作实际样本，并明确提示；礼物以首个公开艺人作为实际收礼人样本，暂停或不符合资格及权威价格照实显示，空数据/错误明确呈现。沿用同一ArtistContent/GiftDetail及公共读取/单市场逻辑；不把普通页面的CartProvider或Cookie恢复带入预览。以后按具体对象预览可基于公开目录扩展，本项不增加后台列表授权或复制商品数据。
+
+- [x] 合同/SQL先失败后通过，旧两代回执重放与历史恢复不变；新四种模板组合有效，额外CSS/交易参数拒绝；真实PG失败保旧与降级保护。
+- [x] 中文和七语简单设置，语义dirty比较、错误保稿；首页/艺人/礼物手机电脑预览同renderer，切目标保草稿且无购物车/私密Cookie读取、写请求与RUM。
+- [x] 默认静态双端不变；分栏不串改首页，图片左右只影响桌面。艺人上下文、礼物规格/价格/库存/资格/数量/私密留言与加入购物车逻辑保持，暂停/售罄/无价状态可见。
+- [x] 新隔离实例发布/恢复/重启、七语双端/320/200%/键盘/reduced motion、非空订单保护和正常交易通过；全仓check:dev与独立S.U.P.E.R复核后提交推送。
+
+不改变已登记L3的虚拟履约与采购文案、真实邮件/OIDC、支付中断或政策审校完成状态；本项不重复或扩写这些商务说明。
+
 ## L3：现在并行启动的生产接入
 
 ### L3-01 沙盒验证结果可信性（本轮）

@@ -24,6 +24,16 @@ export function createDefaultStorefrontPresentation(): StorefrontPresentation {
     motionSpeed: "STANDARD",
   };
 }
+export const storefrontDetailTemplatesSchema = z.strictObject({
+  artist: z.enum(["IMMERSIVE", "SPLIT"]),
+  gift: z.enum(["IMAGE_LEFT", "IMAGE_RIGHT"]),
+});
+export type StorefrontDetailTemplates = z.infer<
+  typeof storefrontDetailTemplatesSchema
+>;
+export function createDefaultStorefrontDetailTemplates(): StorefrontDetailTemplates {
+  return { artist: "IMMERSIVE", gift: "IMAGE_LEFT" };
+}
 const legacyStorefrontThemeSchema = z.strictObject({
   schemaVersion: z.literal(1),
   palette: z.enum(["BLACK_GOLD", "GRAPHITE_PEARL", "MIDNIGHT_BLUE"]),
@@ -37,8 +47,22 @@ export const storefrontThemeSchema = z.union([
   legacyStorefrontThemeSchema.extend({
     presentation: storefrontPresentationSchema,
   }),
+  legacyStorefrontThemeSchema.extend({
+    detailTemplates: storefrontDetailTemplatesSchema,
+  }),
+  legacyStorefrontThemeSchema.extend({
+    presentation: storefrontPresentationSchema,
+    detailTemplates: storefrontDetailTemplatesSchema,
+  }),
 ]);
 export type StorefrontTheme = z.infer<typeof storefrontThemeSchema>;
+export function resolveStorefrontDetailTemplates(
+  theme: StorefrontTheme,
+): StorefrontDetailTemplates {
+  return "detailTemplates" in theme
+    ? { ...theme.detailTemplates }
+    : createDefaultStorefrontDetailTemplates();
+}
 export function resolveStorefrontPresentation(
   theme: StorefrontTheme,
 ): StorefrontPresentation {

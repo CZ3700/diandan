@@ -1,0 +1,39 @@
+/* Detail presets reuse the complete public body and keep its reading order. */
+html[data-storefront-artist-template="SPLIT"] .storefront-artist-hero::after {
+  display: none;
+}
+html[data-storefront-artist-template="SPLIT"]
+  .storefront-artist-hero
+  .storefront-hero-copy {
+  margin-block-start: 0;
+  padding-block: var(--space-8);
+}
+@media (min-width: 48rem) {
+  html[data-storefront-artist-template="SPLIT"] .storefront-artist-hero {
+    grid-template: auto / minmax(0, 1fr) minmax(0, 1.2fr);
+    align-items: center;
+    min-block-size: 0;
+  }
+  html[data-storefront-artist-template="SPLIT"]
+    .storefront-artist-hero
+    .storefront-hero-copy {
+    grid-area: 1 / 1;
+    align-self: center;
+    padding-block: var(--space-16);
+  }
+  html[data-storefront-artist-template="SPLIT"]
+    .storefront-artist-hero
+    .storefront-hero-image {
+    grid-area: 1 / 2;
+    align-self: stretch;
+  }
+  html[data-storefront-gift-template="IMAGE_RIGHT"] .gift-detail-top {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  }
+  html[data-storefront-gift-template="IMAGE_RIGHT"] .gift-detail-gallery {
+    grid-area: 1 / 2;
+  }
+  html[data-storefront-gift-template="IMAGE_RIGHT"] .gift-detail-summary {
+    grid-area: 1 / 1;
+  }
+}

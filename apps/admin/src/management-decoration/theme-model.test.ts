@@ -43,3 +43,45 @@ test("explicit presentation defaults compare equally without rewriting legacy DT
     editableTheme({ ...state, draft: { ...state.draft, theme: explicit } }),
   ).toBe(explicit);
 });
+
+test.each([
+  { artist: "SPLIT" as const, gift: "IMAGE_LEFT" as const },
+  { artist: "IMMERSIVE" as const, gift: "IMAGE_RIGHT" as const },
+])("detail-template-only edits are unsaved: %j", (detailTemplates) => {
+  const legacy = createDefaultStorefrontTheme();
+  const next = { ...legacy, detailTemplates };
+  expect(sameTheme(legacy, next)).toBe(false);
+  expect(sameTheme(next, legacy)).toBe(false);
+});
+
+test("explicit detail defaults compare equally without rewriting either old theme shape", () => {
+  for (const legacy of [
+    createDefaultStorefrontTheme(),
+    { ...createDefaultStorefrontTheme(), presentation },
+  ]) {
+    const explicit = {
+      ...legacy,
+      detailTemplates: {
+        artist: "IMMERSIVE" as const,
+        gift: "IMAGE_LEFT" as const,
+      },
+    };
+    expect(sameTheme(legacy, explicit)).toBe(true);
+    expect(sameTheme(explicit, legacy)).toBe(true);
+    expect(legacy).not.toHaveProperty("detailTemplates");
+    for (const theme of [legacy, explicit]) {
+      expect(
+        editableTheme({
+          schemaVersion: 1,
+          version: 1,
+          draft: {
+            revisionId: "a0000000-0000-4000-8000-000000000001",
+            createdAt: "2026-09-28T00:00:00Z",
+            theme,
+          },
+          published: null,
+        }),
+      ).toBe(theme);
+    }
+  }
+});
