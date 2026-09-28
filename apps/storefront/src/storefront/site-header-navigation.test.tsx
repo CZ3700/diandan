@@ -39,9 +39,7 @@ test.each(SUPPORTED_LOCALES)(
       expect(desktop).toContain(href);
       expect(drawer).toContain(href);
     }
-    expect(drawer).toContain(
-      `href="/${locale}/orders/lookup?market=TEST_MARKET&amp;currency=USD"`,
-    );
+    expect(drawer).toContain(`href="/${locale}/orders/lookup"`);
     expect(drawer).toContain(copy.navOrders);
     expect(drawer?.match(/\/orders\/lookup/gu)).toHaveLength(1);
   },

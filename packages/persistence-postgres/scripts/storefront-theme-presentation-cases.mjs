@@ -16,7 +16,7 @@ import {
 } from "./postgres-gift-commerce-fixtures.mjs";
 
 /** Nonempty protected business state is created through normal audited writers, not replica inserts. */
-async function seedCommerceBaseline(client, actorId) {
+export async function seedCommerceBaseline(client, actorId) {
   const credentials = await seedGiftCommerceAuthority(client, { actorId });
   const market = "DISPLAY_TEST",
     currency = "USD";

@@ -3,6 +3,7 @@ import {
   createManagementCenterUseCases,
   createHomeLayoutUseCases,
   createStorefrontThemeUseCases,
+  createStorefrontNavigationUseCases,
   createManagementCenterWorker,
   createManagementMediaPreparation,
   createResourceManagementUseCases,
@@ -22,6 +23,7 @@ import type {
 import type { ManagementCenterRouteDependencies } from "../management-center-route.js";
 import type { HomeLayoutRouteDependencies } from "../home-layout-route.js";
 import type { StorefrontThemeRouteDependencies } from "../storefront-theme-route.js";
+import type { StorefrontNavigationRouteDependencies } from "../storefront-navigation-route.js";
 import type { ApiLifecycleResource } from "../bootstrap.js";
 import { createManagementCenterRuntime } from "./management-center-runtime.js";
 
@@ -30,6 +32,7 @@ type ManagementPersistence = Pick<
   | "managementCenterTransactionManager"
   | "homeLayoutTransactionManager"
   | "storefrontThemeTransactionManager"
+  | "storefrontNavigationTransactionManager"
   | "managementMediaTransactionManager"
   | "resourceManagementTransactionManager"
   | "mediaProcessingTransactionManager"
@@ -74,6 +77,7 @@ export function createTestManagementCenterComposition(
   managementCenterRoute: ManagementCenterRouteDependencies;
   homeLayoutRoute: HomeLayoutRouteDependencies;
   storefrontThemeRoute: StorefrontThemeRouteDependencies;
+  storefrontNavigationRoute: StorefrontNavigationRouteDependencies;
   managementCenterRuntime: ApiLifecycleResource;
 }> {
   const pollIntervalMs = options.pollIntervalMs ?? 250,
@@ -142,6 +146,13 @@ export function createTestManagementCenterComposition(
         allowedOrigin: options.allowedOrigin,
         useCases: createStorefrontThemeUseCases({
           transactions: persistence.storefrontThemeTransactionManager,
+          tokenPepper: options.tokenPepper,
+        }),
+      },
+      storefrontNavigationRoute: {
+        allowedOrigin: options.allowedOrigin,
+        useCases: createStorefrontNavigationUseCases({
+          transactions: persistence.storefrontNavigationTransactionManager,
           tokenPepper: options.tokenPepper,
         }),
       },

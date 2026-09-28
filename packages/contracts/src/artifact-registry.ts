@@ -1,3 +1,4 @@
+import * as storefrontNavigation from "./storefront-navigation.js";
 import * as storefrontTheme from "./storefront-theme.js";
 import * as homeLayout from "./home-layout.js";
 import {
@@ -788,6 +789,52 @@ const registrations = [
     name: "StorefrontThemePreviewReady",
     audience: "admin-http",
     schema: storefrontTheme.storefrontThemePreviewReadySchema,
+  },
+
+  {
+    name: "StorefrontNavigationAuthorizationCommand",
+    audience: "internal",
+    schema: storefrontNavigation.storefrontNavigationAuthorizationCommandSchema,
+  },
+  {
+    name: "StorefrontNavigation",
+    audience: "public-http",
+    schema: storefrontNavigation.storefrontNavigationSchema,
+  },
+  {
+    name: "StorefrontNavigationState",
+    audience: "admin-http",
+    schema: storefrontNavigation.storefrontNavigationStateSchema,
+  },
+  {
+    name: "StorefrontNavigationCommand",
+    audience: "internal",
+    schema: storefrontNavigation.storefrontNavigationCommandSchema,
+  },
+  {
+    name: "StorefrontNavigationRequest",
+    audience: "internal",
+    schema: storefrontNavigation.storefrontNavigationRequestSchema,
+  },
+  {
+    name: "StorefrontNavigationResponse",
+    audience: "admin-http",
+    schema: storefrontNavigation.storefrontNavigationResponseSchema,
+  },
+  {
+    name: "PublicStorefrontNavigationResponse",
+    audience: "public-http",
+    schema: storefrontNavigation.publicStorefrontNavigationResponseSchema,
+  },
+  {
+    name: "StorefrontNavigationPreviewMessage",
+    audience: "admin-http",
+    schema: storefrontNavigation.storefrontNavigationPreviewMessageSchema,
+  },
+  {
+    name: "StorefrontNavigationPreviewReady",
+    audience: "admin-http",
+    schema: storefrontNavigation.storefrontNavigationPreviewReadySchema,
   },
   { name: "RumIntake", audience: "public-http", schema: rumIntakeSchema },
   {

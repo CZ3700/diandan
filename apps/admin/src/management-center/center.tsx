@@ -17,6 +17,7 @@ import { createFinanceApi } from "../management-finance/api";
 import { ManagementLogin } from "./login";
 import "./management-center.css";
 import { createHomeLayoutApi } from "../management-decoration/api";
+import { createStorefrontNavigationApi } from "../management-decoration/navigation-api";
 import { createStorefrontThemeApi } from "../management-decoration/theme-api";
 
 export function ManagementCenter({
@@ -39,6 +40,10 @@ export function ManagementCenter({
   const exceptionsApi = useMemo(() => createExceptionsApi(client), [client]);
   const financeApi = useMemo(() => createFinanceApi(client), [client]);
   const layoutApi = useMemo(() => createHomeLayoutApi(client), [client]);
+  const navigationApi = useMemo(
+    () => createStorefrontNavigationApi(client),
+    [client],
+  );
   const themeApi = useMemo(() => createStorefrontThemeApi(client), [client]);
   const copy = managementCopy(locale);
   const [loginFailed, setLoginFailed] = useState(false);
@@ -99,6 +104,7 @@ export function ManagementCenter({
       exceptionsApi={exceptionsApi}
       layoutApi={layoutApi}
       themeApi={themeApi}
+      navigationApi={navigationApi}
       layoutPermissions={{
         read: session.permissions.includes("content.read"),
         edit: session.permissions.includes("content.edit"),

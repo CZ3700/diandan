@@ -3,6 +3,7 @@ import { createPublishedContentComposition } from "./published-content-compositi
 import {
   createDefaultHomeLayout,
   createDefaultStorefrontTheme,
+  createDefaultStorefrontNavigation,
 } from "@fan-support/contracts";
 const environment = Object.freeze({
   NODE_ENV: "test",
@@ -49,6 +50,15 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     version: 0,
     publicationId: null,
   }));
+  const readNavigation = vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "STOREFRONT_NAVIGATION",
+    source: "DEFAULT",
+    navigation: createDefaultStorefrontNavigation(),
+    version: 0,
+    publicationId: null,
+  }));
   const load = vi.fn(async () => ({
     schemaVersion: 1,
     outcome: "FAILURE",
@@ -64,6 +74,11 @@ test("binds production public reads to configured PostgreSQL and trusted media o
       runInStorefrontThemeTransaction: async (
         work: (repositories: unknown) => unknown,
       ) => work({ storefrontTheme: { readPublished: readTheme } }),
+    },
+    storefrontNavigationTransactionManager: {
+      runInStorefrontNavigationTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ storefrontNavigation: { readPublished: readNavigation } }),
     },
     storefrontSeoTransactionManager: {
       runInStorefrontSeoTransaction: async (
@@ -105,6 +120,7 @@ test("binds production public reads to configured PostgreSQL and trusted media o
   });
   expect(Object.keys(composition).sort()).toEqual([
     "publicHomeLayoutRoute",
+    "publicStorefrontNavigationRoute",
     "publicStorefrontThemeRoute",
     "publishedContentRoute",
     "publishedContentRuntime",
@@ -149,6 +165,14 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     publicationId: null,
   });
   expect(readTheme).toHaveBeenCalledOnce();
+  await expect(
+    composition.publicStorefrontNavigationRoute.useCases.execute(),
+  ).resolves.toMatchObject({
+    kind: "STOREFRONT_NAVIGATION",
+    source: "DEFAULT",
+    publicationId: null,
+  });
+  expect(readNavigation).toHaveBeenCalledOnce();
   await expect(
     composition.storefrontCommerceRoute.useCases.readContext({
       schemaVersion: 1,

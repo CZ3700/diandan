@@ -1,6 +1,9 @@
 "use client";
 import { useCallback, useState, type ComponentProps } from "react";
 import { DecorationWorkspace } from "./workspace";
+import { NavigationWorkspace } from "./navigation-workspace";
+import type { StorefrontNavigationApi } from "./navigation-api";
+import { navigationCopy } from "./navigation-copy";
 import { ThemeWorkspace } from "./theme-workspace";
 import { decorationNavigationCopy } from "./theme-copy";
 import type { StorefrontThemeApi } from "./theme-api";
@@ -9,16 +12,24 @@ import { decorationCopy } from "./copy";
 
 export function DecorationCenter({
   themeApi,
+  navigationApi,
   onDirtyChange,
   onBusy,
   ...props
 }: ComponentProps<typeof DecorationWorkspace> & {
   themeApi?: StorefrontThemeApi | undefined;
+  navigationApi?: StorefrontNavigationApi | undefined;
 }) {
-  const [view, setView] = useState<"layout" | "theme">("layout");
+  const [view, setView] = useState<"layout" | "theme" | "navigation">("layout");
   const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false);
-  const copy = decorationNavigationCopy(props.locale);
+  const copy = {
+    ...decorationNavigationCopy(props.locale),
+    navigation: navigationCopy(props.locale).title,
+  };
+  const tabs: ("layout" | "theme" | "navigation")[] = ["layout"];
+  if (themeApi) tabs.push("theme");
+  if (navigationApi) tabs.push("navigation");
   const changeDirty = useCallback(
     (value: boolean) => {
       setDirty(value);
@@ -33,21 +44,31 @@ export function DecorationCenter({
     },
     [onBusy],
   );
-  const choose = (next: "layout" | "theme") => {
+  const choose = (next: "layout" | "theme" | "navigation") => {
     if (
       view !== next &&
       canLeaveDecoration({ busy, dirty }, () => window.confirm(copy.discard))
     )
       setView(next);
   };
+  const sharedProps = {
+    ...props,
+    onDirtyChange: changeDirty,
+    onBusy: changeBusy,
+  };
+  let workspace = <DecorationWorkspace {...sharedProps} />;
+  if (view === "navigation" && navigationApi)
+    workspace = <NavigationWorkspace {...sharedProps} api={navigationApi} />;
+  else if (view === "theme" && themeApi)
+    workspace = <ThemeWorkspace {...sharedProps} api={themeApi} />;
   return (
     <>
-      {themeApi && (
+      {tabs.length > 1 && (
         <nav
           className="decoration-tabs"
           aria-label={decorationCopy(props.locale).title}
         >
-          {(["layout", "theme"] as const).map((value) => (
+          {tabs.map((value) => (
             <button
               key={value}
               type="button"
@@ -61,20 +82,7 @@ export function DecorationCenter({
           ))}
         </nav>
       )}
-      {view === "theme" && themeApi ? (
-        <ThemeWorkspace
-          {...props}
-          api={themeApi}
-          onDirtyChange={changeDirty}
-          onBusy={changeBusy}
-        />
-      ) : (
-        <DecorationWorkspace
-          {...props}
-          onDirtyChange={changeDirty}
-          onBusy={changeBusy}
-        />
-      )}
+      {workspace}
     </>
   );
 }

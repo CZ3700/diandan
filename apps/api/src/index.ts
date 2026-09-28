@@ -29,3 +29,4 @@ export * from "./admin-exceptions-route.js";
 export * from "./home-layout-route.js";
 
 export * from "./storefront-theme-route.js";
+export * from "./storefront-navigation-route.js";

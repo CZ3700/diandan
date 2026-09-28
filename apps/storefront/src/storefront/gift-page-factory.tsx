@@ -1,4 +1,6 @@
 import "server-only";
+import { readPublicStorefrontNavigation } from "../server/public-storefront-navigation";
+import { NavigationProvider } from "./navigation-provider";
 import { readCartRestorationHint } from "../server/cart-restoration-hint";
 import "./cart.css";
 import { CartProvider } from "./cart-provider";
@@ -31,6 +33,7 @@ import { queryString } from "./navigation";
 import { createStorefrontLoading } from "./route-states";
 import { GiftPageSeo, loadGiftSeo } from "./gift-seo";
 import { regionEntries } from "./region-entry";
+import { publicNavigationQuery } from "./navigation-target";
 
 type Kind = "gifts" | "gift" | "policy" | "region";
 type PageDefinition =
@@ -63,12 +66,13 @@ export function createGiftStorefrontPage(
         };
       },
     );
-    const [copy, detail, restoreOnLoad] = await Promise.all([
+    const [copy, detail, restoreOnLoad, navigation] = await Promise.all([
       loadStorefrontCopy(locale),
       handle?.success
         ? readGiftDetailPage(locale, handle.data, values)
         : undefined,
       readCartRestorationHint(),
+      readPublicStorefrontNavigation(),
       kind === "gift" || kind === "gifts" ? undefined : contextRead,
     ]);
     const contextQuery = queryString(values);
@@ -181,57 +185,61 @@ export function createGiftStorefrontPage(
     }
     const region = regionEntries(locale, copy, contextQuery);
     return (
-      <div className="storefront" lang={locale}>
-        <CartProvider
-          key={locale}
-          locale={locale}
-          restoreOnLoad={restoreOnLoad}
-        >
-          <SiteHeader
+      <NavigationProvider result={navigation}>
+        <div className="storefront" lang={locale}>
+          <CartProvider
+            key={locale}
+            locale={locale}
+            restoreOnLoad={restoreOnLoad}
+          >
+            <SiteHeader
+              locale={locale}
+              copy={copy}
+              name={name}
+              contextQuery={contextQuery}
+              active={kind === "gifts" || kind === "gift" ? "gifts" : "other"}
+              regionEntry={region.header}
+            />
+            <main id="main-content" tabIndex={-1}>
+              <Suspense fallback={null}>
+                <GiftPageSeo
+                  locale={locale}
+                  kind={kind}
+                  values={values}
+                  {...(routeParams.handle
+                    ? { handle: routeParams.handle }
+                    : {})}
+                />
+              </Suspense>
+              {content}
+            </main>
+          </CartProvider>
+          <SiteFooter
             locale={locale}
             copy={copy}
             name={name}
-            contextQuery={contextQuery}
-            active={kind === "gifts" || kind === "gift" ? "gifts" : "other"}
-            regionEntry={region.header}
+            contextQuery={publicNavigationQuery(contextQuery)}
+            region={region.footer}
+            policyLinks={
+              kind === "gift" || kind === "gifts" ? (
+                <GiftDetailPolicyLinks
+                  locale={locale}
+                  copy={copy}
+                  context={contextRead}
+                  contextQuery={publicNavigationQuery(contextQuery)}
+                />
+              ) : (
+                <PolicyLinks
+                  locale={locale}
+                  copy={copy}
+                  context={await contextRead}
+                  contextQuery={publicNavigationQuery(contextQuery)}
+                />
+              )
+            }
           />
-          <main id="main-content" tabIndex={-1}>
-            <Suspense fallback={null}>
-              <GiftPageSeo
-                locale={locale}
-                kind={kind}
-                values={values}
-                {...(routeParams.handle ? { handle: routeParams.handle } : {})}
-              />
-            </Suspense>
-            {content}
-          </main>
-        </CartProvider>
-        <SiteFooter
-          locale={locale}
-          copy={copy}
-          name={name}
-          contextQuery={contextQuery}
-          region={region.footer}
-          policyLinks={
-            kind === "gift" || kind === "gifts" ? (
-              <GiftDetailPolicyLinks
-                locale={locale}
-                copy={copy}
-                context={contextRead}
-                contextQuery={contextQuery}
-              />
-            ) : (
-              <PolicyLinks
-                locale={locale}
-                copy={copy}
-                context={await contextRead}
-                contextQuery={contextQuery}
-              />
-            )
-          }
-        />
-      </div>
+        </div>
+      </NavigationProvider>
     );
   }
   if (kind === "gifts" || kind === "region") {

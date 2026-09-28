@@ -36,6 +36,11 @@ vi.mock("react", async (original) => {
   };
 });
 import { ThemePreviewFrame } from "./preview-frame";
+import * as previews from "./preview-frame";
+import { navigationFixture } from "./navigation-fixture";
+const navigationLabels = await import("./navigation-copy").catch(
+  () => undefined,
+);
 import { themeCopy } from "./theme-copy";
 
 function find(
@@ -221,6 +226,160 @@ test("a delayed old ready event cannot publish the draft to a newly selected pre
       type: "STOREFRONT_THEME_PREVIEW",
       channel: gift.searchParams.get("channel"),
       theme,
+    },
+    gift.origin,
+  );
+  expect(contentWindow.postMessage).toHaveBeenCalledTimes(2);
+});
+
+test("navigation preview views replace the channel and keep current configuration and viewport", () => {
+  expect(previews.NavigationPreviewFrame).toBeTypeOf("function");
+  expect(navigationLabels?.navigationCopy).toBeTypeOf("function");
+  const navigation = navigationFixture();
+  function render() {
+    hooks.index = 0;
+    hooks.refIndex = 0;
+    hooks.effects = [];
+    const copy = navigationLabels!.navigationCopy("zh-CN");
+    const wrapper = previews.NavigationPreviewFrame({
+      navigation,
+      locale: "zh-CN",
+      origin: "https://storefront.example.invalid",
+      copy,
+      viewCopy: copy.previewViews,
+    }) as ReactElement<Record<string, unknown>>;
+    return (wrapper.type as (props: typeof wrapper.props) => ReactElement)(
+      wrapper.props,
+    );
+  }
+  render();
+  hooks.effects[0]!();
+  let tree = render();
+  let prior = new URL(
+    String(find(tree, "data-navigation-preview-frame")?.props["src"]),
+  );
+  expect(prior.searchParams.get("mode")).toBe("navigation");
+  expect(prior.searchParams.get("view")).toBeNull();
+  for (const view of ["menu", "footer", "header"]) {
+    const select = find(tree, "data-navigation-preview-view");
+    expect(select).toBeDefined();
+    (select!.props["onChange"] as (event: unknown) => void)({
+      currentTarget: { value: view },
+    });
+    tree = render();
+    const next = new URL(
+      String(find(tree, "data-navigation-preview-frame")?.props["src"]),
+    );
+    expect(next.searchParams.get("view")).toBe(view === "header" ? null : view);
+    expect(next.searchParams.get("channel")).not.toBe(
+      prior.searchParams.get("channel"),
+    );
+    expect(
+      find(tree, "data-preview-viewport")?.props["data-preview-viewport"],
+    ).toBe("mobile");
+    prior = next;
+  }
+  expect(navigation).toEqual(navigationFixture());
+});
+
+test("navigation preview rejects wrong origin, source, channel and stale view readiness", () => {
+  vi.useFakeTimers();
+  const receive: ((event: unknown) => void)[] = [];
+  vi.stubGlobal("window", {
+    addEventListener: (_type: string, listener: (event: unknown) => void) =>
+      receive.push(listener),
+    removeEventListener: () => {},
+  });
+  const navigation = navigationFixture();
+  function renderNavigation() {
+    hooks.index = 0;
+    hooks.refIndex = 0;
+    hooks.effects = [];
+    const copy = navigationLabels!.navigationCopy("zh-CN");
+    const wrapper = previews.NavigationPreviewFrame({
+      navigation,
+      locale: "zh-CN",
+      origin: "https://storefront.example.invalid",
+      copy,
+      viewCopy: copy.previewViews,
+    }) as ReactElement<Record<string, unknown>>;
+    return (wrapper.type as (props: typeof wrapper.props) => ReactElement)(
+      wrapper.props,
+    );
+  }
+  function url(tree: ReactElement) {
+    return new URL(
+      String(find(tree, "data-navigation-preview-frame")?.props["src"]),
+    );
+  }
+  const contentWindow = { postMessage: vi.fn() };
+  function renderConnected() {
+    const tree = renderNavigation();
+    const frame = find(tree, "data-navigation-preview-frame");
+    expect(frame).toBeDefined();
+    (frame!.props["ref"] as { current: unknown }).current = { contentWindow };
+    return tree;
+  }
+  renderNavigation();
+  hooks.effects[0]!();
+  let tree = renderConnected();
+  const home = url(tree);
+  hooks.effects[2]!();
+  const message = (
+    channel: string | null,
+    origin = home.origin,
+    source: unknown = contentWindow,
+  ) => ({
+    origin,
+    source,
+    data: {
+      schemaVersion: 1,
+      type: "STOREFRONT_NAVIGATION_PREVIEW_READY",
+      channel,
+    },
+  });
+  receive[0]!(message(home.searchParams.get("channel")));
+  tree = renderConnected();
+  hooks.effects[3]!();
+  expect(contentWindow.postMessage).toHaveBeenCalledExactlyOnceWith(
+    {
+      schemaVersion: 1,
+      type: "STOREFRONT_NAVIGATION_PREVIEW",
+      channel: home.searchParams.get("channel"),
+      navigation,
+    },
+    home.origin,
+  );
+  (
+    find(tree, "data-navigation-preview-view")!.props["onChange"] as (
+      event: unknown,
+    ) => void
+  )({ currentTarget: { value: "footer" } });
+  tree = renderConnected();
+  const gift = url(tree);
+  // The old listener may still be queued before React cleans it up.
+  receive[0]!(message(home.searchParams.get("channel")));
+  renderConnected();
+  hooks.effects[3]!();
+  expect(contentWindow.postMessage).toHaveBeenCalledTimes(1);
+  hooks.effects[2]!();
+  receive[1]!(message(home.searchParams.get("channel")));
+  receive[1]!(
+    message(gift.searchParams.get("channel"), "https://other.example.invalid"),
+  );
+  receive[1]!(message(gift.searchParams.get("channel"), gift.origin, {}));
+  renderConnected();
+  hooks.effects[3]!();
+  expect(contentWindow.postMessage).toHaveBeenCalledTimes(1);
+  receive[1]!(message(gift.searchParams.get("channel")));
+  renderConnected();
+  hooks.effects[3]!();
+  expect(contentWindow.postMessage).toHaveBeenLastCalledWith(
+    {
+      schemaVersion: 1,
+      type: "STOREFRONT_NAVIGATION_PREVIEW",
+      channel: gift.searchParams.get("channel"),
+      navigation,
     },
     gift.origin,
   );

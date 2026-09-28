@@ -44,3 +44,40 @@ test.each(SUPPORTED_LOCALES)(
     expect(layout).not.toContain("data-theme-preview-page");
   },
 );
+
+const navigationPreview = await import("./preview-frame");
+const navigationLabels = await import("./navigation-copy").catch(
+  () => undefined,
+);
+test.each(SUPPORTED_LOCALES)(
+  "%s navigation preview exposes header/menu/footer with the same protected frame",
+  (locale) => {
+    expect(navigationPreview.NavigationPreviewFrame).toBeTypeOf("function");
+    expect(navigationLabels?.navigationCopy).toBeTypeOf("function");
+    const copy = navigationLabels!.navigationCopy(locale);
+    const Frame = navigationPreview.NavigationPreviewFrame;
+    const html = renderToStaticMarkup(
+      <Frame
+        locale={locale}
+        copy={copy}
+        origin="https://storefront.example.invalid"
+        navigation={{
+          schemaVersion: 1,
+          header: ["HOME", "ARTISTS", "GIFTS"],
+          footer: [
+            { id: "DESCRIPTION", visible: true },
+            { id: "REGION", visible: true },
+            { id: "ARTISTS", visible: true },
+            { id: "GIFTS", visible: false },
+            { id: "POLICIES", visible: true },
+          ],
+        }}
+        viewCopy={copy.previewViews}
+      />,
+    );
+    expect(html).toContain("data-navigation-preview-view");
+    expect(html).not.toContain("data-theme-preview-page");
+    for (const value of ["header", "menu", "footer"] as const)
+      expect(html).toContain(`value="${value}"`);
+  },
+);

@@ -560,7 +560,7 @@ test("streams the shell before footer policy data and then includes its real pub
   }
   expect(errors).toEqual([]);
   expect(html).toContain(
-    "/en/policies/test-studio-terms?currency=JPY&amp;market=TEST_MARKET",
+    "/en/policies/test-studio-terms?market=TEST_MARKET&amp;currency=JPY",
   );
 });
 

@@ -98,10 +98,21 @@
   min-block-size: var(--space-12);
   color: var(--color-text);
   font-size: calc(var(--type-body-size) + var(--space-1));
+  font-weight: 700;
   text-decoration: none;
 }
 .storefront-drawer-nav p {
   color: var(--color-text-muted);
+}
+.storefront-navigation-preview {
+  position: fixed;
+  inset: 0;
+  z-index: var(--layer-skip);
+}
+/* Match the real drawer portal, which sits outside .storefront. */
+.storefront-navigation-preview .fs-interaction-icon {
+  inline-size: var(--space-6);
+  block-size: var(--space-6);
 }
 .storefront-skip {
   position: fixed;

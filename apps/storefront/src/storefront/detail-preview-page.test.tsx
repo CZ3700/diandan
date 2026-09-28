@@ -63,3 +63,22 @@ test("layout-only preview cannot request a detail target", async () => {
     }),
   ).rejects.toThrow();
 });
+
+test.each([
+  { mode: "navigation", view: "checkout" },
+  { mode: "navigation", view: ["header"] },
+  { mode: "navigation", view: "menu", page: "gift" },
+  { mode: "navigation", view: "footer", token: "private" },
+  { mode: "theme", view: "menu" },
+])(
+  "rejects unsupported navigation preview context before reading public content: %j",
+  async (extra) => {
+    await expect(
+      createHomeLayoutPreviewPage("en")({
+        searchParams: Promise.resolve({ channel, ...extra }),
+        params: Promise.resolve({}),
+      }),
+    ).rejects.toThrow();
+    expect(reads.home).not.toHaveBeenCalled();
+  },
+);

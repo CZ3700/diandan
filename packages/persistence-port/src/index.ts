@@ -365,3 +365,5 @@ export * from "./admin-finance.js";
 export * from "./home-layout.js";
 
 export * from "./storefront-theme.js";
+
+export * from "./storefront-navigation.js";

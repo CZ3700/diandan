@@ -42,9 +42,15 @@ export function createHomeLayoutPreviewPage(locale: SupportedLocale) {
       !adminOrigin ||
       !query.success ||
       Object.keys(values).some(
-        (key) => !["channel", "mode", "page"].includes(key),
+        (key) => !["channel", "mode", "page", "view"].includes(key),
       ) ||
-      (values["mode"] !== undefined && values["mode"] !== "theme") ||
+      (values["mode"] !== undefined &&
+        values["mode"] !== "theme" &&
+        values["mode"] !== "navigation") ||
+      (values["view"] !== undefined &&
+        (values["mode"] !== "navigation" ||
+          !["header", "menu", "footer"].includes(String(values["view"])) ||
+          Array.isArray(values["view"]))) ||
       (values["page"] !== undefined &&
         (values["mode"] !== "theme" ||
           (values["page"] !== "home" &&
@@ -92,6 +98,18 @@ export function createHomeLayoutPreviewPage(locale: SupportedLocale) {
         copy={copy}
         name={loadStorefrontPresentationConfig().name}
         active="home"
+        navigationPreview={
+          values["mode"] === "navigation"
+            ? {
+                adminOrigin,
+                channel: query.data.channel,
+                view:
+                  values["view"] === "menu" || values["view"] === "footer"
+                    ? values["view"]
+                    : "header",
+              }
+            : undefined
+        }
         contextQuery=""
       >
         {values["mode"] === "theme" && (

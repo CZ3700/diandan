@@ -111,7 +111,7 @@ export async function verifyStorefrontDetailTemplates({
       .every(({ rows }) => rows.length > 0),
     "detail regression starts with real gift, variant, price and stock rows",
   );
-  await migrate({ direction: "up" });
+  await migrate({ direction: "up", targetVersion: "0047" });
   check(
     (
       await client.query("SELECT valid_storefront_theme($1::jsonb) valid", [

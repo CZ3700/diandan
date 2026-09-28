@@ -1,3 +1,8 @@
+import { createStorefrontNavigationRepository } from "./storefront-navigation-repository.js";
+import type {
+  StorefrontNavigationRepositories,
+  StorefrontNavigationTransactionManager,
+} from "@fan-support/persistence-port";
 import { createStorefrontThemeRepository } from "./storefront-theme-repository.js";
 import type {
   StorefrontThemeRepositories,
@@ -217,6 +222,7 @@ import {
 
 export interface PostgresPersistence {
   readonly homeLayoutTransactionManager: HomeLayoutTransactionManager;
+  readonly storefrontNavigationTransactionManager: StorefrontNavigationTransactionManager;
   readonly storefrontThemeTransactionManager: StorefrontThemeTransactionManager;
   readonly adminPaymentConfigurationTransactionManager: AdminPaymentConfigurationTransactionManager;
   readonly adminExceptionsTransactionManager: AdminExceptionsTransactionManager;
@@ -635,6 +641,17 @@ export function createPostgresPersistenceWithPoolFactory(
       createRepositories: (client, scope) => ({
         authorization: createHomeLayoutAuthorizationRepository(client, scope),
         storefrontTheme: createStorefrontThemeRepository(client, scope),
+      }),
+    });
+  const storefrontNavigationRunner =
+    createTransactionRunner<StorefrontNavigationRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createHomeLayoutAuthorizationRepository(client, scope),
+        storefrontNavigation: createStorefrontNavigationRepository(
+          client,
+          scope,
+        ),
       }),
     });
   const adminContentRunner = createTransactionRunner<AdminContentRepositories>({
@@ -1529,6 +1546,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return storefrontThemeRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    storefrontNavigationTransactionManager: {
+      async runInStorefrontNavigationTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return storefrontNavigationRunner.run(
           { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );

@@ -24,7 +24,8 @@
 .decoration-toolbar [data-layout-dirty="true"] {
   color: var(--color-accent);
 }
-.decoration-toolbar [data-theme-dirty="true"] {
+.decoration-toolbar [data-theme-dirty="true"],
+.decoration-toolbar [data-navigation-dirty="true"] {
   color: var(--color-accent);
 }
 .decoration-tabs {

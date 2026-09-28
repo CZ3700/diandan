@@ -34,6 +34,8 @@ const everyRoute = {
   publicHomeLayoutRoute: true,
   storefrontThemeRoute: true,
   publicStorefrontThemeRoute: true,
+  storefrontNavigationRoute: true,
+  publicStorefrontNavigationRoute: true,
   giftCommerceRoute: true,
   publishedGiftCommerceRoute: true,
   adminOrdersRoute: true,
@@ -150,6 +152,19 @@ test("the production application answers admin, SEO, payment and webhook request
     });
     expect(themePublic.statusCode).toBe(400);
     expect(themePublic.headers["cache-control"]).toBe("no-store");
+    const navigationAdmin = await app.inject({
+      method: "POST",
+      url: "/api/v1/admin/storefront-navigation/read",
+      headers: { "content-type": "application/json" },
+      payload: { schemaVersion: 1 },
+    });
+    expect(navigationAdmin.statusCode).toBe(403);
+    const navigationPublic = await app.inject({
+      method: "GET",
+      url: "/api/v1/storefront/storefront-navigation?unexpected=1",
+    });
+    expect(navigationPublic.statusCode).toBe(400);
+    expect(navigationPublic.headers["cache-control"]).toBe("no-store");
     const seo = await app.inject({
       method: "GET",
       url: "/api/v1/storefront-seo/entity",

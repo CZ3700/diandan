@@ -470,6 +470,16 @@
         "up": "be17c1d1053d897a67f8fd424dc175062b0cc4f5318f9d6adc6a43b03ec9c0d2",
         "down": "b3406a5fe6ff61a96ac5e8a65309b389294ba334bb130998eaefbdb756e1e179"
       }
+    },
+    {
+      "version": "0048",
+      "name": "storefront-navigation",
+      "up": "database/migrations/0048_storefront-navigation.up.sql",
+      "down": "database/migrations/0048_storefront-navigation.down.sql",
+      "sha256": {
+        "up": "b7ccd41a76ff65bd622b58c829073283646f2835c5751dea9a01ffb41d6241de",
+        "down": "ad436ae78bcf4458bfebc9f6720e17c79003f72fd8f28b0a6684059be7df207c"
+      }
     }
   ]
 }

@@ -1,4 +1,9 @@
 import "server-only";
+import { readPublicStorefrontNavigation } from "../server/public-storefront-navigation";
+import {
+  NavigationProvider,
+  type NavigationPreviewOptions,
+} from "./navigation-provider";
 import { readCartRestorationHint } from "../server/cart-restoration-hint";
 import { Suspense, type ComponentProps, type ReactNode } from "react";
 import { PolicyLinks } from "./commerce-context";
@@ -8,6 +13,7 @@ import "./cart.css";
 import { SiteHeader } from "./site-header";
 import { SiteFooter } from "./page-parts";
 import { regionEntries } from "./region-entry";
+import { publicNavigationQuery } from "./navigation-target";
 
 export type StorefrontPageProps = Readonly<{
   searchParams: Promise<
@@ -17,7 +23,11 @@ export type StorefrontPageProps = Readonly<{
 }>;
 
 type ShellProps = ComponentProps<typeof SiteHeader> &
-  Readonly<{ children: ReactNode; preview?: boolean }>;
+  Readonly<{
+    children: ReactNode;
+    preview?: boolean;
+    navigationPreview?: NavigationPreviewOptions | undefined;
+  }>;
 type PolicyProps = Pick<ShellProps, "locale" | "copy" | "contextQuery">;
 
 async function FooterPolicyLinks(props: PolicyProps) {
@@ -28,9 +38,13 @@ export async function StorefrontPageShell({
   children,
   active,
   preview = false,
+  navigationPreview,
   ...props
 }: ShellProps) {
-  const restoreOnLoad = preview ? false : await readCartRestorationHint();
+  const [restoreOnLoad, navigation] = await Promise.all([
+    preview ? false : readCartRestorationHint(),
+    readPublicStorefrontNavigation(),
+  ]);
   const region = regionEntries(props.locale, props.copy, props.contextQuery);
   const body = (
     <>
@@ -41,36 +55,41 @@ export async function StorefrontPageShell({
     </>
   );
   return (
-    <div
-      className="storefront"
-      lang={props.locale}
-      inert={preview || undefined}
-      data-layout-preview={preview || undefined}
+    <NavigationProvider
+      result={navigation}
+      preview={preview ? navigationPreview : undefined}
     >
-      {preview ? (
-        body
-      ) : (
-        <CartProvider
-          key={props.locale}
-          locale={props.locale}
-          restoreOnLoad={restoreOnLoad}
-        >
-          {body}
-        </CartProvider>
-      )}
-      <SiteFooter
-        {...props}
-        region={region.footer}
-        policyLinks={
-          <Suspense fallback={null}>
-            <FooterPolicyLinks
-              locale={props.locale}
-              copy={props.copy}
-              contextQuery={props.contextQuery}
-            />
-          </Suspense>
-        }
-      />
-    </div>
+      <div
+        className="storefront"
+        lang={props.locale}
+        inert={preview || undefined}
+        data-layout-preview={preview || undefined}
+      >
+        {preview ? (
+          body
+        ) : (
+          <CartProvider
+            key={props.locale}
+            locale={props.locale}
+            restoreOnLoad={restoreOnLoad}
+          >
+            {body}
+          </CartProvider>
+        )}
+        <SiteFooter
+          {...props}
+          region={region.footer}
+          policyLinks={
+            <Suspense fallback={null}>
+              <FooterPolicyLinks
+                locale={props.locale}
+                copy={props.copy}
+                contextQuery={publicNavigationQuery(props.contextQuery)}
+              />
+            </Suspense>
+          }
+        />
+      </div>
+    </NavigationProvider>
   );
 }

@@ -13,6 +13,7 @@ import { themeCopy } from "./theme-copy";
 import { editableTheme, sameTheme } from "./theme-model";
 import { ThemeEditor } from "./theme-editor";
 import { ThemePreviewFrame } from "./preview-frame";
+import { PublicationHistory } from "./publication-history";
 import "./decoration.css";
 
 export function ThemeWorkspace({
@@ -257,106 +258,23 @@ export function ThemeWorkspace({
               pageCopy={copy.previewPages}
             />
           </div>
-          <details className="decoration-history" data-theme-history>
-            <summary>{copy.history}</summary>
-            {historyFailed ? (
-              <p role="alert">
-                {copy.error}{" "}
-                <Button
-                  variant="quiet"
-                  onClick={() => setHistoryAttempt((value) => value + 1)}
-                >
-                  {copy.reload}
-                </Button>
-              </p>
-            ) : !history ? (
-              <p role="status">{copy.loading}</p>
-            ) : (
-              <>
-                {history.entries.length === 0 ? (
-                  <p className="mc-hint">{copy.noHistory}</p>
-                ) : (
-                  <ol>
-                    {history.entries.map((entry) => (
-                      <li key={entry.publicationId}>
-                        <div>
-                          <strong>
-                            {copy.version} {entry.version}
-                          </strong>
-                          <time dateTime={entry.publishedAt}>
-                            {new Intl.DateTimeFormat(locale, {
-                              dateStyle: "medium",
-                              timeStyle: "short",
-                            }).format(new Date(entry.publishedAt))}
-                          </time>
-                          {entry.publicationId ===
-                            state.published?.publicationId && (
-                            <span>{copy.live}</span>
-                          )}
-                        </div>
-                        <Button
-                          type="button"
-                          variant="secondary"
-                          data-theme-restore={entry.publicationId}
-                          disabled={
-                            busy ||
-                            !canPublish ||
-                            entry.publicationId ===
-                              state.published?.publicationId
-                          }
-                          onClick={() => setRestoreId(entry.publicationId)}
-                        >
-                          {copy.restore}
-                        </Button>
-                      </li>
-                    ))}
-                  </ol>
-                )}
-                {(history.page > 1 || history.hasMore) && (
-                  <div className="mc-pagination">
-                    <Button
-                      variant="quiet"
-                      disabled={busy || history.page === 1}
-                      onClick={() => setHistoryPage(history.page - 1)}
-                    >
-                      {copy.previous}
-                    </Button>
-                    <span>{history.page}</span>
-                    <Button
-                      variant="quiet"
-                      disabled={busy || !history.hasMore}
-                      onClick={() => setHistoryPage(history.page + 1)}
-                    >
-                      {copy.next}
-                    </Button>
-                  </div>
-                )}
-              </>
-            )}
-            {restoreId && (
-              <div className="decoration-restore-confirm" role="alert">
-                <p>{copy.restoreConfirm}</p>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  disabled={busy}
-                  onClick={() => setRestoreId(null)}
-                >
-                  {copy.cancel}
-                </Button>
-                <Button
-                  type="button"
-                  data-theme-confirm-restore
-                  disabled={busy || !canPublish}
-                  onClick={() => {
-                    void mutate("restore");
-                  }}
-                >
-                  {copy.restore}
-                </Button>
-              </div>
-            )}
-          </details>
+          <PublicationHistory
+            kind="theme"
+            locale={locale}
+            copy={copy}
+            history={history}
+            historyFailed={historyFailed}
+            currentPublicationId={state.published?.publicationId ?? null}
+            busy={busy}
+            canPublish={canPublish}
+            restoreId={restoreId}
+            onHistoryRetry={() => setHistoryAttempt((value) => value + 1)}
+            onHistoryPage={setHistoryPage}
+            onRestoreSelect={setRestoreId}
+            onRestoreConfirm={() => {
+              void mutate("restore");
+            }}
+          />
         </>
       )}
     </div>

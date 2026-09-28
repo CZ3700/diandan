@@ -2,7 +2,7 @@ import "server-only";
 import { Suspense, type ReactNode } from "react";
 import type { SupportedLocale } from "@fan-support/contracts";
 import type { StorefrontCopy } from "./copy";
-import { storefrontHref } from "./navigation";
+import { navigationTargetHref } from "./navigation-target";
 import { readSoleCommerceScope } from "./sole-scope-read";
 
 /** ADR-017 addendum: with one published market there is no region to choose. */
@@ -18,7 +18,7 @@ export function regionEntries(
   copy: StorefrontCopy,
   contextQuery: string,
 ) {
-  const href = storefrontHref(locale, "/region", contextQuery);
+  const href = navigationTargetHref(locale, "REGION", contextQuery);
   return {
     header: (
       <Suspense fallback={null}>

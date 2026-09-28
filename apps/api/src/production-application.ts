@@ -225,6 +225,8 @@ export async function createProductionApiApplication(
         publishedContentRoute: published.publishedContentRoute,
         publicHomeLayoutRoute: published.publicHomeLayoutRoute,
         publicStorefrontThemeRoute: published.publicStorefrontThemeRoute,
+        publicStorefrontNavigationRoute:
+          published.publicStorefrontNavigationRoute,
         publishedGiftCommerceRoute: published.publishedGiftCommerceRoute,
         storefrontHomepageRoute: published.storefrontHomepageRoute,
         storefrontCommerceRoute: published.storefrontCommerceRoute,

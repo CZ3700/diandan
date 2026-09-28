@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import {
   homeLayoutPreviewReadySchema,
   storefrontThemePreviewReadySchema,
+  storefrontNavigationPreviewReadySchema,
+  type StorefrontNavigation,
   type StorefrontTheme,
   type HomeLayout,
   type SupportedLocale,
@@ -10,6 +12,7 @@ import {
 import { Button } from "@fan-support/ui";
 import type { DecorationCopy } from "./copy";
 import type { ThemeCopy } from "./theme-copy";
+import type { NavigationCopy } from "./navigation-copy";
 
 type PreviewFrameProps = {
   locale: SupportedLocale;
@@ -46,6 +49,22 @@ export function ThemePreviewFrame({
     />
   );
 }
+export function NavigationPreviewFrame({
+  navigation,
+  viewCopy,
+  ...props
+}: PreviewFrameProps & {
+  navigation: StorefrontNavigation;
+  viewCopy: NavigationCopy["previewViews"];
+}) {
+  return (
+    <DecorationPreviewFrame
+      {...props}
+      configuration={{ mode: "navigation", navigation }}
+      viewCopy={viewCopy}
+    />
+  );
+}
 function DecorationPreviewFrame({
   configuration,
   locale,
@@ -53,12 +72,15 @@ function DecorationPreviewFrame({
   copy,
   replayLabel,
   pageCopy,
+  viewCopy,
 }: PreviewFrameProps & {
   configuration:
     | { mode: "layout"; layout: HomeLayout }
-    | { mode: "theme"; theme: StorefrontTheme };
+    | { mode: "theme"; theme: StorefrontTheme }
+    | { mode: "navigation"; navigation: StorefrontNavigation };
   replayLabel?: string | undefined;
   pageCopy?: ThemeCopy["previewPages"] | undefined;
+  viewCopy?: NavigationCopy["previewViews"] | undefined;
 }) {
   const mode = configuration.mode;
   const frame = useRef<HTMLIFrameElement>(null);
@@ -66,8 +88,9 @@ function DecorationPreviewFrame({
   const [navigation, setNavigation] = useState<{
     channel: string | null;
     page: "home" | "artist" | "gift";
-  }>({ channel: null, page: "home" });
-  const { channel, page } = navigation;
+    view: "header" | "menu" | "footer";
+  }>({ channel: null, page: "home", view: "header" });
+  const { channel, page, view } = navigation;
   const [viewport, setViewport] = useState<"mobile" | "desktop">("mobile");
   const [width, setWidth] = useState(0);
   const [readyChannel, setReadyChannel] = useState<string | null>(null);
@@ -84,10 +107,18 @@ function DecorationPreviewFrame({
     previewQuery.set("mode", "theme");
     if (page !== "home") previewQuery.set("page", page);
   }
-  function restart(nextPage = page) {
+  if (mode === "navigation") {
+    previewQuery.set("mode", "navigation");
+    if (view !== "header") previewQuery.set("view", view);
+  }
+  function restart(nextPage = page, nextView = view) {
     setReadyChannel(null);
     setFailed(false);
-    setNavigation({ page: nextPage, channel: crypto.randomUUID() });
+    setNavigation({
+      page: nextPage,
+      view: nextView,
+      channel: crypto.randomUUID(),
+    });
   }
   useEffect(() => {
     setNavigation((current) => ({ ...current, channel: crypto.randomUUID() }));
@@ -112,11 +143,12 @@ function DecorationPreviewFrame({
         event.source !== frame.current?.contentWindow
       )
         return;
-      const message = (
-        mode === "layout"
-          ? homeLayoutPreviewReadySchema
-          : storefrontThemePreviewReadySchema
-      ).safeParse(event.data);
+      const readySchemas = {
+        layout: homeLayoutPreviewReadySchema,
+        theme: storefrontThemePreviewReadySchema,
+        navigation: storefrontNavigationPreviewReadySchema,
+      };
+      const message = readySchemas[mode].safeParse(event.data);
       if (!message.success || message.data.channel !== channel) return;
       clearTimeout(timer);
       setReadyChannel(channel);
@@ -129,23 +161,33 @@ function DecorationPreviewFrame({
     };
   }, [origin, channel, mode]);
   useEffect(() => {
-    if (ready && origin && channel)
-      frame.current?.contentWindow?.postMessage(
-        configuration.mode === "layout"
-          ? {
-              schemaVersion: 1,
-              type: "HOME_LAYOUT_PREVIEW",
-              channel,
-              layout: configuration.layout,
-            }
-          : {
-              schemaVersion: 1,
-              type: "STOREFRONT_THEME_PREVIEW",
-              channel,
-              theme: configuration.theme,
-            },
-        origin,
-      );
+    if (!ready || !origin || !channel) return;
+    const envelope = { schemaVersion: 1, channel };
+    let message;
+    switch (configuration.mode) {
+      case "layout":
+        message = {
+          ...envelope,
+          type: "HOME_LAYOUT_PREVIEW",
+          layout: configuration.layout,
+        };
+        break;
+      case "theme":
+        message = {
+          ...envelope,
+          type: "STOREFRONT_THEME_PREVIEW",
+          theme: configuration.theme,
+        };
+        break;
+      case "navigation":
+        message = {
+          ...envelope,
+          type: "STOREFRONT_NAVIGATION_PREVIEW",
+          navigation: configuration.navigation,
+        };
+        break;
+    }
+    frame.current?.contentWindow?.postMessage(message, origin);
   }, [ready, origin, channel, configuration]);
   return (
     <section
@@ -199,6 +241,27 @@ function DecorationPreviewFrame({
           </p>
         </>
       )}
+      {mode === "navigation" && viewCopy && (
+        <label className="decoration-preview-page">
+          <span>{viewCopy.label}</span>
+          <select
+            data-navigation-preview-view
+            value={view}
+            disabled={!origin}
+            onChange={(event) => {
+              const value = event.currentTarget.value;
+              if (value === "header" || value === "menu" || value === "footer")
+                restart(page, value);
+            }}
+          >
+            {Object.entries(viewCopy.options).map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
       {mode === "theme" && origin && replayLabel && (
         <Button
           type="button"
@@ -236,7 +299,10 @@ function DecorationPreviewFrame({
                 key={channel}
                 data-layout-preview-frame={mode === "layout" || undefined}
                 data-theme-preview-frame={mode === "theme" || undefined}
-                title={`${copy.preview}${mode === "theme" && pageCopy ? ` — ${pageCopy.options[page]}` : ""} — ${copy[viewport]}`}
+                data-navigation-preview-frame={
+                  mode === "navigation" || undefined
+                }
+                title={`${copy.preview}${mode === "theme" && pageCopy ? ` — ${pageCopy.options[page]}` : ""}${mode === "navigation" && viewCopy ? ` — ${viewCopy.options[view]}` : ""} — ${copy[viewport]}`}
                 src={`${origin}/${locale}/layout-preview?${previewQuery}`}
                 sandbox="allow-scripts allow-same-origin"
                 referrerPolicy="no-referrer"
