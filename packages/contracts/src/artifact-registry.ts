@@ -30,6 +30,7 @@ import * as adminOrderNoteKey from "./admin-order-note-key.js";
 import * as adminOrdersPersistence from "./admin-orders-persistence.js";
 import * as adminOrders from "./admin-orders.js";
 import * as adminAccess from "./admin-access.js";
+import * as adminLocalAccess from "./admin-local-access.js";
 import * as orderNotification from "./order-notification.js";
 import * as notificationSubmission from "./notification-submission.js";
 import * as orderAccess from "./order-access.js";
@@ -3773,6 +3774,56 @@ const registrations = [
     name: "AdminAccessLogoutRequest",
     audience: "internal",
     schema: adminAccess.adminAccessLogoutRequestSchema,
+  },
+  {
+    name: "AdminLocalLoginRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalLoginRequestSchema,
+  },
+  {
+    name: "AdminLocalStepRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalStepRequestSchema,
+  },
+  {
+    name: "AdminLocalAccessResponse",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalAccessResponseSchema,
+  },
+  {
+    name: "AdminLocalLoginBrowserRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalLoginBrowserRequestSchema,
+  },
+  {
+    name: "AdminLocalStepBrowserRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalStepBrowserRequestSchema,
+  },
+  {
+    name: "AdminLocalAccessBrowserResponse",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalAccessBrowserResponseSchema,
+  },
+  {
+    name: "AdminAccountRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminAccountRequestSchema,
+  },
+  {
+    name: "AdminAccountResponse",
+    audience: "internal",
+    schema: adminLocalAccess.adminAccountResponseSchema,
+  },
+  {
+    name: "AdminStaffRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminStaffRequestSchema,
+  },
+  {
+    name: "AdminStaffResponse",
+    audience: "internal",
+    schema: adminLocalAccess.adminStaffResponseSchema,
   },
   {
     name: "AdminAccessBeginBrowserResponse",

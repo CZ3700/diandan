@@ -1,12 +1,9 @@
-import { randomBytes } from "node:crypto";
 import { describe, expect, test } from "vitest";
 import {
   adminPasswordProblem,
   decodeBase32,
-  decryptAdminTotpSecret,
   digestAdminRecoveryCode,
   encodeBase32,
-  encryptAdminTotpSecret,
   generateAdminRecoveryCodes,
   generateAdminTotpSecret,
   hashAdminPassword,
@@ -105,20 +102,6 @@ describe("TOTP", () => {
     ).toBe(
       "otpauth://totp/Fan%20Support%20Studio:studio.owner?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&issuer=Fan%20Support%20Studio&algorithm=SHA1&digits=6&period=30",
     );
-  });
-  test("secrets at rest are AES-256-GCM bound to their account", () => {
-    const key = randomBytes(32);
-    const secret = generateAdminTotpSecret();
-    const sealed = encryptAdminTotpSecret(key, "account-1", secret);
-    expect(sealed.includes(secret)).toBe(false);
-    expect(decryptAdminTotpSecret(key, "account-1", sealed)).toEqual(secret);
-    expect(decryptAdminTotpSecret(key, "account-2", sealed)).toBe(null);
-    expect(decryptAdminTotpSecret(randomBytes(32), "account-1", sealed)).toBe(
-      null,
-    );
-    const tampered = Buffer.from(sealed);
-    tampered[tampered.length - 1]! ^= 1;
-    expect(decryptAdminTotpSecret(key, "account-1", tampered)).toBe(null);
   });
 });
 

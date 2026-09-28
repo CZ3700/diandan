@@ -15,6 +15,7 @@ export const envelopeEncryptionPurposeSchema = z.enum([
   "FULFILLMENT_PROFILE",
   "PAYMENT_ACTION",
   "WEBHOOK_PAYLOAD",
+  "ADMIN_TOTP_SECRET",
 ]);
 export const blindIndexPurposeSchema = z.enum([
   "CUSTOMER_CONTACT_EMAIL_LOOKUP",

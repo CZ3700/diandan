@@ -1,12 +1,5 @@
 /// <reference types="node" />
-import {
-  createCipheriv,
-  createDecipheriv,
-  createHmac,
-  randomBytes,
-  scrypt,
-  timingSafeEqual,
-} from "node:crypto";
+import { createHmac, randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { validateAdminContentTokenPepper } from "./admin-content-tokens.js";
 
 // ADR-021: built-in admin accounts. Only node:crypto; nothing here stores or logs a secret.
@@ -138,52 +131,6 @@ export function adminTotpUri(
   const issuer = encodeURIComponent(input.issuer);
   const secret = encodeBase32(input.secret);
   return `otpauth://totp/${issuer}:${encodeURIComponent(input.account)}?secret=${secret}&issuer=${issuer}&algorithm=SHA1&digits=6&period=${TOTP_PERIOD_SECONDS}`;
-}
-
-const SEALED_VERSION = 1;
-function totpAad(accountId: string): Buffer {
-  return Buffer.from(`fan-support:admin-totp:v1:${accountId}`, "utf8");
-}
-/** version(1) ‖ iv(12) ‖ tag(16) ‖ ciphertext; the account id is authenticated, so rows cannot be swapped. */
-export function encryptAdminTotpSecret(
-  key: Buffer,
-  accountId: string,
-  secret: Buffer,
-): Buffer {
-  if (key.length !== 32) throw new Error("invalid admin TOTP key");
-  const iv = randomBytes(12);
-  const cipher = createCipheriv("aes-256-gcm", key, iv);
-  cipher.setAAD(totpAad(accountId));
-  const ciphertext = Buffer.concat([cipher.update(secret), cipher.final()]);
-  return Buffer.concat([
-    Buffer.from([SEALED_VERSION]),
-    iv,
-    cipher.getAuthTag(),
-    ciphertext,
-  ]);
-}
-export function decryptAdminTotpSecret(
-  key: Buffer,
-  accountId: string,
-  sealed: Buffer,
-): Buffer | null {
-  if (key.length !== 32 || sealed.length < 30 || sealed[0] !== SEALED_VERSION)
-    return null;
-  try {
-    const decipher = createDecipheriv(
-      "aes-256-gcm",
-      key,
-      sealed.subarray(1, 13),
-    );
-    decipher.setAAD(totpAad(accountId));
-    decipher.setAuthTag(sealed.subarray(13, 29));
-    return Buffer.concat([
-      decipher.update(sealed.subarray(29)),
-      decipher.final(),
-    ]);
-  } catch {
-    return null;
-  }
 }
 
 // 32 symbols without 0/1/I/O, so a code read aloud or typed from paper stays unambiguous (60 bits each).

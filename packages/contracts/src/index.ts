@@ -99,6 +99,7 @@ export * from "./order-notification.js";
 export * from "./notification-submission.js";
 
 export * from "./admin-access.js";
+export * from "./admin-local-access.js";
 export * from "./admin-orders.js";
 export * from "./admin-orders-persistence.js";
 export * from "./admin-order-note-key.js";

@@ -223,6 +223,18 @@
       "kind": "TABLE"
     },
     {
+      "name": "admin_local_accounts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_local_logins",
+      "kind": "TABLE"
+    },
+    {
+      "name": "admin_local_recovery_codes",
+      "kind": "TABLE"
+    },
+    {
       "name": "admin_login_challenges",
       "kind": "TABLE"
     },
@@ -2312,6 +2324,456 @@
       "name": "created_at",
       "dataType": "finite_timestamptz",
       "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 3,
+      "name": "admin_identity_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 4,
+      "name": "login_name",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 5,
+      "name": "display_name",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 6,
+      "name": "password_hash",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 7,
+      "name": "password_changed_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 8,
+      "name": "must_change_password",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 9,
+      "name": "failed_attempts",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 10,
+      "name": "locked_until",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 11,
+      "name": "totp_ciphertext",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 12,
+      "name": "totp_encrypted_data_key",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 13,
+      "name": "totp_key_version",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 14,
+      "name": "totp_enabled_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 15,
+      "name": "totp_last_step",
+      "dataType": "bigint",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 16,
+      "name": "totp_pending_ciphertext",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 17,
+      "name": "totp_pending_encrypted_data_key",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 18,
+      "name": "totp_pending_key_version",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 19,
+      "name": "totp_pending_expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 20,
+      "name": "last_login_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 21,
+      "name": "version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 22,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_accounts",
+      "position": 23,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 3,
+      "name": "account_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 4,
+      "name": "challenge_digest",
+      "dataType": "bytea",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 5,
+      "name": "locale",
+      "dataType": "supported_locale",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 6,
+      "name": "needs_second_factor",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 7,
+      "name": "needs_new_password",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 8,
+      "name": "second_factor",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": "'NONE'::text",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 9,
+      "name": "step_attempts",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 10,
+      "name": "state",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": "'PENDING'::text",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 11,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 12,
+      "name": "expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 13,
+      "name": "completed_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 14,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_logins",
+      "position": 15,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "position": 2,
+      "name": "account_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "position": 3,
+      "name": "batch_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "position": 4,
+      "name": "code_digest",
+      "dataType": "bytea",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "position": 5,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "position": 6,
+      "name": "used_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "position": 7,
+      "name": "revoked_at",
+      "dataType": "finite_timestamptz",
+      "notNull": false,
       "defaultExpression": null,
       "identity": "",
       "generation": ""
@@ -28301,6 +28763,590 @@
       "initiallyDeferred": true
     },
     {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_admin_identity_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (admin_identity_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_admin_identity_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (admin_identity_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_admin_identity_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL admin_identity_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_check",
+      "kind": "CHECK",
+      "definition": "CHECK (num_nulls(totp_ciphertext, totp_encrypted_data_key, totp_key_version, totp_enabled_at) = ANY (ARRAY[0, 4]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (totp_ciphertext IS NOT NULL OR totp_last_step IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_check2",
+      "kind": "CHECK",
+      "definition": "CHECK (num_nulls(totp_pending_ciphertext, totp_pending_encrypted_data_key, totp_pending_key_version, totp_pending_expires_at) = ANY (ARRAY[0, 4]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_check3",
+      "kind": "CHECK",
+      "definition": "CHECK (updated_at::timestamp with time zone >= created_at::timestamp with time zone AND password_changed_at::timestamp with time zone >= created_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_display_name_check",
+      "kind": "CHECK",
+      "definition": "CHECK (char_length(display_name) >= 1 AND char_length(display_name) <= 80 AND display_name = btrim(display_name) AND display_name !~ '[[:cntrl:]]'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_display_name_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL display_name",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_failed_attempts_check",
+      "kind": "CHECK",
+      "definition": "CHECK (failed_attempts >= 0 AND failed_attempts <= 1000000)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_failed_attempts_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL failed_attempts",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_login_name_check",
+      "kind": "CHECK",
+      "definition": "CHECK (login_name ~ '^[a-z0-9][a-z0-9._-]{2,63}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_login_name_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (login_name)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_login_name_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL login_name",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_must_change_password_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL must_change_password",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_password_changed_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL password_changed_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_password_hash_check",
+      "kind": "CHECK",
+      "definition": "CHECK (password_hash ~ '^scrypt\\$1\\$[0-9]{1,10}\\$[0-9]{1,3}\\$[0-9]{1,3}\\$[A-Za-z0-9_-]{22}\\$[A-Za-z0-9_-]{43}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_password_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL password_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_totp_ciphertext_check",
+      "kind": "CHECK",
+      "definition": "CHECK (totp_ciphertext ~ '^enc:v1:[A-Za-z0-9_-]{32,4096}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_totp_encrypted_data_key_check",
+      "kind": "CHECK",
+      "definition": "CHECK (totp_encrypted_data_key ~ '^enc:v1:[A-Za-z0-9_-]{32,4096}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_totp_key_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (totp_key_version ~ '^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_totp_last_step_check",
+      "kind": "CHECK",
+      "definition": "CHECK (totp_last_step >= 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_totp_pending_ciphertext_check",
+      "kind": "CHECK",
+      "definition": "CHECK (totp_pending_ciphertext ~ '^enc:v1:[A-Za-z0-9_-]{32,4096}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_totp_pending_encrypted_data_key_check",
+      "kind": "CHECK",
+      "definition": "CHECK (totp_pending_encrypted_data_key ~ '^enc:v1:[A-Za-z0-9_-]{32,4096}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_totp_pending_key_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (totp_pending_key_version ~ '^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_login_audit",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_account_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (account_id) REFERENCES admin_local_accounts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_account_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL account_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_challenge_digest_check",
+      "kind": "CHECK",
+      "definition": "CHECK (octet_length(challenge_digest) = 32)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_challenge_digest_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (challenge_digest)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_check",
+      "kind": "CHECK",
+      "definition": "CHECK (expires_at::timestamp with time zone > created_at::timestamp with time zone AND expires_at::timestamp with time zone <= (created_at::timestamp with time zone + '00:05:00'::interval))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (state = 'PENDING'::text AND completed_at IS NULL AND session_id IS NULL AND audit_log_id IS NULL OR state = 'CONSUMED'::text AND completed_at IS NOT NULL AND audit_log_id IS NOT NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_check2",
+      "kind": "CHECK",
+      "definition": "CHECK (completed_at IS NULL OR completed_at::timestamp with time zone >= created_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_check3",
+      "kind": "CHECK",
+      "definition": "CHECK ((needs_second_factor OR needs_new_password) = (challenge_digest IS NOT NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_check4",
+      "kind": "CHECK",
+      "definition": "CHECK (needs_second_factor OR second_factor = 'NONE'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_expires_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expires_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_locale_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL locale",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_needs_new_password_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL needs_new_password",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_needs_second_factor_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL needs_second_factor",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_second_factor_check",
+      "kind": "CHECK",
+      "definition": "CHECK (second_factor = ANY (ARRAY['NONE'::text, 'TOTP'::text, 'RECOVERY_CODE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_second_factor_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL second_factor",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_session_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (session_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_state_check",
+      "kind": "CHECK",
+      "definition": "CHECK (state = ANY (ARRAY['PENDING'::text, 'CONSUMED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_state_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL state",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_step_attempts_check",
+      "kind": "CHECK",
+      "definition": "CHECK (step_attempts >= 0 AND step_attempts <= 5)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_step_attempts_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL step_attempts",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_account_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (account_id) REFERENCES admin_local_accounts(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_account_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL account_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_batch_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL batch_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_check",
+      "kind": "CHECK",
+      "definition": "CHECK (used_at IS NULL OR revoked_at IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_check1",
+      "kind": "CHECK",
+      "definition": "CHECK (used_at IS NULL OR used_at::timestamp with time zone >= created_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_check2",
+      "kind": "CHECK",
+      "definition": "CHECK (revoked_at IS NULL OR revoked_at::timestamp with time zone >= created_at::timestamp with time zone)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_code_digest_check",
+      "kind": "CHECK",
+      "definition": "CHECK (octet_length(code_digest) = 32)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_code_digest_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (code_digest)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_code_digest_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL code_digest",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "admin_login_challenges",
       "name": "admin_login_challenge_audit",
       "kind": "CONSTRAINT_TRIGGER",
@@ -31415,6 +32461,14 @@
     {
       "table": "admin_sessions",
       "name": "linked_admin_session_revocation_audit",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "admin_sessions",
+      "name": "local_admin_session_revocation_audit",
       "kind": "CONSTRAINT_TRIGGER",
       "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
       "deferrable": true,
@@ -63053,6 +64107,105 @@
       "valid": true
     },
     {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_admin_identity_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_local_accounts_admin_identity_id_key ON public.admin_local_accounts USING btree (admin_identity_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_login_name_key",
+      "definition": "CREATE UNIQUE INDEX admin_local_accounts_login_name_key ON public.admin_local_accounts USING btree (login_name)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_accounts_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_local_accounts_pkey ON public.admin_local_accounts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_local_logins_audit_log_id_key ON public.admin_local_logins USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_challenge_digest_key",
+      "definition": "CREATE UNIQUE INDEX admin_local_logins_challenge_digest_key ON public.admin_local_logins USING btree (challenge_digest)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_expiry_idx",
+      "definition": "CREATE INDEX admin_local_logins_expiry_idx ON public.admin_local_logins USING btree (expires_at) WHERE (state = 'PENDING'::text)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_local_logins_pkey ON public.admin_local_logins USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_logins_session_id_key",
+      "definition": "CREATE UNIQUE INDEX admin_local_logins_session_id_key ON public.admin_local_logins USING btree (session_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_code_digest_key",
+      "definition": "CREATE UNIQUE INDEX admin_local_recovery_codes_code_digest_key ON public.admin_local_recovery_codes USING btree (code_digest)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_live_idx",
+      "definition": "CREATE INDEX admin_local_recovery_codes_live_idx ON public.admin_local_recovery_codes USING btree (account_id) WHERE ((used_at IS NULL) AND (revoked_at IS NULL))",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_codes_pkey",
+      "definition": "CREATE UNIQUE INDEX admin_local_recovery_codes_pkey ON public.admin_local_recovery_codes USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "admin_login_challenges",
       "name": "admin_login_challenges_audit_log_id_key",
       "definition": "CREATE UNIQUE INDEX admin_login_challenges_audit_log_id_key ON public.admin_login_challenges USING btree (audit_log_id)",
@@ -68674,6 +69827,66 @@
       "enabled": "O"
     },
     {
+      "table": "admin_local_accounts",
+      "name": "admin_local_account_guard",
+      "definition": "CREATE TRIGGER admin_local_account_guard BEFORE INSERT OR UPDATE ON admin_local_accounts FOR EACH ROW EXECUTE FUNCTION guard_admin_local_account()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_account_no_delete",
+      "definition": "CREATE TRIGGER admin_local_account_no_delete BEFORE DELETE ON admin_local_accounts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_local_accounts",
+      "name": "admin_local_account_no_truncate",
+      "definition": "CREATE TRIGGER admin_local_account_no_truncate BEFORE TRUNCATE ON admin_local_accounts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_login_audit",
+      "definition": "CREATE CONSTRAINT TRIGGER admin_local_login_audit AFTER INSERT OR UPDATE ON admin_local_logins DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_local_login_audit()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_login_guard",
+      "definition": "CREATE TRIGGER admin_local_login_guard BEFORE INSERT OR UPDATE ON admin_local_logins FOR EACH ROW EXECUTE FUNCTION guard_admin_local_login()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_login_no_delete",
+      "definition": "CREATE TRIGGER admin_local_login_no_delete BEFORE DELETE ON admin_local_logins FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_local_logins",
+      "name": "admin_local_login_no_truncate",
+      "definition": "CREATE TRIGGER admin_local_login_no_truncate BEFORE TRUNCATE ON admin_local_logins FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_code_guard",
+      "definition": "CREATE TRIGGER admin_local_recovery_code_guard BEFORE INSERT OR UPDATE ON admin_local_recovery_codes FOR EACH ROW EXECUTE FUNCTION guard_admin_local_recovery_code()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_code_no_delete",
+      "definition": "CREATE TRIGGER admin_local_recovery_code_no_delete BEFORE DELETE ON admin_local_recovery_codes FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_local_recovery_codes",
+      "name": "admin_local_recovery_code_no_truncate",
+      "definition": "CREATE TRIGGER admin_local_recovery_code_no_truncate BEFORE TRUNCATE ON admin_local_recovery_codes FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "admin_login_challenges",
       "name": "admin_login_challenge_audit",
       "definition": "CREATE CONSTRAINT TRIGGER admin_login_challenge_audit AFTER INSERT OR UPDATE ON admin_login_challenges DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_admin_login_challenge_audit()",
@@ -69049,6 +70262,12 @@
       "table": "admin_sessions",
       "name": "linked_admin_session_revocation_audit",
       "definition": "CREATE CONSTRAINT TRIGGER linked_admin_session_revocation_audit AFTER UPDATE ON admin_sessions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_linked_admin_session_revocation_audit()",
+      "enabled": "O"
+    },
+    {
+      "table": "admin_sessions",
+      "name": "local_admin_session_revocation_audit",
+      "definition": "CREATE CONSTRAINT TRIGGER local_admin_session_revocation_audit AFTER UPDATE ON admin_sessions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_local_admin_session_revocation_audit()",
       "enabled": "O"
     },
     {
@@ -73360,6 +74579,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_idol_redirect()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NEW.entity_type<>'IDOL' THEN RETURN NULL; END IF;\n IF NOT EXISTS(SELECT 1 FROM public.admin_idol_identity_receipts WHERE redirect_id=NEW.id AND action='RENAME_IDOL' AND idol_id=NEW.idol_id AND old_handle=NEW.old_handle AND new_handle=NEW.new_handle AND created_at=NEW.created_at)\n OR EXISTS(SELECT 1 FROM public.idols WHERE handle=NEW.old_handle) THEN RAISE EXCEPTION 'idol redirect must represent an exact completed rename' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
     },
     {
+      "name": "assert_admin_local_login_audit",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_local_login_audit()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE a public.audit_logs%ROWTYPE; s public.admin_sessions%ROWTYPE; acct public.admin_local_accounts%ROWTYPE; expected_reason text;\nBEGIN\n  IF NEW.state<>'CONSUMED' THEN RETURN NEW; END IF;\n  SELECT * INTO a FROM public.audit_logs WHERE id=NEW.audit_log_id;\n  SELECT * INTO acct FROM public.admin_local_accounts WHERE id=NEW.account_id;\n  IF a.id IS NULL OR a.actor_type<>'SYSTEM' OR a.task_name<>'admin-local-access' OR a.subject_type<>'ADMIN_LOCAL_LOGIN'\n    OR a.subject_id<>NEW.id OR a.created_at<>NEW.completed_at OR a.request_id IS NULL OR a.correlation_id IS DISTINCT FROM NEW.id THEN\n    RAISE EXCEPTION 'built-in login completion requires exact immutable audit' USING ERRCODE='23514';\n  END IF;\n  IF NEW.session_id IS NULL THEN\n    IF a.action<>'ADMIN_LOCAL_LOGIN_REJECTED' OR a.outcome<>'REJECTED'\n      OR a.reason_code IS NULL OR a.reason_code NOT IN ('LOGIN_EXPIRED','SECOND_FACTOR_FAILED','ACCOUNT_LOCKED','ACCESS_DENIED') THEN\n      RAISE EXCEPTION 'built-in login rejection audit is required' USING ERRCODE='23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  SELECT * INTO s FROM public.admin_sessions WHERE id=NEW.session_id;\n  -- Computed first: an IF condition ends at its first THEN, so no CASE may appear inside it.\n  expected_reason := CASE NEW.second_factor WHEN 'TOTP' THEN 'AUTHENTICATED_TOTP'\n    WHEN 'RECOVERY_CODE' THEN 'AUTHENTICATED_RECOVERY_CODE' ELSE 'AUTHENTICATED_PASSWORD' END;\n  IF a.action<>'ADMIN_LOCAL_LOGIN_SUCCEEDED' OR a.outcome<>'SUCCEEDED'\n    OR a.reason_code IS DISTINCT FROM expected_reason\n    OR (NEW.needs_second_factor AND NEW.second_factor='NONE')\n    OR (NEW.needs_new_password AND (acct.must_change_password OR acct.password_changed_at<NEW.created_at))\n    OR NEW.completed_at>=NEW.expires_at OR s.id IS NULL OR s.admin_identity_id<>acct.admin_identity_id\n    OR NOT s.authenticated_with_mfa OR s.created_at<>NEW.completed_at OR s.revoked_at IS NOT NULL\n    OR s.expires_at<s.created_at+interval '60 seconds' OR s.expires_at>s.created_at+interval '28800 seconds'\n    OR octet_length(s.session_token_digest)<>32 OR octet_length(s.csrf_token_digest)<>32\n    OR NOT EXISTS(SELECT 1 FROM public.admin_identities WHERE id=s.admin_identity_id AND status='ACTIVE') THEN\n    RAISE EXCEPTION 'built-in login success requires a canonical session that met the account policy' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND $function$"
+    },
+    {
       "name": "assert_admin_login_challenge_audit",
       "identityArguments": "",
       "resultType": "trigger",
@@ -74100,6 +75329,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_linked_admin_session_revocation_audit()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF OLD.revoked_at IS NULL AND NEW.revoked_at IS NOT NULL\n    AND EXISTS(SELECT 1 FROM public.admin_login_challenges WHERE session_id=NEW.id)\n    AND NOT EXISTS(\n      SELECT 1 FROM public.audit_logs a WHERE a.actor_type='ADMIN' AND a.actor_id=NEW.admin_identity_id\n        AND a.action IN ('ADMIN_SESSION_REVOKED','ADMIN_SESSIONS_REVOKED') AND a.subject_type='ADMIN_SESSION'\n        AND a.subject_id=NEW.id AND a.created_at=NEW.revoked_at AND a.outcome='SUCCEEDED'\n        AND a.reason_code='USER_LOGOUT' AND a.request_id IS NOT NULL\n        AND (a.action='ADMIN_SESSIONS_REVOKED' OR a.correlation_id=NEW.id)\n        AND EXISTS(SELECT 1 FROM public.admin_sessions anchor WHERE anchor.id=a.correlation_id\n          AND anchor.admin_identity_id=NEW.admin_identity_id AND anchor.revoked_at=NEW.revoked_at)\n    ) THEN\n    RAISE EXCEPTION 'admin session revocation requires exact immutable audit' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND $function$"
     },
     {
+      "name": "assert_local_admin_session_revocation_audit",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_local_admin_session_revocation_audit()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF OLD.revoked_at IS NULL AND NEW.revoked_at IS NOT NULL\n    AND EXISTS(SELECT 1 FROM public.admin_local_logins WHERE session_id=NEW.id)\n    AND NOT EXISTS(\n      SELECT 1 FROM public.audit_logs a WHERE a.subject_type='ADMIN_SESSION' AND a.subject_id=NEW.id\n        AND a.created_at=NEW.revoked_at AND a.outcome='SUCCEEDED' AND a.request_id IS NOT NULL\n        AND a.action IN ('ADMIN_SESSION_REVOKED','ADMIN_SESSIONS_REVOKED')\n        AND a.reason_code IN ('USER_LOGOUT','PASSWORD_CHANGED','PASSWORD_RESET','ACCOUNT_SUSPENDED','SECOND_FACTOR_CHANGED')\n        AND (a.actor_type='ADMIN' OR (a.actor_type='SYSTEM' AND a.task_name='admin-account-cli'))\n    ) THEN\n    RAISE EXCEPTION 'built-in admin session revocation requires exact immutable audit' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND $function$"
+    },
+    {
       "name": "assert_managed_payment_configuration_authority",
       "identityArguments": "",
       "resultType": "trigger",
@@ -74800,6 +76039,36 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_idol_identity()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE handle_value text;\nBEGIN\n IF TG_OP='DELETE' THEN RAISE EXCEPTION 'idol identity history is retained by archival' USING ERRCODE='55000'; END IF;\n IF TG_OP='UPDATE' THEN\n  IF NEW.id IS DISTINCT FROM OLD.id OR NEW.created_at IS DISTINCT FROM OLD.created_at OR NEW.schema_version IS DISTINCT FROM OLD.schema_version\n   OR NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at THEN RAISE EXCEPTION 'idol identity and optimistic version must be preserved' USING ERRCODE='23514'; END IF;\n  IF OLD.status='archived' AND (NEW.handle IS DISTINCT FROM OLD.handle OR NEW.status IS DISTINCT FROM OLD.status OR NEW.accepting_gifts IS DISTINCT FROM OLD.accepting_gifts) THEN RAISE EXCEPTION 'archived idol identity cannot be reactivated or renamed' USING ERRCODE='23514'; END IF;\n END IF;\n IF TG_OP='INSERT' OR NEW.handle IS DISTINCT FROM OLD.handle THEN\n  -- Both current names and every historical source name remain reserved. Locks serialize competing changes to the same namespace.\n  FOR handle_value IN SELECT DISTINCT v FROM unnest(CASE WHEN TG_OP='INSERT' THEN ARRAY[NEW.handle] ELSE ARRAY[OLD.handle,NEW.handle] END) v ORDER BY v LOOP\n   PERFORM pg_advisory_xact_lock(hashtextextended('fan-support:idol-handle:'||handle_value,0));\n  END LOOP;\n  IF EXISTS(SELECT 1 FROM public.slug_redirects WHERE entity_type='IDOL' AND old_handle=NEW.handle)\n    OR EXISTS(SELECT 1 FROM public.idols WHERE handle=NEW.handle AND id<>NEW.id) THEN RAISE EXCEPTION 'idol handle is reserved by a current or historical identity' USING ERRCODE='23505'; END IF;\n END IF;\n RETURN NEW;\nEND; $function$"
     },
     {
+      "name": "guard_admin_local_account",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_local_account()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP='INSERT' THEN\n    IF NOT EXISTS(SELECT 1 FROM public.admin_identities WHERE id=NEW.admin_identity_id AND issuer='urn:fan-support:local') THEN\n      RAISE EXCEPTION 'built-in account requires a built-in identity' USING ERRCODE='23514';\n    END IF;\n    IF NEW.version<>1 OR NEW.failed_attempts<>0 OR NEW.totp_ciphertext IS NOT NULL OR NEW.totp_pending_ciphertext IS NOT NULL THEN\n      RAISE EXCEPTION 'built-in account starts without history or second factor' USING ERRCODE='23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF NEW.id<>OLD.id OR NEW.admin_identity_id<>OLD.admin_identity_id OR NEW.login_name<>OLD.login_name\n    OR NEW.created_at<>OLD.created_at OR NEW.schema_version<>OLD.schema_version THEN\n    RAISE EXCEPTION 'built-in account binding is immutable' USING ERRCODE='55000';\n  END IF;\n  IF NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at THEN\n    RAISE EXCEPTION 'built-in account updates are versioned' USING ERRCODE='40001';\n  END IF;\n  IF NEW.password_changed_at<OLD.password_changed_at\n    OR (NEW.password_hash IS DISTINCT FROM OLD.password_hash AND NEW.password_changed_at=OLD.password_changed_at) THEN\n    RAISE EXCEPTION 'password change must be timestamped' USING ERRCODE='23514';\n  END IF;\n  IF OLD.totp_last_step IS NOT NULL AND NEW.totp_last_step IS NOT NULL\n    AND NEW.totp_ciphertext IS NOT DISTINCT FROM OLD.totp_ciphertext AND NEW.totp_last_step<OLD.totp_last_step THEN\n    RAISE EXCEPTION 'accepted TOTP steps never move backwards' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_admin_local_login",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_local_login()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP='INSERT' THEN\n    IF NEW.state<>'PENDING' OR NEW.second_factor<>'NONE' OR NEW.step_attempts<>0\n      OR NEW.created_at<transaction_timestamp() OR NEW.created_at>clock_timestamp() THEN\n      RAISE EXCEPTION 'built-in login must start pending at database time' USING ERRCODE='23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF (to_jsonb(NEW)-'state'-'second_factor'-'step_attempts'-'completed_at'-'session_id'-'audit_log_id') IS DISTINCT FROM\n     (to_jsonb(OLD)-'state'-'second_factor'-'step_attempts'-'completed_at'-'session_id'-'audit_log_id') THEN\n    RAISE EXCEPTION 'built-in login binding is immutable' USING ERRCODE='55000';\n  END IF;\n  IF OLD.state<>'PENDING' THEN\n    RAISE EXCEPTION 'built-in login is single use' USING ERRCODE='55000';\n  END IF;\n  IF NEW.step_attempts<OLD.step_attempts OR NEW.step_attempts>OLD.step_attempts+1\n    OR (OLD.second_factor<>'NONE' AND NEW.second_factor<>OLD.second_factor) THEN\n    RAISE EXCEPTION 'built-in login steps only move forward' USING ERRCODE='23514';\n  END IF;\n  IF NEW.state='PENDING' THEN\n    IF clock_timestamp()>=NEW.expires_at THEN\n      RAISE EXCEPTION 'built-in login expired' USING ERRCODE='23514';\n    END IF;\n  ELSIF NEW.completed_at<transaction_timestamp() OR NEW.completed_at>clock_timestamp() THEN\n    RAISE EXCEPTION 'built-in login completion must use database time' USING ERRCODE='23514';\n  END IF;\n  RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_admin_local_recovery_code",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_admin_local_recovery_code()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP='INSERT' THEN\n    IF NEW.used_at IS NOT NULL OR NEW.revoked_at IS NOT NULL THEN\n      RAISE EXCEPTION 'recovery code starts unused' USING ERRCODE='23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF (to_jsonb(NEW)-'used_at'-'revoked_at') IS DISTINCT FROM (to_jsonb(OLD)-'used_at'-'revoked_at')\n    OR OLD.used_at IS NOT NULL OR OLD.revoked_at IS NOT NULL THEN\n    RAISE EXCEPTION 'recovery code is single use' USING ERRCODE='55000';\n  END IF;\n  RETURN NEW;\nEND $function$"
+    },
+    {
       "name": "guard_admin_login_challenge",
       "identityArguments": "",
       "resultType": "trigger",
@@ -75237,7 +76506,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.guard_linked_admin_session()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP='TRUNCATE' THEN\n    IF EXISTS(SELECT 1 FROM public.admin_login_challenges WHERE session_id IS NOT NULL) THEN\n      RAISE EXCEPTION 'issued admin sessions cannot be truncated' USING ERRCODE='55000';\n    END IF;\n    RETURN NULL;\n  END IF;\n  IF NOT EXISTS(SELECT 1 FROM public.admin_login_challenges WHERE session_id=OLD.id) THEN\n    IF TG_OP='DELETE' THEN RETURN OLD; END IF;\n    RETURN NEW;\n  END IF;\n  IF TG_OP='DELETE' THEN\n    RAISE EXCEPTION 'issued admin sessions cannot be deleted' USING ERRCODE='55000';\n  END IF;\n  IF (to_jsonb(NEW)-'last_seen_at'-'revoked_at') IS DISTINCT FROM (to_jsonb(OLD)-'last_seen_at'-'revoked_at')\n    OR NOT isfinite(NEW.last_seen_at) OR NEW.last_seen_at<OLD.last_seen_at THEN\n    RAISE EXCEPTION 'issued admin session binding is immutable' USING ERRCODE='55000';\n  END IF;\n  IF OLD.revoked_at IS NOT NULL AND NEW.revoked_at IS DISTINCT FROM OLD.revoked_at\n    OR NEW.revoked_at IS NOT NULL AND NOT isfinite(NEW.revoked_at)\n    OR OLD.revoked_at IS NULL AND NEW.revoked_at>clock_timestamp() THEN\n    RAISE EXCEPTION 'admin session revocation is final' USING ERRCODE='55000';\n  END IF;\n  RETURN NEW;\nEND $function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_linked_admin_session()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP='TRUNCATE' THEN\n    IF EXISTS(SELECT 1 FROM public.admin_login_challenges WHERE session_id IS NOT NULL)\n      OR EXISTS(SELECT 1 FROM public.admin_local_logins WHERE session_id IS NOT NULL) THEN\n      RAISE EXCEPTION 'issued admin sessions cannot be truncated' USING ERRCODE='55000';\n    END IF;\n    RETURN NULL;\n  END IF;\n  IF NOT EXISTS(SELECT 1 FROM public.admin_login_challenges WHERE session_id=OLD.id)\n    AND NOT EXISTS(SELECT 1 FROM public.admin_local_logins WHERE session_id=OLD.id) THEN\n    IF TG_OP='DELETE' THEN RETURN OLD; END IF;\n    RETURN NEW;\n  END IF;\n  IF TG_OP='DELETE' THEN\n    RAISE EXCEPTION 'issued admin sessions cannot be deleted' USING ERRCODE='55000';\n  END IF;\n  IF (to_jsonb(NEW)-'last_seen_at'-'revoked_at') IS DISTINCT FROM (to_jsonb(OLD)-'last_seen_at'-'revoked_at')\n    OR NOT isfinite(NEW.last_seen_at) OR NEW.last_seen_at<OLD.last_seen_at THEN\n    RAISE EXCEPTION 'issued admin session binding is immutable' USING ERRCODE='55000';\n  END IF;\n  IF OLD.revoked_at IS NOT NULL AND NEW.revoked_at IS DISTINCT FROM OLD.revoked_at\n    OR NEW.revoked_at IS NOT NULL AND NOT isfinite(NEW.revoked_at)\n    OR OLD.revoked_at IS NULL AND NEW.revoked_at>clock_timestamp() THEN\n    RAISE EXCEPTION 'admin session revocation is final' USING ERRCODE='55000';\n  END IF;\n  RETURN NEW;\nEND $function$"
     },
     {
       "name": "guard_managed_payment_configuration_payload",
