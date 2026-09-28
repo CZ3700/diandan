@@ -110,7 +110,7 @@ await runtime(async (config) => {
       ],
     );
     stage = "upgrade 43 to 44 with existing identity";
-    await migrate({ direction: "up" });
+    await migrate({ direction: "up", targetVersion: "0044" });
     check(
       (
         await client.query(
@@ -126,7 +126,7 @@ await runtime(async (config) => {
         .rows[0].v === "0043",
       "unused layout migration rolls back",
     );
-    await migrate({ direction: "up" });
+    await migrate({ direction: "up", targetVersion: "0044" });
     const layout = createDefaultHomeLayout();
     const invalid = [
       { other: 1, sections: layout.sections },

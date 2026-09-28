@@ -49,6 +49,18 @@ L0、L3-01/02 和 L1 首页完整样板现已验收；L3-03 隔离接线在本�
 - [x] 实际 PostgreSQL + 浏览器验收：调整并发布→公开页顺序变化→换海报后布局保持→恢复布局后新海报保持；刷新/重启后仍有效；重复提交、并发冲突、发布失败保旧、无权限拒绝。七语双端检查键盘、错误状态与减少动态效果。
 - [x] 受影响测试、`pnpm check:dev`、迁移检查及独立复核通过后，才登记 L1 已交付，并提供用户可操作入口。
 
+## L2-01：全站主题完整闭环
+
+本项保留图片主导、黑金默认及现有页面结构，提供三套相容的深色配色、标准/大字、标准/紧凑/宽松内容留白、柔和/方正/圆润圆角。保留七语言字体、正文最低 16px、触控尺寸、语义状态颜色和 reduced motion；不改动交易规则。图片焦点、图片比例、动效与页面模板独立后续交付，不以 CSS 位移假装重新裁切。
+
+合同冻结：新增独立 `StorefrontTheme`（schemaVersion 1），字段 `palette: BLACK_GOLD | GRAPHITE_PEARL | MIDNIGHT_BLUE`、`typography: STANDARD | LARGE`、`density: STANDARD | COMPACT | AIRY`、`corners: SOFT | SHARP | ROUND`；默认 BLACK_GOLD/STANDARD/STANDARD/SOFT。沿用 L1 的 read/draft/publish/restore/history 操作语义与权限，但使用独立 `storefront-theme` API、主题版本与历史，不扩写旧 HomeLayout 或旧内容合同。所有 revision/publication/command 的配置字段名为 `theme`，公开响应 kind 为 `STOREFRONT_THEME`；预览消息为独立 `STOREFRONT_THEME_PREVIEW`/`STOREFRONT_THEME_PREVIEW_READY`，同源、父窗口、channel 校验与 L1 一致。
+
+- [x] 合同拒绝任意 CSS/JS/颜色/交易字段；真实 PG 草稿隔离、幂等、版本冲突、失败原子性、追加恢复与历史不可变通过。
+- [x] 在“店铺装修”内切换首页布局/全站主题，切换及离开时保护未保存编辑；一处保存/发布/历史操作，七语文案，真实 iframe 整页预览。
+- [x] 主题覆盖首页、艺人、礼物、区域、政策、购物车、结账和查单（含 portal）；内部样板与后台自身不被改变。读取异常保留明确状态，不冒充已发布默认主题。
+- [x] 默认视觉不变；手机/电脑七语言、键盘、错误保稿、对比度、320px/200%与 reduced motion 检查；主题/布局/海报相互独立，刷新及重启后保持。
+- [x] 受影响测试、迁移升级/回退、真实交易回归、check:dev 与独立复核通过后提交并同步仓库。
+
 ## L3：现在并行启动的生产接入
 
 ### L3-01 沙盒验证结果可信性（本轮）

@@ -1,6 +1,9 @@
 import { expect, test, vi } from "vitest";
 import { createPublishedContentComposition } from "./published-content-composition.js";
-import { createDefaultHomeLayout } from "@fan-support/contracts";
+import {
+  createDefaultHomeLayout,
+  createDefaultStorefrontTheme,
+} from "@fan-support/contracts";
 const environment = Object.freeze({
   NODE_ENV: "test",
   FAN_SUPPORT_DEPLOYMENT_ENV: "test",
@@ -37,6 +40,15 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     version: 0,
     publicationId: null,
   }));
+  const readTheme = vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "STOREFRONT_THEME",
+    source: "DEFAULT",
+    theme: createDefaultStorefrontTheme(),
+    version: 0,
+    publicationId: null,
+  }));
   const load = vi.fn(async () => ({
     schemaVersion: 1,
     outcome: "FAILURE",
@@ -47,6 +59,11 @@ test("binds production public reads to configured PostgreSQL and trusted media o
       runInHomeLayoutTransaction: async (
         work: (repositories: unknown) => unknown,
       ) => work({ homeLayout: { readPublished: readLayout } }),
+    },
+    storefrontThemeTransactionManager: {
+      runInStorefrontThemeTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ storefrontTheme: { readPublished: readTheme } }),
     },
     storefrontSeoTransactionManager: {
       runInStorefrontSeoTransaction: async (
@@ -88,6 +105,7 @@ test("binds production public reads to configured PostgreSQL and trusted media o
   });
   expect(Object.keys(composition).sort()).toEqual([
     "publicHomeLayoutRoute",
+    "publicStorefrontThemeRoute",
     "publishedContentRoute",
     "publishedContentRuntime",
     "publishedGiftCommerceRoute",
@@ -123,6 +141,14 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     composition.publicHomeLayoutRoute.useCases.execute(),
   ).resolves.toMatchObject({ source: "DEFAULT", publicationId: null });
   expect(readLayout).toHaveBeenCalledOnce();
+  await expect(
+    composition.publicStorefrontThemeRoute.useCases.execute(),
+  ).resolves.toMatchObject({
+    kind: "STOREFRONT_THEME",
+    source: "DEFAULT",
+    publicationId: null,
+  });
+  expect(readTheme).toHaveBeenCalledOnce();
   await expect(
     composition.storefrontCommerceRoute.useCases.readContext({
       schemaVersion: 1,

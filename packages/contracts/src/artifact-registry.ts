@@ -1,3 +1,4 @@
+import * as storefrontTheme from "./storefront-theme.js";
 import * as homeLayout from "./home-layout.js";
 import {
   rumIntakeSchema,
@@ -742,6 +743,51 @@ const registrations = [
     name: "HomeLayoutPreviewReady",
     audience: "admin-http",
     schema: homeLayout.homeLayoutPreviewReadySchema,
+  },
+  {
+    name: "StorefrontThemeAuthorizationCommand",
+    audience: "internal",
+    schema: storefrontTheme.storefrontThemeAuthorizationCommandSchema,
+  },
+  {
+    name: "StorefrontTheme",
+    audience: "public-http",
+    schema: storefrontTheme.storefrontThemeSchema,
+  },
+  {
+    name: "StorefrontThemeState",
+    audience: "admin-http",
+    schema: storefrontTheme.storefrontThemeStateSchema,
+  },
+  {
+    name: "StorefrontThemeCommand",
+    audience: "internal",
+    schema: storefrontTheme.storefrontThemeCommandSchema,
+  },
+  {
+    name: "StorefrontThemeRequest",
+    audience: "internal",
+    schema: storefrontTheme.storefrontThemeRequestSchema,
+  },
+  {
+    name: "StorefrontThemeResponse",
+    audience: "admin-http",
+    schema: storefrontTheme.storefrontThemeResponseSchema,
+  },
+  {
+    name: "PublicStorefrontThemeResponse",
+    audience: "public-http",
+    schema: storefrontTheme.publicStorefrontThemeResponseSchema,
+  },
+  {
+    name: "StorefrontThemePreviewMessage",
+    audience: "admin-http",
+    schema: storefrontTheme.storefrontThemePreviewMessageSchema,
+  },
+  {
+    name: "StorefrontThemePreviewReady",
+    audience: "admin-http",
+    schema: storefrontTheme.storefrontThemePreviewReadySchema,
   },
   { name: "RumIntake", audience: "public-http", schema: rumIntakeSchema },
   {

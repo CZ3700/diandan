@@ -363,3 +363,5 @@ export * from "./admin-orders.js";
 export * from "./payment-health.js";
 export * from "./admin-finance.js";
 export * from "./home-layout.js";
+
+export * from "./storefront-theme.js";

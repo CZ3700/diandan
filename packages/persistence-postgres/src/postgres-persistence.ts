@@ -1,3 +1,8 @@
+import { createStorefrontThemeRepository } from "./storefront-theme-repository.js";
+import type {
+  StorefrontThemeRepositories,
+  StorefrontThemeTransactionManager,
+} from "@fan-support/persistence-port";
 import { createHomeLayoutRepository } from "./home-layout-repository.js";
 import type {
   HomeLayoutRepositories,
@@ -212,6 +217,7 @@ import {
 
 export interface PostgresPersistence {
   readonly homeLayoutTransactionManager: HomeLayoutTransactionManager;
+  readonly storefrontThemeTransactionManager: StorefrontThemeTransactionManager;
   readonly adminPaymentConfigurationTransactionManager: AdminPaymentConfigurationTransactionManager;
   readonly adminExceptionsTransactionManager: AdminExceptionsTransactionManager;
   readonly adminFinanceTransactionManager: AdminFinanceTransactionManager;
@@ -623,6 +629,14 @@ export function createPostgresPersistenceWithPoolFactory(
       homeLayout: createHomeLayoutRepository(client, scope),
     }),
   });
+  const storefrontThemeRunner =
+    createTransactionRunner<StorefrontThemeRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createHomeLayoutAuthorizationRepository(client, scope),
+        storefrontTheme: createStorefrontThemeRepository(client, scope),
+      }),
+    });
   const adminContentRunner = createTransactionRunner<AdminContentRepositories>({
     acquireClient: async () => pool.connect(),
     createRepositories: (client, scope) => ({
@@ -1502,6 +1516,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return homeLayoutRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    storefrontThemeTransactionManager: {
+      async runInStorefrontThemeTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return storefrontThemeRunner.run(
           { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );

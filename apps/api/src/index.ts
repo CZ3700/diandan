@@ -27,3 +27,5 @@ export * from "./admin-payment-configuration-route.js";
 export * from "./payment-configuration-runtime.js";
 export * from "./admin-exceptions-route.js";
 export * from "./home-layout-route.js";
+
+export * from "./storefront-theme-route.js";

@@ -2,6 +2,7 @@ import { randomBytes, randomUUID } from "node:crypto";
 import {
   createManagementCenterUseCases,
   createHomeLayoutUseCases,
+  createStorefrontThemeUseCases,
   createManagementCenterWorker,
   createManagementMediaPreparation,
   createResourceManagementUseCases,
@@ -20,6 +21,7 @@ import type {
 } from "@fan-support/media-port";
 import type { ManagementCenterRouteDependencies } from "../management-center-route.js";
 import type { HomeLayoutRouteDependencies } from "../home-layout-route.js";
+import type { StorefrontThemeRouteDependencies } from "../storefront-theme-route.js";
 import type { ApiLifecycleResource } from "../bootstrap.js";
 import { createManagementCenterRuntime } from "./management-center-runtime.js";
 
@@ -27,6 +29,7 @@ type ManagementPersistence = Pick<
   PostgresPersistence,
   | "managementCenterTransactionManager"
   | "homeLayoutTransactionManager"
+  | "storefrontThemeTransactionManager"
   | "managementMediaTransactionManager"
   | "resourceManagementTransactionManager"
   | "mediaProcessingTransactionManager"
@@ -70,6 +73,7 @@ export function createTestManagementCenterComposition(
 ): Readonly<{
   managementCenterRoute: ManagementCenterRouteDependencies;
   homeLayoutRoute: HomeLayoutRouteDependencies;
+  storefrontThemeRoute: StorefrontThemeRouteDependencies;
   managementCenterRuntime: ApiLifecycleResource;
 }> {
   const pollIntervalMs = options.pollIntervalMs ?? 250,
@@ -130,6 +134,13 @@ export function createTestManagementCenterComposition(
         allowedOrigin: options.allowedOrigin,
         useCases: createHomeLayoutUseCases({
           transactions: persistence.homeLayoutTransactionManager,
+          tokenPepper: options.tokenPepper,
+        }),
+      },
+      storefrontThemeRoute: {
+        allowedOrigin: options.allowedOrigin,
+        useCases: createStorefrontThemeUseCases({
+          transactions: persistence.storefrontThemeTransactionManager,
           tokenPepper: options.tokenPepper,
         }),
       },

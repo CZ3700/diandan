@@ -2,23 +2,52 @@
 import { useEffect, useRef, useState } from "react";
 import {
   homeLayoutPreviewReadySchema,
+  storefrontThemePreviewReadySchema,
+  type StorefrontTheme,
   type HomeLayout,
   type SupportedLocale,
 } from "@fan-support/contracts";
 import { Button } from "@fan-support/ui";
 import type { DecorationCopy } from "./copy";
 
+type PreviewFrameProps = {
+  locale: SupportedLocale;
+  origin: string | undefined;
+  copy: Omit<DecorationCopy, "sections">;
+};
 export function LayoutPreviewFrame({
   layout,
+  ...props
+}: PreviewFrameProps & { layout: HomeLayout }) {
+  return (
+    <DecorationPreviewFrame
+      {...props}
+      configuration={{ mode: "layout", layout }}
+    />
+  );
+}
+export function ThemePreviewFrame({
+  theme,
+  ...props
+}: PreviewFrameProps & { theme: StorefrontTheme }) {
+  return (
+    <DecorationPreviewFrame
+      {...props}
+      configuration={{ mode: "theme", theme }}
+    />
+  );
+}
+function DecorationPreviewFrame({
+  configuration,
   locale,
   origin,
   copy,
-}: {
-  layout: HomeLayout;
-  locale: SupportedLocale;
-  origin: string | undefined;
-  copy: DecorationCopy;
+}: PreviewFrameProps & {
+  configuration:
+    | { mode: "layout"; layout: HomeLayout }
+    | { mode: "theme"; theme: StorefrontTheme };
 }) {
+  const mode = configuration.mode;
   const frame = useRef<HTMLIFrameElement>(null);
   const container = useRef<HTMLDivElement>(null);
   const [channel, setChannel] = useState<string | null>(null);
@@ -42,7 +71,7 @@ export function LayoutPreviewFrame({
     const observer = new ResizeObserver(resize);
     observer.observe(element);
     return () => observer.disconnect();
-  }, [origin, channel]);
+  }, [origin, channel, mode]);
   useEffect(() => {
     setReady(false);
     setFailed(false);
@@ -54,7 +83,11 @@ export function LayoutPreviewFrame({
         event.source !== frame.current?.contentWindow
       )
         return;
-      const message = homeLayoutPreviewReadySchema.safeParse(event.data);
+      const message = (
+        mode === "layout"
+          ? homeLayoutPreviewReadySchema
+          : storefrontThemePreviewReadySchema
+      ).safeParse(event.data);
       if (!message.success || message.data.channel !== channel) return;
       clearTimeout(timer);
       setReady(true);
@@ -65,14 +98,26 @@ export function LayoutPreviewFrame({
       clearTimeout(timer);
       window.removeEventListener("message", receive);
     };
-  }, [origin, channel]);
+  }, [origin, channel, mode]);
   useEffect(() => {
     if (ready && origin && channel)
       frame.current?.contentWindow?.postMessage(
-        { schemaVersion: 1, type: "HOME_LAYOUT_PREVIEW", channel, layout },
+        configuration.mode === "layout"
+          ? {
+              schemaVersion: 1,
+              type: "HOME_LAYOUT_PREVIEW",
+              channel,
+              layout: configuration.layout,
+            }
+          : {
+              schemaVersion: 1,
+              type: "STOREFRONT_THEME_PREVIEW",
+              channel,
+              theme: configuration.theme,
+            },
         origin,
       );
-  }, [ready, origin, channel, layout]);
+  }, [ready, origin, channel, configuration]);
   return (
     <section
       className="decoration-preview"
@@ -121,9 +166,10 @@ export function LayoutPreviewFrame({
               <iframe
                 ref={frame}
                 key={channel}
-                data-layout-preview-frame
+                data-layout-preview-frame={mode === "layout" || undefined}
+                data-theme-preview-frame={mode === "theme" || undefined}
                 title={`${copy.preview} — ${copy[viewport]}`}
-                src={`${origin}/${locale}/layout-preview?channel=${channel}`}
+                src={`${origin}/${locale}/layout-preview?channel=${channel}${mode === "theme" ? "&mode=theme" : ""}`}
                 sandbox="allow-scripts allow-same-origin"
                 referrerPolicy="no-referrer"
                 style={{

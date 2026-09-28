@@ -8,10 +8,12 @@
 |:--|:--|:--|
 | L0 基线对齐 | DONE | root，2026-09-28 开始并完成；同步 GitHub 55d5165b，更新 SPEC 5.0.0 / ADR-020 / 统一入口；13 份文档的 17 个相对链接及独立复核通过。现有服务器和数据未改动。 |
 | L1 首页装修样板 | DONE | root 协调，2026-09-28 完整验收；管理中心排序/显隐、真实双端预览、草稿/发布/历史恢复已接通。实际 PG 35 项、44 迁移往返、七语双端、海报与布局互不覆盖、正式构建 21+107 项及重启 7 项、原交易专项 258 项、check:dev 与独立复核通过；原体验和服务器未动。详情见下方本轮验收。 |
-| L2 日常装修完善 | READY | L1 完整验收已满足；下一步按有限预设扩展主题、图片焦点、布局/动效，再接艺人/礼物模板和导航页脚；尚未开工。 |
+| L2 日常装修完善 | IN_PROGRESS | L2-01 全站主题已完成；下一项 L2-02 图片焦点须从原图重新生成媒体，后续继续布局/动效、模板和导航页脚。 |
+| L2-01 全站主题 | DONE | root 协调，2026-09-28；独立主题、后台双端预览/草稿/发布/恢复与所有公开页接通。PG 41 + 旧布局35、45迁移往返、浏览器发布23/七语573/重启9、200%缩放、交易252、check:dev与独立复核通过；未改变原体验或服务器。详见下方验收。 |
 | L3-01 沙盒验证结果可信性 | DONE | root 协调、独立执行与复核，2026-09-28 开始并完成；零回调/错配/验签失败均不通过；配置检查不联网、秘密与付款链接不入普通输出。29 个 adapter 测试及 43 个脚本测试、check:dev、独立真实 adapter/HMAC 检查通过。 |
 | L3-02 Stripe adapter 实际沙盒 | DONE | root，2026-09-28；受限本地配置 + 官方 CLI 转发 + Playwright 托管测试页：USD 25 测试付款、USD 5 部分退款、重放、查询、取消及对应验签回调通过；12 项检查全通过。仅 adapter 验收，`siteOrderFlowVerified=false`，没有真实资金交易。 |
 | L3-03 本站 Stripe 接线准备 | LOCAL_ACCEPTED | stripe_site_audit / root，2026-09-28；新隔离实例可显式选 stripe-test，统一账户/方法/凭据引用/验签头/托管源站，旧 fake 实例不可切换，Web/Worker 不接收支付密钥。75 项相关测试及独立复核通过；本站实际 Stripe 付款、Inbox/Worker、查单和后台退款仍待下一项联调，未冒充完成。 |
+| L3-04 本站 Stripe 实际沙盒 | IN_PROGRESS | stripe_preparation / root，2026-09-28 06:50 +07:00；复用既有本站购买/查单/退款 UI 与只读 PG 证据，准备独立 Stripe 浏览器联调。与 L2 实现并行，运行时/浏览器串行；要求实际签名回调、Inbox/Worker、原订单入账、部分退款与去重，旧 fake 验收不代替。 |
 | L3 正式交易与运营 | IN_PROGRESS | Stripe 测试凭据已配置，adapter 实际沙盒通过；下一步为隔离实例的本站 checkout→API webhook→Inbox/Worker→查单→后台退款。Airwallex 收单号申请中，邮件/正式 OIDC 资源待落实；生产商户尚未批准。 |
 | L4 发布验收 | PENDING | 依赖 L1–L3 首发范围；当前服务器仍为公开 TEST，尚未转正。实际资金/正式发布需单独授权。 |
 
@@ -41,3 +43,14 @@
 6. 最终门禁：`pnpm check:dev` exit 0（69 typecheck / 69 test / 38 build 任务），四项观察器负例、六项正式启动配置测试与独立复核通过。全局 S.U.P.E.R、code-simplifier 与证据入口见 `output/checks/l1-home-layout/final-verification.md`。
 7. Stripe 接线：75 项本地工具/fixture 测试和真实 verifier 的合成 HMAC 检查通过，未在本轮调用 Stripe；`output/checks/l3-03-site-stripe/implementation-handoff.md` 列出隔离实例与 CLI 转发步骤。本站 Stripe 实际沙盒仍是下一项，上一轮 adapter 沙盒结果不变。
 8. 用户入口：[本地操作说明](../runbooks/local-experience.md)；当前可体验实例 `test-regression-layout-0928`，管理中心→店铺装修。原实例配置/运行记录 hash 不变，秘密仍受限保存，未部署服务器、未执行真实资金交易。
+
+## L2-01 本轮验收（2026-09-28）
+
+1. 基线 `220d3bc7`，开始时远端无新提交；root 负责商城与现场验收，focal_audit 负责合同/应用/PG，theme_audit 负责后台，theme_review 独立复核。保护原实例，使用 `test-regression-theme-0928`。
+2. 全站主题独立四表与 API，三套深色配色及字号/留白/圆角共54组合；任意CSS/脚本/交易字段拒绝，旧731合同根/216 OpenAPI schemas/142路径解析不变。真实 PG 41项、旧L1 35项与45迁移/211表往返通过：`output/checks/l2-theme/backend-verification.md`。
+3. 正式构建真实浏览器发布23项、七语390×844/1440×900及主要公开页面573项、重启9项通过；28次axe无严重/致命问题，320/720及后台768/1024/1152、错误保稿/键盘/正常和减少动态效果通过。Chrome原生200%缩放实测通过；截图已查看，见 `output/checks/l2-theme/browser/`。
+4. 恢复主题后较新的海报与布局保留；主题覆盖body和portal，预览无业务写入。公开主题失败明确503；商城最多等待1秒，以带FALLBACK/UNAVAILABLE状态的默认外观继续交易。已打开页面刷新后更新主题，详见本地runbook。
+5. 同一已发布主题下新订单→付款→邮件查单→审核/准备/送达照片→退款→未支付取消→支付配置，252断言/4场景通过，零观察异常/pageerror。限定COMMERCE范围PARTIAL_PASS：`output/playwright/p5-08-local-experience/test-regression-theme-0928-1790554093742/report.json`，支付使用本地模拟PSP。
+6. 修复检查发现的后台文案组织违规；重新生成既有漂移的中日字体字集，并将L1已有尺寸/层级写法接回设计令牌。原始失败日志保留。最终check:dev（69/69/38任务，含缓存）、check:contracts、57项设计基础检查、源码秘密扫描3761文件通过。
+7. 独立审查无P1/P2，S.U.P.E.R十项与小范围收敛通过；完整入口 `output/checks/l2-theme/final-verification.md`。无新增第三方运行依赖，未部署服务器或使用真实资金。
+8. 下一项图片焦点的媒体链路分析已完成：`output/checks/l2-theme/focal-readiness.md`；将复用原图和现有处理队列，不用CSS位移冒充已丢失像素的裁切。

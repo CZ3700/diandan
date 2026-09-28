@@ -111,3 +111,5 @@ export * from "./admin-exceptions.js";
 export * from "./admin-exceptions-persistence.js";
 export * from "./payment-components.js";
 export * from "./home-layout.js";
+
+export * from "./storefront-theme.js";

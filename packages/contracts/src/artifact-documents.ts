@@ -1,3 +1,4 @@
+import { storefrontThemePaths } from "./storefront-theme-openapi.js";
 import { homeLayoutPaths } from "./home-layout-openapi.js";
 import { rumPaths } from "./rum-openapi.js";
 import { adminPaymentConfigurationPaths } from "./admin-payment-configuration-openapi.js";
@@ -224,6 +225,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...orderAccessPaths(),
         ...managementCenterPaths(),
         ...homeLayoutPaths(),
+        ...storefrontThemePaths(),
         ...storefrontHomepagePaths(),
         ...storefrontCommercePaths(),
         ...storefrontSeoPaths(),

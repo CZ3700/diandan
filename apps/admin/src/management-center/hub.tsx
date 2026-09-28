@@ -16,8 +16,10 @@ import { ManagementShell } from "./shell";
 import { ManagementLogout } from "./logout";
 import { managementCopy } from "./copy";
 import type { HomeLayoutApi } from "../management-decoration/api";
-import { DecorationWorkspace } from "../management-decoration/workspace";
-import { decorationCopy } from "../management-decoration/copy";
+import { DecorationCenter } from "../management-decoration/center";
+import type { StorefrontThemeApi } from "../management-decoration/theme-api";
+import { canLeaveDecoration } from "../management-decoration/navigation";
+import { decorationNavigationCopy } from "../management-decoration/theme-copy";
 import {
   resolveManagementAccess,
   managementSectionUnavailable,
@@ -29,6 +31,7 @@ export function ManagementHub({
   paymentsApi,
   exceptionsApi,
   layoutApi,
+  themeApi,
   layoutPermissions,
   locale,
   storefrontOrigin,
@@ -41,6 +44,7 @@ export function ManagementHub({
   paymentsApi?: PaymentConfigurationApi | undefined;
   exceptionsApi?: ExceptionsApi | undefined;
   layoutApi?: HomeLayoutApi | undefined;
+  themeApi?: StorefrontThemeApi | undefined;
   layoutPermissions?:
     { read: boolean; edit: boolean; publish: boolean } | undefined;
   locale: SupportedLocale;
@@ -105,7 +109,9 @@ export function ManagementHub({
           ? "ORDERS"
           : "EXCEPTIONS");
   function canLeaveLayout() {
-    return !layoutDirty || window.confirm(decorationCopy(locale).discard);
+    return canLeaveDecoration({ busy, dirty: layoutDirty }, () =>
+      window.confirm(decorationNavigationCopy(locale).discard),
+    );
   }
   const logout = onLogout
     ? async () => {
@@ -188,8 +194,9 @@ export function ManagementHub({
     >
       {notice}
       {active === "DECORATION" && layoutPermissions?.read && layoutApi ? (
-        <DecorationWorkspace
+        <DecorationCenter
           api={layoutApi}
+          themeApi={themeApi}
           locale={locale}
           storefrontOrigin={storefrontOrigin}
           canEdit={layoutPermissions.edit}

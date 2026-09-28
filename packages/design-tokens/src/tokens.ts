@@ -39,6 +39,8 @@ export const DESIGN_TOKEN_CONTRACT = Object.freeze({
     "--layout-gutter-tablet": "1.5rem",
     "--layout-min-width": "20rem",
     "--layout-reading-max": "65ch",
+    "--layout-editor-controls-min": "17rem",
+    "--layout-preview-mobile": "24.375rem",
     "--link-underline-offset": "0.2em",
     "--motion-control": "220ms",
     "--motion-fast": "120ms",

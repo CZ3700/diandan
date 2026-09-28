@@ -29,6 +29,12 @@ import {
   type PublicHomeLayoutRouteDependencies,
 } from "./home-layout-route.js";
 import {
+  registerStorefrontThemeRoute,
+  registerPublicStorefrontThemeRoute,
+  type StorefrontThemeRouteDependencies,
+  type PublicStorefrontThemeRouteDependencies,
+} from "./storefront-theme-route.js";
+import {
   registerGiftCommerceRoute,
   type GiftCommerceRouteDependencies,
 } from "./gift-commerce-route.js";
@@ -154,6 +160,8 @@ export type CreateApiApplicationOptions = Readonly<{
   managementCenterRuntime?: ApiLifecycleResource;
   homeLayoutRoute?: HomeLayoutRouteDependencies;
   publicHomeLayoutRoute?: PublicHomeLayoutRouteDependencies;
+  storefrontThemeRoute?: StorefrontThemeRouteDependencies;
+  publicStorefrontThemeRoute?: PublicStorefrontThemeRouteDependencies;
   giftCommerceRoute?: GiftCommerceRouteDependencies;
   giftCommerceRuntime?: ApiLifecycleResource;
   publishedGiftCommerceRoute?: PublishedGiftCommerceRouteDependencies;
@@ -515,6 +523,16 @@ export async function createApiApplication(
     registerPublicHomeLayoutRoute(
       adapter.getInstance(),
       options.publicHomeLayoutRoute,
+    );
+  if (options.storefrontThemeRoute !== undefined)
+    registerStorefrontThemeRoute(
+      adapter.getInstance(),
+      options.storefrontThemeRoute,
+    );
+  if (options.publicStorefrontThemeRoute !== undefined)
+    registerPublicStorefrontThemeRoute(
+      adapter.getInstance(),
+      options.publicStorefrontThemeRoute,
     );
   if (options.resourceManagementRoute !== undefined)
     registerResourceManagementRoute(

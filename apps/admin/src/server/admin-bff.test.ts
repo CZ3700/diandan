@@ -279,3 +279,71 @@ test("home layout BFF keeps mutations behind session, CSRF and an idempotency he
     expectedVersion: 0,
   });
 });
+
+test("storefront theme BFF authorizes and forwards only the deployed theme mutation", async () => {
+  const theme = {
+    schemaVersion: 1,
+    palette: "BLACK_GOLD",
+    typography: "STANDARD",
+    density: "STANDARD",
+    corners: "SOFT",
+  };
+  const id = "a0000000-0000-4000-8000-000000000001";
+  const value = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "STATE",
+    replayed: false,
+    state: {
+      schemaVersion: 1,
+      version: 1,
+      published: null,
+      draft: { revisionId: id, createdAt: "2026-09-28T00:00:00Z", theme },
+    },
+  };
+  const fetcher = vi.fn(async () => Response.json(value));
+  const bff = createAdminBff({ config, fetch: fetcher });
+  const make = (headers: Record<string, string> = {}, extra: object = {}) =>
+    request("storefront-theme-draft", {
+      method: "POST",
+      headers: {
+        origin: siteOrigin,
+        "content-type": "application/json",
+        "x-csrf-token": csrf,
+        "idempotency-key": id,
+        ...headers,
+      },
+      body: JSON.stringify({
+        schemaVersion: 1,
+        theme,
+        expectedVersion: 0,
+        ...extra,
+      }),
+    });
+  expect((await bff.operation(make(), "storefront-theme-draft")).status).toBe(
+    200,
+  );
+  const [path, init] = fetcher.mock.calls[0]! as unknown as [
+    string,
+    RequestInit,
+  ];
+  expect(path).toBe(
+    `${config.internalApiOrigin}/api/v1/admin/storefront-theme/draft`,
+  );
+  expect(JSON.parse(String(init.body))).toEqual({
+    schemaVersion: 1,
+    theme,
+    expectedVersion: 0,
+  });
+  fetcher.mockClear();
+  for (const req of [
+    make({ "idempotency-key": "" }),
+    make({ "x-csrf-token": "" }),
+    make({}, { action: "PUBLISH" }),
+    make({}, { theme: { ...theme, css: "body{display:none}" } }),
+  ])
+    expect(
+      (await bff.operation(req, "storefront-theme-draft")).status,
+    ).toBeGreaterThanOrEqual(400);
+  expect(fetcher).not.toHaveBeenCalled();
+});

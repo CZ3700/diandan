@@ -17,6 +17,7 @@ import {
 } from "./storefront-page-reads";
 import { prepareDirectoryQuery } from "./directory-query";
 import { HomeLayoutPreview } from "./home-layout-preview";
+import { ThemePreview } from "./theme-preview";
 import { HomepageDirectory } from "./homepage-directory";
 import { GiftBrowseSection } from "./gift-browse-section";
 import {
@@ -39,7 +40,8 @@ export function createHomeLayoutPreviewPage(locale: SupportedLocale) {
     if (
       !adminOrigin ||
       !query.success ||
-      Object.keys(values).some((key) => key !== "channel")
+      Object.keys(values).some((key) => key !== "channel" && key !== "mode") ||
+      (values["mode"] !== undefined && values["mode"] !== "theme")
     )
       notFound();
     const directoryQuery = prepareDirectoryQuery(locale, undefined);
@@ -61,6 +63,12 @@ export function createHomeLayoutPreviewPage(locale: SupportedLocale) {
         active="home"
         contextQuery=""
       >
+        {values["mode"] === "theme" && (
+          <ThemePreview
+            adminOrigin={adminOrigin}
+            channel={query.data.channel}
+          />
+        )}
         {layout.outcome === "FAILURE" ? (
           <PageState
             locale={locale}

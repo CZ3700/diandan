@@ -440,6 +440,16 @@
         "up": "17fda365695ac84bd828630b65d099d71d295150760aa1ed820f59b6591e438c",
         "down": "cbac0ace139cbba527e58b311fbe36b9ce8ff98132b3abc473add1282d7da1a9"
       }
+    },
+    {
+      "version": "0045",
+      "name": "storefront-theme",
+      "up": "database/migrations/0045_storefront-theme.up.sql",
+      "down": "database/migrations/0045_storefront-theme.down.sql",
+      "sha256": {
+        "up": "e99db539b0a863a3860993f14e004a8914a46e7a7f8d486e5212f3229da59673",
+        "down": "0af0804f4445151e590983551f9b1626c4d5f8e81d682a7a7ad13fb4da9b3f92"
+      }
     }
   ]
 }

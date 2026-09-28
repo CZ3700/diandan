@@ -3,6 +3,12 @@ import { expect, test, vi } from "vitest";
 
 const runtime = vi.hoisted(() => ({
   preview: false,
+  locale: "zh-CN" as string | null,
+  theme: vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "CONTENT_UNAVAILABLE",
+  })),
   collector: vi.fn(async () => null),
 }));
 
@@ -10,12 +16,15 @@ vi.mock("server-only", () => ({}));
 vi.mock("next/headers", () => ({
   headers: async () =>
     new Headers({
-      "x-storefront-locale": "zh-CN",
+      ...(runtime.locale ? { "x-storefront-locale": runtime.locale } : {}),
       ...(runtime.preview ? { "x-storefront-layout-preview": "1" } : {}),
     }),
 }));
 vi.mock("../server/rum-bootstrap", () => ({
   renderRumCollector: runtime.collector,
+}));
+vi.mock("../server/public-storefront-theme", () => ({
+  readPublicStorefrontTheme: runtime.theme,
 }));
 
 type ElementProps = Readonly<{
@@ -59,5 +68,30 @@ test("layout preview does not initialize telemetry collection", async () => {
     expect(runtime.collector).not.toHaveBeenCalled();
   } finally {
     runtime.preview = false;
+  }
+});
+
+test("a theme outage retains the page and marks its safe fallback without claiming publication", async () => {
+  const { default: RootLayout } = await import("./layout");
+  const html = await RootLayout({
+    children: "payment-return-or-order-content",
+  });
+  expect(html.props["data-storefront-palette"]).toBe("BLACK_GOLD");
+  expect(html.props["data-theme-source"]).toBe("FALLBACK");
+  expect(html.props["data-theme-status"]).toBe("UNAVAILABLE");
+  expect(html.props["data-theme-version"]).toBeUndefined();
+  expect(JSON.stringify(html)).toContain("payment-return-or-order-content");
+});
+
+test("internal pages never load or apply published storefront themes", async () => {
+  runtime.locale = null;
+  runtime.theme.mockClear();
+  try {
+    const { default: RootLayout } = await import("./layout");
+    const html = await RootLayout({ children: null });
+    expect(runtime.theme).not.toHaveBeenCalled();
+    expect(html.props["data-storefront-palette"]).toBeUndefined();
+  } finally {
+    runtime.locale = "zh-CN";
   }
 });

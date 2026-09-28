@@ -1,0 +1,49 @@
+/* Only public storefront documents opt in; the approved black/gold stays unchanged. */
+html[data-storefront-palette="GRAPHITE_PEARL"] {
+  --color-accent: #d7dfe5;
+  --color-bg: #0d1012;
+  --color-surface: #15191c;
+  --color-surface-raised: #1c2226;
+  --color-text: #f1f4f5;
+  --color-text-muted: #abb5bc;
+}
+
+html[data-storefront-palette="MIDNIGHT_BLUE"] {
+  --color-accent: #a7c8ed;
+  --color-bg: #090f19;
+  --color-surface: #111b29;
+  --color-surface-raised: #192538;
+  --color-text: #eff3fa;
+  --color-text-muted: #aebbd0;
+}
+
+html[data-storefront-typography="LARGE"] {
+  --type-body-size: clamp(1.125rem, 1.08rem + 0.2vw, 1.25rem);
+  --type-label-size: 0.875rem;
+  --type-heading-size: clamp(2.125rem, 1.55rem + 2.9vw, 4.25rem);
+}
+
+/* Content rhythm only: global spacing also owns the 48px control minimum. */
+html[data-storefront-density="COMPACT"] {
+  --storefront-section-space: var(--space-16);
+  --storefront-section-space-mobile: var(--space-8);
+  --storefront-grid-gap: var(--space-4);
+  --storefront-grid-gap-mobile: var(--space-2);
+}
+
+html[data-storefront-density="AIRY"] {
+  --storefront-section-space: var(--space-32);
+  --storefront-section-space-mobile: var(--space-16);
+  --storefront-grid-gap: var(--space-8);
+  --storefront-grid-gap-mobile: var(--space-4);
+}
+
+html[data-storefront-corners="SHARP"] {
+  --radius-control: 0.25rem;
+  --radius-media: 0.25rem;
+}
+
+html[data-storefront-corners="ROUND"] {
+  --radius-control: 1.25rem;
+  --radius-media: 2rem;
+}

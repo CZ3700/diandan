@@ -145,7 +145,7 @@
 }
 .storefront-hero::after {
   content: "";
-  z-index: 1;
+  z-index: var(--layer-raised);
   pointer-events: none;
   background:
     linear-gradient(
@@ -162,7 +162,7 @@
     );
 }
 .storefront-hero-copy {
-  z-index: 2;
+  z-index: calc(var(--layer-raised) + 1);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -268,7 +268,7 @@
 .storefront-section {
   max-inline-size: var(--layout-canvas-max);
   margin-inline: auto;
-  padding: var(--space-24) var(--layout-gutter);
+  padding: var(--storefront-section-space, var(--space-24)) var(--layout-gutter);
 }
 .storefront-section h2,
 .storefront-directory h1,
@@ -386,7 +386,7 @@
 .storefront-gift-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-12) var(--space-6);
+  gap: var(--space-12) var(--storefront-grid-gap, var(--space-6));
   margin-block-end: var(--space-8);
 }
 .storefront-gift-grid .fs-media {
@@ -429,7 +429,7 @@
 }
 .storefront-final {
   text-align: center;
-  padding-block: var(--space-24);
+  padding-block: var(--storefront-section-space, var(--space-24));
 }
 .storefront-final h2 {
   max-inline-size: var(--layout-reading-max);
@@ -567,7 +567,7 @@
     margin-block-start: var(--space-6);
   }
   .storefront-section {
-    padding-block: var(--space-12);
+    padding-block: var(--storefront-section-space-mobile, var(--space-12));
   }
   .storefront-section-heading {
     flex-direction: column;
@@ -580,7 +580,7 @@
   }
   .storefront-gift-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-8) var(--space-3);
+    gap: var(--space-8) var(--storefront-grid-gap-mobile, var(--space-3));
   }
   .storefront-gift-grid h3 {
     font-size: var(--type-body-size);
