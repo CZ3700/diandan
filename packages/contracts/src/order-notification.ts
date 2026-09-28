@@ -152,7 +152,7 @@ export const orderNotificationContentSchema =
 export const notificationEmailDispatchSchema =
   notificationPortCommandSchema.extend({
     recipient: z.email().max(254),
-    /** Immutable receiver-enforced cutoff. After it, only a stored receipt may be returned. */
+    /** Frozen cutoff: gateway receivers enforce it; native providers use it for platform admission only. */
     dispatchNotAfter: contentTimestampSchema,
   });
 export const notificationGatewayProfileSchema = z.strictObject({

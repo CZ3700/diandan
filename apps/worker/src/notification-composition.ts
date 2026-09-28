@@ -1,6 +1,7 @@
 import {
   createOrderNotificationUseCases,
   createAdminOrderResendUseCases,
+  createDurableNotificationTransport,
 } from "@fan-support/application";
 import {
   notificationRuntimeConfigurationSchema,
@@ -10,9 +11,15 @@ import { resolveServerRuntimeConfig } from "@fan-support/config/server";
 import { createOrderNotificationTemplates } from "@fan-support/i18n/notifications";
 import { createKmsKeyManagementAdapter } from "@fan-support/key-management-kms";
 import type { KeyManagementPort } from "@fan-support/key-management-port";
-import { createNotificationGatewayTransport } from "@fan-support/notification-provider";
+import {
+  createNotificationGatewayTransport,
+  createZeptoMailSubmission,
+} from "@fan-support/notification-provider";
 import type { StructuredLogger } from "@fan-support/observability";
-import type { NotificationTransactionManager } from "@fan-support/persistence-port";
+import type {
+  NotificationSubmissionTransactionManager,
+  NotificationTransactionManager,
+} from "@fan-support/persistence-port";
 import {
   resolveNotificationKms,
   workerNotificationConfigurationSchema,
@@ -23,6 +30,7 @@ type Environment = Readonly<Record<string, string | undefined>>;
 type Dependencies = Readonly<{
   notificationTransactionManager: NotificationTransactionManager;
   adminOrderResendNotificationTransactionManager?: NotificationTransactionManager;
+  notificationSubmissionTransactionManager?: NotificationSubmissionTransactionManager;
   logger?: StructuredLogger;
 }>;
 type Injected = Readonly<{
@@ -33,6 +41,8 @@ type Injected = Readonly<{
   keyManagement: KeyManagementPort;
   logger?: StructuredLogger;
   transportFactory?: typeof createNotificationGatewayTransport;
+  submissionFactory?: typeof createZeptoMailSubmission;
+  submissionTransactions?: NotificationSubmissionTransactionManager;
 }>;
 function prepare(
   options: Omit<Injected, "transactions" | "logger">,
@@ -57,14 +67,26 @@ function prepare(
     }
     return { entry, credential };
   });
-  const profiles = resolvedProfiles.map(({ entry, credential }) => ({
-    name: entry.name,
-    profile: entry.profile,
-    ...(options.transportFactory ?? createNotificationGatewayTransport)({
+  const profiles = resolvedProfiles.map(({ entry, credential }) => {
+    const resolveCredential = async () => credential;
+    if (entry.profile.protocol === "zeptomail-v1")
+      return {
+        name: entry.name,
+        profile: entry.profile,
+        ...(options.submissionFactory ?? createZeptoMailSubmission)({
+          profile: entry.profile,
+          resolveCredential,
+        }),
+      };
+    return {
+      name: entry.name,
       profile: entry.profile,
-      resolveCredential: async () => credential,
-    }),
-  }));
+      ...(options.transportFactory ?? createNotificationGatewayTransport)({
+        profile: entry.profile,
+        resolveCredential,
+      }),
+    };
+  });
   const active = profiles.find((p) => p.name === config.activeProfile)!;
   const configuration = notificationRuntimeConfigurationSchema.parse({
     schemaVersion: 1,
@@ -73,16 +95,34 @@ function prepare(
     transportKey: active.transportKey,
     linkPepperVersion: config.linkPepperVersion,
     linkTtlSeconds: config.linkTtlSeconds,
-    // Derive the permitted window from the exact frozen transport profile. No independent override.
+    // Freeze the gateway deduplication or native admission window with its transport profile.
     idempotencyRetentionSeconds: active.profile.idempotencyRetentionSeconds,
     leaseSeconds: config.leaseSeconds,
     retryDelaySeconds: config.retryDelaySeconds,
     maxAttempts: config.maxAttempts,
   });
-  const transports = new Map(
-    profiles.map((p) => [p.transportKey, p.transport]),
-  );
   return (dependencies: Dependencies) => {
+    const transports = new Map(
+      profiles.map((p) => {
+        if ("submitter" in p) {
+          const transactions =
+            dependencies.notificationSubmissionTransactionManager;
+          if (!transactions)
+            throw new TypeError(
+              "Invalid durable notification transport configuration",
+            );
+          return [
+            p.transportKey,
+            createDurableNotificationTransport({
+              transportKey: p.transportKey,
+              transactions,
+              submitter: p.submitter,
+            }),
+          ] as const;
+        }
+        return [p.transportKey, p.transport] as const;
+      }),
+    );
     const shared = {
       keyManagement: options.keyManagement,
       templates,
@@ -141,6 +181,12 @@ export function createTestWorkerNotifications(
     "TEST_DRAFT",
   )({
     notificationTransactionManager: options.transactions,
+    ...(options.submissionTransactions
+      ? {
+          notificationSubmissionTransactionManager:
+            options.submissionTransactions,
+        }
+      : {}),
     ...(options.resendTransactions
       ? {
           adminOrderResendNotificationTransactionManager:

@@ -51,7 +51,8 @@
     "test:postgres:management-image-source": "pnpm run build:with-dependencies && node ./scripts/postgres-management-image-source.mjs",
     "test:postgres:daily-commerce-preserve": "pnpm run build:with-dependencies && node ./scripts/postgres-daily-commerce-preserve.mjs",
     "test:postgres:storefront-navigation": "pnpm run build:with-dependencies && node ./scripts/postgres-storefront-navigation.mjs",
-    "test:postgres:information-pages": "pnpm run build:with-dependencies && node ./scripts/postgres-information-pages.mjs"
+    "test:postgres:information-pages": "pnpm run build:with-dependencies && node ./scripts/postgres-information-pages.mjs",
+    "test:postgres:notification-submissions": "pnpm turbo run build --filter @fan-support/api --filter @fan-support/worker --output-logs=errors-only && node ./scripts/postgres-notification-submissions.mjs && node ./scripts/notification-submission-integration.mjs"
   },
   "dependencies": {
     "@fan-support/catalog": "workspace:*",

@@ -20,6 +20,8 @@ const workspaceRoot = path.resolve(
 async function inputs() {
   const files = new Set([
     "database/migrations/0032_admin-order-resends.up.sql",
+    "database/migrations/0050_notification-submissions.up.sql",
+    "packages/persistence-postgres/scripts/notification-fulfillment-fixture.mjs",
     "database/migrations/0032_admin-order-resends.down.sql",
     "packages/application/src/admin-order-resends.ts",
     "packages/application/dist/admin-order-resends.js",

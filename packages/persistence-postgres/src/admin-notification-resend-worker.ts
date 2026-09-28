@@ -94,7 +94,7 @@ export function createAdminOrderResendNotificationRepository(
       run(notificationListPendingCommandSchema, input, async (command) => {
         const rows = await draftRows(
           client,
-          `SELECT r.id FROM public.admin_notification_resend_outbox q JOIN public.admin_notification_resends r ON r.id=q.resend_id WHERE r.status='REQUESTED' OR (r.status='RETRY_SCHEDULED' AND (r.next_attempt_at<=clock_timestamp() OR r.dedupe_until<=clock_timestamp() OR public.admin_notification_current_event(r.order_id) IS DISTINCT FROM r.event_type)) OR (r.status='PROCESSING' AND r.lease_expires_at<=clock_timestamp()) ORDER BY q.created_at,r.id LIMIT $1::integer`,
+          `SELECT r.id FROM public.admin_notification_resend_outbox q JOIN public.admin_notification_resends r ON r.id=q.resend_id WHERE (r.status IN('FAILED','CANCELED') AND public.notification_submission_recoverable(r.id)) OR r.status='REQUESTED' OR (r.status='RETRY_SCHEDULED' AND (r.next_attempt_at<=clock_timestamp() OR r.dedupe_until<=clock_timestamp() OR public.admin_notification_current_event(r.order_id) IS DISTINCT FROM r.event_type)) OR (r.status='PROCESSING' AND r.lease_expires_at<=clock_timestamp()) ORDER BY q.created_at,r.id LIMIT $1::integer`,
           [command.limit],
         );
         return notificationListPendingResultSchema.parse({

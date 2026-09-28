@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   keyVersionSchema,
   notificationGatewayProfileSchema,
+  notificationZeptoMailProfileSchema,
   paymentRuntimeOriginSchema,
   supportedLocaleSchema,
 } from "@fan-support/contracts";
@@ -30,7 +31,10 @@ export const workerNotificationConfigurationSchema = z
           credentialEnvironmentVariable: z
             .string()
             .regex(/^[A-Z][A-Z0-9_]{0,127}$/u),
-          profile: notificationGatewayProfileSchema,
+          profile: z.union([
+            notificationGatewayProfileSchema,
+            notificationZeptoMailProfileSchema,
+          ]),
         }),
       )
       .min(1)

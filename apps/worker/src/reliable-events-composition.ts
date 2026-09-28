@@ -267,6 +267,8 @@ export function createWorkerReliableEventsComposition(
   const transactionManager = persistence.reliableEventTransactionManager;
   const notifications = bindNotifications?.({
     notificationTransactionManager: persistence.notificationTransactionManager,
+    notificationSubmissionTransactionManager:
+      persistence.notificationSubmissionTransactionManager,
     adminOrderResendNotificationTransactionManager:
       persistence.adminOrderResendNotificationTransactionManager,
     ...(logger ? { logger } : {}),

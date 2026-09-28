@@ -9,6 +9,8 @@ import {
 } from "../../../apps/api/scripts/order-payment-client.mjs";
 import { createOrderAccessProtocolClient } from "../../../apps/api/scripts/order-access-client.mjs";
 
+import { createNotificationFulfillmentFixture } from "./notification-fulfillment-fixture.mjs";
+
 const hash = (value) =>
   createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const accepted = (id) => ({
@@ -225,95 +227,7 @@ export async function verifyOrderNotifications({ context, transportFactory }) {
     return { ...value, state, sourceId: source.id };
   }
 
-  // Exercises installed SQL authority over real paid orders. This fixture is not
-  // evidence of a future admin fulfillment UI or a physical delivery operation.
-  async function advance(value, status) {
-    const requestId = randomUUID(),
-      correlationId = randomUUID(),
-      sourceId = randomUUID();
-    await client.query("BEGIN");
-    try {
-      const order = await scalar(
-        "SELECT * FROM orders WHERE id=$1::uuid FOR UPDATE",
-        [value.state.order_id],
-      );
-      const fulfillment = await scalar(
-        "SELECT * FROM fulfillments WHERE order_id=$1::uuid FOR UPDATE",
-        [order.id],
-      );
-      await client.query(
-        `UPDATE fulfillments SET status=$2,version=version+1,
-        prepared_at=CASE WHEN $2::text='PREPARING' THEN COALESCE(prepared_at,transaction_timestamp()) ELSE prepared_at END,
-        delivered_at=CASE WHEN $2::text='DELIVERED' THEN transaction_timestamp() ELSE delivered_at END,
-        hold_reason_code=CASE WHEN $2::text='ON_HOLD' THEN 'TEST_HOLD' ELSE NULL END,
-        updated_at=transaction_timestamp() WHERE id=$1::uuid`,
-        [fulfillment.id, status],
-      );
-      await client.query(
-        `UPDATE orders SET fulfillment_status=$2,version=version+1,updated_at=transaction_timestamp() WHERE id=$1::uuid`,
-        [order.id, status],
-      );
-      await client.query(
-        `INSERT INTO order_events(id,order_id,sequence,event_type,from_order_status,to_order_status,
-        from_payment_status,to_payment_status,from_dispute_status,to_dispute_status,from_fulfillment_status,to_fulfillment_status,
-        from_payment_attempt_id,to_payment_attempt_id,authority_kind,reason_code,request_id,correlation_id,occurred_at)
-        VALUES($1::uuid,$2::uuid,$3,'FULFILLMENT_AGGREGATE_CHANGED',$4,$4,$5,$5,$6,$6,$7,$8,$9::uuid,$9::uuid,
-        'FULFILLMENT','TEST_FULFILLMENT_TRANSITION',$10::uuid,$11::uuid,transaction_timestamp())`,
-        [
-          randomUUID(),
-          order.id,
-          Number(order.version) + 1,
-          order.order_status,
-          order.payment_status,
-          order.dispute_status,
-          order.fulfillment_status,
-          status,
-          order.current_payment_attempt_id,
-          requestId,
-          correlationId,
-        ],
-      );
-      await client.query(
-        `INSERT INTO fulfillment_events(id,fulfillment_id,order_id,sequence,from_status,to_status,authority_kind,
-        reason_code,request_id,correlation_id,occurred_at) VALUES($1::uuid,$2::uuid,$3::uuid,$4,$5,$6,'WORKER',
-        CASE WHEN $6::text='ON_HOLD' THEN 'TEST_HOLD' ELSE 'TEST_FULFILLMENT_TRANSITION' END,$7::uuid,$8::uuid,transaction_timestamp())`,
-        [
-          randomUUID(),
-          fulfillment.id,
-          order.id,
-          Number(fulfillment.version) + 1,
-          fulfillment.status,
-          status,
-          requestId,
-          correlationId,
-        ],
-      );
-      await client.query(
-        `INSERT INTO outbox_events(id,event_type,aggregate_type,aggregate_id,aggregate_version,primary_subject_id,
-        secondary_subject_id,locale,market,currency,idempotency_key,correlation_id,request_id,occurred_at,available_at,payload_status)
-        VALUES($1::uuid,'FULFILLMENT_STATUS_CHANGED','FULFILLMENT',$2::uuid,$3,$2::uuid,$4::uuid,$5,$6,$7,$8,
-        $9::uuid,$10::uuid,transaction_timestamp(),transaction_timestamp(),$11)`,
-        [
-          sourceId,
-          fulfillment.id,
-          Number(fulfillment.version) + 1,
-          order.id,
-          order.presentation_locale,
-          order.market,
-          order.currency,
-          `notification-fixture:${sourceId}`,
-          correlationId,
-          requestId,
-          status,
-        ],
-      );
-      await client.query("COMMIT");
-      return sourceId;
-    } catch (error) {
-      await client.query("ROLLBACK");
-      throw error;
-    }
-  }
+  const advance = await createNotificationFulfillmentFixture(context);
   function link(id) {
     const content = captures.get(id)?.content;
     const match =
@@ -406,7 +320,7 @@ export async function verifyOrderNotifications({ context, transportFactory }) {
   cases.push({
     kind: "THREE_HISTORICAL_STAGES",
     scope:
-      "Guarded WORKER SQL fixture over normally paid, message-free checkout; no trigger bypass or physical delivery claim",
+      "Authorized TEST admin application transitions over normally paid, message-free checkout; matched audit and operation receipts; no physical delivery claim",
   });
 
   const deadlineValue = await paid(),

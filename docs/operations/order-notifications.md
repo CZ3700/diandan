@@ -1,6 +1,6 @@
 # 订单通知与到期清理
 
-P4-06 为已付款订单提供付款确认、开始准备和确认送达三类事务邮件。PostgreSQL 保存事件、历史内容、发送版本、重试和失败记录；Worker 使用持久 Outbox/pg-boss 调用邮件适配器。当前仅有本地 TEST 接收器证据：不会向真实收件箱发送邮件。邮件服务商、发信域名与人工译审仍是正式启用条件。
+P4-06 为已付款订单提供付款确认、开始准备和确认送达三类事务邮件。PostgreSQL 保存事件、历史内容、发送版本、重试和失败记录；Worker 使用持久 Outbox/pg-boss 调用邮件适配器。已实现仓库网关与 Zoho ZeptoMail 两种协议；当前仅有本地 TEST 接收器证据：不会向真实收件箱发送邮件。邮件服务商、发信域名与人工译审仍是正式启用条件。
 
 ## 历史内容与语言
 
@@ -31,10 +31,10 @@ Worker 在独立事务提交收件人访问审计后才调用 KMS 解密。通�
 |:--|:--|
 | `schemaVersion` | 固定 1 |
 | `siteName`, `publicStorefrontOrigin` | 实际站名和 HTTPS 前台 Origin，必须与部署、查单配置一致 |
-| `profiles`, `activeProfile` | 保留的邮件网关配置及新任务采用的配置名称；旧任务按其冻结 hash 找原配置 |
-| profile `protocol`, `environment`, `apiOrigin` | `fan-support-mail-v1`、TEST/LIVE、HTTPS 网关 Origin |
+| `profiles`, `activeProfile` | 保留的邮件发送配置及新任务采用的配置名称；旧任务按其冻结 hash 找原配置 |
+| profile `protocol`, `environment`, `apiOrigin` | `fan-support-mail-v1` 或 `zeptomail-v1`、TEST/LIVE、HTTPS 服务商 Origin |
 | profile `fromEmail`, `fromName`, `replyToEmail` | 经审核的发信与回复身份 |
-| profile `timeoutMs`, `idempotencyRetentionSeconds` | 总请求截止和网关保证的去重保留时间 |
+| profile `timeoutMs`, `idempotencyRetentionSeconds` | 总请求截止；网关去重窗口或原生发送的本地准入窗口 |
 | `credentialEnvironmentVariable` | 对应 profile 的服务端凭据变量引用 |
 | `linkPepperVersion`, `acceptedPepperVersions` | 与既有 checkout/order-access KMS 版本集合一致 |
 | `linkTtlSeconds`, `leaseSeconds`, `retryDelaySeconds`, `maxAttempts` | 受限链接、租约与重试预算；profile 请求截止须短于租约 |
@@ -44,7 +44,28 @@ Worker 在独立事务提交收件人访问审计后才调用 KMS 解密。通�
 
 Worker 复用既有 `FAN_SUPPORT_CART_KMS_*` 密钥引用和 SDK 凭据链；需要 `FAN_SUPPORT_ORDER_ACCESS_CONFIG_JSON`。旧 profile、旧渲染版本与旧 KMS 版本必须保留至相关通知和链接不再需要，不能通过修改旧 profile 或换供应商重试 UNKNOWN 发送。
 
-## 网关协议与重试
+## Zoho ZeptoMail 原生接入
+
+Zoho Mail 的当前[使用政策](https://www.zoho.com/mail/help/usage-policy.html)禁止自动事务邮件。订单邮件应使用 ZeptoMail；已有付费 Zoho Mail 的管理台可按[官方说明](https://www.zoho.com/mail/help/adminconsole/transactional-email-integration.html)启用 Transactional Emails。现有业务邮箱仍用作回复邮箱，不能把其 SMTP 密码当作 ZeptoMail API token。
+
+`zeptomail-v1` 使用账户实际区域的 HTTPS Origin，发送到 `/v1.1/email`，凭据按 `Zoho-enczapikey` 认证；from/reply-to 使用已验证身份。需要旧接口退信配置时可提供 profile `bounceEmail`，映射为 `bounce_address`。实际账户参数以后台给出的 API 示例为准，不根据邮箱地址猜测数据中心。官方 API 当前已转入 [Zoho CPaaS 文档](https://www.zoho.com/cpaas/help/api/email-sending.html)。
+
+每次只发送一位收件人，并关闭 click/open tracking，避免查单链接被改写或转成跟踪数据。`client_reference` 只含通知 UUID，作为关联参考；它没有官方幂等保证，不能据此重发。适配器对超时、断流、5xx 或不可信成功响应保留未知结果。
+
+Worker 必须通过 PostgreSQL `notification_submissions` 包装原生接口：先提交唯一发送登记，才允许调用服务商。journal 保存通知 ID、hash、冻结配置 hash/截止和规范化回执，不保存邮箱、正文或 token。进程重启、网络结果未知、数据库提交回执丢失时，同一登记只能读回结果，不能再次 POST；换配置或人工重发也不能绕过尚未解决的未知发送。明确未发送或被服务商拒绝的请求才记录为已知失败；例如 429 会回放既有失败，不在原命令下自动重复 POST。
+
+原生 profile 的 `idempotencyRetentionSeconds` 只用于本地准入截止。它不是 Zoho 承诺的去重期或接收截止；已准入请求稍晚返回明确成功时保留真实回执。journal 不因这个窗口过期而删除。已保存明确接受回执但业务状态写回中断时，租约到期后可以从回执完成状态恢复，无需重新发信。`SENT` 仍只表示 API 接受，不表示收件箱收到。
+
+正式启用依次完成：
+
+1. 在 Zoho 后台确认 Transactional Emails / ZeptoMail 账户、所属区域、发送域名；按其要求验证 DNS、DKIM 和退信域名，核对域名现有 SPF/DMARC，避免覆盖现有邮箱配置。
+2. 将 API token 放到部署的服务端 secret 环境变量，通过 profile 引用；token 不放入仓库、配置 JSON 或聊天。
+3. 审核七语言模板及真实站名、支持邮箱、查单域名。全部仍为 DRAFT 时生产 Worker 拒绝启用。
+4. 明确测试收件人和内容后，执行一封受控真实邮件验收，再检查邮箱接收、回复、链接和异常记录。目前未执行此步骤。
+
+本地原生验收入口：`pnpm --filter @fan-support/worker test:zeptomail`。它复用实际支付事实、PostgreSQL、pg-boss、严格 TLS 接收器和 production Next 查单浏览器；TEST 接收器不向外发信。journal 并发/崩溃和空库迁移检查入口为 `pnpm --filter @fan-support/persistence-postgres test:postgres:notification-submissions`。两项均接入根 `test:postgres`，不会在日常 `check:dev` 隐式执行外部服务验收。
+
+## 仓库网关协议与重试
 
 这是仓库自有的网关协议，并非任意邮件厂商都实现的标准 API。未来接入厂商时需要实现并验收接收端，尤其是接收去重与实际投递副作用的一致性，不能仅用 HTTP 成功模拟真实投递。
 

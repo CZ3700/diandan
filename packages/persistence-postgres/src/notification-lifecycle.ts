@@ -16,6 +16,10 @@ import {
   notificationSkip,
 } from "./notification-data.js";
 import type { TransactionClient } from "./transaction-runner.js";
+import {
+  definiteNotificationSubmission,
+  recoverFailedNotificationSubmission,
+} from "./notification-submission-recovery.js";
 
 type Completion = {
   status: "SENT" | "RETRY_SCHEDULED" | "FAILED";
@@ -137,7 +141,7 @@ export async function claimNotification(
   const row = await lockNotification(client, command.notificationId);
   if (
     !row ||
-    !["REQUESTED", "PROCESSING", "RETRY_SCHEDULED"].includes(
+    !["REQUESTED", "PROCESSING", "RETRY_SCHEDULED", "FAILED"].includes(
       String(row["status"]),
     )
   )
@@ -145,9 +149,55 @@ export async function claimNotification(
   const now = await notificationClock(client),
     time = Date.parse(now);
   const withinWindow = Date.parse(String(row["dedupe_until"])) > time;
-  if (row["status"] === "PROCESSING") {
-    if (Date.parse(String(row["lease_expires_at"])) > time)
+  if (row["status"] === "FAILED") {
+    await recoverFailedNotificationSubmission(client, row, now, "automatic");
+    return notificationSkip;
+  }
+  if (
+    row["status"] === "PROCESSING" &&
+    Date.parse(String(row["lease_expires_at"])) > time
+  )
+    return notificationSkip;
+  if (
+    row["status"] === "PROCESSING" ||
+    (row["status"] === "RETRY_SCHEDULED" &&
+      (!withinWindow || Date.parse(String(row["next_attempt_at"])) <= time))
+  ) {
+    const recorded = await definiteNotificationSubmission(client, row);
+    if (recorded) {
+      if (row["status"] === "RETRY_SCHEDULED") {
+        await client.query(
+          "UPDATE public.notification_deliveries SET status='PROCESSING',next_attempt_at=NULL,last_error_code=NULL,version=version+1,updated_at=$2::timestamptz WHERE id=$1::uuid",
+          [command.notificationId, now],
+        );
+        await client.query(
+          "UPDATE public.notification_runtime_state SET lease_token=$2::uuid,lease_started_at=$3::timestamptz,lease_expires_at=$3::timestamptz+($4::integer*interval '1 second'),generation=generation+1,updated_at=$3::timestamptz WHERE notification_delivery_id=$1::uuid",
+          [
+            command.notificationId,
+            command.leaseToken,
+            now,
+            command.leaseSeconds,
+          ],
+        );
+        row["status"] = "PROCESSING";
+        row["lease_started_at"] = now;
+      }
+      await completeNotification(
+        client,
+        row,
+        notificationCompletion(
+          recorded,
+          Number(row["attempt_count"]) + 1,
+          command.maxAttempts,
+          withinWindow,
+        ),
+        now,
+        0,
+      );
       return notificationSkip;
+    }
+  }
+  if (row["status"] === "PROCESSING") {
     const retry =
       withinWindow && Number(row["attempt_count"]) + 1 < command.maxAttempts;
     await completeNotification(
@@ -197,7 +247,11 @@ export async function claimNotification(
     (row["next_attempt_at"] !== null &&
       Date.parse(String(row["next_attempt_at"])) > time) ||
     (await lowerNotificationPending(client, row)) ||
-    (await hasPendingAdminNotificationResend(client, row["order_id"]))
+    (await hasPendingAdminNotificationResend(
+      client,
+      row["order_id"],
+      command.notificationId,
+    ))
   )
     return notificationSkip;
   await client.query(
@@ -253,7 +307,7 @@ export async function finishNotification(
     return notificationSkip;
   const now = await notificationClock(client);
   const completion = notificationCompletion(
-    command.result,
+    (await definiteNotificationSubmission(client, row)) ?? command.result,
     Number(row["attempt_count"]) + 1,
     command.maxAttempts,
     Date.parse(String(row["dedupe_until"])) > Date.parse(now),

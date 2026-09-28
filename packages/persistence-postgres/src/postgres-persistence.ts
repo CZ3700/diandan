@@ -53,10 +53,13 @@ import type {
   AdminAccessTransactionManager,
 } from "@fan-support/persistence-port";
 import { createNotificationRepository } from "./notification-repository.js";
+import { createNotificationSubmissionRepository } from "./notification-submission-repository.js";
 import { createCommerceExpiryRepository } from "./commerce-expiry-repository.js";
 import type {
   NotificationRepository,
   NotificationTransactionManager,
+  NotificationSubmissionRepository,
+  NotificationSubmissionTransactionManager,
   CommerceExpiryRepository,
   CommerceExpiryTransactionManager,
 } from "@fan-support/persistence-port";
@@ -239,6 +242,7 @@ export interface PostgresPersistence {
   readonly adminOrderResendNotificationTransactionManager: NotificationTransactionManager;
   readonly adminAccessTransactionManager: AdminAccessTransactionManager;
   readonly notificationTransactionManager: NotificationTransactionManager;
+  readonly notificationSubmissionTransactionManager: NotificationSubmissionTransactionManager;
   readonly commerceExpiryTransactionManager: CommerceExpiryTransactionManager;
   readonly orderAccessTransactionManager: OrderAccessTransactionManager;
   readonly orderPaymentApplicationTransactionManager: OrderPaymentApplicationTransactionManager;
@@ -469,6 +473,11 @@ export function createPostgresPersistenceWithPoolFactory(
         ),
       ),
   });
+  const notificationSubmissionRunner =
+    createTransactionRunner<NotificationSubmissionRepository>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: createNotificationSubmissionRepository,
+    });
   const commerceExpiryRunner =
     createTransactionRunner<CommerceExpiryRepository>({
       acquireClient: async () => pool.connect(),
@@ -1349,6 +1358,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return notificationRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    notificationSubmissionTransactionManager: {
+      async runInNotificationSubmissionTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return notificationSubmissionRunner.run(
           { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );

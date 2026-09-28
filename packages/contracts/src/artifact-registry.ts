@@ -31,6 +31,7 @@ import * as adminOrdersPersistence from "./admin-orders-persistence.js";
 import * as adminOrders from "./admin-orders.js";
 import * as adminAccess from "./admin-access.js";
 import * as orderNotification from "./order-notification.js";
+import * as notificationSubmission from "./notification-submission.js";
 import * as orderAccess from "./order-access.js";
 import * as deliveryProof from "./delivery-proof.js";
 import * as orderPaymentApplication from "./order-payment-application.js";
@@ -1303,6 +1304,31 @@ const registrations = [
     name: "NotificationGatewayProfile",
     audience: "internal",
     schema: orderNotification.notificationGatewayProfileSchema,
+  },
+  {
+    name: "NotificationZeptoMailProfile",
+    audience: "internal",
+    schema: notificationSubmission.notificationZeptoMailProfileSchema,
+  },
+  {
+    name: "NotificationSubmissionClaimCommand",
+    audience: "internal",
+    schema: notificationSubmission.notificationSubmissionClaimCommandSchema,
+  },
+  {
+    name: "NotificationSubmissionClaimResult",
+    audience: "internal",
+    schema: notificationSubmission.notificationSubmissionClaimResultSchema,
+  },
+  {
+    name: "NotificationSubmissionFinishCommand",
+    audience: "internal",
+    schema: notificationSubmission.notificationSubmissionFinishCommandSchema,
+  },
+  {
+    name: "NotificationSubmissionFinishResult",
+    audience: "internal",
+    schema: notificationSubmission.notificationSubmissionFinishResultSchema,
   },
   {
     name: "NotificationGatewayReceipt",

@@ -490,6 +490,16 @@
         "up": "1018b019199080b3d901fc6b667c40d0403c3bf4e7eb5be5b54e68857119c5a5",
         "down": "c35de330ef2cf272fe9efe10e2c6060723462d301aecb9fba223d024bc539ee9"
       }
+    },
+    {
+      "version": "0050",
+      "name": "notification-submissions",
+      "up": "database/migrations/0050_notification-submissions.up.sql",
+      "down": "database/migrations/0050_notification-submissions.down.sql",
+      "sha256": {
+        "up": "00b150b52608017996fea2fed5aca99f2c513c1abc41c3165dd9ba32d385e1ae",
+        "down": "c5715877501acfd4bc01022ffc0ff46b1d5c5bd67cf02230f39ef5bf6da0ad1f"
+      }
     }
   ]
 }

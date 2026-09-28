@@ -104,17 +104,18 @@ export function createNotificationRepository(
         const rows = await draftRows(
           client,
           `SELECT d.id FROM public.notification_deliveries d JOIN public.notification_runtime_state r ON r.notification_delivery_id=d.id
-          WHERE (d.status='REQUESTED' OR (d.status='RETRY_SCHEDULED' AND (d.next_attempt_at<=clock_timestamp() OR r.dedupe_until<=clock_timestamp())) OR (d.status='PROCESSING' AND r.lease_expires_at<=clock_timestamp()))
+          WHERE (d.status='FAILED' AND public.notification_submission_recoverable(d.id)) OR ((d.status='REQUESTED' OR (d.status='RETRY_SCHEDULED' AND (d.next_attempt_at<=clock_timestamp() OR r.dedupe_until<=clock_timestamp())) OR (d.status='PROCESSING' AND r.lease_expires_at<=clock_timestamp()))
+          AND NOT public.notification_submission_unresolved(d.order_id,d.id)
           AND (d.status='PROCESSING' OR r.dedupe_until<=clock_timestamp() OR NOT EXISTS(SELECT 1 FROM public.admin_notification_resends manual WHERE manual.order_id=d.order_id AND
             (manual.status IN('REQUESTED','PROCESSING','RETRY_SCHEDULED') OR
-             (manual.status<>'SENT' AND manual.dedupe_until>clock_timestamp() AND EXISTS(SELECT 1 FROM public.admin_notification_resend_attempts a WHERE a.resend_id=manual.id AND a.outcome='UNKNOWN')))))
+             (manual.status<>'SENT' AND NOT public.notification_submission_definite(manual.id) AND manual.dedupe_until>clock_timestamp() AND EXISTS(SELECT 1 FROM public.admin_notification_resend_attempts a WHERE a.resend_id=manual.id AND a.outcome='UNKNOWN')))))
           AND (d.status='PROCESSING' OR r.dedupe_until<=clock_timestamp()
             OR EXISTS(SELECT 1 FROM public.notification_deliveries later JOIN public.notification_runtime_state later_runtime ON later_runtime.notification_delivery_id=later.id WHERE later.order_id=d.order_id AND later_runtime.event_rank>r.event_rank AND (later.status='SENT' OR later_runtime.link_token_id IS NOT NULL))
             OR NOT EXISTS(SELECT 1 FROM public.outbox_events x CROSS JOIN LATERAL public.notification_source_authority(x.id) source
               LEFT JOIN public.notification_deliveries earlier ON earlier.order_id=source.order_id AND earlier.event_type=source.event_type
               WHERE (x.aggregate_id=d.order_id OR x.secondary_subject_id=d.order_id) AND source.order_id=d.order_id AND source.event_rank<r.event_rank
                 AND (earlier.id IS NULL OR earlier.status IN('REQUESTED','PROCESSING','RETRY_SCHEDULED'))))
-          ORDER BY d.created_at,r.event_rank,d.id LIMIT $1::integer`,
+          ) ORDER BY d.created_at,r.event_rank,d.id LIMIT $1::integer`,
           [command.limit],
         );
         return notificationListPendingResultSchema.parse({

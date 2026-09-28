@@ -357,6 +357,7 @@ export * from "./payment-runtime.js";
 
 export * from "./order-access.js";
 export * from "./order-notification.js";
+export * from "./notification-submission.js";
 
 export * from "./admin-access.js";
 export * from "./admin-orders.js";

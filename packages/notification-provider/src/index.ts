@@ -203,3 +203,7 @@ export {
   createNotificationGatewayTransport,
   type NotificationGatewayOptions,
 } from "./gateway.js";
+export {
+  createZeptoMailSubmission,
+  type ZeptoMailSubmissionOptions,
+} from "./zeptomail.js";

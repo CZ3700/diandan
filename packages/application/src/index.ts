@@ -95,6 +95,7 @@ export { createPaymentRuntimeUseCases } from "./payment-runtime.js";
 
 export * from "./order-access.js";
 export * from "./order-notifications.js";
+export * from "./notification-submission.js";
 export * from "./commerce-expiry.js";
 export {
   createAdminAccessUseCases,

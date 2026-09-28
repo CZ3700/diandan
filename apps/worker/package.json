@@ -20,7 +20,8 @@
     "start": "node dist/main.js",
     "test": "vitest run --config ../../vitest.config.ts --root .",
     "typecheck": "tsc -p tsconfig.json",
-    "test:media-processing": "pnpm turbo run build --filter @fan-support/worker --output-logs=errors-only && node ./scripts/media-processing-integration.mjs"
+    "test:media-processing": "pnpm turbo run build --filter @fan-support/worker --output-logs=errors-only && node ./scripts/media-processing-integration.mjs",
+    "test:zeptomail": "pnpm turbo run build --filter @fan-support/api --filter @fan-support/worker --filter @fan-support/storefront^... --output-logs=errors-only && node ./scripts/notification-zeptomail-integration.mjs"
   },
   "dependencies": {
     "@fan-support/i18n": "workspace:*",

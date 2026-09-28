@@ -14,6 +14,8 @@ import { preflightEnvironment } from "../../../apps/api/scripts/publication-pref
 import { createWorkerReliableEventsComposition } from "../../../apps/worker/dist/reliable-events-composition.js";
 import { createReliableEventsWorkerRuntime } from "../../../apps/worker/dist/reliable-events-runtime.js";
 import { createTestWorkerNotifications } from "../../../apps/worker/dist/notification-composition.js";
+import { createNotificationFulfillmentFixture } from "./notification-fulfillment-fixture.mjs";
+
 const sha = (value) =>
   createHash("sha256").update(JSON.stringify(value)).digest("hex");
 
@@ -22,6 +24,7 @@ export async function verifyAdminNotificationResends(context) {
   const scalar = async (sql, params = []) =>
     (await client.query(sql, params)).rows[0];
   const payment = createOrderPaymentProtocolClient(context);
+  const advance = await createNotificationFulfillmentFixture(context);
   const access = createOrderAccessProtocolClient({
     ...context,
     canaries: payment.canaries,
@@ -600,80 +603,4 @@ export async function verifyAdminNotificationResends(context) {
     scope:
       "Synthetic local data and local TEST receiver; no production email or physical delivery",
   };
-
-  // Existing database-enforced WORKER event fixture. Admin fulfillment itself is tested separately.
-  async function advance(value, status) {
-    const requestId = randomUUID(),
-      correlationId = randomUUID(),
-      sourceId = randomUUID();
-    await client.query("BEGIN");
-    try {
-      const order = await scalar(
-        "SELECT * FROM orders WHERE id=$1 FOR UPDATE",
-        [value.state.order_id],
-      );
-      const fulfillment = await scalar(
-        "SELECT * FROM fulfillments WHERE order_id=$1 FOR UPDATE",
-        [order.id],
-      );
-      await client.query(
-        "UPDATE fulfillments SET status=$2,version=version+1,prepared_at=transaction_timestamp(),updated_at=transaction_timestamp() WHERE id=$1",
-        [fulfillment.id, status],
-      );
-      await client.query(
-        "UPDATE orders SET fulfillment_status=$2,version=version+1,updated_at=transaction_timestamp() WHERE id=$1",
-        [order.id, status],
-      );
-      await client.query(
-        `INSERT INTO order_events(id,order_id,sequence,event_type,from_order_status,to_order_status,from_payment_status,to_payment_status,from_dispute_status,to_dispute_status,from_fulfillment_status,to_fulfillment_status,from_payment_attempt_id,to_payment_attempt_id,authority_kind,reason_code,request_id,correlation_id,occurred_at) VALUES($1,$2,$3,'FULFILLMENT_AGGREGATE_CHANGED',$4,$4,$5,$5,$6,$6,$7,$8,$9,$9,'FULFILLMENT','TEST_FULFILLMENT_TRANSITION',$10,$11,transaction_timestamp())`,
-        [
-          randomUUID(),
-          order.id,
-          Number(order.version) + 1,
-          order.order_status,
-          order.payment_status,
-          order.dispute_status,
-          order.fulfillment_status,
-          status,
-          order.current_payment_attempt_id,
-          requestId,
-          correlationId,
-        ],
-      );
-      await client.query(
-        `INSERT INTO fulfillment_events(id,fulfillment_id,order_id,sequence,from_status,to_status,authority_kind,reason_code,request_id,correlation_id,occurred_at) VALUES($1,$2,$3,$4,$5,$6,'WORKER','TEST_FULFILLMENT_TRANSITION',$7,$8,transaction_timestamp())`,
-        [
-          randomUUID(),
-          fulfillment.id,
-          order.id,
-          Number(fulfillment.version) + 1,
-          fulfillment.status,
-          status,
-          requestId,
-          correlationId,
-        ],
-      );
-      await client.query(
-        `INSERT INTO outbox_events(id,event_type,aggregate_type,aggregate_id,aggregate_version,primary_subject_id,secondary_subject_id,locale,market,currency,idempotency_key,correlation_id,request_id,occurred_at,available_at,payload_status) VALUES($1,'FULFILLMENT_STATUS_CHANGED','FULFILLMENT',$2,$3,$2,$4,$5,$6,$7,$8,$9,$10,transaction_timestamp(),transaction_timestamp(),$11)`,
-        [
-          sourceId,
-          fulfillment.id,
-          Number(fulfillment.version) + 1,
-          order.id,
-          order.presentation_locale,
-          order.market,
-          order.currency,
-          `resend-fixture:${sourceId}`,
-          correlationId,
-          requestId,
-          status,
-        ],
-      );
-      await client.query("COMMIT");
-      return sourceId;
-    } catch (error) {
-      await client.query("ROLLBACK");
-      throw error;
-    }
-  }
 }

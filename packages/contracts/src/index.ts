@@ -96,6 +96,7 @@ export * from "./payment-stablecoin.js";
 export * from "./order-access.js";
 export * from "./public-order-number.js";
 export * from "./order-notification.js";
+export * from "./notification-submission.js";
 
 export * from "./admin-access.js";
 export * from "./admin-orders.js";
