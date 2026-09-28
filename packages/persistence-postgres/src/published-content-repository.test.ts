@@ -1,4 +1,5 @@
 import { describe, expect, test, vi } from "vitest";
+import { publishedContentReadCommandSchema } from "@fan-support/contracts";
 import { createPublishedContentRepository } from "./published-content-repository.js";
 import type { TransactionScopeControl } from "./transaction-runner.js";
 
@@ -70,4 +71,56 @@ describe("current public content repository", () => {
       ),
     ).toThrow(TypeError);
   });
+});
+describe("deleted artists and gifts", () => {
+  function ownerRepository(status: string) {
+    const query = vi.fn(async (text: string) => ({
+      rows: text.startsWith("SET ")
+        ? []
+        : text.includes("WHERE handle=$1")
+          ? [{ id: "00000000-0000-4000-8000-000000000001", status }]
+          : [{}, {}],
+    }));
+    return {
+      query,
+      repository: createPublishedContentRepository(
+        { query, release: vi.fn() },
+        scope,
+        "https://media.example.test/",
+      ),
+    };
+  }
+  const read = (kind: "IDOL" | "GIFT") =>
+    publishedContentReadCommandSchema.parse({
+      schemaVersion: 1,
+      locator: { kind, handle: "deleted-owner" },
+      locale: "en",
+    });
+  test.each(["IDOL", "GIFT"] as const)(
+    "an archived %s reads as not found instead of temporarily unavailable",
+    async (kind) => {
+      const value = ownerRepository("archived");
+      expect(await value.repository.load(read(kind))).toEqual({
+        schemaVersion: 1,
+        outcome: "FAILURE",
+        code: "NOT_FOUND",
+      });
+      expect(
+        value.query.mock.calls.some(([text]) =>
+          String(text).includes("content_publications"),
+        ),
+      ).toBe(false);
+    },
+  );
+  test.each(["active", "paused"])(
+    "a %s owner still reads its publication, so integrity failures stay unavailable",
+    async (status) => {
+      const value = ownerRepository(status);
+      expect(await value.repository.load(read("GIFT"))).toEqual({
+        schemaVersion: 1,
+        outcome: "FAILURE",
+        code: "CONTENT_UNAVAILABLE",
+      });
+    },
+  );
 });
