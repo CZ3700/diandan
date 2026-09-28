@@ -3,7 +3,7 @@
 本项目的执行规则由以下文件共同定义（2026-09-28 起按可配置装修与精简上线方案推进）：
 
 1. `AGENTS.md`
-2. `docs/FAN_SUPPORT_PLATFORM_SPEC.md` —— 行为权威，§0.3/ADR-020 为当前变更
+2. `docs/FAN_SUPPORT_PLATFORM_SPEC.md` —— 行为权威，§0.3–0.4/ADR-020/021 为当前变更
 3. `docs/plan/2026-09-28-flexible-storefront-launch.md` —— L0–L4 范围、顺序与验收
 4. `docs/progress/launch-progress.md` —— 唯一当前进度，V2 与 Phase 记录作为历史证据
 5. `.agents/skills/fan-support-platform-dev/SKILL.md`

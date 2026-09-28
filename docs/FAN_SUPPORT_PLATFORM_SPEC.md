@@ -1,8 +1,8 @@
 # 全球偶像礼物应援平台：产品、设计与工程约束
 
 > 文档状态：开发基线（Authoritative）  
-> 版本：5.0.0
-> 日期：2026-09-28
+> 版本：5.1.0
+> 日期：2026-09-29
 > 面向：Codex、Claude Code、产品设计、前端、后端、测试与运营  
 > 目标：让执行代理无需重新解释需求，即可按阶段实现、验证和交付第一版平台。
 
@@ -62,6 +62,12 @@
 - 已有测试、历史证据及未通过记录保留，不降低资金、隐私、权限规则；真实小额支付、正式内容/生产发布和不可逆资源操作仍按已有授权边界执行。4–6 周仅为条件性粗估，不是上线日期承诺。
 
 本节优先于后文尚保留的历史 Phase 排期、特定平台部署形式及旧首发扩展要求。下文产品与安全不变量仍适用。
+
+### 0.4 2026-09-29 用户确认的后台登录与应援凭证（5.1.0）
+
+- 后台首发使用平台内置账号（登录名 + 密码）登录，不依赖外部 IdP；两步验证（TOTP）由账号在"账号设置"中扫码自行绑定，绑定后每次登录必须验证，不强制所有账号绑定；账号设置提供修改密码。初始管理员与紧急访问由服务器命令完成。见 ADR-021，它在首发范围内替代 §14 的 OIDC 要求和 §15 的"管理员必须启用 MFA"。OIDC 保留为可选接入方式。
+- 虚拟礼物在查单页和付款成功页提供可保存的数字应援凭证（浏览器本地生成图片，不含私密留言和金额），见 ADR-019 增补。
+- 协作：Claude（Windows 端）与远端开发者在同一分支并行推进，各自在 `launch-progress.md` 登记认领条目，完成即推送代码、证据摘要与文档，另一方同步。
 
 ## 1. 已确认的产品定义
 
@@ -688,7 +694,7 @@ MVP 没有偶像登录角色。偶像资料由平台运营维护。
 | 核心 API | NestJS + Fastify adapter 的模块化单体 | Domain 不依赖 NestJS、ORM 或供应商 SDK |
 | 数据库 | PostgreSQL + Drizzle query layer + 版本化显式 SQL migrations | 平台所有业务真相源；实际 PostgreSQL catalog 与已评审 SQL migration 是 schema 权威，Drizzle 只提供 query/types；CI 必须做 migration/类型 drift 检查，禁止两边独立手改 |
 | 媒体 | S3 兼容对象存储 + CDN + Worker 图片处理 | 媒体 adapter 可替换；原文件私有、衍生图可缓存 |
-| 员工身份 | 标准 OIDC adapter + IdP MFA | 管理后台自研；身份提供商不拥有业务权限真相源 |
+| 员工身份 | 首发：平台内置账号，两步验证自选（ADR-021）；可选：标准 OIDC adapter + IdP MFA | 管理后台自研；身份提供商不拥有业务权限真相源 |
 | 支付 | 自研支付编排 + PSP 托管页面/字段 SDK | 不存卡；provider adapter、capability、webhook、退款与对账全自研 |
 | 异步任务 | PostgreSQL Outbox + pg-boss/等价持久队列 | MVP 不引入 Redis；webhook、通知、重试、对账 |
 | 合同 | Zod + JSON Schema + OpenAPI | 接口先于实现 |
@@ -1209,7 +1215,7 @@ Provider：
 
 - 公共 API 使用限流、输入 schema、统一错误码和 request ID。
 - BFF 必须从已校验的 `/:locale` route 生成 canonical `LocaleContext`；内容读取接口必须显式携带规范化 locale，响应返回 `requestedLocale / resolvedLocale / fallbackUsed / translationRevision`。禁止以任意字符串、IP 国家或隐式全局 `Accept-Language` 直接选择内容/缓存。
-- 管理 API 使用 OIDC Authorization Code + PKCE、服务端会话、RBAC、CSRF 防护和审计；角色权限保存在平台数据库。
+- 管理 API 使用服务端会话（首发身份源为内置账号，见 ADR-021；OIDC 接入时使用 Authorization Code + PKCE）、RBAC、CSRF 防护和审计；角色权限保存在平台数据库。
 - 粉丝购物车使用至少 256-bit 的 opaque random token 与 HttpOnly/Secure/SameSite cookie 绑定，数据库只存带 pepper 的摘要；禁止 JWT/自包含业务字段和连续 ID 作为授权。
 - 购物车 token 不得出现在 URL、日志、分析或响应正文；上述 `/cart` API 只从受保护 cookie 解析当前购物车，数据库仅保存 token 摘要。
 - 查单 token 只允许在禁用 request-body logging 的交换接口中出现；成功交换后设置短时、受订单范围约束的 HttpOnly cookie，普通订单接口同时校验该 cookie 与 `publicOrderId`。
@@ -1228,7 +1234,7 @@ Provider：
 - 查单 token 只向粉丝展示一次，服务端保存不可逆摘要；支持过期、轮换和撤销。邮件链接使用 fragment，交换页禁止第三方脚本并立即清除 fragment，token 不得进入服务端访问日志、分析、Referrer 或普通页面历史。
 - 前台富文本必须白名单清洗；留言防 XSS、双向文本混淆和异常 Unicode 滥用。
 - 留言在交付偶像前经过自动规则与受限运营复核；拒绝骚扰、威胁、仇恨、性内容、个人联系方式和索取私下联系。审核流程必须覆盖七种首发语言；自动检测不支持或低置信度时进入具备对应语言能力的人工队列，绝不能因“不认识语言”自动批准。保留/删除期限由隐私政策配置并可审计。
-- 管理员必须启用 MFA；退款、强制状态变更和渠道启停需要二次确认。
+- 管理员两步验证按 ADR-021 由账号自行绑定（OIDC 接入时仍要求 IdP MFA）；退款、强制状态变更和渠道启停需要二次确认。
 - 全站 HTTPS、HSTS、CSP、`frame-ancestors`、X-Content-Type-Options、Referrer-Policy 与合理 Permissions-Policy。
 - 所有密钥从 Secret Manager 注入并支持轮换；前端 bundle 和仓库中不得出现私钥。
 - 对登录、查单、购物车、支付创建、退款和 webhook 做差异化限流与滥用防护。
