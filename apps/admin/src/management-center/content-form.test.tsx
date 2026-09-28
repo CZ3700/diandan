@@ -68,6 +68,9 @@ it("does not ask for fictitious stock on the default repeatable gift", () => {
   expect(html).toContain('data-management-field="giftKind"');
   expect(html).not.toContain('data-management-field="quantity"');
   expect(html).toContain('value="PROCURE_ON_DEMAND" selected=""');
+  expect(html).not.toMatch(
+    /<select[^>]*data-management-field="(?:market|currency)"[^>]*disabled=""/u,
+  );
 });
 it("disables the whole form during the active upload or publication", () => {
   const html = renderToStaticMarkup(
@@ -127,4 +130,11 @@ it("locks only an existing inventory policy while leaving zero quantity and cont
     /<input[^>]*data-management-field="(?:quantity|name|price)"[^>]*disabled=""/u,
   );
   expect(html).toContain("保存并显示");
+  expect(html).toMatch(
+    /<select[^>]*data-management-field="market"[^>]*disabled=""/u,
+  );
+  expect(html).toMatch(
+    /<select[^>]*data-management-field="currency"[^>]*disabled=""/u,
+  );
+  expect(html).not.toContain('data-management-field="locationId"');
 });

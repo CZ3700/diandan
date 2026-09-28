@@ -15,6 +15,7 @@ export type ManagementCenterRouteDependencies = Readonly<{
 const routes = [
   ["context", "CONTEXT", false],
   ["list", "LIST", false],
+  ["images/read", "READ_IMAGE_SOURCE", false],
   ["uploads/prepare", "PREPARE_UPLOAD", true],
   ["submit", "SUBMIT", true],
   ["operations/read", "READ_OPERATION", false],
@@ -39,6 +40,13 @@ function matches(
       );
     case "PREPARE_UPLOAD":
       return result.kind === "UPLOAD_GRANT";
+    case "READ_IMAGE_SOURCE":
+      return (
+        result.kind === "ORIGINAL_IMAGE" &&
+        result.target.kind === command.target.kind &&
+        same(result.target.id, command.target.id) &&
+        result.target.expectedVersion === command.target.expectedVersion
+      );
     case "READ_OPERATION":
     case "RETRY_OPERATION":
       return (

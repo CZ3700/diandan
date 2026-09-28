@@ -158,3 +158,35 @@ it("offers gift deletion only with gift.manage and treats a failed context as no
     }).api.canDeleteGifts(),
   ).toBe(false);
 });
+it("reads an original only for the exact requested content version", async () => {
+  const target = { kind: "ARTIST" as const, id, expectedVersion: 2 };
+  const response = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "ORIGINAL_IMAGE",
+    target,
+    currentImage: { assetId: id, metadataRevisionId: id },
+    focalPoint: { x: 0.2, y: 0.4 },
+    sourceWidth: 2000,
+    sourceHeight: 1600,
+    download: {
+      method: "GET",
+      url: "https://storage.example.invalid/original",
+      headers: {},
+      expiresAt: "2099-01-01T00:00:00Z",
+    },
+  };
+  const { api, calls } = setup(response);
+  await expect(api.readImageSource(target)).resolves.toMatchObject({ target });
+  expect(calls[0]?.url).toBe("/api/admin/management-read-image-source");
+  expect(JSON.parse(String(calls[0]?.init.body))).toEqual({
+    schemaVersion: 1,
+    target,
+  });
+  await expect(
+    api.readImageSource({ ...target, expectedVersion: 3 }),
+  ).rejects.toThrow("INVALID_RESPONSE");
+  await expect(
+    api.readImageSource({ ...target, kind: "GIFT" }),
+  ).rejects.toThrow("INVALID_RESPONSE");
+});

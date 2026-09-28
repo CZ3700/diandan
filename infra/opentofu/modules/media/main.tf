@@ -67,7 +67,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "media" {
 resource "aws_s3_bucket_cors_configuration" "source" {
   bucket = aws_s3_bucket.media["source"].id
   cors_rule {
-    allowed_methods = ["PUT", "POST", "HEAD"]
+    allowed_methods = ["GET", "PUT", "POST", "HEAD"]
     allowed_origins = [var.admin_origin]
     allowed_headers = ["if-none-match", "content-type", "x-amz-checksum-sha256", "x-amz-content-sha256", "x-amz-date", "authorization", "x-amz-security-token"]
     expose_headers  = ["ETag", "x-amz-version-id", "x-amz-checksum-sha256"]
@@ -87,5 +87,19 @@ resource "aws_s3_bucket_policy" "media" {
 output "buckets" { value = { for name, bucket in aws_s3_bucket.media : name => { id = bucket.id, arn = bucket.arn, domain = bucket.bucket_regional_domain_name } } }
 output "kms_key_arn" { value = aws_kms_key.media.arn }
 output "invariants" {
-  value = { private_buckets = length(aws_s3_bucket_public_access_block.media), versioned_buckets = length(aws_s3_bucket_versioning.media), encrypted_buckets = length(aws_s3_bucket_server_side_encryption_configuration.media), source_upload_headers = one(aws_s3_bucket_cors_configuration.source.cors_rule).allowed_headers, source_cdn_access = strcontains(aws_s3_bucket_policy.media["source"].policy, "cloudfront.amazonaws.com") }
+  value = {
+    private_buckets       = length(aws_s3_bucket_public_access_block.media)
+    versioned_buckets     = length(aws_s3_bucket_versioning.media)
+    encrypted_buckets     = length(aws_s3_bucket_server_side_encryption_configuration.media)
+    source_upload_headers = one(aws_s3_bucket_cors_configuration.source.cors_rule).allowed_headers
+    source_cors_methods   = one(aws_s3_bucket_cors_configuration.source.cors_rule).allowed_methods
+    source_cors_origins   = one(aws_s3_bucket_cors_configuration.source.cors_rule).allowed_origins
+    source_public_access_blocked = alltrue([
+      aws_s3_bucket_public_access_block.media["source"].block_public_acls,
+      aws_s3_bucket_public_access_block.media["source"].block_public_policy,
+      aws_s3_bucket_public_access_block.media["source"].ignore_public_acls,
+      aws_s3_bucket_public_access_block.media["source"].restrict_public_buckets,
+    ])
+    source_cdn_access = strcontains(aws_s3_bucket_policy.media["source"].policy, "cloudfront.amazonaws.com")
+  }
 }

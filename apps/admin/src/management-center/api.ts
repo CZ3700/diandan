@@ -28,6 +28,14 @@ export type PreparedUpload = Extract<
   ManagementCenterResponse,
   { kind: "UPLOAD_GRANT" }
 >;
+export type ImageSourceTarget = Extract<
+  ManagementCenterCommand,
+  { action: "READ_IMAGE_SOURCE" }
+>["target"];
+export type OriginalImage = Extract<
+  ManagementCenterResponse,
+  { kind: "ORIGINAL_IMAGE" }
+>;
 type PrepareCommand = Omit<
   Extract<ManagementCenterCommand, { action: "PREPARE_UPLOAD" }>,
   "action" | "idempotencyKey"
@@ -47,6 +55,17 @@ export function createManagementApi(client: AdminClient) {
     );
   const invalid = () => new AdminClientError("INVALID_RESPONSE");
   return {
+    async readImageSource(target: ImageSourceTarget): Promise<OriginalImage> {
+      const result = await call("read-image-source", { target });
+      if (
+        result.kind !== "ORIGINAL_IMAGE" ||
+        result.target.kind !== target.kind ||
+        result.target.id.toLowerCase() !== target.id.toLowerCase() ||
+        result.target.expectedVersion !== target.expectedVersion
+      )
+        throw invalid();
+      return result;
+    },
     async context(): Promise<ManagementContext> {
       const result = await call("context");
       if (result.kind !== "CONTEXT") throw invalid();

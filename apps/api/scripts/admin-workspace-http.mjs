@@ -742,7 +742,7 @@ export async function verifyAdminWorkspaceScenario(
               CORSRules: [
                 {
                   AllowedOrigins: [origin],
-                  AllowedMethods: ["PUT"],
+                  AllowedMethods: ["PUT", "GET", "HEAD"],
                   AllowedHeaders: ["*"],
                   ExposeHeaders: ["ETag", "x-amz-checksum-sha256"],
                   MaxAgeSeconds: 60,

@@ -334,6 +334,10 @@
         {
           "condition": "${alltrue([for key, routes in output.invariants.edge.operation_routes : alltrue([for route in routes : strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), jsonencode(route.path)) && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), jsonencode(route.method))]) && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), \"URL_DECODE\") && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), \"NORMALIZE_PATH\")])}",
           "error_message": "Planned WAF scopes must contain the reviewed method/path pairs and canonicalization transforms."
+        },
+        {
+          "condition": "${toset(output.invariants.media.source_cors_methods) == toset([\"GET\", \"PUT\", \"POST\", \"HEAD\"]) && toset(output.invariants.media.source_cors_origins) == toset([format(\"https://%s\", var.domains.admin)]) && output.invariants.media.source_public_access_blocked && !output.invariants.media.source_cdn_access}",
+          "error_message": "Authenticated original previews must permit GET only from the configured admin origin while the source bucket remains private and outside the CDN."
         }
       ]
     },
@@ -428,6 +432,10 @@
         {
           "condition": "${alltrue([for key, routes in output.invariants.edge.operation_routes : alltrue([for route in routes : strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), jsonencode(route.path)) && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), jsonencode(route.method))]) && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), \"URL_DECODE\") && strcontains(jsonencode(output.invariants.edge.operation_rates[key].scope), \"NORMALIZE_PATH\")])}",
           "error_message": "Planned WAF scopes must contain the reviewed method/path pairs and canonicalization transforms."
+        },
+        {
+          "condition": "${toset(output.invariants.media.source_cors_methods) == toset([\"GET\", \"PUT\", \"POST\", \"HEAD\"]) && toset(output.invariants.media.source_cors_origins) == toset([format(\"https://%s\", var.domains.admin)]) && output.invariants.media.source_public_access_blocked && !output.invariants.media.source_cdn_access}",
+          "error_message": "Authenticated original previews must permit GET only from the configured admin origin while the source bucket remains private and outside the CDN."
         }
       ]
     },

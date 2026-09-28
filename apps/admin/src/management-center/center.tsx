@@ -68,6 +68,7 @@ export function ManagementCenter({
         locale={locale}
         section="ARTISTS"
         disabled
+        languageDisabled={loading}
         onSection={() => {}}
       >
         <h1 ref={heading} tabIndex={-1}>

@@ -833,6 +833,7 @@ function createS3MediaStorageAdapterWithDependencies(
           new GetObjectCommand({
             Bucket: bucketFor(config, parsed.data.storageClass),
             Key: parsed.data.objectKey,
+            ResponseCacheControl: "private, no-store",
           }),
           { expiresIn },
         );

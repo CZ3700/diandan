@@ -90,7 +90,7 @@ test("gift listing reads the current daily gift kind before the legacy profile",
         all_artists: true,
       },
     ],
-    [],
+    [{ market: "TEST", currency: "USD", amount_minor: "1000" }],
   ]);
   const result = await readManagementCenterList(
     db,
@@ -143,7 +143,7 @@ test.each([false, true])(
           all_artists: true,
         },
       ],
-      [],
+      [{ market: "TEST", currency: "USD", amount_minor: "1000" }],
     ]);
     const value = await readManagementCenterList(
       db,
@@ -332,4 +332,50 @@ test("missing result rows cannot masquerade as a successful complete page", asyn
       "https://media.example.test/",
     ),
   ).rejects.toThrow();
+});
+
+test("a gift without a current price cannot be edited by inventing one", async () => {
+  const db = client([
+    [{ total: "1" }],
+    [
+      {
+        id,
+        revision_id: id,
+        version: 2,
+        source_locale: "en",
+        name: "Gift",
+        description: "Description",
+        status: "active",
+        handle: "gift",
+        media_asset_id: null,
+        gift_kind: "VIRTUAL",
+        category: "OTHER",
+      },
+    ],
+    [
+      {
+        id,
+        inventory_policy: "PROCURE_ON_DEMAND",
+        variant_count: "1",
+        inventory_item_id: null,
+        location_id: null,
+        configured_location_id: null,
+        quantity: "0",
+        all_artists: true,
+      },
+    ],
+    [],
+  ]);
+  const response = await readManagementCenterList(
+    db,
+    {
+      schemaVersion: 1,
+      action: "LIST",
+      section: "GIFTS",
+      page: 1,
+      pageSize: 10,
+    },
+    "https://media.example.test",
+  );
+  expect(response).toMatchObject({ items: [{ price: null, canEdit: false }] });
 });

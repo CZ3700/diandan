@@ -1,5 +1,23 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  interfaceLanguage: "Idioma da interface",
+  discardEdits: "Descartar as alterações não guardadas e sair desta página?",
+  adjustFocus: "Ajustar o foco do recorte",
+  focusHint:
+    "Escolha o motivo na foto original. Use as setas para pequenos movimentos ou Shift + seta para movimentos maiores.",
+  focusHorizontal: "Foco horizontal",
+  focusVertical: "Foco vertical",
+  resetFocus: "Repor foco",
+  previewPortrait: "Retrato",
+  previewDesktop: "Banner para computador",
+  previewMobile: "Banner para telemóvel",
+  previewGift: "Foto do presente",
+  originalLoading: "A carregar a foto original…",
+  originalUnavailable:
+    "Não foi possível carregar a foto original. Tente novamente; as alterações foram mantidas.",
+  reuploadRequired: "Envie novamente a foto original para ajustar esta imagem.",
+  imageUnchanged: "Escolha uma nova foto ou ajuste o foco antes de publicar.",
+
   login: "Entrar",
   loginHint: "Entre para gerenciar artistas, presentes e cartazes.",
   loginFailed: "Não foi possível entrar. Tente novamente.",

@@ -1,3 +1,4 @@
+import { resolveManagementClaimImageSource } from "./management-image-source.js";
 import { randomUUID } from "node:crypto";
 import {
   dailyMediaMetadataDocumentSchema,
@@ -58,14 +59,22 @@ export async function prepareDailyMediaMetadata(
   if (!claim) return managementFailure("NEEDS_AUTHORIZATION");
   if (!("image" in claim.intent) || claim.intent.image === null)
     return managementFailure("INVALID_COMMAND");
-  const [source] = await draftRows(
-    client,
-    `SELECT u.registered_asset_id FROM public.media_upload_reservations u JOIN public.media_assets a ON a.id=u.registered_asset_id WHERE u.id=$1 AND u.actor_id=$2 AND u.status='REGISTERED' AND a.identity_kind='SOURCE' AND a.processing_status<>'ARCHIVED' AND a.rights_status='APPROVED' FOR SHARE OF u,a`,
-    [claim.intent.image.uploadId, claim.actorId],
-  );
-  if (!source) return managementFailure("UPLOAD_NOT_READY");
+  let sourceAssetId: string;
+  if ("currentImage" in claim.intent.image) {
+    const resolved = await resolveManagementClaimImageSource(client, claim);
+    if (resolved.outcome === "FAILURE") return resolved;
+    sourceAssetId = resolved.source.assetId;
+  } else {
+    const [source] = await draftRows(
+      client,
+      `SELECT u.registered_asset_id FROM public.media_upload_reservations u JOIN public.media_assets a ON a.id=u.registered_asset_id WHERE u.id=$1 AND u.actor_id=$2 AND u.status='REGISTERED' AND a.identity_kind='SOURCE' AND a.processing_status<>'ARCHIVED' AND a.rights_status='APPROVED' FOR SHARE OF u,a`,
+      [claim.intent.image.uploadId, claim.actorId],
+    );
+    if (!source) return managementFailure("UPLOAD_NOT_READY");
+    sourceAssetId = String(source["registered_asset_id"]);
+  }
   if (input.processingJobId === null) {
-    if (source["registered_asset_id"] !== input.assetId)
+    if (sourceAssetId !== input.assetId)
       return managementFailure("INVALID_COMMAND");
   } else {
     const checkpoint = claim.checkpoint.jobs.find(
@@ -77,7 +86,7 @@ export async function prepareDailyMediaMetadata(
       `SELECT j.id FROM public.media_processing_jobs j JOIN public.media_assets a ON a.id=j.output_asset_id WHERE j.id=$1 AND j.source_asset_id=$2 AND j.output_asset_id=$3 AND j.source_metadata_revision_id=$4 AND j.role=$5 AND j.status='SUCCEEDED' AND a.identity_kind='PROCESSED_MASTER' AND a.processing_status='READY' AND a.rights_status='APPROVED' FOR SHARE OF j,a`,
       [
         input.processingJobId,
-        source["registered_asset_id"],
+        sourceAssetId,
         input.assetId,
         checkpoint.metadataRevisionId,
         checkpoint.role,

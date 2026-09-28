@@ -100,6 +100,7 @@ export function ContentOptions({
   gift,
   errors,
   inventoryPolicyLocked,
+  commerceScopeLocked = false,
 }: {
   draft: ContentDraft;
   update: (patch: Partial<ContentDraft>) => void;
@@ -108,6 +109,7 @@ export function ContentOptions({
   gift: boolean;
   errors: FormErrors;
   inventoryPolicyLocked: boolean;
+  commerceScopeLocked?: boolean;
 }) {
   return (
     <details
@@ -141,6 +143,7 @@ export function ContentOptions({
                 name="market"
                 label={copy.market}
                 value={draft.market}
+                disabled={commerceScopeLocked}
                 onChange={(value) =>
                   update({
                     market: value,
@@ -152,6 +155,12 @@ export function ContentOptions({
                 }
               >
                 <option value="">—</option>
+                {commerceScopeLocked &&
+                !context.markets.some(
+                  (entry) => entry.market === draft.market,
+                ) ? (
+                  <option value={draft.market}>{draft.market}</option>
+                ) : null}
                 {context.markets.map((entry) => (
                   <option key={entry.market} value={entry.market}>
                     {entry.market}
@@ -162,9 +171,18 @@ export function ContentOptions({
                 name="currency"
                 label={copy.currency}
                 value={draft.currency}
+                disabled={commerceScopeLocked}
                 onChange={(value) => update({ currency: value, price: "" })}
               >
                 <option value="">—</option>
+                {commerceScopeLocked &&
+                !context.markets
+                  .find((entry) => entry.market === draft.market)
+                  ?.currencies.some(
+                    (currency) => currency === draft.currency,
+                  ) ? (
+                  <option value={draft.currency}>{draft.currency}</option>
+                ) : null}
                 {context.markets
                   .find((entry) => entry.market === draft.market)
                   ?.currencies.map((currency) => (

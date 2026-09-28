@@ -214,6 +214,7 @@ export function createProductionAdminComposition(
         useCases: createManagementCenterUseCases({
           transactions: persistence.managementCenterTransactionManager,
           resourceManagement,
+          storage: media.storage,
           tokenPepper,
         }),
       },

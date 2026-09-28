@@ -1,10 +1,16 @@
 "use client";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   currencySchema,
   marketSchema,
   minorAmountSchema,
-  type ManagementCenterIntent,
   type ManagementCenterListItem,
   type ManagementCenterOperation,
   type SupportedLocale,
@@ -22,6 +28,8 @@ import {
 import { managementCopy } from "./copy";
 import { managementError } from "./errors";
 import type { ContentDraft, EditableItem } from "./form-model";
+import type { PhotoEdit } from "./focal-model";
+import { giftCommerceEdit } from "./gift-commerce-edit";
 import { parseManagementPrice } from "./inputs";
 
 export type EditorSelection =
@@ -40,6 +48,7 @@ export function ManagementEditor({
   onDeleted,
   canDelete = false,
   onBusy,
+  onDirtyChange,
 }: {
   api: ManagementApi;
   locale: SupportedLocale;
@@ -49,8 +58,25 @@ export function ManagementEditor({
   onDeleted?: ((item: DeletableItem) => void) | undefined;
   canDelete?: boolean;
   onBusy: (busy: boolean) => void;
+  onDirtyChange?: ((dirty: boolean) => void) | undefined;
 }) {
   const copy = managementCopy(locale);
+  const loadOriginal = useMemo(
+    () =>
+      selection.item
+        ? () =>
+            api.readImageSource({
+              kind: selection.item!.kind,
+              id: selection.item!.id,
+              expectedVersion:
+                selection.kind === "REPLACE_POSTER"
+                  ? context.poster.version
+                  : selection.item!.version,
+            })
+        : undefined,
+    [api, selection, context.poster.version],
+  );
+  useLayoutEffect(() => () => onDirtyChange?.(false), [onDirtyChange]);
   const attempt = useMemo(() => createManagementSubmission(api), [api]);
   const [phase, setPhase] = useState<SubmissionPhase | null>(null);
   const [operation, setOperation] = useState<ManagementCenterOperation | null>(
@@ -69,9 +95,12 @@ export function ManagementEditor({
   const change = useCallback(
     (next: ManagementCenterOperation) => {
       setOperation(next);
-      if (next.status === "PUBLISHED") onPublished(next);
+      if (next.status === "PUBLISHED") {
+        onDirtyChange?.(false);
+        onPublished(next);
+      }
     },
-    [onPublished],
+    [onPublished, onDirtyChange],
   );
   async function submit(intent: SubmissionIntent, file: File | null) {
     if (active.current || operation) return;
@@ -112,7 +141,11 @@ export function ManagementEditor({
       }
     }
   }
-  function submitContent(draft: ContentDraft, file: File | null) {
+  function submitContent(
+    draft: ContentDraft,
+    file: File | null,
+    image: PhotoEdit | null,
+  ) {
     if (selection.kind === "REPLACE_POSTER") return;
     const base = {
       sourceLocale: draft.sourceLocale,
@@ -120,10 +153,10 @@ export function ManagementEditor({
       expectedVersion: selection.item?.version ?? 0,
       name: draft.name.trim(),
       description: draft.description.trim(),
-      image: null,
+      image,
     };
     try {
-      const intent: ManagementCenterIntent =
+      const intent: SubmissionIntent =
         selection.kind === "SAVE_ARTIST"
           ? { kind: "SAVE_ARTIST", ...base }
           : {
@@ -148,7 +181,14 @@ export function ManagementEditor({
                   : { policy: draft.policy },
               eligibility: { rule: "ALL_ACTIVE_ARTISTS" },
             };
-      void submit(intent, file);
+      const guarded =
+        intent.kind === "SAVE_GIFT" && selection.item?.kind === "GIFT"
+          ? {
+              ...intent,
+              commerceEdit: giftCommerceEdit(selection.item, intent),
+            }
+          : intent;
+      void submit(guarded, file);
     } catch (failure) {
       setError(failure);
     }
@@ -179,14 +219,16 @@ export function ManagementEditor({
         <PosterForm
           locale={locale}
           current={selection.item?.image}
+          loadOriginal={loadOriginal}
+          onDirtyChange={onDirtyChange}
           busy={phase !== null || operation !== null}
-          onSubmit={(file, sourceLocale) => {
+          onSubmit={(file, sourceLocale, image) => {
             void submit(
               {
                 kind: "REPLACE_POSTER",
                 sourceLocale,
                 expectedVersion: context.poster.version,
-                image: null,
+                image,
               },
               file,
             );
@@ -200,6 +242,8 @@ export function ManagementEditor({
           item={selection.item}
           busy={phase !== null || operation !== null}
           onSubmit={submitContent}
+          loadOriginal={loadOriginal}
+          onDirtyChange={onDirtyChange}
         />
       )}
       {deletable && canDelete ? (

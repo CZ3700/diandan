@@ -349,6 +349,7 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/home-layout/read",
     "/api/v1/admin/home-layout/restore",
     "/api/v1/admin/management/context",
+    "/api/v1/admin/management/images/read",
     "/api/v1/admin/management/list",
     "/api/v1/admin/management/operations/read",
     "/api/v1/admin/management/operations/retry",

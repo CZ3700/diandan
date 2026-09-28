@@ -1,5 +1,23 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  interfaceLanguage: "ภาษาอินเทอร์เฟซ",
+  discardEdits: "ละทิ้งการเปลี่ยนแปลงที่ยังไม่บันทึกและออกจากหน้านี้หรือไม่",
+  adjustFocus: "ปรับจุดโฟกัสภาพ",
+  focusHint:
+    "เลือกจุดสำคัญบนภาพต้นฉบับ ใช้ปุ่มลูกศรเพื่อขยับเล็กน้อย หรือ Shift + ลูกศรเพื่อขยับมากขึ้น",
+  focusHorizontal: "โฟกัสแนวนอน",
+  focusVertical: "โฟกัสแนวตั้ง",
+  resetFocus: "รีเซ็ตจุดโฟกัส",
+  previewPortrait: "ภาพศิลปิน",
+  previewDesktop: "แบนเนอร์คอมพิวเตอร์",
+  previewMobile: "แบนเนอร์มือถือ",
+  previewGift: "ภาพของขวัญ",
+  originalLoading: "กำลังโหลดภาพต้นฉบับ…",
+  originalUnavailable:
+    "โหลดภาพต้นฉบับไม่ได้ โปรดลองอีกครั้ง การแก้ไขของคุณยังอยู่",
+  reuploadRequired: "อัปโหลดภาพต้นฉบับอีกครั้งเพื่อปรับภาพนี้",
+  imageUnchanged: "เลือกภาพใหม่หรือปรับจุดโฟกัสก่อนเผยแพร่",
+
   login: "เข้าสู่ระบบ",
   loginHint: "เข้าสู่ระบบเพื่อจัดการศิลปิน ของขวัญ และโปสเตอร์",
   loginFailed: "เข้าสู่ระบบไม่สำเร็จ โปรดลองอีกครั้ง",

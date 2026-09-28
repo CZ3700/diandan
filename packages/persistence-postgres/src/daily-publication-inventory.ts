@@ -16,6 +16,11 @@ export async function publishDailyGiftInventory(
 ): Promise<void> {
   if (claim.intent.kind !== "SAVE_GIFT")
     throw new Error("Daily inventory requires a gift");
+  if (
+    "commerceEdit" in claim.intent &&
+    claim.intent.commerceEdit.inventory.mode === "PRESERVE"
+  )
+    return;
   const inventory = claim.intent.inventory;
   if (inventory.policy !== "TRACKED") return;
   const [variant] = await draftRows(

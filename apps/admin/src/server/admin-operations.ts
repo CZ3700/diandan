@@ -480,6 +480,35 @@ const entries = {
     "UPLOAD_GRANT",
     true,
   ),
+  "management-read-image-source": Object.freeze({
+    ...operation(
+      "/api/v1/admin/management/images/read",
+      contract.managementCenterCommandSchema,
+      contract.managementCenterResponseSchema,
+      "READ_IMAGE_SOURCE",
+      "ORIGINAL_IMAGE",
+    ),
+    responseMatches(command: unknown, response: unknown) {
+      const request = contract.managementCenterCommandSchema.safeParse(command);
+      const result =
+        contract.managementCenterResponseSchema.safeParse(response);
+      if (
+        !request.success ||
+        request.data.action !== "READ_IMAGE_SOURCE" ||
+        !result.success
+      )
+        return false;
+      if (result.data.outcome === "FAILURE") return true;
+      if (result.data.kind !== "ORIGINAL_IMAGE") return false;
+      const actual = result.data.target,
+        expected = request.data.target;
+      return (
+        actual.kind === expected.kind &&
+        actual.id.toLowerCase() === expected.id.toLowerCase() &&
+        actual.expectedVersion === expected.expectedVersion
+      );
+    },
+  }),
   "management-submit": operation(
     "/api/v1/admin/management/submit",
     contract.managementCenterCommandSchema,

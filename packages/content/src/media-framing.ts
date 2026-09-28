@@ -33,7 +33,13 @@ function focalOffset(
   );
 }
 
-function coveringCrop(request: MediaFramingRequest, target: Size): Rectangle {
+function coveringCrop(
+  request: Pick<
+    MediaFramingRequest,
+    "sourceWidth" | "sourceHeight" | "focalPoint"
+  >,
+  target: Size,
+): Rectangle {
   const divisor = greatestCommonDivisor(target.width, target.height);
   const aspectWidth = target.width / divisor;
   const aspectHeight = target.height / divisor;
@@ -154,3 +160,24 @@ export function planMediaFraming(input: unknown): MediaFramingResult {
     },
   });
 }
+
+/** Geometry-only browser entry; shares the worker's exact crop math. */
+export function planMediaCrop(
+  input: unknown,
+): Readonly<{ sourceCrop: Rectangle; target: Size }> | null {
+  const parsed = mediaFramingRequestSchema
+    .pick({
+      sourceWidth: true,
+      sourceHeight: true,
+      role: true,
+      focalPoint: true,
+    })
+    .safeParse(input);
+  if (!parsed.success) return null;
+  const target = MEDIA_FRAMING_MASTER_SIZES[parsed.data.role];
+  const sourceCrop = coveringCrop(parsed.data, target);
+  return sourceCrop.width > 0 && sourceCrop.height > 0
+    ? { sourceCrop, target: { ...target } }
+    : null;
+}
+export { dailyManagementFraming } from "./daily-media-framing.js";

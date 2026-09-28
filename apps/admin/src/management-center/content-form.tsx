@@ -1,8 +1,8 @@
 "use client";
-import { useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Button, Field } from "@fan-support/ui";
 import type { SupportedLocale } from "@fan-support/contracts";
-import type { ManagementContext } from "./api";
+import type { OriginalImage, ManagementContext } from "./api";
 import {
   contentDraftErrors,
   initialContentDraft,
@@ -10,6 +10,7 @@ import {
   type ContentDraft,
   type EditableItem,
 } from "./form-model";
+import type { PhotoEdit } from "./focal-model";
 import { managementCopy } from "./copy";
 import { PhotoInput } from "./photo-input";
 import { ContentOptions, giftKindLabel, ManagementSelect } from "./form-fields";
@@ -19,7 +20,13 @@ export type ContentFormProps = {
   kind: "SAVE_ARTIST" | "SAVE_GIFT";
   item: EditableItem | null;
   busy: boolean;
-  onSubmit: (draft: ContentDraft, file: File | null) => void;
+  onSubmit: (
+    draft: ContentDraft,
+    file: File | null,
+    image: PhotoEdit | null,
+  ) => void;
+  loadOriginal?: (() => Promise<OriginalImage>) | undefined;
+  onDirtyChange?: ((dirty: boolean) => void) | undefined;
 };
 export function ContentForm({
   locale,
@@ -28,13 +35,24 @@ export function ContentForm({
   item,
   busy,
   onSubmit,
+  loadOriginal,
+  onDirtyChange,
 }: ContentFormProps) {
   const copy = managementCopy(locale);
   const [draft, setDraft] = useState(() =>
     initialContentDraft(locale, context, item),
   );
+  const initial = useRef(draft);
+  const [image, setImage] = useState<PhotoEdit | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<FormErrors>({});
+  const dirty =
+    file !== null ||
+    image !== null ||
+    JSON.stringify(draft) !== JSON.stringify(initial.current);
+  useLayoutEffect(() => {
+    onDirtyChange?.(dirty);
+  }, [dirty, onDirtyChange]);
   const form = useRef<HTMLFormElement>(null);
   const update = (patch: Partial<ContentDraft>) =>
     setDraft((current) => ({ ...current, ...patch }));
@@ -63,13 +81,15 @@ export function ContentForm({
           );
           return;
         }
-        onSubmit(draft, file);
+        onSubmit(draft, file, image);
       }}
     >
       <fieldset className="mc-form-layout" disabled={busy}>
         <PhotoInput
           copy={copy}
           kind={kind}
+          loadOriginal={loadOriginal}
+          onImageEdit={setImage}
           current={item?.image}
           file={file}
           onChange={setFile}
@@ -157,6 +177,7 @@ export function ContentForm({
             inventoryPolicyLocked={
               item?.kind === "GIFT" && item.inventoryPolicyLocked
             }
+            commerceScopeLocked={item?.kind === "GIFT"}
           />
           <div className="mc-submit">
             <p className="mc-hint">{copy.rightsNotice}</p>

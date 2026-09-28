@@ -132,7 +132,8 @@
   border-radius: var(--radius-control);
   aspect-ratio: 4 / 5;
 }
-.mc-item-photo[data-kind="GIFT"] {
+.mc-item-photo[data-kind="GIFT"],
+.mc-photo-picker[data-kind="SAVE_GIFT"] {
   aspect-ratio: 1;
 }
 .mc-item-photo[data-kind="POSTER"],
@@ -452,4 +453,100 @@
   .mc-item:not(:disabled):is(:hover, :focus-visible) .mc-item-action {
     transform: none;
   }
+}
+
+.mc-language {
+  margin-block-start: var(--space-6);
+  padding-inline: var(--space-3);
+  color: var(--color-text-muted);
+}
+.mc-focus-options {
+  margin-block-start: var(--space-4);
+}
+.mc-focus-controls {
+  display: grid;
+  gap: var(--space-4);
+  padding-block-end: var(--space-4);
+}
+.mc-focus-controls p {
+  margin: 0;
+}
+.mc-focus-original {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-control);
+  overflow: hidden;
+  background: var(--color-surface);
+  cursor: crosshair;
+}
+.mc-focus-original img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+.mc-focus-marker {
+  position: absolute;
+  width: var(--space-6);
+  height: var(--space-6);
+  border: var(--focus-ring-width) solid var(--color-accent);
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: 0 0 0 var(--border-width) var(--color-text);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.mc-focus-ranges {
+  display: grid;
+  gap: var(--space-4);
+}
+.mc-focus-ranges .mc-field > span {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.mc-focus-ranges input {
+  padding: 0;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+.mc-focus-reset {
+  justify-self: start;
+  min-height: var(--space-12);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+.mc-focus-previews {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  align-items: start;
+}
+.mc-focus-previews figure {
+  min-width: 0;
+  margin: 0;
+}
+.mc-focus-previews figcaption {
+  margin-block-start: var(--space-2);
+  font-size: var(--type-body-size);
+  overflow-wrap: anywhere;
+}
+.mc-focus-crop {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+}
+.mc-focus-crop img {
+  position: absolute;
+  max-width: none;
+  object-fit: fill;
 }

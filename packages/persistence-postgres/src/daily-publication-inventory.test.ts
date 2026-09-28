@@ -62,3 +62,18 @@ test("saving stock below reserved units fails without modifying stock", async ()
   ).rejects.toThrow();
   expect(mocks.write).not.toHaveBeenCalled();
 });
+test("a content-only gift edit does not restore stock sold since the form opened", async () => {
+  const input = claim(10);
+  if (input.intent.kind !== "SAVE_GIFT") throw new Error("fixture");
+  input.intent = {
+    ...input.intent,
+    commerceEdit: {
+      price: { mode: "PRESERVE" },
+      inventory: { mode: "PRESERVE" },
+    },
+  };
+  const db = client(9);
+  await publishDailyGiftInventory(db, input, id, at);
+  expect(mocks.write).not.toHaveBeenCalled();
+  expect(db.query).not.toHaveBeenCalled();
+});

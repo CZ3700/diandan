@@ -18,6 +18,12 @@ import { mediaMimeTypeSchema } from "./media-content.js";
 import { MEDIA_IMAGE_PROFILE } from "./media-processing.js";
 import { mediaUploadGrantResponseSchema } from "./resource-management.js";
 
+import {
+  managementImageInputSchema,
+  managementImageTargetSchema,
+  managementOriginalImageSchema,
+} from "./management-image.js";
+
 const uuid = z.uuid();
 const version = schemaVersionSchema;
 const sequence = z
@@ -26,7 +32,7 @@ const sequence = z
   .nonnegative()
   .max(Number.MAX_SAFE_INTEGER - 1);
 const text = (limit: number) => z.string().trim().min(1).max(limit);
-const image = z.strictObject({ uploadId: uuid });
+const image = managementImageInputSchema;
 const scope = { market: marketSchema, currency: currencySchema };
 export const managementCenterPriceSchema = z.strictObject({
   ...scope,
@@ -49,19 +55,42 @@ const editable = {
   description: text(600),
   image: image.nullable(),
 };
-export const managementCenterIntentSchema = z
-  .discriminatedUnion("kind", [
-    z.strictObject({ kind: z.literal("SAVE_ARTIST"), ...editable }),
+export const managementCommerceEditSchema = z.strictObject({
+  price: z.discriminatedUnion("mode", [
+    z.strictObject({ mode: z.literal("PRESERVE") }),
     z.strictObject({
-      kind: z.literal("SAVE_GIFT"),
-      ...editable,
-      name: text(100),
-      giftKind: giftKindSchema,
-      category: giftCategorySchema,
-      price: managementCenterPriceSchema,
-      inventory: managementCenterInventorySchema,
-      eligibility: z.strictObject({ rule: z.literal("ALL_ACTIVE_ARTISTS") }),
+      mode: z.literal("SET"),
+      baseline: managementCenterPriceSchema,
     }),
+  ]),
+  inventory: z.discriminatedUnion("mode", [
+    z.strictObject({ mode: z.literal("PRESERVE") }),
+    z.strictObject({
+      mode: z.literal("SET"),
+      baseline: managementCenterInventorySchema,
+    }),
+  ]),
+});
+const giftEditable = {
+  kind: z.literal("SAVE_GIFT"),
+  ...editable,
+  name: text(100),
+  giftKind: giftKindSchema,
+  category: giftCategorySchema,
+  price: managementCenterPriceSchema,
+  inventory: managementCenterInventorySchema,
+  eligibility: z.strictObject({ rule: z.literal("ALL_ACTIVE_ARTISTS") }),
+};
+export const managementCenterIntentSchema = z
+  .union([
+    z.strictObject({ kind: z.literal("SAVE_ARTIST"), ...editable }),
+    z.union([
+      z.strictObject(giftEditable),
+      z.strictObject({
+        ...giftEditable,
+        commerceEdit: managementCommerceEditSchema,
+      }),
+    ]),
     z.strictObject({
       kind: z.literal("REPLACE_POSTER"),
       sourceLocale: supportedLocaleSchema,
@@ -76,6 +105,16 @@ export const managementCenterIntentSchema = z
     }),
   ])
   .superRefine((value, context) => {
+    if (
+      value.kind === "SAVE_GIFT" &&
+      "commerceEdit" in value &&
+      value.id === null
+    )
+      context.addIssue({
+        code: "custom",
+        path: ["commerceEdit"],
+        message: "Commerce baselines require an existing gift",
+      });
     if (value.kind === "SAVE_ARTIST" || value.kind === "SAVE_GIFT") {
       if ((value.id === null) !== (value.expectedVersion === 0))
         context.addIssue({
@@ -84,7 +123,10 @@ export const managementCenterIntentSchema = z
           message:
             "New targets require version zero; edits require the current version",
         });
-      if (value.id === null && value.image === null)
+      if (
+        value.id === null &&
+        (value.image === null || "currentImage" in value.image)
+      )
         context.addIssue({
           code: "custom",
           path: ["image"],
@@ -99,6 +141,7 @@ export const managementCenterFailureSchema = adminContentFailureSchema.extend({
       "MANAGEMENT_UNAVAILABLE",
       "NEEDS_AUTHORIZATION",
       "MEDIA_FAILED",
+      "REUPLOAD_REQUIRED",
       "UPLOAD_NOT_READY",
       "HERO_NOT_CONFIGURED",
       "DEFAULTS_NOT_CONFIGURED",
@@ -160,6 +203,11 @@ const pagination = {
 };
 export const managementCenterCommandSchema = z.discriminatedUnion("action", [
   z.strictObject({ schemaVersion: version, action: z.literal("CONTEXT") }),
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("READ_IMAGE_SOURCE"),
+    target: managementImageTargetSchema,
+  }),
   z.strictObject({
     schemaVersion: version,
     action: z.literal("LIST"),
@@ -247,6 +295,7 @@ export const managementCenterListItemSchema = z.discriminatedUnion("kind", [
 const success = { schemaVersion: version, outcome: z.literal("SUCCESS") };
 export const managementCenterResponseSchema = z.union([
   managementCenterFailureSchema,
+  managementOriginalImageSchema,
   mediaUploadGrantResponseSchema.options[0],
   z.strictObject({
     ...success,

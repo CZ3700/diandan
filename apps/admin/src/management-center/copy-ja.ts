@@ -1,5 +1,24 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  interfaceLanguage: "表示言語",
+  discardEdits: "未保存の変更を破棄して、このページを離れますか？",
+  adjustFocus: "画像の焦点を調整",
+  focusHint:
+    "元の写真で残したい被写体を選びます。矢印キーで微調整、Shift + 矢印キーで大きく移動できます。",
+  focusHorizontal: "横方向の焦点",
+  focusVertical: "縦方向の焦点",
+  resetFocus: "焦点をリセット",
+  previewPortrait: "ポートレート",
+  previewDesktop: "パソコン用バナー",
+  previewMobile: "スマートフォン用バナー",
+  previewGift: "ギフト画像",
+  originalLoading: "元の写真を読み込み中…",
+  originalUnavailable:
+    "元の写真を読み込めませんでした。変更は保持されています。再試行してください。",
+  reuploadRequired:
+    "この画像を調整するには、元の写真を再アップロードしてください。",
+  imageUnchanged: "新しい写真を選ぶか焦点を調整してから公開してください。",
+
   login: "ログイン",
   loginHint: "ログインしてアーティスト、ギフト、ポスターを管理します。",
   loginFailed: "ログインできませんでした。もう一度お試しください。",

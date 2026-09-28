@@ -1,6 +1,10 @@
 import { exceptionsCopy } from "../management-exceptions/copy";
 import type { ReactNode } from "react";
-import type { SupportedLocale } from "@fan-support/contracts";
+import {
+  LOCALE_NATIVE_NAMES,
+  SUPPORTED_LOCALES,
+  type SupportedLocale,
+} from "@fan-support/contracts";
 import type { ManagementSection } from "./api";
 import { managementCopy } from "./copy";
 import { paymentCopy } from "../management-payments/copy";
@@ -19,6 +23,8 @@ export function ManagementShell({
   paymentsAvailable = false,
   exceptionsAvailable = false,
   decorationAvailable = false,
+  beforeLeave,
+  languageDisabled = disabled,
 }: {
   locale: SupportedLocale;
   section:
@@ -35,6 +41,8 @@ export function ManagementShell({
   paymentsAvailable?: boolean;
   exceptionsAvailable?: boolean;
   decorationAvailable?: boolean;
+  beforeLeave?: (() => boolean) | undefined;
+  languageDisabled?: boolean;
 }) {
   const copy = managementCopy(locale);
   return (
@@ -118,6 +126,27 @@ export function ManagementShell({
             </button>
           ) : null}
         </nav>
+        <label className="mc-language mc-field">
+          <span>{copy.interfaceLanguage}</span>
+          <select
+            data-management-language
+            value={locale}
+            disabled={languageDisabled}
+            onChange={(event) => {
+              if (
+                (!beforeLeave || beforeLeave()) &&
+                event.currentTarget.value !== locale
+              )
+                window.location.assign(`/${event.currentTarget.value}`);
+            }}
+          >
+            {SUPPORTED_LOCALES.map((value) => (
+              <option key={value} value={value}>
+                {LOCALE_NATIVE_NAMES[value]}
+              </option>
+            ))}
+          </select>
+        </label>
         {accountAction}
       </aside>
       <main className="mc-main" id="management-main">

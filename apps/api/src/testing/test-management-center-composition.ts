@@ -110,6 +110,7 @@ export function createTestManagementCenterComposition(
     const useCases = createManagementCenterUseCases({
       transactions: persistence.managementCenterTransactionManager,
       resourceManagement: resources,
+      storage: options.storage,
       tokenPepper: options.tokenPepper,
     });
     const media = createManagementMediaPreparation({

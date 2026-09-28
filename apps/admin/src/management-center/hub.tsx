@@ -66,6 +66,7 @@ export function ManagementHub({
     >(null),
     [busy, setBusy] = useState(false);
   const [layoutDirty, setLayoutDirty] = useState(false);
+  const [paymentDirty, setPaymentDirty] = useState(false);
   const copy = ordersCopy(locale),
     common = managementCopy(locale);
   useEffect(() => {
@@ -108,21 +109,27 @@ export function ManagementHub({
         : access?.orders
           ? "ORDERS"
           : "EXCEPTIONS");
-  function canLeaveLayout() {
-    return canLeaveDecoration({ busy, dirty: layoutDirty }, () =>
-      window.confirm(decorationNavigationCopy(locale).discard),
+  function canLeaveWorkspace() {
+    return canLeaveDecoration(
+      { busy, dirty: layoutDirty || paymentDirty },
+      () =>
+        window.confirm(
+          layoutDirty
+            ? decorationNavigationCopy(locale).discard
+            : common.discardEdits,
+        ),
     );
   }
   const logout = onLogout
     ? async () => {
-        if (canLeaveLayout()) await onLogout();
+        if (canLeaveWorkspace()) await onLogout();
       }
     : undefined;
   function chooseSection(
     next:
       ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS" | "DECORATION",
   ) {
-    if (next !== "DECORATION" && !canLeaveLayout()) return;
+    if (next !== active && !canLeaveWorkspace()) return;
     setSection(next);
     if (next === "PAYMENTS" || next === "EXCEPTIONS")
       setAttempt((value) => value + 1);
@@ -184,6 +191,7 @@ export function ManagementHub({
       paymentsAvailable={Boolean(access?.payments)}
       exceptionsAvailable={Boolean(access?.exceptions)}
       decorationAvailable={Boolean(layoutPermissions?.read && layoutApi)}
+      beforeLeave={() => !busy}
       disabled={busy || !access}
       onSection={chooseSection}
       accountAction={
@@ -214,6 +222,7 @@ export function ManagementHub({
       ) : active === "PAYMENTS" && access?.payments && paymentsApi ? (
         <PaymentsWorkspace
           api={paymentsApi}
+          onDirtyChange={setPaymentDirty}
           initial={access.payments}
           locale={locale}
           onBusy={setBusy}

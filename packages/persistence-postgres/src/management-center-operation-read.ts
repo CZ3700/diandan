@@ -149,6 +149,7 @@ async function giftDetails(client: TransactionClient, row: DraftRow) {
           : "EXPLICIT_ARTISTS",
     },
     canEdit:
+      price !== undefined &&
       Number(variant?.["variant_count"]) === 1 &&
       variant?.["all_artists"] === true &&
       (variant["inventory_policy"] !== "TRACKED" || locationId !== null),

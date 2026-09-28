@@ -1,3 +1,4 @@
+import { readManagementImageSource } from "./management-image-source.js";
 import {
   managementCenterCheckpointSchema,
   managementCenterIntentSchema,
@@ -75,6 +76,8 @@ export function createManagementCenterOperationRepository(
   }
   return {
     authorize: (input) => run(() => authorizeManagementSession(client, input)),
+    readImageSource: (input) =>
+      run(() => readManagementImageSource(client, input.target)),
     context: (principal) =>
       run(() => readManagementCenterContext(client, principal)),
     list: (input) =>
@@ -98,7 +101,11 @@ export function createManagementCenterOperationRepository(
           return managementFailure("INVALID_COMMAND");
         if (
           intent.kind === "SAVE_GIFT" &&
-          intent.inventory.policy === "TRACKED"
+          intent.inventory.policy === "TRACKED" &&
+          !(
+            "commerceEdit" in intent &&
+            intent.commerceEdit.inventory.mode === "PRESERVE"
+          )
         ) {
           const [location] = await draftRows(
             client,
@@ -107,7 +114,11 @@ export function createManagementCenterOperationRepository(
           );
           if (!location) return managementFailure("NOT_FOUND");
         }
-        if ("image" in intent && intent.image !== null) {
+        if (
+          "image" in intent &&
+          intent.image !== null &&
+          "uploadId" in intent.image
+        ) {
           const [upload] = await draftRows(
             client,
             `SELECT id FROM public.media_upload_reservations WHERE id=$1 AND actor_id=$2 AND session_id=$3 AND (status='REGISTERED' OR expires_at>clock_timestamp()) FOR SHARE`,
@@ -134,7 +145,13 @@ export function createManagementCenterOperationRepository(
               target["status"] === "archived"
             )
               return managementFailure("TARGET_CONFLICT");
-            if (intent.kind === "SAVE_GIFT") {
+            if (
+              intent.kind === "SAVE_GIFT" &&
+              !(
+                "commerceEdit" in intent &&
+                intent.commerceEdit.inventory.mode === "PRESERVE"
+              )
+            ) {
               const variants = await draftRows(
                 client,
                 `SELECT v.inventory_policy,i.id inventory_item_id FROM public.gift_variants v LEFT JOIN public.inventory_items i ON i.gift_variant_id=v.id WHERE v.gift_id=$1 FOR SHARE OF v`,
@@ -160,6 +177,30 @@ export function createManagementCenterOperationRepository(
           if (Number(head["version"]) !== intent.expectedVersion)
             return managementFailure("TARGET_CONFLICT");
           targetId = head["homepage_revision_id"];
+        }
+        if (
+          "image" in intent &&
+          intent.image &&
+          "currentImage" in intent.image
+        ) {
+          const original = await readManagementImageSource(client, {
+            kind:
+              intent.kind === "SAVE_ARTIST"
+                ? "ARTIST"
+                : intent.kind === "SAVE_GIFT"
+                  ? "GIFT"
+                  : "POSTER",
+            id: String(targetId),
+            expectedVersion: intent.expectedVersion,
+          });
+          if (original.outcome === "FAILURE") return original;
+          if (
+            original.currentImage.assetId !==
+              intent.image.currentImage.assetId ||
+            original.currentImage.metadataRevisionId !==
+              intent.image.currentImage.metadataRevisionId
+          )
+            return managementFailure("TARGET_CONFLICT");
         }
         await client.query(
           `INSERT INTO public.management_operations(id,actor_id,session_id,request_id,capability,intent,intent_hash,idempotency_key,status,phase,version,target_id,checkpoint,authorized_until,attempt_count,next_attempt_at,created_at,updated_at)

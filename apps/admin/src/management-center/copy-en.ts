@@ -1,4 +1,22 @@
 export const copy = {
+  interfaceLanguage: "Interface language",
+  discardEdits: "Discard unsaved changes and leave this page?",
+  adjustFocus: "Adjust crop focus",
+  focusHint:
+    "Choose the subject in the original photo. Use the arrow keys for small moves, or Shift + arrow for larger moves.",
+  focusHorizontal: "Horizontal focus",
+  focusVertical: "Vertical focus",
+  resetFocus: "Reset focus",
+  previewPortrait: "Portrait",
+  previewDesktop: "Desktop banner",
+  previewMobile: "Mobile banner",
+  previewGift: "Gift photo",
+  originalLoading: "Loading original photo…",
+  originalUnavailable:
+    "We could not load the original. Try again; your changes are kept.",
+  reuploadRequired: "Upload the original photo again to adjust this image.",
+  imageUnchanged: "Choose a new photo or adjust its focus before publishing.",
+
   login: "Sign in",
   loginHint: "Sign in to manage artists, gifts and posters.",
   loginFailed: "We could not sign you in. Please try again.",

@@ -39,6 +39,7 @@ test("management reads stay authenticated and reject mismatched success payloads
     "management-context",
     "management-list",
     "management-read-operation",
+    "management-read-image-source",
   ]) {
     const operation = getAdminOperation(key);
     expect(operation).toBeDefined();
@@ -57,4 +58,47 @@ test("management reads stay authenticated and reject mismatched success payloads
       items: [],
     }),
   ).toThrow();
+});
+
+test("original-image BFF binds the private descriptor to the exact requested target and version", () => {
+  const operation = getAdminOperation("management-read-image-source")!;
+  const target = { kind: "ARTIST", id, expectedVersion: 4 };
+  const command = operation.parseCommand({ schemaVersion: 1, target });
+  const response = operation.parseResponse({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "ORIGINAL_IMAGE",
+    target,
+    currentImage: { assetId: id, metadataRevisionId: id },
+    focalPoint: { x: 0.5, y: 0.3 },
+    sourceWidth: 2000,
+    sourceHeight: 3000,
+    download: {
+      method: "GET",
+      url: "https://storage.example.invalid/original",
+      headers: {},
+      expiresAt: "2099-01-01T00:00:00Z",
+    },
+  });
+  expect(operation.responseMatches).toBeTypeOf("function");
+  expect(operation.responseMatches!(command, response)).toBe(true);
+  for (const changed of [
+    { kind: "GIFT" },
+    { id: "10000000-0000-4000-8000-000000000002" },
+    { expectedVersion: 5 },
+  ]) {
+    expect(
+      operation.responseMatches!(command, {
+        ...(response as object),
+        target: { ...target, ...changed },
+      }),
+    ).toBe(false);
+  }
+  expect(
+    operation.responseMatches!(command, {
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "REUPLOAD_REQUIRED",
+    }),
+  ).toBe(true);
 });

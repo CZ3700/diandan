@@ -71,6 +71,9 @@ importers:
       '@fan-support/config':
         specifier: workspace:*
         version: link:../../packages/config
+      '@fan-support/content':
+        specifier: workspace:*
+        version: link:../../packages/content
       '@fan-support/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts

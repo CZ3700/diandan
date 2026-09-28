@@ -4,6 +4,7 @@ import { managementCenterCommandSchema } from "./management-center.js";
 type JsonObject = Record<string, unknown>;
 const paths = [
   ["context", "CONTEXT"],
+  ["images/read", "READ_IMAGE_SOURCE"],
   ["list", "LIST"],
   ["uploads/prepare", "PREPARE_UPLOAD"],
   ["submit", "SUBMIT"],

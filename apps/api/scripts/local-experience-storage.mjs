@@ -19,6 +19,23 @@ export function verifyOwnedContainer(container, instanceId) {
   )
     throw new Error("Local container ownership mismatch");
 }
+/** Browser CORS is scoped to this instance's admin; it does not grant S3 object access. */
+export function localStorageCorsConfiguration(config, bucket) {
+  return {
+    CORSRules: [
+      {
+        AllowedOrigins: [config.origins.admin],
+        AllowedMethods:
+          bucket === config.s3.sourceBucket
+            ? ["PUT", "GET", "HEAD"]
+            : ["GET", "HEAD"],
+        AllowedHeaders: ["*"],
+        ExposeHeaders: ["ETag"],
+        MaxAgeSeconds: 300,
+      },
+    ],
+  };
+}
 export async function startS3(context) {
   const { config, stateDirectory, own } = context,
     name = "fan-local-s3-" + config.instanceId;
@@ -134,18 +151,7 @@ export async function startS3(context) {
     await client.send(
       new PutBucketCorsCommand({
         Bucket,
-        CORSConfiguration: {
-          CORSRules: [
-            {
-              AllowedOrigins: [config.origins.admin],
-              AllowedMethods:
-                Bucket === s3.sourceBucket ? ["PUT"] : ["GET", "HEAD"],
-              AllowedHeaders: ["*"],
-              ExposeHeaders: ["ETag"],
-              MaxAgeSeconds: 300,
-            },
-          ],
-        },
+        CORSConfiguration: localStorageCorsConfiguration(config, Bucket),
       }),
     );
   }

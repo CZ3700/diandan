@@ -3,6 +3,7 @@ import {
   managementCenterClaimSchema,
   mediaUploadTicketSchema,
   sourceHashSchema,
+  type ManagementCenterCheckpoint,
 } from "@fan-support/contracts";
 import type { ManagementMediaTransactionManager } from "@fan-support/persistence-port";
 import { PersistenceTransactionFailureError } from "@fan-support/persistence-port";
@@ -644,4 +645,107 @@ describe("management media confirmed transaction aborts", () => {
     expect(f.resources.registerUpload).not.toHaveBeenCalled();
     expect(vi.getTimerCount()).toBe(0);
   });
+});
+
+test("a focus edit reuses only its currently authorized source and enqueues the requested focus", async () => {
+  const claim = makeClaim();
+  if (claim.intent.kind !== "SAVE_ARTIST") throw new Error("fixture");
+  claim.intent.image = {
+    currentImage: { assetId: id, metadataRevisionId: id },
+    focalPoint: { x: 0.12345, y: 0.8 },
+  };
+  const resolveImageSource = vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    target: { kind: "ARTIST", id, expectedVersion: 1 },
+    currentImage: { assetId: id, metadataRevisionId: id },
+    focalPoint: { x: 0.5, y: 0.3 },
+    source: {
+      assetId: id,
+      metadataRevisionId: id,
+      checksumSha256: "a".repeat(64),
+      objectKey: "uploads/original.png",
+      mimeType: "image/png",
+      width: 2400,
+      height: 1600,
+      byteSize: 100,
+    },
+    orientation: 1,
+  }));
+  const prepareMediaMetadata = vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    metadataRevisionId: id,
+  }));
+  const repositories = {
+    operations: {
+      loadClaim: async () => claim,
+      checkpoint: async (input: { checkpoint: ManagementCenterCheckpoint }) => {
+        claim.checkpoint = input.checkpoint;
+        return claim;
+      },
+    },
+    publication: { resolveImageSource, prepareMediaMetadata },
+    resources: {
+      enqueueMedia: async () => ({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "MUTATION",
+        resultId: id,
+        replayed: false,
+      }),
+      readMedia: async () => ({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "MEDIA",
+        media: {
+          schemaVersion: 1,
+          assetId: id,
+          identityKind: "SOURCE",
+          mimeType: "image/png",
+          width: 2400,
+          height: 1600,
+          byteSize: 100,
+          processingStatus: "READY",
+          rightsStatus: "APPROVED",
+          rightsVersion: 1,
+        },
+      }),
+      readMediaJob: async () => ({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "MEDIA_JOB",
+        job: {
+          schemaVersion: 1,
+          generation: 1,
+          retryOfJobId: null,
+          snapshot: {
+            schemaVersion: 1,
+            jobId: id,
+            status: "PENDING",
+            attemptCount: 0,
+            outputAssetId: null,
+            error: null,
+            nextAttemptAt: now,
+          },
+        },
+      }),
+    },
+  };
+  const inspect = vi.fn();
+  const preparation = createManagementMediaPreparation({
+    transactions: {
+      runInManagementMediaTransaction: (work) => work(repositories as never),
+    },
+    inspector: { inspect },
+  });
+  expect(await preparation.prepare(claim)).toEqual({ outcome: "PENDING" });
+  expect(prepareMediaMetadata).toHaveBeenCalledWith(
+    expect.objectContaining({
+      focalPoint: { x: 0.12345, y: 0.8 },
+      processingJobId: null,
+    }),
+  );
+  expect(resolveImageSource).toHaveBeenCalled();
+  expect(inspect).not.toHaveBeenCalled();
 });

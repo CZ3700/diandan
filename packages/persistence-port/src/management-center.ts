@@ -9,6 +9,8 @@ import type {
   ManagementCenterPreparedMedia,
   ManagementCenterResponse,
   AdminPrincipal,
+  ManagementImageSource,
+  ManagementImageTarget,
 } from "@fan-support/contracts";
 import type { JsonValue } from "./index.js";
 
@@ -24,6 +26,12 @@ export interface ManagementCenterOperationRepository {
       sourceLocale?: string;
     }>,
   ): Promise<ManagementCenterAuthorization>;
+  readImageSource(
+    input: Readonly<{
+      principal: AdminPrincipal;
+      target: ManagementImageTarget;
+    }>,
+  ): Promise<ManagementImageSource | ManagementCenterFailure>;
   context(principal: AdminPrincipal): Promise<ManagementCenterResponse>;
   list(
     input: Readonly<{
@@ -74,6 +82,9 @@ export interface ManagementCenterOperationRepository {
 }
 /** Implemented by the publication adapter using the very same transaction client. */
 export interface ManagementCenterPublicationRepository {
+  resolveImageSource(
+    input: ManagementCenterFence,
+  ): Promise<ManagementImageSource | ManagementCenterFailure>;
   prepareMediaMetadata(
     input: ManagementCenterFence &
       Readonly<{

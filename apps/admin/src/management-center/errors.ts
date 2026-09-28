@@ -3,6 +3,8 @@ import type { ManagementCopy } from "./copy";
 export function managementError(error: unknown, copy: ManagementCopy): string {
   const code = error instanceof AdminClientError ? error.code : "";
   switch (code) {
+    case "REUPLOAD_REQUIRED":
+      return copy.reuploadRequired;
     case "FORBIDDEN":
     case "NEEDS_AUTHORIZATION":
       return copy.forbidden;

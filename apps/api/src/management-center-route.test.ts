@@ -30,6 +30,58 @@ const operation = {
   result: null,
   failure: null,
 };
+test("original preview is a private read bound to the current target and version", async () => {
+  const app = Fastify({ logger: false });
+  const target = { kind: "ARTIST", id, expectedVersion: 2 };
+  const result = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "ORIGINAL_IMAGE",
+    target,
+    currentImage: { assetId: id, metadataRevisionId: id },
+    focalPoint: { x: 0.5, y: 0.3 },
+    sourceWidth: 800,
+    sourceHeight: 1200,
+    download: {
+      method: "GET",
+      url: "https://media.example.invalid/private-preview",
+      headers: {},
+      expiresAt: "2026-09-28T08:00:00Z",
+    },
+  };
+  const execute = vi.fn().mockResolvedValue(result);
+  registerManagementCenterRoute(app, {
+    allowedOrigin: origin,
+    useCases: { execute },
+  });
+  const read = () =>
+    app.inject({
+      method: "POST",
+      url: "/api/v1/admin/management/images/read",
+      headers,
+      payload: { schemaVersion: 1, target },
+    });
+  try {
+    const response = await read();
+    expect(response.statusCode).toBe(200);
+    expect(response.headers["cache-control"]).toBe("private, no-store");
+    expect(execute).toHaveBeenCalledWith(
+      expect.objectContaining({
+        command: { schemaVersion: 1, action: "READ_IMAGE_SOURCE", target },
+      }),
+    );
+    for (const changed of [
+      { ...target, id: id.replace(/1$/u, "2") },
+      { ...target, kind: "GIFT" },
+      { ...target, expectedVersion: 3 },
+    ]) {
+      execute.mockResolvedValueOnce({ ...result, target: changed });
+      expect((await read()).statusCode).toBe(503);
+    }
+  } finally {
+    await app.close();
+  }
+});
 test("a locked inventory policy returns the precise private 409 failure", async () => {
   const app = Fastify({ logger: false });
   const value = {

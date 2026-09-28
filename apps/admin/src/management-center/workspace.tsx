@@ -1,5 +1,11 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import type { ReactNode } from "react";
 import { Button, Icon } from "@fan-support/ui";
 import type {
@@ -21,6 +27,7 @@ import { OperationProgress } from "./operation-progress";
 import { managementError } from "./errors";
 import { canStartManagementWrite } from "./workspace-state";
 import { scheduleManagementFocus } from "./focus";
+import { canLeaveDecoration } from "../management-decoration/navigation";
 import { ManagementLogout } from "./logout";
 
 function publishedHref(
@@ -75,6 +82,21 @@ export function ManagementWorkspace({
   const [selection, setSelection] = useState<EditorSelection | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [dirty, setDirty] = useState(false);
+  function canLeave() {
+    return canLeaveDecoration({ busy, dirty }, () =>
+      window.confirm(copy.discardEdits),
+    );
+  }
+  useLayoutEffect(() => {
+    if (!dirty && !busy) return;
+    const prevent = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", prevent);
+    return () => window.removeEventListener("beforeunload", prevent);
+  }, [dirty, busy]);
   const [error, setError] = useState<unknown>(null);
   const [success, setSuccess] = useState<ManagementCenterOperation | null>(
     null,
@@ -127,6 +149,7 @@ export function ManagementWorkspace({
     };
   }, [api]);
   const removed = useCallback(() => {
+    setDirty(false);
     setSuccess(null);
     setDeleted(true);
     setSelection(null);
@@ -139,6 +162,7 @@ export function ManagementWorkspace({
   }, [focusTarget]);
   const published = useCallback(
     (operation: ManagementCenterOperation) => {
+      setDirty(false);
       setDeleted(false);
       setSuccess(operation);
       setSelection(null);
@@ -163,7 +187,8 @@ export function ManagementWorkspace({
     [published],
   );
   function chooseSection(next: ManagementSection) {
-    if (busy) return;
+    if (!canLeave()) return;
+    setDirty(false);
     setSelection(null);
     setSection(next);
     setPage(1);
@@ -240,17 +265,19 @@ export function ManagementWorkspace({
     <ManagementShell
       locale={locale}
       section={section}
-      onSection={(next) =>
-        next === "ORDERS"
-          ? onOrders?.()
-          : next === "PAYMENTS"
-            ? onPayments?.()
-            : next === "DECORATION"
-              ? onDecoration?.()
-              : next === "EXCEPTIONS"
-                ? onExceptions?.()
-                : chooseSection(next)
-      }
+      beforeLeave={() => !busy}
+      onSection={(next) => {
+        if (
+          ["ORDERS", "PAYMENTS", "DECORATION", "EXCEPTIONS"].includes(next) &&
+          !canLeave()
+        )
+          return;
+        if (next === "ORDERS") onOrders?.();
+        else if (next === "PAYMENTS") onPayments?.();
+        else if (next === "DECORATION") onDecoration?.();
+        else if (next === "EXCEPTIONS") onExceptions?.();
+        else chooseSection(next);
+      }}
       ordersAvailable={Boolean(onOrders)}
       paymentsAvailable={Boolean(onPayments)}
       exceptionsAvailable={Boolean(onExceptions)}
@@ -260,7 +287,9 @@ export function ManagementWorkspace({
         onLogout ? (
           <ManagementLogout
             locale={locale}
-            onLogout={onLogout}
+            onLogout={async () => {
+              if (canLeave()) await onLogout();
+            }}
             disabled={busy}
           />
         ) : undefined
@@ -275,6 +304,8 @@ export function ManagementWorkspace({
               type="button"
               disabled={busy}
               onClick={() => {
+                if (!canLeave()) return;
+                setDirty(false);
                 setSelection(null);
                 setRefresh((value) => value + 1);
                 focusTitle();
@@ -379,6 +410,7 @@ export function ManagementWorkspace({
               : selection.kind === "SAVE_GIFT" && canDeleteGifts
           }
           onBusy={setBusy}
+          onDirtyChange={setDirty}
         />
       ) : (
         <>

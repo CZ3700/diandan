@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import {
   createDefaultStorefrontTheme,
   type StorefrontTheme,
@@ -89,10 +89,10 @@ export function ThemeWorkspace({
       active = false;
     };
   }, [api, historyPage, historyAttempt]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     onDirtyChange(dirty);
   }, [dirty, onDirtyChange]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!dirty) return;
     const prevent = (event: BeforeUnloadEvent) => {
       event.preventDefault();
@@ -101,7 +101,7 @@ export function ThemeWorkspace({
     window.addEventListener("beforeunload", prevent);
     return () => window.removeEventListener("beforeunload", prevent);
   }, [dirty]);
-  useEffect(
+  useLayoutEffect(
     () => () => {
       onDirtyChange(false);
       onBusy(false);

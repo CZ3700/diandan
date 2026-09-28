@@ -1,3 +1,5 @@
+import { validateDailyGiftCommerceEdit } from "./daily-publication-commerce.js";
+import { resolveManagementClaimImageSource } from "./management-image-source.js";
 import { randomUUID } from "node:crypto";
 import {
   dailyMediaMetadataDocumentSchema,
@@ -101,7 +103,14 @@ async function prepareCatalog(
   const intent = claim.intent;
   if (intent.kind !== "SAVE_ARTIST" && intent.kind !== "SAVE_GIFT")
     throw new Error("Catalog intent required");
-  if (intent.kind === "SAVE_GIFT" && intent.inventory.policy === "TRACKED") {
+  if (
+    intent.kind === "SAVE_GIFT" &&
+    intent.inventory.policy === "TRACKED" &&
+    !(
+      "commerceEdit" in intent &&
+      intent.commerceEdit.inventory.mode === "PRESERVE"
+    )
+  ) {
     const [location] = await draftRows(
       client,
       "SELECT id FROM public.inventory_locations WHERE id=$1 AND status='ACTIVE' FOR SHARE",
@@ -126,6 +135,22 @@ async function prepareCatalog(
         prior["status"] === "archived"
   )
     return null;
+  if (intent.kind === "SAVE_GIFT" && "commerceEdit" in intent) {
+    const rows = await draftRows(
+      client,
+      "SELECT id FROM public.gift_variants WHERE gift_id=$1 AND status<>'archived' ORDER BY id FOR UPDATE",
+      [targetId],
+    );
+    if (
+      rows.length !== 1 ||
+      !(await validateDailyGiftCommerceEdit(
+        client,
+        claim,
+        String(rows[0]!["id"]),
+      ))
+    )
+      return managementFailure("TARGET_CONFLICT");
+  }
   let refs: Ref[];
   if (prepared) refs = preparedRefs(prepared);
   else {
@@ -237,6 +262,14 @@ async function prepareCatalog(
       )
     )
       throw new Error("Daily gift requires its explicit managed variant");
+    const inventoryPolicy =
+      "commerceEdit" in intent &&
+      intent.commerceEdit.inventory.mode === "PRESERVE" &&
+      variants[0]
+        ? giftVariantDefinitionSchema.shape.inventoryPolicy.parse(
+            variants[0]["inventory_policy"],
+          )
+        : intent.inventory.policy;
     if (variants[0]) {
       const [item] = await draftRows(
         client,
@@ -245,8 +278,8 @@ async function prepareCatalog(
       );
       if (
         item &&
-        (item["policy"] !== intent.inventory.policy ||
-          variants[0]["inventory_policy"] !== intent.inventory.policy)
+        (item["policy"] !== inventoryPolicy ||
+          variants[0]["inventory_policy"] !== inventoryPolicy)
       )
         return managementFailure("INVENTORY_POLICY_LOCKED");
     }
@@ -257,12 +290,12 @@ async function prepareCatalog(
     if (variants[0])
       await client.query(
         `UPDATE public.gift_variants SET status='active',inventory_policy=$2,version=version+1,updated_at=$3 WHERE id=$1`,
-        [variantId, intent.inventory.policy, time],
+        [variantId, inventoryPolicy, time],
       );
     else
       await client.query(
         `INSERT INTO public.gift_variants(id,gift_id,sku,status,inventory_policy,version,created_at,updated_at) VALUES($1,$2,$3,'active',$4,1,$5,$5)`,
-        [variantId, targetId, sku, intent.inventory.policy, time],
+        [variantId, targetId, sku, inventoryPolicy, time],
       );
     await client.query(
       `INSERT INTO public.gift_variant_recipient_rules(gift_variant_id,rule,operation_id) VALUES($1,'ALL_ACTIVE_ARTISTS',$2) ON CONFLICT(gift_variant_id) DO NOTHING`,
@@ -274,7 +307,7 @@ async function prepareCatalog(
       giftId: targetId,
       sku,
       status: "active",
-      inventoryPolicy: intent.inventory.policy,
+      inventoryPolicy,
     });
     const fields = {
       title: intent.name,
@@ -473,6 +506,13 @@ export function createDailyPublicationRepository(
 ): ManagementCenterPublicationRepository {
   const run = createResourceRun(client, scope);
   return {
+    resolveImageSource: (input) =>
+      run(async () => {
+        const claim = await loadDailyClaim(client, input);
+        return claim
+          ? resolveManagementClaimImageSource(client, claim)
+          : managementFailure("NEEDS_AUTHORIZATION");
+      }),
     prepareMediaMetadata: (input) =>
       run(() => prepareDailyMediaMetadata(client, input)),
     publish: (input) =>

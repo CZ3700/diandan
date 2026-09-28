@@ -113,3 +113,5 @@ export * from "./payment-components.js";
 export * from "./home-layout.js";
 
 export * from "./storefront-theme.js";
+
+export * from "./management-image.js";

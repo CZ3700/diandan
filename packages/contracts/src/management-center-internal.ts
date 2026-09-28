@@ -1,3 +1,9 @@
+import {
+  managementImageTargetSchema,
+  managementCurrentImageSchema,
+  managementImageFocalPointSchema,
+} from "./management-image.js";
+import { mediaImageProcessingCommandSchema } from "./media-processing.js";
 import { z } from "zod";
 import { adminPrincipalSchema } from "./admin-content.js";
 import {
@@ -78,3 +84,15 @@ export type ManagementCenterCheckpoint = z.infer<
   typeof managementCenterCheckpointSchema
 >;
 export type ManagementCenterClaim = z.infer<typeof managementCenterClaimSchema>;
+
+/** Authorized storage identity remains between application and persistence, never a public DTO. */
+export const managementImageSourceSchema = z.strictObject({
+  schemaVersion: z.literal(1),
+  outcome: z.literal("SUCCESS"),
+  target: managementImageTargetSchema,
+  currentImage: managementCurrentImageSchema,
+  focalPoint: managementImageFocalPointSchema,
+  source: mediaImageProcessingCommandSchema.shape.source,
+  orientation: z.number().int().min(1).max(8),
+});
+export type ManagementImageSource = z.infer<typeof managementImageSourceSchema>;

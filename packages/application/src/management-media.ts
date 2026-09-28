@@ -3,6 +3,7 @@ import {
   DAILY_MANAGEMENT_IMAGE_ROLES,
   adminMutationResponseSchema,
   managementCenterClaimSchema,
+  managementImageSourceSchema,
   managementCenterPreparedMediaSchema,
   mediaUploadTicketResponseSchema,
   mediaSourceInspectionResponseSchema,
@@ -72,7 +73,14 @@ function roles(
 function framing(claim: ManagementCenterClaim) {
   if (claim.intent.kind === "RESTORE_POSTER")
     throw new PreparationFailure("INVALID_CONTENT");
-  return dailyManagementFraming(claim.intent.kind);
+  const defaults = dailyManagementFraming(claim.intent.kind);
+  return {
+    ...defaults,
+    focalPoint:
+      claim.intent.image && "focalPoint" in claim.intent.image
+        ? claim.intent.image.focalPoint
+        : defaults.focalPoint,
+  };
 }
 function audit(claim: ManagementCenterClaim) {
   return {
@@ -88,7 +96,8 @@ async function readUpload(
   claim: ManagementCenterClaim,
 ): Promise<MediaUploadTicket> {
   const uploaded = image(claim);
-  if (!uploaded) throw new PreparationFailure("INVALID_COMMAND");
+  if (!uploaded || !("uploadId" in uploaded))
+    throw new PreparationFailure("INVALID_COMMAND");
   return requireSuccess(
     mediaUploadTicketResponseSchema.parse(
       await repositories.resources.readUpload({
@@ -145,11 +154,24 @@ export function createManagementMediaPreparation(
             repositories,
             managementCenterClaimSchema.parse(input),
           );
+          const selected = image(claim);
+          const original =
+            selected && "currentImage" in selected
+              ? managementImageSourceSchema.parse(
+                  requireSuccess(
+                    await repositories.publication.resolveImageSource(
+                      fence(claim),
+                    ),
+                  ),
+                )
+              : null;
           const ticket =
-            image(claim) && claim.checkpoint.sourceAssetId === null
+            selected &&
+            "uploadId" in selected &&
+            claim.checkpoint.sourceAssetId === null
               ? await readUpload(repositories, claim)
               : null;
-          return { claim, ticket };
+          return { claim, ticket, original };
         });
         if (!image(before.claim))
           return { outcome: "READY", preparedMedia: null };
@@ -176,9 +198,22 @@ export function createManagementMediaPreparation(
           const claim = await reload(repositories, before.claim);
           if (claim.checkpoint.preparedMedia) return claim;
           if (claim.checkpoint.sourceAssetId === null) {
-            const ticket = await readUpload(repositories, claim);
-            let sourceAssetId = ticket.assetId;
-            if (ticket.status === "PENDING") {
+            const selected = image(claim);
+            const original =
+              selected && "currentImage" in selected
+                ? managementImageSourceSchema.parse(
+                    requireSuccess(
+                      await repositories.publication.resolveImageSource(
+                        fence(claim),
+                      ),
+                    ),
+                  )
+                : null;
+            const ticket = original
+              ? null
+              : await readUpload(repositories, claim);
+            let sourceAssetId = original?.source.assetId ?? ticket?.assetId;
+            if (ticket?.status === "PENDING") {
               if (
                 !inspection ||
                 !before.ticket ||

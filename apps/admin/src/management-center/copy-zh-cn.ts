@@ -1,5 +1,22 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  interfaceLanguage: "界面语言",
+  discardEdits: "放弃尚未保存的修改并离开此页？",
+  adjustFocus: "调整图片焦点",
+  focusHint:
+    "在原图上点击需要保留的主体。方向键可微调，Shift + 方向键可大幅移动。",
+  focusHorizontal: "水平焦点",
+  focusVertical: "垂直焦点",
+  resetFocus: "重置焦点",
+  previewPortrait: "艺人肖像",
+  previewDesktop: "电脑海报",
+  previewMobile: "手机海报",
+  previewGift: "礼物图片",
+  originalLoading: "正在加载原图…",
+  originalUnavailable: "原图加载失败，请重试。你的修改已保留。",
+  reuploadRequired: "请重新上传原图后调整这张图片。",
+  imageUnchanged: "请选择新图片或调整焦点后再发布。",
+
   login: "登录",
   loginHint: "登录后管理艺人、礼物和海报。",
   loginFailed: "登录未成功，请重试。",

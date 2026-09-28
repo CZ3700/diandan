@@ -1,5 +1,23 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  interfaceLanguage: "Ngôn ngữ giao diện",
+  discardEdits: "Bỏ các thay đổi chưa lưu và rời trang này?",
+  adjustFocus: "Điều chỉnh tiêu điểm ảnh",
+  focusHint:
+    "Chọn chủ thể cần giữ trên ảnh gốc. Dùng phím mũi tên để dịch chuyển nhỏ hoặc Shift + mũi tên để dịch chuyển lớn.",
+  focusHorizontal: "Tiêu điểm ngang",
+  focusVertical: "Tiêu điểm dọc",
+  resetFocus: "Đặt lại tiêu điểm",
+  previewPortrait: "Chân dung",
+  previewDesktop: "Ảnh bìa máy tính",
+  previewMobile: "Ảnh bìa điện thoại",
+  previewGift: "Ảnh quà tặng",
+  originalLoading: "Đang tải ảnh gốc…",
+  originalUnavailable:
+    "Không thể tải ảnh gốc. Hãy thử lại; các thay đổi vẫn được giữ.",
+  reuploadRequired: "Hãy tải lại ảnh gốc để điều chỉnh ảnh này.",
+  imageUnchanged: "Chọn ảnh mới hoặc điều chỉnh tiêu điểm trước khi đăng.",
+
   login: "Đăng nhập",
   loginHint: "Đăng nhập để quản lý nghệ sĩ, quà tặng và áp phích.",
   loginFailed: "Không thể đăng nhập. Vui lòng thử lại.",

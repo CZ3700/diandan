@@ -147,3 +147,36 @@ test("a market without a current published source does not accidentally publish 
   ).rejects.toThrow();
   expect(mocks.write).not.toHaveBeenCalled();
 });
+test("preserving price returns the current head without publishing the form's old amount", async () => {
+  mocks.write.mockClear();
+  const input = claim();
+  if (input.intent.kind !== "SAVE_GIFT") throw new Error("fixture");
+  input.intent = {
+    ...input.intent,
+    id,
+    expectedVersion: 2,
+    commerceEdit: {
+      price: { mode: "PRESERVE" },
+      inventory: { mode: "PRESERVE" },
+    },
+  };
+  mocks.context.mockResolvedValue({
+    owner: { status: "ACTIVE" },
+    head: { price_book_id: id, price_book_revision: 4, publication_id: id },
+    authoringVersion: 4,
+    headVersion: 3,
+  });
+  mocks.book.mockResolvedValue({
+    book: { singleWindow: true },
+    prices: [{ giftVariantId: id, unitAmountMinor: 2000 }],
+  });
+  expect(
+    await publishDailyGiftPrice(
+      { query: vi.fn(), release: vi.fn() },
+      input,
+      id,
+      time,
+    ),
+  ).toEqual({ pricePublicationId: id });
+  expect(mocks.write).not.toHaveBeenCalled();
+});
