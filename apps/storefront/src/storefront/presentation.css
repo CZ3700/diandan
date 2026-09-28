@@ -1,0 +1,127 @@
+/* Presets decorate the existing renderer; they never hide content or controls. */
+html[data-storefront-hero-layout="SPLIT"] [data-home-hero]::after {
+  display: none;
+}
+html[data-storefront-hero-layout="SPLIT"]
+  [data-home-hero]
+  .storefront-hero-copy {
+  margin-block-start: 0;
+  padding-block: var(--space-8);
+}
+html[data-storefront-hero-layout="SPLIT"]
+  [data-home-hero]
+  .storefront-hero-image
+  img {
+  object-fit: contain;
+}
+@media (min-width: 48rem) {
+  html[data-storefront-hero-layout="SPLIT"] [data-home-hero] {
+    grid-template: auto / minmax(0, 1fr) minmax(0, 1.2fr);
+    align-items: center;
+    min-block-size: 0;
+  }
+  html[data-storefront-hero-layout="SPLIT"]
+    [data-home-hero]
+    .storefront-hero-copy {
+    grid-area: 1 / 1;
+    align-self: center;
+    padding-block: var(--space-16);
+  }
+  html[data-storefront-hero-layout="SPLIT"]
+    [data-home-hero]
+    .storefront-hero-image {
+    grid-area: 1 / 2;
+    align-self: stretch;
+  }
+}
+
+html[data-storefront-gift-layout="SHOWCASE"] .gift-directory-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (width < 48rem) {
+  html[data-storefront-gift-layout="SHOWCASE"] .gift-directory-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Keep feedback/spinners alive. NONE disables decorative transitions explicitly. */
+html[data-storefront-motion="NONE"]
+  :is(
+    .storefront-hero-copy h1,
+    .storefront-hero-copy > .storefront-primary,
+    .cart-add-button[data-cart-add-state="confirmed"]
+  ) {
+  animation: none;
+}
+html[data-storefront-motion="NONE"]
+  :is(
+    .fs-button,
+    .fs-link,
+    .fs-field__input,
+    .fs-quantity__button,
+    .fs-overlay-trigger,
+    .fs-menu__trigger,
+    .fs-menu__chevron,
+    .fs-menu__popup,
+    .fs-overlay__backdrop,
+    .fs-dialog__popup,
+    .fs-drawer__popup,
+    .fs-overlay__close,
+    .fs-toast,
+    .fs-toast__close,
+    .storefront-gift-grid img,
+    .storefront-kinds__list a
+  ) {
+  transition: none;
+}
+/* Only transient transforms are removed: skip links, toast dragging, and semantic
+   chevron orientation retain their independent behavior. Includes portaled UI. */
+html:is([data-storefront-motion="SUBTLE"], [data-storefront-motion="NONE"])
+  :is(
+    .fs-button:active:not(:disabled),
+    .fs-overlay-trigger:active,
+    .fs-menu__trigger:active,
+    .fs-overlay__close:active,
+    .fs-toast__close:active,
+    .storefront-gift-grid a:hover img
+  ),
+html:is([data-storefront-motion="SUBTLE"], [data-storefront-motion="NONE"])
+  :is(.fs-menu__popup, .fs-dialog__popup, .fs-drawer__popup, .fs-toast):is(
+    [data-starting-style],
+    [data-ending-style]
+  ) {
+  transform: none;
+}
+html[data-storefront-motion="SUBTLE"]
+  .cart-add-button[data-cart-add-state="confirmed"] {
+  animation: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-storefront-motion="SUBTLE"]
+    :is(.storefront-hero-copy h1, .storefront-hero-copy > .storefront-primary) {
+    animation-name: storefront-presentation-fade;
+  }
+  @keyframes storefront-presentation-fade {
+    from {
+      opacity: 0.65;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html[data-storefront-motion="STANDARD"] .gift-directory-card img {
+    transition: transform var(--motion-layout-effective) var(--ease-out);
+  }
+  html[data-storefront-motion="STANDARD"] .gift-directory-card > a:hover img {
+    transform: scale(var(--motion-hover-scale));
+  }
+  html[data-storefront-motion="SUBTLE"] .gift-directory-card img {
+    transition: opacity var(--motion-control-effective) var(--ease-out);
+  }
+  html[data-storefront-motion="SUBTLE"] .gift-directory-card > a:hover img {
+    opacity: 0.92;
+  }
+}

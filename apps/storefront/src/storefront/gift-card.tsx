@@ -38,7 +38,7 @@ export function GiftCard({
           <PublishedImage
             media={gift.primaryMedia}
             fallbackLabel={copy.mediaFallback}
-            sizes="(max-width: 48rem) 45vw, (max-width: 90rem) 30vw, 432px"
+            sizes="auto, (max-width: 48rem) 100vw, (max-width: 90rem) 50vw, 720px"
           />
         </div>
         <div className="gift-directory-card__body">

@@ -47,3 +47,12 @@ html[data-storefront-corners="ROUND"] {
   --radius-control: 1.25rem;
   --radius-media: 2rem;
 }
+
+/* System reduced motion always wins; this never changes the reduction tokens. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-storefront-motion-speed="QUICK"] {
+    --motion-control-effective: var(--motion-control-quick);
+    --motion-hero-effective: var(--motion-hero-quick);
+    --motion-layout-effective: var(--motion-layout-quick);
+  }
+}

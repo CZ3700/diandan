@@ -1,5 +1,8 @@
 import { expect, test } from "vitest";
-import { createDefaultStorefrontTheme } from "@fan-support/contracts";
+import {
+  createDefaultStorefrontTheme,
+  createDefaultStorefrontPresentation,
+} from "@fan-support/contracts";
 import { createAdminClient } from "../workspace/client";
 const subject = await import("./theme-api").catch(() => undefined);
 test("theme mutations reject unrelated receipts and keep the retry key until success", async () => {
@@ -99,6 +102,94 @@ test("theme save rejects a receipt for different settings even when its version 
     ),
   );
   await expect(api.save(theme, 0)).rejects.toThrow("INVALID_RESPONSE");
+});
+
+test.each([
+  { heroLayout: "SPLIT" as const },
+  { giftLayout: "SHOWCASE" as const },
+  { motion: "SUBTLE" as const },
+  { motionSpeed: "QUICK" as const },
+])(
+  "theme save rejects a different presentation-only receipt: %j",
+  async (change) => {
+    const theme = {
+      ...createDefaultStorefrontTheme(),
+      presentation: createDefaultStorefrontPresentation(),
+    };
+    const receiptTheme = {
+      ...theme,
+      presentation: { ...theme.presentation, ...change },
+    };
+    const api = subject!.createStorefrontThemeApi(
+      createAdminClient(
+        () => "csrf",
+        () => {},
+        async () =>
+          Response.json({
+            schemaVersion: 1,
+            outcome: "SUCCESS",
+            kind: "STATE",
+            replayed: false,
+            state: {
+              schemaVersion: 1,
+              version: 1,
+              published: null,
+              draft: {
+                revisionId: "a0000000-0000-4000-8000-000000000001",
+                createdAt: "2026-09-28T00:00:00Z",
+                theme: receiptTheme,
+              },
+            },
+          }),
+      ),
+    );
+    await expect(api.save(theme, 0)).rejects.toThrow("INVALID_RESPONSE");
+  },
+);
+
+test("theme save sends and accepts the complete presentation without changing the envelope", async () => {
+  const theme = {
+    ...createDefaultStorefrontTheme(),
+    presentation: {
+      heroLayout: "SPLIT" as const,
+      giftLayout: "SHOWCASE" as const,
+      motion: "SUBTLE" as const,
+      motionSpeed: "QUICK" as const,
+    },
+  };
+  const requests: RequestInit[] = [];
+  const state = {
+    schemaVersion: 1,
+    version: 1,
+    published: null,
+    draft: {
+      revisionId: "a0000000-0000-4000-8000-000000000001",
+      createdAt: "2026-09-28T00:00:00Z",
+      theme,
+    },
+  };
+  const api = subject!.createStorefrontThemeApi(
+    createAdminClient(
+      () => "csrf",
+      () => {},
+      async (_path, init) => {
+        requests.push(init!);
+        return Response.json({
+          schemaVersion: 1,
+          outcome: "SUCCESS",
+          kind: "STATE",
+          replayed: false,
+          state,
+        });
+      },
+    ),
+  );
+  expect(await api.save(theme, 0)).toEqual(state);
+  expect(JSON.parse(String(requests[0]?.body))).toEqual({
+    schemaVersion: 1,
+    expectedVersion: 0,
+    theme,
+  });
 });
 
 test("theme publication and restoration reject another revision's receipt", async () => {

@@ -1,6 +1,8 @@
 "use client";
 import {
   storefrontThemeSchema,
+  resolveStorefrontPresentation,
+  type StorefrontPresentation,
   type StorefrontTheme,
 } from "@fan-support/contracts";
 import type { ThemeCopy } from "./theme-copy";
@@ -16,8 +18,19 @@ export function ThemeEditor({
   disabled: boolean;
   copy: ThemeCopy;
 }) {
+  const presentation = resolveStorefrontPresentation(theme);
   function change(field: keyof StorefrontTheme, value: string) {
     const next = storefrontThemeSchema.safeParse({ ...theme, [field]: value });
+    if (next.success) onChange(next.data);
+  }
+  function changePresentation(
+    field: keyof StorefrontPresentation,
+    value: string,
+  ) {
+    const next = storefrontThemeSchema.safeParse({
+      ...theme,
+      presentation: { ...presentation, [field]: value },
+    });
     if (next.success) onChange(next.data);
   }
   return (
@@ -42,6 +55,30 @@ export function ThemeEditor({
         <summary>{copy.advanced}</summary>
         {(
           [
+            ["heroLayout", copy.heroLayout, copy.heroLayoutOptions],
+            ["giftLayout", copy.giftLayout, copy.giftLayoutOptions],
+          ] as const
+        ).map(([field, label, options]) => (
+          <label key={field}>
+            <span>{label}</span>
+            <select
+              data-theme-setting={field}
+              disabled={disabled}
+              value={presentation[field]}
+              onChange={(event) =>
+                changePresentation(field, event.currentTarget.value)
+              }
+            >
+              {Object.entries(options).map(([value, text]) => (
+                <option key={value} value={value}>
+                  {text}
+                </option>
+              ))}
+            </select>
+          </label>
+        ))}
+        {(
+          [
             ["typography", copy.typography, copy.typographyOptions],
             ["density", copy.density, copy.densityOptions],
             ["corners", copy.corners, copy.cornerOptions],
@@ -63,6 +100,37 @@ export function ThemeEditor({
             </select>
           </label>
         ))}
+        {(
+          [
+            ["motion", copy.motion, copy.motionOptions],
+            ["motionSpeed", copy.motionSpeed, copy.motionSpeedOptions],
+          ] as const
+        ).map(([field, label, options]) => (
+          <label key={field}>
+            <span>{label}</span>
+            <select
+              data-theme-setting={field}
+              disabled={
+                disabled ||
+                (field === "motionSpeed" && presentation.motion === "NONE")
+              }
+              value={presentation[field]}
+              aria-describedby="theme-motion-hint"
+              onChange={(event) =>
+                changePresentation(field, event.currentTarget.value)
+              }
+            >
+              {Object.entries(options).map(([value, text]) => (
+                <option key={value} value={value}>
+                  {text}
+                </option>
+              ))}
+            </select>
+          </label>
+        ))}
+        <p className="mc-hint" id="theme-motion-hint">
+          {copy.motionHint}
+        </p>
       </details>
     </div>
   );

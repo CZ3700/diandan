@@ -5,6 +5,7 @@ import { randomUUID, randomBytes, createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Client } from "pg";
+import { verifyStorefrontPresentation } from "./storefront-theme-presentation-cases.mjs";
 import {
   createDefaultStorefrontTheme,
   createDefaultHomeLayout,
@@ -414,6 +415,18 @@ await runtime(async (config) => {
       refused = true;
     }
     check(refused, "downgrade refuses existing theme history");
+    const finalVersion = await verifyStorefrontPresentation({
+      client,
+      migrate,
+      execute,
+      publicApp,
+      publicLayout,
+      priorLayout,
+      saveCommand,
+      published,
+      check,
+      actorId,
+    });
     await persistence.close();
     persistence = createPostgresPersistence(config);
     app = createStorefrontThemeUseCases({
@@ -424,7 +437,7 @@ await runtime(async (config) => {
       transactions: persistence.storefrontThemeTransactionManager,
     });
     check(
-      (await publicApp.execute()).version === 5,
+      (await publicApp.execute()).version === finalVersion,
       "new application process connection retains publication",
     );
     await client.query(

@@ -26,6 +26,10 @@ test("theme exposes only deployed presentation attributes and rejects arbitrary 
     "data-storefront-typography": "STANDARD",
     "data-storefront-density": "STANDARD",
     "data-storefront-corners": "SOFT",
+    "data-storefront-hero-layout": "IMMERSIVE",
+    "data-storefront-gift-layout": "GRID",
+    "data-storefront-motion": "STANDARD",
+    "data-storefront-motion-speed": "STANDARD",
   });
   expect(() =>
     storefrontThemeAttributes({ ...theme, css: "display:none" }),
@@ -33,6 +37,31 @@ test("theme exposes only deployed presentation attributes and rejects arbitrary 
   expect(() =>
     storefrontThemeAttributes({ ...theme, palette: "url(example)" }),
   ).toThrow();
+});
+test("layout and motion attributes use one complete set and legacy themes reset them", () => {
+  const { storefrontThemeAttributes } = subject();
+  expect(
+    storefrontThemeAttributes({
+      ...theme,
+      presentation: {
+        heroLayout: "SPLIT",
+        giftLayout: "SHOWCASE",
+        motion: "SUBTLE",
+        motionSpeed: "QUICK",
+      },
+    }),
+  ).toMatchObject({
+    "data-storefront-hero-layout": "SPLIT",
+    "data-storefront-gift-layout": "SHOWCASE",
+    "data-storefront-motion": "SUBTLE",
+    "data-storefront-motion-speed": "QUICK",
+  });
+  expect(storefrontThemeAttributes(theme)).toMatchObject({
+    "data-storefront-hero-layout": "IMMERSIVE",
+    "data-storefront-gift-layout": "GRID",
+    "data-storefront-motion": "STANDARD",
+    "data-storefront-motion-speed": "STANDARD",
+  });
 });
 function luminance(hex: string) {
   const rgb = [1, 3, 5]
@@ -75,7 +104,7 @@ test("every palette retains readable text, action and semantic states on all sur
     ).toBe(false);
   }
 });
-test("preset CSS agrees with palette tokens and never changes touch, fonts or motion", async () => {
+test("preset CSS agrees with palette tokens and keeps touch, fonts and reduced motion protected", async () => {
   const { STOREFRONT_THEME_PALETTES } = subject();
   const css = await readFile(
     new URL("../styles/storefront-theme.css", import.meta.url),
@@ -93,6 +122,6 @@ test("preset CSS agrees with palette tokens and never changes touch, fonts or mo
     for (const [key, value] of Object.entries(palette))
       expect(block).toContain(`${key}: ${value};`);
   }
-  expect(css).not.toMatch(/--(?:space-\d+|font-ui|motion-[\w-]+)\s*:/u);
+  expect(css).not.toMatch(/--(?:space-\d+|font-ui|motion-reduced)\s*:/u);
   expect(css).not.toMatch(/url\(|!important|animation:/u);
 });

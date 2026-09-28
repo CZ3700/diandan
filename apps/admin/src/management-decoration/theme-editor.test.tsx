@@ -1,6 +1,10 @@
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
+import { isValidElement, type ReactElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { SUPPORTED_LOCALES } from "@fan-support/contracts";
+import {
+  SUPPORTED_LOCALES,
+  createDefaultStorefrontTheme,
+} from "@fan-support/contracts";
 const editor = await import("./theme-editor").catch(() => undefined);
 const copyModule = await import("./theme-copy").catch(() => undefined);
 test.each(SUPPORTED_LOCALES)(
@@ -24,10 +28,96 @@ test.each(SUPPORTED_LOCALES)(
       />,
     );
     expect(html.match(/type="radio"/gu)).toHaveLength(3);
-    expect(html.match(/<select/gu)).toHaveLength(3);
-    expect(html).toContain("<details");
+    expect(html.match(/<select/gu)).toHaveLength(7);
+    expect(html.match(/<details/gu)).toHaveLength(1);
+    expect(html).not.toMatch(/<details[^>]*\bopen/u);
+    for (const field of ["heroLayout", "giftLayout", "motion", "motionSpeed"])
+      expect(html).toMatch(
+        new RegExp(`data-theme-setting="${field}"[^>]*disabled`, "u"),
+      );
     expect(html).toContain("data-theme-editor");
     expect(html).toContain('<fieldset disabled=""');
     expect(html).not.toMatch(/undefined|\[object Object\]/u);
   },
 );
+
+function control(
+  node: unknown,
+  field: string,
+): ReactElement<{ onChange: (event: unknown) => void }> | undefined {
+  if (Array.isArray(node)) {
+    for (const child of node) {
+      const result = control(child, field);
+      if (result) return result;
+    }
+    return;
+  }
+  if (!isValidElement<Record<string, unknown>>(node)) return;
+  if (node.props["data-theme-setting"] === field)
+    return node as ReactElement<{ onChange: (event: unknown) => void }>;
+  return control(node.props["children"], field);
+}
+
+test("legacy themes show presentation defaults without silently rewriting their saved shape", () => {
+  const theme = createDefaultStorefrontTheme();
+  const onChange = vi.fn();
+  const result = editor!.ThemeEditor({
+    theme,
+    onChange,
+    disabled: false,
+    copy: copyModule!.themeCopy("zh-CN"),
+  });
+  const html = renderToStaticMarkup(result);
+  expect(html).toContain('value="IMMERSIVE" selected=""');
+  expect(html).toContain('value="GRID" selected=""');
+  expect(html).toContain("首页海报布局");
+  expect(html).toContain("礼物展示");
+  expect(html).toContain("动效速度");
+  expect(onChange).not.toHaveBeenCalled();
+  expect(theme).not.toHaveProperty("presentation");
+  expect(control(result, "heroLayout")).toBeDefined();
+  control(result, "heroLayout")!.props.onChange({
+    currentTarget: { value: "SPLIT" },
+  });
+  expect(onChange).toHaveBeenCalledExactlyOnceWith({
+    ...theme,
+    presentation: {
+      heroLayout: "SPLIT",
+      giftLayout: "GRID",
+      motion: "STANDARD",
+      motionSpeed: "STANDARD",
+    },
+  });
+  expect(theme).not.toHaveProperty("presentation");
+});
+
+test("motion off disables only its speed and preserves the chosen speed", () => {
+  const theme = {
+    ...createDefaultStorefrontTheme(),
+    presentation: {
+      heroLayout: "SPLIT" as const,
+      giftLayout: "SHOWCASE" as const,
+      motion: "NONE" as const,
+      motionSpeed: "QUICK" as const,
+    },
+  };
+  const onChange = vi.fn();
+  const result = editor!.ThemeEditor({
+    theme,
+    onChange,
+    disabled: false,
+    copy: copyModule!.themeCopy("en"),
+  });
+  const html = renderToStaticMarkup(result);
+  expect(html).toMatch(/data-theme-setting="motionSpeed"[^>]*disabled/u);
+  expect(html).not.toMatch(/data-theme-setting="motion"[^>]*disabled/u);
+  expect(html).toContain('value="QUICK" selected=""');
+  expect(control(result, "motion")).toBeDefined();
+  control(result, "motion")!.props.onChange({
+    currentTarget: { value: "SUBTLE" },
+  });
+  expect(onChange).toHaveBeenCalledExactlyOnceWith({
+    ...theme,
+    presentation: { ...theme.presentation, motion: "SUBTLE" },
+  });
+});

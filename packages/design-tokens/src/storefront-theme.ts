@@ -1,4 +1,7 @@
-import { storefrontThemeSchema } from "@fan-support/contracts";
+import {
+  resolveStorefrontPresentation,
+  storefrontThemeSchema,
+} from "@fan-support/contracts";
 import { DESIGN_TOKEN_CONTRACT } from "./tokens.js";
 
 const defaults = DESIGN_TOKEN_CONTRACT.values;
@@ -32,10 +35,15 @@ export const STOREFRONT_THEME_PALETTES = Object.freeze({
 
 export function storefrontThemeAttributes(input: unknown) {
   const theme = storefrontThemeSchema.parse(input);
+  const presentation = resolveStorefrontPresentation(theme);
   return {
     "data-storefront-palette": theme.palette,
     "data-storefront-typography": theme.typography,
     "data-storefront-density": theme.density,
     "data-storefront-corners": theme.corners,
+    "data-storefront-hero-layout": presentation.heroLayout,
+    "data-storefront-gift-layout": presentation.giftLayout,
+    "data-storefront-motion": presentation.motion,
+    "data-storefront-motion-speed": presentation.motionSpeed,
   } as const;
 }

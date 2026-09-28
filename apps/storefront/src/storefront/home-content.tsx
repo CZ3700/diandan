@@ -64,7 +64,11 @@ export function HomeContent({
       : undefined;
   const sections: Record<HomeLayout["sections"][number]["id"], ReactNode> = {
     HERO: (
-      <section className="storefront-hero" aria-labelledby="hero-title">
+      <section
+        className="storefront-hero"
+        data-home-hero="true"
+        aria-labelledby="hero-title"
+      >
         <div className="storefront-hero-copy">
           <p className="storefront-eyebrow">{copy.artistEyebrow}</p>
           <h1 id="hero-title" lang={view.localeContext.resolvedLocale}>

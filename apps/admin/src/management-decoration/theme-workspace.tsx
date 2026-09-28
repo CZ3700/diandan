@@ -253,6 +253,7 @@ export function ThemeWorkspace({
               locale={locale}
               origin={storefrontOrigin}
               copy={copy}
+              replayLabel={copy.replayPreview}
             />
           </div>
           <details className="decoration-history" data-theme-history>

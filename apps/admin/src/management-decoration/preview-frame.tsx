@@ -28,12 +28,17 @@ export function LayoutPreviewFrame({
 }
 export function ThemePreviewFrame({
   theme,
+  replayLabel,
   ...props
-}: PreviewFrameProps & { theme: StorefrontTheme }) {
+}: PreviewFrameProps & {
+  theme: StorefrontTheme;
+  replayLabel?: string | undefined;
+}) {
   return (
     <DecorationPreviewFrame
       {...props}
       configuration={{ mode: "theme", theme }}
+      replayLabel={replayLabel}
     />
   );
 }
@@ -42,10 +47,12 @@ function DecorationPreviewFrame({
   locale,
   origin,
   copy,
+  replayLabel,
 }: PreviewFrameProps & {
   configuration:
     | { mode: "layout"; layout: HomeLayout }
     | { mode: "theme"; theme: StorefrontTheme };
+  replayLabel?: string | undefined;
 }) {
   const mode = configuration.mode;
   const frame = useRef<HTMLIFrameElement>(null);
@@ -139,6 +146,17 @@ function DecorationPreviewFrame({
         </div>
       </div>
       <p className="mc-hint">{copy.previewHint}</p>
+      {mode === "theme" && origin && replayLabel && (
+        <Button
+          type="button"
+          variant="quiet"
+          data-theme-preview-replay
+          disabled={!channel}
+          onClick={() => setChannel(crypto.randomUUID())}
+        >
+          {replayLabel}
+        </Button>
+      )}
       {!origin ? (
         <p role="status">{copy.previewUnavailable}</p>
       ) : (

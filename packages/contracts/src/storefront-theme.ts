@@ -7,14 +7,45 @@ import { contentTimestampSchema } from "./content-lifecycle.js";
 import { idempotencyKeySchema } from "./identifiers.js";
 import { homeLayoutAuthorizationCommandSchema } from "./home-layout.js";
 
-export const storefrontThemeSchema = z.strictObject({
+export const storefrontPresentationSchema = z.strictObject({
+  heroLayout: z.enum(["IMMERSIVE", "SPLIT"]),
+  giftLayout: z.enum(["GRID", "SHOWCASE"]),
+  motion: z.enum(["STANDARD", "SUBTLE", "NONE"]),
+  motionSpeed: z.enum(["STANDARD", "QUICK"]),
+});
+export type StorefrontPresentation = z.infer<
+  typeof storefrontPresentationSchema
+>;
+export function createDefaultStorefrontPresentation(): StorefrontPresentation {
+  return {
+    heroLayout: "IMMERSIVE",
+    giftLayout: "GRID",
+    motion: "STANDARD",
+    motionSpeed: "STANDARD",
+  };
+}
+const legacyStorefrontThemeSchema = z.strictObject({
   schemaVersion: z.literal(1),
   palette: z.enum(["BLACK_GOLD", "GRAPHITE_PEARL", "MIDNIGHT_BLUE"]),
   typography: z.enum(["STANDARD", "LARGE"]),
   density: z.enum(["STANDARD", "COMPACT", "AIRY"]),
   corners: z.enum(["SOFT", "SHARP", "ROUND"]),
 });
+// Keep old JSON and receipt hashes exact; display defaults never become persisted fields.
+export const storefrontThemeSchema = z.union([
+  legacyStorefrontThemeSchema,
+  legacyStorefrontThemeSchema.extend({
+    presentation: storefrontPresentationSchema,
+  }),
+]);
 export type StorefrontTheme = z.infer<typeof storefrontThemeSchema>;
+export function resolveStorefrontPresentation(
+  theme: StorefrontTheme,
+): StorefrontPresentation {
+  return "presentation" in theme
+    ? { ...theme.presentation }
+    : createDefaultStorefrontPresentation();
+}
 export function createDefaultStorefrontTheme(): StorefrontTheme {
   return {
     schemaVersion: 1,
