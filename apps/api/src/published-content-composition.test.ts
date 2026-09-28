@@ -65,6 +65,23 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     code: "NOT_FOUND",
   }));
   const createPersistence = vi.fn(() => ({
+    informationPageTransactionManager: {
+      runInInformationPageTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) =>
+        work({
+          informationPages: {
+            readPublished: load,
+            readIndex: async () => ({
+              schemaVersion: 1,
+              outcome: "SUCCESS",
+              kind: "INFORMATION_PAGE_INDEX",
+              locale: "en",
+              entries: [],
+            }),
+          },
+        }),
+    },
     homeLayoutTransactionManager: {
       runInHomeLayoutTransaction: async (
         work: (repositories: unknown) => unknown,
@@ -120,6 +137,7 @@ test("binds production public reads to configured PostgreSQL and trusted media o
   });
   expect(Object.keys(composition).sort()).toEqual([
     "publicHomeLayoutRoute",
+    "publicInformationPagesRoute",
     "publicStorefrontNavigationRoute",
     "publicStorefrontThemeRoute",
     "publishedContentRoute",
@@ -173,6 +191,19 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     publicationId: null,
   });
   expect(readNavigation).toHaveBeenCalledOnce();
+  await expect(
+    composition.publicInformationPagesRoute.useCases.read({
+      schemaVersion: 1,
+      pageKey: "FAQ",
+      locale: "en",
+    }),
+  ).resolves.toMatchObject({ code: "NOT_FOUND" });
+  await expect(
+    composition.publicInformationPagesRoute.useCases.index({
+      schemaVersion: 1,
+      locale: "en",
+    }),
+  ).resolves.toMatchObject({ kind: "INFORMATION_PAGE_INDEX", entries: [] });
   await expect(
     composition.storefrontCommerceRoute.useCases.readContext({
       schemaVersion: 1,

@@ -32,6 +32,8 @@ const everyRoute = {
   managementCenterRoute: true,
   homeLayoutRoute: true,
   publicHomeLayoutRoute: true,
+  informationPagesRoute: true,
+  publicInformationPagesRoute: true,
   storefrontThemeRoute: true,
   publicStorefrontThemeRoute: true,
   storefrontNavigationRoute: true,
@@ -165,6 +167,27 @@ test("the production application answers admin, SEO, payment and webhook request
     });
     expect(navigationPublic.statusCode).toBe(400);
     expect(navigationPublic.headers["cache-control"]).toBe("no-store");
+    const informationAdmin = await app.inject({
+      method: "POST",
+      url: "/api/v1/admin/information-pages/read",
+      headers: { "content-type": "application/json" },
+      payload: { schemaVersion: 1, pageKey: "ABOUT", locale: "en" },
+    });
+    expect(informationAdmin.statusCode).toBe(403);
+    for (const path of [
+      "/api/v1/storefront/information-pages",
+      "/api/v1/storefront/information-pages/ABOUT",
+    ]) {
+      const informationPublic = await app.inject({
+        method: "GET",
+        url: `${path}?locale=en&unexpected=1`,
+      });
+      expect(informationPublic.statusCode).toBe(400);
+      expect(informationPublic.headers["cache-control"]).toBe("no-store");
+      expect(informationPublic.json()).toMatchObject({
+        code: "INVALID_COMMAND",
+      });
+    }
     const seo = await app.inject({
       method: "GET",
       url: "/api/v1/storefront-seo/entity",

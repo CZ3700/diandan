@@ -85,3 +85,5 @@ export { createHomeLayoutRepository } from "./home-layout-repository.js";
 export { createStorefrontThemeRepository } from "./storefront-theme-repository.js";
 
 export { createStorefrontNavigationRepository } from "./storefront-navigation-repository.js";
+
+export { createInformationPageRepository } from "./information-pages-repository.js";

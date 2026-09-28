@@ -385,3 +385,70 @@ test("navigation preview rejects wrong origin, source, channel and stale view re
   );
   expect(contentWindow.postMessage).toHaveBeenCalledTimes(2);
 });
+
+import { informationFixture } from "../management-info-pages/fixture";
+import { informationCopy } from "../management-info-pages/copy";
+test("information frame uses content locale and sends only saved public document after exact readiness", () => {
+  vi.useFakeTimers();
+  const receive: ((event: unknown) => void)[] = [];
+  vi.stubGlobal("window", {
+    addEventListener: (_key: string, listener: (event: unknown) => void) =>
+      receive.push(listener),
+    removeEventListener: () => {},
+  });
+  const document = informationFixture().preview!;
+  const contentWindow = { postMessage: vi.fn() };
+  function render() {
+    hooks.index = 0;
+    hooks.refIndex = 0;
+    hooks.effects = [];
+    const wrapper = previews.InformationPreviewFrame({
+      document,
+      locale: "zh-CN",
+      origin: "https://storefront.example.invalid",
+      copy: informationCopy("zh-CN"),
+    });
+    const inner = find(wrapper, "configuration")!;
+    return (inner.type as (props: typeof inner.props) => ReactElement)(
+      inner.props,
+    );
+  }
+  render();
+  hooks.effects[0]!();
+  const tree = render();
+  const frame = find(tree, "data-info-preview-frame")!;
+  (frame.props["ref"] as { current: unknown }).current = { contentWindow };
+  const url = new URL(String(frame.props["src"]));
+  expect(url.pathname).toBe("/en/information-preview");
+  expect(url.searchParams.get("page")).toBe("about");
+  hooks.effects[2]!();
+  const message = (
+    origin = url.origin,
+    source: unknown = contentWindow,
+    channel = url.searchParams.get("channel"),
+  ) => ({
+    origin,
+    source,
+    data: { schemaVersion: 1, type: "INFORMATION_PAGE_PREVIEW_READY", channel },
+  });
+  receive[0]!(message("https://other.example.invalid"));
+  receive[0]!(message(url.origin, {}));
+  receive[0]!(
+    message(url.origin, contentWindow, "10000000-0000-4000-8000-000000000093"),
+  );
+  render();
+  hooks.effects[3]!();
+  expect(contentWindow.postMessage).not.toHaveBeenCalled();
+  receive[0]!(message());
+  render();
+  hooks.effects[3]!();
+  expect(contentWindow.postMessage).toHaveBeenCalledExactlyOnceWith(
+    {
+      schemaVersion: 1,
+      type: "INFORMATION_PAGE_PREVIEW_RENDER",
+      channel: url.searchParams.get("channel"),
+      document,
+    },
+    url.origin,
+  );
+});

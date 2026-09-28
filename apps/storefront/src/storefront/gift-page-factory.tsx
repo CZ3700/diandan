@@ -34,6 +34,7 @@ import { createStorefrontLoading } from "./route-states";
 import { GiftPageSeo, loadGiftSeo } from "./gift-seo";
 import { regionEntries } from "./region-entry";
 import { publicNavigationQuery } from "./navigation-target";
+import { InformationPageFooter } from "./information-page-footer";
 
 type Kind = "gifts" | "gift" | "policy" | "region";
 type PageDefinition =
@@ -220,6 +221,14 @@ export function createGiftStorefrontPage(
             name={name}
             contextQuery={publicNavigationQuery(contextQuery)}
             region={region.footer}
+            informationLinks={
+              <Suspense fallback={null}>
+                <InformationPageFooter
+                  locale={locale}
+                  contextQuery={contextQuery}
+                />
+              </Suspense>
+            }
             policyLinks={
               kind === "gift" || kind === "gifts" ? (
                 <GiftDetailPolicyLinks

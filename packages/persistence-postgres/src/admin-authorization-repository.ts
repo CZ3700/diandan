@@ -2,6 +2,7 @@ import { timingSafeEqual } from "node:crypto";
 import {
   adminAuthorizationCommandSchema,
   homeLayoutAuthorizationCommandSchema,
+  informationPageAuthorizationCommandSchema,
   adminAuthorizationResponseSchema,
   contentTimestampSchema,
   type AdminContentFailure,
@@ -9,6 +10,7 @@ import {
 import type {
   AdminAuthorizationRepository,
   HomeLayoutAuthorizationRepository,
+  InformationPageAuthorizationRepository,
 } from "@fan-support/persistence-port";
 import { draftRows } from "./content-draft-data.js";
 import {
@@ -40,6 +42,14 @@ export function createHomeLayoutAuthorizationRepository(
     homeLayoutAuthorizationCommandSchema.safeParse(input),
   );
 }
+export function createInformationPageAuthorizationRepository(
+  client: TransactionClient,
+  scope: TransactionScopeControl,
+): InformationPageAuthorizationRepository {
+  return createAuthorizationRepository(client, scope, (input) =>
+    informationPageAuthorizationCommandSchema.safeParse(input),
+  );
+}
 function createAuthorizationRepository(
   client: TransactionClient,
   scope: TransactionScopeControl,
@@ -47,7 +57,8 @@ function createAuthorizationRepository(
     input: unknown,
   ) =>
     | ReturnType<typeof adminAuthorizationCommandSchema.safeParse>
-    | ReturnType<typeof homeLayoutAuthorizationCommandSchema.safeParse>,
+    | ReturnType<typeof homeLayoutAuthorizationCommandSchema.safeParse>
+    | ReturnType<typeof informationPageAuthorizationCommandSchema.safeParse>,
 ) {
   return {
     authorize: (input: unknown) =>

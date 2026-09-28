@@ -1,3 +1,4 @@
+import * as informationPages from "./information-pages.js";
 import * as storefrontNavigation from "./storefront-navigation.js";
 import * as storefrontTheme from "./storefront-theme.js";
 import * as homeLayout from "./home-layout.js";
@@ -700,6 +701,66 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "InformationPageAuthorizationCommand",
+    audience: "internal",
+    schema: informationPages.informationPageAuthorizationCommandSchema,
+  },
+  {
+    name: "InformationPageCommand",
+    audience: "internal",
+    schema: informationPages.informationPageCommandSchema,
+  },
+  {
+    name: "InformationPageRequest",
+    audience: "internal",
+    schema: informationPages.informationPageRequestSchema,
+  },
+  {
+    name: "InformationPageWorkspace",
+    audience: "admin-http",
+    schema: informationPages.informationPageWorkspaceSchema,
+  },
+  {
+    name: "InformationPageResponse",
+    audience: "admin-http",
+    schema: informationPages.informationPageResponseSchema,
+  },
+  {
+    name: "InformationPagePreviewDocument",
+    audience: "admin-http",
+    schema: informationPages.informationPagePreviewDocumentSchema,
+  },
+  {
+    name: "InformationPagePreviewMessage",
+    audience: "admin-http",
+    schema: informationPages.informationPagePreviewMessageSchema,
+  },
+  {
+    name: "InformationPagePreviewReady",
+    audience: "admin-http",
+    schema: informationPages.informationPagePreviewReadySchema,
+  },
+  {
+    name: "PublicInformationPageRequest",
+    audience: "internal",
+    schema: informationPages.publicInformationPageRequestSchema,
+  },
+  {
+    name: "PublicInformationPageIndexRequest",
+    audience: "internal",
+    schema: informationPages.publicInformationPageIndexRequestSchema,
+  },
+  {
+    name: "PublicInformationPageResponse",
+    audience: "public-http",
+    schema: informationPages.publicInformationPageResponseSchema,
+  },
+  {
+    name: "PublicInformationPageIndexResponse",
+    audience: "public-http",
+    schema: informationPages.publicInformationPageIndexResponseSchema,
+  },
   {
     name: "HomeLayoutAuthorizationCommand",
     audience: "internal",

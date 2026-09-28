@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import type { SupportedLocale } from "@fan-support/contracts";
 import { Button } from "@fan-support/ui";
+import { InformationPagesWorkspace } from "../management-info-pages/workspace";
+import type { InformationPagesApi } from "../management-info-pages/api";
 import type { ManagementApi, ManagementSection } from "./api";
 import type { OrdersApi } from "../management-orders/api";
 import type { PaymentConfigurationApi } from "../management-payments/api";
@@ -35,6 +37,8 @@ export function ManagementHub({
   themeApi,
   navigationApi,
   layoutPermissions,
+  infoPagesApi,
+  infoPagesAccess,
   locale,
   storefrontOrigin,
   onLogout,
@@ -48,6 +52,9 @@ export function ManagementHub({
   layoutApi?: HomeLayoutApi | undefined;
   themeApi?: StorefrontThemeApi | undefined;
   navigationApi?: StorefrontNavigationApi | undefined;
+  infoPagesApi?: InformationPagesApi | undefined;
+  infoPagesAccess?:
+    { allowed: boolean; localeScopes: readonly SupportedLocale[] } | undefined;
   layoutPermissions?:
     { read: boolean; edit: boolean; publish: boolean } | undefined;
   locale: SupportedLocale;
@@ -65,10 +72,12 @@ export function ManagementHub({
       | "PAYMENTS"
       | "EXCEPTIONS"
       | "DECORATION"
+      | "INFO_PAGES"
       | null
     >(null),
     [busy, setBusy] = useState(false);
   const [layoutDirty, setLayoutDirty] = useState(false);
+  const [infoDirty, setInfoDirty] = useState(false);
   const [paymentDirty, setPaymentDirty] = useState(false);
   const copy = ordersCopy(locale),
     common = managementCopy(locale);
@@ -107,14 +116,16 @@ export function ManagementHub({
     section ??
     (access?.contentAllowed
       ? "ARTISTS"
-      : access?.payments
-        ? "PAYMENTS"
-        : access?.orders
-          ? "ORDERS"
-          : "EXCEPTIONS");
+      : infoPagesAccess?.allowed && infoPagesApi
+        ? "INFO_PAGES"
+        : access?.payments
+          ? "PAYMENTS"
+          : access?.orders
+            ? "ORDERS"
+            : "EXCEPTIONS");
   function canLeaveWorkspace() {
     return canLeaveDecoration(
-      { busy, dirty: layoutDirty || paymentDirty },
+      { busy, dirty: layoutDirty || paymentDirty || infoDirty },
       () =>
         window.confirm(
           layoutDirty
@@ -130,7 +141,12 @@ export function ManagementHub({
     : undefined;
   function chooseSection(
     next:
-      ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS" | "DECORATION",
+      | ManagementSection
+      | "ORDERS"
+      | "PAYMENTS"
+      | "EXCEPTIONS"
+      | "DECORATION"
+      | "INFO_PAGES",
   ) {
     if (next !== active && !canLeaveWorkspace()) return;
     setSection(next);
@@ -149,7 +165,9 @@ export function ManagementHub({
     </Button>
   );
   const notice =
-    active !== "DECORATION" && managementSectionUnavailable(access, active) ? (
+    active !== "DECORATION" &&
+    active !== "INFO_PAGES" &&
+    managementSectionUnavailable(access, active) ? (
       <div className="mc-error-state" role="alert">
         <p>{copy.loadError}</p>
         {retry}
@@ -160,6 +178,7 @@ export function ManagementHub({
     active !== "ORDERS" &&
     active !== "PAYMENTS" &&
     active !== "DECORATION" &&
+    active !== "INFO_PAGES" &&
     active !== "EXCEPTIONS"
   )
     return (
@@ -175,6 +194,11 @@ export function ManagementHub({
         }
         onExceptions={
           access.exceptions ? () => chooseSection("EXCEPTIONS") : undefined
+        }
+        onInfoPages={
+          infoPagesAccess?.allowed && infoPagesApi
+            ? () => chooseSection("INFO_PAGES")
+            : undefined
         }
         onDecoration={
           layoutPermissions?.read && layoutApi
@@ -193,6 +217,7 @@ export function ManagementHub({
       ordersAvailable={Boolean(access?.orders)}
       paymentsAvailable={Boolean(access?.payments)}
       exceptionsAvailable={Boolean(access?.exceptions)}
+      infoPagesAvailable={Boolean(infoPagesAccess?.allowed && infoPagesApi)}
       decorationAvailable={Boolean(layoutPermissions?.read && layoutApi)}
       beforeLeave={() => !busy}
       disabled={busy || !access}
@@ -204,7 +229,16 @@ export function ManagementHub({
       }
     >
       {notice}
-      {active === "DECORATION" && layoutPermissions?.read && layoutApi ? (
+      {active === "INFO_PAGES" && infoPagesAccess?.allowed && infoPagesApi ? (
+        <InformationPagesWorkspace
+          api={infoPagesApi}
+          locale={locale}
+          localeScopes={infoPagesAccess.localeScopes}
+          storefrontOrigin={storefrontOrigin}
+          onBusy={setBusy}
+          onDirtyChange={setInfoDirty}
+        />
+      ) : active === "DECORATION" && layoutPermissions?.read && layoutApi ? (
         <DecorationCenter
           api={layoutApi}
           themeApi={themeApi}

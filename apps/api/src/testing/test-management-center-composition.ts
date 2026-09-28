@@ -4,6 +4,7 @@ import {
   createHomeLayoutUseCases,
   createStorefrontThemeUseCases,
   createStorefrontNavigationUseCases,
+  createInformationPageUseCases,
   createManagementCenterWorker,
   createManagementMediaPreparation,
   createResourceManagementUseCases,
@@ -24,6 +25,7 @@ import type { ManagementCenterRouteDependencies } from "../management-center-rou
 import type { HomeLayoutRouteDependencies } from "../home-layout-route.js";
 import type { StorefrontThemeRouteDependencies } from "../storefront-theme-route.js";
 import type { StorefrontNavigationRouteDependencies } from "../storefront-navigation-route.js";
+import type { InformationPagesRouteDependencies } from "../information-pages-route.js";
 import type { ApiLifecycleResource } from "../bootstrap.js";
 import { createManagementCenterRuntime } from "./management-center-runtime.js";
 
@@ -33,6 +35,7 @@ type ManagementPersistence = Pick<
   | "homeLayoutTransactionManager"
   | "storefrontThemeTransactionManager"
   | "storefrontNavigationTransactionManager"
+  | "informationPageTransactionManager"
   | "managementMediaTransactionManager"
   | "resourceManagementTransactionManager"
   | "mediaProcessingTransactionManager"
@@ -78,6 +81,7 @@ export function createTestManagementCenterComposition(
   homeLayoutRoute: HomeLayoutRouteDependencies;
   storefrontThemeRoute: StorefrontThemeRouteDependencies;
   storefrontNavigationRoute: StorefrontNavigationRouteDependencies;
+  informationPagesRoute: InformationPagesRouteDependencies;
   managementCenterRuntime: ApiLifecycleResource;
 }> {
   const pollIntervalMs = options.pollIntervalMs ?? 250,
@@ -146,6 +150,13 @@ export function createTestManagementCenterComposition(
         allowedOrigin: options.allowedOrigin,
         useCases: createStorefrontThemeUseCases({
           transactions: persistence.storefrontThemeTransactionManager,
+          tokenPepper: options.tokenPepper,
+        }),
+      },
+      informationPagesRoute: {
+        allowedOrigin: options.allowedOrigin,
+        useCases: createInformationPageUseCases({
+          transactions: persistence.informationPageTransactionManager,
           tokenPepper: options.tokenPepper,
         }),
       },

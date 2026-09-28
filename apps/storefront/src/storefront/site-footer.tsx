@@ -12,6 +12,7 @@ export function SiteFooter({
   name,
   contextQuery,
   policyLinks,
+  informationLinks,
   region,
 }: Readonly<{
   copy: StorefrontCopy;
@@ -19,6 +20,7 @@ export function SiteFooter({
   name: string;
   contextQuery: string;
   policyLinks?: ReactNode;
+  informationLinks?: ReactNode;
   /** Server-decided region entry; a sole published market hides it. */
   region?: ReactNode;
 }>) {
@@ -65,6 +67,7 @@ export function SiteFooter({
         .map(({ id }) => (
           <Fragment key={id}>{sections[id]}</Fragment>
         ))}
+      {informationLinks}
     </footer>
   );
 }

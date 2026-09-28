@@ -635,6 +635,34 @@
       "kind": "TABLE"
     },
     {
+      "name": "information_page_heads",
+      "kind": "TABLE"
+    },
+    {
+      "name": "information_page_publications",
+      "kind": "TABLE"
+    },
+    {
+      "name": "information_page_receipts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "information_page_revision_translations",
+      "kind": "TABLE"
+    },
+    {
+      "name": "information_page_revisions",
+      "kind": "TABLE"
+    },
+    {
+      "name": "information_page_translation_copy_evidence",
+      "kind": "TABLE"
+    },
+    {
+      "name": "information_page_translation_reviews",
+      "kind": "TABLE"
+    },
+    {
       "name": "inventory_balances",
       "kind": "TABLE"
     },
@@ -13941,6 +13969,626 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_heads",
+      "position": 1,
+      "name": "page_key",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_heads",
+      "position": 2,
+      "name": "version",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_heads",
+      "position": 3,
+      "name": "draft_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_heads",
+      "position": 4,
+      "name": "published_publication_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_heads",
+      "position": 5,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_publications",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_publications",
+      "position": 2,
+      "name": "page_key",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_publications",
+      "position": 3,
+      "name": "revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_publications",
+      "position": 4,
+      "name": "version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_publications",
+      "position": 5,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_publications",
+      "position": 6,
+      "name": "restored_from_publication_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_publications",
+      "position": 7,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_publications",
+      "position": 8,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_publications",
+      "position": 9,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_publications",
+      "position": 10,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_publications",
+      "position": 11,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_receipts",
+      "position": 2,
+      "name": "page_key",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_receipts",
+      "position": 3,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_receipts",
+      "position": 4,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_receipts",
+      "position": 5,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_receipts",
+      "position": 6,
+      "name": "idempotency_key",
+      "dataType": "idempotency_key_value",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_receipts",
+      "position": 7,
+      "name": "request_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_receipts",
+      "position": 8,
+      "name": "response",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_receipts",
+      "position": 9,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_receipts",
+      "position": 10,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_receipts",
+      "position": 11,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revision_translations",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revision_translations",
+      "position": 2,
+      "name": "revision_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revision_translations",
+      "position": 3,
+      "name": "locale",
+      "dataType": "supported_locale",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revision_translations",
+      "position": 4,
+      "name": "title",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revision_translations",
+      "position": 5,
+      "name": "summary",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revision_translations",
+      "position": 6,
+      "name": "sections",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revision_translations",
+      "position": 7,
+      "name": "content_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revision_translations",
+      "position": 8,
+      "name": "translated_from_source_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revision_translations",
+      "position": 9,
+      "name": "editor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revision_translations",
+      "position": 10,
+      "name": "edited_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 3,
+      "name": "page_key",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 4,
+      "name": "revision",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 5,
+      "name": "source_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 6,
+      "name": "structure",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 7,
+      "name": "source_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 8,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 9,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 10,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 11,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_revisions",
+      "position": 12,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "position": 1,
+      "name": "target_translation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "position": 2,
+      "name": "source_translation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "position": 3,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "position": 2,
+      "name": "translation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "position": 3,
+      "name": "sequence",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "position": 4,
+      "name": "status",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "position": 5,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "position": 6,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "position": 7,
+      "name": "content_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "position": 8,
+      "name": "source_hash",
+      "dataType": "sha256_hex",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "position": 9,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "position": 10,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
       "identity": "",
       "generation": ""
     },
@@ -44103,6 +44751,918 @@
       "initiallyDeferred": false
     },
     {
+      "table": "information_page_heads",
+      "name": "information_head_receipt",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "information_page_heads",
+      "name": "information_page_heads_draft_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (draft_revision_id) REFERENCES information_page_revisions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_heads",
+      "name": "information_page_heads_page_key_check",
+      "kind": "CHECK",
+      "definition": "CHECK (page_key = ANY (ARRAY['ABOUT'::text, 'FAQ'::text, 'SUPPORT'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_heads",
+      "name": "information_page_heads_page_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL page_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_heads",
+      "name": "information_page_heads_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (page_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_heads",
+      "name": "information_page_heads_published_publication_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (published_publication_id) REFERENCES information_page_publications(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_heads",
+      "name": "information_page_heads_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_heads",
+      "name": "information_page_heads_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (version >= 0 AND version <= '9007199254740991'::bigint)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_heads",
+      "name": "information_page_heads_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['PUBLISH'::text, 'RESTORE'::text, 'UNPUBLISH'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_check",
+      "kind": "CHECK",
+      "definition": "CHECK ((action = 'UNPUBLISH'::text) = (revision_id IS NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_check1",
+      "kind": "CHECK",
+      "definition": "CHECK ((action = 'RESTORE'::text) = (restored_from_publication_id IS NOT NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_page_key_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (page_key) REFERENCES information_page_heads(page_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_page_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL page_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_page_key_version_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (page_key, version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_restored_from_publication_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (restored_from_publication_id) REFERENCES information_page_publications(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (revision_id) REFERENCES information_page_revisions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_publication_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['SAVE_DRAFT'::text, 'SUBMIT_REVIEW'::text, 'APPROVE_REVIEW'::text, 'PUBLISH'::text, 'RESTORE'::text, 'UNPUBLISH'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_actor_id_action_idempotency_key_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (actor_id, action, idempotency_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_idempotency_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idempotency_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_page_key_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (page_key) REFERENCES information_page_heads(page_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_page_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL page_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_request_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_response_check",
+      "kind": "CHECK",
+      "definition": "CHECK ((response ->> 'outcome'::text) = 'SUCCESS'::text AND (response ->> 'kind'::text) = 'STATE'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_response_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL response",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_t_translated_from_source_has_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL translated_from_source_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_content_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL content_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_edited_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL edited_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_editor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (editor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_editor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL editor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_locale_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL locale",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (revision_id) REFERENCES information_page_revisions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_revision_id_locale_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (revision_id, locale)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_revision_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL revision_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_sections_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL sections",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_summary_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL summary",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_title_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL title",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_check",
+      "kind": "CHECK",
+      "definition": "CHECK (valid_information_page_structure(structure, page_key))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_page_key_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (page_key) REFERENCES information_page_heads(page_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_page_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL page_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_page_key_revision_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (page_key, revision)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_revision_check",
+      "kind": "CHECK",
+      "definition": "CHECK (revision > 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_revision_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL revision",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_source_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL source_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_source_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (source_revision_id) REFERENCES information_page_revisions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_structure_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL structure",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_revision_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_page_translation_cop_source_translation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL source_translation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_page_translation_cop_target_translation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL target_translation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_page_translation_copy_ev_source_translation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (source_translation_id) REFERENCES information_page_revision_translations(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_page_translation_copy_ev_target_translation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (target_translation_id) REFERENCES information_page_revision_translations(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_page_translation_copy_evidenc_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_page_translation_copy_evidence_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_page_translation_copy_evidence_check",
+      "kind": "CHECK",
+      "definition": "CHECK (target_translation_id <> source_translation_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_page_translation_copy_evidence_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (target_translation_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_review_translation_id_sequence_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (translation_id, sequence)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_check",
+      "kind": "CHECK",
+      "definition": "CHECK (sequence = 1 AND status = 'DRAFT'::text OR sequence = 2 AND status = 'IN_REVIEW'::text OR sequence = 3 AND status = 'APPROVED'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_content_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL content_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_sequence_check",
+      "kind": "CHECK",
+      "definition": "CHECK (sequence >= 1 AND sequence <= 3)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_sequence_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL sequence",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_source_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL source_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_status_check",
+      "kind": "CHECK",
+      "definition": "CHECK (status = ANY (ARRAY['DRAFT'::text, 'IN_REVIEW'::text, 'APPROVED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_status_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL status",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_translation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (translation_id) REFERENCES information_page_revision_translations(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_translation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL translation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "inventory_balances",
       "name": "inventory_balance_consistency_trigger",
       "kind": "CONSTRAINT_TRIGGER",
@@ -51536,6 +53096,14 @@
     },
     {
       "table": "outbox_events",
+      "name": "information_page_outbox_proof",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "outbox_events",
       "name": "outbox_events_aggregate_id_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL aggregate_id",
@@ -51546,7 +53114,7 @@
       "table": "outbox_events",
       "name": "outbox_events_aggregate_type_check",
       "kind": "CHECK",
-      "definition": "CHECK (aggregate_type = ANY (ARRAY['CART'::text, 'CONTENT_PUBLICATION'::text, 'ORDER'::text, 'PAYMENT_ATTEMPT'::text, 'REFUND'::text, 'DISPUTE'::text, 'FULFILLMENT'::text, 'NOTIFICATION_DELIVERY'::text, 'PAYMENT_CONFIG'::text, 'PRICE_BOOK'::text]))",
+      "definition": "CHECK (aggregate_type = ANY (ARRAY['CART'::text, 'CONTENT_PUBLICATION'::text, 'ORDER'::text, 'PAYMENT_ATTEMPT'::text, 'REFUND'::text, 'DISPUTE'::text, 'FULFILLMENT'::text, 'NOTIFICATION_DELIVERY'::text, 'PAYMENT_CONFIG'::text, 'PRICE_BOOK'::text, 'INFORMATION_PAGE_PUBLICATION'::text]))",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -51610,7 +53178,7 @@
       "table": "outbox_events",
       "name": "outbox_events_event_type_check",
       "kind": "CHECK",
-      "definition": "CHECK (event_type = ANY (ARRAY['CART_ITEM_ADDED'::text, 'CONTENT_PUBLICATION_CHANGED'::text, 'PAYMENT_STATUS_CHANGED'::text, 'ORDER_PAYMENT_CONFIRMED'::text, 'REFUND_STATUS_CHANGED'::text, 'DISPUTE_STATUS_CHANGED'::text, 'FULFILLMENT_STATUS_CHANGED'::text, 'NOTIFICATION_REQUESTED'::text, 'PAYMENT_CONFIG_PUBLISHED'::text, 'PRICE_BOOK_PUBLISHED'::text]))",
+      "definition": "CHECK (event_type = ANY (ARRAY['CART_ITEM_ADDED'::text, 'CONTENT_PUBLICATION_CHANGED'::text, 'PAYMENT_STATUS_CHANGED'::text, 'ORDER_PAYMENT_CONFIRMED'::text, 'REFUND_STATUS_CHANGED'::text, 'DISPUTE_STATUS_CHANGED'::text, 'FULFILLMENT_STATUS_CHANGED'::text, 'NOTIFICATION_REQUESTED'::text, 'PAYMENT_CONFIG_PUBLISHED'::text, 'PRICE_BOOK_PUBLISHED'::text, 'INFORMATION_PAGE_PUBLICATION_CHANGED'::text]))",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -63908,6 +65476,132 @@
       "valid": true
     },
     {
+      "table": "information_page_heads",
+      "name": "information_page_heads_pkey",
+      "definition": "CREATE UNIQUE INDEX information_page_heads_pkey ON public.information_page_heads USING btree (page_key)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX information_page_publications_audit_log_id_key ON public.information_page_publications USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_page_key_version_key",
+      "definition": "CREATE UNIQUE INDEX information_page_publications_page_key_version_key ON public.information_page_publications USING btree (page_key, version)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_pkey",
+      "definition": "CREATE UNIQUE INDEX information_page_publications_pkey ON public.information_page_publications USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_actor_id_action_idempotency_key_key",
+      "definition": "CREATE UNIQUE INDEX information_page_receipts_actor_id_action_idempotency_key_key ON public.information_page_receipts USING btree (actor_id, action, idempotency_key)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX information_page_receipts_audit_log_id_key ON public.information_page_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX information_page_receipts_pkey ON public.information_page_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_pkey",
+      "definition": "CREATE UNIQUE INDEX information_page_revision_translations_pkey ON public.information_page_revision_translations USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_revision_id_locale_key",
+      "definition": "CREATE UNIQUE INDEX information_page_revision_translations_revision_id_locale_key ON public.information_page_revision_translations USING btree (revision_id, locale)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_page_key_revision_key",
+      "definition": "CREATE UNIQUE INDEX information_page_revisions_page_key_revision_key ON public.information_page_revisions USING btree (page_key, revision)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_pkey",
+      "definition": "CREATE UNIQUE INDEX information_page_revisions_pkey ON public.information_page_revisions USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_page_translation_copy_evidence_pkey",
+      "definition": "CREATE UNIQUE INDEX information_page_translation_copy_evidence_pkey ON public.information_page_translation_copy_evidence USING btree (target_translation_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_review_translation_id_sequence_key",
+      "definition": "CREATE UNIQUE INDEX information_page_translation_review_translation_id_sequence_key ON public.information_page_translation_reviews USING btree (translation_id, sequence)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_pkey",
+      "definition": "CREATE UNIQUE INDEX information_page_translation_reviews_pkey ON public.information_page_translation_reviews USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "inventory_balances",
       "name": "inventory_balances_pkey",
       "definition": "CREATE UNIQUE INDEX inventory_balances_pkey ON public.inventory_balances USING btree (inventory_item_id, location_id)",
@@ -64989,6 +66683,15 @@
     },
     {
       "table": "outbox_events",
+      "name": "information_page_outbox_once",
+      "definition": "CREATE UNIQUE INDEX information_page_outbox_once ON public.outbox_events USING btree (aggregate_id, locale) WHERE (event_type = 'INFORMATION_PAGE_PUBLICATION_CHANGED'::text)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "outbox_events",
       "name": "outbox_content_publication_locale_unique",
       "definition": "CREATE UNIQUE INDEX outbox_content_publication_locale_unique ON public.outbox_events USING btree (event_type, primary_subject_id, locale) WHERE (event_type = 'CONTENT_PUBLICATION_CHANGED'::text)",
       "unique": true,
@@ -65026,7 +66729,7 @@
     {
       "table": "outbox_events",
       "name": "outbox_events_state_transition_unique_idx",
-      "definition": "CREATE UNIQUE INDEX outbox_events_state_transition_unique_idx ON public.outbox_events USING btree (event_type, aggregate_type, aggregate_id, aggregate_version) WHERE (event_type <> ALL (ARRAY['CONTENT_PUBLICATION_CHANGED'::text, 'PAYMENT_CONFIG_PUBLISHED'::text, 'PRICE_BOOK_PUBLISHED'::text]))",
+      "definition": "CREATE UNIQUE INDEX outbox_events_state_transition_unique_idx ON public.outbox_events USING btree (event_type, aggregate_type, aggregate_id, aggregate_version) WHERE (event_type <> ALL (ARRAY['CONTENT_PUBLICATION_CHANGED'::text, 'PAYMENT_CONFIG_PUBLISHED'::text, 'PRICE_BOOK_PUBLISHED'::text, 'INFORMATION_PAGE_PUBLICATION_CHANGED'::text]))",
       "unique": true,
       "primary": false,
       "exclusion": false,
@@ -68935,6 +70638,138 @@
       "enabled": "O"
     },
     {
+      "table": "information_page_heads",
+      "name": "information_head_guard",
+      "definition": "CREATE TRIGGER information_head_guard BEFORE DELETE OR UPDATE ON information_page_heads FOR EACH ROW EXECUTE FUNCTION guard_information_page_head()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_heads",
+      "name": "information_head_receipt",
+      "definition": "CREATE CONSTRAINT TRIGGER information_head_receipt AFTER UPDATE ON information_page_heads DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_information_page_head_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_heads",
+      "name": "information_heads_no_truncate",
+      "definition": "CREATE TRIGGER information_heads_no_truncate BEFORE TRUNCATE ON information_page_heads FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_immutable",
+      "definition": "CREATE TRIGGER information_page_publications_immutable BEFORE DELETE OR UPDATE ON information_page_publications FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_page_publications_no_truncate",
+      "definition": "CREATE TRIGGER information_page_publications_no_truncate BEFORE TRUNCATE ON information_page_publications FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_publication_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER information_publication_complete AFTER INSERT ON information_page_publications DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_information_page_publication_complete()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_publications",
+      "name": "information_publication_validate",
+      "definition": "CREATE TRIGGER information_publication_validate BEFORE INSERT ON information_page_publications FOR EACH ROW EXECUTE FUNCTION guard_information_page_publication()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_immutable",
+      "definition": "CREATE TRIGGER information_page_receipts_immutable BEFORE DELETE OR UPDATE ON information_page_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_page_receipts_no_truncate",
+      "definition": "CREATE TRIGGER information_page_receipts_no_truncate BEFORE TRUNCATE ON information_page_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_receipts",
+      "name": "information_receipt_validate",
+      "definition": "CREATE TRIGGER information_receipt_validate BEFORE INSERT ON information_page_receipts FOR EACH ROW EXECUTE FUNCTION guard_information_page_receipt()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_immutable",
+      "definition": "CREATE TRIGGER information_page_revision_translations_immutable BEFORE DELETE OR UPDATE ON information_page_revision_translations FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_page_revision_translations_no_truncate",
+      "definition": "CREATE TRIGGER information_page_revision_translations_no_truncate BEFORE TRUNCATE ON information_page_revision_translations FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_revision_translations",
+      "name": "information_translation_validate",
+      "definition": "CREATE TRIGGER information_translation_validate BEFORE INSERT ON information_page_revision_translations FOR EACH ROW EXECUTE FUNCTION guard_information_page_translation()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_immutable",
+      "definition": "CREATE TRIGGER information_page_revisions_immutable BEFORE DELETE OR UPDATE ON information_page_revisions FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_page_revisions_no_truncate",
+      "definition": "CREATE TRIGGER information_page_revisions_no_truncate BEFORE TRUNCATE ON information_page_revisions FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_revisions",
+      "name": "information_revision_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER information_revision_complete AFTER INSERT ON information_page_revisions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_information_page_revision()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_copy_validate",
+      "definition": "CREATE TRIGGER information_copy_validate BEFORE INSERT ON information_page_translation_copy_evidence FOR EACH ROW EXECUTE FUNCTION guard_information_page_copy()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_page_translation_copy_evidence_immutable",
+      "definition": "CREATE TRIGGER information_page_translation_copy_evidence_immutable BEFORE DELETE OR UPDATE ON information_page_translation_copy_evidence FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_translation_copy_evidence",
+      "name": "information_page_translation_copy_evidence_no_truncate",
+      "definition": "CREATE TRIGGER information_page_translation_copy_evidence_no_truncate BEFORE TRUNCATE ON information_page_translation_copy_evidence FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_immutable",
+      "definition": "CREATE TRIGGER information_page_translation_reviews_immutable BEFORE DELETE OR UPDATE ON information_page_translation_reviews FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_page_translation_reviews_no_truncate",
+      "definition": "CREATE TRIGGER information_page_translation_reviews_no_truncate BEFORE TRUNCATE ON information_page_translation_reviews FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "information_page_translation_reviews",
+      "name": "information_review_validate",
+      "definition": "CREATE TRIGGER information_review_validate BEFORE INSERT ON information_page_translation_reviews FOR EACH ROW EXECUTE FUNCTION guard_information_page_review()",
+      "enabled": "O"
+    },
+    {
       "table": "inventory_balances",
       "name": "inventory_balance_consistency_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER inventory_balance_consistency_trigger AFTER INSERT OR DELETE OR UPDATE ON inventory_balances DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_inventory_consistency()",
@@ -69716,6 +71551,12 @@
     },
     {
       "table": "outbox_dispatch_attempts",
+      "name": "information_page_attempt_guard",
+      "definition": "CREATE TRIGGER information_page_attempt_guard BEFORE INSERT ON outbox_dispatch_attempts FOR EACH ROW EXECUTE FUNCTION guard_information_page_dispatch_effect()",
+      "enabled": "O"
+    },
+    {
+      "table": "outbox_dispatch_attempts",
       "name": "outbox_dispatch_attempts_append_only_trigger",
       "definition": "CREATE TRIGGER outbox_dispatch_attempts_append_only_trigger BEFORE DELETE OR UPDATE ON outbox_dispatch_attempts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
@@ -69724,6 +71565,12 @@
       "table": "outbox_dispatch_attempts",
       "name": "outbox_dispatch_attempts_no_truncate_trigger",
       "definition": "CREATE TRIGGER outbox_dispatch_attempts_no_truncate_trigger BEFORE TRUNCATE ON outbox_dispatch_attempts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "outbox_effect_receipts",
+      "name": "information_page_effect_guard",
+      "definition": "CREATE TRIGGER information_page_effect_guard BEFORE INSERT ON outbox_effect_receipts FOR EACH ROW EXECUTE FUNCTION guard_information_page_dispatch_effect()",
       "enabled": "O"
     },
     {
@@ -69740,6 +71587,12 @@
     },
     {
       "table": "outbox_events",
+      "name": "information_page_outbox_proof",
+      "definition": "CREATE CONSTRAINT TRIGGER information_page_outbox_proof AFTER INSERT ON outbox_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW WHEN (new.event_type = 'INFORMATION_PAGE_PUBLICATION_CHANGED'::text) EXECUTE FUNCTION assert_information_page_outbox()",
+      "enabled": "O"
+    },
+    {
+      "table": "outbox_events",
       "name": "outbox_events_append_only_trigger",
       "definition": "CREATE TRIGGER outbox_events_append_only_trigger BEFORE DELETE OR UPDATE ON outbox_events FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
@@ -69747,7 +71600,7 @@
     {
       "table": "outbox_events",
       "name": "outbox_events_authority_trigger",
-      "definition": "CREATE CONSTRAINT TRIGGER outbox_events_authority_trigger AFTER INSERT ON outbox_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_outbox_event_authority()",
+      "definition": "CREATE CONSTRAINT TRIGGER outbox_events_authority_trigger AFTER INSERT ON outbox_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW WHEN (new.event_type <> 'INFORMATION_PAGE_PUBLICATION_CHANGED'::text) EXECUTE FUNCTION assert_outbox_event_authority()",
       "enabled": "O"
     },
     {
@@ -69759,7 +71612,7 @@
     {
       "table": "outbox_events",
       "name": "outbox_events_validate_trigger",
-      "definition": "CREATE TRIGGER outbox_events_validate_trigger BEFORE INSERT ON outbox_events FOR EACH ROW EXECUTE FUNCTION validate_outbox_event_shape()",
+      "definition": "CREATE TRIGGER outbox_events_validate_trigger BEFORE INSERT ON outbox_events FOR EACH ROW WHEN (new.event_type <> 'INFORMATION_PAGE_PUBLICATION_CHANGED'::text) EXECUTE FUNCTION validate_outbox_event_shape()",
       "enabled": "O"
     },
     {
@@ -71845,6 +73698,46 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_idol_alias_draft()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE draft public.idol_revision_alias_sets%ROWTYPE; target uuid; n integer; last_position integer;\nBEGIN\n  IF TG_TABLE_NAME = 'idol_revision_alias_sets' THEN target := NEW.id;\n  ELSE target := NEW.alias_set_id; END IF;\n  SELECT * INTO draft FROM public.idol_revision_alias_sets WHERE id = target;\n  PERFORM public.assert_content_draft_audit(draft.audit_log_id,draft.editor_id,draft.id,'IDOL_ALIAS_SET','IDOL_ALIAS_DRAFT_CREATE',draft.request_id,draft.edited_at);\n  SELECT count(*),max(position) INTO n,last_position FROM public.idol_revision_aliases WHERE alias_set_id = target;\n  IF n <> draft.alias_count OR (n > 0 AND last_position <> n - 1) THEN\n    RAISE EXCEPTION 'alias draft rows must match the complete immutable set' USING ERRCODE = '23514';\n  END IF;\n  IF NOT EXISTS (SELECT 1 FROM public.idol_revision_alias_reviews WHERE alias_set_id = target AND sequence = 1 AND status = 'DRAFT' AND audit_log_id = draft.audit_log_id) THEN\n    RAISE EXCEPTION 'alias creation requires its initial draft review' USING ERRCODE = '23514';\n  END IF;\n  RETURN NULL;\nEND; $function$"
     },
     {
+      "name": "assert_information_page_head_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_information_page_head_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM information_page_receipts r WHERE r.page_key=NEW.page_key AND (r.response#>>'{workspace,version}')::bigint=NEW.version AND r.created_at=NEW.updated_at AND (r.response#>>'{workspace,draft,revisionId}')::uuid IS NOT DISTINCT FROM NEW.draft_revision_id AND (r.response#>>'{workspace,published,publicationId}')::uuid IS NOT DISTINCT FROM NEW.published_publication_id) THEN RAISE EXCEPTION 'information head requires matching atomic receipt' USING ERRCODE='23514';END IF; RETURN NULL;\nEND $function$"
+    },
+    {
+      "name": "assert_information_page_outbox",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_information_page_outbox()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM information_page_publications p JOIN audit_logs a ON a.id=p.audit_log_id WHERE p.id=NEW.aggregate_id AND NEW.aggregate_type='INFORMATION_PAGE_PUBLICATION' AND NEW.primary_subject_id=p.id AND NEW.secondary_subject_id IS NULL AND NEW.aggregate_version=p.version AND NEW.locale IS NOT NULL AND NEW.market IS NULL AND NEW.currency IS NULL AND NEW.occurred_at=p.created_at AND NEW.available_at=p.created_at AND NEW.created_at=p.created_at AND NEW.request_id=p.request_id AND NEW.correlation_id=p.request_id AND NEW.causation_id IS NULL AND NEW.trace_id IS NULL AND a.actor_id=p.actor_id AND a.subject_id=p.id AND a.action='INFORMATION_PAGE_'||p.action) THEN RAISE EXCEPTION 'information outbox requires exact publication proof' USING ERRCODE='23514';END IF;RETURN NULL;\nEND $function$"
+    },
+    {
+      "name": "assert_information_page_publication_complete",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_information_page_publication_complete()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF(SELECT count(*) FROM outbox_events WHERE event_type='INFORMATION_PAGE_PUBLICATION_CHANGED' AND aggregate_id=NEW.id)<>7 OR NOT EXISTS(SELECT 1 FROM information_page_receipts WHERE audit_log_id=NEW.audit_log_id AND action=NEW.action AND actor_id=NEW.actor_id AND page_key=NEW.page_key) THEN RAISE EXCEPTION 'information publication requires seven locale events and atomic receipt' USING ERRCODE='23514';END IF;RETURN NULL;\nEND $function$"
+    },
+    {
+      "name": "assert_information_page_revision",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_information_page_revision()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM information_page_receipts receipt JOIN audit_logs a ON a.id=receipt.audit_log_id WHERE receipt.audit_log_id=NEW.audit_log_id AND receipt.action='SAVE_DRAFT' AND receipt.page_key=NEW.page_key AND receipt.actor_id=NEW.actor_id AND receipt.session_id=NEW.session_id AND receipt.created_at=NEW.created_at AND a.subject_id=NEW.id AND a.action='INFORMATION_PAGE_SAVE_DRAFT' AND a.actor_id=NEW.actor_id AND a.created_at=NEW.created_at) OR (NEW.source_revision_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM information_page_revisions r WHERE r.id=NEW.source_revision_id AND r.page_key=NEW.page_key AND r.revision<NEW.revision)) OR NOT EXISTS(SELECT 1 FROM information_page_revision_translations WHERE revision_id=NEW.id AND locale='en') OR EXISTS(SELECT 1 FROM information_page_revision_translations t WHERE t.revision_id=NEW.id AND NOT EXISTS(SELECT 1 FROM information_page_effective_review(t.id))) THEN RAISE EXCEPTION 'information revision requires source and real author/review provenance' USING ERRCODE='23514';END IF;RETURN NULL;\nEND $function$"
+    },
+    {
       "name": "assert_inventory_consistency",
       "identityArguments": "",
       "resultType": "trigger",
@@ -72925,6 +74818,76 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_immutable_columns()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  column_name text;\nBEGIN\n  FOREACH column_name IN ARRAY TG_ARGV\n  LOOP\n    IF (to_jsonb(NEW) -> column_name) IS DISTINCT FROM\n       (to_jsonb(OLD) -> column_name) THEN\n      RAISE EXCEPTION '% column %.% is immutable', TG_TABLE_NAME, TG_TABLE_NAME, column_name\n        USING ERRCODE = '55000';\n    END IF;\n  END LOOP;\n  RETURN NEW;\nEND;\n$function$"
     },
     {
+      "name": "guard_information_page_copy",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_information_page_copy()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE t information_page_revision_translations;s information_page_revision_translations;tr information_page_revisions;sr information_page_revisions;\nBEGIN\n SELECT * INTO t FROM information_page_revision_translations WHERE id=NEW.target_translation_id;SELECT * INTO s FROM information_page_revision_translations WHERE id=NEW.source_translation_id;SELECT * INTO tr FROM information_page_revisions WHERE id=t.revision_id;SELECT * INTO sr FROM information_page_revisions WHERE id=s.revision_id;\n IF EXISTS(SELECT 1 FROM information_page_receipts WHERE audit_log_id=tr.audit_log_id) OR tr.page_key<>sr.page_key OR tr.revision<=sr.revision OR tr.source_revision_id<>sr.id OR (to_jsonb(t)-'id'-'revision_id') IS DISTINCT FROM(to_jsonb(s)-'id'-'revision_id') OR NEW.audit_log_id<>tr.audit_log_id THEN RAISE EXCEPTION 'information copy requires exact immutable predecessor' USING ERRCODE='23514';END IF;RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_information_page_dispatch_effect",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_information_page_dispatch_effect()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE e outbox_events;\nBEGIN\n SELECT * INTO e FROM outbox_events WHERE id=NEW.outbox_event_id;\n IF (NEW.consumer_key='information-page-publication') IS DISTINCT FROM (e.event_type='INFORMATION_PAGE_PUBLICATION_CHANGED') THEN RAISE EXCEPTION 'information dispatch consumer must match event family' USING ERRCODE='23514';END IF;\n IF TG_TABLE_NAME='outbox_effect_receipts' THEN\n IF e.event_type='INFORMATION_PAGE_PUBLICATION_CHANGED' AND (NEW.effect_key<>'INFORMATION_PAGE_PUBLICATION_OBSERVED' OR NEW.subject_id<>e.primary_subject_id) THEN RAISE EXCEPTION 'information effect requires exact publication subject' USING ERRCODE='23514';END IF; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_information_page_head",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_information_page_head()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF TG_OP<>'UPDATE' THEN RAISE EXCEPTION 'information head cannot be removed' USING ERRCODE='55000';END IF;\n IF NEW.page_key<>OLD.page_key OR NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at OR(NEW.draft_revision_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM information_page_revisions r WHERE r.id=NEW.draft_revision_id AND r.page_key=NEW.page_key)) OR(NEW.published_publication_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM information_page_publications p WHERE p.id=NEW.published_publication_id AND p.page_key=NEW.page_key AND p.action<>'UNPUBLISH')) THEN RAISE EXCEPTION 'information head requires exact same-page references and version' USING ERRCODE='23514';END IF;RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_information_page_publication",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_information_page_publication()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NEW.action<>'UNPUBLISH' AND (NOT coalesce(information_page_publishable(NEW.revision_id),false) OR NOT EXISTS(SELECT 1 FROM information_page_revisions WHERE id=NEW.revision_id AND page_key=NEW.page_key)) OR(NEW.action='RESTORE' AND NOT EXISTS(SELECT 1 FROM information_page_publications p WHERE p.id=NEW.restored_from_publication_id AND p.page_key=NEW.page_key AND p.revision_id=NEW.revision_id AND p.action<>'UNPUBLISH')) THEN RAISE EXCEPTION 'information publication requires seven approved current translations' USING ERRCODE='23514';END IF;RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_information_page_receipt",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_information_page_receipt()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM audit_logs a JOIN admin_sessions s ON s.id=NEW.session_id WHERE a.id=NEW.audit_log_id AND a.actor_id=NEW.actor_id AND a.actor_type='ADMIN' AND a.action='INFORMATION_PAGE_'||NEW.action AND a.subject_type='INFORMATION_PAGE' AND a.outcome='SUCCEEDED' AND a.created_at=NEW.created_at AND a.request_id=NEW.request_id AND s.admin_identity_id=NEW.actor_id AND s.authenticated_with_mfa AND s.created_at<=NEW.created_at AND s.expires_at>NEW.created_at AND(s.revoked_at IS NULL OR s.revoked_at>NEW.created_at)) OR NEW.response#>>'{workspace,pageKey}' IS DISTINCT FROM NEW.page_key THEN RAISE EXCEPTION 'information receipt requires exact audit and session proof' USING ERRCODE='23514';END IF; RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_information_page_review",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_information_page_review()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE t information_page_revision_translations;r information_page_revisions;prior information_page_translation_reviews;\nBEGIN\n SELECT * INTO t FROM information_page_revision_translations WHERE id=NEW.translation_id;SELECT * INTO r FROM information_page_revisions WHERE id=t.revision_id;SELECT * INTO prior FROM information_page_effective_review(t.id);\n IF (NEW.sequence>1 AND NOT EXISTS(SELECT 1 FROM information_page_heads h WHERE h.page_key=r.page_key AND h.draft_revision_id=r.id)) OR (NEW.sequence=1 AND EXISTS(SELECT 1 FROM information_page_receipts WHERE audit_log_id=r.audit_log_id)) OR NOT EXISTS(SELECT 1 FROM audit_logs a WHERE a.id=NEW.audit_log_id AND a.actor_id=NEW.actor_id AND a.subject_id=r.id AND a.request_id IS NOT NULL AND a.action=CASE NEW.sequence WHEN 1 THEN 'INFORMATION_PAGE_SAVE_DRAFT' WHEN 2 THEN 'INFORMATION_PAGE_SUBMIT_REVIEW' ELSE 'INFORMATION_PAGE_APPROVE_REVIEW' END AND a.created_at=NEW.created_at) OR NEW.content_hash<>t.content_hash OR NEW.source_hash<>t.translated_from_source_hash OR NEW.created_at<t.edited_at OR(NEW.sequence>1 AND(NEW.source_hash<>r.source_hash OR prior.sequence IS DISTINCT FROM NEW.sequence-1)) OR (NEW.sequence<3 AND NEW.actor_id<>t.editor_id) OR (NEW.sequence=3 AND (NEW.actor_id=t.editor_id OR EXISTS(SELECT 1 FROM information_page_revision_translations en WHERE en.revision_id=r.id AND en.locale='en' AND en.editor_id=NEW.actor_id))) OR NOT EXISTS(SELECT 1 FROM admin_sessions s WHERE s.id=NEW.session_id AND s.admin_identity_id=NEW.actor_id) THEN RAISE EXCEPTION 'information review requires current hashes sequence and independent actor' USING ERRCODE='23514';END IF;RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_information_page_translation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_information_page_translation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE parent information_page_revisions; fields jsonb;\nBEGIN\n SELECT * INTO parent FROM information_page_revisions WHERE id=NEW.revision_id;\n IF EXISTS(SELECT 1 FROM information_page_receipts WHERE audit_log_id=parent.audit_log_id) THEN RAISE EXCEPTION 'information revision content is sealed' USING ERRCODE='55000';END IF;\n fields:=jsonb_build_object('title',NEW.title,'summary',NEW.summary,'sections',NEW.sections);\n IF NOT valid_information_page_fields(fields,parent.page_key) OR NEW.content_hash<>information_page_hash(fields) OR (NEW.translated_from_source_hash=parent.source_hash AND NOT information_page_matches(parent.structure,fields)) OR (NEW.locale='en' AND(NEW.translated_from_source_hash<>parent.source_hash OR parent.source_hash<>information_page_hash(jsonb_build_object('pageKey',parent.page_key,'structure',parent.structure,'englishFields',fields)) )) THEN RAISE EXCEPTION 'information translation requires exact bounded text source and structure' USING ERRCODE='23514';END IF;RETURN NEW;\nEND $function$"
+    },
+    {
       "name": "guard_inventory_reservation_transition",
       "identityArguments": "",
       "resultType": "trigger",
@@ -73295,6 +75258,56 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_webhook_payload_transition()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP = 'DELETE' THEN\n    RAISE EXCEPTION 'webhook payload retention rows cannot be deleted'\n      USING ERRCODE = '55000';\n  END IF;\n  IF TG_OP = 'INSERT' THEN\n    IF NEW.created_at <> transaction_timestamp() THEN\n      RAISE EXCEPTION 'webhook payload creation time must be server anchored'\n        USING ERRCODE = '23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF (to_jsonb(NEW) - 'status' - 'payload_ciphertext' - 'encrypted_data_key'\n      - 'encryption_key_version' - 'purged_at') IS DISTINCT FROM\n     (to_jsonb(OLD) - 'status' - 'payload_ciphertext' - 'encrypted_data_key'\n      - 'encryption_key_version' - 'purged_at') THEN\n    RAISE EXCEPTION 'webhook payload identity and retention evidence are immutable'\n      USING ERRCODE = '55000';\n  END IF;\n  IF NOT (OLD.status = 'RETAINED' AND NEW.status = 'PURGED') THEN\n    RAISE EXCEPTION 'webhook payloads only support RETAINED to PURGED'\n      USING ERRCODE = '23514';\n  END IF;\n  IF NEW.purged_at <> transaction_timestamp() THEN\n    RAISE EXCEPTION 'webhook payload purge time must be server anchored'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
     },
     {
+      "name": "information_page_effective_review",
+      "identityArguments": "target uuid",
+      "resultType": "SETOF information_page_translation_reviews",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "STABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.information_page_effective_review(target uuid)\n RETURNS SETOF information_page_translation_reviews\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n WITH RECURSIVE chain(id,depth,visited) AS(SELECT target,0,ARRAY[target] UNION ALL SELECT e.source_translation_id,c.depth+1,c.visited||e.source_translation_id FROM chain c JOIN information_page_translation_copy_evidence e ON e.target_translation_id=c.id WHERE NOT e.source_translation_id=ANY(c.visited)) SELECT r.* FROM chain c JOIN information_page_translation_reviews r ON r.translation_id=c.id ORDER BY c.depth,r.sequence DESC LIMIT 1\n$function$"
+    },
+    {
+      "name": "information_page_hash",
+      "identityArguments": "value jsonb",
+      "resultType": "text",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.information_page_hash(value jsonb)\n RETURNS text\n LANGUAGE sql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$ SELECT encode(sha256(convert_to(public.canonical_publication_json(value),'UTF8')),'hex') $function$"
+    },
+    {
+      "name": "information_page_matches",
+      "identityArguments": "structure jsonb, fields jsonb",
+      "resultType": "boolean",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.information_page_matches(structure jsonb, fields jsonb)\n RETURNS boolean\n LANGUAGE sql\n IMMUTABLE STRICT\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$ SELECT ARRAY(SELECT lower(v#>>'{}') FROM jsonb_array_elements(structure->'sectionIds') v) = ARRAY(SELECT lower(v->>'id') FROM jsonb_array_elements(fields->'sections') v) $function$"
+    },
+    {
+      "name": "information_page_publishable",
+      "identityArguments": "target uuid",
+      "resultType": "boolean",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "STABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.information_page_publishable(target uuid)\n RETURNS boolean\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT count(*)=7 AND bool_and(review.status='APPROVED' AND review.content_hash=t.content_hash AND review.source_hash=r.source_hash AND t.translated_from_source_hash=r.source_hash AND information_page_matches(r.structure,jsonb_build_object('sections',t.sections))) FROM information_page_revisions r JOIN information_page_revision_translations t ON t.revision_id=r.id JOIN LATERAL information_page_effective_review(t.id) review ON true WHERE r.id=target\n$function$"
+    },
+    {
+      "name": "information_page_text",
+      "identityArguments": "value jsonb, max_length integer, required boolean",
+      "resultType": "boolean",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.information_page_text(value jsonb, max_length integer, required boolean)\n RETURNS boolean\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE t text;\nBEGIN\n IF jsonb_typeof(value) IS DISTINCT FROM 'string' THEN RETURN false; END IF;\n t:=value#>>'{}';\n RETURN length(t)<=max_length AND t !~ U&'[\\0001-\\0008\\000B\\000C\\000E-\\001F\\007F-\\009F]' AND t !~ '<[/]?[A-Za-z!][^>]*>' AND (NOT required OR regexp_replace(t,U&'[\\0001-\\0020\\007F-\\00A0\\00AD\\034F\\061C\\115F\\1160\\1680\\17B4\\17B5\\180B-\\180F\\2000-\\200F\\2028-\\202F\\205F-\\206F\\2800\\3000\\3164\\FE00-\\FE0F\\FEFF\\FFA0]','','g')<>'');\nEXCEPTION WHEN OTHERS THEN RETURN false; END $function$"
+    },
+    {
       "name": "lock_base_content_review_parent",
       "identityArguments": "",
       "resultType": "trigger",
@@ -73493,6 +75506,26 @@
       "volatility": "IMMUTABLE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.valid_homepage_layout(value jsonb)\n RETURNS boolean\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE item jsonb; ids text[] := ARRAY[]::text[];\nBEGIN\n IF jsonb_typeof(value) IS DISTINCT FROM 'object' OR value->'schemaVersion' IS DISTINCT FROM '1'::jsonb OR\n    (SELECT count(*) FROM jsonb_object_keys(value))<>2 OR jsonb_typeof(value->'sections') IS DISTINCT FROM 'array' OR jsonb_array_length(value->'sections')<>8 THEN RETURN false; END IF;\n FOR item IN SELECT jsonb_array_elements(value->'sections') LOOP\n  IF jsonb_typeof(item) IS DISTINCT FROM 'object' OR (SELECT count(*) FROM jsonb_object_keys(item))<>2 OR\n     jsonb_typeof(item->'visible') IS DISTINCT FROM 'boolean' OR jsonb_typeof(item->'id') IS DISTINCT FROM 'string' OR NOT (item->>'id'=ANY(ARRAY['HERO','KINDS','ARTISTS','GIFTS','POLICIES','HOW_IT_WORKS','STUDIO_PROMISE','FINAL_CTA'])) OR\n     item->>'id'=ANY(ids) OR (item->>'id'=ANY(ARRAY['HERO','ARTISTS','GIFTS']) AND item->'visible'<>'true'::jsonb) THEN RETURN false; END IF;\n  ids := array_append(ids,item->>'id');\n END LOOP;\n RETURN cardinality(ids)=8 AND array_position(ids,NULL) IS NULL;\nEXCEPTION WHEN OTHERS THEN RETURN false;\nEND $function$"
+    },
+    {
+      "name": "valid_information_page_fields",
+      "identityArguments": "value jsonb, key text",
+      "resultType": "boolean",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.valid_information_page_fields(value jsonb, key text)\n RETURNS boolean\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE s jsonb; ids uuid[]:=ARRAY[]::uuid[]; id uuid;\nBEGIN\n IF jsonb_typeof(value) IS DISTINCT FROM 'object' OR (SELECT array_agg(k ORDER BY k) FROM jsonb_object_keys(value) k) IS DISTINCT FROM ARRAY['sections','summary','title'] OR NOT information_page_text(value->'title',120,true) OR NOT information_page_text(value->'summary',500,false) OR jsonb_typeof(value->'sections') IS DISTINCT FROM 'array' OR jsonb_array_length(value->'sections') NOT BETWEEN 1 AND 12 THEN RETURN false; END IF;\n FOR s IN SELECT jsonb_array_elements(value->'sections') LOOP\n  IF jsonb_typeof(s) IS DISTINCT FROM 'object' OR (SELECT array_agg(k ORDER BY k) FROM jsonb_object_keys(s) k) IS DISTINCT FROM ARRAY['body','heading','id'] OR jsonb_typeof(s->'id') IS DISTINCT FROM 'string' OR NOT(s->>'id' ~* '^([0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$') OR NOT information_page_text(s->'heading',160,key='FAQ') OR NOT information_page_text(s->'body',4000,true) THEN RETURN false; END IF;\n  id:=(s->>'id')::uuid; IF id=ANY(ids) THEN RETURN false;END IF;ids:=array_append(ids,id);\n END LOOP;RETURN true;\nEXCEPTION WHEN OTHERS THEN RETURN false; END $function$"
+    },
+    {
+      "name": "valid_information_page_structure",
+      "identityArguments": "value jsonb, key text",
+      "resultType": "boolean",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.valid_information_page_structure(value jsonb, key text)\n RETURNS boolean\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE ids text[]; email text;\nBEGIN\n IF key NOT IN('ABOUT','FAQ','SUPPORT') OR jsonb_typeof(value) IS DISTINCT FROM 'object' OR (SELECT array_agg(k ORDER BY k) FROM jsonb_object_keys(value) k) IS DISTINCT FROM ARRAY['contactEmail','sectionIds'] OR jsonb_typeof(value->'sectionIds') IS DISTINCT FROM 'array' OR jsonb_array_length(value->'sectionIds') NOT BETWEEN 1 AND 12 THEN RETURN false;END IF;\n SELECT array_agg(lower(v#>>'{}')) INTO ids FROM jsonb_array_elements(value->'sectionIds') v WHERE jsonb_typeof(v)='string' AND v#>>'{}' ~* '^([0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$';\n IF cardinality(ids) IS DISTINCT FROM jsonb_array_length(value->'sectionIds') OR (SELECT count(DISTINCT x) FROM unnest(ids) x)<>cardinality(ids) THEN RETURN false; END IF;\n IF value->'contactEmail'='null'::jsonb THEN RETURN true; END IF;\n email:=value->>'contactEmail';\n RETURN key='SUPPORT' AND jsonb_typeof(value->'contactEmail')='string' AND length(email)<=254 AND email !~ E'[\\\\r\\\\n?&#%]' AND email ~ '^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_''+\\-.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$';\nEXCEPTION WHEN OTHERS THEN RETURN false; END $function$"
     },
     {
       "name": "valid_storefront_navigation",

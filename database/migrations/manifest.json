@@ -480,6 +480,16 @@
         "up": "b7ccd41a76ff65bd622b58c829073283646f2835c5751dea9a01ffb41d6241de",
         "down": "ad436ae78bcf4458bfebc9f6720e17c79003f72fd8f28b0a6684059be7df207c"
       }
+    },
+    {
+      "version": "0049",
+      "name": "information-pages",
+      "up": "database/migrations/0049_information-pages.up.sql",
+      "down": "database/migrations/0049_information-pages.down.sql",
+      "sha256": {
+        "up": "1018b019199080b3d901fc6b667c40d0403c3bf4e7eb5be5b54e68857119c5a5",
+        "down": "c35de330ef2cf272fe9efe10e2c6060723462d301aecb9fba223d024bc539ee9"
+      }
     }
   ]
 }

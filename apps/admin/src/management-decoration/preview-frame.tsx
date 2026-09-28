@@ -2,6 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import {
   homeLayoutPreviewReadySchema,
+  informationPagePreviewReadySchema,
+  type InformationPagePreviewDocument,
   storefrontThemePreviewReadySchema,
   storefrontNavigationPreviewReadySchema,
   type StorefrontNavigation,
@@ -12,6 +14,7 @@ import {
 import { Button } from "@fan-support/ui";
 import type { DecorationCopy } from "./copy";
 import type { ThemeCopy } from "./theme-copy";
+import type { InformationCopy } from "../management-info-pages/copy";
 import type { NavigationCopy } from "./navigation-copy";
 
 type PreviewFrameProps = {
@@ -65,6 +68,34 @@ export function NavigationPreviewFrame({
     />
   );
 }
+export function InformationPreviewFrame({
+  document,
+  copy,
+  ...props
+}: PreviewFrameProps & {
+  document: InformationPagePreviewDocument | null;
+  copy: InformationCopy;
+}) {
+  return (
+    <div className="info-preview">
+      {!document && (
+        <p className="mc-hint" data-info-preview-saved>
+          {copy.savedOnly}
+        </p>
+      )}
+      {document ? (
+        <DecorationPreviewFrame
+          key={`${document.pageKey}:${document.locale}`}
+          {...props}
+          copy={{ ...copy, previewHint: copy.savedOnly }}
+          configuration={{ mode: "information", document }}
+        />
+      ) : (
+        <p role="status">{copy.previewMissing}</p>
+      )}
+    </div>
+  );
+}
 function DecorationPreviewFrame({
   configuration,
   locale,
@@ -77,7 +108,8 @@ function DecorationPreviewFrame({
   configuration:
     | { mode: "layout"; layout: HomeLayout }
     | { mode: "theme"; theme: StorefrontTheme }
-    | { mode: "navigation"; navigation: StorefrontNavigation };
+    | { mode: "navigation"; navigation: StorefrontNavigation }
+    | { mode: "information"; document: InformationPagePreviewDocument };
   replayLabel?: string | undefined;
   pageCopy?: ThemeCopy["previewPages"] | undefined;
   viewCopy?: NavigationCopy["previewViews"] | undefined;
@@ -111,6 +143,12 @@ function DecorationPreviewFrame({
     previewQuery.set("mode", "navigation");
     if (view !== "header") previewQuery.set("view", view);
   }
+  if (mode === "information")
+    previewQuery.set("page", configuration.document.pageKey.toLowerCase());
+  const previewPath =
+    configuration.mode === "information"
+      ? `${configuration.document.locale}/information-preview`
+      : `${locale}/layout-preview`;
   function restart(nextPage = page, nextView = view) {
     setReadyChannel(null);
     setFailed(false);
@@ -147,6 +185,7 @@ function DecorationPreviewFrame({
         layout: homeLayoutPreviewReadySchema,
         theme: storefrontThemePreviewReadySchema,
         navigation: storefrontNavigationPreviewReadySchema,
+        information: informationPagePreviewReadySchema,
       };
       const message = readySchemas[mode].safeParse(event.data);
       if (!message.success || message.data.channel !== channel) return;
@@ -177,6 +216,13 @@ function DecorationPreviewFrame({
           ...envelope,
           type: "STOREFRONT_THEME_PREVIEW",
           theme: configuration.theme,
+        };
+        break;
+      case "information":
+        message = {
+          ...envelope,
+          type: "INFORMATION_PAGE_PREVIEW_RENDER",
+          document: configuration.document,
         };
         break;
       case "navigation":
@@ -297,13 +343,14 @@ function DecorationPreviewFrame({
               <iframe
                 ref={frame}
                 key={channel}
+                data-info-preview-frame={mode === "information" || undefined}
                 data-layout-preview-frame={mode === "layout" || undefined}
                 data-theme-preview-frame={mode === "theme" || undefined}
                 data-navigation-preview-frame={
                   mode === "navigation" || undefined
                 }
                 title={`${copy.preview}${mode === "theme" && pageCopy ? ` — ${pageCopy.options[page]}` : ""}${mode === "navigation" && viewCopy ? ` — ${viewCopy.options[view]}` : ""} — ${copy[viewport]}`}
-                src={`${origin}/${locale}/layout-preview?${previewQuery}`}
+                src={`${origin}/${previewPath}?${previewQuery}`}
                 sandbox="allow-scripts allow-same-origin"
                 referrerPolicy="no-referrer"
                 style={{

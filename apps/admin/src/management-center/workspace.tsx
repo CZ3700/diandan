@@ -56,6 +56,7 @@ export function ManagementWorkspace({
   onPayments,
   onExceptions,
   onDecoration,
+  onInfoPages,
   initialSection = "ARTISTS",
   accessNotice,
   canDeleteArtists = false,
@@ -67,6 +68,7 @@ export function ManagementWorkspace({
   onOrders?: (() => void) | undefined;
   onPayments?: (() => void) | undefined;
   onExceptions?: (() => void) | undefined;
+  onInfoPages?: (() => void) | undefined;
   onDecoration?: (() => void) | undefined;
   initialSection?: ManagementSection;
   accessNotice?: ReactNode;
@@ -268,12 +270,19 @@ export function ManagementWorkspace({
       beforeLeave={() => !busy}
       onSection={(next) => {
         if (
-          ["ORDERS", "PAYMENTS", "DECORATION", "EXCEPTIONS"].includes(next) &&
+          [
+            "ORDERS",
+            "PAYMENTS",
+            "DECORATION",
+            "EXCEPTIONS",
+            "INFO_PAGES",
+          ].includes(next) &&
           !canLeave()
         )
           return;
         if (next === "ORDERS") onOrders?.();
         else if (next === "PAYMENTS") onPayments?.();
+        else if (next === "INFO_PAGES") onInfoPages?.();
         else if (next === "DECORATION") onDecoration?.();
         else if (next === "EXCEPTIONS") onExceptions?.();
         else chooseSection(next);
@@ -281,6 +290,7 @@ export function ManagementWorkspace({
       ordersAvailable={Boolean(onOrders)}
       paymentsAvailable={Boolean(onPayments)}
       exceptionsAvailable={Boolean(onExceptions)}
+      infoPagesAvailable={Boolean(onInfoPages)}
       decorationAvailable={Boolean(onDecoration)}
       disabled={busy}
       accountAction={

@@ -136,7 +136,124 @@ function exceptionOperation(
     },
   });
 }
+function informationOperation(
+  path: string,
+  command: Parser,
+  response: Parser,
+  action: string,
+  kind: string,
+  mutation: boolean,
+): AdminOperation {
+  const base = operation(
+    path,
+    command,
+    response,
+    action,
+    kind,
+    mutation,
+    action === "SAVE_DRAFT" ? 256 * 1024 : SMALL,
+  );
+  return {
+    ...base,
+    responseMatches(input, output) {
+      const request = contract.informationPageCommandSchema.parse(input);
+      const result = contract.informationPageResponseSchema.parse(output);
+      if (result.outcome === "FAILURE") return true;
+      if (request.action === "LIST") return result.kind === "LIST";
+      if (request.action === "HISTORY")
+        return (
+          result.kind === "HISTORY" &&
+          result.page === request.page &&
+          result.pageSize === request.pageSize &&
+          result.entries.every((entry) => entry.pageKey === request.pageKey)
+        );
+      if (
+        result.kind !== "STATE" ||
+        result.workspace.pageKey !== request.pageKey ||
+        result.workspace.locale !== request.locale
+      )
+        return false;
+      return (
+        request.action === "READ" ||
+        result.workspace.version === request.expectedVersion + 1
+      );
+    },
+  };
+}
 const entries = {
+  "information-pages-list": informationOperation(
+    "/api/v1/admin/information-pages/list",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "LIST",
+    "LIST",
+    false,
+  ),
+  "information-pages-read": informationOperation(
+    "/api/v1/admin/information-pages/read",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "READ",
+    "STATE",
+    false,
+  ),
+  "information-pages-save": informationOperation(
+    "/api/v1/admin/information-pages/save",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "SAVE_DRAFT",
+    "STATE",
+    true,
+  ),
+  "information-pages-submit": informationOperation(
+    "/api/v1/admin/information-pages/submit",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "SUBMIT_REVIEW",
+    "STATE",
+    true,
+  ),
+  "information-pages-approve": informationOperation(
+    "/api/v1/admin/information-pages/approve",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "APPROVE_REVIEW",
+    "STATE",
+    true,
+  ),
+  "information-pages-publish": informationOperation(
+    "/api/v1/admin/information-pages/publish",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "PUBLISH",
+    "STATE",
+    true,
+  ),
+  "information-pages-unpublish": informationOperation(
+    "/api/v1/admin/information-pages/unpublish",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "UNPUBLISH",
+    "STATE",
+    true,
+  ),
+  "information-pages-restore": informationOperation(
+    "/api/v1/admin/information-pages/restore",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "RESTORE",
+    "STATE",
+    true,
+  ),
+  "information-pages-history": informationOperation(
+    "/api/v1/admin/information-pages/history",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "HISTORY",
+    "HISTORY",
+    false,
+  ),
+
   "home-layout-read": operation(
     "/api/v1/admin/home-layout/read",
     contract.homeLayoutCommandSchema,

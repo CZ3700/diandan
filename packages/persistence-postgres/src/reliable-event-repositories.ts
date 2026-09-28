@@ -907,6 +907,13 @@ function outboxEventFromRow(row: QueryRow): EventEnvelope {
   };
   const input = (() => {
     switch (eventType) {
+      case "INFORMATION_PAGE_PUBLICATION_CHANGED":
+        return {
+          ...base,
+          eventType,
+          locale: requiredString(row, "locale"),
+          payload: { informationPagePublicationId: primarySubjectId },
+        };
       case "CART_ITEM_ADDED":
         return {
           ...base,
@@ -1410,6 +1417,7 @@ export function createReliableEventRepositories(
                     event.correlation_id::text as correlation_id
                from public.outbox_events event
               where event.available_at <= $2::timestamptz
+                and (($1='information-page-publication' and event.event_type='INFORMATION_PAGE_PUBLICATION_CHANGED') or ($1<>'information-page-publication' and event.event_type<>'INFORMATION_PAGE_PUBLICATION_CHANGED'))
                 and not exists (
                   select 1 from public.outbox_dispatch_attempts attempt
                    where attempt.outbox_event_id = event.id
@@ -1487,7 +1495,8 @@ export function createReliableEventRepositories(
                          and attempt.consumer_key = $2
                     ), 1)::text as next_attempt_number
                from public.outbox_events event
-              where event.id = $1::uuid`,
+              where event.id = $1::uuid
+                and (($2='information-page-publication' and event.event_type='INFORMATION_PAGE_PUBLICATION_CHANGED') or ($2<>'information-page-publication' and event.event_type<>'INFORMATION_PAGE_PUBLICATION_CHANGED'))`,
             [parsed.data.outboxEventId, parsed.data.consumerKey],
           );
           if (rows.length === 0) {

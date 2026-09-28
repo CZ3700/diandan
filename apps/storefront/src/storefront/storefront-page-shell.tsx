@@ -14,6 +14,7 @@ import { SiteHeader } from "./site-header";
 import { SiteFooter } from "./page-parts";
 import { regionEntries } from "./region-entry";
 import { publicNavigationQuery } from "./navigation-target";
+import { InformationPageFooter } from "./information-page-footer";
 
 export type StorefrontPageProps = Readonly<{
   searchParams: Promise<
@@ -79,6 +80,14 @@ export async function StorefrontPageShell({
         <SiteFooter
           {...props}
           region={region.footer}
+          informationLinks={
+            <Suspense fallback={null}>
+              <InformationPageFooter
+                locale={props.locale}
+                contextQuery={props.contextQuery}
+              />
+            </Suspense>
+          }
           policyLinks={
             <Suspense fallback={null}>
               <FooterPolicyLinks

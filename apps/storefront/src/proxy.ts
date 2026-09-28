@@ -5,12 +5,14 @@ import {
   SUPPORTED_LOCALES,
   supportedLocaleSchema,
   paymentRuntimeOriginSchema,
+  informationPagePreviewReadySchema,
 } from "@fan-support/contracts";
 
 import {
   REQUEST_ID_HEADER,
   resolveRequestId,
 } from "@fan-support/observability";
+import { informationPageKeyFromPath } from "./storefront/information-page-path";
 
 function checkoutPrivacy(response: NextResponse, pathname: string) {
   const orderPage = /^\/[^/]+\/(?:order-access|orders|thank-you)(?:\/|$)/u.test(
@@ -57,7 +59,7 @@ function checkoutPrivacy(response: NextResponse, pathname: string) {
   return response;
 }
 
-export function proxy(request: NextRequest): NextResponse {
+export async function proxy(request: NextRequest): Promise<NextResponse> {
   const requestId = resolveRequestId(request.headers.get(REQUEST_ID_HEADER));
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set(REQUEST_ID_HEADER, requestId);
@@ -95,7 +97,10 @@ export function proxy(request: NextRequest): NextResponse {
   if (locale && request.nextUrl.pathname === `/${locale}/order-access`)
     requestHeaders.set("x-storefront-order-access", "1");
   const layoutPreview = Boolean(
-    locale && request.nextUrl.pathname === `/${locale}/layout-preview`,
+    locale &&
+    ["layout-preview", "information-preview"].some(
+      (path) => request.nextUrl.pathname === `/${locale}/${path}`,
+    ),
   );
   if (layoutPreview) requestHeaders.set("x-storefront-layout-preview", "1");
   const response = NextResponse.next({
@@ -103,6 +108,19 @@ export function proxy(request: NextRequest): NextResponse {
   });
   response.headers.set(REQUEST_ID_HEADER, requestId);
   if (locale) response.headers.set("content-language", locale);
+  const path = request.nextUrl.pathname.split("/");
+  const informationPage =
+    path.length === 3 ? informationPageKeyFromPath(path[2]) : null;
+  if (locale && informationPage) {
+    const { informationPagePreflight } =
+      await import("./server/information-page-preflight");
+    return informationPagePreflight(
+      response,
+      informationPage,
+      locale,
+      requestId,
+    );
+  }
   if (layoutPreview) {
     let adminOrigin: string | null = null;
     try {
@@ -119,6 +137,35 @@ export function proxy(request: NextRequest): NextResponse {
       "content-security-policy",
       `frame-ancestors ${adminOrigin ?? "'none'"}; form-action 'none'; frame-src 'none'; object-src 'none'; base-uri 'self'; sandbox allow-scripts allow-same-origin`,
     );
+    if (request.nextUrl.pathname === `/${locale}/information-preview`) {
+      const query = request.nextUrl.searchParams;
+      const valid =
+        adminOrigin &&
+        query.size === 2 &&
+        query.getAll("channel").length === 1 &&
+        query.getAll("page").length === 1 &&
+        informationPageKeyFromPath(query.get("page")) &&
+        informationPagePreviewReadySchema.safeParse({
+          schemaVersion: 1,
+          type: "INFORMATION_PAGE_PREVIEW_READY",
+          channel: query.get("channel"),
+        }).success;
+      if (!valid) {
+        const headers = new Headers();
+        for (const name of [
+          "cache-control",
+          "x-robots-tag",
+          "referrer-policy",
+          "content-security-policy",
+          "content-language",
+          REQUEST_ID_HEADER,
+        ]) {
+          const value = response.headers.get(name);
+          if (value) headers.set(name, value);
+        }
+        return new NextResponse(null, { status: 404, headers });
+      }
+    }
   }
   return checkoutPrivacy(response, request.nextUrl.pathname);
 }

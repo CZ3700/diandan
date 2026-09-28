@@ -8,6 +8,7 @@ import {
   createPublicHomeLayoutUseCases,
   createPublicStorefrontThemeUseCases,
   createPublicStorefrontNavigationUseCases,
+  createPublicInformationPageUseCases,
 } from "@fan-support/application";
 import {
   resolveDatabaseRuntimeConfig,
@@ -28,6 +29,7 @@ import type { StorefrontHomepageRouteDependencies } from "./storefront-homepage-
 import type { PublicHomeLayoutRouteDependencies } from "./home-layout-route.js";
 import type { PublicStorefrontThemeRouteDependencies } from "./storefront-theme-route.js";
 import type { PublicStorefrontNavigationRouteDependencies } from "./storefront-navigation-route.js";
+import type { PublicInformationPagesRouteDependencies } from "./information-pages-route.js";
 
 type PublishedPersistence = Pick<
   PostgresPersistence,
@@ -39,6 +41,7 @@ type PublishedPersistence = Pick<
   | "homeLayoutTransactionManager"
   | "storefrontThemeTransactionManager"
   | "storefrontNavigationTransactionManager"
+  | "informationPageTransactionManager"
   | "close"
 >;
 type PersistenceFactory = (
@@ -59,6 +62,7 @@ export type PublishedContentComposition = Readonly<{
   publicHomeLayoutRoute: PublicHomeLayoutRouteDependencies;
   publicStorefrontThemeRoute: PublicStorefrontThemeRouteDependencies;
   publicStorefrontNavigationRoute: PublicStorefrontNavigationRouteDependencies;
+  publicInformationPagesRoute: PublicInformationPagesRouteDependencies;
   publishedContentRuntime: ApiLifecycleResource;
 }>;
 
@@ -84,8 +88,17 @@ export function createPublishedContentComposition(
         }),
     },
   );
+  const informationPages = createPublicInformationPageUseCases({
+    transactions: persistence.informationPageTransactionManager,
+  });
   let closePromise: Promise<void> | undefined;
   return Object.freeze({
+    publicInformationPagesRoute: {
+      useCases: {
+        read: informationPages.execute,
+        index: informationPages.index,
+      },
+    },
     publicHomeLayoutRoute: {
       useCases: createPublicHomeLayoutUseCases({
         transactions: persistence.homeLayoutTransactionManager,

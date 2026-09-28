@@ -1,3 +1,9 @@
+import { createInformationPageRepository } from "./information-pages-repository.js";
+import { createInformationPageAuthorizationRepository } from "./admin-authorization-repository.js";
+import type {
+  InformationPageRepositories,
+  InformationPageTransactionManager,
+} from "@fan-support/persistence-port";
 import { createStorefrontNavigationRepository } from "./storefront-navigation-repository.js";
 import type {
   StorefrontNavigationRepositories,
@@ -222,6 +228,7 @@ import {
 
 export interface PostgresPersistence {
   readonly homeLayoutTransactionManager: HomeLayoutTransactionManager;
+  readonly informationPageTransactionManager: InformationPageTransactionManager;
   readonly storefrontNavigationTransactionManager: StorefrontNavigationTransactionManager;
   readonly storefrontThemeTransactionManager: StorefrontThemeTransactionManager;
   readonly adminPaymentConfigurationTransactionManager: AdminPaymentConfigurationTransactionManager;
@@ -641,6 +648,17 @@ export function createPostgresPersistenceWithPoolFactory(
       createRepositories: (client, scope) => ({
         authorization: createHomeLayoutAuthorizationRepository(client, scope),
         storefrontTheme: createStorefrontThemeRepository(client, scope),
+      }),
+    });
+  const informationPageRunner =
+    createTransactionRunner<InformationPageRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createInformationPageAuthorizationRepository(
+          client,
+          scope,
+        ),
+        informationPages: createInformationPageRepository(client, scope),
       }),
     });
   const storefrontNavigationRunner =
@@ -1546,6 +1564,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return storefrontThemeRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    informationPageTransactionManager: {
+      async runInInformationPageTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return informationPageRunner.run(
           { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );

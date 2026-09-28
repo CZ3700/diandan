@@ -15,6 +15,7 @@ import {
   createHomeLayoutUseCases,
   createStorefrontThemeUseCases,
   createStorefrontNavigationUseCases,
+  createInformationPageUseCases,
   createPublicationPreflightUseCases,
   createPublicationRuntimeUseCases,
   createResourceManagementUseCases,
@@ -49,6 +50,7 @@ import type { ManagementCenterRouteDependencies } from "./management-center-rout
 import type { HomeLayoutRouteDependencies } from "./home-layout-route.js";
 import type { StorefrontThemeRouteDependencies } from "./storefront-theme-route.js";
 import type { StorefrontNavigationRouteDependencies } from "./storefront-navigation-route.js";
+import type { InformationPagesRouteDependencies } from "./information-pages-route.js";
 import { createPaymentRecoveryLifecycle } from "./payment-runtime-lifecycle.js";
 import type { PaymentConfigurationRuntime } from "./payment-configuration-runtime.js";
 import type { ApiProductionResources } from "./production-resources.js";
@@ -84,6 +86,7 @@ export type ProductionAdminComposition = Readonly<{
   homeLayoutRoute: HomeLayoutRouteDependencies;
   storefrontThemeRoute: StorefrontThemeRouteDependencies;
   storefrontNavigationRoute: StorefrontNavigationRouteDependencies;
+  informationPagesRoute: InformationPagesRouteDependencies;
   publicationPreflightRoute: PublicationPreflightRouteDependencies;
   publicationRuntimeRoute: PublicationRuntimeRouteDependencies;
   giftCommerceRoute: GiftCommerceRouteDependencies;
@@ -232,6 +235,13 @@ export function createProductionAdminComposition(
         allowedOrigin,
         useCases: createStorefrontThemeUseCases({
           transactions: persistence.storefrontThemeTransactionManager,
+          tokenPepper,
+        }),
+      },
+      informationPagesRoute: {
+        allowedOrigin,
+        useCases: createInformationPageUseCases({
+          transactions: persistence.informationPageTransactionManager,
           tokenPepper,
         }),
       },

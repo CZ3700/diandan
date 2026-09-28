@@ -9,6 +9,7 @@ import type { ManagementSection } from "./api";
 import { managementCopy } from "./copy";
 import { paymentCopy } from "../management-payments/copy";
 import { ordersCopy } from "../management-orders/copy";
+import { informationCopy } from "../management-info-pages/copy";
 import { decorationCopy } from "../management-decoration/copy";
 
 export function ManagementShell({
@@ -23,15 +24,26 @@ export function ManagementShell({
   paymentsAvailable = false,
   exceptionsAvailable = false,
   decorationAvailable = false,
+  infoPagesAvailable = false,
   beforeLeave,
   languageDisabled = disabled,
 }: {
   locale: SupportedLocale;
   section:
-    ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS" | "DECORATION";
+    | ManagementSection
+    | "ORDERS"
+    | "PAYMENTS"
+    | "EXCEPTIONS"
+    | "DECORATION"
+    | "INFO_PAGES";
   onSection: (
     section:
-      ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS" | "DECORATION",
+      | ManagementSection
+      | "ORDERS"
+      | "PAYMENTS"
+      | "EXCEPTIONS"
+      | "DECORATION"
+      | "INFO_PAGES",
   ) => void;
   children: ReactNode;
   disabled?: boolean;
@@ -41,6 +53,7 @@ export function ManagementShell({
   paymentsAvailable?: boolean;
   exceptionsAvailable?: boolean;
   decorationAvailable?: boolean;
+  infoPagesAvailable?: boolean;
   beforeLeave?: (() => boolean) | undefined;
   languageDisabled?: boolean;
 }) {
@@ -81,6 +94,17 @@ export function ManagementShell({
               </button>
             </>
           ) : null}
+          {infoPagesAvailable && (
+            <button
+              type="button"
+              data-management-section="INFO_PAGES"
+              aria-current={section === "INFO_PAGES" ? "page" : undefined}
+              disabled={disabled}
+              onClick={() => onSection("INFO_PAGES")}
+            >
+              {informationCopy(locale).title}
+            </button>
+          )}
           {decorationAvailable && (
             <button
               type="button"

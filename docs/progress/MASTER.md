@@ -2,6 +2,8 @@
 
 > **2026-09-28 起按可配置装修与精简上线方案推进**：当前进度见 [launch-progress.md](launch-progress.md)，方案见 [2026-09-28-flexible-storefront-launch.md](../plan/2026-09-28-flexible-storefront-launch.md)，决策见 ADR-020、SPEC §0.3。V2 成果保留在 [v2-progress.md](v2-progress.md)。以下 49 项 Phase/Task 及状态均是历史记录，不是当前领取门禁或整站完成率。
 
+> **当前检查点（2026-09-29）**：L1 与 L2 六项装修能力已完成本地验收，L3-01～04 Stripe 本站沙盒已完成；下一步 L3 正式邮件/身份、支付中断和四类混合异常闭环。以下历史日期与计数保持原样，详见当前上线进度。
+
 > 最后更新：2026-09-24（Asia/Bangkok）
 > 当前里程碑：完整本地 TEST 体验已交付，进入 Phase 6 质量加固；M3/M4 未完外部验收保留（M1/M2 已完成）
 > 当前 ACTIVE Phase：Phase 3/4（未完验收待续）、Phase 5（ADR-016，逐项本地研发）；Phase 6 有限 ACTIVE（P6-01/02/03/04 本地范围 ACCEPT、P6-05 READY）；Phase 7 仍 LOCKED

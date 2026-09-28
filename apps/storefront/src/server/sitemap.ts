@@ -18,16 +18,17 @@ import {
 type Read = (
   command: StorefrontSeoReadCommand,
 ) => Promise<StorefrontSeoResponse>;
-const escapeXml = (value: string) =>
+export const escapeSitemapXml = (value: string) =>
   value
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&apos;");
+const escapeXml = escapeSitemapXml;
 const declaration = '<?xml version="1.0" encoding="UTF-8"?>';
 const maxEntries = 50_000;
-function failure(status: number): Response {
+export function sitemapFailure(status: number): Response {
   return new Response("Sitemap unavailable", {
     status,
     headers: {
@@ -37,6 +38,7 @@ function failure(status: number): Response {
     },
   });
 }
+const failure = sitemapFailure;
 function identity(entity: StorefrontSeoEntity, locale: SupportedLocale) {
   const locator = entity.locator;
   switch (locator.kind) {
@@ -60,7 +62,7 @@ function matchesEtag(header: string | null, etag: string): boolean {
     tags.some((tag) => tag.replace(/^W\//u, "") === etag.replace(/^W\//u, ""))
   );
 }
-function response(
+export function sitemapXmlResponse(
   request: Request,
   xml: string,
   locale?: SupportedLocale,
@@ -84,6 +86,7 @@ function response(
   }
   return new Response(xml, { headers });
 }
+const response = sitemapXmlResponse;
 
 /** All reads are fresh canonical API snapshots; stale/failed traversal is never published as a partial index. */
 export async function sitemapResponse(
@@ -91,6 +94,7 @@ export async function sitemapResponse(
   origin: string,
   read: Read,
   locale?: SupportedLocale,
+  information?: () => Promise<readonly SupportedLocale[]>,
 ): Promise<Response> {
   try {
     if (
@@ -187,6 +191,13 @@ export async function sitemapResponse(
         cursors.add(next);
       }
     } while (next);
+    if (information) {
+      for (const language of await information()) {
+        if (locale && language !== locale) continue;
+        const url = new URL(`/${language}/information-sitemap.xml`, origin);
+        entries.push(`<sitemap><loc>${escapeXml(url.href)}</loc></sitemap>`);
+      }
+    }
     return response(
       request,
       `${declaration}<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${entries.join("")}</sitemapindex>`,

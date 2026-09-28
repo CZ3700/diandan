@@ -367,3 +367,5 @@ export * from "./home-layout.js";
 export * from "./storefront-theme.js";
 
 export * from "./storefront-navigation.js";
+
+export * from "./information-pages.js";

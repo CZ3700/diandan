@@ -39,6 +39,10 @@ import {
   type ReliableEventsWorkerRuntime,
 } from "./reliable-events-runtime.js";
 import { prepareOptionalWorkerNotifications } from "./notification-composition.js";
+import {
+  informationPagePublicationConsumer,
+  informationPagePublicationConsumerKey,
+} from "./information-page-publication.js";
 
 const QUEUE_SCHEMA = "pgboss";
 const LOCAL_CONCURRENCY = 4;
@@ -229,6 +233,8 @@ export function createWorkerReliableEventsComposition(
   // Validate mail configuration and approvals before allocating infrastructure.
   const bindNotifications = factories.prepareNotifications(environment);
   const notificationConsumerKey = "order-notifications-v1";
+  if (bindings.consumerKeys.includes(informationPagePublicationConsumerKey))
+    throw new TypeError("Reserved information publication consumer key");
   if (
     bindNotifications &&
     bindings.consumerKeys.includes(notificationConsumerKey)
@@ -285,9 +291,11 @@ export function createWorkerReliableEventsComposition(
   const dispatchOutboxEvent = createDispatchOutboxEvent({
     transactionManager,
     consumerForKey: (key) =>
-      notifications && key === notificationConsumerKey
-        ? notifications.consumer
-        : bindings.consumerForKey(key),
+      key === informationPagePublicationConsumerKey
+        ? informationPagePublicationConsumer
+        : notifications && key === notificationConsumerKey
+          ? notifications.consumer
+          : bindings.consumerForKey(key),
     createId: factories.createId,
     now: factories.now,
   });
@@ -351,9 +359,11 @@ export function createWorkerReliableEventsComposition(
       const result = await expiry.runPending(MAINTENANCE_BATCH_SIZE);
       if (result.failed > 0) throw new Error("Commerce expiry failed");
     },
-    consumerKeys: notifications
-      ? [...bindings.consumerKeys, notificationConsumerKey]
-      : bindings.consumerKeys,
+    consumerKeys: [
+      ...bindings.consumerKeys,
+      informationPagePublicationConsumerKey,
+      ...(notifications ? [notificationConsumerKey] : []),
+    ],
     now: factories.now,
     createPropagation: factories.createPropagation,
     intervalMs: MAINTENANCE_INTERVAL_MS,
