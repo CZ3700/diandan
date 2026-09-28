@@ -294,3 +294,94 @@ for (const status of ["SUCCEEDED", "FAILED", "CANCELED", "EXPIRED"] as const)
       }),
     );
   });
+
+function expiredActionCommand() {
+  const source = command(true);
+  return paymentRuntimeRecordReconcileCommandSchema.parse({
+    ...source,
+    claim: {
+      ...source.claim,
+      attempt: {
+        ...source.claim.attempt,
+        status: "REQUIRES_ACTION",
+        action: source.action,
+        actionExpired: true,
+        externalReference: "provider-test-reference",
+      },
+    },
+  });
+}
+test("expired same-state authorization is capped and gets exact same-state history", async () => {
+  mocks.readiness.mockResolvedValue({
+    resources_valid: true,
+    order_status: "PENDING_PAYMENT",
+    payment_status: "PENDING",
+    current_payment_attempt_id: id(2),
+    action_deadline: "2026-09-09T00:00:30.000Z",
+  });
+  const query = queries();
+  await recordPaymentReconcile(
+    { query, release: vi.fn() },
+    {} as OutboxRepository,
+    expiredActionCommand(),
+  );
+  const update = query.mock.calls.find(([sql]) =>
+    sql.startsWith("UPDATE public.payment_attempts"),
+  );
+  expect(update?.[1]?.[10]).toBe("2026-09-09T00:00:30.000Z");
+  expect(mocks.history).toHaveBeenCalledWith(
+    expect.anything(),
+    expect.anything(),
+    expect.objectContaining({
+      fromStatus: "REQUIRES_ACTION",
+      toStatus: "REQUIRES_ACTION",
+      reasonCode: "PAYMENT_ACTION_REFRESHED",
+    }),
+  );
+  expect(mocks.insert).toHaveBeenCalledWith(
+    expect.anything(),
+    "payment_reconcile_receipts",
+    expect.objectContaining({ disposition: "APPLIED_NONFINANCIAL" }),
+  );
+});
+for (const readiness of [
+  { resources_valid: false },
+  { order_status: "PAID" },
+  { payment_status: "PAID" },
+  { current_payment_attempt_id: id(99) },
+])
+  test(`expired same-state authorization rejects unavailable authority ${JSON.stringify(readiness)}`, async () => {
+    mocks.readiness.mockResolvedValue({
+      resources_valid: true,
+      order_status: "PENDING_PAYMENT",
+      payment_status: "PENDING",
+      current_payment_attempt_id: id(2),
+      ...readiness,
+    });
+    const query = queries();
+    await recordPaymentReconcile(
+      { query, release: vi.fn() },
+      {} as OutboxRepository,
+      expiredActionCommand(),
+    );
+    expect(mocks.history).not.toHaveBeenCalled();
+    expect(
+      query.mock.calls.some(([sql]) =>
+        sql.startsWith("UPDATE public.payment_attempts"),
+      ),
+    ).toBe(false);
+  });
+test("same-state write losing the actual clock race retains only the audited observation", async () => {
+  const query = queries(false);
+  await recordPaymentReconcile(
+    { query, release: vi.fn() },
+    {} as OutboxRepository,
+    expiredActionCommand(),
+  );
+  expect(mocks.history).not.toHaveBeenCalled();
+  expect(mocks.insert).toHaveBeenCalledWith(
+    expect.anything(),
+    "payment_reconcile_receipts",
+    expect.objectContaining({ disposition: "OBSERVED" }),
+  );
+});

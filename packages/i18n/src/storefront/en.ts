@@ -77,6 +77,7 @@ const copy = {
   checkoutContinue: "Continue to checkout",
   checkoutRefresh: "Refresh status",
   checkoutRecover: "Resume this request",
+  checkoutResumePayment: "Resume payment",
   checkoutUnavailable: "Checkout is unavailable. Try again shortly.",
   checkoutChanged: "Details changed. Review them and confirm again.",
   checkoutExpired: "This checkout has expired. Return to your gift bag.",
@@ -95,7 +96,8 @@ const copy = {
     "The result is not confirmed. We are checking the same payment.",
   checkoutProcessing: "Your payment is being confirmed.",
   checkoutFailed: "This payment did not complete.",
-  checkoutActionExpired: "The payment link has expired. Refresh its status.",
+  checkoutActionExpired:
+    "This payment link has expired. Check the current payment before continuing.",
   checkoutRetryPayment: "Choose a payment method again",
   checkoutLanguageFallback:
     "Payment page language: {language}. Your order stays unchanged.",

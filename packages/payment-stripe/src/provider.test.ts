@@ -474,7 +474,7 @@ test("reconcile with a stored reference produces matched, authenticated capture 
         eventType: "PAYMENT_STATUS",
         providerAccountId: accountId,
         environment: "TEST",
-        providerEventId: `reconcile:${sessionReference}:SUCCEEDED`,
+        providerEventId: `reconcile:${auditLogId}`,
         evidence: { kind: "AUTHENTICATED_RECONCILE", auditLogId },
         occurredAt: "2026-09-26T00:00:00.000Z",
         association: {
@@ -489,6 +489,48 @@ test("reconcile with a stored reference produces matched, authenticated capture 
       },
     },
   });
+});
+
+test("repeated authenticated payment observations bind distinct audit identities without creating another session", async () => {
+  const fake = fakeStripe({
+    [`GET /v1/checkout/sessions/${sessionId}`]: paidSession,
+  });
+  let instant = now();
+  const stripe = createStripePaymentProvider({
+    connection,
+    credentials: credentialResolver(),
+    transport: fake.transport,
+    now: () => instant,
+  });
+  const first = await stripe.reconcilePayment({
+    ...reconcileCommand,
+    externalReference: sessionReference,
+  } as never);
+  const sameObservation = await stripe.reconcilePayment({
+    ...reconcileCommand,
+    externalReference: sessionReference,
+  } as never);
+  expect(sameObservation).toEqual(first);
+  instant = new Date(instant.getTime() + 300_000);
+  const nextAudit = "50000000-0000-4000-8000-000000000006";
+  const second = await stripe.reconcilePayment({
+    ...reconcileCommand,
+    externalReference: sessionReference,
+    auditLogId: nextAudit,
+  } as never);
+  expect(first.outcome).toBe("SUCCESS");
+  expect(second.outcome).toBe("SUCCESS");
+  if (first.outcome !== "SUCCESS" || second.outcome !== "SUCCESS") return;
+  expect(first.value.event.providerEventId).toBe(`reconcile:${auditLogId}`);
+  expect(second.value.event.providerEventId).toBe(`reconcile:${nextAudit}`);
+  expect(second.value.event.occurredAt).not.toBe(first.value.event.occurredAt);
+  expect(second.value.event.transaction).toEqual(first.value.event.transaction);
+  expect(second.value.event.association).toEqual(first.value.event.association);
+  expect(fake.calls.map(({ method, path }) => [method, path])).toEqual([
+    ["GET", `/v1/checkout/sessions/${sessionId}`],
+    ["GET", `/v1/checkout/sessions/${sessionId}`],
+    ["GET", `/v1/checkout/sessions/${sessionId}`],
+  ]);
 });
 
 test("reconcile without a stored reference finds the attempt by payment metadata, then by recent sessions", async () => {
@@ -605,6 +647,40 @@ test("refund reconcile finds the platform refund by metadata and reports its fin
   ).toMatchObject({
     error: { code: "REFUND_NOT_FOUND" },
   });
+});
+
+test("repeated refund observations keep one refund transaction and separate audited queries", async () => {
+  const fake = fakeStripe({
+    [`GET /v1/checkout/sessions/${sessionId}`]: paidSession,
+    "GET /v1/refunds": () => ok(list([refund()])),
+  });
+  let instant = now();
+  const stripe = createStripePaymentProvider({
+    connection,
+    credentials: credentialResolver(),
+    transport: fake.transport,
+    now: () => instant,
+  });
+  const command = {
+    ...refundCommand,
+    operation: "RECONCILE_REFUND",
+    auditLogId,
+  };
+  const first = await stripe.reconcileRefund(command as never);
+  instant = new Date(instant.getTime() + 300_000);
+  const nextAudit = "50000000-0000-4000-8000-000000000006";
+  const second = await stripe.reconcileRefund({
+    ...command,
+    auditLogId: nextAudit,
+  } as never);
+  expect(first.outcome).toBe("SUCCESS");
+  expect(second.outcome).toBe("SUCCESS");
+  if (first.outcome !== "SUCCESS" || second.outcome !== "SUCCESS") return;
+  expect(first.value.event.providerEventId).toBe(`reconcile:${auditLogId}`);
+  expect(second.value.event.providerEventId).toBe(`reconcile:${nextAudit}`);
+  expect(second.value.event.occurredAt).not.toBe(first.value.event.occurredAt);
+  expect(second.value.event.transaction).toEqual(first.value.event.transaction);
+  expect(fake.calls.every(({ method }) => method === "GET")).toBe(true);
 });
 
 test("a key for the other Stripe mode or an unavailable secret store never reaches Stripe", async () => {

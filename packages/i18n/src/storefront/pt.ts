@@ -79,6 +79,7 @@ const copy = {
   checkoutContinue: "Continuar para o pagamento",
   checkoutRefresh: "Atualizar status",
   checkoutRecover: "Retomar esta solicitação",
+  checkoutResumePayment: "Retomar o pagamento",
   checkoutUnavailable:
     "O pagamento está indisponível. Tente novamente em breve.",
   checkoutChanged: "Os detalhes mudaram. Confira e confirme novamente.",
@@ -99,7 +100,8 @@ const copy = {
     "O resultado ainda não foi confirmado. Estamos verificando o mesmo pagamento.",
   checkoutProcessing: "Seu pagamento está sendo confirmado.",
   checkoutFailed: "Este pagamento não foi concluído.",
-  checkoutActionExpired: "O link de pagamento expirou. Atualize o status.",
+  checkoutActionExpired:
+    "Este link de pagamento expirou. Verifique o estado deste pagamento antes de continuar.",
   checkoutRetryPayment: "Escolher uma forma de pagamento novamente",
   checkoutLanguageFallback:
     "Idioma da página de pagamento: {language}. Seu pedido permanece igual.",

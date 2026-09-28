@@ -109,6 +109,41 @@ describe("persistent payment application orchestration", () => {
     expect(h.keys.encryptEnvelope).toHaveBeenCalledOnce();
     expect(h.state().current.currentAttempt?.action).toEqual(before.action);
   });
+  it("refreshes an expired original action after a matching query without creating another payment", async () => {
+    const h = await harness();
+    await h.app.create(h.create, h.context);
+    h.setReconcileStatus("REQUIRES_ACTION");
+    const attempt = h.state().current.currentAttempt!;
+    attempt.actionExpired = true;
+    attempt.recovery = "RECONCILE_REQUIRED";
+    const record = vi.spyOn(h.repo, "recordReconcile");
+    await h.app.recover(h.recover(attempt.id), h.freshContext());
+    expect(h.provider.getPayment).toHaveBeenCalledOnce();
+    expect(h.keys.encryptEnvelope).toHaveBeenCalledTimes(2);
+    expect(record.mock.calls[0]?.[0]).toMatchObject({
+      claim: {
+        attempt: {
+          id: attempt.id,
+          status: "REQUIRES_ACTION",
+          actionExpired: true,
+        },
+      },
+      action: { type: "REDIRECT" },
+    });
+    expect(h.provider.createPayment).toHaveBeenCalledOnce();
+  });
+  it("does not look up a new action when expired checkout resources are not recoverable", async () => {
+    const h = await harness();
+    await h.app.create(h.create, h.context);
+    h.setReconcileStatus("REQUIRES_ACTION");
+    const attempt = h.state().current.currentAttempt!;
+    attempt.actionExpired = true;
+    attempt.recovery = "NONE";
+    await h.app.recover(h.recover(attempt.id), h.freshContext());
+    expect(h.provider.getPayment).not.toHaveBeenCalled();
+    expect(h.keys.encryptEnvelope).toHaveBeenCalledOnce();
+    expect(h.provider.createPayment).toHaveBeenCalledOnce();
+  });
   it.each(["GET", "KMS"])(
     "defers %s failure during lost-action recovery without recording a state transition",
     async (boundary) => {

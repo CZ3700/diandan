@@ -115,20 +115,31 @@ export async function recordPaymentReconcile(
   const target = command.event.status;
   // Success is durable evidence pending P4-05, never an isolated financial status update.
   const pending = target === "SUCCEEDED";
-  const recoveredAction =
+  const refreshesAction =
+    claim.attempt.status === "REQUIRES_ACTION" &&
+    claim.attempt.actionExpired &&
+    claim.attempt.recovery === "RECONCILE_REQUIRED";
+  let recoveredAction =
     target === "REQUIRES_ACTION" &&
-    claim.attempt.status === "UNKNOWN" &&
+    (claim.attempt.status === "UNKNOWN" || refreshesAction) &&
     command.action?.type !== "WAIT"
       ? command.action
       : undefined;
   const restoresNonterminal =
-    claim.attempt.status === "UNKNOWN" &&
-    (recoveredAction !== undefined || target === "PROCESSING");
+    (claim.attempt.status === "UNKNOWN" &&
+      (recoveredAction !== undefined || target === "PROCESSING")) ||
+    (refreshesAction && recoveredAction !== undefined);
+  const reasonCode =
+    refreshesAction && recoveredAction
+      ? "PAYMENT_ACTION_REFRESHED"
+      : "PAYMENT_STATUS_RECONCILED";
   let canApply =
     (!prior ||
-      (prior["disposition"] === "OBSERVED" && recoveredAction !== undefined)) &&
+      (recoveredAction !== undefined &&
+        (prior["disposition"] === "OBSERVED" || refreshesAction))) &&
     !pending &&
-    target !== claim.attempt.status &&
+    (target !== claim.attempt.status ||
+      (refreshesAction && recoveredAction !== undefined)) &&
     (recoveredAction !== undefined ||
       ["FAILED", "CANCELED", "EXPIRED"].includes(target) ||
       (target === "PROCESSING" &&
@@ -141,11 +152,22 @@ export async function recordPaymentReconcile(
       order["order_status"] === "PENDING_PAYMENT" &&
       order["payment_status"] === "PENDING" &&
       order["current_payment_attempt_id"] === claim.attempt.id;
+    if (recoveredAction && typeof order["action_deadline"] === "string") {
+      recoveredAction = {
+        ...recoveredAction,
+        expiresAt: new Date(
+          Math.min(
+            Date.parse(recoveredAction.expiresAt),
+            Date.parse(order["action_deadline"]),
+          ),
+        ).toISOString(),
+      };
+    }
   }
   if (canApply) {
     const changed = await draftRows(
       client,
-      `UPDATE public.payment_attempts SET status=$2,provider_call_started=true,external_reference=coalesce(external_reference,$3),action_type=$7,action_ciphertext=$8::bytea,action_encrypted_data_key=$9::bytea,action_key_version=$10,action_expires_at=$11::timestamptz,action_poll_after_ms=NULL,status_evidence_kind='AUTHENTICATED_RECONCILE',provider_event_id=$4::uuid,evidence_audit_log_id=$5::uuid,evidence_reason_code='PAYMENT_STATUS_RECONCILED',version=version+1,updated_at=$6::timestamptz,terminated_at=CASE WHEN $2::text IN('FAILED','CANCELED','EXPIRED') THEN $6::timestamptz ELSE NULL END WHERE id=$1::uuid${restoresNonterminal ? ` AND EXISTS(SELECT 1 FROM public.orders o WHERE o.id=payment_attempts.order_id AND o.current_payment_attempt_id=$1::uuid AND o.order_status='PENDING_PAYMENT' AND o.payment_status='PENDING' AND o.quote_expires_at>clock_timestamp() AND ${validPaymentReservationsSql})` : ""} RETURNING id`,
+      `UPDATE public.payment_attempts SET status=$2,provider_call_started=true,external_reference=coalesce(external_reference,$3),action_type=$7,action_ciphertext=$8::bytea,action_encrypted_data_key=$9::bytea,action_key_version=$10,action_expires_at=$11::timestamptz,action_poll_after_ms=NULL,status_evidence_kind='AUTHENTICATED_RECONCILE',provider_event_id=$4::uuid,evidence_audit_log_id=$5::uuid,evidence_reason_code=$12,version=version+1,updated_at=$6::timestamptz,terminated_at=CASE WHEN $2::text IN('FAILED','CANCELED','EXPIRED') THEN $6::timestamptz ELSE NULL END WHERE id=$1::uuid${restoresNonterminal ? ` AND EXISTS(SELECT 1 FROM public.orders o WHERE o.id=payment_attempts.order_id AND o.current_payment_attempt_id=$1::uuid AND o.order_status='PENDING_PAYMENT' AND o.payment_status='PENDING' AND o.quote_expires_at>clock_timestamp() AND ${validPaymentReservationsSql}) AND ($11::timestamptz IS NULL OR $11::timestamptz>clock_timestamp())` : ""} RETURNING id`,
       [
         claim.attempt.id,
         target,
@@ -164,6 +186,7 @@ export async function recordPaymentReconcile(
           : null,
         recoveredAction?.encryptionKeyVersion ?? null,
         recoveredAction?.expiresAt ?? null,
+        reasonCode,
       ],
     );
     // A deadline may pass after readiness. Preserve the observation and UNKNOWN when the guarded write loses that race.
@@ -182,7 +205,7 @@ export async function recordPaymentReconcile(
       fromStatus: claim.attempt.status,
       toStatus: target,
       evidenceKind: "AUTHENTICATED_RECONCILE",
-      reasonCode: "PAYMENT_STATUS_RECONCILED",
+      reasonCode,
       providerEventId: evidence.providerEventId,
       auditLogId: evidence.auditLogId,
       requestId: claim.requestId,

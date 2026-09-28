@@ -636,7 +636,8 @@ export function createStripePaymentProvider(
           eventType: "PAYMENT_STATUS",
           providerAccountId: command.providerAccountId,
           environment: command.environment,
-          providerEventId: `reconcile:${externalReference}:${observed.status}`,
+          // Each fenced query has its own audit identity; the session is not an immutable event.
+          providerEventId: `reconcile:${command.auditLogId}`,
           evidence: {
             kind: "AUTHENTICATED_RECONCILE",
             auditLogId: command.auditLogId,
@@ -693,7 +694,7 @@ export function createStripePaymentProvider(
           eventType: "REFUND_STATUS",
           providerAccountId: command.providerAccountId,
           environment: command.environment,
-          providerEventId: `reconcile:${refundReference}:${status}`,
+          providerEventId: `reconcile:${command.auditLogId}`,
           evidence: {
             kind: "AUTHENTICATED_RECONCILE",
             auditLogId: command.auditLogId,

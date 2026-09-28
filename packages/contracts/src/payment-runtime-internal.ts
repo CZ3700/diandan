@@ -427,7 +427,10 @@ export const paymentRuntimeRecordReconcileCommandSchema = z
       event.amountMinor === claim.attempt.amountMinor &&
       event.currency === claim.attempt.currency &&
       (value.action === undefined ||
-        (claim.attempt.status === "UNKNOWN" &&
+        ((claim.attempt.status === "UNKNOWN" ||
+          (claim.attempt.status === "REQUIRES_ACTION" &&
+            claim.attempt.actionExpired &&
+            claim.attempt.recovery === "RECONCILE_REQUIRED")) &&
           event.status === "REQUIRES_ACTION" &&
           value.action.type !== "WAIT" &&
           claim.supportedActionTypes.includes(value.action.type))) &&

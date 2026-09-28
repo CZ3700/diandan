@@ -184,7 +184,7 @@ export function CheckoutClient({
               data-checkout-retry
               disabled={state.busy}
               onClick={() => {
-                void controller.retry();
+                void submit(() => controller.retry());
               }}
             >
               {state.uncertain ? copy.checkoutRecover : copy.cartRetry}
@@ -232,7 +232,7 @@ export function CheckoutClient({
                   void continuePayment();
                 }}
                 onRecover={() => {
-                  void controller.retry();
+                  void submit(() => controller.retry());
                 }}
                 onRefresh={() => {
                   void controller.refresh();

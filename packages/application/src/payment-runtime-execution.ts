@@ -149,7 +149,10 @@ async function executeReconcile(
     event: response.data.value.event,
   });
   if (
-    claim.attempt.status === "UNKNOWN" &&
+    (claim.attempt.status === "UNKNOWN" ||
+      (claim.attempt.status === "REQUIRES_ACTION" &&
+        claim.attempt.actionExpired &&
+        claim.attempt.recovery === "RECONCILE_REQUIRED")) &&
     record.event.eventType === "PAYMENT_STATUS" &&
     record.event.status === "REQUIRES_ACTION" &&
     record.event.association.status === "MATCHED"

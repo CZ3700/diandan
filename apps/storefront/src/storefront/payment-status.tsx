@@ -87,7 +87,9 @@ export function PaymentStatus({
             disabled={busy}
             onClick={onRecover}
           >
-            {copy.checkoutRecover}
+            {attempt.status === "REQUIRES_ACTION" && attempt.actionExpired
+              ? copy.checkoutResumePayment
+              : copy.checkoutRecover}
           </button>
         )}
         <button

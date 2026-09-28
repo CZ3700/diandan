@@ -80,6 +80,7 @@ const copy = {
   checkoutContinue: "Continuar al pago",
   checkoutRefresh: "Actualizar estado",
   checkoutRecover: "Reanudar esta solicitud",
+  checkoutResumePayment: "Reanudar el pago",
   checkoutUnavailable: "El pago no está disponible. Inténtalo más tarde.",
   checkoutChanged: "Los datos han cambiado. Revísalos y confirma de nuevo.",
   checkoutExpired: "Este proceso de pago ha caducado. Vuelve a tu bolsa.",
@@ -98,7 +99,8 @@ const copy = {
     "El resultado no está confirmado. Estamos comprobando el mismo pago.",
   checkoutProcessing: "Estamos confirmando tu pago.",
   checkoutFailed: "Este pago no se ha completado.",
-  checkoutActionExpired: "El enlace de pago ha caducado. Actualiza el estado.",
+  checkoutActionExpired:
+    "Este enlace de pago ha caducado. Comprueba el estado del pago antes de continuar.",
   checkoutRetryPayment: "Elegir otro método de pago",
   checkoutLanguageFallback:
     "Idioma de la página de pago: {language}. Tu pedido no cambia.",

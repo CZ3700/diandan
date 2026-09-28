@@ -73,6 +73,15 @@ corepack pnpm --filter @fan-support/payment-stripe test
 
 复验时创建独立 `test-regression-` 实例并显式选择 `--payment-provider stripe-test`，保持单仓库一次一个Next运行实例。官方CLI选择同一沙盒，API只接收当前签名密钥；不复制到Web/Worker，不输出托管URL、客户信息或原始回调。完成后停止专用监听与实例，保留订单和数据库；原体验不迁移、不清空。
 
-托管页测试表单使用逐键输入，并以真实页面字段/提交状态为准；发现hcaptcha脚本或iframe并不代表有可见人工挑战。平台跳转action现有有效期为300秒，过期后不能重签延长或盲目新建付款：先核对原attempt/PSP状态。支付中断后的安全恢复体验仍按L3异常路径后续验收。
+托管页测试表单使用逐键输入，并以真实页面字段/提交状态为准；发现hcaptcha脚本或iframe并不代表有可见人工挑战。平台跳转action默认有效期仍为300秒。L3-07复用现有recover入口：过期后先由原账户认证查询同一个PSP会话，再获取当前可用action；原订单、报价、私密应援意图和库存预占均有效时，才保存有界加密授权。粉丝点击“恢复付款”后，再显式继续进入托管页。刷新、切语和响应丢失重试均不得创建另一笔付款；明确失败/取消/过期且服务端允许重试时，页面自动读取当前支付方式，由粉丝再次选择。
+
+本地恢复回归使用独立PG、严格TLS的自有TEST PSP和真实生产Next构建，不调用Stripe或外部邮件：
+
+```sh
+corepack pnpm --filter @fan-support/api test:postgres:payment-runtime
+corepack pnpm verify:payment-action-recovery:browser
+```
+
+浏览器命令覆盖七语言390×844和1440×900，从真实授权到期、恢复、托管付款、原签名回调到Worker入账和查单。原生PostgreSQL可由`POSTGRES_TEST_BIN`指定本机PG18的bin路径。证据写入`output/checks/l3-commerce-recovery/integration/run-*/`；本地TEST协议通过不替代Stripe真实沙盒续接验收，也不改变生产发布门。不要为过期会话直接延长旧URL、修改PSP会话期限或启用会创建新会话的供应商恢复功能。
 
 退款可能先由已认证的PSP响应形成canonical退款事件，后续已验签webhook通过canonical关联去重；应核对原账户/TEST、订单/attempt、退款reference、金额/币种、账本与canonical关联，不能只要求每个回调都有直接attempt association，也不能跳过归属核对。原签名重放必须在有效期内，超期保留缺口，禁止自行重签冒充原回调。

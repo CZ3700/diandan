@@ -17,6 +17,14 @@ const supportedHeads = [
   "0041",
   "0042",
   "0043",
+  "0044",
+  "0045",
+  "0046",
+  "0047",
+  "0048",
+  "0049",
+  "0050",
+  "0051",
 ];
 
 /** Legacy probes may rewind only explicitly known, empty migration prefixes. */
@@ -42,6 +50,48 @@ export async function rollbackEmptyNotifications({
     bootstraps: "public.order_access_tokens WHERE purpose='CHECKOUT_BOOTSTRAP'",
     expiries:
       "public.order_events WHERE authority_kind='SYSTEM' AND reason_code='CHECKOUT_QUOTE_EXPIRED'",
+    ...(version >= "0044"
+      ? {
+          layout_revisions: "public.homepage_layout_revisions",
+          layout_publications: "public.homepage_layout_publications",
+          layout_receipts: "public.homepage_layout_receipts",
+          layout_audits: "public.audit_logs WHERE action LIKE 'HOME_LAYOUT_%'",
+        }
+      : {}),
+    ...(version >= "0045"
+      ? {
+          theme_revisions: "public.storefront_theme_revisions",
+          theme_publications: "public.storefront_theme_publications",
+          theme_receipts: "public.storefront_theme_receipts",
+          theme_audits:
+            "public.audit_logs WHERE action LIKE 'STOREFRONT_THEME_%'",
+        }
+      : {}),
+    ...(version >= "0048"
+      ? {
+          navigation_revisions: "public.storefront_navigation_revisions",
+          navigation_publications: "public.storefront_navigation_publications",
+          navigation_receipts: "public.storefront_navigation_receipts",
+          navigation_audits:
+            "public.audit_logs WHERE action LIKE 'STOREFRONT_NAVIGATION_%'",
+        }
+      : {}),
+    ...(version >= "0049"
+      ? {
+          information_revisions: "public.information_page_revisions",
+          information_publications: "public.information_page_publications",
+          information_receipts: "public.information_page_receipts",
+          information_outbox:
+            "public.outbox_events WHERE event_type='INFORMATION_PAGE_PUBLICATION_CHANGED'",
+          information_audits:
+            "public.audit_logs WHERE action LIKE 'INFORMATION_PAGE_%'",
+        }
+      : {}),
+    ...(version >= "0050"
+      ? {
+          native_submissions: "public.notification_submissions",
+        }
+      : {}),
     ...(version >= "0030"
       ? {
           login_challenges: "public.admin_login_challenges",

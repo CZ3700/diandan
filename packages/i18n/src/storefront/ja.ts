@@ -78,6 +78,7 @@ const copy = {
   checkoutContinue: "お会計に進む",
   checkoutRefresh: "状況を更新",
   checkoutRecover: "このリクエストを再開",
+  checkoutResumePayment: "支払いを再開",
   checkoutUnavailable:
     "現在お会計を利用できません。しばらくして再試行してください。",
   checkoutChanged: "内容が変更されました。もう一度確認してください。",
@@ -98,7 +99,7 @@ const copy = {
   checkoutProcessing: "支払いを確認しています。",
   checkoutFailed: "この支払いは完了していません。",
   checkoutActionExpired:
-    "支払いリンクの有効期限が切れました。状況を更新してください。",
+    "支払いリンクの有効期限が切れました。再開する前に、現在の支払い状況を確認してください。",
   checkoutRetryPayment: "支払い方法を選び直す",
   checkoutLanguageFallback:
     "支払い画面の言語：{language}。注文内容は変わりません。",

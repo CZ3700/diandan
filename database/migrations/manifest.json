@@ -500,6 +500,16 @@
         "up": "00b150b52608017996fea2fed5aca99f2c513c1abc41c3165dd9ba32d385e1ae",
         "down": "c5715877501acfd4bc01022ffc0ff46b1d5c5bd67cf02230f39ef5bf6da0ad1f"
       }
+    },
+    {
+      "version": "0051",
+      "name": "payment-action-refresh",
+      "up": "database/migrations/0051_payment-action-refresh.up.sql",
+      "down": "database/migrations/0051_payment-action-refresh.down.sql",
+      "sha256": {
+        "up": "151b199c2e1d336d25c46c0fe612e54264770d0edd7c39e736f8eaa4a0c9e074",
+        "down": "a51a9d64af28e560565b5bf67f7b1ac5e4f86b7532974cab47f3cb048bbb125a"
+      }
     }
   ]
 }

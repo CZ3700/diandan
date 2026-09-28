@@ -312,6 +312,39 @@ describe("payment runtime persistence boundaries", () => {
     expect(
       paymentRuntimeRecordReconcileCommandSchema.safeParse(resumed).success,
     ).toBe(true);
+    const expired = {
+      ...resumed,
+      claim: {
+        ...c,
+        attempt: {
+          ...unknown,
+          status: "REQUIRES_ACTION",
+          action,
+          actionExpired: true,
+          externalReference: "fake/payment/one",
+        },
+      },
+    };
+    expect(
+      paymentRuntimeRecordReconcileCommandSchema.safeParse(expired).success,
+    ).toBe(true);
+    for (const changes of [
+      { actionExpired: false },
+      { recovery: "NONE" },
+      { recovery: "EVIDENCE_PENDING" },
+      { status: "PROCESSING" },
+    ]) {
+      expect(
+        paymentRuntimeRecordReconcileCommandSchema.safeParse({
+          ...expired,
+          claim: {
+            ...expired.claim,
+            attempt: { ...expired.claim.attempt, ...changes },
+          },
+        }).success,
+      ).toBe(false);
+    }
+
     expect(
       paymentRuntimeRecordReconcileCommandSchema.safeParse({
         ...resumed,

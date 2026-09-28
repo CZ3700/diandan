@@ -78,6 +78,7 @@ const copy = {
   checkoutContinue: "Tiếp tục thanh toán",
   checkoutRefresh: "Cập nhật trạng thái",
   checkoutRecover: "Tiếp tục yêu cầu này",
+  checkoutResumePayment: "Tiếp tục thanh toán",
   checkoutUnavailable: "Hiện chưa thể thanh toán. Vui lòng thử lại sau.",
   checkoutChanged: "Thông tin đã thay đổi. Vui lòng kiểm tra và xác nhận lại.",
   checkoutExpired: "Phiên thanh toán đã hết hạn. Hãy quay lại túi quà.",
@@ -97,7 +98,7 @@ const copy = {
   checkoutProcessing: "Thanh toán của bạn đang được xác nhận.",
   checkoutFailed: "Thanh toán này chưa hoàn tất.",
   checkoutActionExpired:
-    "Liên kết thanh toán đã hết hạn. Hãy cập nhật trạng thái.",
+    "Liên kết thanh toán đã hết hạn. Hãy kiểm tra trạng thái giao dịch này trước khi tiếp tục.",
   checkoutRetryPayment: "Chọn lại phương thức thanh toán",
   checkoutLanguageFallback:
     "Ngôn ngữ trang thanh toán: {language}. Đơn hàng không thay đổi.",

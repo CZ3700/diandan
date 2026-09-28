@@ -74,6 +74,7 @@ const copy = {
   checkoutContinue: "ไปที่การชำระเงิน",
   checkoutRefresh: "อัปเดตสถานะ",
   checkoutRecover: "ดำเนินคำขอนี้ต่อ",
+  checkoutResumePayment: "กลับไปชำระเงินต่อ",
   checkoutUnavailable: "ยังไม่สามารถชำระเงินได้ โปรดลองอีกครั้งในภายหลัง",
   checkoutChanged: "ข้อมูลเปลี่ยนแปลงแล้ว โปรดตรวจสอบและยืนยันอีกครั้ง",
   checkoutExpired: "ขั้นตอนชำระเงินหมดอายุแล้ว โปรดกลับไปที่ถุงของขวัญ",
@@ -91,7 +92,8 @@ const copy = {
   checkoutUnknown: "ยังไม่ยืนยันผล เรากำลังตรวจสอบการชำระเงินรายการเดิม",
   checkoutProcessing: "กำลังยืนยันการชำระเงินของคุณ",
   checkoutFailed: "การชำระเงินนี้ยังไม่เสร็จสมบูรณ์",
-  checkoutActionExpired: "ลิงก์ชำระเงินหมดอายุแล้ว โปรดอัปเดตสถานะ",
+  checkoutActionExpired:
+    "ลิงก์ชำระเงินหมดอายุแล้ว โปรดตรวจสอบสถานะการชำระเงินนี้ก่อนดำเนินการต่อ",
   checkoutRetryPayment: "เลือกวิธีชำระเงินอีกครั้ง",
   checkoutLanguageFallback:
     "ภาษาของหน้าชำระเงิน: {language} คำสั่งซื้อของคุณไม่เปลี่ยนแปลง",

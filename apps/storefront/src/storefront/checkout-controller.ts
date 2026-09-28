@@ -192,9 +192,12 @@ export function createCheckoutController(
     if (locator) returnLocator = locator;
     if (returnLocator) {
       if (!(await run(checkoutCalls.session(returnLocator.session)))) return;
-      await run(
-        checkoutCalls.attempt(returnLocator.session, returnLocator.attempt),
-      );
+      if (
+        await run(
+          checkoutCalls.attempt(returnLocator.session, returnLocator.attempt),
+        )
+      )
+        await capabilities();
       return;
     }
     if (!(await run(checkoutCalls.current()))) {
@@ -251,9 +254,10 @@ export function createCheckoutController(
   }
   async function refresh() {
     if (!active || pending || state.busy) return;
-    if (state.checkout && state.attempt)
-      await run(checkoutCalls.attempt(state.checkout.id, state.attempt.id));
-    else await initialize();
+    if (state.checkout && state.attempt) {
+      if (await run(checkoutCalls.attempt(state.checkout.id, state.attempt.id)))
+        await capabilities();
+    } else await initialize();
   }
   async function retry() {
     if (!active || state.busy) return;
@@ -268,9 +272,10 @@ export function createCheckoutController(
       state.checkout &&
       state.attempt &&
       ["CREATE_PENDING", "RECONCILE_REQUIRED"].includes(state.attempt.recovery)
-    )
-      await run(checkoutCalls.recover(state.checkout.id, state.attempt.id));
-    else await initialize();
+    ) {
+      if (await run(checkoutCalls.recover(state.checkout.id, state.attempt.id)))
+        await capabilities();
+    } else await initialize();
   }
   async function continuePayment(): Promise<PaymentContinuation | null> {
     if (pending || state.busy || !state.checkout || !state.attempt) return null;

@@ -6,6 +6,32 @@ import {
   reviewFixture,
 } from "../test-support/checkout-fixtures";
 vi.mock("server-only", () => ({}));
+it("offers a clear resume-payment action for an expired authorization only when the server permits recovery", async () => {
+  const { PaymentStatus } = await import("./payment-status");
+  const render = (recovery: "NONE" | "RECONCILE_REQUIRED") =>
+    renderToStaticMarkup(
+      <PaymentStatus
+        attempt={{
+          ...attemptFixture,
+          status: "REQUIRES_ACTION",
+          actionExpired: true,
+          recovery,
+        }}
+        locale="en"
+        copy={copy}
+        busy={false}
+        onRecover={() => {}}
+        onRefresh={() => {}}
+        onContinue={() => {}}
+      />,
+    );
+  const resumable = render("RECONCILE_REQUIRED");
+  expect(resumable).toContain("Resume payment");
+  expect(resumable).toContain("data-payment-recover");
+  expect(resumable).not.toContain("data-payment-continue");
+  expect(resumable).not.toContain("href=");
+  expect(render("NONE")).not.toContain("data-payment-recover=");
+});
 it("renders uncertain payment as pending confirmation and never a success or fresh-payment link", async () => {
   const loaded = await import("./payment-status").catch(() => null);
   expect(loaded?.PaymentStatus).toBeTypeOf("function");

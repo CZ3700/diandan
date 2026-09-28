@@ -1,6 +1,9 @@
 import { randomBytes, randomUUID } from "node:crypto";
 import path from "node:path";
-import { SUPPORTED_LOCALES } from "@fan-support/contracts";
+import {
+  SUPPORTED_LOCALES,
+  paymentRuntimeConfigurationSchema,
+} from "@fan-support/contracts";
 import { createStructuredLogger } from "@fan-support/observability";
 import { createPersistentTestPaymentProvider } from "@fan-support/payment-fake/persistent-http";
 import { createApiApplication } from "../dist/bootstrap.js";
@@ -18,6 +21,9 @@ import {
 import { seedPaymentRuntimeConfiguration } from "./payment-runtime-config-fixture.mjs";
 
 export async function withPaymentRuntimeFixture(options) {
+  const actionTtlMs = paymentRuntimeConfigurationSchema.shape.actionTtlMs.parse(
+    options.paymentActionTtlMs ?? 60_000,
+  );
   const tls = await createPaymentTestTls({
     caDirectory: path.dirname(process.env.FAN_SUPPORT_MEDIA_S3_TEST_CONFIG),
   });
@@ -62,7 +68,7 @@ export async function withPaymentRuntimeFixture(options) {
           publicStorefrontOrigin: context.origin,
           leaseMs: 2000,
           recoveryDelayMs: 1000,
-          actionTtlMs: 60_000,
+          actionTtlMs,
           returnStateTtlMs: 900_000,
           recoveryBatchSize: 4,
         };
