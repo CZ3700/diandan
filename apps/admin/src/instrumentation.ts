@@ -9,6 +9,10 @@ export async function register(): Promise<void> {
     return;
   }
 
+  const { resolveAdminRuntimeConfig } =
+    await import("@fan-support/config/server");
+  resolveAdminRuntimeConfig({ environment: process.env });
+
   const [nodeObservability, observability] = await Promise.all([
     import("@fan-support/observability/node"),
     import("@fan-support/observability"),

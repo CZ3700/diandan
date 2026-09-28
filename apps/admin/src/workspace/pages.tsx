@@ -22,7 +22,9 @@ export function WorkspacePage({ locale }: { locale: SupportedLocale }) {
   return (
     <ManagementCenter
       locale={locale}
-      authenticationAvailable={config.mode === "LOCAL_OIDC"}
+      authenticationAvailable={
+        config.mode === "LOCAL_OIDC" || config.mode === "OIDC"
+      }
       storefrontOrigin={getManagementStorefrontOrigin()}
     />
   );

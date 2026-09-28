@@ -20,7 +20,7 @@
     "build": "tsc -p tsconfig.build.json",
     "dev": "tsx watch src/main.ts",
     "start": "node dist/main.js",
-    "test": "vitest run --config ../../vitest.config.ts --root .",
+    "test": "vitest run --config ../../vitest.config.ts --root . && node --test ./scripts/production-admin-oidc-*.test.mjs",
     "typecheck": "tsc -p tsconfig.json",
     "test:postgres:catalog": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/postgres-catalog-http.mjs",
     "test:postgres:admin-content": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/postgres-admin-content-http.mjs",
@@ -65,7 +65,9 @@
     "test:postgres:admin-payment-configuration": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-payment-config-psp-envelope.test.mjs ./scripts/admin-payment-config-psp-http.test.mjs && node ./scripts/admin-payment-config-http.mjs",
     "test:browser:admin-payment-configuration": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node --test ./scripts/admin-payment-config-psp-envelope.test.mjs ./scripts/admin-payment-config-psp-http.test.mjs && node ./scripts/admin-payment-config-http.mjs --ui",
     "test:postgres:admin-exceptions": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node ./scripts/admin-exceptions-http.mjs",
-    "test:browser:admin-exceptions": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node ./scripts/admin-exceptions-http.mjs --ui"
+    "test:browser:admin-exceptions": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node ./scripts/admin-exceptions-http.mjs --ui",
+    "test:postgres:production-admin-oidc": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/admin^... --output-logs=errors-only --concurrency=2 && node --test ./scripts/production-admin-oidc-*.test.mjs && node ./scripts/production-admin-oidc-http.mjs",
+    "test:browser:production-admin-oidc": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/admin... --output-logs=errors-only --concurrency=2 && node --test ./scripts/production-admin-oidc-*.test.mjs && node ./scripts/production-admin-oidc-http.mjs --ui"
   },
   "dependencies": {
     "@fan-support/application": "workspace:*",

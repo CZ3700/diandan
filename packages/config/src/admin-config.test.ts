@@ -71,3 +71,85 @@ test("local OIDC access requires HTTPS, an internal secret, explicit issuer and 
       resolveAdminRuntimeConfig({ environment: { ...oidc, ...patch } }),
     ).toThrow();
 });
+
+const deployed = {
+  NODE_ENV: "production",
+  FAN_SUPPORT_DEPLOYMENT_ENV: "production",
+  FAN_SUPPORT_SITE_ORIGIN: "https://admin.example.invalid",
+  FAN_SUPPORT_INTERNAL_API_ORIGIN: "https://api.example.invalid",
+  FAN_SUPPORT_ADMIN_MODE: "OIDC",
+  FAN_SUPPORT_ADMIN_ACCESS_KEY: "b".repeat(64),
+  FAN_SUPPORT_ADMIN_OIDC_ISSUER:
+    "https://identity.example.invalid/realm/studio",
+};
+
+test.each(["staging", "production"])(
+  "explicit OIDC supports a production build in %s with only server-side credentials",
+  (tier) => {
+    const config = resolveAdminRuntimeConfig({
+      environment: { ...deployed, FAN_SUPPORT_DEPLOYMENT_ENV: tier },
+    });
+    expect(config).toEqual({
+      schemaVersion: 1,
+      mode: "OIDC",
+      siteOrigin: deployed.FAN_SUPPORT_SITE_ORIGIN,
+      internalApiOrigin: deployed.FAN_SUPPORT_INTERNAL_API_ORIGIN,
+      adminAccessKey: deployed.FAN_SUPPORT_ADMIN_ACCESS_KEY,
+      oidcIssuer: deployed.FAN_SUPPORT_ADMIN_OIDC_ISSUER,
+    });
+    expect(Object.isFrozen(config)).toBe(true);
+  },
+);
+
+test("OIDC does not relax development modes, TLS, canonical URLs or required credentials", () => {
+  for (const patch of [
+    { FAN_SUPPORT_ADMIN_MODE: "LOCAL_OIDC" },
+    { FAN_SUPPORT_ADMIN_MODE: "TEST" },
+    { NODE_ENV: "development" },
+    { FAN_SUPPORT_DEPLOYMENT_ENV: "preview" },
+    { NODE_ENV: "development", FAN_SUPPORT_DEPLOYMENT_ENV: "development" },
+    { NODE_ENV: "test", FAN_SUPPORT_DEPLOYMENT_ENV: "test" },
+    { FAN_SUPPORT_SITE_ORIGIN: "http://localhost:3100" },
+    { FAN_SUPPORT_SITE_ORIGIN: "https://admin.example.invalid/path" },
+    { FAN_SUPPORT_INTERNAL_API_ORIGIN: "http://127.0.0.1:3200" },
+    { FAN_SUPPORT_INTERNAL_API_ORIGIN: "https://localhost:3200" },
+    { FAN_SUPPORT_INTERNAL_API_ORIGIN: "https://api.example.invalid/path" },
+    { FAN_SUPPORT_INTERNAL_API_ORIGIN: "https://user@api.example.invalid" },
+    { FAN_SUPPORT_ADMIN_ACCESS_KEY: undefined },
+    { FAN_SUPPORT_ADMIN_ACCESS_KEY: "" },
+    { FAN_SUPPORT_ADMIN_ACCESS_KEY: "not-an-access-key" },
+    { FAN_SUPPORT_ADMIN_OIDC_ISSUER: undefined },
+    { FAN_SUPPORT_ADMIN_OIDC_ISSUER: "http://identity.example.invalid" },
+    { FAN_SUPPORT_ADMIN_OIDC_ISSUER: "https://identity.example.invalid?x=y" },
+  ]) {
+    expect(() =>
+      resolveAdminRuntimeConfig({ environment: { ...deployed, ...patch } }),
+    ).toThrow();
+  }
+});
+
+test("OIDC preserves configuration precedence and never includes credentials in errors", () => {
+  const valid = resolveAdminRuntimeConfig({
+    configFile: { ...deployed, FAN_SUPPORT_ADMIN_MODE: "DISABLED" },
+    environment: { FAN_SUPPORT_ADMIN_MODE: "OIDC" },
+  });
+  expect(valid.mode).toBe("OIDC");
+  const secret = "sensitive-credential-canary";
+  try {
+    resolveAdminRuntimeConfig({
+      environment: { ...deployed, FAN_SUPPORT_ADMIN_ACCESS_KEY: secret },
+    });
+    expect.fail("Invalid credentials must fail closed");
+  } catch (error) {
+    expect(String(error)).toContain("FAN_SUPPORT_ADMIN_ACCESS_KEY");
+    expect(String(error)).not.toContain(secret);
+  }
+  expect(
+    resolveAdminRuntimeConfig({
+      environment: {
+        ...deployed,
+        FAN_SUPPORT_ADMIN_MODE: "DISABLED",
+      },
+    }),
+  ).toEqual({ schemaVersion: 1, mode: "DISABLED" });
+});

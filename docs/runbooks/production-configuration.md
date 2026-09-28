@@ -44,7 +44,29 @@ Storefront 进程单独接收公开的 `FAN_SUPPORT_ADMIN_ORIGIN`（准确 HTTPS
 }
 ```
 
-回调地址固定为 `${FAN_SUPPORT_ADMIN_ORIGIN}/api/admin/auth/callback`，需要在 IdP 登记。`acceptedAcrValues` 和 `requiredAmrValues` 至少填一个，不能关闭 MFA。`clientAuthentication` 为 `NONE` 时不得提供客户端密钥；为 `CLIENT_SECRET_BASIC` 时必须提供。Admin 应用的生产身份模式（R1-5）上线前，Admin 应用本身仍只允许 `DISABLED`。
+回调地址固定为 `${FAN_SUPPORT_ADMIN_ORIGIN}/api/admin/auth/callback`，需要在 IdP 登记。`acceptedAcrValues` 和 `requiredAmrValues` 至少填一个，不能关闭 MFA。`clientAuthentication` 为 `NONE` 时不得提供客户端密钥；为 `CLIENT_SECRET_BASIC` 时必须提供。
+
+### 管理 Web 的正式登录
+
+正式构建使用显式 `FAN_SUPPORT_ADMIN_MODE=OIDC`。只接受 `NODE_ENV=production` 与 `FAN_SUPPORT_DEPLOYMENT_ENV=staging` 或 `production`。未设置模式仍为 `DISABLED`；`TEST` 和 `LOCAL_OIDC` 仍限于原开发环境，不能作为配置失败后的回退。启用 OIDC 后配置不完整或不合法会使 Node 初始化校验失败，服务不能进入就绪状态。
+
+就绪以带超时的 `/healthz` HTTP 200 为准，不能只看 PID 或 Next 控制台的 “Ready”。当前 Next 版本在 `instrumentation.register` 抛错后可能保留进程而不服务请求；因此裸 `next start` 的非零退出不是唯一判据。已有 Docker/ECS 健康检查有超时并检查 HTTP 成功，正式部署必须保留，缺配置时不可放行流量。此行为符合 [Next 的 register 就绪约定](https://nextjs.org/docs/app/api-reference/file-conventions/instrumentation#register-optional)；实际拒流与恢复还需在 L4 部署验收。
+
+| Admin 进程变量 | 要求 |
+| :-- | :-- |
+| `FAN_SUPPORT_SITE_ORIGIN` | 管理站精确 HTTPS origin，与 API 的 `FAN_SUPPORT_ADMIN_ORIGIN` 一致 |
+| `FAN_SUPPORT_INTERNAL_API_ORIGIN` | 后台 BFF 使用的规范 HTTPS API origin；不含路径、账号、查询或片段；不是浏览器请求地址 |
+| `FAN_SUPPORT_ADMIN_ACCESS_KEY` | 仅 Admin/API 共享的独立随机 32 字节小写 hex，由秘密管理注入 |
+| `FAN_SUPPORT_ADMIN_OIDC_ISSUER` | 与 API 及 IdP discovery 完全相同的 HTTPS issuer，可包含 IdP 的 realm 路径 |
+| `FAN_SUPPORT_STOREFRONT_ORIGIN` | 可选的商城 HTTPS origin，用于真实页面预览 |
+
+Admin 不接收客户端密钥、会话 pepper、主体 pepper、数据库或支付密钥；这些仍由 API 持有。不得把上述秘密加入 `NEXT_PUBLIC_*`。OIDC 模式继续使用同一个服务端 BFF、HttpOnly Cookie、CSRF 和 PostgreSQL 权限检查；根地址进入默认英语管理中心，语言入口仍为七个固定 `/:locale` 路由。
+
+部署代理必须保留公开 Host / HTTPS 协议及 Cookie，身份与后台接口禁止缓存、不得记录 callback 查询参数。Next 内部监听必须保持私有；代理必须覆盖而非追加客户端的 `Host`、`X-Forwarded-Host`、`X-Forwarded-Proto`，三者分别与配置的管理 host、host、`https` 完全一致。Next 若用内部监听构造 Request URL，后台按这些固定值识别公开入口；这不授予身份，原 Origin、Fetch Metadata、Cookie、CSRF 和数据库权限仍分别检查。应用不通过关闭 TLS 验证或信任任意转发地址适配错误的代理配置。平台退出撤销本平台会话，不承诺退出 IdP 的 SSO 会话。
+
+配置可用不表示人员已经获权。正式开通前必须记录并核验：IdP 客户端及精确回调、真实 MFA 声明、至少一名获准操作者和恢复负责人的账户恢复流程、平台人员的 issuer/subject 预授权、订单与财务角色隔离，以及暂停账号/撤销会话后的实际拒绝。平台以独立 HMAC 摘要关联 subject，不按邮箱自动开户、不接受 IdP 角色覆盖业务权限；参见 [身份与权限](admin-access-local.md#身份与当前权限)。首次正式人员预授权及恢复操作尚需受控实施和实际验收，本次本地接线没有预建正式管理员或交付自助人员管理界面。
+
+L3-05 的隔离验证入口见 [管理登录验证](admin-access-local.md#正式构建的隔离验证)。自有 HTTPS IdP、临时 PostgreSQL 与 `next start` 只能证明工程接线，不替代真实 IdP/MFA、经营方授权或生产发布验收。
 
 ## 支付：代码与激活分离
 

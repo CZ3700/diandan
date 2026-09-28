@@ -774,7 +774,7 @@ export function resolveCachePurgeRuntimeConfig(
 export type AdminRuntimeConfig = Readonly<
   | {
       schemaVersion: 1;
-      mode: "LOCAL_OIDC";
+      mode: "LOCAL_OIDC" | "OIDC";
       siteOrigin: string;
       internalApiOrigin: string;
       adminAccessKey: string;
@@ -788,7 +788,7 @@ export type AdminRuntimeConfig = Readonly<
       internalApiOrigin: string;
     }
 >;
-/** Production identity remains closed pending UAT; TEST and OIDC protocol access are development-only. */
+/** Formal identity is explicit; TEST and LOCAL_OIDC never become production fallbacks. */
 export function resolveAdminRuntimeConfig(
   sources: RuntimeConfigSources,
 ): AdminRuntimeConfig {
@@ -804,12 +804,24 @@ export function resolveAdminRuntimeConfig(
     return Object.freeze({ schemaVersion: 1, mode: "DISABLED" });
   if (
     layered.FAN_SUPPORT_ADMIN_MODE !== "TEST" &&
-    layered.FAN_SUPPORT_ADMIN_MODE !== "LOCAL_OIDC"
+    layered.FAN_SUPPORT_ADMIN_MODE !== "LOCAL_OIDC" &&
+    layered.FAN_SUPPORT_ADMIN_MODE !== "OIDC"
   )
     throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
   const runtime = resolveServerRuntimeConfig(sources);
   const internal = resolveInternalApiRuntimeConfig(sources);
-  if (
+  const mode = layered.FAN_SUPPORT_ADMIN_MODE;
+  if (mode === "OIDC") {
+    if (
+      !["staging", "production"].includes(runtime.deploymentEnvironment) ||
+      runtime.nodeEnvironment !== "production" ||
+      !isPublicSiteOrigin(runtime.siteOrigin) ||
+      new URL(runtime.siteOrigin).protocol !== "https:" ||
+      !isPublicSiteOrigin(internal.origin) ||
+      new URL(internal.origin).protocol !== "https:"
+    )
+      throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
+  } else if (
     runtime.deploymentEnvironment !== "development" ||
     runtime.nodeEnvironment !== "development" ||
     (layered.FAN_SUPPORT_ADMIN_MODE === "TEST"
@@ -819,7 +831,7 @@ export function resolveAdminRuntimeConfig(
     !isLoopbackHttpOrigin(internal.origin)
   )
     throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
-  if (layered.FAN_SUPPORT_ADMIN_MODE === "LOCAL_OIDC") {
+  if (mode === "LOCAL_OIDC" || mode === "OIDC") {
     const key = z
       .string()
       .regex(/^[a-f0-9]{64}$/u)
@@ -834,7 +846,7 @@ export function resolveAdminRuntimeConfig(
       ]);
     return Object.freeze({
       schemaVersion: 1,
-      mode: "LOCAL_OIDC",
+      mode,
       siteOrigin: runtime.siteOrigin,
       internalApiOrigin: internal.origin,
       adminAccessKey: key.data,

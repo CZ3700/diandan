@@ -19,13 +19,14 @@
 | L3-02 Stripe adapter 实际沙盒 | DONE | root，2026-09-28；受限本地配置 + 官方 CLI 转发 + Playwright 托管测试页：USD 25 测试付款、USD 5 部分退款、重放、查询、取消及对应验签回调通过；12 项检查全通过。仅 adapter 验收，`siteOrderFlowVerified=false`，没有真实资金交易。 |
 | L3-03 本站 Stripe 接线准备 | DONE | 新隔离实例显式stripe-test、旧fake实例不可切换、Web/Worker不接收支付密钥；75项接线测试及独立复核通过。L3-04已补实际本站沙盒验证，正式生产配置仍不在本项范围。 |
 | L3-04 本站 Stripe 实际沙盒 | DONE | root / stripe_preparation，2026-09-28；同一原订单USD48测试收款、USD5部分退款、验签Inbox/Worker、TEST邮件查单、原签名重放、粉丝和管理端退款回读通过；组合验收与独立审查通过，原失败报告保留。两笔未付款测试订单已正常取消，未用真实资金。 |
+| L3-05 正式管理登录接线 | LOCAL_ACCEPTED | root协调，2026-09-29；显式OIDC正式模式、登录/退出/会话与原权限接通，修复HTTPS代理下403。实际PG/HTTPS IdP/正式Next联合613检查、七语双端42axe、真实200%缩放及check:dev通过，八旧实例数据未变。真实IdP/MFA设备、人员预授权及恢复仍待外部验收，未部署服务器。 |
 | L3 正式交易与运营 | IN_PROGRESS | Stripe adapter及本站实际沙盒已完成；继续正式邮件/OIDC、四类礼物与混合/异常交易、支付中断安全恢复、内容政策审校。Airwallex申请中，生产商户尚未批准。 |
 | L4 发布验收 | PENDING | 依赖 L1–L3 首发范围；当前服务器仍为公开 TEST，尚未转正。实际资金/正式发布需单独授权。 |
 
 ## 当前外部条件
 
 - PSP：用户提供的 Stripe 测试凭据已保存到 Git 忽略且权限为 0600 的 `.env`。通过临时 npm 执行官方 `@stripe/cli@1.51.1`，API key 仅注入子进程环境；CLI 签名密钥自动保存到同一本地文件，原始输出受限保存。验收完成后已停止转发和浏览器。再次运行须启动同一沙盒的转发并核对签名密钥；不把 CLI 本地签名密钥当作正式 API endpoint 配置。
-- 邮件/身份：需真实服务账号、发信域名配置、OIDC/MFA 与恢复方式；已有 TEST 能力不充当生产证据。
+- 邮件：用户于 2026-09-29 确认已有 Zoho 邮件服务及域名，已提供发信地址（仅受限本地交接记录），具体产品（Mail/ZeptoMail）及接入权限待核实，接续验证真实送达与换设备查单；不能把已备账号等同已接入。身份：仍待真实 IdP/MFA、人员预授权与恢复方式；已有 TEST 能力不充当生产证据。
 - 正式内容/政策/客服/商户业务范围：保留待确认项，不能由开发代理猜测或伪造批准。
 
 ## L0 与 L3-01/02 历史证据
@@ -127,3 +128,21 @@
 5. 两次正常重启后32组页面/index/旧装修/首页精确回读一致，7次发布×7语言的49事件/49Worker回执全部完成。新库只持读表锁的真实故障显示HTTP503和重试，释放后恢复已发布FAQ。初始预检与render二读仍有并发窗口，后者失败走框架错误，不保证所有故障均503；不输出虚构正文。
 6. 最终check:dev exit0（69typecheck/69test/38build，含缓存）、design57、3926源码秘密扫描与正式入口10项请求测试通过；全仓门禁发现并修复正式API漏注册公开信息页路由。原失败均保留，DNS映射/过早截取deferred页脚等观察器问题有独立说明，未放宽产品要求。S.U.P.E.R十项和代码收敛见 `output/checks/l2-info-pages/final-verification.md`。
 7. [本地操作说明](../runbooks/local-experience.md)已更新，管理中心→信息页面；前台正式构建/后台本地开发，两个正式build均通过。TEST内容和独立测试身份仅证明软件流程，不冒充经营说明或人工翻译批准；L3真实邮件/OIDC、支付续接、四类混合异常和正式审校仍开放，L4未开始。本轮未调用Stripe、外部邮件、真实资金或部署服务器。
+
+## L3-05 执行登记（2026-09-29）
+
+- Owner：root（配置、计划、组合验收）；backend（正式 API/实际 PG 与协议验收）；admin（管理 Web 接线及失败测试）；reviewer（独立全局复核）。基线 `10ebd66d`，远端核对 0 ahead / 0 behind，工作区干净。
+- 范围：新增显式 `OIDC` 模式，只在 staging/production 且 NODE_ENV=production 下启用；HTTPS 管理与 API 源站、服务端 access key/issuer 必填。`LOCAL_OIDC`/`TEST` 保留原开发边界，默认 DISABLED。Web 复用已有会话、PKCE/MFA、CSRF 与平台 RBAC，不新增身份或权限真相源。根入口接回管理中心。
+- 合同：既有 API/会话合同不变，只有服务端配置判别联合增加 OIDC；失败文案沿用七语言，不将服务端凭据放入浏览器。正式 API composition 与真实 OIDC adapter 必须纳入测试，不能只验证 testing composition。
+- 验证：先 RED；配置/BFF/UI 受影响测试；临时实际 PG+自有 HTTPS IdP 协议（正常、MFA缺失、签名异常、state/nonce/PKCE、重放、撤权、退出及订单/财务权限）；正式 Next 构建及七语390×844/1440×900、键盘/错误/reduced-motion/200%缩放；check:dev、秘密扫描、S.U.P.E.R 与独立复核。只使用新隔离验收数据，正常停止并哈希保护八个旧实例。
+- 边界：开工时邮件服务待确认，按 ADR-020 先完成独立身份接线；本轮用户已补充 Zoho 及发信地址，后续接入条件见上方。真实身份账号、MFA设备、恢复及正式人员授权未验收前，只记 LOCAL_ACCEPTED。不得部署服务器、伪造身份审校、改变真实款项或现有实例业务数据。
+
+## L3-05 本轮验收（2026-09-29）
+
+1. 基线10ebd66d；root配置/组合验收、backend协议、admin管理Web、reviewer独立复核。使用临时实际PG18.6、49迁移、自有HTTPS IdP及正式Next构建，八个旧实例24,254份非Chrome配置/数据库/媒体文件摘要全同；验收资源正常清理。
+2. 正式OIDC仅在production Node与staging/production环境显式开启，默认仍关闭；复用现有PKCE/MFA、平台RBAC与会话，不另建权限体系。失败保留请求语言，退出失败可重试；会话秘密不进浏览器存储、公开HTML或普通证据。
+3. 新模式、启动拒绝和代理问题均先RED后GREEN；配置189、identity75、旧实际PG权限115项通过。联合HTTP/实际浏览器613检查含独立215（不重复相加），正常/失败七语390×844与1440×900、42次axe零违规、键盘/减少动态/Chrome原生200%缩放通过。无pageerror或网络请求失败；98条控制台HTTP拒绝逐条对应匿名401或三个未授权能力403，不称控制台零错误。
+4. 实际浏览器发现HTTPS代理令Next内部Request源站与公开源站不同、匿名会话403；新增管理端共用固定代理校验，五入口及21正反例通过，同一严格TLS环境复验成功。保留原Origin/Fetch/CSRF及API权限验证，不接受任意转发源站。
+5. 缺key及HTTP API坏配置在真实启动中明确报配置错误，health/页面/登录均500且不发cookie；进程可能仍存活，未宣称非零退出。仅权限隔离的空commerce fixture，不冒充实际退款/履约；API实际正式管理composition已验，云KMS/S3/PSP未调用。
+6. 全仓check:dev exit0（69typecheck/69test/38build，含64/64/34缓存）、34构建出口、3936源码文件秘密扫描通过；原失败完整保留。S.U.P.E.R十项、代码收敛与独立复核见 `output/checks/l3-admin-oidc/final-verification.md`，实际联合证据 `backend/integration-2026-09-28T19-34-19.569Z/` 位于同目录。
+7. 下一项优先Zoho实际邮件投递与换设备查单，具体Mail/ZeptoMail及接入权限待核实；模板审校不伪造批准。真实IdP/MFA/恢复、支付续接、四类混合异常与正式内容仍开放，L4未开始；本轮未发送外部邮件、调用Stripe、使用真实资金或部署服务器。
