@@ -299,9 +299,13 @@
   gap: var(--space-1) var(--space-4);
   font-size: var(--type-label-size);
 }
+/* Withdrawn reads quieter through the frame and title; no opacity, so text keeps its contrast. */
 [data-certificate-state="REVOKED"] .order-certificate-card {
   border-color: var(--color-border);
-  opacity: 0.6;
+  border-style: dashed;
+}
+[data-certificate-state="REVOKED"] .order-certificate-title {
+  color: var(--color-text-muted);
 }
 .order-certificate-revoked,
 .order-certificate-help,
