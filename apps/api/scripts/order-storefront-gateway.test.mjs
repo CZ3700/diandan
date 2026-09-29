@@ -3,7 +3,7 @@ import { createServer } from "node:http";
 import { test } from "node:test";
 import { createOrderStorefrontGateway } from "./order-storefront-gateway.mjs";
 
-test("order gateway routes four exact API paths without exposing request credentials", async () => {
+test("order gateway routes five exact API paths without exposing request credentials", async () => {
   const server = createServer((request, response) => {
     response
       .writeHead(200, { "content-type": "application/json" })
@@ -19,6 +19,7 @@ test("order gateway routes four exact API paths without exposing request credent
     const paths = [
       "/api/v1/order-access/exchange",
       "/api/v1/order-access/revoke",
+      "/api/v1/order-access/locate",
       "/api/v1/orders/order_test",
       "/api/v1/checkout/sessions/123/order-access",
       "/api/v1/cart",
@@ -33,7 +34,7 @@ test("order gateway routes four exact API paths without exposing request credent
     }
     assert.deepEqual(
       gateway.observations().map((item) => item.category),
-      ["ORDER", "ORDER", "ORDER", "ORDER", "OTHER", "OTHER"],
+      ["ORDER", "ORDER", "ORDER", "ORDER", "ORDER", "OTHER", "OTHER"],
     );
     assert.equal(
       JSON.stringify(gateway.observations()).includes("private-canary"),
