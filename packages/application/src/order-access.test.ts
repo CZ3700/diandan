@@ -152,6 +152,7 @@ test("protected historical reads bind the response to the authorized order and r
     giftKind: "PHYSICAL",
     fulfillmentStatus: "PENDING",
     deliveryProofs: [],
+    supportCertificate: null,
   };
   const order = {
     schemaVersion: 1,

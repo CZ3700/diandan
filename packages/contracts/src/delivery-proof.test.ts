@@ -144,6 +144,7 @@ describe("fan-visible proof references", () => {
         thumbnailHeight: 360,
       },
     ],
+    supportCertificate: null,
   };
   test("only delivered physical lines expose distinct opaque proofs", () => {
     expect(orderAccessItemSchema.safeParse(item).success).toBe(true);

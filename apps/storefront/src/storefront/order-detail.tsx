@@ -9,6 +9,7 @@ import { Price } from "@fan-support/ui";
 import { Media } from "@fan-support/ui/client";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
 import { OrderDeliveryPhotos } from "./order-delivery-photos";
+import { OrderSupportCertificate } from "./order-support-certificate";
 import {
   fanOrderStatus,
   orderItemStatus,
@@ -54,9 +55,15 @@ function SnapshotLanguages({
 function OrderLine({
   item,
   publicOrderId,
+  publicOrderNo,
   locale,
   copy,
-}: Presentation & Readonly<{ item: OrderAccessItem; publicOrderId: string }>) {
+}: Presentation &
+  Readonly<{
+    item: OrderAccessItem;
+    publicOrderId: string;
+    publicOrderNo: string;
+  }>) {
   return (
     <li className="order-line" data-order-line={item.position}>
       <div className="order-gift-image">
@@ -131,6 +138,15 @@ function OrderLine({
         >
           {orderItemStatus(item, copy)}
         </p>
+        {item.supportCertificate && (
+          <OrderSupportCertificate
+            item={item}
+            certificate={item.supportCertificate}
+            publicOrderNo={publicOrderNo}
+            locale={locale}
+            copy={copy}
+          />
+        )}
         <OrderDeliveryPhotos
           item={item}
           publicOrderId={publicOrderId}
@@ -198,6 +214,7 @@ export function OrderDetail({
                 key={item.position}
                 item={item}
                 publicOrderId={order.publicOrderId}
+                publicOrderNo={order.publicOrderNo}
                 locale={locale}
                 copy={copy}
               />

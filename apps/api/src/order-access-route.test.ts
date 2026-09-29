@@ -97,6 +97,7 @@ const order = {
       giftKind: "PHYSICAL",
       fulfillmentStatus: "PENDING",
       deliveryProofs: [],
+      supportCertificate: null,
     },
   ],
   createdAt: "2026-09-15T00:00:00Z",

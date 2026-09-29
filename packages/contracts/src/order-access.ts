@@ -215,6 +215,10 @@ export const orderAccessDeliveryProofSchema = z
       Math.max(value.thumbnailWidth, value.thumbnailHeight) <=
         DELIVERY_PROOF_PROFILE.renditions.thumbnail.maxEdge,
   );
+export const orderAccessSupportCertificateSchema = z.strictObject({
+  deliveredAt: contentTimestampSchema,
+  revoked: z.boolean(),
+});
 export const orderAccessItemSchema = z
   .strictObject({
     schemaVersion: version,
@@ -246,6 +250,12 @@ export const orderAccessItemSchema = z
     deliveryProofs: z
       .array(orderAccessDeliveryProofSchema)
       .max(DELIVERY_PROOF_PROFILE.maxActiveProofsPerLine),
+    /**
+     * ADR-019 supplement (L3-09): facts for the fan's savable support certificate, present
+     * exactly on delivered virtual lines. `revoked` once succeeded refunds cover the whole
+     * line. Never carries the message, the fan's name, amounts or contact details.
+     */
+    supportCertificate: orderAccessSupportCertificateSchema.nullable(),
   })
   .refine(
     (value) =>
@@ -255,6 +265,15 @@ export const orderAccessItemSchema = z
         new Set(value.deliveryProofs.map((proof) => proof.proofId)).size ===
           value.deliveryProofs.length),
     { message: "Only delivered physical lines carry distinct delivery proofs" },
+  )
+  .refine(
+    (value) =>
+      (value.supportCertificate !== null) ===
+      (value.giftKind === "VIRTUAL" && value.fulfillmentStatus === "DELIVERED"),
+    {
+      message:
+        "Exactly the delivered virtual lines carry a support certificate",
+    },
   )
   .refine(
     (value) =>
@@ -411,6 +430,9 @@ export type OrderAccessFailureCode = z.infer<
 >;
 export type OrderAccessDetail = z.infer<typeof orderAccessDetailSchema>;
 export type OrderAccessItem = z.infer<typeof orderAccessItemSchema>;
+export type OrderAccessSupportCertificate = z.infer<
+  typeof orderAccessSupportCertificateSchema
+>;
 export type OrderAccessLocale = z.infer<typeof orderAccessLocaleSchema>;
 export type OrderAccessResponse = z.infer<typeof orderAccessResponseSchema>;
 export type OrderAccessRateCommand = z.infer<

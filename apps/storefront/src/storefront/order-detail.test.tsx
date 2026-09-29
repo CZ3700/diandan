@@ -82,6 +82,7 @@ const order = orderAccessDetailSchema.parse({
       giftKind: "PHYSICAL",
       fulfillmentStatus: "PENDING",
       deliveryProofs: [],
+      supportCertificate: null,
     },
   ],
   createdAt: "2026-09-01T12:34:00.000Z",
@@ -288,6 +289,106 @@ describe("protected historical order presentation", () => {
       expect(html).not.toMatch(/>undefined<|>null</u);
     },
   );
+});
+
+// ADR-019 supplement (L3-09): a savable digital support certificate per delivered virtual line.
+describe("digital support certificate", () => {
+  const certificate = {
+    deliveredAt: "2026-09-29T12:00:00.000000Z",
+    revoked: false,
+  };
+  const virtual = orderAccessDetailSchema.parse({
+    ...order,
+    fulfillmentStatus: "DELIVERED",
+    items: [
+      {
+        ...order.items[0]!,
+        giftKind: "VIRTUAL",
+        fulfillmentStatus: "DELIVERED",
+        supportCertificate: certificate,
+      },
+      {
+        ...order.items[0]!,
+        position: 2,
+        unitAmountMinor: 0,
+        lineSubtotalMinor: 0,
+        taxAmountMinor: 0,
+        discountAmountMinor: 0,
+        lineTotalMinor: 0,
+        giftKind: "PHYSICAL",
+        fulfillmentStatus: "DELIVERED",
+      },
+    ],
+  });
+  const section = (html: string) =>
+    html.split("data-support-certificate")[1]?.split("</section>")[0] ?? "";
+
+  it("appears only on the delivered virtual line, with artist, gift, quantity, date and number", async () => {
+    const html = await render(virtual);
+    expect(html.split("data-support-certificate")).toHaveLength(2);
+    const lines = html.split("data-order-line=");
+    expect(lines[1]).toContain("data-support-certificate");
+    expect(lines[2]).not.toContain("data-support-certificate");
+    const card = section(html);
+    expect(card).toContain('data-certificate-state="AVAILABLE"');
+    expect(card).toContain(copy.orderCertificateTitle);
+    expect(card).toContain("历史艺人");
+    expect(card).toContain("注文時のギフト · Original option × 2");
+    expect(card).toContain('dateTime="2026-09-29T12:00:00.000000Z"');
+    expect(card).toContain("Delivered on September 29, 2026");
+    expect(card).toContain("Order FS-7K3M9C");
+    expect(card).toContain("data-certificate-save");
+    expect(card).toContain(copy.orderCertificateSignatureNone);
+    expect(card).toContain(copy.orderCertificateSignatureAnonymous);
+    expect(card).toContain(copy.orderCertificateSignatureName);
+  });
+
+  it("carries no private message, amount or contact detail", async () => {
+    const card = section(await render(virtual));
+    expect(card).not.toMatch(
+      /value="\d|data-currency|\$|USD|@|support_intent/u,
+    );
+    expect(card).not.toContain(order.publicOrderId);
+  });
+
+  it("shows a fully refunded line as withdrawn with nothing to save", async () => {
+    const revoked = orderAccessDetailSchema.parse({
+      ...virtual,
+      items: [
+        {
+          ...virtual.items[0]!,
+          supportCertificate: { ...certificate, revoked: true },
+        },
+        virtual.items[1]!,
+      ],
+    });
+    const card = section(await render(revoked));
+    expect(card).toContain('data-certificate-state="REVOKED"');
+    expect(card).toContain(copy.orderCertificateRevoked);
+    expect(card).not.toContain("data-certificate-save");
+    expect(card).not.toContain('type="radio"');
+  });
+
+  it("stays away from physical lines and orders that are not yet paid", async () => {
+    expect(await render()).not.toContain("data-support-certificate");
+    const unpaid = orderAccessDetailSchema.parse({
+      ...order,
+      orderStatus: "PENDING_PAYMENT",
+      paymentStatus: "PENDING",
+      items: [{ ...order.items[0]!, giftKind: "VIRTUAL" }],
+    });
+    expect(await render(unpaid)).not.toContain("data-support-certificate");
+  });
+
+  it("is written in the page language across the seven locales", async () => {
+    for (const locale of SUPPORTED_LOCALES) {
+      const shell = await loadStorefrontCopy(locale);
+      const card = section(await render(virtual, locale));
+      expect(card).toContain(shell.orderCertificateTitle);
+      expect(card).toContain(shell.orderCertificateSave);
+      expect(card).not.toMatch(/[{}]/u);
+    }
+  });
 });
 
 describe("private delivery photos", () => {

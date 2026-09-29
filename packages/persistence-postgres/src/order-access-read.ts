@@ -7,6 +7,7 @@ import {
   publicMediaUrlSchema,
   type OrderAccessProofCommand,
 } from "@fan-support/contracts";
+import { cartTimestamp } from "./cart-runtime-data.js";
 import { draftRows, type DraftRow } from "./content-draft-data.js";
 import {
   candidateBindings,
@@ -89,6 +90,14 @@ export function orderAccessItem(
     giftKind: row["gift_kind"] ?? null,
     fulfillmentStatus: row["fulfillment_status"],
     deliveryProofs: row["delivery_proofs"],
+    supportCertificate:
+      row["gift_kind"] === "VIRTUAL" &&
+      row["fulfillment_status"] === "DELIVERED"
+        ? {
+            deliveredAt: row["delivered_at"],
+            revoked: row["refunded_in_full"] === true,
+          }
+        : null,
   });
 }
 export async function readOrderAccessDetail(
@@ -105,7 +114,11 @@ export async function readOrderAccessDetail(
       i.gift_image_object_key,i.gift_image_alt,i.gift_image_alt_requested_locale,i.gift_image_alt_resolved_locale,i.gift_image_alt_fallback_used,i.gift_image_alt_daily_translation_id,
       portrait.object_key idol_portrait_public_object_key,gift_image.object_key gift_image_public_object_key,
       i.quantity,i.unit_amount_minor::text,i.line_subtotal_minor::text,i.tax_amount_minor::text,i.discount_amount_minor::text,i.line_total_minor::text,i.currency,i.display_mode,i.gift_kind,f.status fulfillment_status,
-      original.line->>'giftVariantLabel' variant_label,delivery_proofs.proofs delivery_proofs
+      original.line->>'giftVariantLabel' variant_label,delivery_proofs.proofs delivery_proofs,
+      ${cartTimestamp("f.delivered_at")} delivered_at,
+      (i.line_total_minor>0 AND coalesce((SELECT sum(ri.amount_minor) FROM public.refund_items ri
+        JOIN public.refunds refund ON refund.id=ri.refund_id AND refund.order_id=i.order_id
+        WHERE ri.order_item_id=i.id AND refund.status='SUCCEEDED'),0)>=i.line_total_minor) refunded_in_full
       FROM public.order_items i LEFT JOIN public.fulfillments f ON f.order_item_id=i.id AND f.order_id=i.order_id
       LEFT JOIN public.checkout_preflight_observations observation ON observation.id=i.checkout_preflight_id
       LEFT JOIN LATERAL(SELECT line FROM jsonb_array_elements(observation.observation#>'{consent,lines}') line WHERE (line->>'cartItemId')::uuid=i.cart_item_id) original ON true

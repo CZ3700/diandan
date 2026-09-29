@@ -69,6 +69,31 @@ const copy = {
   orderDeliveryPhotoOpen: "Xem ảnh giao quà {position}/{count}",
   orderDeliveryPhotoAlt: "Ảnh giao quà {position}/{count}",
   orderDeliveryPhotoClose: "Đóng ảnh",
+  orderCertificateTitle: "Chứng nhận ủng hộ kỹ thuật số",
+  orderCertificateHelp:
+    "Kỷ niệm cho sự ủng hộ bạn đã thêm vào hồ sơ của {artist}. Lưu thành ảnh trên thiết bị này.",
+  orderCertificateGift: "{gift} × {quantity}",
+  orderCertificateDelivered: "Đã gửi ngày {date}",
+  orderCertificateOrder: "Đơn hàng {number}",
+  orderCertificateSignature: "Chữ ký trên ảnh",
+  orderCertificateSignatureNone: "Không ký tên",
+  orderCertificateSignatureAnonymous: "Người hâm mộ ẩn danh",
+  orderCertificateSignatureName: "Tên của tôi",
+  orderCertificateNameLabel: "Tên hiển thị",
+  orderCertificateNameHint:
+    "Tối đa 40 ký tự. Chỉ dùng để tạo ảnh trên thiết bị này, không tải lên hay lưu lại.",
+  orderCertificateNameInvalid:
+    "Nhập tên từ 1 đến 40 ký tự, hoặc chọn cách khác.",
+  orderCertificateFrom: "Từ {name}",
+  orderCertificateFromAnonymous: "Từ một người hâm mộ ẩn danh",
+  orderCertificateSave: "Lưu ảnh",
+  orderCertificateSaving: "Đang tạo ảnh…",
+  orderCertificateReady:
+    "Ảnh đã sẵn sàng. Nếu tệp không tự tải xuống, hãy nhấn giữ hoặc nhấp chuột phải vào ảnh bên dưới để lưu.",
+  orderCertificateFailed: "Không thể tạo ảnh. Vui lòng thử lại.",
+  orderCertificateRevoked:
+    "Đã thu hồi sau khi hoàn tiền toàn bộ. Không thể lưu chứng nhận này nữa.",
+  orderCertificateImageAlt: "Chứng nhận ủng hộ kỹ thuật số cho {artist}",
 
   checkoutTitle: "Thanh toán",
   checkoutReview: "Kiểm tra quà tặng",

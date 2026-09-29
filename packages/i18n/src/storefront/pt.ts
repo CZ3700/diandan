@@ -70,6 +70,31 @@ const copy = {
   orderDeliveryPhotoOpen: "Ver foto da entrega {position} de {count}",
   orderDeliveryPhotoAlt: "Foto da entrega {position} de {count}",
   orderDeliveryPhotoClose: "Fechar foto",
+  orderCertificateTitle: "Certificado digital de apoio",
+  orderCertificateHelp:
+    "Uma lembrança do apoio que você adicionou ao registro de {artist}. Salve como imagem neste dispositivo.",
+  orderCertificateGift: "{gift} × {quantity}",
+  orderCertificateDelivered: "Entregue em {date}",
+  orderCertificateOrder: "Pedido {number}",
+  orderCertificateSignature: "Assinatura na imagem",
+  orderCertificateSignatureNone: "Sem assinatura",
+  orderCertificateSignatureAnonymous: "Fã anônimo",
+  orderCertificateSignatureName: "Meu nome",
+  orderCertificateNameLabel: "Nome exibido",
+  orderCertificateNameHint:
+    "Até 40 caracteres. Usado apenas para criar a imagem neste dispositivo; não é enviado nem salvo.",
+  orderCertificateNameInvalid:
+    "Digite um nome de 1 a 40 caracteres ou escolha outra opção.",
+  orderCertificateFrom: "De {name}",
+  orderCertificateFromAnonymous: "De um fã anônimo",
+  orderCertificateSave: "Salvar imagem",
+  orderCertificateSaving: "Criando imagem…",
+  orderCertificateReady:
+    "Sua imagem está pronta. Se o download não começar, toque e segure ou clique com o botão direito na imagem abaixo para salvá-la.",
+  orderCertificateFailed: "Não foi possível criar a imagem. Tente novamente.",
+  orderCertificateRevoked:
+    "Retirado após reembolso total. Este certificado não pode mais ser salvo.",
+  orderCertificateImageAlt: "Certificado digital de apoio para {artist}",
 
   checkoutTitle: "Finalizar pedido",
   checkoutReview: "Confira seus presentes",

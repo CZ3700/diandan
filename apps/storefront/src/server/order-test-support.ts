@@ -74,6 +74,7 @@ export const orderTestDetail = orderAccessDetailSchema.parse({
       giftKind: "PHYSICAL",
       fulfillmentStatus: "PENDING",
       deliveryProofs: [],
+      supportCertificate: null,
     },
   ],
   createdAt: "2026-09-01T00:00:00Z",

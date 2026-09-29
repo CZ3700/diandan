@@ -68,6 +68,31 @@ const copy = {
   orderDeliveryPhotoOpen: "View delivery photo {position} of {count}",
   orderDeliveryPhotoAlt: "Delivery photo {position} of {count}",
   orderDeliveryPhotoClose: "Close photo",
+  orderCertificateTitle: "Digital support certificate",
+  orderCertificateHelp:
+    "A keepsake of the support you added to {artist}'s record. Save it as an image on this device.",
+  orderCertificateGift: "{gift} × {quantity}",
+  orderCertificateDelivered: "Delivered on {date}",
+  orderCertificateOrder: "Order {number}",
+  orderCertificateSignature: "Signature on the image",
+  orderCertificateSignatureNone: "No signature",
+  orderCertificateSignatureAnonymous: "Anonymous fan",
+  orderCertificateSignatureName: "My name",
+  orderCertificateNameLabel: "Name to show",
+  orderCertificateNameHint:
+    "Up to 40 characters. Used only to make the image on this device; it is not uploaded or saved.",
+  orderCertificateNameInvalid:
+    "Enter a name of 1 to 40 characters, or choose another option.",
+  orderCertificateFrom: "From {name}",
+  orderCertificateFromAnonymous: "From an anonymous fan",
+  orderCertificateSave: "Save image",
+  orderCertificateSaving: "Creating image…",
+  orderCertificateReady:
+    "Your image is ready. If the download did not start, press and hold or right-click the image below to save it.",
+  orderCertificateFailed: "The image could not be created. Please try again.",
+  orderCertificateRevoked:
+    "Withdrawn after a full refund. This certificate can no longer be saved.",
+  orderCertificateImageAlt: "Digital support certificate for {artist}",
 
   checkoutTitle: "Checkout",
   checkoutReview: "Review your gifts",

@@ -253,6 +253,100 @@
   max-height: 70dvh;
   object-fit: contain;
 }
+/* ADR-019 supplement (L3-09): the digital support certificate of a delivered virtual line. */
+.order-certificate {
+  display: grid;
+  gap: var(--space-4);
+}
+.order-certificate-card {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: center;
+  padding: var(--space-6) var(--space-4);
+  border: var(--border-width) solid var(--color-accent);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  text-align: center;
+}
+.order-certificate-card > * {
+  margin: 0;
+}
+.order-certificate-title {
+  color: var(--color-accent);
+  font-size: var(--type-label-size);
+  letter-spacing: var(--type-label-tracking);
+  text-transform: uppercase;
+}
+.order-certificate-artist {
+  font-size: calc(var(--type-body-size) * 1.5);
+  font-weight: 600;
+}
+.order-certificate-gift,
+.order-certificate-meta,
+.order-certificate-help {
+  color: var(--color-text-muted);
+}
+.order-certificate-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-1) var(--space-4);
+  font-size: var(--type-label-size);
+}
+[data-certificate-state="REVOKED"] .order-certificate-card {
+  border-color: var(--color-border);
+  opacity: 0.6;
+}
+.order-certificate-revoked,
+.order-certificate-help,
+.order-certificate-status {
+  margin: 0;
+}
+.order-certificate-save {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}
+.order-certificate-save > .fs-field {
+  inline-size: 100%;
+}
+.order-certificate-signature {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.order-certificate-signature legend {
+  margin-block-end: var(--space-2);
+  padding: 0;
+  font-weight: 600;
+}
+.order-certificate-signature label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--space-12);
+}
+.order-certificate-signature input {
+  accent-color: var(--color-accent);
+}
+/* Stay in the accessibility tree while empty so the ready/failed message is announced. */
+.order-certificate-status:empty {
+  position: absolute;
+  inline-size: var(--border-width);
+  block-size: var(--border-width);
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.order-certificate-preview {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: calc(var(--space-24) * 3);
+  block-size: auto;
+  border-radius: var(--radius-control);
+}
 .order-steps {
   display: grid;
   gap: var(--space-4);

@@ -65,6 +65,31 @@ const copy = {
   orderDeliveryPhotoOpen: "ดูรูปการส่งมอบที่ {position} จาก {count}",
   orderDeliveryPhotoAlt: "รูปการส่งมอบที่ {position} จาก {count}",
   orderDeliveryPhotoClose: "ปิดรูป",
+  orderCertificateTitle: "ใบรับรองการสนับสนุนดิจิทัล",
+  orderCertificateHelp:
+    "ของที่ระลึกจากการสนับสนุนที่คุณเพิ่มลงในบันทึกของ {artist} บันทึกเป็นรูปภาพไว้ในอุปกรณ์นี้ได้",
+  orderCertificateGift: "{gift} × {quantity}",
+  orderCertificateDelivered: "ส่งถึงเมื่อ {date}",
+  orderCertificateOrder: "คำสั่งซื้อ {number}",
+  orderCertificateSignature: "ลายเซ็นบนรูปภาพ",
+  orderCertificateSignatureNone: "ไม่ลงชื่อ",
+  orderCertificateSignatureAnonymous: "แฟนนิรนาม",
+  orderCertificateSignatureName: "ใส่ชื่อของฉัน",
+  orderCertificateNameLabel: "ชื่อที่จะแสดง",
+  orderCertificateNameHint:
+    "ไม่เกิน 40 ตัวอักษร ใช้เพื่อสร้างรูปภาพในอุปกรณ์นี้เท่านั้น ไม่มีการอัปโหลดหรือบันทึก",
+  orderCertificateNameInvalid:
+    "กรุณาใส่ชื่อ 1–40 ตัวอักษร หรือเลือกตัวเลือกอื่น",
+  orderCertificateFrom: "จาก {name}",
+  orderCertificateFromAnonymous: "จากแฟนนิรนาม",
+  orderCertificateSave: "บันทึกรูปภาพ",
+  orderCertificateSaving: "กำลังสร้างรูปภาพ…",
+  orderCertificateReady:
+    "รูปภาพพร้อมแล้ว หากการดาวน์โหลดไม่เริ่ม ให้กดค้างหรือคลิกขวาที่รูปด้านล่างเพื่อบันทึก",
+  orderCertificateFailed: "สร้างรูปภาพไม่สำเร็จ กรุณาลองอีกครั้ง",
+  orderCertificateRevoked:
+    "ถูกเพิกถอนหลังคืนเงินเต็มจำนวน ไม่สามารถบันทึกใบรับรองนี้ได้อีก",
+  orderCertificateImageAlt: "ใบรับรองการสนับสนุนดิจิทัลสำหรับ {artist}",
 
   checkoutTitle: "ชำระเงิน",
   checkoutReview: "ตรวจสอบของขวัญ",

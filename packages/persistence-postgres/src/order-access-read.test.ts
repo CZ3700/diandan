@@ -213,6 +213,79 @@ test("delivered physical lines expose opaque proof references, never storage ide
     ),
   ).toThrow();
 });
+// ADR-019 supplement (L3-09): certificate facts only on delivered virtual lines.
+test("delivered virtual lines carry certificate facts; revoked once refunded in full", () => {
+  expect(module).toBeDefined();
+  const delivered = {
+    ...row,
+    gift_kind: "VIRTUAL",
+    fulfillment_status: "DELIVERED",
+    delivered_at: "2026-09-29T12:00:00.000000Z",
+    refunded_in_full: false,
+    // The read never selects private intent columns; a stray one must not surface.
+    display_name_ciphertext: "secret",
+  };
+  const item = (value: Record<string, unknown>) =>
+    module!.orderAccessItem(value, 1, "https://cdn.example.invalid/");
+  expect(item(delivered).supportCertificate).toEqual({
+    deliveredAt: "2026-09-29T12:00:00.000000Z",
+    revoked: false,
+  });
+  expect(
+    item({ ...delivered, refunded_in_full: true }).supportCertificate,
+  ).toEqual({ deliveredAt: "2026-09-29T12:00:00.000000Z", revoked: true });
+  expect(JSON.stringify(item(delivered))).not.toContain("secret");
+  for (const change of [
+    { gift_kind: "PHYSICAL" },
+    { gift_kind: null },
+    { fulfillment_status: "PENDING", delivered_at: null },
+  ])
+    expect(item({ ...delivered, ...change }).supportCertificate).toBeNull();
+  // A delivered virtual row without its delivery time is not a readable history.
+  expect(() => item({ ...delivered, delivered_at: null })).toThrow();
+});
+test("the read counts only succeeded refunds against the line total", async () => {
+  expect(module).toBeDefined();
+  let sql = "";
+  const client = {
+    query: async (text: string) => {
+      sql = text;
+      return { rows: [row] };
+    },
+    release: () => {},
+  };
+  await module!.readOrderAccessDetail(
+    client,
+    {
+      id,
+      public_order_id: "00000000-0000-4000-8000-000000000002",
+      public_order_no: "FS-7K3M9C",
+      presentation_locale: "en",
+      order_status: "OPEN",
+      payment_status: "PAID",
+      dispute_status: "NONE",
+      fulfillment_status: "PENDING",
+      currency: "USD",
+      subtotal_minor: "100",
+      tax_amount_minor: "0",
+      shipping_amount_minor: "0",
+      fee_amount_minor: "0",
+      discount_amount_minor: "0",
+      total_amount_minor: "100",
+      created_at: "2026-09-26T00:00:00.000Z",
+      updated_at: "2026-09-26T00:00:00.000Z",
+    },
+    "https://cdn.example.invalid/",
+  );
+  for (const guard of [
+    "refund.status='SUCCEEDED'",
+    "ri.order_item_id=i.id",
+    ">=i.line_total_minor",
+    "f.delivered_at",
+  ])
+    expect(sql).toContain(guard);
+  expect(sql).not.toContain("support_intents");
+});
 test("proof reads require exactly one session-bound, visible proof", async () => {
   expect(module).toBeDefined();
   const checksum = "d".repeat(64);

@@ -68,6 +68,7 @@ export function detailFixture(): OrdersDetail {
           giftKind: "PHYSICAL",
           fulfillmentStatus: "PENDING",
           deliveryProofs: [],
+          supportCertificate: null,
         },
       ],
     },

@@ -69,6 +69,32 @@ const copy = {
   orderDeliveryPhotoOpen: "お届け写真 {position}/{count} を表示",
   orderDeliveryPhotoAlt: "お届け写真 {position}/{count}",
   orderDeliveryPhotoClose: "写真を閉じる",
+  orderCertificateTitle: "デジタル応援証明",
+  orderCertificateHelp:
+    "{artist}さんの応援記録に加わった応援の記念です。この端末に画像として保存できます。",
+  orderCertificateGift: "{gift} × {quantity}",
+  orderCertificateDelivered: "お届け日：{date}",
+  orderCertificateOrder: "注文番号 {number}",
+  orderCertificateSignature: "画像の署名",
+  orderCertificateSignatureNone: "署名なし",
+  orderCertificateSignatureAnonymous: "匿名のファン",
+  orderCertificateSignatureName: "名前を入れる",
+  orderCertificateNameLabel: "表示する名前",
+  orderCertificateNameHint:
+    "40文字まで。この端末で画像を作るためだけに使い、アップロードや保存はしません。",
+  orderCertificateNameInvalid:
+    "1〜40文字の名前を入力するか、別の方法を選んでください。",
+  orderCertificateFrom: "{name}より",
+  orderCertificateFromAnonymous: "匿名のファンより",
+  orderCertificateSave: "画像を保存",
+  orderCertificateSaving: "画像を作成中…",
+  orderCertificateReady:
+    "画像ができました。ダウンロードが始まらない場合は、下の画像を長押しまたは右クリックして保存してください。",
+  orderCertificateFailed:
+    "画像を作成できませんでした。もう一度お試しください。",
+  orderCertificateRevoked:
+    "全額返金のため取り消されました。この証明は保存できません。",
+  orderCertificateImageAlt: "{artist}さんのデジタル応援証明",
 
   checkoutTitle: "お会計",
   checkoutReview: "ギフトを確認",
