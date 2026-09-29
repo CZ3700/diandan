@@ -27,17 +27,25 @@ type AccessConfig = Extract<
   AdminRuntimeConfig,
   { mode: "LOCAL_OIDC" | "OIDC" }
 >;
+/** Every mode with a server-issued session; logout works the same for all of them. */
+type SessionConfig = Extract<
+  AdminRuntimeConfig,
+  { mode: "LOCAL_OIDC" | "OIDC" | "LOCAL_ACCOUNT" }
+>;
 function supportsOidc(config: AdminRuntimeConfig): config is AccessConfig {
   return config.mode === "LOCAL_OIDC" || config.mode === "OIDC";
+}
+function supportsSessions(config: AdminRuntimeConfig): config is SessionConfig {
+  return supportsOidc(config) || config.mode === "LOCAL_ACCOUNT";
 }
 type Parser<T> = Readonly<{ parse(value: unknown): T }>;
 const LOGIN_COOKIE = "__Host-fan-admin-login";
 const LOGIN_LOCALE_COOKIE = "__Host-fan-admin-login-locale";
 const LOGIN_COOKIES = [LOGIN_COOKIE, LOGIN_LOCALE_COOKIE] as const;
-const SESSION_COOKIE = "__Host-fan-admin-session";
-const CSRF_COOKIE = "__Host-fan-admin-csrf";
+export const SESSION_COOKIE = "__Host-fan-admin-session";
+export const CSRF_COOKIE = "__Host-fan-admin-csrf";
 
-function cookie(
+export function cookie(
   name: string,
   value: string,
   maxAge: number,
@@ -45,7 +53,7 @@ function cookie(
 ): string {
   return `${name}=${value}; Path=/; Secure; HttpOnly; SameSite=${name === LOGIN_COOKIE || name === LOGIN_LOCALE_COOKIE ? "Lax" : "Strict"}; Max-Age=${maxAge}${expiresAt ? `; Expires=${new Date(expiresAt).toUTCString()}` : ""}`;
 }
-function clearCookie(name: string): string {
+export function clearCookie(name: string): string {
   return cookie(name, "", 0, "1970-01-01T00:00:00Z");
 }
 function redirect(location: string, cookies: readonly string[] = []): Response {
@@ -53,7 +61,10 @@ function redirect(location: string, cookies: readonly string[] = []): Response {
   for (const value of cookies) headers.append("set-cookie", value);
   return new Response(null, { status: 303, headers });
 }
-function cookieValue(header: string | null, name: string): string | undefined {
+export function cookieValue(
+  header: string | null,
+  name: string,
+): string | undefined {
   if (!header || header.length > 8192) return undefined;
   let value: string | undefined;
   for (const part of header.split(";")) {
@@ -85,7 +96,7 @@ function loginLocale(header: string | null, now: number): SupportedLocale {
     ? locale.data
     : DEFAULT_LOCALE;
 }
-function maxAge(expiresAt: string, now: number, limit: number): number {
+export function maxAge(expiresAt: string, now: number, limit: number): number {
   const remaining = Math.ceil((Date.parse(expiresAt) - now) / 1000);
   if (!Number.isFinite(remaining) || remaining <= 0 || remaining > limit)
     throw new Error("Invalid credential lifetime");
@@ -105,7 +116,12 @@ export function createAdminAccessBff(
     request: Request,
     action: "begin" | "callback" | "logout",
   ): Response | undefined {
-    if (!supportsOidc(options.config)) return adminError("NOT_FOUND", 404);
+    const config = options.config;
+    if (
+      !supportsSessions(config) ||
+      (action !== "logout" && !supportsOidc(config))
+    )
+      return adminError("NOT_FOUND", 404);
     let headerBytes = 0;
     request.headers.forEach((value, key) => {
       headerBytes += value.length + key.length;
@@ -113,7 +129,7 @@ export function createAdminAccessBff(
     if (request.url.length > 8192 || headerBytes > 16384)
       return adminError("INVALID_COMMAND", 400);
     const url = new URL(request.url);
-    if (!matchesConfiguredRequestOrigin(request, options.config.siteOrigin))
+    if (!matchesConfiguredRequestOrigin(request, config.siteOrigin))
       return adminError("FORBIDDEN", 403);
     if (
       url.pathname !== `/api/admin/auth/${action}` ||
@@ -123,7 +139,7 @@ export function createAdminAccessBff(
     if (action !== "callback") {
       if (url.search) return adminError("INVALID_COMMAND", 400);
       if (
-        request.headers.get("origin") !== options.config.siteOrigin ||
+        request.headers.get("origin") !== config.siteOrigin ||
         request.headers.get("sec-fetch-site") !== "same-origin"
       )
         return adminError("FORBIDDEN", 403);
@@ -131,13 +147,14 @@ export function createAdminAccessBff(
     return undefined;
   }
   async function call<T extends { outcome: string }>(
-    config: AccessConfig,
+    config: SessionConfig,
     action: string,
     command: unknown,
     parser: Parser<T>,
   ): Promise<{ value: T; status: number }> {
+    const route = config.mode === "LOCAL_ACCOUNT" ? "local-access" : "access";
     const response = await (options.fetch ?? fetch)(
-      `${config.internalApiOrigin}/api/v1/admin/access/${action}`,
+      `${config.internalApiOrigin}/api/v1/admin/${route}/${action}`,
       {
         method: "POST",
         headers: {
@@ -287,7 +304,7 @@ export function createAdminAccessBff(
       const rejected = boundary(request, "logout");
       if (rejected) return rejected;
       const config = options.config;
-      if (!supportsOidc(config)) return adminError("NOT_FOUND", 404);
+      if (!supportsSessions(config)) return adminError("NOT_FOUND", 404);
       if (
         !/^application\/json(?:;\s*charset=utf-8)?$/iu.test(
           request.headers.get("content-type") ?? "",

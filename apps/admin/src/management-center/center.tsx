@@ -15,6 +15,7 @@ import { createPaymentConfigurationApi } from "../management-payments/api";
 import { createExceptionsApi } from "../management-exceptions/api";
 import { createFinanceApi } from "../management-finance/api";
 import { ManagementLogin } from "./login";
+import { LocalSignIn } from "./local-sign-in";
 import "./management-center.css";
 import { createHomeLayoutApi } from "../management-decoration/api";
 import { createStorefrontNavigationApi } from "../management-decoration/navigation-api";
@@ -26,10 +27,13 @@ export function ManagementCenter({
   locale,
   storefrontOrigin,
   authenticationAvailable = false,
+  localAccounts = false,
 }: {
   locale: SupportedLocale;
   storefrontOrigin?: string | undefined;
   authenticationAvailable?: boolean;
+  /** ADR-021 built-in accounts sign in on their own page instead of an identity provider. */
+  localAccounts?: boolean;
 }) {
   const { client, session, loading, reload, unavailable, expired, logout } =
     useAdminSession();
@@ -77,6 +81,10 @@ export function ManagementCenter({
   else if (expired) sessionMessage = copy.sessionExpired;
 
   const canLogin = authenticationAvailable && !unavailable;
+  if (localAccounts && canLogin && !loading && !session)
+    return (
+      <LocalSignIn locale={locale} expired={expired} onSignedIn={reload} />
+    );
   if (loading || !session)
     return (
       <ManagementShell

@@ -101,6 +101,12 @@
 - **接口精简**：`LIST` 已同时返回员工和可选角色，不再单设 `roles` 接口。
 - **临时密码**：16 个无歧义字符分 4 组（约 80 位随机性），只在创建或重置的响应里出现一次。
 
+## 4.2 第 ④ 段实现约定
+
+- **后台模式 `LOCAL_ACCOUNT`**：部署环境为 staging/production 时按 `OIDC` 的标准校验（正式构建、公网 HTTPS 站点和内部 API）；部署环境为 development 时（stg）按 `LOCAL_OIDC` 的标准校验。两种都只需要 access key。
+- **BFF**：`/api/admin/local-auth/{login,step}` 只收同源 JSON。多步登录的挑战令牌只放在 `__Host-fan-admin-local-login`（HttpOnly、SameSite=Strict、不超过 300 秒），浏览器脚本看不到任何令牌。锁定或"需要重新登录"时清掉这个 Cookie。登出路由在 `LOCAL_ACCOUNT` 模式下改走 `/api/v1/admin/local-access/logout`。这两个路由已排除在 Next 请求日志之外。
+- **登录页**：独立整页，不在管理中心外壳里。页面只做登录这一件事，所以每一步打开时光标都在第一个字段。新密码两次输入不一致时在浏览器里就拦下，不发请求。锁定和"登录已超时"会退回第一步，保留已填的登录名。会话服务不可用时仍显示原来的"重试"，不显示登录表单。
+
 ## 5. 服务器命令
 
 `apps/api/scripts/admin-account.mjs`：

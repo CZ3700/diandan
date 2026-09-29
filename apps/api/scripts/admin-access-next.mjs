@@ -23,6 +23,8 @@ export async function startAdminAccessNext({
   issuer,
   accessKey,
   logs,
+  // LOCAL_ACCOUNT (ADR-021) needs no identity provider.
+  mode = "LOCAL_OIDC",
 }) {
   const tls = createTestTlsMaterial(new URL(adminOrigin).hostname);
   const declaration = path.join(workspaceRoot, "apps/admin/next-env.d.ts"),
@@ -37,9 +39,9 @@ export async function startAdminAccessNext({
     FAN_SUPPORT_DEPLOYMENT_ENV: "development",
     FAN_SUPPORT_SITE_ORIGIN: adminOrigin,
     FAN_SUPPORT_INTERNAL_API_ORIGIN: apiOrigin,
-    FAN_SUPPORT_ADMIN_MODE: "LOCAL_OIDC",
+    FAN_SUPPORT_ADMIN_MODE: mode,
     FAN_SUPPORT_ADMIN_ACCESS_KEY: accessKey,
-    FAN_SUPPORT_ADMIN_OIDC_ISSUER: issuer,
+    ...(issuer === undefined ? {} : { FAN_SUPPORT_ADMIN_OIDC_ISSUER: issuer }),
     NEXT_TELEMETRY_DISABLED: "1",
   });
   const child = spawn(

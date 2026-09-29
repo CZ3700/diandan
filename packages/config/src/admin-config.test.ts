@@ -153,3 +153,56 @@ test("OIDC preserves configuration precedence and never includes credentials in 
     }),
   ).toEqual({ schemaVersion: 1, mode: "DISABLED" });
 });
+
+// ADR-021: built-in accounts. Formal tiers check like OIDC; the remote TEST instance checks like LOCAL_OIDC.
+test.each([
+  ["a formal staging or production build", { ...deployed }],
+  [
+    "the remote TEST instance in development mode",
+    {
+      ...local,
+      FAN_SUPPORT_SITE_ORIGIN: "https://admin.stg.example.invalid",
+      FAN_SUPPORT_ADMIN_ACCESS_KEY: "b".repeat(64),
+    },
+  ],
+])("built-in accounts run in %s without an identity provider", (_, base) => {
+  const environment = {
+    ...base,
+    FAN_SUPPORT_ADMIN_MODE: "LOCAL_ACCOUNT",
+    FAN_SUPPORT_ADMIN_OIDC_ISSUER: undefined,
+  };
+  const config = resolveAdminRuntimeConfig({ environment });
+  expect(config).toEqual({
+    schemaVersion: 1,
+    mode: "LOCAL_ACCOUNT",
+    siteOrigin: environment.FAN_SUPPORT_SITE_ORIGIN,
+    internalApiOrigin: environment.FAN_SUPPORT_INTERNAL_API_ORIGIN,
+    adminAccessKey: "b".repeat(64),
+  });
+  expect(Object.isFrozen(config)).toBe(true);
+});
+
+test("built-in accounts keep TLS, canonical origins and the internal secret", () => {
+  const account = { ...deployed, FAN_SUPPORT_ADMIN_MODE: "LOCAL_ACCOUNT" };
+  for (const patch of [
+    { FAN_SUPPORT_ADMIN_ACCESS_KEY: undefined },
+    { FAN_SUPPORT_ADMIN_ACCESS_KEY: "not-an-access-key" },
+    { FAN_SUPPORT_SITE_ORIGIN: "http://admin.example.invalid" },
+    { FAN_SUPPORT_SITE_ORIGIN: "https://admin.example.invalid/path" },
+    { FAN_SUPPORT_INTERNAL_API_ORIGIN: "http://127.0.0.1:3200" },
+    { NODE_ENV: "development" },
+    { FAN_SUPPORT_DEPLOYMENT_ENV: "preview" },
+    { NODE_ENV: "test", FAN_SUPPORT_DEPLOYMENT_ENV: "test" },
+    // Development mode needs a public HTTPS site and a loopback API.
+    { NODE_ENV: "development", FAN_SUPPORT_DEPLOYMENT_ENV: "development" },
+    {
+      NODE_ENV: "development",
+      FAN_SUPPORT_DEPLOYMENT_ENV: "development",
+      FAN_SUPPORT_INTERNAL_API_ORIGIN: "http://127.0.0.1:3200",
+      FAN_SUPPORT_SITE_ORIGIN: "http://localhost:3100",
+    },
+  ])
+    expect(() =>
+      resolveAdminRuntimeConfig({ environment: { ...account, ...patch } }),
+    ).toThrow();
+});

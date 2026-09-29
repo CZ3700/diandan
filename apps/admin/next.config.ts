@@ -8,9 +8,11 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   devIndicators: false,
-  // Authorization codes and state must never enter Next's native URL logs.
+  // Authorization codes, state and sign-in attempts never enter Next's native URL logs.
   logging: {
-    incomingRequests: { ignore: [/^\/api\/admin\/auth(?:\/|\?|$)/u] },
+    incomingRequests: {
+      ignore: [/^\/api\/admin\/(?:auth|local-auth)(?:\/|\?|$)/u],
+    },
   },
 };
 

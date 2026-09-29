@@ -2,7 +2,6 @@
 // L3-10 ③: built-in admin accounts through the production API composition over HTTP, with a real
 // PostgreSQL, real scrypt/TOTP and the envelope KMS adapter the remote TEST instance uses.
 import assert from "node:assert/strict";
-import { Buffer } from "node:buffer";
 import { randomBytes, randomUUID } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -14,21 +13,16 @@ import {
   runMigrations,
   withEphemeralPostgres,
 } from "@fan-support/persistence-postgres";
-import {
-  decodeBase32,
-  digestAdminLocalIdentitySubject,
-  hashAdminPassword,
-  totpCode,
-} from "@fan-support/application";
-import {
-  SUPPORTED_LOCALES,
-  adminPermissionKeySchema,
-} from "@fan-support/contracts";
+import { decodeBase32, totpCode } from "@fan-support/application";
 import { createStructuredLogger } from "@fan-support/observability";
 import { createApiApplication } from "../dist/bootstrap.js";
 import { createProductionAdminComposition } from "../dist/production-admin-composition.js";
 import { resolveAdminApiRuntimeConfig } from "../dist/admin-runtime-config.js";
 import { createLocalExperienceKms } from "./local-experience-kms.mjs";
+import {
+  localAccountComposition,
+  provisionFirstAdministrator,
+} from "./admin-local-fixtures.mjs";
 import { preflightEnvironment } from "./publication-preflight-http-fixtures.mjs";
 
 const workspaceRoot = fileURLToPath(new URL("../../../", import.meta.url));
@@ -93,110 +87,34 @@ try {
         `owner ${randomBytes(12).toString("base64url")}`,
       );
       stage = "first administrator";
-      // What the L3-10 server command will provision: catalog, standard roles, first owner.
-      const ownerAccount = randomUUID(),
-        ownerIdentity = randomUUID();
-      await client.query("BEGIN");
-      for (const key of adminPermissionKeySchema.options)
-        await client.query(
-          "INSERT INTO permissions(id,permission_key,description) VALUES($1,$2,'Platform permission') ON CONFLICT (permission_key) DO NOTHING",
-          [randomUUID(), key],
-        );
-      await client.query(
-        "INSERT INTO roles(id,role_key,description) VALUES($1,'studio:owner','Studio administrator'),($2,'studio:operator','Daily operations')",
-        [randomUUID(), randomUUID()],
+      const { accountId: ownerAccount } = await provisionFirstAdministrator(
+        client,
+        { subjectPepper, password: ownerPassword },
       );
-      await client.query(
-        "INSERT INTO role_permissions(role_id,permission_id) SELECT r.id,p.id FROM roles r CROSS JOIN permissions p WHERE r.role_key='studio:owner'",
-      );
-      await client.query(
-        "INSERT INTO role_permissions(role_id,permission_id) SELECT r.id,p.id FROM roles r JOIN permissions p ON p.permission_key IN ('content.read','orders.read') WHERE r.role_key='studio:operator'",
-      );
-      await client.query(
-        "INSERT INTO admin_identities(id,issuer,external_subject_hash,status,mfa_required) VALUES($1,'urn:fan-support:local',$2,'ACTIVE',false)",
-        [
-          ownerIdentity,
-          Buffer.from(
-            digestAdminLocalIdentitySubject(subjectPepper, ownerAccount),
-            "hex",
-          ),
-        ],
-      );
-      await client.query(
-        "INSERT INTO admin_local_accounts(id,admin_identity_id,login_name,display_name,password_hash,password_changed_at,must_change_password) VALUES($1,$2,'studio.owner','Studio Owner',$3,clock_timestamp(),false)",
-        [ownerAccount, ownerIdentity, await hashAdminPassword(ownerPassword)],
-      );
-      await client.query(
-        "INSERT INTO admin_identity_roles(admin_identity_id,role_id,granted_by) SELECT $1,id,$1 FROM roles WHERE role_key='studio:owner'",
-        [ownerIdentity],
-      );
-      for (const locale of SUPPORTED_LOCALES) {
-        const audit = randomUUID();
-        await client.query(
-          "INSERT INTO audit_logs(id,actor_type,actor_id,action,subject_type,subject_id,reason_code,request_id,correlation_id,outcome,field_category) VALUES($1,'ADMIN',$2,'CONTENT_LOCALE_GRANT','ADMIN_CONTENT_LOCALE_GRANT',$2,'FIRST_ADMINISTRATOR',$3,$3,'SUCCEEDED','CONTENT_TRANSLATION')",
-          [audit, ownerIdentity, randomUUID()],
-        );
-        await client.query(
-          "INSERT INTO admin_content_locale_grants(admin_identity_id,locale,granted_by,audit_log_id) VALUES($1,$2,$1,$3)",
-          [ownerIdentity, locale, audit],
-        );
-      }
-      await client.query("COMMIT");
 
       stage = "production composition";
-      const config = resolveAdminApiRuntimeConfig({
-        FAN_SUPPORT_ADMIN_ORIGIN: adminOrigin,
-        FAN_SUPPORT_ADMIN_ACCESS_KEY: accessKey,
-        FAN_SUPPORT_ADMIN_TOKEN_PEPPER: tokenPepper,
-        FAN_SUPPORT_ADMIN_SUBJECT_PEPPER: subjectPepper,
-        FAN_SUPPORT_ADMIN_LOCAL_ACCOUNTS: "ENABLED",
-        FAN_SUPPORT_ADMIN_TOTP_ISSUER: "Studio Admin",
-      });
-      check(
-        config.settings === undefined && config.localAccounts,
-        "built-in accounts without OIDC",
-      );
       const kms = createLocalExperienceKms({
         environment: "TEST",
         masterKey: randomBytes(32).toString("base64url"),
         macKey: randomBytes(32).toString("base64url"),
       });
       own(() => kms.close());
-      const unavailable = () => async () => {
-        throw new Error("Out-of-scope fixture service requested");
-      };
-      const persistence = () => {
-        const pool = createPostgresPersistence(database, {
-          catalogPublicMediaBaseUrl: "https://media.example.invalid",
-        });
-        own(() => pool.close());
-        return pool;
-      };
-      const composition = createProductionAdminComposition({
-        config,
-        resources: {
-          persistence,
-          paymentConfigurationPersistence: persistence,
-          keys: {
-            keyManagement: kms.adapter,
-            activePepperVersion: "test-mac",
-            pepperVersions: ["test-mac"],
-          },
-          media: {
-            storage: {
-              createUploadGrant: unavailable(),
-              createDownloadGrant: unavailable(),
-            },
-            inspector: { inspect: unavailable() },
-            proofProcessor: { process: unavailable() },
-            proofReader: { read: unavailable() },
-          },
-        },
-        payment: {
-          deployedAccounts: [],
-          providerDirectory: { getRegistrations: () => [] },
-        },
+      const { config, composition } = localAccountComposition({
+        createProductionAdminComposition,
+        resolveAdminApiRuntimeConfig,
+        createPostgresPersistence,
+        database,
+        keyManagement: kms.adapter,
+        adminOrigin,
+        accessKey,
+        tokenPepper,
+        subjectPepper,
+        own,
       });
+      check(
+        config.settings === undefined && config.localAccounts,
+        "built-in accounts without OIDC",
+      );
       check(
         composition.adminAccessRoute === undefined,
         "no OIDC route without OIDC settings",
