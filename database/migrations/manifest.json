@@ -540,6 +540,16 @@
         "up": "c897ec4d623106b9fd8ab761124b6e436b85295d0e40fd070ce902f4316355dc",
         "down": "e7dbce9c16e4a4bb4e075793ad61c0cc9aa716827858ff0253ac03d5b027d1ae"
       }
+    },
+    {
+      "version": "0055",
+      "name": "admin-local-secret-format",
+      "up": "database/migrations/0055_admin-local-secret-format.up.sql",
+      "down": "database/migrations/0055_admin-local-secret-format.down.sql",
+      "sha256": {
+        "up": "9fc9b60c8b2cd1ef1237680cc6dc36a634dffaa7e5c3195870df53cab8074c0c",
+        "down": "4f428fe9e2c489f172297188ac665918f204526c4ad603bf0e4a56ba5afeaf88"
+      }
     }
   ]
 }

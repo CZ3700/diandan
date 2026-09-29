@@ -43,6 +43,8 @@ it("recognizes the production administration keys", () => {
     FAN_SUPPORT_ADMIN_SUBJECT_PEPPER: "subject",
     FAN_SUPPORT_ADMIN_OIDC_CONFIG_JSON: "config",
     FAN_SUPPORT_ADMIN_OIDC_CLIENT_SECRET: "secret",
+    FAN_SUPPORT_ADMIN_LOCAL_ACCOUNTS: "ENABLED",
+    FAN_SUPPORT_ADMIN_TOTP_ISSUER: "Studio Admin",
   };
   expect(
     resolveConfigLayers({ environment }, ["FAN_SUPPORT_ADMIN_ORIGIN"]),

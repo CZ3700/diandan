@@ -2,8 +2,11 @@ import { describe, expect, test } from "vitest";
 import {
   adminPasswordProblem,
   decodeBase32,
+  digestAdminLocalChallenge,
+  digestAdminLocalIdentitySubject,
   digestAdminRecoveryCode,
   encodeBase32,
+  generateAdminTemporaryPassword,
   generateAdminRecoveryCodes,
   generateAdminTotpSecret,
   hashAdminPassword,
@@ -125,5 +128,41 @@ describe("recovery codes", () => {
       digest,
     );
     expect(digestAdminRecoveryCode("b".repeat(64), code)).not.toBe(digest);
+  });
+});
+
+describe("built-in sign-in material", () => {
+  test("temporary passwords are unambiguous, grouped and long enough for the policy", () => {
+    const passwords = new Set(
+      Array.from({ length: 50 }, () => generateAdminTemporaryPassword()),
+    );
+    expect(passwords.size).toBe(50);
+    for (const password of passwords) {
+      expect(password).toMatch(/^[2-9A-HJ-NP-Z]{4}(-[2-9A-HJ-NP-Z]{4}){3}$/u);
+      expect(adminPasswordProblem(password, "night.shift")).toBe(null);
+    }
+  });
+  test("a built-in identity key is peppered, stable and bound to the account id", () => {
+    const account = "3f2c9a1e-0000-4000-8000-000000000001";
+    const digest = digestAdminLocalIdentitySubject(pepper, account);
+    expect(digest).toMatch(/^[a-f0-9]{64}$/u);
+    expect(digestAdminLocalIdentitySubject(pepper, account)).toBe(digest);
+    expect(
+      digestAdminLocalIdentitySubject(
+        pepper,
+        "3f2c9a1e-0000-4000-8000-000000000002",
+      ),
+    ).not.toBe(digest);
+    expect(digestAdminLocalIdentitySubject("b".repeat(64), account)).not.toBe(
+      digest,
+    );
+    expect(() => digestAdminLocalIdentitySubject(pepper, "owner")).toThrow();
+  });
+  test("a sign-in challenge is stored only as a purpose-bound digest", () => {
+    const token = "A".repeat(42) + "A";
+    const digest = digestAdminLocalChallenge(pepper, token);
+    expect(digest).toMatch(/^[a-f0-9]{64}$/u);
+    expect(digestAdminLocalChallenge("b".repeat(64), token)).not.toBe(digest);
+    expect(() => digestAdminLocalChallenge(pepper, "short")).toThrow();
   });
 });

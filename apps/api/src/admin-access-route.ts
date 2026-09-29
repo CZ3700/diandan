@@ -1,6 +1,10 @@
 import { timingSafeEqual } from "node:crypto";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import type { AdminAccessUseCases } from "@fan-support/application";
+import type { ZodType } from "zod";
+import type {
+  AdminAccessUseCases,
+  AdminLocalAccessUseCases,
+} from "@fan-support/application";
 import {
   adminAccessBeginRequestSchema,
   adminAccessBeginResponseSchema,
@@ -8,12 +12,27 @@ import {
   adminAccessCallbackResponseSchema,
   adminAccessLogoutRequestSchema,
   adminAccessLogoutResponseSchema,
+  adminLocalAccessResponseSchema,
+  adminLocalLoginRequestSchema,
+  adminLocalStepRequestSchema,
   type AdminAccessFailure,
 } from "@fan-support/contracts";
 export type AdminAccessRouteDependencies = Readonly<{
   allowedOrigin: string;
   accessKey: string;
   useCases: AdminAccessUseCases;
+}>;
+/** ADR-021 built-in sign-in; the same BFF-only boundary as the OIDC routes. */
+export type AdminLocalAccessRouteDependencies = Readonly<{
+  allowedOrigin: string;
+  accessKey: string;
+  useCases: Pick<AdminLocalAccessUseCases, "login" | "step" | "logout">;
+}>;
+type AccessEndpoint = Readonly<{
+  path: string;
+  request: ZodType;
+  response: ZodType<{ outcome: string; code?: string }>;
+  execute(input: never): Promise<unknown>;
 }>;
 function privacy(reply: FastifyReply) {
   void reply
@@ -54,6 +73,58 @@ function status(code: string): number {
 export function registerAdminAccessRoute(
   instance: FastifyInstance,
   options: AdminAccessRouteDependencies,
+): void {
+  registerAccessKeyEndpoints(instance, options, "/api/v1/admin/access", [
+    {
+      path: "/begin",
+      request: adminAccessBeginRequestSchema,
+      response: adminAccessBeginResponseSchema,
+      execute: options.useCases.begin,
+    },
+    {
+      path: "/callback",
+      request: adminAccessCallbackRequestSchema,
+      response: adminAccessCallbackResponseSchema,
+      execute: options.useCases.callback,
+    },
+    {
+      path: "/logout",
+      request: adminAccessLogoutRequestSchema,
+      response: adminAccessLogoutResponseSchema,
+      execute: options.useCases.logout,
+    },
+  ]);
+}
+export function registerAdminLocalAccessRoute(
+  instance: FastifyInstance,
+  options: AdminLocalAccessRouteDependencies,
+): void {
+  registerAccessKeyEndpoints(instance, options, "/api/v1/admin/local-access", [
+    {
+      path: "/login",
+      request: adminLocalLoginRequestSchema,
+      response: adminLocalAccessResponseSchema,
+      execute: options.useCases.login,
+    },
+    {
+      path: "/step",
+      request: adminLocalStepRequestSchema,
+      response: adminLocalAccessResponseSchema,
+      execute: options.useCases.step,
+    },
+    {
+      path: "/logout",
+      request: adminAccessLogoutRequestSchema,
+      response: adminAccessLogoutResponseSchema,
+      execute: options.useCases.logout,
+    },
+  ]);
+}
+function registerAccessKeyEndpoints(
+  instance: FastifyInstance,
+  options: Readonly<{ allowedOrigin: string; accessKey: string }>,
+  prefix: string,
+  endpoints: readonly AccessEndpoint[],
 ): void {
   const origin = new URL(options.allowedOrigin);
   if (
@@ -102,26 +173,6 @@ export function registerAdminAccessRoute(
           return fail(reply, "INVALID_COMMAND", 400);
         return fail(reply, "ACCESS_UNAVAILABLE", 503);
       });
-      const endpoints = [
-        {
-          path: "/begin",
-          request: adminAccessBeginRequestSchema,
-          response: adminAccessBeginResponseSchema,
-          execute: options.useCases.begin,
-        },
-        {
-          path: "/callback",
-          request: adminAccessCallbackRequestSchema,
-          response: adminAccessCallbackResponseSchema,
-          execute: options.useCases.callback,
-        },
-        {
-          path: "/logout",
-          request: adminAccessLogoutRequestSchema,
-          response: adminAccessLogoutResponseSchema,
-          execute: options.useCases.logout,
-        },
-      ];
       for (const endpoint of endpoints)
         scope.post(
           endpoint.path,
@@ -131,10 +182,14 @@ export function registerAdminAccessRoute(
             if (!input.success) return fail(reply, "INVALID_COMMAND", 400);
             try {
               const result = endpoint.response.parse(
-                await endpoint.execute(input.data),
+                await endpoint.execute(input.data as never),
               );
               return reply
-                .code(result.outcome === "SUCCESS" ? 200 : status(result.code))
+                .code(
+                  result.outcome === "SUCCESS"
+                    ? 200
+                    : status(result.code ?? "ACCESS_UNAVAILABLE"),
+                )
                 .send(result);
             } catch {
               return fail(reply, "ACCESS_UNAVAILABLE", 503);
@@ -142,6 +197,6 @@ export function registerAdminAccessRoute(
           },
         );
     },
-    { prefix: "/api/v1/admin/access" },
+    { prefix },
   );
 }

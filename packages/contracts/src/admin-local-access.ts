@@ -58,6 +58,7 @@ export const adminPasswordProblemSchema = z.enum([
   "TOO_SHORT",
   "TOO_LONG",
   "SAME_AS_LOGIN",
+  "SAME_AS_CURRENT",
 ]);
 
 // ---------- Sign-in (before a session exists) ----------
@@ -193,6 +194,7 @@ export const adminAccountFailureSchema = z.strictObject({
     "UNAUTHENTICATED",
     "CSRF_INVALID",
     "INVALID_PASSWORD",
+    "ACCOUNT_LOCKED",
     "PASSWORD_REJECTED",
     "INVALID_CODE",
     "ENROLLMENT_EXPIRED",

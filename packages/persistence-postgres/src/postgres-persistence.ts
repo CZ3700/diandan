@@ -51,9 +51,14 @@ import type {
   AdminOrdersTransactionManager,
 } from "@fan-support/persistence-port";
 import { createAdminAccessRepository } from "./admin-access-repository.js";
+import { createAdminLocalLoginRepository } from "./admin-local-login-repository.js";
+import { createAdminLocalAccountRepository } from "./admin-local-account-repository.js";
+import { createAdminLocalStaffRepository } from "./admin-local-staff-repository.js";
 import type {
   AdminAccessRepositories,
   AdminAccessTransactionManager,
+  AdminLocalAccessRepositories,
+  AdminLocalAccessTransactionManager,
 } from "@fan-support/persistence-port";
 import { createNotificationRepository } from "./notification-repository.js";
 import { createNotificationSubmissionRepository } from "./notification-submission-repository.js";
@@ -245,6 +250,7 @@ export interface PostgresPersistence {
   readonly adminOrdersTransactionManager: AdminOrdersTransactionManager;
   readonly adminOrderResendNotificationTransactionManager: NotificationTransactionManager;
   readonly adminAccessTransactionManager: AdminAccessTransactionManager;
+  readonly adminLocalAccessTransactionManager: AdminLocalAccessTransactionManager;
   readonly notificationTransactionManager: NotificationTransactionManager;
   readonly notificationSubmissionTransactionManager: NotificationSubmissionTransactionManager;
   readonly commerceExpiryTransactionManager: CommerceExpiryTransactionManager;
@@ -854,6 +860,16 @@ export function createPostgresPersistenceWithPoolFactory(
       adminAccess: createAdminAccessRepository(client, scope),
     }),
   });
+  const adminLocalAccessRunner =
+    createTransactionRunner<AdminLocalAccessRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        adminAccess: createAdminAccessRepository(client, scope),
+        localLogin: createAdminLocalLoginRepository(client, scope),
+        localAccount: createAdminLocalAccountRepository(client, scope),
+        localStaff: createAdminLocalStaffRepository(client, scope),
+      }),
+    });
   const adminSessionRunner = createTransactionRunner<AdminSessionRepositories>({
     acquireClient: async () => pool.connect(),
     createRepositories: (client, scope) => ({
@@ -1224,6 +1240,20 @@ export function createPostgresPersistenceWithPoolFactory(
           });
         return adminAccessRunner.run(
           { schemaVersion: 1, isolationLevel: "SERIALIZABLE" },
+          work,
+        );
+      },
+    },
+    // Explicit row locks (identity, account, login) serialize built-in sign-in without serialization aborts.
+    adminLocalAccessTransactionManager: {
+      async runInAdminLocalAccessTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminLocalAccessRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );
       },

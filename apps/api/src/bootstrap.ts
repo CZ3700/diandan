@@ -12,8 +12,14 @@ import {
 } from "./admin-payment-configuration-route.js";
 import {
   registerAdminAccessRoute,
+  registerAdminLocalAccessRoute,
   type AdminAccessRouteDependencies,
+  type AdminLocalAccessRouteDependencies,
 } from "./admin-access-route.js";
+import {
+  registerAdminAccountRoutes,
+  type AdminAccountRouteDependencies,
+} from "./admin-account-route.js";
 import {
   registerStorefrontCommerceRoute,
   type StorefrontCommerceRouteDependencies,
@@ -195,6 +201,8 @@ export type CreateApiApplicationOptions = Readonly<{
   adminPaymentConfigurationRoute?: AdminPaymentConfigurationRouteDependencies;
   adminPaymentConfigurationRuntime?: ApiLifecycleResource;
   adminAccessRoute?: AdminAccessRouteDependencies;
+  adminLocalAccessRoute?: AdminLocalAccessRouteDependencies;
+  adminAccountRoute?: AdminAccountRouteDependencies;
   adminAccessRuntime?: ApiLifecycleResource;
   adminSessionRoute?: AdminSessionRouteDependencies;
   adminSessionRuntime?: ApiLifecycleResource;
@@ -479,6 +487,16 @@ export async function createApiApplication(
     registerAdminOrdersRoute(adapter.getInstance(), options.adminOrdersRoute);
   if (options.adminAccessRoute)
     registerAdminAccessRoute(adapter.getInstance(), options.adminAccessRoute);
+  if (options.adminLocalAccessRoute)
+    registerAdminLocalAccessRoute(
+      adapter.getInstance(),
+      options.adminLocalAccessRoute,
+    );
+  if (options.adminAccountRoute)
+    registerAdminAccountRoutes(
+      adapter.getInstance(),
+      options.adminAccountRoute,
+    );
   if (options.adminSessionRoute)
     registerAdminSessionRoute(adapter.getInstance(), options.adminSessionRoute);
   if (options.adminCatalogRoute)

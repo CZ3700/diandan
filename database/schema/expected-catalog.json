@@ -29064,7 +29064,7 @@
       "table": "admin_local_accounts",
       "name": "admin_local_accounts_totp_ciphertext_check",
       "kind": "CHECK",
-      "definition": "CHECK (totp_ciphertext ~ '^enc:v1:[A-Za-z0-9_-]{32,4096}$'::text)",
+      "definition": "CHECK (totp_ciphertext ~ '^enc:v1:[A-Za-z0-9_-]+$'::text AND char_length(totp_ciphertext) >= 39 AND char_length(totp_ciphertext) <= 4103)",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -29072,7 +29072,7 @@
       "table": "admin_local_accounts",
       "name": "admin_local_accounts_totp_encrypted_data_key_check",
       "kind": "CHECK",
-      "definition": "CHECK (totp_encrypted_data_key ~ '^enc:v1:[A-Za-z0-9_-]{32,4096}$'::text)",
+      "definition": "CHECK (totp_encrypted_data_key ~ '^enc:v1:[A-Za-z0-9_-]+$'::text AND char_length(totp_encrypted_data_key) >= 39 AND char_length(totp_encrypted_data_key) <= 4103)",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -29096,7 +29096,7 @@
       "table": "admin_local_accounts",
       "name": "admin_local_accounts_totp_pending_ciphertext_check",
       "kind": "CHECK",
-      "definition": "CHECK (totp_pending_ciphertext ~ '^enc:v1:[A-Za-z0-9_-]{32,4096}$'::text)",
+      "definition": "CHECK (totp_pending_ciphertext ~ '^enc:v1:[A-Za-z0-9_-]+$'::text AND char_length(totp_pending_ciphertext) >= 39 AND char_length(totp_pending_ciphertext) <= 4103)",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -29104,7 +29104,7 @@
       "table": "admin_local_accounts",
       "name": "admin_local_accounts_totp_pending_encrypted_data_key_check",
       "kind": "CHECK",
-      "definition": "CHECK (totp_pending_encrypted_data_key ~ '^enc:v1:[A-Za-z0-9_-]{32,4096}$'::text)",
+      "definition": "CHECK (totp_pending_encrypted_data_key ~ '^enc:v1:[A-Za-z0-9_-]+$'::text AND char_length(totp_pending_encrypted_data_key) >= 39 AND char_length(totp_pending_encrypted_data_key) <= 4103)",
       "deferrable": false,
       "initiallyDeferred": false
     },

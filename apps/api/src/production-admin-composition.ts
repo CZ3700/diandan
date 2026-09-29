@@ -1,6 +1,7 @@
 import {
   createAdminAccessUseCases,
   createAdminCatalogUseCases,
+  createAdminLocalAccessUseCases,
   createAdminContentUseCases,
   createAdminExceptionsUseCases,
   createAdminFinanceUseCases,
@@ -29,7 +30,11 @@ import {
 } from "@fan-support/identity-oidc";
 import type { PostgresPersistence } from "@fan-support/persistence-postgres";
 
-import type { AdminAccessRouteDependencies } from "./admin-access-route.js";
+import type {
+  AdminAccessRouteDependencies,
+  AdminLocalAccessRouteDependencies,
+} from "./admin-access-route.js";
+import type { AdminAccountRouteDependencies } from "./admin-account-route.js";
 import type { AdminContentRouteOptions } from "./admin-content-route.js";
 import type { AdminExceptionsRouteDependencies } from "./admin-exceptions-route.js";
 import type { AdminFinanceRouteDependencies } from "./admin-finance-route.js";
@@ -73,7 +78,11 @@ export type ProductionAdminCompositionOptions = Readonly<{
   identityTransport?: OidcIdentityProviderDependencies;
 }>;
 export type ProductionAdminComposition = Readonly<{
-  adminAccessRoute: AdminAccessRouteDependencies;
+  /** Present when OIDC is configured. */
+  adminAccessRoute?: AdminAccessRouteDependencies;
+  /** Present when built-in accounts are enabled (ADR-021). */
+  adminLocalAccessRoute?: AdminLocalAccessRouteDependencies;
+  adminAccountRoute?: AdminAccountRouteDependencies;
   adminSessionRoute: AdminSessionRouteDependencies;
   adminAccessRuntime: ApiLifecycleResource;
   adminCatalogRoute: AdminCatalogRouteDependencies;
@@ -115,7 +124,7 @@ function releaseOnStop(
   });
 }
 
-/** Wires the whole administration surface. Identity, roles and MFA stay behind the OIDC and session use cases. */
+/** Wires the whole administration surface. Identity stays behind the OIDC or built-in sign-in use cases; roles and sessions are shared. */
 export function createProductionAdminComposition(
   options: ProductionAdminCompositionOptions,
 ): ProductionAdminComposition {
@@ -130,10 +139,26 @@ export function createProductionAdminComposition(
   const financePersistence = resources.persistence();
   const configurationPersistence = resources.paymentConfigurationPersistence();
   try {
-    const identityProvider = createOidcIdentityProvider(
-      config.provider,
-      options.identityTransport,
-    );
+    const oidc =
+      config.settings !== undefined && config.provider !== undefined
+        ? {
+            settings: config.settings,
+            identityProvider: createOidcIdentityProvider(
+              config.provider,
+              options.identityTransport,
+            ),
+          }
+        : undefined;
+    const localAccess =
+      config.localAccounts === undefined
+        ? undefined
+        : createAdminLocalAccessUseCases({
+            transactions: persistence.adminLocalAccessTransactionManager,
+            keys: keys.keyManagement,
+            tokenPepper,
+            subjectPepper: config.subjectPepper,
+            totpIssuer: config.localAccounts.totpIssuer,
+          });
     const resourceManagement = createResourceManagementUseCases({
       transactions: persistence.resourceManagementTransactionManager,
       tokenPepper,
@@ -148,17 +173,31 @@ export function createProductionAdminComposition(
       retryAfterMs: FINANCE_RETRY_AFTER_MS,
     });
     return Object.freeze({
-      adminAccessRoute: {
-        allowedOrigin,
-        accessKey: config.accessKey,
-        useCases: createAdminAccessUseCases({
-          settings: config.settings,
-          identityProvider,
-          tokenPepper,
-          subjectPepper: config.subjectPepper,
-          transactions: persistence.adminAccessTransactionManager,
-        }),
-      },
+      ...(oidc === undefined
+        ? {}
+        : {
+            adminAccessRoute: {
+              allowedOrigin,
+              accessKey: config.accessKey,
+              useCases: createAdminAccessUseCases({
+                settings: oidc.settings,
+                identityProvider: oidc.identityProvider,
+                tokenPepper,
+                subjectPepper: config.subjectPepper,
+                transactions: persistence.adminAccessTransactionManager,
+              }),
+            },
+          }),
+      ...(localAccess === undefined
+        ? {}
+        : {
+            adminLocalAccessRoute: {
+              allowedOrigin,
+              accessKey: config.accessKey,
+              useCases: localAccess,
+            },
+            adminAccountRoute: { allowedOrigin, useCases: localAccess },
+          }),
       adminSessionRoute: {
         allowedOrigin,
         useCases: createAdminSessionUseCases({

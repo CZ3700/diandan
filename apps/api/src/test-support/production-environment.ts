@@ -97,6 +97,8 @@ export const completeProductionEnvironment = Object.freeze({
   ...commerceEnvironment,
   ...paymentEnvironment,
   ...adminEnvironment,
+  // Both sign-in paths, so every administration route is wired.
+  FAN_SUPPORT_ADMIN_LOCAL_ACCOUNTS: "ENABLED",
 });
 
 export const paymentConnection = Object.freeze({

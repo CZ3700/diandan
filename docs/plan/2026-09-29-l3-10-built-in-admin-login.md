@@ -32,6 +32,7 @@
   - 待确认的 TOTP：`totp_pending_ciphertext`、`totp_pending_encrypted_data_key`、`totp_pending_key_version`、`totp_pending_expires_at`，同样全空或全有，有效期不超过 10 分钟。
   - 其他：`last_login_at`、`version`、`created_at`、`updated_at`。
   - 禁止 DELETE 和 TRUNCATE；停用账号通过身份行的 `status` 表示。
+- **0055 修正（第 ③ 段发现）**：0052 给四个 TOTP 密文列写的 CHECK 正则是 `{32,4096}`，但 PostgreSQL 正则的重复次数上限是 255，任何非空值都会报 2201B，也就是 TOTP 根本存不进去。0052 已部署到 stg，不能改，所以用 0055 换成等价规则：`^enc:v1:[A-Za-z0-9_-]+$` 加长度 39–4103。已存有 TOTP 时 0055 拒绝降级。stg 要先部署 0055，两步验证才能用。
 - **`admin_local_recovery_codes`**：
   - 字段：`account_id`、`batch_id`、`code_digest`（32 字节，唯一）、`created_at`、`used_at`、`revoked_at`。
   - 已用或已作废的码不能恢复；只追加，不删除。

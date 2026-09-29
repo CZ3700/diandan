@@ -46,6 +46,8 @@ const everyRoute = {
   adminExceptionsRoute: true,
   adminPaymentConfigurationRoute: true,
   adminAccessRoute: true,
+  adminLocalAccessRoute: true,
+  adminAccountRoute: true,
   adminSessionRoute: true,
   adminCatalogRoute: true,
   translationWorkspaceRoute: true,

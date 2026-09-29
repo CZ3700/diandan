@@ -1,5 +1,10 @@
 /// <reference types="node" />
 import { createHmac, randomBytes, scrypt, timingSafeEqual } from "node:crypto";
+import {
+  ADMIN_LOCAL_ISSUER,
+  adminOpaqueTokenSchema,
+  sourceHashSchema,
+} from "@fan-support/contracts";
 import { validateAdminContentTokenPepper } from "./admin-content-tokens.js";
 
 // ADR-021: built-in admin accounts. Only node:crypto; nothing here stores or logs a secret.
@@ -146,6 +151,13 @@ export function generateAdminRecoveryCodes(count = 10): string[] {
   }
   return [...codes];
 }
+/** Shown once to the administrator who created or reset the account; 80 random bits. */
+export function generateAdminTemporaryPassword(): string {
+  const raw = [...randomBytes(16)]
+    .map((byte) => RECOVERY_ALPHABET[byte & 31])
+    .join("");
+  return raw.match(/.{4}/gu)!.join("-");
+}
 export function normalizeAdminRecoveryCode(input: string): string | null {
   const normalized = input.replace(/[\s-]/gu, "").toUpperCase();
   return RECOVERY_PATTERN.test(normalized) ? normalized : null;
@@ -158,4 +170,32 @@ export function digestAdminRecoveryCode(pepper: string, code: string): string {
     .update("fan-support:admin-recovery-code:v1:", "utf8")
     .update(normalized, "ascii")
     .digest("hex");
+}
+
+const UUID =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u;
+/** Same construction as OIDC identities, with the platform issuer and the account id as subject. */
+export function digestAdminLocalIdentitySubject(
+  subjectPepper: string,
+  accountId: string,
+): string {
+  validateAdminContentTokenPepper(subjectPepper);
+  if (!UUID.test(accountId)) throw new Error("invalid built-in account id");
+  return sourceHashSchema.parse(
+    createHmac("sha256", Buffer.from(subjectPepper, "hex"))
+      .update("fan-support:admin-identity:v1:", "utf8")
+      .update(JSON.stringify([ADMIN_LOCAL_ISSUER, accountId]), "utf8")
+      .digest("hex"),
+  );
+}
+/** The HttpOnly challenge of a multi-step sign-in; PostgreSQL keeps only this digest. */
+export function digestAdminLocalChallenge(pepper: string, token: string) {
+  validateAdminContentTokenPepper(pepper);
+  adminOpaqueTokenSchema.parse(token);
+  return sourceHashSchema.parse(
+    createHmac("sha256", Buffer.from(pepper, "hex"))
+      .update("fan-support:admin-local-login:v1:", "utf8")
+      .update(token, "ascii")
+      .digest("hex"),
+  );
 }

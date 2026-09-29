@@ -53,6 +53,7 @@ export function adminFailureStatus(code: string): number {
     case "RATE_LIMITED":
       return 429;
     case "TEMPORARY_UNAVAILABLE":
+    case "ACCESS_UNAVAILABLE":
     case "CONTENT_UNAVAILABLE":
     case "COMMERCE_UNAVAILABLE":
     case "MANAGEMENT_UNAVAILABLE":

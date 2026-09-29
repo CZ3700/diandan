@@ -103,6 +103,8 @@ export {
   type AdminAccessUseCases,
 } from "./admin-access.js";
 export { digestAdminIdentitySubject } from "./admin-access-tokens.js";
+export * from "./admin-local-access.js";
+export * from "./admin-local-credentials.js";
 export {
   createAdminOrdersUseCases,
   type AdminOrdersDependencies,

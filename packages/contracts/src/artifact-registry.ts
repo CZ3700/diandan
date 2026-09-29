@@ -32,6 +32,7 @@ import * as adminOrdersPersistence from "./admin-orders-persistence.js";
 import * as adminOrders from "./admin-orders.js";
 import * as adminAccess from "./admin-access.js";
 import * as adminLocalAccess from "./admin-local-access.js";
+import * as adminLocalAccessPersistence from "./admin-local-access-persistence.js";
 import * as orderNotification from "./order-notification.js";
 import * as notificationSubmission from "./notification-submission.js";
 import * as orderAccess from "./order-access.js";
@@ -3840,6 +3841,91 @@ const registrations = [
     name: "AdminStaffResponse",
     audience: "internal",
     schema: adminLocalAccess.adminStaffResponseSchema,
+  },
+  {
+    name: "AdminLocalLoginReadCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginReadCommandSchema,
+  },
+  {
+    name: "AdminLocalLoginReadResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginReadResponseSchema,
+  },
+  {
+    name: "AdminLocalLoginFailureCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginFailureCommandSchema,
+  },
+  {
+    name: "AdminLocalLoginFailureResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginFailureResponseSchema,
+  },
+  {
+    name: "AdminLocalLoginStartCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginStartCommandSchema,
+  },
+  {
+    name: "AdminLocalLoginProgress",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginProgressSchema,
+  },
+  {
+    name: "AdminLocalStepReadCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalStepReadCommandSchema,
+  },
+  {
+    name: "AdminLocalStepReadResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalStepReadResponseSchema,
+  },
+  {
+    name: "AdminLocalStepCompleteCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalStepCompleteCommandSchema,
+  },
+  {
+    name: "AdminLocalAccountReadCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountReadCommandSchema,
+  },
+  {
+    name: "AdminLocalAccountReadResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountReadResponseSchema,
+  },
+  {
+    name: "AdminLocalAccountFailureCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountFailureCommandSchema,
+  },
+  {
+    name: "AdminLocalAccountFailureResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountFailureResponseSchema,
+  },
+  {
+    name: "AdminLocalAccountUpdateCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountUpdateCommandSchema,
+  },
+  {
+    name: "AdminLocalAccountUpdateResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountUpdateResponseSchema,
+  },
+  {
+    name: "AdminLocalStaffCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalStaffCommandSchema,
+  },
+  {
+    name: "AdminLocalStaffResult",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalStaffResultSchema,
   },
   {
     name: "AdminAccessBeginBrowserResponse",

@@ -11,8 +11,11 @@ export type AdminApiRuntimeConfig = Readonly<{
   accessKey: string;
   tokenPepper: string;
   subjectPepper: string;
-  settings: AdminAccessSettings;
-  provider: OidcIdentityProviderOptions;
+  /** OIDC sign-in; both present or both absent. Optional once built-in accounts are enabled. */
+  settings?: AdminAccessSettings;
+  provider?: OidcIdentityProviderOptions;
+  /** ADR-021 built-in accounts. */
+  localAccounts?: Readonly<{ totpIssuer: string }>;
 }>;
 
 // Keys owned only by the API decide presence. The Admin app shares the access key and issuer
@@ -23,7 +26,12 @@ const API_ONLY_KEYS = [
   "FAN_SUPPORT_ADMIN_SUBJECT_PEPPER",
   "FAN_SUPPORT_ADMIN_OIDC_CONFIG_JSON",
   "FAN_SUPPORT_ADMIN_OIDC_CLIENT_SECRET",
+  "FAN_SUPPORT_ADMIN_LOCAL_ACCOUNTS",
+  "FAN_SUPPORT_ADMIN_TOTP_ISSUER",
 ] as const;
+const DEFAULT_TOTP_ISSUER = "Studio Admin";
+// Authenticator apps split the otpauth label on ":"; keep the label plain.
+const totpIssuerSchema = z.string().regex(/^[\p{L}\p{N} ._-]{1,64}$/u);
 const CALLBACK_PATH = "/api/admin/auth/callback";
 const hexSecretSchema = z.string().regex(/^[a-f0-9]{64}$/u);
 const clientSecretSchema = z
@@ -72,6 +80,26 @@ export function resolveAdminApiRuntimeConfig(
     );
     if (new Set([accessKey, tokenPepper, subjectPepper]).size !== 3)
       throw new Error("Administration secrets must be independent");
+    const base = { allowedOrigin, accessKey, tokenPepper, subjectPepper };
+    const switchValue = environment["FAN_SUPPORT_ADMIN_LOCAL_ACCOUNTS"];
+    const issuerValue = environment["FAN_SUPPORT_ADMIN_TOTP_ISSUER"];
+    if (switchValue !== undefined && switchValue !== "ENABLED")
+      throw new Error("Unknown built-in account switch");
+    if (switchValue === undefined && issuerValue !== undefined)
+      throw new Error("Authenticator label without built-in accounts");
+    const localAccounts =
+      switchValue === "ENABLED"
+        ? Object.freeze({
+            totpIssuer: totpIssuerSchema.parse(
+              issuerValue ?? DEFAULT_TOTP_ISSUER,
+            ),
+          })
+        : undefined;
+    const oidcRequested =
+      environment["FAN_SUPPORT_ADMIN_OIDC_CONFIG_JSON"] !== undefined ||
+      environment["FAN_SUPPORT_ADMIN_OIDC_CLIENT_SECRET"] !== undefined;
+    if (localAccounts !== undefined && !oidcRequested)
+      return Object.freeze({ ...base, localAccounts });
     const text = environment["FAN_SUPPORT_ADMIN_OIDC_CONFIG_JSON"];
     if (text === undefined || text.length > 16_384)
       throw new Error("Invalid identity configuration");
@@ -92,10 +120,8 @@ export function resolveAdminApiRuntimeConfig(
       maxAuthenticationAgeSeconds: oidc.maxAuthenticationAgeSeconds,
     });
     return Object.freeze({
-      allowedOrigin,
-      accessKey,
-      tokenPepper,
-      subjectPepper,
+      ...base,
+      ...(localAccounts === undefined ? {} : { localAccounts }),
       settings,
       provider: Object.freeze({
         issuer: settings.issuer,
