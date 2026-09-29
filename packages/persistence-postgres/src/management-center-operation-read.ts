@@ -223,7 +223,7 @@ async function readPosters(
   command: Extract<ManagementCenterCommand, { action: "LIST" }>,
   publicMediaBaseUrl: string,
 ) {
-  const query = `FROM public.homepage_revisions r JOIN public.homepage_slots s ON s.homepage_revision_id=r.id AND s.kind='HERO_IDOL' JOIN public.content_publications p ON p.homepage_revision_id=r.id AND p.action='PUBLISH' LEFT JOIN public.homepage_publication_heads h ON true LEFT JOIN public.daily_publication_revisions d ON d.revision_id=r.id LEFT JOIN public.homepage_revision_translations t ON t.homepage_revision_id=r.id AND t.locale='en'`;
+  const query = `FROM public.homepage_revisions r JOIN public.homepage_slots s ON s.homepage_revision_id=r.id AND s.kind='HERO_IDOL' JOIN public.content_publications p ON p.homepage_revision_id=r.id AND p.action='PUBLISH' LEFT JOIN public.homepage_publication_heads h ON true LEFT JOIN public.daily_publication_revisions d ON d.revision_id=r.id LEFT JOIN public.homepage_revision_translations t ON t.homepage_revision_id=r.id AND t.locale='en' WHERE r.lifecycle<>'ARCHIVED'`;
   const [count] = await draftRows(
     client,
     `SELECT count(*)::text total ${query}`,
@@ -259,6 +259,7 @@ async function readPosters(
       current: row["current"],
       image,
       canRestore: image !== null && mobile !== null && row["current"] !== true,
+      canDelete: row["current"] !== true,
       createdAt: row["created_at"],
     });
   }

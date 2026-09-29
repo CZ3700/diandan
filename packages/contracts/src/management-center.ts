@@ -245,6 +245,15 @@ export const managementCenterCommandSchema = z.discriminatedUnion("action", [
     expectedVersion: sequence.positive(),
     ...mutation,
   }),
+  // L2-09: removes an old poster from the list; the poster on the homepage cannot be archived.
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("ARCHIVE_POSTER"),
+    revisionId: uuid,
+    expectedVersion: sequence.positive(),
+    sourceLocale: supportedLocaleSchema,
+    ...mutation,
+  }),
 ]);
 export const managementCenterRequestSchema = z.strictObject({
   schemaVersion: version,
@@ -288,9 +297,11 @@ export const managementCenterListItemSchema = z.discriminatedUnion("kind", [
       current: z.boolean(),
       image: publicMediaViewSchema.nullable(),
       canRestore: z.boolean(),
+      canDelete: z.boolean(),
       createdAt: contentTimestampSchema,
     })
-    .refine((value) => !value.canRestore || value.image !== null),
+    .refine((value) => !value.canRestore || value.image !== null)
+    .refine((value) => !(value.current && value.canDelete)),
 ]);
 const success = { schemaVersion: version, outcome: z.literal("SUCCESS") };
 export const managementCenterResponseSchema = z.union([
@@ -301,6 +312,11 @@ export const managementCenterResponseSchema = z.union([
     ...success,
     kind: z.literal("OPERATION"),
     operation: managementCenterOperationSchema,
+  }),
+  z.strictObject({
+    ...success,
+    kind: z.literal("POSTER_ARCHIVED"),
+    revisionId: uuid,
   }),
   z
     .strictObject({

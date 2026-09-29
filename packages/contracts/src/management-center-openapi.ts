@@ -10,6 +10,7 @@ const paths = [
   ["submit", "SUBMIT"],
   ["operations/read", "READ_OPERATION"],
   ["operations/retry", "RETRY_OPERATION"],
+  ["posters/archive", "ARCHIVE_POSTER"],
 ] as const;
 export function managementCenterPaths(): JsonObject {
   return Object.fromEntries(

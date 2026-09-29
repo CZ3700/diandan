@@ -88,7 +88,9 @@ export function createManagementCenterUseCases(
                   }),
                   ...(command.action === "SUBMIT"
                     ? { sourceLocale: command.intent.sourceLocale }
-                    : {}),
+                    : command.action === "ARCHIVE_POSTER"
+                      ? { sourceLocale: command.sourceLocale }
+                      : {}),
                 }),
               );
               if (authorized.outcome === "FAILURE") return authorized;
@@ -160,6 +162,15 @@ export function createManagementCenterUseCases(
                       operationId: command.operationId,
                       expectedVersion: command.expectedVersion,
                       idempotencyKey: command.idempotencyKey,
+                    }),
+                  );
+                case "ARCHIVE_POSTER":
+                  return managementCenterResponseSchema.parse(
+                    await operations.archivePoster({
+                      principal,
+                      requestId: request.requestId,
+                      revisionId: command.revisionId,
+                      expectedVersion: command.expectedVersion,
                     }),
                   );
                 case "PREPARE_UPLOAD":

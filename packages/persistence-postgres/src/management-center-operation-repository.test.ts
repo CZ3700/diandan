@@ -1,4 +1,4 @@
-import { expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { slugSchema } from "@fan-support/contracts";
 import { createManagementCenterOperationRepository } from "./management-center-operation-repository.js";
 import type {
@@ -262,4 +262,98 @@ test("an explicit authorized retry records one media retry request", async () =>
         ) && sql.includes("retry_key=$5"),
     ),
   ).toBe(true);
+});
+
+describe("archiving an old poster (L2-09)", () => {
+  const current = "00000000-0000-4000-8000-00000000000a";
+  const old = "00000000-0000-4000-8000-00000000000b";
+  const archive = (
+    f: ReturnType<typeof fixture>,
+    revisionId = old,
+    expectedVersion = 4,
+  ) =>
+    f.repository.archivePoster({
+      principal: {
+        schemaVersion: 1,
+        actorId: id,
+        sessionId: id,
+        authorizedAt: "2026-09-08T00:00:00Z",
+        expiresAt: "2026-09-08T01:00:00Z",
+      },
+      requestId: id,
+      revisionId,
+      expectedVersion,
+    });
+  const head = [{ homepage_revision_id: current, version: "4" }];
+  const writes = (f: ReturnType<typeof fixture>) =>
+    f.queries.filter((sql) => /^(UPDATE|INSERT)/u.test(sql.trim()));
+  test("the homepage poster and a stale head are refused without any write", async () => {
+    for (const [revisionId, version] of [
+      [current, 4],
+      [old, 3],
+    ] as const) {
+      const f = fixture([[], head]);
+      expect(await archive(f, revisionId, version)).toMatchObject({
+        outcome: "FAILURE",
+        code: "TARGET_CONFLICT",
+      });
+      expect(writes(f)).toEqual([]);
+      const lock = f.queries.findIndex((sql) =>
+        sql.includes("fan-support:homepage"),
+      );
+      const read = f.queries.findIndex((sql) =>
+        sql.includes("homepage_publication_heads"),
+      );
+      expect(lock).toBeGreaterThanOrEqual(0);
+      expect(lock).toBeLessThan(read);
+    }
+  });
+  test("a queued restore of the same poster wins; an archived poster is already done", async () => {
+    const queued = fixture([
+      [],
+      head,
+      [{ lifecycle: "SUPERSEDED" }],
+      [{ "?column?": 1 }],
+    ]);
+    expect(await archive(queued)).toMatchObject({ code: "TARGET_CONFLICT" });
+    expect(writes(queued)).toEqual([]);
+    const repeated = fixture([[], head, [{ lifecycle: "ARCHIVED" }]]);
+    expect(await archive(repeated)).toEqual({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      kind: "POSTER_ARCHIVED",
+      revisionId: old,
+    });
+    expect(writes(repeated)).toEqual([]);
+  });
+  test("a superseded poster is archived with an audit in the same transaction", async () => {
+    const f = fixture([
+      [],
+      head,
+      [{ lifecycle: "SUPERSEDED" }],
+      [],
+      [{ audit_id: id, now: "2026-09-29T00:00:00.000000Z" }],
+      [],
+      [],
+    ]);
+    expect(await archive(f)).toMatchObject({
+      outcome: "SUCCESS",
+      kind: "POSTER_ARCHIVED",
+    });
+    const [update, audit] = writes(f);
+    expect(update).toContain("lifecycle='ARCHIVED'");
+    expect(update).toContain("lifecycle='SUPERSEDED'");
+    expect(audit).toContain("INSERT INTO public.audit_logs");
+    const auditCall = f.query.mock.calls.find(([sql]) =>
+      String(sql).includes("INSERT INTO public.audit_logs"),
+    );
+    expect((auditCall as unknown[] | undefined)?.[1]).toEqual(
+      expect.arrayContaining([
+        "HOMEPAGE_POSTER_ARCHIVE",
+        "HOMEPAGE_REVISION",
+        old,
+        "DAILY_CENTER_DELETE",
+      ]),
+    );
+  });
 });

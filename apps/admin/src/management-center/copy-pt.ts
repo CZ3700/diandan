@@ -128,4 +128,10 @@ export const copy = {
   deleteTypeName: "Digite o nome exato para confirmar",
   deleteConfirm: "Excluir definitivamente",
   deleted: "Excluído. Não aparece mais no site.",
+  posterDelete: "Excluir",
+  posterDeleteWarning:
+    "Excluir esta imagem do histórico? Não é possível desfazer. A imagem inicial atual não é afetada.",
+  posterDeleteConfirm: "Excluir imagem",
+  posterDeleteCancel: "Manter",
+  posterDeleted: "Imagem excluída. A página inicial não mudou.",
 } satisfies ManagementCopy;

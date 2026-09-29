@@ -190,3 +190,40 @@ it("reads an original only for the exact requested content version", async () =>
     api.readImageSource({ ...target, kind: "GIFT" }),
   ).rejects.toThrow("INVALID_RESPONSE");
 });
+it("archives an old poster through its own mutation and refuses another poster's result", async () => {
+  const poster = {
+    kind: "POSTER" as const,
+    id,
+    version: 4,
+    sourceLocale: "ja" as const,
+    sourceRevisionId: id,
+    current: false,
+    image: null,
+    canRestore: false,
+    canDelete: true,
+    createdAt: "2026-09-08T00:00:00Z",
+  };
+  const { api, calls } = setup({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "POSTER_ARCHIVED",
+    revisionId: id,
+  });
+  await api.archivePoster(poster);
+  expect(calls[0]?.url).toContain("management-archive-poster");
+  expect(JSON.parse(String(calls[0]?.init.body))).toMatchObject({
+    revisionId: id,
+    expectedVersion: 4,
+    sourceLocale: "ja",
+  });
+  expect(
+    new Headers(calls[0]?.init.headers).get("idempotency-key"),
+  ).toBeTruthy();
+  const other = setup({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "POSTER_ARCHIVED",
+    revisionId: "10000000-0000-4000-8000-000000000009",
+  });
+  await expect(other.api.archivePoster(poster)).rejects.toThrow();
+});

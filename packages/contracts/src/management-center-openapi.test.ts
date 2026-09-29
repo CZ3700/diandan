@@ -1,8 +1,9 @@
 import { expect, test } from "vitest";
 import { managementCenterPaths } from "./management-center-openapi.js";
-test("management API documents seven strictly private operations without browser orchestration", () => {
+test("management API documents eight strictly private operations without browser orchestration", () => {
   const paths = managementCenterPaths();
-  expect(Object.keys(paths)).toHaveLength(7);
+  expect(Object.keys(paths)).toHaveLength(8);
+  expect(paths).toHaveProperty("/api/v1/admin/management/posters/archive");
   const submit = paths["/api/v1/admin/management/submit"] as {
     post: {
       parameters: { name: string }[];

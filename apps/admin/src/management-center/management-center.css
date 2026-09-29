@@ -550,3 +550,25 @@
   max-width: none;
   object-fit: fill;
 }
+/* L2-09: deleting an old poster from the history, confirmed in place. */
+.mc-poster-delete-trigger {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+}
+.mc-poster-delete {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width) solid var(--color-danger, var(--color-border));
+  border-radius: var(--radius-control);
+}
+.mc-poster-delete p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+.mc-poster-delete-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

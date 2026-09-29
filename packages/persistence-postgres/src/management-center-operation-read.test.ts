@@ -314,8 +314,42 @@ test("a missing history image does not erase its historical entry or authorize r
       "https://media.example.test/",
     ),
   ).toMatchObject({
-    items: [{ sourceRevisionId: id, image: null, canRestore: false }],
+    items: [
+      { sourceRevisionId: id, image: null, canRestore: false, canDelete: true },
+    ],
   });
+});
+test("deleted posters leave the history and the homepage poster is never deletable", async () => {
+  const db = client([
+    [{ total: "1" }],
+    [
+      {
+        id,
+        version: 3,
+        current: true,
+        source_locale: "en",
+        desktop_media_asset_id: null,
+        created_at: "2026-09-08T00:00:00Z",
+      },
+    ],
+  ]);
+  expect(
+    await readManagementCenterList(
+      db,
+      {
+        schemaVersion: 1,
+        action: "LIST",
+        section: "POSTERS",
+        page: 1,
+        pageSize: 10,
+      },
+      "https://media.example.test/",
+    ),
+  ).toMatchObject({ items: [{ current: true, canDelete: false }] });
+  const sql = vi.mocked(db.query).mock.calls.map(([text]) => String(text));
+  expect(sql.every((text) => text.includes("r.lifecycle<>'ARCHIVED'"))).toBe(
+    true,
+  );
 });
 test("missing result rows cannot masquerade as a successful complete page", async () => {
   const db = client([[{ total: "2" }], []]);

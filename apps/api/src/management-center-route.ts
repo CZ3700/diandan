@@ -20,6 +20,7 @@ const routes = [
   ["submit", "SUBMIT", true],
   ["operations/read", "READ_OPERATION", false],
   ["operations/retry", "RETRY_OPERATION", true],
+  ["posters/archive", "ARCHIVE_POSTER", true],
 ] as const;
 const same = (left: string, right: string) =>
   left.toLowerCase() === right.toLowerCase();
@@ -52,6 +53,11 @@ function matches(
       return (
         result.kind === "OPERATION" &&
         same(result.operation.operationId, command.operationId)
+      );
+    case "ARCHIVE_POSTER":
+      return (
+        result.kind === "POSTER_ARCHIVED" &&
+        same(result.revisionId, command.revisionId)
       );
     case "SUBMIT":
       return (

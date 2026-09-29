@@ -51,6 +51,15 @@ export interface ManagementCenterOperationRepository {
   read(
     input: Readonly<{ actorId: string; operationId: string }>,
   ): Promise<ManagementCenterResponse>;
+  /** L2-09: archive an old poster; the homepage's current poster is never archived. */
+  archivePoster(
+    input: Readonly<{
+      principal: AdminPrincipal;
+      requestId: string;
+      revisionId: string;
+      expectedVersion: number;
+    }>,
+  ): Promise<ManagementCenterResponse>;
   retry(
     input: Readonly<{
       principal: AdminPrincipal;

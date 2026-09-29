@@ -124,4 +124,10 @@ export const copy = {
   deleteTypeName: "พิมพ์ชื่อให้ตรงกันเพื่อยืนยัน",
   deleteConfirm: "ลบถาวร",
   deleted: "ลบแล้ว จะไม่แสดงบนเว็บไซต์อีก",
+  posterDelete: "ลบ",
+  posterDeleteWarning:
+    "ลบภาพนี้ออกจากประวัติหรือไม่ ย้อนกลับไม่ได้ ภาพหน้าหลักปัจจุบันไม่ได้รับผลกระทบ",
+  posterDeleteConfirm: "ยืนยันการลบ",
+  posterDeleteCancel: "เก็บไว้",
+  posterDeleted: "ลบภาพแล้ว หน้าหลักไม่เปลี่ยนแปลง",
 } satisfies ManagementCopy;

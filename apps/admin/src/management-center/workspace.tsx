@@ -18,6 +18,7 @@ import type {
   ManagementContext,
   ManagementList,
   ManagementSection,
+  PosterItem,
 } from "./api";
 import { managementCopy } from "./copy";
 import { ManagementShell } from "./shell";
@@ -108,7 +109,7 @@ export function ManagementWorkspace({
   const [success, setSuccess] = useState<ManagementCenterOperation | null>(
     null,
   );
-  const [deleted, setDeleted] = useState(false);
+  const [deleted, setDeleted] = useState<string | null>(null);
   const [canDeleteGifts, setCanDeleteGifts] = useState(false);
   const restoreActive = useRef(false);
   const writeBlocked = !canStartManagementWrite(busy, operations);
@@ -156,22 +157,39 @@ export function ManagementWorkspace({
       canceled = true;
     };
   }, [api]);
-  const removed = useCallback(() => {
-    setDirty(false);
-    setSuccess(null);
-    setDeleted(true);
-    setSelection(null);
-    setPage(1);
-    setRefresh((value) => value + 1);
-    setBusy(false);
-    focusTarget(() =>
-      document.querySelector<HTMLElement>("[data-management-deleted]"),
-    );
-  }, [focusTarget]);
+  const removed = useCallback(
+    (message: string) => {
+      setDirty(false);
+      setSuccess(null);
+      setDeleted(message);
+      setSelection(null);
+      setPage(1);
+      setRefresh((value) => value + 1);
+      setBusy(false);
+      focusTarget(() =>
+        document.querySelector<HTMLElement>("[data-management-deleted]"),
+      );
+    },
+    [focusTarget],
+  );
+  const archivePoster = useCallback(
+    async (item: PosterItem) => {
+      setBusy(true);
+      setError(null);
+      try {
+        await api.archivePoster(item);
+        removed(copy.posterDeleted);
+      } catch (failure) {
+        setError(failure);
+        setBusy(false);
+      }
+    },
+    [api, removed, copy.posterDeleted],
+  );
   const published = useCallback(
     (operation: ManagementCenterOperation) => {
       setDirty(false);
-      setDeleted(false);
+      setDeleted(null);
       setSuccess(operation);
       setSelection(null);
       setPage(1);
@@ -207,7 +225,7 @@ export function ManagementWorkspace({
     setSection(next);
     setPage(1);
     setSuccess(null);
-    setDeleted(false);
+    setDeleted(null);
     focusTitle();
   }
   async function restore(
@@ -249,7 +267,7 @@ export function ManagementWorkspace({
   function select(item: ManagementCenterListItem) {
     if (writeBlocked) return;
     setSuccess(null);
-    setDeleted(false);
+    setDeleted(null);
     if (item.kind === "POSTER") {
       void restore(item);
       return;
@@ -352,7 +370,7 @@ export function ManagementWorkspace({
             }
             onClick={() => {
               setSuccess(null);
-              setDeleted(false);
+              setDeleted(null);
               setSelection(
                 section === "POSTERS"
                   ? {
@@ -414,7 +432,7 @@ export function ManagementWorkspace({
           data-management-deleted
         >
           <Icon name="check" decorative />
-          <span>{copy.deleted}</span>
+          <span>{deleted}</span>
         </div>
       ) : null}
       {selection && context ? (
@@ -425,7 +443,7 @@ export function ManagementWorkspace({
           context={context}
           selection={selection}
           onPublished={published}
-          onDeleted={removed}
+          onDeleted={() => removed(copy.deleted)}
           canDelete={
             selection.kind === "SAVE_ARTIST"
               ? canDeleteArtists
@@ -471,6 +489,7 @@ export function ManagementWorkspace({
                 list={list}
                 busy={writeBlocked}
                 onSelect={select}
+                onDeletePoster={(item) => void archivePoster(item)}
                 onPage={(next) => {
                   setPage(next);
                   focusTitle();

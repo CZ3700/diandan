@@ -3,8 +3,9 @@ import {
   type ManagementCenterListItem,
   type SupportedLocale,
 } from "@fan-support/contracts";
+import { useState } from "react";
 import { Button, Icon, Price } from "@fan-support/ui";
-import type { ManagementList } from "./api";
+import type { ManagementList, PosterItem } from "./api";
 import { managementCopy } from "./copy";
 import { giftKindLabel } from "./form-fields";
 import { PhotoView } from "./photo-view";
@@ -14,6 +15,8 @@ export type ListViewProps = {
   busy: boolean;
   onSelect: (item: ManagementCenterListItem) => void;
   onPage: (page: number) => void;
+  /** L2-09: old posters can be deleted after an inline confirmation. */
+  onDeletePoster?: (item: PosterItem) => void;
 };
 export function ManagementListView({
   locale,
@@ -21,8 +24,10 @@ export function ManagementListView({
   busy,
   onSelect,
   onPage,
+  onDeletePoster,
 }: ListViewProps) {
   const copy = managementCopy(locale);
+  const [confirming, setConfirming] = useState<string | null>(null);
   const poster = list.section === "POSTERS";
   const empty = poster
     ? copy.emptyPosters
@@ -125,6 +130,55 @@ export function ManagementListView({
                       : ""}
                   </span>
                 </button>
+                {item.kind === "POSTER" && item.canDelete && onDeletePoster ? (
+                  confirming === item.id ? (
+                    <div
+                      className="mc-poster-delete"
+                      role="group"
+                      aria-label={`${copy.posterDelete} · ${name}`}
+                      data-management-poster-confirm={item.id}
+                    >
+                      <p>{copy.posterDeleteWarning}</p>
+                      <div className="mc-poster-delete-actions">
+                        <Button
+                          variant="danger"
+                          size="compact"
+                          type="button"
+                          disabled={busy}
+                          data-management-poster-delete-confirm
+                          onClick={() => {
+                            setConfirming(null);
+                            onDeletePoster(item);
+                          }}
+                        >
+                          {copy.posterDeleteConfirm}
+                        </Button>
+                        <Button
+                          variant="quiet"
+                          size="compact"
+                          type="button"
+                          onClick={() => setConfirming(null)}
+                        >
+                          {copy.posterDeleteCancel}
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <Button
+                      variant="quiet"
+                      size="compact"
+                      type="button"
+                      className="mc-poster-delete-trigger"
+                      disabled={busy}
+                      aria-label={`${copy.posterDelete} · ${name}`}
+                      data-management-poster-delete={item.id}
+                      onClick={() => setConfirming(item.id)}
+                    >
+                      <Icon name="close" decorative />
+                      {copy.posterDelete}
+                    </Button>
+                  )
+                ) : null}
               </li>
             );
           })}

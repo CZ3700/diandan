@@ -129,4 +129,10 @@ export const copy = {
   deleteTypeName: "確認のため名前を正確に入力してください",
   deleteConfirm: "完全に削除",
   deleted: "削除しました。サイトには表示されなくなりました。",
+  posterDelete: "削除",
+  posterDeleteWarning:
+    "この画像を履歴から削除しますか？元に戻せません。現在のトップ画像には影響しません。",
+  posterDeleteConfirm: "削除する",
+  posterDeleteCancel: "残す",
+  posterDeleted: "画像を削除しました。トップページは変わりません。",
 } satisfies ManagementCopy;

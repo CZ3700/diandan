@@ -125,4 +125,10 @@ export const copy = {
   deleteTypeName: "Nhập chính xác tên để xác nhận",
   deleteConfirm: "Xóa vĩnh viễn",
   deleted: "Đã xóa. Mục này không còn hiển thị trên trang web.",
+  posterDelete: "Xóa",
+  posterDeleteWarning:
+    "Xóa ảnh này khỏi lịch sử? Không thể hoàn tác. Ảnh trang chủ hiện tại không bị ảnh hưởng.",
+  posterDeleteConfirm: "Xác nhận xóa",
+  posterDeleteCancel: "Giữ lại",
+  posterDeleted: "Đã xóa ảnh. Trang chủ không thay đổi.",
 } satisfies ManagementCopy;

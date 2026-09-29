@@ -125,4 +125,10 @@ export const copy = {
   deleteTypeName: "Type the name exactly to confirm",
   deleteConfirm: "Delete permanently",
   deleted: "Deleted. It no longer appears on the website.",
+  posterDelete: "Delete",
+  posterDeleteWarning:
+    "Delete this poster from the history? This cannot be undone. The homepage poster is not affected.",
+  posterDeleteConfirm: "Delete poster",
+  posterDeleteCancel: "Keep",
+  posterDeleted: "Poster deleted. The homepage is unchanged.",
 };

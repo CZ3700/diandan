@@ -1,0 +1,49 @@
+# L2-10 设计：艺人与礼物的手动展示顺序
+
+> 日期：2026-09-29 · 执行：Claude（Windows 端） · 用户原话：“艺人和礼物在商城展示的顺序依然现在还不能修改……比如我可以随意调动哪个艺人出现在前面” · 进度：[launch-progress.md](../progress/launch-progress.md) 的 L2-10 行
+
+## 1. 现状（2026-09-29 调研）
+
+- **艺人**：目录、首页艺人区和礼物页的收礼人选择，都按 `match_rank, idol_revisions.display_order, id` 排序。
+  - `display_order` 存在已冻结、经清单证明的艺人内容版本里，改它就得重新发布内容。
+  - ADR-020 规定排序属于非语言布局元数据，不能靠改冻结内容来实现，所以不复用这个字段。
+- **礼物**：没有任何排序字段。"推荐"排序就是 `published_at DESC, id`，编辑一次礼物它就会跳到最前面。
+- **缓存**：商城读取全部 `no-store`，API 响应带整体 ETag，没有 CDN purge。只要顺序进入目录的版本哈希（`versionState`），保存后下一次请求就能看到新顺序。
+
+## 2. 数据（迁移 0053_catalog-display-order）
+
+表 `catalog_display_orders`，只追加：
+
+- 字段：`id`、`kind`（`IDOL`/`GIFT`）、`version`（按类型递增，`UNIQUE(kind, version)`）、`ordered_ids uuid[]`（不重复，最多 500 个）、`actor_id`、`session_id`、`audit_log_id`（唯一）、`idempotency_key`（与执行者组合唯一）、`request_hash`、`created_at`。
+- 同一类型版本号最大的那一行就是当前顺序；空数组表示恢复默认顺序。
+- 写入时校验 id 都存在且未归档；读取时仍按状态过滤，所以之后删除的项目会自然消失。
+- 并发保护：以“当前版本 + 1”插入，遇到唯一冲突就返回 `STALE_VERSION`。相同幂等键加相同请求哈希返回原结果，哈希不同返回 `IDEMPOTENCY_CONFLICT`。
+- 审计：`CATALOG_DISPLAY_ORDER_SAVE`，subject 为 `CATALOG_DISPLAY_ORDER`，与写入在同一事务。
+- 触发器：禁止 UPDATE、DELETE、TRUNCATE；审计必须精确对应。降级迁移只要有数据就拒绝。
+
+## 3. 商城排序规则
+
+- **手动排过的在前**，按手动顺序排列；没排过的（包括新建项目）接在后面，保持原来的默认顺序（艺人 `display_order, id`；礼物 `published_at DESC, id`）。
+- **影响范围**：艺人目录、首页艺人区、收礼人选择、礼物“推荐”排序、首页礼物区、艺人页里的礼物列表。按价格排序不受影响，搜索结果仍按匹配度优先。
+- **分页**：游标和 ETag 都纳入顺序版本，排序改动后旧游标按现有规则返回 `CATALOG_CHANGED`。
+
+## 4. 接口与权限
+
+- 管理接口：`/api/v1/admin/display-order/{read,save}`，需要会话和 CSRF，并校验 Origin。
+  - `read`：按类型返回当前版本、手动顺序，以及可排序的项目（名称、缩略图、状态）。
+  - `save`：带 `expectedVersion`、`orderedIds` 和幂等键。
+- 权限沿用装修体系的 `content.read` / `content.publish`。
+
+## 5. 后台界面
+
+- **入口**：“店铺装修”新增“展示顺序”标签，分“艺人”“礼物”两个列表。
+- **操作**：每项有上移、下移、置顶按钮，键盘可用；“恢复默认顺序”只改待保存的草稿。
+- **保存**：点“保存并生效”后，商城立刻按新顺序显示。
+- **提示**：切换标签或离开页面时提醒未保存的改动；七语言。
+- 不做实时预览：保存即生效，而且可以随时再调整。
+
+## 6. 验收
+
+- 单测：合同、仓储（并发冲突、幂等、校验）、SQL 排序（手动在前、其余默认）、后台移动模型与界面。
+- 在实际 PostgreSQL 上验证迁移往返、结构目录和排序查询。
+- 部署 stg：后台调整艺人和礼物顺序后，首页、艺人目录、礼物目录和收礼人选择的顺序一致；恢复默认后回到原顺序。

@@ -88,6 +88,7 @@ it("keeps an unavailable historical poster visible with no restore action", () =
         sourceRevisionId: id,
         current: false,
         canRestore: false,
+        canDelete: true,
         image: null,
         createdAt: "2026-09-08T00:00:00Z",
       },
@@ -105,4 +106,42 @@ it("keeps an unavailable historical poster visible with no restore action", () =
   expect(html).toContain('data-management-kind="POSTER"');
   expect(html).toMatch(/<button[^>]*disabled=""/u);
   expect(html).toContain("图片暂不可用");
+});
+
+it("offers delete for an old poster only, never for the homepage poster", () => {
+  const poster = (posterId: string, current: boolean) => ({
+    kind: "POSTER" as const,
+    id: posterId,
+    version: 3,
+    sourceLocale: "en" as const,
+    sourceRevisionId: posterId,
+    current,
+    canRestore: false,
+    canDelete: !current,
+    image: null,
+    createdAt: "2026-09-08T00:00:00Z",
+  });
+  const current = "00000000-0000-4000-8000-00000000000a";
+  const old = "00000000-0000-4000-8000-00000000000b";
+  const list = listing({
+    section: "POSTERS",
+    totalItems: 2,
+    items: [poster(current, true), poster(old, false)],
+  });
+  const render = (onDeletePoster?: () => void) =>
+    renderToStaticMarkup(
+      <ManagementListView
+        locale="zh-CN"
+        list={list}
+        busy={false}
+        onSelect={() => {}}
+        onPage={() => {}}
+        {...(onDeletePoster ? { onDeletePoster } : {})}
+      />,
+    );
+  const html = render(() => {});
+  expect(html).toContain(`data-management-poster-delete="${old}"`);
+  expect(html).not.toContain(`data-management-poster-delete="${current}"`);
+  expect(html).toContain(">删除<");
+  expect(render()).not.toContain("data-management-poster-delete");
 });

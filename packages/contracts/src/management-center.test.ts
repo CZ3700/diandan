@@ -230,6 +230,7 @@ describe("management center boundary", () => {
       current: false,
       image: null,
       canRestore: false,
+      canDelete: true,
       createdAt: "2026-09-08T00:00:00Z",
     };
     const response = {
@@ -251,5 +252,18 @@ describe("management center boundary", () => {
         items: [{ ...item, canRestore: true }],
       }).success,
     ).toBe(false);
+    // The poster on the homepage can never be offered for deletion.
+    expect(
+      managementCenterResponseSchema.safeParse({
+        ...response,
+        items: [{ ...item, current: true, canDelete: true }],
+      }).success,
+    ).toBe(false);
+    expect(
+      managementCenterResponseSchema.safeParse({
+        ...response,
+        items: [{ ...item, current: true, canDelete: false }],
+      }).success,
+    ).toBe(true);
   });
 });

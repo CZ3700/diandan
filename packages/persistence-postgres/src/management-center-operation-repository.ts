@@ -11,7 +11,10 @@ import type {
   ManagementCenterOperationRepository,
 } from "@fan-support/persistence-port";
 import { draftRows } from "./content-draft-data.js";
-import { createResourceRun } from "./resource-management-data.js";
+import {
+  createResourceRun,
+  writeResourceAudit,
+} from "./resource-management-data.js";
 import {
   authorizeManagementSession,
   currentManagementDelegation,
@@ -177,6 +180,15 @@ export function createManagementCenterOperationRepository(
           if (Number(head["version"]) !== intent.expectedVersion)
             return managementFailure("TARGET_CONFLICT");
           targetId = head["homepage_revision_id"];
+          if (intent.kind === "RESTORE_POSTER") {
+            // An archived (deleted) poster cannot come back through restore.
+            const [source] = await draftRows(
+              client,
+              "SELECT 1 FROM public.homepage_revisions WHERE id=$1 AND lifecycle IN ('PUBLISHED','SUPERSEDED') FOR SHARE",
+              [intent.sourceRevisionId],
+            );
+            if (!source) return managementFailure("TARGET_CONFLICT");
+          }
         }
         if (
           "image" in intent &&
@@ -232,6 +244,65 @@ export function createManagementCenterOperationRepository(
           stored["intent_hash"].toString("hex") === input.intentHash
           ? managementOperationResponse(stored)
           : managementFailure("IDEMPOTENCY_CONFLICT");
+      }),
+    archivePoster: (input) =>
+      run(async () => {
+        // Same lock as poster publication, so a replace/restore never races an archive.
+        await client.query(
+          "SELECT pg_advisory_xact_lock(hashtextextended('fan-support:homepage',0))",
+        );
+        const [head] = await draftRows(
+          client,
+          "SELECT homepage_revision_id,version FROM public.homepage_publication_heads FOR SHARE",
+        );
+        if (!head) return managementFailure("HERO_NOT_CONFIGURED");
+        if (
+          Number(head["version"]) !== input.expectedVersion ||
+          String(head["homepage_revision_id"]).toLowerCase() ===
+            input.revisionId.toLowerCase()
+        )
+          return managementFailure("TARGET_CONFLICT");
+        const [revision] = await draftRows(
+          client,
+          "SELECT lifecycle FROM public.homepage_revisions WHERE id=$1 FOR UPDATE",
+          [input.revisionId],
+        );
+        if (!revision) return managementFailure("NOT_FOUND");
+        const archived = managementCenterResponseSchema.parse({
+          schemaVersion: 1,
+          outcome: "SUCCESS",
+          kind: "POSTER_ARCHIVED",
+          revisionId: input.revisionId,
+        });
+        if (revision["lifecycle"] === "ARCHIVED") return archived;
+        if (revision["lifecycle"] !== "SUPERSEDED")
+          return managementFailure("TARGET_CONFLICT");
+        const [pending] = await draftRows(
+          client,
+          `SELECT 1 FROM public.management_operations WHERE status IN ('QUEUED','RUNNING')
+          AND intent->>'kind'='RESTORE_POSTER' AND lower(intent->>'sourceRevisionId')=lower($1) LIMIT 1`,
+          [input.revisionId],
+        );
+        if (pending) return managementFailure("TARGET_CONFLICT");
+        const [instant] = await draftRows(
+          client,
+          `SELECT gen_random_uuid() AS audit_id,to_char(clock_timestamp() AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS now`,
+        );
+        await client.query(
+          "UPDATE public.homepage_revisions SET lifecycle='ARCHIVED',archived_at=GREATEST($2::timestamptz,superseded_at) WHERE id=$1 AND lifecycle='SUPERSEDED'",
+          [input.revisionId, instant?.["now"]],
+        );
+        await writeResourceAudit(client, {
+          auditId: String(instant?.["audit_id"]),
+          actorId: input.principal.actorId,
+          action: "HOMEPAGE_POSTER_ARCHIVE",
+          subjectType: "HOMEPAGE_REVISION",
+          subjectId: input.revisionId,
+          reasonCode: "DAILY_CENTER_DELETE",
+          requestId: input.requestId,
+          at: String(instant?.["now"]),
+        });
+        return archived;
       }),
     read: (input) =>
       run(async () => {

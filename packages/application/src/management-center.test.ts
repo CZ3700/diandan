@@ -71,6 +71,12 @@ function fixture() {
     submit: vi.fn().mockResolvedValue(success),
     read: vi.fn().mockResolvedValue(success),
     retry: vi.fn().mockResolvedValue(success),
+    archivePoster: vi.fn().mockResolvedValue({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      kind: "POSTER_ARCHIVED",
+      revisionId: id,
+    }),
     context: vi.fn(),
     list: vi.fn(),
     claim: vi.fn().mockResolvedValue(claim),
@@ -520,6 +526,31 @@ describe("management publication rollback outcomes", () => {
   });
 });
 describe("management orchestration", () => {
+  it("archives an old poster under the poster's source-locale authority", async () => {
+    const f = fixture();
+    const result = await f.useCases.execute({
+      ...f.request,
+      command: {
+        schemaVersion: 1,
+        action: "ARCHIVE_POSTER",
+        revisionId: id,
+        expectedVersion: 4,
+        sourceLocale: "ja",
+        idempotencyKey: "management-archive-01",
+      },
+    });
+    expect(result).toMatchObject({ kind: "POSTER_ARCHIVED", revisionId: id });
+    expect(f.operations.authorize.mock.calls[0]?.[0]).toMatchObject({
+      sourceLocale: "ja",
+    });
+    expect(f.operations.archivePoster).toHaveBeenCalledWith({
+      principal,
+      requestId: id,
+      revisionId: id,
+      expectedVersion: 4,
+    });
+    expect(f.operations.submit).not.toHaveBeenCalled();
+  });
   it("authorizes actual source locale and persists only credential digests and IDs", async () => {
     const f = fixture();
     expect(await f.useCases.execute(f.request)).toEqual(success);

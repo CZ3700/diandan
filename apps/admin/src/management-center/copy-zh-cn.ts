@@ -122,4 +122,10 @@ export const copy = {
   deleteTypeName: "请输入完整名称以确认",
   deleteConfirm: "永久删除",
   deleted: "已删除，网站上不再显示。",
+  posterDelete: "删除",
+  posterDeleteWarning:
+    "从历史中删除这张海报？删除后无法恢复，首页当前海报不受影响。",
+  posterDeleteConfirm: "确认删除",
+  posterDeleteCancel: "保留",
+  posterDeleted: "海报已删除，首页不受影响。",
 } satisfies ManagementCopy;

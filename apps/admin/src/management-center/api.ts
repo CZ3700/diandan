@@ -15,6 +15,7 @@ export type DeletableItem = Extract<
 >;
 const DELETE_REASON = "DAILY_CENTER_DELETE";
 
+export type PosterItem = Extract<ManagementCenterListItem, { kind: "POSTER" }>;
 export type ManagementContext = Extract<
   ManagementCenterResponse,
   { kind: "CONTEXT" }
@@ -166,6 +167,23 @@ export function createManagementApi(client: AdminClient) {
       if (!("action" in result) || result.action !== "SET_GIFT_STATUS")
         throw invalid();
       if (result.giftId.toLowerCase() !== item.id.toLowerCase())
+        throw invalid();
+    },
+    /** L2-09: an old poster leaves the history; the current one is refused by the server. */
+    async archivePoster(item: PosterItem) {
+      const result = await call(
+        "archive-poster",
+        {
+          revisionId: item.id,
+          expectedVersion: item.version,
+          sourceLocale: item.sourceLocale,
+        },
+        true,
+      );
+      if (
+        result.kind !== "POSTER_ARCHIVED" ||
+        result.revisionId.toLowerCase() !== item.id.toLowerCase()
+      )
         throw invalid();
     },
     async retry(operationId: string, expectedVersion: number) {
