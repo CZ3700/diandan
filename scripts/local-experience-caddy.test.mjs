@@ -141,3 +141,18 @@ test("the edge refuses loopback instances, plaintext secrets and odd paths", () 
       /explicit non-loopback/u,
     );
 });
+
+test("built-in accounts drop Basic Auth from the admin only", () => {
+  const text = renderLocalExperienceCaddyfile({
+    config: { ...config, adminSignIn: "LOCAL_ACCOUNT" },
+    authUser: "tester",
+    authHash: hash,
+    caPath: "/etc/caddy/fan-support-local-ca.crt",
+    bindAddresses: ["172.26.5.34"],
+  });
+  const admin = site(text, "admin.stg.example.com");
+  assert.doesNotMatch(admin, /basic_auth/u);
+  assert.match(admin, /@root path \/\n\tredir @root \/en 302/u);
+  assert.match(site(text, "mail.stg.example.com"), /basic_auth \{/u);
+  assert.match(site(text, "oidc.stg.example.com"), /basic_auth @picker \{/u);
+});

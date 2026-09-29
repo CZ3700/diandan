@@ -49,7 +49,7 @@ export async function startLocalWeb(context) {
         ...localPaymentProfile(config).actionOrigins,
       ]),
       FAN_SUPPORT_ADMIN_ORIGIN: config.origins.admin,
-      FAN_SUPPORT_ADMIN_MODE: "LOCAL_OIDC",
+      FAN_SUPPORT_ADMIN_MODE: config.adminSignIn ?? "LOCAL_OIDC",
       FAN_SUPPORT_ADMIN_ACCESS_KEY: Buffer.from(
         config.secrets.accessKey,
         "base64url",

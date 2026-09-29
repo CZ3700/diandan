@@ -1,5 +1,6 @@
 import { randomBytes, randomUUID } from "node:crypto";
 import {
+  access,
   mkdir,
   lstat,
   realpath,
@@ -268,6 +269,29 @@ export async function loadLocalState(
     flag: "wx",
   });
   return { stateDirectory, config };
+}
+/** Switches how operators sign in to an existing instance; takes effect at the next start. */
+export async function setLocalAdminSignIn(workspaceRoot, instance, mode) {
+  if (!["LOCAL_OIDC", "LOCAL_ACCOUNT"].includes(mode))
+    throw new Error("Admin sign-in must be LOCAL_OIDC or LOCAL_ACCOUNT");
+  await access(
+    path.join(
+      await localStateDirectory(workspaceRoot, instance),
+      "config.json",
+    ),
+  ).catch(() => {
+    throw new Error("Unknown local instance; start it first");
+  });
+  const { stateDirectory, config } = await loadLocalState(
+    workspaceRoot,
+    instance,
+  );
+  const next = localExperienceConfigSchema.parse({
+    ...config,
+    adminSignIn: mode,
+  });
+  await writePrivateJson(path.join(stateDirectory, "config.json"), next);
+  return next;
 }
 export async function resetLocalState(workspaceRoot, instance, confirmation) {
   const state = await loadLocalState(workspaceRoot, instance);

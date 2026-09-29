@@ -12,6 +12,7 @@ import {
   createTestGiftCommerceComposition,
   createTestManagementCenterComposition,
   createLocalOidcAdminAccessComposition,
+  createLocalAccountAdminAccessComposition,
   createLocalAdminOrdersComposition,
   createLocalAdminFinanceComposition,
   createLocalAdminPaymentConfigurationComposition,
@@ -131,6 +132,18 @@ export async function startLocalExperienceRuntime({
       { identityTransport: { fetch: services.oidc.fetch } },
     ),
   );
+  if (config.adminSignIn === "LOCAL_ACCOUNT")
+    add(
+      createLocalAccountAdminAccessComposition({
+        environment: "LOCAL_ACCOUNT",
+        database,
+        keyManagement: kms.adapter,
+        tokenPepper,
+        subjectPepper: localSecretHex(config.secrets.subjectPepper),
+        accessKey: localSecretHex(config.secrets.accessKey),
+        allowedOrigin: config.origins.admin,
+      }),
+    );
   add(createPublishedContentComposition(environment, { logger }));
   add(createCatalogDirectoryComposition(environment, { logger }));
   add(

@@ -11,7 +11,11 @@ import {
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
-import { loadLocalState, resetLocalState } from "./local-experience-state.mjs";
+import {
+  loadLocalState,
+  resetLocalState,
+  setLocalAdminSignIn,
+} from "./local-experience-state.mjs";
 async function fixture(t) {
   const root = await mkdtemp(path.join(os.tmpdir(), "fan-local-state-"));
   await mkdir(path.join(root, "node_modules"));
@@ -167,5 +171,30 @@ test("Stripe sandbox is an explicit immutable choice for a new isolated instance
   await assert.rejects(
     loadLocalState(root, "test-live", { paymentProvider: "stripe-live" }),
     /payment provider/u,
+  );
+});
+
+test("admin sign-in switches only an existing instance and keeps everything else", async (t) => {
+  const root = await fixture(t);
+  await assert.rejects(
+    setLocalAdminSignIn(root, "missing", "LOCAL_ACCOUNT"),
+    /Unknown local instance/u,
+  );
+  const first = await loadLocalState(root, "test");
+  assert.equal(first.config.adminSignIn, undefined);
+  await assert.rejects(
+    setLocalAdminSignIn(root, "test", "OIDC"),
+    /LOCAL_OIDC or LOCAL_ACCOUNT/u,
+  );
+  const switched = await setLocalAdminSignIn(root, "test", "LOCAL_ACCOUNT");
+  assert.equal(switched.adminSignIn, "LOCAL_ACCOUNT");
+  const reloaded = await loadLocalState(root, "test");
+  assert.deepEqual(reloaded.config, {
+    ...first.config,
+    adminSignIn: "LOCAL_ACCOUNT",
+  });
+  assert.equal(
+    (await setLocalAdminSignIn(root, "test", "LOCAL_OIDC")).adminSignIn,
+    "LOCAL_OIDC",
   );
 });

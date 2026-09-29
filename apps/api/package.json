@@ -22,6 +22,7 @@
     "start": "node dist/main.js",
     "test": "vitest run --config ../../vitest.config.ts --root . && node --test ./scripts/production-admin-oidc-*.test.mjs",
     "typecheck": "tsc -p tsconfig.json",
+    "test:postgres:admin-local": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/admin-account-postgres.mjs && node ./scripts/production-admin-local-http.mjs",
     "test:postgres:catalog": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/postgres-catalog-http.mjs",
     "test:postgres:admin-content": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/postgres-admin-content-http.mjs",
     "test:postgres:content-authoring": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/postgres-admin-content-authoring-http.mjs",

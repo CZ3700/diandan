@@ -1,5 +1,8 @@
 import { expect, test, vi } from "vitest";
-import { createLocalOidcAdminAccessComposition } from "./admin-access-composition.js";
+import {
+  createLocalAccountAdminAccessComposition,
+  createLocalOidcAdminAccessComposition,
+} from "./admin-access-composition.js";
 const settings = {
   schemaVersion: 1 as const,
   issuer: "https://identity.example.invalid",
@@ -71,4 +74,50 @@ test("configuration mismatches and nonlocal tiers fail before opening the databa
       ),
     ).toThrow();
   expect(createPersistence).not.toHaveBeenCalled();
+});
+
+test("built-in accounts compose sign-in and account routes over one closable pool", async () => {
+  const close = vi.fn(async () => undefined);
+  const local = {
+    environment: "LOCAL_ACCOUNT" as const,
+    database: options.database,
+    keyManagement: { encryptEnvelope: vi.fn(), decryptEnvelope: vi.fn() },
+    tokenPepper: options.tokenPepper,
+    subjectPepper: options.subjectPepper,
+    accessKey: options.accessKey,
+    allowedOrigin: options.allowedOrigin,
+  };
+  const composition = createLocalAccountAdminAccessComposition(local as never, {
+    createPersistence: () =>
+      ({
+        adminLocalAccessTransactionManager: {
+          runInAdminLocalAccessTransaction: vi.fn(),
+        },
+        close,
+      }) as never,
+  });
+  expect(composition.adminLocalAccessRoute.allowedOrigin).toBe(
+    options.allowedOrigin,
+  );
+  expect(typeof composition.adminLocalAccessRoute.useCases.login).toBe(
+    "function",
+  );
+  expect(typeof composition.adminAccountRoute.useCases.staff).toBe("function");
+  await composition.adminLocalAccessRuntime.stop();
+  await composition.adminLocalAccessRuntime.stop();
+  expect(close).toHaveBeenCalledTimes(1);
+  for (const patch of [
+    { environment: "LOCAL_OIDC" },
+    { allowedOrigin: "http://admin.example.invalid" },
+    { tokenPepper: options.subjectPepper },
+    { accessKey: "short" },
+  ])
+    expect(() =>
+      createLocalAccountAdminAccessComposition(
+        { ...local, ...patch } as never,
+        {
+          createPersistence: () => ({ close }) as never,
+        },
+      ),
+    ).toThrow("Invalid local account admin access configuration");
 });

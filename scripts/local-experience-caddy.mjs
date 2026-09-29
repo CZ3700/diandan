@@ -19,8 +19,9 @@ const workspaceRoot = path.resolve(
 
 /**
  * Edge for a publicly exposed TEST instance: Let's Encrypt on each public host, owned loopback
- * TLS upstreams verified against the instance CA. The TEST identity picker, admin and captured
- * mail sit behind Basic Auth; server-to-server calls never pass through this edge.
+ * TLS upstreams verified against the instance CA. The TEST identity picker and captured mail sit
+ * behind Basic Auth, and so does the admin unless it signs in with built-in accounts (ADR-021);
+ * server-to-server calls never pass through this edge.
  */
 export function renderLocalExperienceCaddyfile({
   config,
@@ -63,7 +64,7 @@ export function renderLocalExperienceCaddyfile({
     const guard =
       key === "admin"
         ? // The admin root is the runtime placeholder; operators land on the default locale.
-          `${auth()}\t@root path /\n\tredir @root /en 302\n`
+          `${config.adminSignIn === "LOCAL_ACCOUNT" ? "" : auth()}\t@root path /\n\tredir @root /en 302\n`
         : key === "mail"
           ? auth()
           : key === "oidc"

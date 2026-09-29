@@ -98,6 +98,8 @@ export const localExperienceConfigSchema = z
     schemaVersion: z.literal(1),
     environment: z.literal("LOCAL_TEST"),
     paymentProvider: z.enum(["fake", "stripe-test"]).optional(),
+    // ADR-021: how operators sign in to the admin. Absent means the local identity provider.
+    adminSignIn: z.enum(["LOCAL_OIDC", "LOCAL_ACCOUNT"]).optional(),
     instance: z.string().regex(/^[a-z][a-z0-9-]{0,31}$/u),
     instanceId: z.uuid(),
     workspaceRoot: file,
