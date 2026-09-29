@@ -274,6 +274,12 @@
 .order-certificate-title {
   color: var(--color-accent);
   font-size: var(--type-label-size);
+}
+/* Tracking and capitals suit Latin script only; they break Thai marks and CJK rhythm. */
+.order-certificate-title:lang(en),
+.order-certificate-title:lang(es),
+.order-certificate-title:lang(pt),
+.order-certificate-title:lang(vi) {
   letter-spacing: var(--type-label-tracking);
   text-transform: uppercase;
 }

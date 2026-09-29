@@ -3,7 +3,9 @@ import { orderAccessItemSchema } from "@fan-support/contracts";
 import { loadStorefrontCopy } from "@fan-support/i18n/storefront";
 import {
   certificateFileName,
+  certificateGiftLine,
   certificateSignatureName,
+  certificateTracked,
   certificateText,
   wrapCertificateText,
 } from "./support-certificate-image";
@@ -121,6 +123,30 @@ describe("certificate layout helpers", () => {
     expect(cut).toHaveLength(2);
     expect(cut[1]!.endsWith("…")).toBe(true);
     expect(measure(cut[1]!)).toBeLessThanOrEqual(30);
+  });
+
+  it("drops a variant label that only repeats the gift title", async () => {
+    const copy = await loadStorefrontCopy("en");
+    const repeated = orderAccessItemSchema.parse({
+      ...item,
+      gift: { ...item.gift, variantLabel: "Cheer" },
+    });
+    const distinct = orderAccessItemSchema.parse({
+      ...item,
+      gift: { ...item.gift, variantLabel: "Gold" },
+    });
+    expect(certificateGiftLine(repeated, "en", copy)).toBe("Cheer × 1,200");
+    expect(certificateGiftLine(distinct, "en", copy)).toBe(
+      "Cheer · Gold × 1,200",
+    );
+  });
+
+  it("spaces and capitalizes the title only in Latin-script locales", () => {
+    expect(
+      (["en", "es", "pt", "vi", "zh-CN", "ja", "th"] as const).map((locale) =>
+        certificateTracked(locale),
+      ),
+    ).toEqual([true, true, true, true, false, false, false]);
   });
 
   it("names the file after the public order number and line", () => {

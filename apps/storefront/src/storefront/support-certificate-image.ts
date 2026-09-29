@@ -51,10 +51,12 @@ export function certificateGiftLine(
   locale: SupportedLocale,
   copy: StorefrontCopy,
 ) {
+  const variant = item.gift.variantLabel?.trim();
+  // Daily gifts often name their only option after the gift; say it once.
   const title =
-    item.gift.variantLabel === null
+    !variant || variant === item.gift.title.trim()
       ? item.gift.title
-      : `${item.gift.title} · ${item.gift.variantLabel}`;
+      : `${item.gift.title} · ${variant}`;
   return formatStorefrontMessage(copy, "orderCertificateGift", locale, {
     gift: title,
     quantity: new Intl.NumberFormat(locale).format(item.quantity),
@@ -92,6 +94,11 @@ export function certificateText(
       number: publicOrderNo,
     }),
   };
+}
+
+/** Letter spacing and capitals suit Latin script only; they break Thai marks and CJK rhythm. */
+export function certificateTracked(locale: SupportedLocale) {
+  return ["en", "es", "pt", "vi"].includes(locale);
 }
 
 export function certificateFileName(publicOrderNo: string, position: number) {
@@ -297,8 +304,16 @@ function draw(
     return y + (lines.length - 1) * size * leading;
   };
 
-  if ("letterSpacing" in context) context.letterSpacing = "6px";
-  line(text.title.toLocaleUpperCase(locale), 150, 30, "700", theme.accent, 1);
+  const tracked = certificateTracked(locale);
+  if (tracked && "letterSpacing" in context) context.letterSpacing = "6px";
+  line(
+    tracked ? text.title.toLocaleUpperCase(locale) : text.title,
+    150,
+    30,
+    "700",
+    theme.accent,
+    1,
+  );
   if ("letterSpacing" in context) context.letterSpacing = "0px";
   drawPhoto(context, theme, photo, text.artist);
   let y = line(text.artist, 890, 64, "600", theme.text, 2, 1.15);
