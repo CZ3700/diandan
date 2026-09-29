@@ -262,21 +262,28 @@
   min-block-size: var(--space-12);
   border-bottom: var(--border-width) solid var(--color-border);
 }
-.storefront-hero-caption {
+/* The homepage hero's single guide: artist search plus the hero link. Its suggestions
+   hang below the hero, so the hero clips only sideways and sits above what follows. */
+.storefront-hero[data-home-hero] {
+  position: relative;
+  z-index: var(--layer-raised);
+  overflow-x: clip;
+  overflow-y: visible;
+}
+.storefront-hero-guide {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-4);
-  inline-size: 100%;
-  border-top: var(--border-width) solid var(--color-border);
-  margin-block-start: var(--space-12);
-  padding-block-start: var(--space-6);
-  font-size: var(--type-label-size);
+  gap: var(--space-4) var(--space-6);
+  align-self: stretch;
+  margin-block-start: var(--space-8);
 }
-.storefront-hero-caption > span {
-  color: var(--color-text-muted);
+.storefront-hero-guide > :first-child {
+  flex: 1 1 calc(var(--space-32) * 2);
+  min-inline-size: 0;
 }
-.storefront-hero-caption > svg {
-  margin-inline-start: auto;
+.storefront-hero-guide > .storefront-text-link {
+  flex: none;
 }
 .storefront-hero-image {
   z-index: 0;
@@ -598,9 +605,8 @@
   .storefront-hero-body {
     max-inline-size: none;
   }
-  .storefront-hero-caption {
+  .storefront-hero-guide {
     margin-block-start: var(--space-6);
-    padding-block-start: var(--space-4);
   }
   .storefront-primary {
     margin-block-start: var(--space-6);

@@ -91,7 +91,7 @@ export function GiftRecipientPicker({
           acceptingOnly
           locale={locale}
           copy={copy}
-          onSelect={select}
+          onSelect={(artist) => select(artist.id)}
         />
         <div className="gift-recipient-options">
           {state.items.map((artist) => (

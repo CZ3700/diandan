@@ -390,7 +390,7 @@ export async function verifyLocalExperienceBrowser({
         /\S/u,
       );
       await expect(page.locator(".storefront-hero-image img")).toBeVisible();
-      const heroLink = page.locator(".storefront-hero-caption a");
+      const heroLink = page.locator('[data-home-hero-link="artist"]');
       await expect(heroLink).toBeVisible();
       check(
         new URL(await heroLink.getAttribute("href"), location.origin)

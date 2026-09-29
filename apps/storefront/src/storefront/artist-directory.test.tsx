@@ -115,3 +115,17 @@ it("renders a distinct empty state with no retry loop or invented artists", asyn
   expect(html).toContain("artistEmptyDescription");
   expect(html).not.toContain("artistLoadMore");
 });
+
+it("leaves the search to the homepage hero when asked", async () => {
+  const { ArtistDirectory } = await import("./artist-directory");
+  const html = renderToStaticMarkup(
+    <ArtistDirectory
+      locale="en"
+      copy={copy}
+      initial={directoryFixturePage([1])}
+      search={false}
+    />,
+  );
+  expect(html).not.toContain("data-artist-search");
+  expect(html).toContain("Fictional 1");
+});

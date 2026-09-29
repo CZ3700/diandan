@@ -410,7 +410,8 @@ export async function verifyAcceptanceBrowser(input) {
       await save();
       step = "artist search anchor keyboard and language restore";
       await page.setViewportSize(acceptanceViewports[1]);
-      await goto("/en?market=GLOBAL&currency=USD#artists");
+      // The homepage hero search opens the artist; anchoring lives on the directory page.
+      await goto("/en/idols?market=GLOBAL&currency=USD#artists");
       const search = page.locator("[data-artist-search]");
       await search.fill(fixtures.target.name);
       await page
@@ -437,7 +438,7 @@ export async function verifyAcceptanceBrowser(input) {
           exact: true,
         })
         .click();
-      await page.waitForURL((url) => url.pathname === "/zh-CN");
+      await page.waitForURL((url) => url.pathname === "/zh-CN/idols");
       check(
         new globalThis.URL(page.url()).searchParams.get("anchorId") ===
           fixtures.target.id,

@@ -15,7 +15,7 @@ import {
   type PublishedContentResponse,
 } from "@fan-support/contracts";
 import { directoryFixturePage } from "./directory-fixture";
-import { HomeContent } from "./home-content";
+import { HomeContent, homeArtistSearchInHero } from "./home-content";
 import { loadStorefrontCopy } from "@fan-support/i18n/storefront";
 
 const reads = vi.hoisted(() => ({
@@ -176,6 +176,47 @@ test("homepage offers one artist browsing path and retains featured links when t
   const encodedHref = href.replaceAll("&", "&amp;");
   expect(browsable.split(`href="${encodedHref}"`)).toHaveLength(2);
   expect(fallback).toContain(`href="${encodedHref}"`);
+});
+
+// User request 2026-09-29: one guide to the artists, in the hero, instead of a hero button,
+// a repeated eyebrow, an "All artists" link and a separate search right below it.
+test("homepage merges the artist guides into one hero bar", async () => {
+  const copy = await loadStorefrontCopy("en");
+  const html = renderToStaticMarkup(
+    <HomeContent
+      data={publishedHome("en")}
+      locale="en"
+      copy={copy}
+      contextQuery="currency=USD"
+      directory={<nav aria-label="Artist directory" />}
+    />,
+  );
+  const hero =
+    html.split('data-home-hero="true"')[1]?.split("</section>")[0] ?? "";
+  const guide = hero.split('data-home-guide="true"')[1] ?? "";
+  expect(guide).toContain("data-artist-search");
+  expect(guide).toContain(`placeholder="${copy.artistSearchLabel}"`);
+  expect(guide).toContain('href="/en/idols/fictional-1?currency=USD"');
+  expect(guide).toContain("Explore");
+  expect(hero).not.toContain("storefront-hero-caption");
+  expect(hero).not.toContain("storefront-primary");
+  const artists = html.split('id="artists"')[1]?.split("</section>")[0] ?? "";
+  expect(artists).toContain(copy.artistTitle);
+  expect(artists).not.toContain(copy.artistEyebrow);
+  expect(artists).not.toContain(copy.backArtists);
+});
+
+test("the artist search sits in the hero only while the hero is shown", () => {
+  const layout = createDefaultHomeLayout();
+  expect(homeArtistSearchInHero(layout)).toBe(true);
+  expect(
+    homeArtistSearchInHero({
+      ...layout,
+      sections: layout.sections.map((section) =>
+        section.id === "HERO" ? { ...section, visible: false } : section,
+      ),
+    }),
+  ).toBe(false);
 });
 
 function publishedArtist(locale: (typeof SUPPORTED_LOCALES)[number]) {

@@ -21,6 +21,8 @@ type Props = Readonly<{
   values: Readonly<Record<string, string | string[] | undefined>>;
   basePath?: string;
   headingLevel?: 1 | 2;
+  /** False on the homepage, where the four-kinds section above carries the same eyebrow. */
+  eyebrow?: boolean;
   initial?: Promise<GiftBrowseResponse> | undefined;
   /**
    * Price the list in place once one published market is confirmed; the content list streams
@@ -134,7 +136,9 @@ export function GiftBrowseSection(props: Props) {
     >
       <div className="storefront-section-heading">
         <div>
-          <p className="storefront-eyebrow">{props.copy.giftEyebrow}</p>
+          {props.eyebrow === false ? null : (
+            <p className="storefront-eyebrow">{props.copy.giftEyebrow}</p>
+          )}
           <Heading id="featured-gifts-title">{props.copy.giftTitle}</Heading>
         </div>
         <p>{props.copy.giftBody}</p>

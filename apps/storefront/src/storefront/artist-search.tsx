@@ -38,11 +38,14 @@ export function ArtistSearch({
   copy,
   onSelect,
   acceptingOnly = false,
+  compact = false,
 }: Readonly<{
   locale: SupportedLocale;
   copy: StorefrontCopy;
   acceptingOnly?: boolean;
-  onSelect: (id: PublishedIdolView["id"]) => void;
+  /** The homepage hero bar: label and hint stay for assistive technology only. */
+  compact?: boolean;
+  onSelect: (artist: PublishedIdolView) => void;
 }>) {
   const id = useId();
   const [raw, setRaw] = useState("");
@@ -108,7 +111,7 @@ export function ArtistSearch({
     if (!canSelectSearchArtist(artist, acceptingOnly)) return;
     close();
     setRaw(artist.displayName);
-    onSelect(artist.id);
+    onSelect(artist);
   };
   const resultId = (index: number) => `${id}-option-${index}`;
   const expanded = open && !composing && state.status !== "idle";
@@ -116,7 +119,9 @@ export function ArtistSearch({
 
   return (
     <div
-      className={styles["search"]}
+      className={
+        compact ? `${styles["search"]} ${styles["compact"]}` : styles["search"]
+      }
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) close();
       }}
@@ -126,7 +131,9 @@ export function ArtistSearch({
         id={id}
         label={copy.artistSearchLabel}
         hint={copy.artistSearchHint}
-        placeholder={copy.artistSearchPlaceholder}
+        placeholder={
+          compact ? copy.artistSearchLabel : copy.artistSearchPlaceholder
+        }
         value={raw}
         type="search"
         role="combobox"

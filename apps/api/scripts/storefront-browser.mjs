@@ -386,45 +386,35 @@ export async function createStorefrontBrowserVerifier({
         "SSR delivers first real artist window with crawlable hrefs without JavaScript",
       );
       await noScript.close();
-      step = "homepage search locates a distant actual artist";
-      await goto("/en?market=GLOBAL&currency=USD#artists");
-      await page.locator("[data-artist-search]").fill(fixtures.target.name);
+      // The homepage keeps one artist guide in its hero: a picked result opens the artist;
+      // anchoring and language restore stay on /idols, covered below.
+      step = "homepage hero search opens a distant actual artist";
+      await goto("/en?market=GLOBAL&currency=USD");
+      check(
+        (await page.locator("[data-artist-search]").count()) === 1 &&
+          (await page
+            .locator("[data-home-guide] [data-artist-search]")
+            .count()) === 1,
+        "homepage offers exactly one artist search, in the hero guide",
+      );
+      await page
+        .locator("[data-home-guide] [data-artist-search]")
+        .fill(fixtures.target.name);
       await page
         .locator(`[data-artist-result="${fixtures.target.id}"]`)
         .waitFor();
+      await screenshot("en-home-hero-search.png");
       await page
         .locator(`[data-artist-result="${fixtures.target.id}"]`)
         .click();
-      await page.waitForFunction(
-        (id) =>
-          globalThis.document.activeElement?.getAttribute(
-            "data-artist-link",
-          ) === id,
-        fixtures.target.id,
+      await page.waitForURL(
+        (url) => url.pathname === `/en/idols/${fixtures.target.handle}`,
       );
       check(
-        new globalThis.URL(page.url()).pathname === "/en" &&
-          new globalThis.URL(page.url()).searchParams.get("anchorId") ===
-            fixtures.target.id,
-        "homepage retains its route while focusing the actual distant artist window",
-      );
-      await screenshot("en-home-search-anchor.png");
-      await page.locator(".storefront-desktop-language button").click();
-      await page
-        .getByRole("menuitemradio", {
-          name: LOCALE_NATIVE_NAMES["zh-CN"],
-          exact: true,
-        })
-        .click();
-      await page.waitForURL((url) => url.pathname === "/zh-CN");
-      await page
-        .locator(`[data-artist-link="${fixtures.target.id}"]`)
-        .waitFor();
-      check(
-        new globalThis.URL(page.url()).searchParams.get("anchorId") ===
-          fixtures.target.id &&
+        new globalThis.URL(page.url()).searchParams.get("market") ===
+          "GLOBAL" &&
           new globalThis.URL(page.url()).searchParams.get("currency") === "USD",
-        "homepage language navigation restores the actual anchored artist and independent currency context",
+        "homepage hero search opens the actual artist with the independent commerce context",
       );
       await goto(
         "/en/idols?market=GLOBAL&currency=USD&gift=rose-palace#artists",

@@ -11,6 +11,14 @@ import { storefrontHref } from "./navigation";
 import type { StorefrontCopy } from "./copy";
 import { HomeKinds } from "./home-kinds";
 import { HowItWorks, PageState, StudioPromise } from "./page-parts";
+import { HeroArtistSearch } from "./hero-artist-search";
+
+/** The artist search joins the hero's guide bar whenever the hero is shown. */
+export function homeArtistSearchInHero(layout: HomeLayout): boolean {
+  return layout.sections.some(
+    (section) => section.id === "HERO" && section.visible,
+  );
+}
 
 export function HomeContent({
   data,
@@ -80,34 +88,27 @@ export function HomeContent({
           >
             {view.heroSubtitle}
           </p>
-          <a
-            className="storefront-primary"
-            href={storefrontHref(
-              locale,
-              heroArtist ? `/idols/${heroArtist.handle}` : "/idols",
-              contextQuery,
-            )}
-            lang={view.localeContext.resolvedLocale}
-          >
-            {view.ctaLabel}
-            <Icon name="arrow-right" decorative />
-          </a>
-          {heroArtist && (
-            <div className="storefront-hero-caption">
-              <span>{copy.artistEyebrow}</span>
-              <a
-                lang={heroArtist.localeContext.resolvedLocale}
-                href={storefrontHref(
-                  locale,
-                  `/idols/${heroArtist.handle}`,
-                  contextQuery,
-                )}
-              >
-                {heroArtist.displayName}
-              </a>
+          {/* One guide to the artists (user request 2026-09-29): search, or the hero link. */}
+          <div className="storefront-hero-guide" data-home-guide="true">
+            <HeroArtistSearch
+              locale={locale}
+              copy={copy}
+              contextQuery={contextQuery}
+            />
+            <a
+              className="storefront-text-link"
+              data-home-hero-link={heroArtist ? "artist" : "artists"}
+              href={storefrontHref(
+                locale,
+                heroArtist ? `/idols/${heroArtist.handle}` : "/idols",
+                contextQuery,
+              )}
+              lang={view.localeContext.resolvedLocale}
+            >
+              {view.ctaLabel}
               <Icon name="arrow-right" decorative />
-            </div>
-          )}
+            </a>
+          </div>
         </div>
         <PublishedHeroImage
           desktop={view.heroDesktop}
@@ -126,17 +127,7 @@ export function HomeContent({
         aria-labelledby="featured-artists-title"
       >
         <div className="storefront-section-heading">
-          <div>
-            <p className="storefront-eyebrow">{copy.artistEyebrow}</p>
-            <h2 id="featured-artists-title">{copy.artistTitle}</h2>
-          </div>
-          <a
-            className="storefront-text-link"
-            href={storefrontHref(locale, "/idols", contextQuery)}
-          >
-            {copy.backArtists}
-            <Icon name="arrow-right" decorative />
-          </a>
+          <h2 id="featured-artists-title">{copy.artistTitle}</h2>
         </div>
         {!directory && (
           <div className="storefront-featured-shortcuts">
