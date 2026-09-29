@@ -2183,6 +2183,31 @@ async function collectMetrics(page) {
           bodyScrollWidth: document.body.scrollWidth,
           clientWidth: document.documentElement.clientWidth,
           scrollWidth: document.documentElement.scrollWidth,
+          // Diagnostics only: the deepest elements whose right edge passes the viewport.
+          overflowing: [...document.body.querySelectorAll("*")]
+            .filter(
+              (element) =>
+                element.getBoundingClientRect().right >
+                document.documentElement.clientWidth + 0.5,
+            )
+            .filter(
+              (element, _index, all) =>
+                !all.some(
+                  (other) => other !== element && element.contains(other),
+                ),
+            )
+            .slice(0, 8)
+            .map((element) => {
+              const classes =
+                typeof element.className === "string"
+                  ? element.className.trim().split(/\s+/u).slice(0, 3)
+                  : [];
+              const marks = [...element.attributes]
+                .filter((attribute) => attribute.name.startsWith("data-fs"))
+                .slice(0, 2)
+                .map((attribute) => `[${attribute.name}=${attribute.value}]`);
+              return `${element.tagName.toLowerCase()}${classes.map((name) => `.${name}`).join("")}${marks.join("")} right=${element.getBoundingClientRect().right.toFixed(2)}`;
+            }),
         },
         fontsStatus: document.fonts.status,
         replacementGlyphs: (document.body.innerText.match(/�/gu) ?? []).length,

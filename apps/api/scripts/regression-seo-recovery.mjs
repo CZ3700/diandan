@@ -232,11 +232,32 @@ export async function verifyRegressionSeoRecovery({
         !document.text.includes(view.body),
         "fallback policy terms are not silently displayed as accepted localized terms",
       );
-    } else
+    } else {
+      if (!document.text?.includes(headline)) {
+        // Diagnostics only: keep what the page actually rendered for the CI evidence.
+        const name = `headline-missing-${sample.locator.kind.toLowerCase()}-${locale}-${viewport.width}`;
+        await page.screenshot({
+          path: path.join(output, `${name}.png`),
+          fullPage: true,
+        });
+        await writeFile(
+          path.join(output, `${name}.json`),
+          JSON.stringify(
+            {
+              headline,
+              fallback,
+              main: document.text?.replace(/\s+/gu, " ").slice(0, 4000) ?? null,
+            },
+            null,
+            2,
+          ),
+        );
+      }
       check(
         document.text.includes(headline),
         "rendered content includes the proven object headline",
       );
+    }
     assert.deepEqual(
       document.alternates.sort(),
       fallback ? [] : expectedLinks(origin, sample.locator, available),

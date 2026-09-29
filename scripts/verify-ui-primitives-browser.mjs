@@ -424,11 +424,15 @@ export function assessPageMetrics(metrics) {
     Number(metrics?.document?.bodyScrollWidth ?? 0),
   );
   if (clientWidth <= 0 || scrollWidth > clientWidth + 0.5) {
+    const overflowing = metrics?.document?.overflowing;
     errors.push(
       "horizontal overflow: clientWidth=" +
         String(clientWidth) +
         " scrollWidth=" +
-        String(scrollWidth),
+        String(scrollWidth) +
+        (Array.isArray(overflowing) && overflowing.length
+          ? " overflowing=" + overflowing.join(" | ")
+          : ""),
     );
   }
   for (const clipped of metrics?.clippedText ?? []) {
