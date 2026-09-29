@@ -1,11 +1,12 @@
 "use client";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { SupportedLocale } from "@fan-support/contracts";
-import { Button } from "@fan-support/ui";
+import { Button, Icon } from "@fan-support/ui";
 import type { FinanceApi, FinanceDetail, FinanceDraft } from "./api";
 import { financeCopy } from "./copy";
 import { financeError, uncertainFinanceResult } from "./labels";
 import { FinanceDetailView } from "./detail-view";
+import { financeNeedsAttention } from "./model";
 import {
   createFinancePendingStore,
   type PendingFinanceRequest,
@@ -19,7 +20,10 @@ export function FinancePanel({
   onBusy,
   onUpdated,
   itemTitles,
+  collapsible = false,
 }: {
+  /** Folded behind its title until opened, or until something here needs a person. */
+  collapsible?: boolean;
   api: FinanceApi;
   orderId: string;
   actorId: string;
@@ -37,6 +41,19 @@ export function FinancePanel({
     [recorded, setRecorded] = useState(false);
   const [pending, setPending] = useState<PendingFinanceRequest | null>(null);
   const [storageReady, setStorageReady] = useState(false);
+  const [open, setOpen] = useState(!collapsible),
+    [attended, setAttended] = useState(false);
+  // Opens by itself once when attention is needed; the person may fold it again.
+  if (
+    collapsible &&
+    !attended &&
+    (financeNeedsAttention(detail, pending !== null) ||
+      error !== null ||
+      recorded)
+  ) {
+    setAttended(true);
+    setOpen(true);
+  }
   const pendingStore = useRef<ReturnType<
     typeof createFinancePendingStore
   > | null>(null);
@@ -149,66 +166,93 @@ export function FinancePanel({
       aria-busy={busy || loading}
     >
       <div className="mo-section-heading">
-        <h2 id={`${id}-title`}>{copy.title}</h2>
-        <Button
-          type="button"
-          variant="secondary"
-          data-finance-refresh
-          disabled={busy || loading}
-          onClick={() => void load()}
-        >
-          {copy.reload}
-        </Button>
-      </div>
-      {!storageReady && !loading ? (
-        <p
-          className="mc-error-state"
-          role="alert"
-          data-finance-storage-unavailable
-        >
-          {copy.storageUnavailable}
-        </p>
-      ) : null}
-      {pending && !busy ? (
-        <div className="mf-notice" role="status" data-finance-recovery>
-          <p>{copy.uncertain}</p>
+        <h2 id={`${id}-title`}>
+          {collapsible ? (
+            <button
+              type="button"
+              className="mf-toggle"
+              data-finance-toggle
+              aria-expanded={open}
+              aria-controls={open ? `${id}-body` : undefined}
+              onClick={() => setOpen((value) => !value)}
+            >
+              {copy.title}
+              <Icon name="chevron-down" decorative />
+            </button>
+          ) : (
+            copy.title
+          )}
+        </h2>
+        {open ? (
           <Button
             type="button"
-            data-finance-retry
-            disabled={!storageReady}
-            onClick={() => void run(pending)}
+            variant="secondary"
+            data-finance-refresh
+            disabled={busy || loading}
+            onClick={() => void load()}
           >
-            {copy.retrySame}
+            {copy.reload}
           </Button>
+        ) : null}
+      </div>
+      {open ? (
+        <div id={`${id}-body`}>
+          {!storageReady && !loading ? (
+            <p
+              className="mc-error-state"
+              role="alert"
+              data-finance-storage-unavailable
+            >
+              {copy.storageUnavailable}
+            </p>
+          ) : null}
+          {pending && !busy ? (
+            <div className="mf-notice" role="status" data-finance-recovery>
+              <p>{copy.uncertain}</p>
+              <Button
+                type="button"
+                data-finance-retry
+                disabled={!storageReady}
+                onClick={() => void run(pending)}
+              >
+                {copy.retrySame}
+              </Button>
+            </div>
+          ) : null}
+          {error ? (
+            <div
+              className="mc-error-state"
+              ref={notice}
+              tabIndex={-1}
+              role="alert"
+              data-finance-error
+            >
+              <p>{detail ? financeError(error, copy) : copy.unavailable}</p>
+            </div>
+          ) : recorded ? (
+            <div
+              ref={notice}
+              tabIndex={-1}
+              role="status"
+              className="mc-success"
+            >
+              {copy.recorded}
+            </div>
+          ) : null}
+          {loading ? (
+            <p role="status">{copy.loading}</p>
+          ) : detail ? (
+            <FinanceDetailView
+              key={`${detail.order.orderId}-${detail.order.version}`}
+              detail={detail}
+              locale={locale}
+              busy={busy}
+              locked={pending !== null || !storageReady}
+              submit={submit}
+              {...(itemTitles ? { itemTitles } : {})}
+            />
+          ) : null}
         </div>
-      ) : null}
-      {error ? (
-        <div
-          className="mc-error-state"
-          ref={notice}
-          tabIndex={-1}
-          role="alert"
-          data-finance-error
-        >
-          <p>{detail ? financeError(error, copy) : copy.unavailable}</p>
-        </div>
-      ) : recorded ? (
-        <div ref={notice} tabIndex={-1} role="status" className="mc-success">
-          {copy.recorded}
-        </div>
-      ) : null}
-      {loading ? (
-        <p role="status">{copy.loading}</p>
-      ) : detail ? (
-        <FinanceDetailView
-          key={`${detail.order.orderId}-${detail.order.version}`}
-          detail={detail}
-          locale={locale}
-          busy={busy}
-          locked={pending !== null || !storageReady}
-          submit={submit}
-          {...(itemTitles ? { itemTitles } : {})}
-        />
       ) : null}
     </section>
   );

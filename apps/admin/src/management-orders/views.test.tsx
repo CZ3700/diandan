@@ -6,6 +6,7 @@ import {
 } from "@fan-support/contracts";
 import * as views from "./list-view";
 import * as messages from "./copy";
+import { fulfillmentTone, paymentTone } from "./labels";
 test("order lists offer semantic search, independent filters and bounded pagination in every language", () => {
   expect(views.OrdersListView).toBeTypeOf("function");
   for (const locale of SUPPORTED_LOCALES) {
@@ -86,6 +87,41 @@ test("order rows show the public number support hears, not the UUID", () => {
   );
   expect(html).toContain("<strong>FS-7K3M9C</strong>");
   expect(html).not.toContain("20000000-0000-4000-8000-000000000002");
+  // User request 2026-09-29: delivery and payment states are told apart by colour.
+  expect(html).toContain(
+    '<span class="mo-status" data-tone="progress" data-status-kind="fulfillment">Preparing</span>',
+  );
+  expect(html).toContain(
+    '<span class="mo-status" data-tone="success" data-status-kind="payment">Paid</span>',
+  );
+});
+test("order states map to distinct colour tones for handling delivery", () => {
+  expect(
+    Object.fromEntries(
+      (
+        ["PENDING", "PREPARING", "DELIVERED", "ON_HOLD", "CANCELED"] as const
+      ).map((status) => [status, fulfillmentTone(status)]),
+    ),
+  ).toEqual({
+    PENDING: "attention",
+    PREPARING: "progress",
+    DELIVERED: "success",
+    ON_HOLD: "danger",
+    CANCELED: "neutral",
+  });
+  expect(
+    Object.fromEntries(
+      (
+        ["UNPAID", "PENDING", "PAID", "PARTIALLY_REFUNDED", "REFUNDED"] as const
+      ).map((status) => [status, paymentTone(status)]),
+    ),
+  ).toEqual({
+    UNPAID: "attention",
+    PENDING: "attention",
+    PAID: "success",
+    PARTIALLY_REFUNDED: "danger",
+    REFUNDED: "danger",
+  });
 });
 test("seven order vocabularies contain equal complete keys", () => {
   expect(messages.ordersCopy).toBeTypeOf("function");

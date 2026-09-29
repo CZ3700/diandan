@@ -40,6 +40,43 @@ export function orderStatusLabel(status: string, copy: OrdersCopy): string {
       return copy.unavailable;
   }
 }
+/** Colour tones for handling delivery (user request 2026-09-29). */
+export type StatusTone =
+  "attention" | "progress" | "success" | "danger" | "neutral";
+export function fulfillmentTone(status: string): StatusTone {
+  switch (status) {
+    case "PENDING":
+      return "attention";
+    case "PREPARING":
+      return "progress";
+    case "DELIVERED":
+      return "success";
+    case "ON_HOLD":
+      return "danger";
+    default:
+      return "neutral";
+  }
+}
+export function paymentTone(status: string): StatusTone {
+  switch (status) {
+    case "UNPAID":
+    case "PENDING":
+      return "attention";
+    case "PAID":
+      return "success";
+    case "PARTIALLY_REFUNDED":
+    case "REFUNDED":
+      return "danger";
+    default:
+      return "neutral";
+  }
+}
+/** A payment still pending reads "awaiting payment", never the fulfilment "pending". */
+export function paymentStatusLabel(status: string, copy: OrdersCopy): string {
+  return status === "PENDING"
+    ? copy.paymentPending
+    : orderStatusLabel(status, copy);
+}
 export function ordersError(error: unknown, copy: OrdersCopy): string {
   const code = error instanceof AdminClientError ? error.code : "";
   switch (code) {

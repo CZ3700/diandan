@@ -145,3 +145,39 @@ test("delivery opens a private photo panel, and photos are offered only to deliv
   expect(deliver).toMatch(/data-proof-submit="DELIVER"(?![^>]*disabled)/u);
   expect(panel("ATTACH")).toMatch(/data-proof-submit="ATTACH"[^>]*disabled/u);
 });
+
+// User request 2026-09-29: delivery work first; payments and refunds wait, folded, at the
+// bottom; states carry the same colour tones as the list.
+test("delivery comes first and payments and refunds wait behind one control at the bottom", async () => {
+  const { financeFixture } =
+    await import("../management-finance/fixtures.test-support");
+  const html = renderToStaticMarkup(
+    <views.OrdersDetailView
+      locale="en"
+      detail={detailFixture()}
+      context={context}
+      api={{} as OrdersApi}
+      financeApi={{ detail: async () => financeFixture() } as never}
+      onFinanceBusy={() => {}}
+      busy={false}
+      onMutation={async () => true}
+      onReload={() => {}}
+    />,
+  );
+  const lines = html.indexOf('class="mo-lines"');
+  const notification = html.indexOf('id="order-notification"');
+  const notes = html.indexOf('id="order-notes"');
+  const finance = html.indexOf("data-finance-panel");
+  expect(lines).toBeGreaterThan(-1);
+  expect(lines).toBeLessThan(notification);
+  expect(notification).toBeLessThan(notes);
+  expect(notes).toBeLessThan(finance);
+  expect(html).toMatch(/data-finance-toggle[^>]*aria-expanded="false"/u);
+  expect(html).not.toContain("data-finance-refresh");
+  expect(html).toMatch(
+    /class="mo-status" data-tone="[a-z]+" data-status-kind="payment"/u,
+  );
+  expect(html).toMatch(
+    /class="mo-line-status mo-status" data-tone="[a-z]+" data-status-kind="fulfillment"/u,
+  );
+});

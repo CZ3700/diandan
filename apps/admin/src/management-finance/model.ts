@@ -46,3 +46,30 @@ export function refundAllocation(
     return null;
   return { amountMinor: minorAmountSchema.parse(Number(total)), allocations };
 }
+
+/**
+ * The order page folds payments and refunds away (user request 2026-09-29) but opens them
+ * itself while anything there still needs a person: an unconfirmed request of this browser,
+ * a refund in flight, an outstanding reconciliation or an open or lost dispute.
+ */
+export function financeNeedsAttention(
+  detail: Readonly<{
+    order: Readonly<{
+      occupiedRefundAmountMinor: number;
+      refundedAmountMinor: number;
+      needsReconciliation: boolean;
+      disputeStatus: string;
+    }>;
+  }> | null,
+  pendingRequest: boolean,
+): boolean {
+  if (pendingRequest) return true;
+  if (!detail) return false;
+  const { order } = detail;
+  return (
+    order.occupiedRefundAmountMinor > order.refundedAmountMinor ||
+    order.needsReconciliation ||
+    order.disputeStatus === "OPEN" ||
+    order.disputeStatus === "LOST"
+  );
+}

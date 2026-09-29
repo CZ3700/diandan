@@ -130,6 +130,11 @@ export async function verifyAdminFinanceBrowser({
       await page.locator("[data-orders-search]").fill(publicId);
       await page.locator("[data-orders-apply]").click();
       await page.locator(`[data-order-id="${orderId}"]`).click();
+      // Payments and refunds sit folded at the bottom of the order page (L2-12).
+      const toggle = page.locator("[data-finance-toggle]");
+      await toggle.waitFor({ timeout: 60000 });
+      if ((await toggle.getAttribute("aria-expanded")) === "false")
+        await toggle.click();
       await page
         .locator(`[data-finance-detail="${orderId}"]`)
         .waitFor({ timeout: 60000 });

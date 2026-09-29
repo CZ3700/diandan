@@ -11,6 +11,7 @@ import { PhotoView } from "../management-center/photo-view";
 import type { OrdersApi, OrdersContext, OrdersDetail } from "./api";
 import { ordersCopy } from "./copy";
 import { orderStatusLabel } from "./labels";
+import { OrderStatus } from "./order-status";
 import { PrivateMessage } from "./private-message";
 import { PrivateNotes } from "./private-notes";
 import { DeliveryProofPanel } from "./delivery-proof-panel";
@@ -135,9 +136,12 @@ function OrderLine({
             />
           </p>
         </div>
-        <strong className="mo-line-status">
-          {orderStatusLabel(snapshot.fulfillmentStatus, copy)}
-        </strong>
+        <OrderStatus
+          className="mo-line-status"
+          kind="fulfillment"
+          status={snapshot.fulfillmentStatus}
+          copy={copy}
+        />
       </div>
       <div className="mo-line-review">
         <span>
@@ -371,39 +375,15 @@ export function OrdersDetailView(props: DetailProps) {
             amountMinor={detail.order.amount.totalAmountMinor}
           />
           <p>
-            {detail.order.paymentStatus === "PENDING"
-              ? copy.paymentPending
-              : orderStatusLabel(detail.order.paymentStatus, copy)}
+            <OrderStatus
+              kind="payment"
+              status={detail.order.paymentStatus}
+              copy={copy}
+            />
           </p>
         </div>
       </div>
       <p className="mc-hint">{copy.studioDelivery}</p>
-      {props.financeApi && props.onFinanceBusy ? (
-        <FinancePanel
-          api={props.financeApi}
-          orderId={detail.orderId}
-          actorId={context.actorId}
-          locale={locale}
-          onBusy={props.onFinanceBusy}
-          onUpdated={props.onReload}
-          itemTitles={Object.fromEntries(
-            detail.items.map((line) => {
-              const snapshot = detail.order.items.find(
-                (item) => item.position === line.position,
-              );
-              const position = new Intl.NumberFormat(locale).format(
-                line.position,
-              );
-              return [
-                line.itemId,
-                snapshot
-                  ? `${position} · ${snapshot.gift.title} · ${snapshot.idol.displayName}`
-                  : position,
-              ];
-            }),
-          )}
-        />
-      ) : null}
       <ul className="mo-lines">
         {detail.items.map((line) => (
           <OrderLine
@@ -470,6 +450,35 @@ export function OrdersDetailView(props: DetailProps) {
             </Button>
           )}
         </section>
+      ) : null}
+      {/* Delivery first; payments and refunds wait, folded, at the bottom (user request
+          2026-09-29), opening by themselves when something there needs a person. */}
+      {props.financeApi && props.onFinanceBusy ? (
+        <FinancePanel
+          collapsible
+          api={props.financeApi}
+          orderId={detail.orderId}
+          actorId={context.actorId}
+          locale={locale}
+          onBusy={props.onFinanceBusy}
+          onUpdated={props.onReload}
+          itemTitles={Object.fromEntries(
+            detail.items.map((line) => {
+              const snapshot = detail.order.items.find(
+                (item) => item.position === line.position,
+              );
+              const position = new Intl.NumberFormat(locale).format(
+                line.position,
+              );
+              return [
+                line.itemId,
+                snapshot
+                  ? `${position} · ${snapshot.gift.title} · ${snapshot.idol.displayName}`
+                  : position,
+              ];
+            }),
+          )}
+        />
       ) : null}
     </div>
   );
