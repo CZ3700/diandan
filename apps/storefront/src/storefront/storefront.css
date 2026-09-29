@@ -45,8 +45,8 @@
   .storefront-header {
     background: color-mix(in srgb, var(--color-bg) 70%, transparent);
     border-bottom-color: color-mix(in srgb, var(--color-text) 10%, transparent);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(calc(var(--space-4) * 1.25));
+    backdrop-filter: saturate(180%) blur(calc(var(--space-4) * 1.25));
   }
   .storefront-header[data-scrolled="true"] {
     background: color-mix(in srgb, var(--color-surface) 62%, transparent);

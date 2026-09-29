@@ -344,7 +344,7 @@
   align-items: center;
   gap: var(--space-3);
 }
-@media (width < 40rem) {
+@media (width < 48rem) {
   .decoration-order-list li {
     grid-template-columns: var(--space-12) minmax(0, 1fr);
   }
