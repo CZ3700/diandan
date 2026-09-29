@@ -14,14 +14,6 @@ export const metadata: Metadata = {
   title: "Storefront runtime",
   description: "Fan Support Platform storefront runtime preview",
   robots: { index: false, follow: false },
-  // iOS would otherwise rewrite digit runs (order numbers, amounts, names) into links
-  // before hydration, which both breaks hydration and turns reference numbers into calls.
-  formatDetection: {
-    telephone: false,
-    date: false,
-    email: false,
-    address: false,
-  },
 };
 
 export default async function RootLayout({
@@ -53,6 +45,15 @@ export default async function RootLayout({
       {...(theme ? themePresentation(theme) : {})}
       suppressHydrationWarning
     >
+      {/* Streaming metadata appends tags after the body content, too late to stop iOS from
+          rewriting digit runs (order numbers, amounts, names) into links before hydration,
+          which breaks hydration and turns reference numbers into calls. */}
+      <head>
+        <meta
+          name="format-detection"
+          content="telephone=no, date=no, email=no, address=no"
+        />
+      </head>
       <body suppressHydrationWarning>
         {requestHeaders.get("x-storefront-order-access") === "1" && (
           <script

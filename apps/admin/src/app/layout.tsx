@@ -10,13 +10,6 @@ export const metadata: Metadata = {
   title: "Admin runtime",
   description: "Fan Support Platform admin runtime preview",
   robots: { index: false, follow: false },
-  // iOS would otherwise rewrite digit runs (order numbers, amounts) into links before hydration.
-  formatDetection: {
-    telephone: false,
-    date: false,
-    email: false,
-    address: false,
-  },
 };
 
 export default async function RootLayout({
@@ -32,6 +25,15 @@ export default async function RootLayout({
   // server-derived, so only these two elements ignore foreign attributes.
   return (
     <html lang={locale} suppressHydrationWarning>
+      {/* Streaming metadata appends tags after the body content, too late to stop iOS from
+          rewriting digit runs (order numbers, amounts, names) into links before hydration,
+          which breaks hydration and turns reference numbers into calls. */}
+      <head>
+        <meta
+          name="format-detection"
+          content="telephone=no, date=no, email=no, address=no"
+        />
+      </head>
       <body
         suppressHydrationWarning
         style={{

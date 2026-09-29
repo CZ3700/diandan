@@ -147,6 +147,8 @@ export function PublishedHeroImage({
             decoding="async"
             fetchPriority="high"
             loading="eager"
+            // WeChat injects an inline style on <img> before hydration; focus is on the wrapper.
+            suppressHydrationWarning
             onError={() => setFailedIdentity(identity)}
             onLoad={() => setFailedIdentity(null)}
           />

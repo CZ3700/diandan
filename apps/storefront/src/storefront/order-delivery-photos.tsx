@@ -60,6 +60,8 @@ export function OrderDeliveryPhotos({
                     )}
                     loading="lazy"
                     decoding="async"
+                    // WeChat injects an inline style on <img> before hydration.
+                    suppressHydrationWarning
                   />
                 }
                 title={alt}
@@ -73,6 +75,7 @@ export function OrderDeliveryPhotos({
                   height={proof.height}
                   alt={alt}
                   decoding="async"
+                  suppressHydrationWarning
                 />
               </Dialog>
             </li>

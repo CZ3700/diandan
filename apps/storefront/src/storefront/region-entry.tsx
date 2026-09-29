@@ -22,9 +22,12 @@ export function regionEntries(
   return {
     header: (
       <Suspense fallback={null}>
+        {/* The children cross into the client header as an array, so each needs a key. */}
         <RegionChoiceEntry>
-          <p>{copy.regionHint}</p>
-          <a href={href}>{copy.region}</a>
+          <p key="hint">{copy.regionHint}</p>
+          <a key="choice" href={href}>
+            {copy.region}
+          </a>
         </RegionChoiceEntry>
       </Suspense>
     ),
