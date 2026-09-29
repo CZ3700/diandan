@@ -7,6 +7,7 @@ import type { StorefrontCopy } from "./copy";
 import type { DirectoryState } from "./directory-model";
 import { PublishedImage } from "./published-image";
 import { storefrontHref } from "./navigation";
+import { artistWave, leadingArtistIndex } from "./artist-wave";
 import styles from "./artist-directory.module.css";
 
 export function ArtistTrack({
@@ -28,7 +29,43 @@ export function ArtistTrack({
   const track = useRef<HTMLUListElement>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+  const [peak, setPeak] = useState<number | null>(null);
   const focusedRequest = useRef(-1);
+
+  // L2-15: touch screens have no hover, so the leftmost whole card leads the wave while
+  // swiping. With a pointer, CSS raises the hovered card instead and no card is marked.
+  useEffect(() => {
+    const element = track.current;
+    if (element === null) return;
+    const touch = window.matchMedia("(hover: none), (pointer: coarse)");
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      setPeak(
+        touch.matches
+          ? leadingArtistIndex(
+              element.scrollLeft,
+              [
+                ...element.querySelectorAll<HTMLElement>("[data-artist-card]"),
+              ].map((card) => card.offsetLeft),
+            )
+          : null,
+      );
+    };
+    const schedule = () => {
+      if (frame === 0) frame = window.requestAnimationFrame(measure);
+    };
+    schedule();
+    element.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    touch.addEventListener("change", schedule);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      element.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      touch.removeEventListener("change", schedule);
+    };
+  }, [state.items.length]);
 
   useEffect(() => {
     if (
@@ -145,11 +182,12 @@ export function ArtistTrack({
             onLoadMore();
         }}
       >
-        {state.items.map((artist) => (
+        {state.items.map((artist, index) => (
           <li
             className={styles["card"]}
             key={artist.id}
             data-artist-card={artist.id}
+            data-wave={artistWave(index, peak)}
             data-accepting={artist.acceptingGifts}
             lang={artist.localeContext.resolvedLocale}
           >
