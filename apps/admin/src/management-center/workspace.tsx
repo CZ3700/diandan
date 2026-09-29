@@ -63,6 +63,7 @@ export function ManagementWorkspace({
   onExceptions,
   onDecoration,
   onInfoPages,
+  onStaff,
   onAccount,
   accountWarning,
   initialSection = "ARTISTS",
@@ -78,6 +79,7 @@ export function ManagementWorkspace({
   onExceptions?: (() => void) | undefined;
   onInfoPages?: (() => void) | undefined;
   onDecoration?: (() => void) | undefined;
+  onStaff?: (() => void) | undefined;
   onAccount?: (() => void) | undefined;
   accountWarning?: string | undefined;
   initialSection?: ManagementSection;
@@ -310,6 +312,7 @@ export function ManagementWorkspace({
             "DECORATION",
             "EXCEPTIONS",
             "INFO_PAGES",
+            "STAFF",
             "ACCOUNT",
           ].includes(next) &&
           !canLeave()
@@ -320,6 +323,7 @@ export function ManagementWorkspace({
         else if (next === "INFO_PAGES") onInfoPages?.();
         else if (next === "DECORATION") onDecoration?.();
         else if (next === "EXCEPTIONS") onExceptions?.();
+        else if (next === "STAFF") onStaff?.();
         else if (next === "ACCOUNT") onAccount?.();
         else chooseSection(next);
       }}
@@ -328,6 +332,7 @@ export function ManagementWorkspace({
       exceptionsAvailable={Boolean(onExceptions)}
       infoPagesAvailable={Boolean(onInfoPages)}
       decorationAvailable={Boolean(onDecoration)}
+      staffAvailable={Boolean(onStaff)}
       accountAvailable={Boolean(onAccount)}
       accountWarning={accountWarning}
       disabled={busy}

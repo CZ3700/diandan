@@ -115,3 +115,67 @@ test("an API without built-in accounts reports the section as absent, not broken
   expect(response.status).toBe(404);
   expect(await response.json()).toMatchObject({ code: "NOT_FOUND" });
 });
+
+test("staff management maps each operation to its own route, command and result", () => {
+  const id = "10000000-0000-4000-8000-000000000001";
+  for (const [key, path, action, body, kind] of [
+    ["staff-context", "context", "CONTEXT", {}, "STAFF_CONTEXT"],
+    ["staff-list", "list", "LIST", {}, "STAFF"],
+    [
+      "staff-create",
+      "create",
+      "CREATE",
+      {
+        loginName: "night.shift",
+        displayName: "Night",
+        roleKeys: ["studio:operator"],
+      },
+      "STAFF_CREATED",
+    ],
+    [
+      "staff-update-roles",
+      "update-roles",
+      "UPDATE_ROLES",
+      { accountId: id, expectedVersion: 2, roleKeys: ["studio:owner"] },
+      "STAFF_UPDATED",
+    ],
+    [
+      "staff-reset-password",
+      "reset-password",
+      "RESET_PASSWORD",
+      { accountId: id, expectedVersion: 2 },
+      "PASSWORD_RESET",
+    ],
+    [
+      "staff-clear-totp",
+      "clear-totp",
+      "CLEAR_TOTP",
+      { accountId: id, expectedVersion: 2 },
+      "STAFF_UPDATED",
+    ],
+    [
+      "staff-set-status",
+      "set-status",
+      "SET_STATUS",
+      { accountId: id, expectedVersion: 2, status: "SUSPENDED" },
+      "STAFF_UPDATED",
+    ],
+  ] as const) {
+    const operation = getAdminOperation(key)!;
+    expect(operation.path).toBe(`/api/v1/admin/staff/${path}`);
+    expect(operation.readOnly).toBe(action === "CONTEXT" || action === "LIST");
+    const command = operation.parseCommand(body);
+    expect(command).toEqual({ action, ...body });
+    expect(operation.apiBody(command)).toEqual(body);
+    expect(() => operation.parseCommand({ ...body, actorId: id })).toThrow();
+    expect(() =>
+      operation.parseResponse({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "STAFF_CONTEXT" === kind ? "STAFF" : "STAFF_CONTEXT",
+        members: [],
+        roles: [],
+      }),
+    ).toThrow();
+  }
+});

@@ -12,6 +12,7 @@ import { ordersCopy } from "../management-orders/copy";
 import { informationCopy } from "../management-info-pages/copy";
 import { decorationCopy } from "../management-decoration/copy";
 import { accountCopy } from "../management-account/copy";
+import { staffCopy } from "../management-staff/copy";
 
 export function ManagementShell({
   locale,
@@ -26,6 +27,7 @@ export function ManagementShell({
   exceptionsAvailable = false,
   decorationAvailable = false,
   infoPagesAvailable = false,
+  staffAvailable = false,
   accountAvailable = false,
   accountWarning,
   beforeLeave,
@@ -39,6 +41,7 @@ export function ManagementShell({
     | "EXCEPTIONS"
     | "DECORATION"
     | "INFO_PAGES"
+    | "STAFF"
     | "ACCOUNT";
   onSection: (
     section:
@@ -48,6 +51,7 @@ export function ManagementShell({
       | "EXCEPTIONS"
       | "DECORATION"
       | "INFO_PAGES"
+      | "STAFF"
       | "ACCOUNT",
   ) => void;
   children: ReactNode;
@@ -59,6 +63,8 @@ export function ManagementShell({
   exceptionsAvailable?: boolean;
   decorationAvailable?: boolean;
   infoPagesAvailable?: boolean;
+  /** ADR-021: staff accounts, for holders of staff.manage. */
+  staffAvailable?: boolean;
   /** ADR-021: the signed-in built-in account's own settings. */
   accountAvailable?: boolean;
   /** Shown under the entry while two-step verification is off. */
@@ -156,6 +162,17 @@ export function ManagementShell({
               onClick={() => onSection("EXCEPTIONS")}
             >
               {exceptionsCopy(locale).title}
+            </button>
+          ) : null}
+          {staffAvailable ? (
+            <button
+              type="button"
+              data-management-section="STAFF"
+              aria-current={section === "STAFF" ? "page" : undefined}
+              disabled={disabled}
+              onClick={() => onSection("STAFF")}
+            >
+              {staffCopy(locale).title}
             </button>
           ) : null}
           {accountAvailable ? (

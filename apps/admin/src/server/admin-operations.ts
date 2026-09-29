@@ -98,6 +98,25 @@ function accountOperation(
     },
   });
 }
+/** ADR-021 staff accounts; every command re-authorizes staff.manage in the API. */
+function staffOperation(
+  path: string,
+  action: contract.AdminStaffCommand["action"],
+  kind: string,
+): AdminOperation {
+  return Object.freeze({
+    ...operation(
+      `/api/v1/admin/staff/${path}`,
+      contract.adminStaffCommandSchema,
+      contract.adminStaffResponseSchema,
+      action,
+      kind,
+      false,
+      4096,
+    ),
+    readOnly: action === "CONTEXT" || action === "LIST",
+  });
+}
 function commerceOperation(
   path: string,
   action: contract.GiftCommerceCommand["action"],
@@ -1171,6 +1190,29 @@ const entries = {
     "recovery-codes",
     "REGENERATE_RECOVERY_CODES",
     "RECOVERY_CODES",
+  ),
+  "staff-context": staffOperation("context", "CONTEXT", "STAFF_CONTEXT"),
+  "staff-list": staffOperation("list", "LIST", "STAFF"),
+  "staff-create": staffOperation("create", "CREATE", "STAFF_CREATED"),
+  "staff-update-roles": staffOperation(
+    "update-roles",
+    "UPDATE_ROLES",
+    "STAFF_UPDATED",
+  ),
+  "staff-reset-password": staffOperation(
+    "reset-password",
+    "RESET_PASSWORD",
+    "PASSWORD_RESET",
+  ),
+  "staff-clear-totp": staffOperation(
+    "clear-totp",
+    "CLEAR_TOTP",
+    "STAFF_UPDATED",
+  ),
+  "staff-set-status": staffOperation(
+    "set-status",
+    "SET_STATUS",
+    "STAFF_UPDATED",
   ),
 } as const;
 export type AdminOperationKey = Exclude<keyof typeof entries, "session">;

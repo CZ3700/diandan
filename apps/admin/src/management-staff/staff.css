@@ -1,0 +1,162 @@
+/* ADR-021 staff accounts: one quiet row per person, actions in reach. Tokens only. */
+.staff-page {
+  display: grid;
+  gap: var(--space-6);
+  max-width: calc(var(--space-32) * 7.5);
+}
+.staff-page h1 {
+  margin: 0;
+  font-size: calc(var(--type-body-size) * 1.85);
+  line-height: var(--type-heading-script-leading);
+  font-weight: 600;
+}
+.staff-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.staff-heading > div {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.staff-meta,
+.staff-notice,
+.staff-panel p,
+.staff-name {
+  margin: 0;
+  line-height: var(--type-body-leading);
+  overflow-wrap: anywhere;
+}
+.staff-meta {
+  color: var(--color-text-muted);
+}
+.staff-notice--error {
+  color: var(--color-danger);
+  font-weight: 700;
+}
+.staff-notice--done {
+  color: var(--color-success);
+}
+.staff-list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-block-start: var(--border-width) solid var(--color-border);
+}
+.staff-row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: var(--space-3) var(--space-6);
+  padding-block: var(--space-6);
+  border-block-end: var(--border-width) solid var(--color-border);
+}
+.staff-who {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  min-width: 0;
+}
+.staff-name {
+  font-weight: 600;
+}
+.staff-you {
+  margin-inline-start: var(--space-2);
+  padding: 0 var(--space-2);
+  border: var(--border-width) solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  color: var(--color-accent);
+  font-size: var(--type-label-size);
+  font-weight: 600;
+  vertical-align: middle;
+}
+.staff-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-text-muted);
+}
+.staff-facts [data-status="SUSPENDED"] {
+  color: var(--color-warning);
+}
+.staff-facts [data-two-factor="on"] {
+  color: var(--color-success);
+}
+.staff-row > .staff-actions,
+.staff-row > .staff-panel {
+  grid-column: 1 / -1;
+}
+.staff-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+}
+.staff-panel {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+}
+.staff-panel h2 {
+  margin: 0;
+  font-size: calc(var(--type-body-size) * 1.35);
+  line-height: var(--type-heading-script-leading);
+  font-weight: 600;
+}
+.staff-panel h2:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-accent);
+  outline-offset: var(--focus-ring-offset);
+}
+.staff-temporary {
+  border-color: var(--color-accent);
+}
+.staff-password {
+  color: var(--color-accent);
+  font-size: calc(var(--type-body-size) * 1.35);
+  font-weight: 600;
+  letter-spacing: var(--type-label-tracking);
+  font-variant-numeric: tabular-nums;
+}
+.staff-roles {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.staff-roles legend {
+  margin-block-end: var(--space-2);
+  padding: 0;
+  font-weight: 700;
+}
+.staff-role {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+  cursor: pointer;
+}
+.staff-role input {
+  width: var(--space-4);
+  height: var(--space-4);
+  margin-block-start: var(--space-1);
+  accent-color: var(--color-accent);
+}
+.staff-role > span {
+  display: grid;
+  gap: var(--space-1);
+}
+@media (max-width: 48rem) {
+  .staff-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

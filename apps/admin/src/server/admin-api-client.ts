@@ -94,6 +94,7 @@ export async function callAdminApi(
         "/api/v1/admin/orders/context",
         "/api/v1/admin/exceptions/context",
         "/api/v1/admin/account/context",
+        "/api/v1/admin/staff/context",
       ].includes(operation.path) &&
       response.status === 404
     ) {

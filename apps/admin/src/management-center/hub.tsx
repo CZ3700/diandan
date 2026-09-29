@@ -7,6 +7,8 @@ import type { InformationPagesApi } from "../management-info-pages/api";
 import type { AccountApi, AccountView } from "../management-account/api";
 import { AccountSettings } from "../management-account/account-settings";
 import { accountCopy } from "../management-account/copy";
+import type { StaffApi } from "../management-staff/api";
+import { StaffWorkspace } from "../management-staff/staff-workspace";
 import type { ManagementApi, ManagementSection } from "./api";
 import type { OrdersApi } from "../management-orders/api";
 import type { PaymentConfigurationApi } from "../management-payments/api";
@@ -45,6 +47,7 @@ export function ManagementHub({
   infoPagesApi,
   infoPagesAccess,
   accountApi,
+  staffApi,
   locale,
   storefrontOrigin,
   onLogout,
@@ -61,6 +64,7 @@ export function ManagementHub({
   displayOrderApi?: DisplayOrderApi | undefined;
   infoPagesApi?: InformationPagesApi | undefined;
   accountApi?: AccountApi | undefined;
+  staffApi?: StaffApi | undefined;
   infoPagesAccess?:
     { allowed: boolean; localeScopes: readonly SupportedLocale[] } | undefined;
   layoutPermissions?:
@@ -81,6 +85,7 @@ export function ManagementHub({
       | "EXCEPTIONS"
       | "DECORATION"
       | "INFO_PAGES"
+      | "STAFF"
       | "ACCOUNT"
       | null
     >(null),
@@ -108,6 +113,22 @@ export function ManagementHub({
       canceled = true;
     };
   }, [accountApi, accountRead]);
+  const [staffAvailable, setStaffAvailable] = useState(false);
+  useEffect(() => {
+    if (!staffApi) return;
+    let canceled = false;
+    void staffApi.available().then(
+      (value) => {
+        if (!canceled) setStaffAvailable(value);
+      },
+      () => {
+        if (!canceled) setStaffAvailable(false);
+      },
+    );
+    return () => {
+      canceled = true;
+    };
+  }, [staffApi]);
   const accountWarning =
     account && !account.twoFactorEnabled
       ? accountCopy(locale).warningBadge
@@ -178,6 +199,7 @@ export function ManagementHub({
       | "EXCEPTIONS"
       | "DECORATION"
       | "INFO_PAGES"
+      | "STAFF"
       | "ACCOUNT",
   ) {
     if (next !== active && !canLeaveWorkspace()) return;
@@ -199,6 +221,7 @@ export function ManagementHub({
   const notice =
     active !== "DECORATION" &&
     active !== "INFO_PAGES" &&
+    active !== "STAFF" &&
     active !== "ACCOUNT" &&
     managementSectionUnavailable(access, active) ? (
       <div className="mc-error-state" role="alert">
@@ -213,6 +236,7 @@ export function ManagementHub({
     active !== "DECORATION" &&
     active !== "INFO_PAGES" &&
     active !== "EXCEPTIONS" &&
+    active !== "STAFF" &&
     active !== "ACCOUNT"
   )
     return (
@@ -239,6 +263,7 @@ export function ManagementHub({
             ? () => chooseSection("DECORATION")
             : undefined
         }
+        onStaff={staffAvailable ? () => chooseSection("STAFF") : undefined}
         onAccount={account ? () => chooseSection("ACCOUNT") : undefined}
         accountWarning={accountWarning}
         accessNotice={notice}
@@ -255,6 +280,7 @@ export function ManagementHub({
       exceptionsAvailable={Boolean(access?.exceptions)}
       infoPagesAvailable={Boolean(infoPagesAccess?.allowed && infoPagesApi)}
       decorationAvailable={Boolean(layoutPermissions?.read && layoutApi)}
+      staffAvailable={staffAvailable}
       accountAvailable={Boolean(account)}
       accountWarning={accountWarning}
       beforeLeave={() => !busy}
@@ -267,7 +293,9 @@ export function ManagementHub({
       }
     >
       {notice}
-      {active === "ACCOUNT" && account && accountApi ? (
+      {active === "STAFF" && staffAvailable && staffApi ? (
+        <StaffWorkspace api={staffApi} locale={locale} onBusy={setBusy} />
+      ) : active === "ACCOUNT" && account && accountApi ? (
         <AccountSettings
           api={accountApi}
           locale={locale}
