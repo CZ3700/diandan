@@ -34,9 +34,20 @@ export type StorefrontDetailTemplates = z.infer<
 export function createDefaultStorefrontDetailTemplates(): StorefrontDetailTemplates {
   return { artist: "IMMERSIVE", gift: "IMAGE_LEFT" };
 }
+/** Deployed palettes: three dark presets, then four light presets (L2-16). */
+export const storefrontPaletteSchema = z.enum([
+  "BLACK_GOLD",
+  "GRAPHITE_PEARL",
+  "MIDNIGHT_BLUE",
+  "SAKURA_PINK",
+  "SKY_BLUE",
+  "IVORY_GOLD",
+  "PEARL_GRAY",
+]);
+export type StorefrontPalette = z.infer<typeof storefrontPaletteSchema>;
 const legacyStorefrontThemeSchema = z.strictObject({
   schemaVersion: z.literal(1),
-  palette: z.enum(["BLACK_GOLD", "GRAPHITE_PEARL", "MIDNIGHT_BLUE"]),
+  palette: storefrontPaletteSchema,
   typography: z.enum(["STANDARD", "LARGE"]),
   density: z.enum(["STANDARD", "COMPACT", "AIRY"]),
   corners: z.enum(["SOFT", "SHARP", "ROUND"]),

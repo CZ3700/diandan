@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { Client } from "pg";
 import { verifyStorefrontPresentation } from "./storefront-theme-presentation-cases.mjs";
 import { verifyStorefrontDetailTemplates } from "./storefront-theme-detail-template-cases.mjs";
+import { verifyStorefrontLightPalettes } from "./storefront-theme-light-palette-cases.mjs";
 import {
   createDefaultStorefrontTheme,
   createDefaultHomeLayout,
@@ -428,7 +429,7 @@ await runtime(async (config) => {
       check,
       actorId,
     });
-    const finalVersion = await verifyStorefrontDetailTemplates({
+    const detailVersion = await verifyStorefrontDetailTemplates({
       client,
       migrate,
       execute,
@@ -438,6 +439,16 @@ await runtime(async (config) => {
       saveCommand,
       published,
       previousVersion,
+      check,
+    });
+    const finalVersion = await verifyStorefrontLightPalettes({
+      client,
+      migrate,
+      execute,
+      publicApp,
+      publicLayout,
+      priorLayout,
+      previousVersion: detailVersion,
       check,
     });
     await persistence.close();

@@ -114,6 +114,13 @@
   scroll-margin-inline: var(--space-3);
 }
 
+/* L2-16 light palettes: white catches the light, while the edge and the cast shadow take the
+   ink colour so the mount still reads on pale paper. */
+:global(html[data-storefront-scheme="LIGHT"]) .card {
+  --artist-glass-light: var(--color-surface-raised);
+  --artist-glass-shade: color-mix(in srgb, var(--color-text) 24%, transparent);
+}
+
 .card a {
   position: relative;
   display: block;
@@ -150,6 +157,10 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--motion-control-effective) var(--ease-out);
+}
+
+:global(html[data-storefront-scheme="LIGHT"]) .card a::before {
+  border-color: color-mix(in srgb, var(--color-text) 12%, transparent);
 }
 
 .card figure {

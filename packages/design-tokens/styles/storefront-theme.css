@@ -17,6 +17,68 @@ html[data-storefront-palette="MIDNIGHT_BLUE"] {
   --color-text-muted: #aebbd0;
 }
 
+/* L2-16 light palettes: dark ink on light paper, with feedback states, border and shadow
+   retuned so every state stays readable (WCAG AA) on all three surfaces. */
+html[data-storefront-scheme="LIGHT"] {
+  color-scheme: light;
+}
+
+html[data-storefront-palette="SAKURA_PINK"] {
+  --color-accent: #b0305c;
+  --color-bg: #fcf3f5;
+  --color-surface: #fff8fa;
+  --color-surface-raised: #ffffff;
+  --color-text: #3b1f2b;
+  --color-text-muted: #765462;
+  --color-border: rgb(59 31 43 / 14%);
+  --shadow-raised: 0 1rem 3rem rgb(59 31 43 / 12%);
+  --color-danger: #b42318;
+  --color-success: #16703f;
+  --color-warning: #8a5300;
+}
+
+html[data-storefront-palette="SKY_BLUE"] {
+  --color-accent: #1c64b0;
+  --color-bg: #f1f6fc;
+  --color-surface: #f8fbff;
+  --color-surface-raised: #ffffff;
+  --color-text: #10243a;
+  --color-text-muted: #4d6179;
+  --color-border: rgb(16 36 58 / 14%);
+  --shadow-raised: 0 1rem 3rem rgb(16 36 58 / 12%);
+  --color-danger: #b42318;
+  --color-success: #16703f;
+  --color-warning: #8a5300;
+}
+
+html[data-storefront-palette="IVORY_GOLD"] {
+  --color-accent: #86600f;
+  --color-bg: #faf6ec;
+  --color-surface: #fdfaf2;
+  --color-surface-raised: #fffdf8;
+  --color-text: #2b2417;
+  --color-text-muted: #6b604b;
+  --color-border: rgb(43 36 23 / 14%);
+  --shadow-raised: 0 1rem 3rem rgb(43 36 23 / 12%);
+  --color-danger: #b42318;
+  --color-success: #16703f;
+  --color-warning: #8a5300;
+}
+
+html[data-storefront-palette="PEARL_GRAY"] {
+  --color-accent: #4a5670;
+  --color-bg: #f2f3f5;
+  --color-surface: #f8f9fa;
+  --color-surface-raised: #ffffff;
+  --color-text: #1c1f24;
+  --color-text-muted: #585f69;
+  --color-border: rgb(28 31 36 / 14%);
+  --shadow-raised: 0 1rem 3rem rgb(28 31 36 / 12%);
+  --color-danger: #b42318;
+  --color-success: #16703f;
+  --color-warning: #8a5300;
+}
+
 html[data-storefront-typography="LARGE"] {
   --type-body-size: clamp(1.125rem, 1.08rem + 0.2vw, 1.25rem);
   --type-label-size: 0.875rem;

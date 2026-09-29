@@ -103,7 +103,15 @@ test("both previous theme generations preserve exact command JSON and receipt ha
       for (const motion of ["STANDARD", "SUBTLE", "NONE"])
         for (const motionSpeed of ["STANDARD", "QUICK"])
           presentations.push({ heroLayout, giftLayout, motion, motionSpeed });
-  for (const palette of ["BLACK_GOLD", "GRAPHITE_PEARL", "MIDNIGHT_BLUE"])
+  for (const palette of [
+    "BLACK_GOLD",
+    "GRAPHITE_PEARL",
+    "MIDNIGHT_BLUE",
+    "SAKURA_PINK",
+    "SKY_BLUE",
+    "IVORY_GOLD",
+    "PEARL_GRAY",
+  ])
     for (const typography of ["STANDARD", "LARGE"])
       for (const density of ["STANDARD", "COMPACT", "AIRY"])
         for (const corners of ["SOFT", "SHARP", "ROUND"])

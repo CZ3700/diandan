@@ -5,11 +5,13 @@ import * as tokens from "./index.js";
 type ThemeExports = {
   storefrontThemeAttributes: (value: unknown) => Record<string, string>;
   STOREFRONT_THEME_PALETTES: Record<string, Record<string, string>>;
+  STOREFRONT_PALETTE_SCHEMES: Record<string, "DARK" | "LIGHT">;
 };
 function subject() {
   const value = tokens as unknown as ThemeExports;
   expect(value.storefrontThemeAttributes).toBeTypeOf("function");
   expect(value.STOREFRONT_THEME_PALETTES).toBeDefined();
+  expect(value.STOREFRONT_PALETTE_SCHEMES).toBeDefined();
   return value;
 }
 const theme = {
@@ -23,6 +25,7 @@ test("theme exposes only deployed presentation attributes and rejects arbitrary 
   const { storefrontThemeAttributes } = subject();
   expect(storefrontThemeAttributes(theme)).toEqual({
     "data-storefront-palette": "BLACK_GOLD",
+    "data-storefront-scheme": "DARK",
     "data-storefront-typography": "STANDARD",
     "data-storefront-density": "STANDARD",
     "data-storefront-corners": "SOFT",
@@ -91,9 +94,59 @@ function luminance(hex: string) {
     );
   return rgb[0]! * 0.2126 + rgb[1]! * 0.7152 + rgb[2]! * 0.0722;
 }
+function contrast(left: string, right: string) {
+  const [lighter, darker] = [luminance(left), luminance(right)].sort(
+    (a, b) => b - a,
+  );
+  return (lighter! + 0.05) / (darker! + 0.05);
+}
+function hue(hex: string) {
+  const [red, green, blue] = [1, 3, 5].map(
+    (index) => parseInt(hex.slice(index, index + 2), 16) / 255,
+  ) as [number, number, number];
+  const max = Math.max(red, green, blue);
+  const delta = max - Math.min(red, green, blue);
+  if (delta === 0) return 0;
+  const sector =
+    max === red
+      ? ((green - blue) / delta) % 6
+      : max === green
+        ? (blue - red) / delta + 2
+        : (red - green) / delta + 4;
+  return (sector * 60 + 360) % 360;
+}
+const LIGHT_PALETTES = ["SAKURA_PINK", "SKY_BLUE", "IVORY_GOLD", "PEARL_GRAY"];
+const FEEDBACK = ["--color-danger", "--color-success", "--color-warning"];
+test("each palette declares its scheme: three dark presets, then four light presets (L2-16)", () => {
+  const { STOREFRONT_PALETTE_SCHEMES, STOREFRONT_THEME_PALETTES } = subject();
+  expect(STOREFRONT_PALETTE_SCHEMES).toEqual({
+    BLACK_GOLD: "DARK",
+    GRAPHITE_PEARL: "DARK",
+    MIDNIGHT_BLUE: "DARK",
+    SAKURA_PINK: "LIGHT",
+    SKY_BLUE: "LIGHT",
+    IVORY_GOLD: "LIGHT",
+    PEARL_GRAY: "LIGHT",
+  });
+  expect(Object.keys(STOREFRONT_THEME_PALETTES)).toEqual(
+    Object.keys(STOREFRONT_PALETTE_SCHEMES),
+  );
+});
+test("light palettes switch the scheme attribute; dark palettes keep it", () => {
+  const { storefrontThemeAttributes, STOREFRONT_PALETTE_SCHEMES } = subject();
+  for (const [palette, scheme] of Object.entries(STOREFRONT_PALETTE_SCHEMES))
+    expect(storefrontThemeAttributes({ ...theme, palette })).toMatchObject({
+      "data-storefront-palette": palette,
+      "data-storefront-scheme": scheme,
+    });
+});
 test("every palette retains readable text, action and semantic states on all surfaces", () => {
   const { STOREFRONT_THEME_PALETTES } = subject();
-  for (const palette of Object.values(STOREFRONT_THEME_PALETTES)) {
+  for (const [name, palette] of Object.entries(STOREFRONT_THEME_PALETTES)) {
+    const values = {
+      ...tokens.DESIGN_TOKEN_CONTRACT.values,
+      ...palette,
+    } as Record<string, string>;
     for (const background of [
       "--color-bg",
       "--color-surface",
@@ -103,25 +156,48 @@ test("every palette retains readable text, action and semantic states on all sur
         "--color-text",
         "--color-text-muted",
         "--color-accent",
-        "--color-success",
-        "--color-danger",
-        "--color-warning",
+        ...FEEDBACK,
       ]) {
-        const values = {
-          ...tokens.DESIGN_TOKEN_CONTRACT.values,
-          ...palette,
-        } as Record<string, string>;
-        const ratio =
-          (luminance(values[foreground]!) + 0.05) /
-          (luminance(values[background]!) + 0.05);
-        expect(ratio, `${foreground} on ${background}`).toBeGreaterThanOrEqual(
-          4.5,
-        );
+        expect(
+          contrast(values[foreground]!, values[background]!),
+          `${name} ${foreground} on ${background}`,
+        ).toBeGreaterThanOrEqual(4.5);
       }
     }
+    // Text is lighter than the page on dark palettes and darker on light ones.
     expect(
-      Object.keys(palette).some((key) => /danger|success|warning/.test(key)),
-    ).toBe(false);
+      luminance(values["--color-text"]!) > luminance(values["--color-bg"]!),
+      `${name} scheme direction`,
+    ).toBe(!LIGHT_PALETTES.includes(name));
+  }
+});
+test("dark palettes never retune semantic states; light palettes carry a complete set that keeps its meaning", () => {
+  const { STOREFRONT_THEME_PALETTES } = subject();
+  for (const [name, palette] of Object.entries(STOREFRONT_THEME_PALETTES)) {
+    const overrides = Object.keys(palette).filter((key) =>
+      /danger|success|warning|border|shadow/.test(key),
+    );
+    if (!LIGHT_PALETTES.includes(name)) {
+      expect(overrides, name).toEqual([]);
+      continue;
+    }
+    expect(overrides.sort(), name).toEqual(
+      [...FEEDBACK, "--color-border", "--shadow-raised"].sort(),
+    );
+    const danger = hue(palette["--color-danger"]!);
+    expect(danger < 15 || danger > 345, `${name} danger stays red`).toBe(true);
+    const success = hue(palette["--color-success"]!);
+    expect(success > 100 && success < 170, `${name} success stays green`).toBe(
+      true,
+    );
+    const warning = hue(palette["--color-warning"]!);
+    expect(warning > 25 && warning < 50, `${name} warning stays amber`).toBe(
+      true,
+    );
+    expect(palette["--color-border"]).toMatch(/^rgb\(\d+ \d+ \d+ \/ \d+%\)$/u);
+    expect(palette["--shadow-raised"]).toMatch(
+      /^0 1rem 3rem rgb\(\d+ \d+ \d+ \/ \d+%\)$/u,
+    );
   }
 });
 test("preset CSS agrees with palette tokens and keeps touch, fonts and reduced motion protected", async () => {
@@ -142,6 +218,10 @@ test("preset CSS agrees with palette tokens and keeps touch, fonts and reduced m
     for (const [key, value] of Object.entries(palette))
       expect(block).toContain(`${key}: ${value};`);
   }
+  // Native controls, scrollbars and autofill follow the page on light palettes.
+  expect(css).toMatch(
+    /html\[data-storefront-scheme="LIGHT"\] \{\s*color-scheme: light;\s*\}/u,
+  );
   expect(css).not.toMatch(/--(?:space-\d+|font-ui|motion-reduced)\s*:/u);
   expect(css).not.toMatch(/url\(|!important|animation:/u);
 });

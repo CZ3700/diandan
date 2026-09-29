@@ -5,6 +5,7 @@ import {
   SUPPORTED_LOCALES,
   createDefaultStorefrontTheme,
 } from "@fan-support/contracts";
+import { STOREFRONT_THEME_PALETTES } from "@fan-support/design-tokens";
 const editor = await import("./theme-editor").catch(() => undefined);
 const copyModule = await import("./theme-copy").catch(() => undefined);
 test.each(SUPPORTED_LOCALES)(
@@ -27,7 +28,7 @@ test.each(SUPPORTED_LOCALES)(
         copy={copyModule!.themeCopy(locale)}
       />,
     );
-    expect(html.match(/type="radio"/gu)).toHaveLength(3);
+    expect(html.match(/type="radio"/gu)).toHaveLength(7);
     expect(html.match(/<select/gu)).toHaveLength(9);
     expect(html.match(/<details/gu)).toHaveLength(1);
     expect(html).not.toMatch(/<details[^>]*\bopen/u);
@@ -45,6 +46,63 @@ test.each(SUPPORTED_LOCALES)(
     expect(html).toContain("data-theme-editor");
     expect(html).toContain('<fieldset disabled=""');
     expect(html).not.toMatch(/undefined|\[object Object\]/u);
+  },
+);
+
+test.each(SUPPORTED_LOCALES)(
+  "%s palettes are grouped dark then light, each with a token swatch and its own name (L2-16)",
+  (locale) => {
+    const ThemeEditor = editor!.ThemeEditor;
+    const copy = copyModule!.themeCopy(locale);
+    const html = renderToStaticMarkup(
+      <ThemeEditor
+        theme={{ ...createDefaultStorefrontTheme(), palette: "IVORY_GOLD" }}
+        onChange={() => {}}
+        disabled={false}
+        copy={copy}
+      />,
+    );
+    const groups = [
+      ...html.matchAll(
+        /<fieldset data-palette-group="(DARK|LIGHT)"><legend>([^<]+)<\/legend>(.*?)<\/fieldset>/gu,
+      ),
+    ];
+    expect(groups.map((group) => group[1])).toEqual(["DARK", "LIGHT"]);
+    expect(groups.map((group) => group[2])).toEqual([
+      copy.paletteGroups.DARK,
+      copy.paletteGroups.LIGHT,
+    ]);
+    const options = groups.map((group) =>
+      [...group[3]!.matchAll(/data-theme-palette="([A-Z_]+)"/gu)].map(
+        (match) => match[1],
+      ),
+    );
+    expect(options).toEqual([
+      ["BLACK_GOLD", "GRAPHITE_PEARL", "MIDNIGHT_BLUE"],
+      ["SAKURA_PINK", "SKY_BLUE", "IVORY_GOLD", "PEARL_GRAY"],
+    ]);
+    for (const [palette, tokens] of Object.entries(STOREFRONT_THEME_PALETTES)) {
+      const option = html.match(
+        new RegExp(
+          `data-theme-palette="${palette}"[^>]*/><span class="decoration-theme-swatch" aria-hidden="true" style="([^"]+)"></span><span>([^<]+)</span>`,
+          "u",
+        ),
+      );
+      expect(option, `${locale} ${palette}`).not.toBeNull();
+      for (const token of ["--color-bg", "--color-text", "--color-accent"])
+        expect(option![1]).toContain(
+          `--swatch-${token.slice("--color-".length)}:${tokens[token as keyof typeof tokens]}`,
+        );
+      expect(option![2]).toBe(
+        copy.palettes[palette as keyof typeof copy.palettes].replaceAll(
+          "&",
+          "&amp;",
+        ),
+      );
+    }
+    expect(new Set(Object.values(copy.palettes)).size).toBe(7);
+    expect(html).toMatch(/data-theme-palette="IVORY_GOLD"[^>]*checked/u);
+    expect(html.match(/checked=""/gu)).toHaveLength(1);
   },
 );
 

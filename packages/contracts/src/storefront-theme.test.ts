@@ -5,6 +5,7 @@ import {
   storefrontThemeCommandSchema,
   publicStorefrontThemeResponseSchema,
   storefrontThemePreviewMessageSchema,
+  storefrontPaletteSchema,
 } from "./index.js";
 
 test("default preserves the accepted black gold presentation and returns independent values", () => {
@@ -22,7 +23,15 @@ test("default preserves the accepted black gold presentation and returns indepen
 });
 test("all deployed presets are accepted and unknown executable or commerce settings are rejected", () => {
   const theme = createDefaultStorefrontTheme();
-  for (const palette of ["BLACK_GOLD", "GRAPHITE_PEARL", "MIDNIGHT_BLUE"])
+  for (const palette of [
+    "BLACK_GOLD",
+    "GRAPHITE_PEARL",
+    "MIDNIGHT_BLUE",
+    "SAKURA_PINK",
+    "SKY_BLUE",
+    "IVORY_GOLD",
+    "PEARL_GRAY",
+  ])
     for (const typography of ["STANDARD", "LARGE"])
       for (const density of ["STANDARD", "COMPACT", "AIRY"])
         for (const corners of ["SOFT", "SHARP", "ROUND"])
@@ -46,6 +55,25 @@ test("all deployed presets are accepted and unknown executable or commerce setti
     { ...theme, corners: 8 },
   ])
     expect(storefrontThemeSchema.safeParse(value).success).toBe(false);
+});
+test("palettes list the three dark presets first, then the four light presets (L2-16)", () => {
+  expect(storefrontPaletteSchema.options).toEqual([
+    "BLACK_GOLD",
+    "GRAPHITE_PEARL",
+    "MIDNIGHT_BLUE",
+    "SAKURA_PINK",
+    "SKY_BLUE",
+    "IVORY_GOLD",
+    "PEARL_GRAY",
+  ]);
+  expect(createDefaultStorefrontTheme().palette).toBe("BLACK_GOLD");
+  for (const palette of ["sakura_pink", "PEARL_GREY", "LIGHT", ""])
+    expect(
+      storefrontThemeSchema.safeParse({
+        ...createDefaultStorefrontTheme(),
+        palette,
+      }).success,
+    ).toBe(false);
 });
 test("mutations require version and idempotency; public responses cannot expose drafts or invented provenance", () => {
   expect(

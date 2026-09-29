@@ -18,6 +18,7 @@ test("published appearance carries its actual version and visual presets without
   });
   expect(attributes).toEqual({
     "data-storefront-palette": "MIDNIGHT_BLUE",
+    "data-storefront-scheme": "DARK",
     "data-storefront-typography": "STANDARD",
     "data-storefront-density": "STANDARD",
     "data-storefront-corners": "SOFT",

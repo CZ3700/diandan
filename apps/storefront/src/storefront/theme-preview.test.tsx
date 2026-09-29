@@ -61,6 +61,7 @@ test("preview applies presets, restores legacy defaults and cleans up every pres
   const legacy = createDefaultStorefrontTheme();
   const updated = {
     ...legacy,
+    palette: "SAKURA_PINK",
     detailTemplates: { artist: "SPLIT", gift: "IMAGE_RIGHT" },
     presentation: {
       heroLayout: "SPLIT",
@@ -73,6 +74,8 @@ test("preview applies presets, restores legacy defaults and cleans up every pres
   expect(attributes.get("data-storefront-motion")).toBe("NONE");
   send(updated);
   expect(attributes.get("data-storefront-hero-layout")).toBe("SPLIT");
+  expect(attributes.get("data-storefront-palette")).toBe("SAKURA_PINK");
+  expect(attributes.get("data-storefront-scheme")).toBe("LIGHT");
   expect(attributes.get("data-storefront-motion")).toBe("SUBTLE");
   expect(attributes.get("data-storefront-artist-template")).toBe("SPLIT");
   expect(attributes.get("data-storefront-gift-template")).toBe("IMAGE_RIGHT");
@@ -82,6 +85,7 @@ test("preview applies presets, restores legacy defaults and cleans up every pres
   expect(play).toHaveBeenCalledTimes(1);
   expect(attributes.has("data-theme-version")).toBe(false);
   send(legacy);
+  expect(attributes.get("data-storefront-scheme")).toBe("DARK");
   expect(attributes.get("data-storefront-hero-layout")).toBe("IMMERSIVE");
   expect(attributes.get("data-storefront-gift-layout")).toBe("GRID");
   expect(attributes.get("data-storefront-motion")).toBe("STANDARD");

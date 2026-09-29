@@ -40,6 +40,7 @@ type ThemeLabels = {
   motionHint: string;
   replayPreview: string;
   palettes: Record<StorefrontTheme["palette"], string>;
+  paletteGroups: Record<"DARK" | "LIGHT", string>;
   typographyOptions: Record<StorefrontTheme["typography"], string>;
   densityOptions: Record<StorefrontTheme["density"], string>;
   cornerOptions: Record<StorefrontTheme["corners"], string>;
@@ -106,7 +107,12 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
           BLACK_GOLD: "Black & gold",
           GRAPHITE_PEARL: "Graphite & pearl",
           MIDNIGHT_BLUE: "Midnight blue",
+          SAKURA_PINK: "Sakura pink",
+          SKY_BLUE: "Sky blue",
+          IVORY_GOLD: "Ivory & gold",
+          PEARL_GRAY: "Pearl gray",
         },
+        paletteGroups: { DARK: "Dark", LIGHT: "Light" },
         typographyOptions: { STANDARD: "Standard", LARGE: "Larger" },
         densityOptions: {
           STANDARD: "Standard",
@@ -162,7 +168,12 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
           BLACK_GOLD: "经典黑金",
           GRAPHITE_PEARL: "石墨珍珠",
           MIDNIGHT_BLUE: "午夜蓝",
+          SAKURA_PINK: "樱花粉",
+          SKY_BLUE: "晴空蓝",
+          IVORY_GOLD: "象牙金",
+          PEARL_GRAY: "珍珠灰",
         },
+        paletteGroups: { DARK: "深色", LIGHT: "浅色" },
         typographyOptions: { STANDARD: "标准", LARGE: "较大" },
         densityOptions: { STANDARD: "标准", COMPACT: "紧凑", AIRY: "宽松" },
         cornerOptions: { SOFT: "柔和", SHARP: "方正", ROUND: "圆润" },
@@ -223,7 +234,12 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
           BLACK_GOLD: "ブラック＆ゴールド",
           GRAPHITE_PEARL: "グラファイト＆パール",
           MIDNIGHT_BLUE: "ミッドナイトブルー",
+          SAKURA_PINK: "サクラピンク",
+          SKY_BLUE: "スカイブルー",
+          IVORY_GOLD: "アイボリー＆ゴールド",
+          PEARL_GRAY: "パールグレー",
         },
+        paletteGroups: { DARK: "ダーク系", LIGHT: "ライト系" },
         typographyOptions: { STANDARD: "標準", LARGE: "大きめ" },
         densityOptions: {
           STANDARD: "標準",
@@ -287,7 +303,12 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
           BLACK_GOLD: "ดำและทอง",
           GRAPHITE_PEARL: "เทากราไฟต์และมุก",
           MIDNIGHT_BLUE: "น้ำเงินมิดไนต์",
+          SAKURA_PINK: "ชมพูซากุระ",
+          SKY_BLUE: "ฟ้าใส",
+          IVORY_GOLD: "งาช้างและทอง",
+          PEARL_GRAY: "เทามุก",
         },
+        paletteGroups: { DARK: "โทนเข้ม", LIGHT: "โทนอ่อน" },
         typographyOptions: { STANDARD: "มาตรฐาน", LARGE: "ใหญ่ขึ้น" },
         densityOptions: {
           STANDARD: "มาตรฐาน",
@@ -356,7 +377,12 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
           BLACK_GOLD: "Đen và vàng",
           GRAPHITE_PEARL: "Than chì và ngọc trai",
           MIDNIGHT_BLUE: "Xanh đêm",
+          SAKURA_PINK: "Hồng anh đào",
+          SKY_BLUE: "Xanh trời",
+          IVORY_GOLD: "Ngà và vàng",
+          PEARL_GRAY: "Xám ngọc trai",
         },
+        paletteGroups: { DARK: "Tông tối", LIGHT: "Tông sáng" },
         typographyOptions: { STANDARD: "Tiêu chuẩn", LARGE: "Lớn hơn" },
         densityOptions: {
           STANDARD: "Tiêu chuẩn",
@@ -429,7 +455,12 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
           BLACK_GOLD: "Negro y oro",
           GRAPHITE_PEARL: "Grafito y perla",
           MIDNIGHT_BLUE: "Azul medianoche",
+          SAKURA_PINK: "Rosa sakura",
+          SKY_BLUE: "Azul cielo",
+          IVORY_GOLD: "Marfil y oro",
+          PEARL_GRAY: "Gris perla",
         },
+        paletteGroups: { DARK: "Tonos oscuros", LIGHT: "Tonos claros" },
         typographyOptions: { STANDARD: "Estándar", LARGE: "Más grande" },
         densityOptions: {
           STANDARD: "Estándar",
@@ -506,7 +537,12 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
           BLACK_GOLD: "Preto e dourado",
           GRAPHITE_PEARL: "Grafite e pérola",
           MIDNIGHT_BLUE: "Azul meia-noite",
+          SAKURA_PINK: "Rosa sakura",
+          SKY_BLUE: "Azul-céu",
+          IVORY_GOLD: "Marfim e dourado",
+          PEARL_GRAY: "Cinza-pérola",
         },
+        paletteGroups: { DARK: "Tons escuros", LIGHT: "Tons claros" },
         typographyOptions: { STANDARD: "Padrão", LARGE: "Maior" },
         densityOptions: {
           STANDARD: "Padrão",

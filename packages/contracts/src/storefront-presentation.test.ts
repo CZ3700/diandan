@@ -84,7 +84,15 @@ test("display defaults never mutate old theme JSON and return independent values
 test("legacy commands retain their original field order and idempotency hash", () => {
   const hash = (value: string) =>
     createHash("sha256").update(value).digest("hex");
-  for (const palette of ["BLACK_GOLD", "GRAPHITE_PEARL", "MIDNIGHT_BLUE"])
+  for (const palette of [
+    "BLACK_GOLD",
+    "GRAPHITE_PEARL",
+    "MIDNIGHT_BLUE",
+    "SAKURA_PINK",
+    "SKY_BLUE",
+    "IVORY_GOLD",
+    "PEARL_GRAY",
+  ])
     for (const typography of ["STANDARD", "LARGE"])
       for (const density of ["STANDARD", "COMPACT", "AIRY"])
         for (const corners of ["SOFT", "SHARP", "ROUND"]) {

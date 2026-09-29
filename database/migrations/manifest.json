@@ -550,6 +550,16 @@
         "up": "9fc9b60c8b2cd1ef1237680cc6dc36a634dffaa7e5c3195870df53cab8074c0c",
         "down": "4f428fe9e2c489f172297188ac665918f204526c4ad603bf0e4a56ba5afeaf88"
       }
+    },
+    {
+      "version": "0056",
+      "name": "storefront-light-palettes",
+      "up": "database/migrations/0056_storefront-light-palettes.up.sql",
+      "down": "database/migrations/0056_storefront-light-palettes.down.sql",
+      "sha256": {
+        "up": "7d6630ba6e3a145716fe539a3bafcdc4d00ea408e67db06dead67952c0af6059",
+        "down": "9bd8d5fe84a53783cbee6879506f6b99cdbe0bf9e330ffec76b6eeae23d187da"
+      }
     }
   ]
 }

@@ -82,6 +82,35 @@
 .decoration-theme-palettes span {
   overflow-wrap: anywhere;
 }
+/* L2-16: dark and light palettes are listed as two groups. */
+.decoration-theme-palettes fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+.decoration-theme-palettes fieldset + fieldset {
+  margin-block-start: var(--space-4);
+}
+.decoration-theme-palettes fieldset legend {
+  margin-block-end: var(--space-1);
+  color: var(--color-text-muted);
+  font-size: var(--type-label-size);
+}
+/* Page colour, then ink and accent, painted from the palette's own tokens. */
+.decoration-theme-swatch {
+  flex: none;
+  inline-size: var(--space-12);
+  block-size: var(--space-6);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    90deg,
+    var(--swatch-bg) 0 50%,
+    var(--swatch-text) 50% 75%,
+    var(--swatch-accent) 75%
+  );
+}
 .decoration-theme-settings {
   margin-block: var(--space-6);
 }
