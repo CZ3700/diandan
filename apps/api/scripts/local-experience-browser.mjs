@@ -647,6 +647,10 @@ export async function verifyLocalExperienceBrowser({
       "false",
       { timeout: 30000 },
     );
+    // Payments and refunds sit folded at the bottom of the order page (L2-12).
+    const toggle = admin.locator("[data-finance-toggle]");
+    if ((await toggle.getAttribute("aria-expanded")) === "false")
+      await toggle.click();
     return orderId;
   }
   async function managementItem(section, id) {

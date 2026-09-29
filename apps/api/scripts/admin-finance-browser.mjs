@@ -122,6 +122,13 @@ export async function verifyAdminFinanceBrowser({
       await page.locator('[data-management-section="ORDERS"]').click();
       await page.locator("[data-orders-search]").waitFor({ timeout: 60000 });
     }
+    // Payments and refunds sit folded at the bottom of the order page (L2-12).
+    async function unfoldFinance() {
+      const toggle = page.locator("[data-finance-toggle]");
+      await toggle.waitFor({ timeout: 60000 });
+      if ((await toggle.getAttribute("aria-expanded")) === "false")
+        await toggle.click();
+    }
     async function select(publicId, orderId) {
       await expect(page.locator("[data-orders-workspace]")).toHaveAttribute(
         "aria-busy",
@@ -130,11 +137,7 @@ export async function verifyAdminFinanceBrowser({
       await page.locator("[data-orders-search]").fill(publicId);
       await page.locator("[data-orders-apply]").click();
       await page.locator(`[data-order-id="${orderId}"]`).click();
-      // Payments and refunds sit folded at the bottom of the order page (L2-12).
-      const toggle = page.locator("[data-finance-toggle]");
-      await toggle.waitFor({ timeout: 60000 });
-      if ((await toggle.getAttribute("aria-expanded")) === "false")
-        await toggle.click();
+      await unfoldFinance();
       await page
         .locator(`[data-finance-detail="${orderId}"]`)
         .waitFor({ timeout: 60000 });
@@ -213,6 +216,7 @@ export async function verifyAdminFinanceBrowser({
         await page
           .locator(`[data-finance-order="${fixture.paidOrderId}"]`)
           .click();
+        await unfoldFinance();
         await page.locator("[data-finance-mode]").waitFor();
         await expect(page.locator("[data-finance-submit]")).toBeDisabled();
         await capture(`${locale}-${viewport.width}-refund-full`);
