@@ -305,7 +305,14 @@ export async function verifyRegressionJourneys({
         await page
           .locator(`[data-payment-state="${outcome}"]`)
           .waitFor({ timeout: 90000 });
-        await page.locator("[data-payment-method-refresh]").click();
+        // The return page re-reads the methods by itself; the refresh control only appears
+        // when that read did not complete.
+        await page
+          .locator("[data-payment-create], [data-payment-method-refresh]")
+          .first()
+          .waitFor();
+        const refresh = page.locator("[data-payment-method-refresh]");
+        if (await refresh.count()) await refresh.click();
         await page.locator("[data-payment-create]").first().waitFor();
         assert(
           (await page.locator("[data-payment-country]").count()) === 0,
