@@ -13,15 +13,16 @@
   "dependencies": {
     "@fan-support/config": "workspace:*",
     "@fan-support/content": "workspace:*",
+    "@fan-support/contracts": "workspace:*",
     "@fan-support/design-tokens": "workspace:*",
+    "@fan-support/i18n": "workspace:*",
     "@fan-support/observability": "workspace:*",
     "@fan-support/ui": "workspace:*",
     "next": "16.3.6",
+    "qrcode-generator": "2.0.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "server-only": "0.0.1",
-    "@fan-support/contracts": "workspace:*",
-    "@fan-support/i18n": "workspace:*"
+    "server-only": "0.0.1"
   },
   "devDependencies": {
     "@types/react": "19.2.18",

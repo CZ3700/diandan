@@ -11,6 +11,7 @@ import { paymentCopy } from "../management-payments/copy";
 import { ordersCopy } from "../management-orders/copy";
 import { informationCopy } from "../management-info-pages/copy";
 import { decorationCopy } from "../management-decoration/copy";
+import { accountCopy } from "../management-account/copy";
 
 export function ManagementShell({
   locale,
@@ -25,6 +26,8 @@ export function ManagementShell({
   exceptionsAvailable = false,
   decorationAvailable = false,
   infoPagesAvailable = false,
+  accountAvailable = false,
+  accountWarning,
   beforeLeave,
   languageDisabled = disabled,
 }: {
@@ -35,7 +38,8 @@ export function ManagementShell({
     | "PAYMENTS"
     | "EXCEPTIONS"
     | "DECORATION"
-    | "INFO_PAGES";
+    | "INFO_PAGES"
+    | "ACCOUNT";
   onSection: (
     section:
       | ManagementSection
@@ -43,7 +47,8 @@ export function ManagementShell({
       | "PAYMENTS"
       | "EXCEPTIONS"
       | "DECORATION"
-      | "INFO_PAGES",
+      | "INFO_PAGES"
+      | "ACCOUNT",
   ) => void;
   children: ReactNode;
   disabled?: boolean;
@@ -54,6 +59,10 @@ export function ManagementShell({
   exceptionsAvailable?: boolean;
   decorationAvailable?: boolean;
   infoPagesAvailable?: boolean;
+  /** ADR-021: the signed-in built-in account's own settings. */
+  accountAvailable?: boolean;
+  /** Shown under the entry while two-step verification is off. */
+  accountWarning?: string | undefined;
   beforeLeave?: (() => boolean) | undefined;
   languageDisabled?: boolean;
 }) {
@@ -147,6 +156,25 @@ export function ManagementShell({
               onClick={() => onSection("EXCEPTIONS")}
             >
               {exceptionsCopy(locale).title}
+            </button>
+          ) : null}
+          {accountAvailable ? (
+            <button
+              type="button"
+              data-management-section="ACCOUNT"
+              aria-current={section === "ACCOUNT" ? "page" : undefined}
+              aria-describedby={
+                accountWarning ? "mc-account-warning" : undefined
+              }
+              disabled={disabled}
+              onClick={() => onSection("ACCOUNT")}
+            >
+              {accountCopy(locale).title}
+              {accountWarning ? (
+                <span id="mc-account-warning" className="mc-nav-warning">
+                  {accountWarning}
+                </span>
+              ) : null}
             </button>
           ) : null}
         </nav>

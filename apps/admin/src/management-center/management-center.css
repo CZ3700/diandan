@@ -40,6 +40,14 @@
     color var(--motion-fast-effective),
     background-color var(--motion-fast-effective);
 }
+/* ADR-021: an unfinished account setting stays visible from every page. */
+.mc-nav-warning {
+  display: block;
+  margin-block-start: var(--space-1);
+  color: var(--color-warning);
+  font-size: var(--type-label-size);
+  font-weight: 600;
+}
 .mc-sidebar button[aria-current="page"] {
   color: var(--color-accent);
   background: var(--color-surface-raised);

@@ -63,6 +63,8 @@ export function ManagementWorkspace({
   onExceptions,
   onDecoration,
   onInfoPages,
+  onAccount,
+  accountWarning,
   initialSection = "ARTISTS",
   accessNotice,
   canDeleteArtists = false,
@@ -76,6 +78,8 @@ export function ManagementWorkspace({
   onExceptions?: (() => void) | undefined;
   onInfoPages?: (() => void) | undefined;
   onDecoration?: (() => void) | undefined;
+  onAccount?: (() => void) | undefined;
+  accountWarning?: string | undefined;
   initialSection?: ManagementSection;
   accessNotice?: ReactNode;
   canDeleteArtists?: boolean;
@@ -306,6 +310,7 @@ export function ManagementWorkspace({
             "DECORATION",
             "EXCEPTIONS",
             "INFO_PAGES",
+            "ACCOUNT",
           ].includes(next) &&
           !canLeave()
         )
@@ -315,6 +320,7 @@ export function ManagementWorkspace({
         else if (next === "INFO_PAGES") onInfoPages?.();
         else if (next === "DECORATION") onDecoration?.();
         else if (next === "EXCEPTIONS") onExceptions?.();
+        else if (next === "ACCOUNT") onAccount?.();
         else chooseSection(next);
       }}
       ordersAvailable={Boolean(onOrders)}
@@ -322,6 +328,8 @@ export function ManagementWorkspace({
       exceptionsAvailable={Boolean(onExceptions)}
       infoPagesAvailable={Boolean(onInfoPages)}
       decorationAvailable={Boolean(onDecoration)}
+      accountAvailable={Boolean(onAccount)}
+      accountWarning={accountWarning}
       disabled={busy}
       accountAction={
         onLogout ? (

@@ -68,6 +68,36 @@ function operation(
     },
   });
 }
+/** ADR-021 account settings: an OIDC session answers NOT_LOCAL instead of the action's kind. */
+function accountOperation(
+  path: string,
+  action: contract.AdminAccountCommand["action"],
+  kind: string,
+): AdminOperation {
+  const base = operation(
+    `/api/v1/admin/account/${path}`,
+    contract.adminAccountCommandSchema,
+    contract.adminAccountResponseSchema,
+    action,
+    kind,
+    false,
+    4096,
+  );
+  return Object.freeze({
+    ...base,
+    readOnly: action === "READ",
+    parseResponse(input: unknown) {
+      const parsed = contract.adminAccountResponseSchema.parse(input);
+      if (
+        parsed.outcome === "SUCCESS" &&
+        parsed.kind !== kind &&
+        parsed.kind !== "NOT_LOCAL"
+      )
+        throw new Error("Invalid administrative response");
+      return parsed;
+    },
+  });
+}
 function commerceOperation(
   path: string,
   action: contract.GiftCommerceCommand["action"],
@@ -1115,6 +1145,32 @@ const entries = {
     "MUTATION",
     true,
     LARGE,
+  ),
+  "account-context": accountOperation("context", "READ", "ACCOUNT"),
+  "account-change-password": accountOperation(
+    "change-password",
+    "CHANGE_PASSWORD",
+    "PASSWORD_CHANGED",
+  ),
+  "account-totp-begin": accountOperation(
+    "totp-begin",
+    "BEGIN_TOTP",
+    "TOTP_ENROLLMENT",
+  ),
+  "account-totp-confirm": accountOperation(
+    "totp-confirm",
+    "CONFIRM_TOTP",
+    "TOTP_ENABLED",
+  ),
+  "account-totp-disable": accountOperation(
+    "totp-disable",
+    "DISABLE_TOTP",
+    "TOTP_DISABLED",
+  ),
+  "account-recovery-codes": accountOperation(
+    "recovery-codes",
+    "REGENERATE_RECOVERY_CODES",
+    "RECOVERY_CODES",
   ),
 } as const;
 export type AdminOperationKey = Exclude<keyof typeof entries, "session">;

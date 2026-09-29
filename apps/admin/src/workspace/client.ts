@@ -19,6 +19,8 @@ export class AdminClientError extends Error {
       code: string;
       locale?: string;
     }[] = [],
+    /** Why a new password was refused (ADR-021 account settings). */
+    readonly passwordProblem?: string,
   ) {
     super(code);
   }
@@ -81,6 +83,7 @@ export function createAdminClient(
         outcome?: string;
         code?: string;
         issues?: AdminClientError["issues"];
+        passwordProblem?: string;
       };
       if (envelope.outcome !== "SUCCESS") {
         if (
@@ -91,6 +94,7 @@ export function createAdminClient(
         throw new AdminClientError(
           envelope.code ?? "UNEXPECTED_FAILURE",
           envelope.issues,
+          envelope.passwordProblem,
         );
       }
       if (mutation && explicitMutationKey === undefined)

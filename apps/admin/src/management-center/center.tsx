@@ -21,6 +21,7 @@ import { createHomeLayoutApi } from "../management-decoration/api";
 import { createStorefrontNavigationApi } from "../management-decoration/navigation-api";
 import { createDisplayOrderApi } from "../management-decoration/display-order-api";
 import { createInformationPagesApi } from "../management-info-pages/api";
+import { createAccountApi } from "../management-account/api";
 import { createStorefrontThemeApi } from "../management-decoration/theme-api";
 
 export function ManagementCenter({
@@ -59,6 +60,7 @@ export function ManagementCenter({
     [client],
   );
   const themeApi = useMemo(() => createStorefrontThemeApi(client), [client]);
+  const accountApi = useMemo(() => createAccountApi(client), [client]);
   const copy = managementCopy(locale);
   const [loginFailed, setLoginFailed] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -125,6 +127,7 @@ export function ManagementCenter({
       navigationApi={navigationApi}
       displayOrderApi={displayOrderApi}
       infoPagesApi={infoPagesApi}
+      accountApi={localAccounts ? accountApi : undefined}
       infoPagesAccess={{
         allowed: session.permissions.includes("content.read"),
         localeScopes: session.localeScopes,

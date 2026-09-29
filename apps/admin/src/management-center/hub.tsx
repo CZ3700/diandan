@@ -4,6 +4,9 @@ import type { SupportedLocale } from "@fan-support/contracts";
 import { Button } from "@fan-support/ui";
 import { InformationPagesWorkspace } from "../management-info-pages/workspace";
 import type { InformationPagesApi } from "../management-info-pages/api";
+import type { AccountApi, AccountView } from "../management-account/api";
+import { AccountSettings } from "../management-account/account-settings";
+import { accountCopy } from "../management-account/copy";
 import type { ManagementApi, ManagementSection } from "./api";
 import type { OrdersApi } from "../management-orders/api";
 import type { PaymentConfigurationApi } from "../management-payments/api";
@@ -41,6 +44,7 @@ export function ManagementHub({
   layoutPermissions,
   infoPagesApi,
   infoPagesAccess,
+  accountApi,
   locale,
   storefrontOrigin,
   onLogout,
@@ -56,6 +60,7 @@ export function ManagementHub({
   navigationApi?: StorefrontNavigationApi | undefined;
   displayOrderApi?: DisplayOrderApi | undefined;
   infoPagesApi?: InformationPagesApi | undefined;
+  accountApi?: AccountApi | undefined;
   infoPagesAccess?:
     { allowed: boolean; localeScopes: readonly SupportedLocale[] } | undefined;
   layoutPermissions?:
@@ -76,6 +81,7 @@ export function ManagementHub({
       | "EXCEPTIONS"
       | "DECORATION"
       | "INFO_PAGES"
+      | "ACCOUNT"
       | null
     >(null),
     [busy, setBusy] = useState(false);
@@ -84,6 +90,28 @@ export function ManagementHub({
   const [paymentDirty, setPaymentDirty] = useState(false);
   const copy = ordersCopy(locale),
     common = managementCopy(locale);
+  // Null until known, and for identity-provider sessions, which have no built-in settings.
+  const [account, setAccount] = useState<AccountView | null>(null);
+  const [accountRead, setAccountRead] = useState(0);
+  useEffect(() => {
+    if (!accountApi) return;
+    let canceled = false;
+    void accountApi.context().then(
+      (value) => {
+        if (!canceled) setAccount(value);
+      },
+      () => {
+        if (!canceled) setAccount(null);
+      },
+    );
+    return () => {
+      canceled = true;
+    };
+  }, [accountApi, accountRead]);
+  const accountWarning =
+    account && !account.twoFactorEnabled
+      ? accountCopy(locale).warningBadge
+      : undefined;
   useEffect(() => {
     let canceled = false;
     setAccess(null);
@@ -149,7 +177,8 @@ export function ManagementHub({
       | "PAYMENTS"
       | "EXCEPTIONS"
       | "DECORATION"
-      | "INFO_PAGES",
+      | "INFO_PAGES"
+      | "ACCOUNT",
   ) {
     if (next !== active && !canLeaveWorkspace()) return;
     setSection(next);
@@ -170,6 +199,7 @@ export function ManagementHub({
   const notice =
     active !== "DECORATION" &&
     active !== "INFO_PAGES" &&
+    active !== "ACCOUNT" &&
     managementSectionUnavailable(access, active) ? (
       <div className="mc-error-state" role="alert">
         <p>{copy.loadError}</p>
@@ -182,7 +212,8 @@ export function ManagementHub({
     active !== "PAYMENTS" &&
     active !== "DECORATION" &&
     active !== "INFO_PAGES" &&
-    active !== "EXCEPTIONS"
+    active !== "EXCEPTIONS" &&
+    active !== "ACCOUNT"
   )
     return (
       <ManagementWorkspace
@@ -208,6 +239,8 @@ export function ManagementHub({
             ? () => chooseSection("DECORATION")
             : undefined
         }
+        onAccount={account ? () => chooseSection("ACCOUNT") : undefined}
+        accountWarning={accountWarning}
         accessNotice={notice}
         canDeleteArtists={canDeleteArtists}
       />
@@ -222,6 +255,8 @@ export function ManagementHub({
       exceptionsAvailable={Boolean(access?.exceptions)}
       infoPagesAvailable={Boolean(infoPagesAccess?.allowed && infoPagesApi)}
       decorationAvailable={Boolean(layoutPermissions?.read && layoutApi)}
+      accountAvailable={Boolean(account)}
+      accountWarning={accountWarning}
       beforeLeave={() => !busy}
       disabled={busy || !access}
       onSection={chooseSection}
@@ -232,7 +267,17 @@ export function ManagementHub({
       }
     >
       {notice}
-      {active === "INFO_PAGES" && infoPagesAccess?.allowed && infoPagesApi ? (
+      {active === "ACCOUNT" && account && accountApi ? (
+        <AccountSettings
+          api={accountApi}
+          locale={locale}
+          account={account}
+          onAccount={setAccount}
+          onReload={() => setAccountRead((value) => value + 1)}
+        />
+      ) : active === "INFO_PAGES" &&
+        infoPagesAccess?.allowed &&
+        infoPagesApi ? (
         <InformationPagesWorkspace
           api={infoPagesApi}
           locale={locale}
