@@ -205,6 +205,7 @@ const copy = {
   skip: "本文へ移動",
   artistEyebrow: "スポットライト",
   artistTitle: "心に響くアーティストとの出会い",
+  heroAllArtists: "すべてのアーティストを見る",
   artistBody: "親しみのある表情、新しい物語。少し近くに。",
   giftEyebrow: "心を込めて選ぶ",
   giftTitle: "想いを届けるギフト",

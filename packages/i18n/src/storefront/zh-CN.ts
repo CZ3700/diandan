@@ -187,6 +187,7 @@ const copy = {
   skip: "跳到正文",
   artistEyebrow: "聚光灯下",
   artistTitle: "找到你心中的那位艺人",
+  heroAllArtists: "认识全部艺人",
   artistBody: "熟悉的面孔，新的故事，让心意更近一点。",
   giftEyebrow: "用心挑选",
   giftTitle: "每份礼物，都有心意",

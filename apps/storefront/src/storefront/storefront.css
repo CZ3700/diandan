@@ -262,29 +262,6 @@
   min-block-size: var(--space-12);
   border-bottom: var(--border-width) solid var(--color-border);
 }
-/* The homepage hero's single guide: artist search plus the hero link. Its suggestions
-   hang below the hero, so the hero clips only sideways and sits above what follows. */
-.storefront-hero[data-home-hero] {
-  position: relative;
-  z-index: var(--layer-raised);
-  overflow-x: clip;
-  overflow-y: visible;
-}
-.storefront-hero-guide {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-4) var(--space-6);
-  align-self: stretch;
-  margin-block-start: var(--space-8);
-}
-.storefront-hero-guide > :first-child {
-  flex: 1 1 calc(var(--space-32) * 2);
-  min-inline-size: 0;
-}
-.storefront-hero-guide > .storefront-text-link {
-  flex: none;
-}
 .storefront-hero-image {
   z-index: 0;
   min-inline-size: 0;
@@ -604,9 +581,6 @@
   }
   .storefront-hero-body {
     max-inline-size: none;
-  }
-  .storefront-hero-guide {
-    margin-block-start: var(--space-6);
   }
   .storefront-primary {
     margin-block-start: var(--space-6);

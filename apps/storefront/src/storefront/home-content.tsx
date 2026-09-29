@@ -11,14 +11,7 @@ import { storefrontHref } from "./navigation";
 import type { StorefrontCopy } from "./copy";
 import { HomeKinds } from "./home-kinds";
 import { HowItWorks, PageState, StudioPromise } from "./page-parts";
-import { HeroArtistSearch } from "./hero-artist-search";
-
-/** The artist search joins the hero's guide bar whenever the hero is shown. */
-export function homeArtistSearchInHero(layout: HomeLayout): boolean {
-  return layout.sections.some(
-    (section) => section.id === "HERO" && section.visible,
-  );
-}
+import { HomeArtistSearch } from "./home-artist-search";
 
 export function HomeContent({
   data,
@@ -62,14 +55,7 @@ export function HomeContent({
       </>
     );
   const view = data.homepage.content.view;
-  const hero = data.slots.find(
-    (slot) => slot.kind === "HERO_IDOL" && slot.status === "AVAILABLE",
-  );
   const artists = data.slots.filter((slot) => slot.kind === "FEATURED_IDOL");
-  const heroArtist =
-    hero?.status === "AVAILABLE" && hero.content.content.kind === "IDOL"
-      ? hero.content.content.view
-      : undefined;
   const sections: Record<HomeLayout["sections"][number]["id"], ReactNode> = {
     HERO: (
       <section
@@ -88,27 +74,15 @@ export function HomeContent({
           >
             {view.heroSubtitle}
           </p>
-          {/* One guide to the artists (user request 2026-09-29): search, or the hero link. */}
-          <div className="storefront-hero-guide" data-home-guide="true">
-            <HeroArtistSearch
-              locale={locale}
-              copy={copy}
-              contextQuery={contextQuery}
-            />
-            <a
-              className="storefront-text-link"
-              data-home-hero-link={heroArtist ? "artist" : "artists"}
-              href={storefrontHref(
-                locale,
-                heroArtist ? `/idols/${heroArtist.handle}` : "/idols",
-                contextQuery,
-              )}
-              lang={view.localeContext.resolvedLocale}
-            >
-              {view.ctaLabel}
-              <Icon name="arrow-right" decorative />
-            </a>
-          </div>
+          {/* User request 2026-09-29 (L2-13): one gold button to all the artists. */}
+          <a
+            className="storefront-primary"
+            data-home-hero-link="artists"
+            href={storefrontHref(locale, "/idols", contextQuery)}
+          >
+            {copy.heroAllArtists}
+            <Icon name="arrow-right" decorative />
+          </a>
         </div>
         <PublishedHeroImage
           desktop={view.heroDesktop}
@@ -129,6 +103,11 @@ export function HomeContent({
         <div className="storefront-section-heading">
           <h2 id="featured-artists-title">{copy.artistTitle}</h2>
         </div>
+        <HomeArtistSearch
+          locale={locale}
+          copy={copy}
+          contextQuery={contextQuery}
+        />
         {!directory && (
           <div className="storefront-featured-shortcuts">
             {artists.map((slot) =>

@@ -9,12 +9,7 @@
   z-index: var(--layer-raised);
 }
 
-/* Homepage hero bar: one field, its label and hint kept for assistive technology. */
-.compact {
-  max-width: none;
-  margin-block-end: 0;
-}
-
+/* Homepage search under the section title: its label and hint stay for assistive technology. */
 .compact :global(.fs-field__label),
 .compact :global(.fs-field__hint) {
   position: absolute;

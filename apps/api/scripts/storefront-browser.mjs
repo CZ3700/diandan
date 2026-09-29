@@ -386,24 +386,22 @@ export async function createStorefrontBrowserVerifier({
         "SSR delivers first real artist window with crawlable hrefs without JavaScript",
       );
       await noScript.close();
-      // The homepage keeps one artist guide in its hero: a picked result opens the artist;
-      // anchoring and language restore stay on /idols, covered below.
-      step = "homepage hero search opens a distant actual artist";
+      // The homepage search sits under the artist section title (L2-13): a picked result
+      // opens the artist; anchoring and language restore stay on /idols, covered below.
+      step = "homepage artist search opens a distant actual artist";
       await goto("/en?market=GLOBAL&currency=USD");
       check(
         (await page.locator("[data-artist-search]").count()) === 1 &&
-          (await page
-            .locator("[data-home-guide] [data-artist-search]")
-            .count()) === 1,
-        "homepage offers exactly one artist search, in the hero guide",
+          (await page.locator("#artists [data-artist-search]").count()) === 1,
+        "homepage offers exactly one artist search, under the artist title",
       );
       await page
-        .locator("[data-home-guide] [data-artist-search]")
+        .locator("#artists [data-artist-search]")
         .fill(fixtures.target.name);
       await page
         .locator(`[data-artist-result="${fixtures.target.id}"]`)
         .waitFor();
-      await screenshot("en-home-hero-search.png");
+      await screenshot("en-home-artist-search.png");
       await page
         .locator(`[data-artist-result="${fixtures.target.id}"]`)
         .click();

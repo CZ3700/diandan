@@ -15,7 +15,7 @@ import {
   type PublishedContentResponse,
 } from "@fan-support/contracts";
 import { directoryFixturePage } from "./directory-fixture";
-import { HomeContent, homeArtistSearchInHero } from "./home-content";
+import { HomeContent } from "./home-content";
 import { loadStorefrontCopy } from "@fan-support/i18n/storefront";
 
 const reads = vi.hoisted(() => ({
@@ -178,9 +178,9 @@ test("homepage offers one artist browsing path and retains featured links when t
   expect(fallback).toContain(`href="${encodedHref}"`);
 });
 
-// User request 2026-09-29: one guide to the artists, in the hero, instead of a hero button,
-// a repeated eyebrow, an "All artists" link and a separate search right below it.
-test("homepage merges the artist guides into one hero bar", async () => {
+// User requests 2026-09-29: L2-11 merged the artist guides; L2-13 gives the hero back its
+// gold button to all artists and puts the search right under the artist section title.
+test("homepage hero has one gold button to all artists and the search sits under the artist title", async () => {
   const copy = await loadStorefrontCopy("en");
   const html = renderToStaticMarkup(
     <HomeContent
@@ -193,30 +193,24 @@ test("homepage merges the artist guides into one hero bar", async () => {
   );
   const hero =
     html.split('data-home-hero="true"')[1]?.split("</section>")[0] ?? "";
-  const guide = hero.split('data-home-guide="true"')[1] ?? "";
-  expect(guide).toContain("data-artist-search");
-  expect(guide).toContain(`placeholder="${copy.artistSearchLabel}"`);
-  expect(guide).toContain('href="/en/idols/fictional-1?currency=USD"');
-  expect(guide).toContain("Explore");
+  expect(hero.split("storefront-primary")).toHaveLength(2);
+  expect(hero).toContain('href="/en/idols?currency=USD"');
+  expect(hero).toContain(copy.heroAllArtists);
+  // The published content label (fixture "Explore") no longer shows in the hero.
+  expect(hero).not.toContain("Explore");
+  expect(hero).not.toContain("data-artist-search");
+  expect(hero).not.toContain("storefront-text-link");
   expect(hero).not.toContain("storefront-hero-caption");
-  expect(hero).not.toContain("storefront-primary");
   const artists = html.split('id="artists"')[1]?.split("</section>")[0] ?? "";
-  expect(artists).toContain(copy.artistTitle);
+  const [heading, below = ""] = artists.split("</h2>");
+  expect(heading).toContain(copy.artistTitle);
+  expect(below.split("data-artist-search")).toHaveLength(2);
+  expect(below.indexOf("data-artist-search")).toBeLessThan(
+    below.indexOf('aria-label="Artist directory"'),
+  );
+  expect(below).toContain(`placeholder="${copy.artistSearchLabel}"`);
   expect(artists).not.toContain(copy.artistEyebrow);
   expect(artists).not.toContain(copy.backArtists);
-});
-
-test("the artist search sits in the hero only while the hero is shown", () => {
-  const layout = createDefaultHomeLayout();
-  expect(homeArtistSearchInHero(layout)).toBe(true);
-  expect(
-    homeArtistSearchInHero({
-      ...layout,
-      sections: layout.sections.map((section) =>
-        section.id === "HERO" ? { ...section, visible: false } : section,
-      ),
-    }),
-  ).toBe(false);
 });
 
 function publishedArtist(locale: (typeof SUPPORTED_LOCALES)[number]) {
@@ -255,7 +249,9 @@ test("homepage renders configured section order and visibility without losing re
   expect(html.indexOf('id="gifts"')).toBeLessThan(html.indexOf('id="artists"'));
   expect(html).not.toContain('id="how-title"');
   expect(html).toContain('id="hero-title"');
-  expect(html).toContain("/en/idols/fictional-1?currency=USD");
+  expect(html).toContain(
+    'data-home-hero-link="artists" href="/en/idols?currency=USD"',
+  );
 });
 
 function giftPage(locale: (typeof SUPPORTED_LOCALES)[number]) {

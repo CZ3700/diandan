@@ -207,6 +207,7 @@ const copy = {
   skip: "Ir para o conteúdo",
   artistEyebrow: "Em destaque",
   artistTitle: "Encontre quem inspira você.",
+  heroAllArtists: "Conheça todos os artistas",
   artistBody: "Um rosto familiar. Uma nova história. Um pouco mais perto.",
   giftEyebrow: "Escolhidos com carinho",
   giftTitle: "Um presente com significado.",

@@ -116,7 +116,7 @@ it("renders a distinct empty state with no retry loop or invented artists", asyn
   expect(html).not.toContain("artistLoadMore");
 });
 
-it("leaves the search to the homepage hero when asked", async () => {
+it("leaves the search to the homepage section title when asked", async () => {
   const { ArtistDirectory } = await import("./artist-directory");
   const html = renderToStaticMarkup(
     <ArtistDirectory

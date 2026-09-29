@@ -10,7 +10,7 @@ import {
 import { loadStorefrontCopy } from "../server/storefront-copy";
 import type { StorefrontCopy } from "./copy";
 import { queryString } from "./navigation";
-import { HomeContent, homeArtistSearchInHero } from "./home-content";
+import { HomeContent } from "./home-content";
 import { PageState } from "./page-parts";
 import { readPublicHomeLayout } from "../server/public-home-layout";
 import { GiftBrowseSection } from "./gift-browse-section";
@@ -100,7 +100,6 @@ export function createStorefrontPage(
                   copy={copy}
                   initial={directory}
                   contextQuery={contextQuery}
-                  search={!homeArtistSearchInHero(layoutResult.layout)}
                   {...(directoryQuery.anchor
                     ? { initialAnchor: directoryQuery.anchor }
                     : {})}

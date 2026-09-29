@@ -5,8 +5,8 @@ import type { StorefrontCopy } from "./copy";
 import { ArtistSearch } from "./artist-search";
 import { storefrontHref } from "./navigation";
 
-/** The homepage hero's single artist guide: picking a result opens that artist. */
-export function HeroArtistSearch({
+/** The homepage artist search under the artist section title: picking a result opens that artist. */
+export function HomeArtistSearch({
   locale,
   copy,
   contextQuery,

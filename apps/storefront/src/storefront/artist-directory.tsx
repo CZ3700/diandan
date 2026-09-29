@@ -26,7 +26,7 @@ export type ArtistDirectoryProps = Readonly<{
   initialAnchor?: IdolId;
   contextQuery?: string;
   headingLevel?: 1 | 2;
-  /** False when the homepage hero already carries the artist search. */
+  /** False on the homepage, whose artist search sits under the section title. */
   search?: boolean;
 }>;
 

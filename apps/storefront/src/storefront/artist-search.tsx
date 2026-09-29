@@ -43,7 +43,7 @@ export function ArtistSearch({
   locale: SupportedLocale;
   copy: StorefrontCopy;
   acceptingOnly?: boolean;
-  /** The homepage hero bar: label and hint stay for assistive technology only. */
+  /** The homepage search: label and hint stay for assistive technology only. */
   compact?: boolean;
   onSelect: (artist: PublishedIdolView) => void;
 }>) {

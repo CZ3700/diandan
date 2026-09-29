@@ -390,12 +390,12 @@ export async function verifyLocalExperienceBrowser({
         /\S/u,
       );
       await expect(page.locator(".storefront-hero-image img")).toBeVisible();
-      const heroLink = page.locator('[data-home-hero-link="artist"]');
+      const heroLink = page.locator('[data-home-hero-link="artists"]');
       await expect(heroLink).toBeVisible();
       check(
         new URL(await heroLink.getAttribute("href"), location.origin)
-          .pathname === `/${route[0]}/idols/${artistHandle}`,
-        "Homepage hero links to the published artist identity",
+          .pathname === `/${route[0]}/idols`,
+        "Homepage hero button opens all the artists",
       );
       await expect(
         page.locator(`[data-artist-card="${artistId}"] img`),
