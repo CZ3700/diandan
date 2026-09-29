@@ -221,8 +221,9 @@ export function createGiftStorefrontPage(
             name={name}
             contextQuery={publicNavigationQuery(contextQuery)}
             region={region.footer}
+            // Lazy server elements handed to the client footer carry keys (see region-entry).
             informationLinks={
-              <Suspense fallback={null}>
+              <Suspense key="information-links" fallback={null}>
                 <InformationPageFooter
                   locale={locale}
                   contextQuery={contextQuery}
@@ -232,6 +233,7 @@ export function createGiftStorefrontPage(
             policyLinks={
               kind === "gift" || kind === "gifts" ? (
                 <GiftDetailPolicyLinks
+                  key="policy-links"
                   locale={locale}
                   copy={copy}
                   context={contextRead}
@@ -239,6 +241,7 @@ export function createGiftStorefrontPage(
                 />
               ) : (
                 <PolicyLinks
+                  key="policy-links"
                   locale={locale}
                   copy={copy}
                   context={await contextRead}

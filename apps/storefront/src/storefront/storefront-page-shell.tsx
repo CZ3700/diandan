@@ -80,8 +80,9 @@ export async function StorefrontPageShell({
         <SiteFooter
           {...props}
           region={region.footer}
+          // Lazy server elements handed to the client footer carry keys (see region-entry).
           informationLinks={
-            <Suspense fallback={null}>
+            <Suspense key="information-links" fallback={null}>
               <InformationPageFooter
                 locale={props.locale}
                 contextQuery={props.contextQuery}
@@ -89,7 +90,7 @@ export async function StorefrontPageShell({
             </Suspense>
           }
           policyLinks={
-            <Suspense fallback={null}>
+            <Suspense key="policy-links" fallback={null}>
               <FooterPolicyLinks
                 locale={props.locale}
                 copy={props.copy}

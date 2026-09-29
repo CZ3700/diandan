@@ -98,7 +98,8 @@ test("responsive candidates optimize only the published source and never adverti
   expect(img.width).toBe("1600");
   expect(img.height).toBe("2000");
   expect(img.sizes).toContain("78vw");
-  expect(html).toContain("object-position:40% 30%");
+  // The focus rides on the frame; WeChat may overwrite <img style> before hydration.
+  expect(html).toContain("--fs-media-focus:40% 30%");
 });
 
 test("each hero composition has its own bounded candidates and mobile fallback uses eager priority", () => {

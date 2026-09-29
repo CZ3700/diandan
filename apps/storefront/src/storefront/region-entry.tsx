@@ -19,10 +19,12 @@ export function regionEntries(
   contextQuery: string,
 ) {
   const href = navigationTargetHref(locale, "REGION", contextQuery);
+  // Both entries are lazy RSC elements rendered beside a client component's own children,
+  // and a single market returns an array of the choice's children: everything is keyed so
+  // React never reports a list without keys (the phone menu's "1 Issue").
   return {
     header: (
-      <Suspense fallback={null}>
-        {/* The children cross into the client header as an array, so each needs a key. */}
+      <Suspense key="region-entry" fallback={null}>
         <RegionChoiceEntry>
           <p key="hint">{copy.regionHint}</p>
           <a key="choice" href={href}>
@@ -32,7 +34,7 @@ export function regionEntries(
       </Suspense>
     ),
     footer: (
-      <Suspense fallback={null}>
+      <Suspense key="region-entry" fallback={null}>
         <RegionChoiceEntry>
           <a href={href}>{copy.region}</a>
         </RegionChoiceEntry>

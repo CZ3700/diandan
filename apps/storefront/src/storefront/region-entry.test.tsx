@@ -22,6 +22,9 @@ test("region entries hand the client header keyed children", async () => {
   const { regionEntries } = await import("./region-entry");
   const entries = regionEntries("en", await loadStorefrontCopy("en"), "");
   for (const entry of [entries.header, entries.footer] as Wrapper[]) {
+    // The entry itself arrives as a lazy RSC element next to the header's own children;
+    // unkeyed, React warns once the phone menu mounts it (stg log, 2026-09-29).
+    expect(entry.key).not.toBeNull();
     const choice = entry.props.children;
     const children = Children.toArray(choice.props.children);
     expect(children.length).toBeGreaterThan(0);
