@@ -21,18 +21,39 @@
   color: inherit;
   text-decoration: none;
 }
+/* L2-14 (user request 2026-09-30): each gift photo sits inside a mat, like a framed print,
+   with an even border of about 7% of the card on every layout. The hover zoom stays inside
+   the inner frame; the mat's hairline turns gold on hover and keyboard focus. */
+.gift-directory-grid {
+  --gift-mat: var(--space-8);
+}
 .gift-directory-card__media {
   aspect-ratio: 1;
-  overflow: hidden;
-  background: var(--color-surface);
+  padding: var(--gift-mat);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-text) 4%, var(--color-surface)),
+    var(--color-surface)
+  );
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-media);
+  transition: border-color var(--motion-control-effective) var(--ease-out);
 }
 .gift-directory-card__media > * {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--radius-media) / 2);
+  box-shadow: 0 var(--space-2) var(--space-6)
+    color-mix(in srgb, var(--color-bg) 55%, transparent);
 }
 .gift-directory .gift-directory-card__media .fs-media__image {
-  object-fit: contain;
+  object-fit: cover;
+}
+.gift-directory-card
+  > a:is(:hover, :focus-visible)
+  .gift-directory-card__media {
+  border-color: var(--color-accent);
 }
 .gift-directory-card__body {
   padding-block: var(--space-4);
@@ -301,6 +322,7 @@
 }
 @media (max-width: 48rem) {
   .gift-directory-grid {
+    --gift-mat: var(--space-3);
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6) var(--space-4);
   }

@@ -36,10 +36,12 @@ html[data-storefront-hero-layout="SPLIT"]
 }
 
 html[data-storefront-gift-layout="SHOWCASE"] .gift-directory-grid {
+  --gift-mat: var(--space-12);
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 @media (width < 48rem) {
   html[data-storefront-gift-layout="SHOWCASE"] .gift-directory-grid {
+    --gift-mat: var(--space-6);
     grid-template-columns: minmax(0, 1fr);
   }
 }
@@ -70,6 +72,7 @@ html[data-storefront-motion="NONE"]
     .fs-toast,
     .fs-toast__close,
     .storefront-gift-grid img,
+    .gift-directory-card__media,
     .storefront-kinds__list a
   ) {
   transition: none;
