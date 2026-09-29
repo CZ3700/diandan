@@ -6,7 +6,8 @@
 
 - 一台 Debian 12 服务器（当前是 Lightsail 4GB，静态 IP `18.143.148.122`），运行用户是 `xiadan`，代码在 `/home/xiadan/app`。
 - 实例 `stg`，基础域名 `stg.kikikong.com`。Cloudflare 上配一条通配记录 `*.stg` A → 服务器 IP，**仅 DNS（灰色云朵）**。
-- Caddy 负责 Let's Encrypt 证书，并把 `https://<服务>.stg.kikikong.com` 反向代理到本机的 TLS 服务。Basic Auth 保护后台、收件箱和 OIDC 身份选择页。
+- Caddy 负责 Let's Encrypt 证书，并把 `https://<服务>.stg.kikikong.com` 反向代理到本机的 TLS 服务。Basic Auth 保护收件箱和 OIDC 身份选择页。
+- 后台自 2026-09-29 起用内置账号登录（ADR-021，实例配置 `adminSignIn: LOCAL_ACCOUNT`），不再套 Basic Auth，登录页本身就是入口。
 - 服务器上已安装：Node 24.20.0（`/opt`，经 SHA256 校验）、pnpm 11.25.0（corepack）、PostgreSQL 18（PGDG，只用二进制，集群由实例自己管理）、Docker、Caddy；另有 4GB swap。
 - 两个 Next 开发服务器分别监听 `127.0.0.2:443`（商城）和 `127.0.0.3:443`（后台）。Next 用启动时的 `--hostname:--port` 构造请求地址，只有监听 443，这个地址才会等于公网地址。
   - 为此 `/etc/sysctl.d/99-xiadan.conf` 设置了 `net.ipv4.ip_unprivileged_port_start=443`；
@@ -45,14 +46,26 @@
 - **重置测试数据**：先停止实例，再执行 `pnpm local:reset --instance stg --confirm <instanceId>`。这会删除本实例的全部数据和图片，属于不可逆操作，需要用户确认。
 - **换域名**：必须新建实例（配置、身份源、支付绑定和证书都绑定在对外地址上），然后重新生成 Caddyfile。
 
+## 后台账号（内置账号，ADR-021）
+
+- **切换登录方式**：`pnpm local:admin-sign-in --instance stg --mode LOCAL_ACCOUNT`（或 `LOCAL_OIDC`），下次启动生效，之后重新生成 Caddyfile。
+- **服务器命令**（以 `xiadan` 身份在 `~/app` 执行，都加 `--instance stg`，审计记为 SYSTEM `admin-account-cli`）：
+  - `node apps/api/scripts/admin-account.mjs list`
+  - `node apps/api/scripts/admin-account.mjs create --login <登录名> --name <显示名> [--role studio:owner|studio:operator] --password-stdin`
+  - `reset-password --login <登录名> --password-stdin`、`clear-2fa --login <登录名>`、`suspend --login <登录名>`、`reactivate --login <登录名>`
+  - 密码只从标准输入或无回显提示读取，不能写进参数。从开发机远程执行时，把密码经 SSH 的标准输入传过去，不要写在命令行里。
+  - 第一次 `create` 会幂等补齐权限目录和"工作室管理员 / 日常运营"两个标准角色。
+- **当前账号**：`studio.owner`（工作室管理员，尚未开启两步验证，密码只保存在开发机 `C:\Users\admin\.tools\xiadan-stg-admin.txt`）；`qa.check` 是 2026-09-29 真实域名验收用的账号，验收后已暂停。
+- **重新生成 Caddyfile**：Basic Auth 哈希没有另存时，以 root 用 `grep -oE '[$]2[aby][$][0-9]{2}[$][./A-Za-z0-9]{53}'` 从现有 `/etc/caddy/Caddyfile` 提取到只有 `xiadan` 可读的临时文件，再以 `xiadan` 执行 `pnpm local:caddy ... --auth-hash-file <临时文件>`。对比时先把哈希替换成占位符再 `diff`，确认只有预期的变化；`caddy validate` 通过后安装，`systemctl reload caddy`，最后删除临时文件。远程执行时用 `ssh ... 'bash -s' <<'EOF'` 传脚本，避免 `$[` 被当成算术展开。
+
 ## 访问
 
 | 地址 | 用途 | 密码 |
 |:--|:--|:--|
 | `https://storefront.stg.kikikong.com/en` | 商城 | 否 |
 | `https://kikikong.com` | 302 跳转到商城 | 否 |
-| `https://admin.stg.kikikong.com` | 后台（TEST 身份登录；根路径会跳转到 `/en`） | 是 |
+| `https://admin.stg.kikikong.com` | 后台（内置账号登录；根路径会跳转到 `/en`） | 否，用后台自己的账号 |
 | `https://mail.stg.kikikong.com` | TEST 收件箱 | 是 |
 | `https://payments.stg.kikikong.com` | TEST 支付页，由结账流程跳转 | 否 |
 
-访问账号和密码只保存在运维者本机的文件里，服务器上只有哈希。
+Basic Auth 的账号和密码只保存在运维者本机的文件里，服务器上只有哈希；后台账号见上一节。

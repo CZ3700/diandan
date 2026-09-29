@@ -133,6 +133,12 @@
 - 密码只从标准输入读取，支持 `--password-stdin`，不回显，不写入参数、历史或日志。
 - 审计记为 SYSTEM，`task_name=admin-account-cli`。
 - 首个管理员使用 `studio:owner` 角色，并自授 7 种语言权限。
+- 实现时确定（第 ⑦ 段）：
+  - 不带 `--instance` 时按 API 的方式读 `FAN_SUPPORT_DATABASE_URL` 和 `FAN_SUPPORT_ADMIN_SUBJECT_PEPPER`。
+  - 用命令设置或重置的密码由运维者自己输入，所以不要求登录后再改（`must_change_password=false`）。
+  - 每次 `create` 都幂等补齐权限目录和两个标准角色；新账号的 7 种语言内容与留言权限由它自己授予（语言授权的审计要求 ADMIN 执行者）。
+  - 输出只有登录名、状态、角色等，不含密码或哈希；数据库报错只报 SQLSTATE。
+- 本地与远程 TEST 实例用 `adminSignIn`（`LOCAL_OIDC` / `LOCAL_ACCOUNT`）选择登录方式，`pnpm local:admin-sign-in` 切换；`LOCAL_ACCOUNT` 下生成的 Caddyfile 只撤后台的 Basic Auth。
 
 ## 6. 标准角色（默认值，可调整）
 
