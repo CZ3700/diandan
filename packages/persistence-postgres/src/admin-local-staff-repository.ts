@@ -1,4 +1,5 @@
 import {
+  ADMIN_STAFF_ROLE_KEYS,
   SUPPORTED_LOCALES,
   adminLocalStaffCommandSchema,
   adminLocalStaffResultSchema,
@@ -76,6 +77,14 @@ export function createAdminLocalStaffRepository(
     return member(row, actorId);
   }
   async function findRoles(keys: readonly string[]) {
+    // Only the two standard roles can be granted here; other roles (such as the local
+    // experience's TEST roles) stay out of the staff page.
+    if (
+      !keys.every((key) =>
+        (ADMIN_STAFF_ROLE_KEYS as readonly string[]).includes(key),
+      )
+    )
+      return undefined;
     const rows = await draftRows(
       client,
       "SELECT id,role_key FROM public.roles WHERE role_key=ANY($1::text[]) FOR SHARE",
@@ -129,7 +138,9 @@ export function createAdminLocalStaffRepository(
               FILTER (WHERE p.permission_key IS NOT NULL),'{}') AS permissions
             FROM public.roles r LEFT JOIN public.role_permissions rp ON rp.role_id=r.id
             LEFT JOIN public.permissions p ON p.id=rp.permission_id
+            WHERE r.role_key=ANY($1::text[])
             GROUP BY r.id,r.role_key,r.description ORDER BY r.role_key LIMIT 64`,
+            [ADMIN_STAFF_ROLE_KEYS],
           );
           return adminLocalStaffResultSchema.parse({
             ...success,

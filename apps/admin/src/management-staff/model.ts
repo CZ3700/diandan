@@ -1,11 +1,13 @@
-import type { SupportedLocale } from "@fan-support/contracts";
+import {
+  ADMIN_STAFF_ROLE_KEYS,
+  type SupportedLocale,
+} from "@fan-support/contracts";
 import { AdminClientError } from "../workspace/client";
 import { staffCopy } from "./copy";
 import type { StaffRole } from "./api";
 
 // ADR-021 staff accounts: role names people understand, input checks, and failure messages.
-export const OWNER_ROLE = "studio:owner";
-export const OPERATOR_ROLE = "studio:operator";
+export const [OWNER_ROLE, OPERATOR_ROLE] = ADMIN_STAFF_ROLE_KEYS;
 
 export function roleLabel(
   role: Pick<StaffRole, "roleKey" | "description">,

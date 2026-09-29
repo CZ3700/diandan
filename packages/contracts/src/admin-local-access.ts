@@ -44,6 +44,11 @@ export const adminDisplayNameSchema = z
 export const adminRoleKeySchema = z
   .string()
   .regex(/^[a-z][a-z0-9.:-]{1,127}$/u);
+/** The two standard roles (ADR-021): the only ones the staff page lists and grants. */
+export const ADMIN_STAFF_ROLE_KEYS = [
+  "studio:owner",
+  "studio:operator",
+] as const;
 /** Raw input; length and login-name rules are checked where the account is known. */
 const passwordInputSchema = z.string().min(1).max(512);
 const totpCodeSchema = z.string().regex(/^\d{6}$/u);

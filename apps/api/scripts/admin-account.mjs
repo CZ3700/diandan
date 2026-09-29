@@ -25,14 +25,14 @@ import {
   hashAdminPassword,
 } from "@fan-support/application";
 import {
+  ADMIN_STAFF_ROLE_KEYS,
   SUPPORTED_LOCALES,
   adminLoginNameSchema,
   adminPermissionKeySchema,
 } from "@fan-support/contracts";
 
 const TASK = "admin-account-cli";
-export const OWNER_ROLE = "studio:owner";
-export const OPERATOR_ROLE = "studio:operator";
+export const [OWNER_ROLE, OPERATOR_ROLE] = ADMIN_STAFF_ROLE_KEYS;
 /** Design §6: daily operations have no finance, payment configuration, replay or staff management. */
 const OPERATOR_EXCLUDED = new Set([
   "orders.manage",

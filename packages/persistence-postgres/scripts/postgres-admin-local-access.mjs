@@ -174,6 +174,14 @@ await withEphemeralPostgres(async (config) => {
   await client.query(
     "INSERT INTO role_permissions(role_id,permission_id) SELECT r.id,p.id FROM roles r JOIN permissions p ON p.permission_key IN ('content.read','orders.read') WHERE r.role_key='studio:operator'",
   );
+  // The local experience seeds roles like this for its TEST sign-in identities (L3-10a).
+  await client.query(
+    "INSERT INTO roles(id,role_key,description) VALUES($1,'local:manager:fixture','Local TEST role')",
+    [randomUUID()],
+  );
+  await client.query(
+    "INSERT INTO role_permissions(role_id,permission_id) SELECT r.id,p.id FROM roles r CROSS JOIN permissions p WHERE r.role_key='local:manager:fixture'",
+  );
   await client.query(
     "INSERT INTO admin_identities(id,issuer,external_subject_hash,status,mfa_required) VALUES($1,$2,$3,'ACTIVE',false)",
     [ownerIdentity, LOCAL, randomBytes(32)],
@@ -382,6 +390,12 @@ await withEphemeralPostgres(async (config) => {
       (await create({ roleKeys: ["studio:nobody"] })).code,
       "UNKNOWN_ROLE",
       "unknown role rejected",
+    );
+    equal(
+      (await create({ roleKeys: ["studio:operator", "local:manager:fixture"] }))
+        .code,
+      "UNKNOWN_ROLE",
+      "roles other than the two standard ones cannot be granted",
     );
     const created = await create();
     equal(created.kind, "STAFF_SAVED", "staff account created");
@@ -982,6 +996,18 @@ await withEphemeralPostgres(async (config) => {
       "SELF_LOCKOUT",
       "cannot drop your own staff.manage",
     );
+    equal(
+      (
+        await staff(ownerSession, {
+          action: "UPDATE_ROLES",
+          accountId: ownerAccount,
+          expectedVersion: ownerVersion,
+          roleKeys: ["studio:owner", "local:manager:fixture"],
+        })
+      ).code,
+      "UNKNOWN_ROLE",
+      "role changes accept only the two standard roles",
+    );
     for (const change of [
       { action: "RESET_PASSWORD", passwordHash: hash() },
       { action: "CLEAR_TOTP" },
@@ -1082,7 +1108,7 @@ await withEphemeralPostgres(async (config) => {
     equal(
       list.roles.map((r) => r.roleKey),
       ["studio:operator", "studio:owner"],
-      "roles listed",
+      "only the two standard roles are listed",
     );
     ok(
       list.roles
