@@ -2,6 +2,7 @@ import * as informationPages from "./information-pages.js";
 import * as storefrontNavigation from "./storefront-navigation.js";
 import * as storefrontTheme from "./storefront-theme.js";
 import * as homeLayout from "./home-layout.js";
+import * as catalogDisplayOrder from "./catalog-display-order.js";
 import {
   rumIntakeSchema,
   rumObservationSchema,
@@ -797,6 +798,21 @@ const registrations = [
     name: "PublicHomeLayoutResponse",
     audience: "public-http",
     schema: homeLayout.publicHomeLayoutResponseSchema,
+  },
+  {
+    name: "CatalogDisplayOrderCommand",
+    audience: "internal",
+    schema: catalogDisplayOrder.catalogDisplayOrderCommandSchema,
+  },
+  {
+    name: "CatalogDisplayOrderRequest",
+    audience: "internal",
+    schema: catalogDisplayOrder.catalogDisplayOrderRequestSchema,
+  },
+  {
+    name: "CatalogDisplayOrderResponse",
+    audience: "admin-http",
+    schema: catalogDisplayOrder.catalogDisplayOrderResponseSchema,
   },
   {
     name: "HomeLayoutPreviewMessage",

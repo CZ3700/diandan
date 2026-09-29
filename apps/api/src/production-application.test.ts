@@ -31,6 +31,7 @@ const everyRoute = {
   paymentRuntimeRoute: true,
   managementCenterRoute: true,
   homeLayoutRoute: true,
+  catalogDisplayOrderRoute: true,
   publicHomeLayoutRoute: true,
   informationPagesRoute: true,
   publicInformationPagesRoute: true,

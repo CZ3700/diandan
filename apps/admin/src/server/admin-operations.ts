@@ -330,6 +330,21 @@ const entries = {
     "HISTORY",
     "HISTORY",
   ),
+  "display-order-read": operation(
+    "/api/v1/admin/display-order/read",
+    contract.catalogDisplayOrderCommandSchema,
+    contract.catalogDisplayOrderResponseSchema,
+    "READ",
+    "DISPLAY_ORDER",
+  ),
+  "display-order-save": operation(
+    "/api/v1/admin/display-order/save",
+    contract.catalogDisplayOrderCommandSchema,
+    contract.catalogDisplayOrderResponseSchema,
+    "SAVE",
+    "DISPLAY_ORDER",
+    true,
+  ),
   "storefront-navigation-read": operation(
     "/api/v1/admin/storefront-navigation/read",
     contract.storefrontNavigationCommandSchema,

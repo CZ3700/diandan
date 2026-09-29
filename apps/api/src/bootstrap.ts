@@ -29,6 +29,10 @@ import {
   type PublicHomeLayoutRouteDependencies,
 } from "./home-layout-route.js";
 import {
+  registerCatalogDisplayOrderRoute,
+  type CatalogDisplayOrderRouteDependencies,
+} from "./catalog-display-order-route.js";
+import {
   registerStorefrontThemeRoute,
   registerPublicStorefrontThemeRoute,
   type StorefrontThemeRouteDependencies,
@@ -171,6 +175,7 @@ export type CreateApiApplicationOptions = Readonly<{
   managementCenterRoute?: ManagementCenterRouteDependencies;
   managementCenterRuntime?: ApiLifecycleResource;
   homeLayoutRoute?: HomeLayoutRouteDependencies;
+  catalogDisplayOrderRoute?: CatalogDisplayOrderRouteDependencies;
   publicHomeLayoutRoute?: PublicHomeLayoutRouteDependencies;
   storefrontThemeRoute?: StorefrontThemeRouteDependencies;
   publicStorefrontThemeRoute?: PublicStorefrontThemeRouteDependencies;
@@ -535,6 +540,11 @@ export async function createApiApplication(
     );
   if (options.homeLayoutRoute !== undefined)
     registerHomeLayoutRoute(adapter.getInstance(), options.homeLayoutRoute);
+  if (options.catalogDisplayOrderRoute !== undefined)
+    registerCatalogDisplayOrderRoute(
+      adapter.getInstance(),
+      options.catalogDisplayOrderRoute,
+    );
   if (options.publicHomeLayoutRoute !== undefined)
     registerPublicHomeLayoutRoute(
       adapter.getInstance(),

@@ -2,6 +2,7 @@ import { randomBytes, randomUUID } from "node:crypto";
 import {
   createManagementCenterUseCases,
   createHomeLayoutUseCases,
+  createCatalogDisplayOrderUseCases,
   createStorefrontThemeUseCases,
   createStorefrontNavigationUseCases,
   createInformationPageUseCases,
@@ -23,6 +24,7 @@ import type {
 } from "@fan-support/media-port";
 import type { ManagementCenterRouteDependencies } from "../management-center-route.js";
 import type { HomeLayoutRouteDependencies } from "../home-layout-route.js";
+import type { CatalogDisplayOrderRouteDependencies } from "../catalog-display-order-route.js";
 import type { StorefrontThemeRouteDependencies } from "../storefront-theme-route.js";
 import type { StorefrontNavigationRouteDependencies } from "../storefront-navigation-route.js";
 import type { InformationPagesRouteDependencies } from "../information-pages-route.js";
@@ -33,6 +35,7 @@ type ManagementPersistence = Pick<
   PostgresPersistence,
   | "managementCenterTransactionManager"
   | "homeLayoutTransactionManager"
+  | "catalogDisplayOrderTransactionManager"
   | "storefrontThemeTransactionManager"
   | "storefrontNavigationTransactionManager"
   | "informationPageTransactionManager"
@@ -79,6 +82,7 @@ export function createTestManagementCenterComposition(
 ): Readonly<{
   managementCenterRoute: ManagementCenterRouteDependencies;
   homeLayoutRoute: HomeLayoutRouteDependencies;
+  catalogDisplayOrderRoute: CatalogDisplayOrderRouteDependencies;
   storefrontThemeRoute: StorefrontThemeRouteDependencies;
   storefrontNavigationRoute: StorefrontNavigationRouteDependencies;
   informationPagesRoute: InformationPagesRouteDependencies;
@@ -143,6 +147,13 @@ export function createTestManagementCenterComposition(
         allowedOrigin: options.allowedOrigin,
         useCases: createHomeLayoutUseCases({
           transactions: persistence.homeLayoutTransactionManager,
+          tokenPepper: options.tokenPepper,
+        }),
+      },
+      catalogDisplayOrderRoute: {
+        allowedOrigin: options.allowedOrigin,
+        useCases: createCatalogDisplayOrderUseCases({
+          transactions: persistence.catalogDisplayOrderTransactionManager,
           tokenPepper: options.tokenPepper,
         }),
       },

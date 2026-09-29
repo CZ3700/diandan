@@ -20,6 +20,7 @@ import { managementCopy } from "./copy";
 import type { HomeLayoutApi } from "../management-decoration/api";
 import { DecorationCenter } from "../management-decoration/center";
 import type { StorefrontNavigationApi } from "../management-decoration/navigation-api";
+import type { DisplayOrderApi } from "../management-decoration/display-order-api";
 import type { StorefrontThemeApi } from "../management-decoration/theme-api";
 import { canLeaveDecoration } from "../management-decoration/navigation";
 import { decorationNavigationCopy } from "../management-decoration/theme-copy";
@@ -36,6 +37,7 @@ export function ManagementHub({
   layoutApi,
   themeApi,
   navigationApi,
+  displayOrderApi,
   layoutPermissions,
   infoPagesApi,
   infoPagesAccess,
@@ -52,6 +54,7 @@ export function ManagementHub({
   layoutApi?: HomeLayoutApi | undefined;
   themeApi?: StorefrontThemeApi | undefined;
   navigationApi?: StorefrontNavigationApi | undefined;
+  displayOrderApi?: DisplayOrderApi | undefined;
   infoPagesApi?: InformationPagesApi | undefined;
   infoPagesAccess?:
     { allowed: boolean; localeScopes: readonly SupportedLocale[] } | undefined;
@@ -243,6 +246,7 @@ export function ManagementHub({
           api={layoutApi}
           themeApi={themeApi}
           navigationApi={navigationApi}
+          displayOrderApi={displayOrderApi}
           locale={locale}
           storefrontOrigin={storefrontOrigin}
           canEdit={layoutPermissions.edit}

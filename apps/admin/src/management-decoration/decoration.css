@@ -278,3 +278,81 @@
     flex-wrap: wrap;
   }
 }
+/* L2-10: storefront display order for artists and gifts. */
+.decoration-order-header p {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-muted);
+}
+.decoration-order-hint {
+  font-size: calc(var(--type-body-size) * 0.875);
+}
+.decoration-order-kinds {
+  display: flex;
+  gap: var(--space-2);
+  margin-block: var(--space-6) var(--space-4);
+}
+.decoration-order-kinds button {
+  min-height: var(--space-12);
+  padding: var(--space-2) var(--space-5, var(--space-4));
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  color: var(--color-text-muted);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+.decoration-order-kinds button[aria-pressed="true"] {
+  color: var(--color-text);
+  border-color: var(--color-accent);
+}
+.decoration-order-kinds button:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-accent);
+  outline-offset: var(--focus-ring-offset);
+}
+.decoration-order-list li {
+  grid-template-columns: var(--space-6) var(--space-12) minmax(0, 1fr) auto;
+}
+.decoration-order-thumb {
+  width: var(--space-12);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+}
+.decoration-order-thumb > * {
+  width: 100%;
+  height: 100%;
+}
+.decoration-order-list .decoration-section-name span {
+  display: block;
+  margin-block-start: var(--space-1);
+  color: var(--color-text-muted);
+}
+.decoration-order-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block-start: var(--space-6);
+}
+.decoration-order-dirty {
+  color: var(--color-accent);
+}
+.decoration-order-error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+@media (width < 40rem) {
+  .decoration-order-list li {
+    grid-template-columns: var(--space-12) minmax(0, 1fr);
+  }
+  .decoration-order-list .decoration-section-number {
+    display: none;
+  }
+  .decoration-order-list .decoration-section-move {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+}

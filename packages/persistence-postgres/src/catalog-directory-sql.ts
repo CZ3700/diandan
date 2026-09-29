@@ -61,6 +61,10 @@ function versionState(includeCommerce: boolean): string {
     aggregateState(
       `SELECT jsonb_build_array(id, lifecycle) value FROM public.media_metadata_revisions`,
     ),
+    // L2-10: a new manual order changes the version, so old cursors and ETags are retired.
+    aggregateState(
+      `SELECT jsonb_build_array(id, kind, version) value FROM public.catalog_display_orders`,
+    ),
   ];
   if (includeCommerce)
     states.push(
@@ -181,7 +185,7 @@ export function buildIdolDirectoryQuery(
       WHERE $2::text IS NULL OR strpos(normalized_name, $2) > 0 OR strpos(handle, $2) > 0
       GROUP BY id, display_order
     ), ordered AS (
-      SELECT id, row_number() OVER (ORDER BY match_rank, display_order, id) ordinal FROM ranked
+      SELECT id, row_number() OVER (ORDER BY match_rank, array_position((SELECT ordered_ids FROM public.catalog_display_orders WHERE kind='IDOL' ORDER BY version DESC LIMIT 1), id) NULLS LAST, display_order, id) ordinal FROM ranked
     ), window_rows AS (
       SELECT id, ordinal FROM ordered
       WHERE ($3::uuid IS NULL OR ordinal >= (SELECT ordinal FROM ordered WHERE id = $3))
@@ -254,7 +258,8 @@ export function buildGiftDirectoryQuery(
   let order: string;
   switch (input.sort) {
     case "RECOMMENDED":
-      order = "published_at DESC, id ASC";
+      // L2-10: the operator's manual order first, then newest publication.
+      order = "manual_position ASC NULLS LAST, published_at DESC, id ASC";
       break;
     case "PRICE_ASC":
       order = "price_minor ASC NULLS LAST, id ASC";
@@ -278,7 +283,8 @@ export function buildGiftDirectoryQuery(
       input.kind,
     ],
     text: `WITH ${versionState(true)}, candidates AS (
-      SELECT gift.id, publication.published_at, revision.category, ${publishedGiftKindColumn}, offer.price_minor
+      SELECT gift.id, publication.published_at, revision.category, ${publishedGiftKindColumn}, offer.price_minor,
+        array_position((SELECT ordered_ids FROM public.catalog_display_orders WHERE kind='GIFT' ORDER BY version DESC LIMIT 1), gift.id) AS manual_position
       FROM public.gifts gift
       JOIN public.gift_publication_heads head ON head.gift_id = gift.id AND head.gift_revision_id = gift.published_revision_id
       JOIN public.content_publications publication ON publication.id = head.publication_id

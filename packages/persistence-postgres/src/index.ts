@@ -81,6 +81,10 @@ export { createCatalogDirectoryRepository } from "./catalog-directory-repository
 export { createManagementCenterOperationRepository } from "./management-center-operation-repository.js";
 export { createDailyPublicationRepository } from "./daily-publication-repository.js";
 export { createHomeLayoutRepository } from "./home-layout-repository.js";
+export {
+  createCatalogDisplayOrderRepository,
+  displayOrderItemsSql,
+} from "./catalog-display-order-repository.js";
 
 export { createStorefrontThemeRepository } from "./storefront-theme-repository.js";
 

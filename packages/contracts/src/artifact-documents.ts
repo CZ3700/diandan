@@ -2,6 +2,7 @@ import { informationPagePaths } from "./information-pages-openapi.js";
 import { storefrontNavigationPaths } from "./storefront-navigation-openapi.js";
 import { storefrontThemePaths } from "./storefront-theme-openapi.js";
 import { homeLayoutPaths } from "./home-layout-openapi.js";
+import { catalogDisplayOrderPaths } from "./catalog-display-order-openapi.js";
 import { rumPaths } from "./rum-openapi.js";
 import { adminPaymentConfigurationPaths } from "./admin-payment-configuration-openapi.js";
 import { adminExceptionsPaths } from "./admin-exceptions-openapi.js";
@@ -227,6 +228,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...orderAccessPaths(),
         ...managementCenterPaths(),
         ...homeLayoutPaths(),
+        ...catalogDisplayOrderPaths(),
         ...storefrontThemePaths(),
         ...storefrontNavigationPaths(),
         ...informationPagePaths(),

@@ -177,6 +177,7 @@ export const catalogPageInfoSchema = z
 
 const sortFieldSchema = z.enum([
   "MATCH_RANK",
+  "MANUAL_POSITION",
   "DISPLAY_ORDER",
   "PUBLISHED_AT",
   "PRICE_MINOR",
@@ -198,7 +199,7 @@ export const idolDiscoveryPlanSchema = z
       z.literal("PREFIX"),
       z.literal("CONTAINS"),
     ]),
-    orderBy: z.array(orderTermSchema).min(2).max(3),
+    orderBy: z.array(orderTermSchema).min(3).max(4),
     take: z
       .number()
       .int()
@@ -225,7 +226,7 @@ export const giftDiscoveryPlanSchema = z
           CATALOG_DISCOVERY_LIMITS.giftPageMaximum,
       ),
     take: pageSizeSchema,
-    orderBy: z.array(orderTermSchema).length(2),
+    orderBy: z.array(orderTermSchema).min(2).max(3),
   })
   .meta({
     "x-runtime-invariants": [

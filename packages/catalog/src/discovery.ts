@@ -36,7 +36,14 @@ export function createGiftDiscoveryPlan(input: unknown): GiftDiscoveryPlan {
     query,
     offset: (query.page - 1) * query.pageSize,
     take: query.pageSize,
-    orderBy: [primaryOrder, { field: "ID", direction: "ASC" }],
+    // L2-10: "recommended" puts the operator's manual order first; price sorts ignore it.
+    orderBy: [
+      ...(query.sort === "RECOMMENDED"
+        ? [{ field: "MANUAL_POSITION", direction: "ASC", nulls: "LAST" }]
+        : []),
+      primaryOrder,
+      { field: "ID", direction: "ASC" },
+    ],
   });
 }
 
@@ -67,6 +74,7 @@ export function createIdolDiscoveryPlan(input: unknown): IdolDiscoveryPlan {
       ...(searchTerm === undefined
         ? []
         : [{ field: "MATCH_RANK", direction: "ASC" }]),
+      { field: "MANUAL_POSITION", direction: "ASC", nulls: "LAST" },
       { field: "DISPLAY_ORDER", direction: "ASC" },
       { field: "ID", direction: "ASC" },
     ],

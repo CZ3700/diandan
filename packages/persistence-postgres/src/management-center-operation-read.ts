@@ -65,7 +65,7 @@ export async function readManagementCenterContext(
     operations: operations.map(mapManagementOperation),
   });
 }
-async function thumbnail(
+export async function thumbnail(
   client: TransactionClient,
   assetId: unknown,
   alt: string,

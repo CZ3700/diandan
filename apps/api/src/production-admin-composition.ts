@@ -13,6 +13,7 @@ import {
   createGiftCommerceUseCases,
   createManagementCenterUseCases,
   createHomeLayoutUseCases,
+  createCatalogDisplayOrderUseCases,
   createStorefrontThemeUseCases,
   createStorefrontNavigationUseCases,
   createInformationPageUseCases,
@@ -48,6 +49,7 @@ import type { ContentAuthoringRouteDependencies } from "./admin-content-authorin
 import type { GiftCommerceRouteDependencies } from "./gift-commerce-route.js";
 import type { ManagementCenterRouteDependencies } from "./management-center-route.js";
 import type { HomeLayoutRouteDependencies } from "./home-layout-route.js";
+import type { CatalogDisplayOrderRouteDependencies } from "./catalog-display-order-route.js";
 import type { StorefrontThemeRouteDependencies } from "./storefront-theme-route.js";
 import type { StorefrontNavigationRouteDependencies } from "./storefront-navigation-route.js";
 import type { InformationPagesRouteDependencies } from "./information-pages-route.js";
@@ -84,6 +86,7 @@ export type ProductionAdminComposition = Readonly<{
   resourceManagementRoute: ResourceManagementRouteDependencies;
   managementCenterRoute: ManagementCenterRouteDependencies;
   homeLayoutRoute: HomeLayoutRouteDependencies;
+  catalogDisplayOrderRoute: CatalogDisplayOrderRouteDependencies;
   storefrontThemeRoute: StorefrontThemeRouteDependencies;
   storefrontNavigationRoute: StorefrontNavigationRouteDependencies;
   informationPagesRoute: InformationPagesRouteDependencies;
@@ -228,6 +231,13 @@ export function createProductionAdminComposition(
         allowedOrigin,
         useCases: createHomeLayoutUseCases({
           transactions: persistence.homeLayoutTransactionManager,
+          tokenPepper,
+        }),
+      },
+      catalogDisplayOrderRoute: {
+        allowedOrigin,
+        useCases: createCatalogDisplayOrderUseCases({
+          transactions: persistence.catalogDisplayOrderTransactionManager,
           tokenPepper,
         }),
       },

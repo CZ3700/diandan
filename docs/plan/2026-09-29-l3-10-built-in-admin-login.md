@@ -20,8 +20,8 @@
 
 ## 2. 数据（迁移 0052_admin-local-accounts）
 
-- **`permissions`**：按合同里的完整权限目录补齐所有键（`ON CONFLICT DO NOTHING`），新增 `staff.manage`。
-- **标准角色**：新建 `studio:owner` 和 `studio:operator`，分配见第 6 节。以后新增权限的迁移应同时授予 `studio:owner`。
+- **`permissions`**：只新增 `staff.manage`。
+- **权限目录与标准角色**：0052 起初在迁移里预置了完整权限目录和 `studio:owner` / `studio:operator`，但仓库惯例是迁移只登记自己引入的键（如 0035–0037），其余权限键由测试夹具和部署初始化创建，16 个夹具因此在全新库上撞唯一约束。0052 已推送并在 stg 执行，不能修改，所以用修正迁移 0054 撤下预置的目录和两个未分配的角色，只保留 `staff.manage`。完整目录（合同中的 `adminPermissionKeySchema`）和两个标准角色，改由服务器命令在创建首个管理员时幂等补齐。
 - **`admin_local_accounts`**，一个账号对应一个 `admin_identities` 行：
   - 身份字段：`admin_identity_id`（唯一），对应身份行的 issuer 必须为 `urn:fan-support:local`，由触发器校验。
   - `login_name`：唯一，规则为 `^[a-z0-9][a-z0-9._-]{2,63}$`，存储前统一转小写。

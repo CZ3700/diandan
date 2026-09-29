@@ -18,7 +18,10 @@ import { createHomeLayoutRepository } from "./home-layout-repository.js";
 import type {
   HomeLayoutRepositories,
   HomeLayoutTransactionManager,
+  CatalogDisplayOrderRepositories,
+  CatalogDisplayOrderTransactionManager,
 } from "@fan-support/persistence-port";
+import { createCatalogDisplayOrderRepository } from "./catalog-display-order-repository.js";
 import { createAdminExceptionsRepository } from "./admin-exceptions-repository.js";
 import type {
   AdminExceptionsRepository,
@@ -231,6 +234,7 @@ import {
 
 export interface PostgresPersistence {
   readonly homeLayoutTransactionManager: HomeLayoutTransactionManager;
+  readonly catalogDisplayOrderTransactionManager: CatalogDisplayOrderTransactionManager;
   readonly informationPageTransactionManager: InformationPageTransactionManager;
   readonly storefrontNavigationTransactionManager: StorefrontNavigationTransactionManager;
   readonly storefrontThemeTransactionManager: StorefrontThemeTransactionManager;
@@ -651,6 +655,18 @@ export function createPostgresPersistenceWithPoolFactory(
       homeLayout: createHomeLayoutRepository(client, scope),
     }),
   });
+  const catalogDisplayOrderRunner =
+    createTransactionRunner<CatalogDisplayOrderRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createHomeLayoutAuthorizationRepository(client, scope),
+        displayOrder: createCatalogDisplayOrderRepository(
+          client,
+          scope,
+          options?.catalogPublicMediaBaseUrl ?? "",
+        ),
+      }),
+    });
   const storefrontThemeRunner =
     createTransactionRunner<StorefrontThemeRepositories>({
       acquireClient: async () => pool.connect(),
@@ -1573,6 +1589,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return homeLayoutRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    catalogDisplayOrderTransactionManager: {
+      async runInCatalogDisplayOrderTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return catalogDisplayOrderRunner.run(
           { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );

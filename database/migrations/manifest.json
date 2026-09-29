@@ -520,6 +520,26 @@
         "up": "27f89b64070c84800fc77d48f49d8579445c9344106e9f13e78717d33d4d0034",
         "down": "b4f888264ed737a8fd6e0941bc905a7e0520bebdcaf6a24242f923fb4c92ccc1"
       }
+    },
+    {
+      "version": "0053",
+      "name": "catalog-display-order",
+      "up": "database/migrations/0053_catalog-display-order.up.sql",
+      "down": "database/migrations/0053_catalog-display-order.down.sql",
+      "sha256": {
+        "up": "d0ea5d698e861dc3eb497fd5200cdd39a2269b9ecfb3c2245900a68e34577599",
+        "down": "5726780aafba199f2a92abafec8a1b13d8218191db613879ea896a046c46b456"
+      }
+    },
+    {
+      "version": "0054",
+      "name": "admin-permission-catalog-ownership",
+      "up": "database/migrations/0054_admin-permission-catalog-ownership.up.sql",
+      "down": "database/migrations/0054_admin-permission-catalog-ownership.down.sql",
+      "sha256": {
+        "up": "c897ec4d623106b9fd8ab761124b6e436b85295d0e40fd070ce902f4316355dc",
+        "down": "e7dbce9c16e4a4bb4e075793ad61c0cc9aa716827858ff0253ac03d5b027d1ae"
+      }
     }
   ]
 }

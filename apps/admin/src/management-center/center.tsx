@@ -18,6 +18,7 @@ import { ManagementLogin } from "./login";
 import "./management-center.css";
 import { createHomeLayoutApi } from "../management-decoration/api";
 import { createStorefrontNavigationApi } from "../management-decoration/navigation-api";
+import { createDisplayOrderApi } from "../management-decoration/display-order-api";
 import { createInformationPagesApi } from "../management-info-pages/api";
 import { createStorefrontThemeApi } from "../management-decoration/theme-api";
 
@@ -43,6 +44,10 @@ export function ManagementCenter({
   const layoutApi = useMemo(() => createHomeLayoutApi(client), [client]);
   const navigationApi = useMemo(
     () => createStorefrontNavigationApi(client),
+    [client],
+  );
+  const displayOrderApi = useMemo(
+    () => createDisplayOrderApi(client),
     [client],
   );
   const infoPagesApi = useMemo(
@@ -110,6 +115,7 @@ export function ManagementCenter({
       layoutApi={layoutApi}
       themeApi={themeApi}
       navigationApi={navigationApi}
+      displayOrderApi={displayOrderApi}
       infoPagesApi={infoPagesApi}
       infoPagesAccess={{
         allowed: session.permissions.includes("content.read"),

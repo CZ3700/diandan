@@ -37343,6 +37343,164 @@
         "type": "object",
         "x-fan-support-audience": "public-http"
       },
+      "CatalogDisplayOrderResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "items": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "image": {
+                      "anyOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "alt": {
+                              "maxLength": 300,
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "url": {
+                              "format": "uri",
+                              "maxLength": 8192,
+                              "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                              "type": "string",
+                              "x-runtime-invariants": [
+                                "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                "storage and CDN signing credentials are rejected"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "url",
+                            "alt"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "manual": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "maxLength": 160,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "active",
+                        "paused"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "image",
+                    "status",
+                    "manual"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 500,
+                "type": "array"
+              },
+              "kind": {
+                "const": "DISPLAY_ORDER",
+                "type": "string"
+              },
+              "orderKind": {
+                "enum": [
+                  "IDOL",
+                  "GIFT"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "replayed": {
+                "type": "boolean"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "version": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "orderKind",
+              "version",
+              "items",
+              "replayed"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "INVALID_COMMAND",
+                  "UNAUTHENTICATED",
+                  "FORBIDDEN",
+                  "CSRF_INVALID",
+                  "NOT_FOUND",
+                  "REVISION_NOT_DRAFT",
+                  "ALREADY_EXISTS",
+                  "INVALID_CONTENT",
+                  "CONTENT_UNAVAILABLE",
+                  "STALE_CONTENT",
+                  "STALE_VERSION",
+                  "SELF_REVIEW",
+                  "INVALID_REVIEW_STATE",
+                  "IDEMPOTENCY_CONFLICT",
+                  "CONFLICT",
+                  "PREVIEW_UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "admin-http"
+      },
       "CatalogPageInfo": {
         "additionalProperties": false,
         "properties": {
@@ -167807,6 +167965,433 @@
         "x-fan-support-concurrency": "expectedVersion is the canonical review sequence; hashes must still match",
         "x-fan-support-idempotency": "same actor/operation/key/body returns the original safe result reference",
         "x-fan-support-rbac": "content.edit"
+      }
+    },
+    "/api/v1/admin/display-order/read": {
+      "post": {
+        "description": "Exact Origin, CSRF and a current admin session required. Reading needs content.read; saving publishes immediately and needs content.publish. Items left out follow in the storefront default order; an empty list restores the default.",
+        "operationId": "catalogDisplayOrderRead",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "IDOL",
+                      "GIFT"
+                    ],
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "kind"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 32768
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "read the storefront order of artists or gifts",
+        "x-fan-support-rbac": "content.read"
+      }
+    },
+    "/api/v1/admin/display-order/save": {
+      "post": {
+        "description": "Exact Origin, CSRF and a current admin session required. Reading needs content.read; saving publishes immediately and needs content.publish. Items left out follow in the storefront default order; an empty list restores the default.",
+        "operationId": "catalogDisplayOrderSave",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "expectedVersion": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "kind": {
+                    "enum": [
+                      "IDOL",
+                      "GIFT"
+                    ],
+                    "type": "string"
+                  },
+                  "orderedIds": {
+                    "items": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "maxItems": 500,
+                    "type": "array"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "kind",
+                  "expectedVersion",
+                  "orderedIds"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 32768
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatalogDisplayOrderResponse"
+                }
+              }
+            },
+            "description": "Current order with the items the storefront shows. No content, price or stock state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "save the storefront order of artists or gifts",
+        "x-fan-support-rbac": "content.publish"
       }
     },
     "/api/v1/admin/exceptions/context": {

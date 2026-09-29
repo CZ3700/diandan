@@ -12,7 +12,12 @@ test("gift browsing has bounded stable pagination and no market or offer depende
     }),
   );
   expect(query.values).toEqual(["th", "FLOWERS", null, 12, 12, null]);
-  expect(query.text).toContain("ORDER BY published_at DESC, id ASC");
+  expect(query.text).toContain(
+    "ORDER BY manual_position ASC NULLS LAST, published_at DESC, id ASC",
+  );
+  expect(query.text).toContain(
+    "kind='GIFT' ORDER BY version DESC LIMIT 1), gift.id) AS manual_position",
+  );
   expect(query.text).toContain("LIMIT $4::integer OFFSET $5::integer");
   expect(query.text).toContain("replaces_publication_id = publication.id");
   expect(query.text).toContain("gift.published_revision_id");
@@ -67,6 +72,6 @@ test("gift kind is read from the published revision's daily document, then its p
   expect(filter).toBeGreaterThan(-1);
   expect(filter).toBeLessThan(window);
   expect(query.text).toContain(
-    "jsonb_agg(jsonb_build_array(id, gift_kind) ORDER BY published_at DESC,id ASC)",
+    "jsonb_agg(jsonb_build_array(id, gift_kind) ORDER BY manual_position ASC NULLS LAST,published_at DESC,id ASC)",
   );
 });

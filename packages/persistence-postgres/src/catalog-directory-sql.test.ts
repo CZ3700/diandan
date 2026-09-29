@@ -112,7 +112,11 @@ describe("catalog directory SQL boundaries", () => {
       "projection.source_hash = translation.source_hash",
     );
     expect(query.text).toContain("projection.algorithm_version = 1");
-    expect(query.text).toContain("ORDER BY match_rank, display_order, id");
+    // L2-10: search rank, then the operator's manual order, then the content default.
+    expect(query.text).toMatch(
+      /ORDER BY match_rank, array_position\(\(SELECT ordered_ids FROM public\.catalog_display_orders WHERE kind='IDOL' ORDER BY version DESC LIMIT 1\), id\) NULLS LAST, display_order, id/u,
+    );
+    expect(query.text).toContain("FROM public.catalog_display_orders");
     expect(query.text).toContain("LIMIT $5");
   });
 
@@ -219,4 +223,29 @@ describe("catalog directory SQL boundaries", () => {
       "item.id IS NULL OR (item.status = 'ACTIVE' AND item.policy = variant.inventory_policy)",
     );
   });
+});
+
+test("recommended gifts follow the manual order first; price sorts ignore it (L2-10)", () => {
+  const base = {
+    locale: "en" as const,
+    market: "TEST",
+    currency: "USD",
+    idolId: null,
+    category: null,
+    kind: null,
+    priceMinMinor: null,
+    priceMaxMinor: null,
+    availability: "ALL" as const,
+    take: 12,
+    offset: 0,
+  };
+  const recommended = buildGiftDirectoryQuery({ ...base, sort: "RECOMMENDED" });
+  expect(recommended.text).toContain(
+    "ORDER BY manual_position ASC NULLS LAST, published_at DESC, id ASC",
+  );
+  expect(recommended.text).toContain("FROM public.catalog_display_orders");
+  const cheapest = buildGiftDirectoryQuery({ ...base, sort: "PRICE_ASC" });
+  expect(cheapest.text).toContain(
+    "ORDER BY price_minor ASC NULLS LAST, id ASC",
+  );
 });
