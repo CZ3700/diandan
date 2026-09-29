@@ -2183,12 +2183,13 @@ async function collectMetrics(page) {
           bodyScrollWidth: document.body.scrollWidth,
           clientWidth: document.documentElement.clientWidth,
           scrollWidth: document.documentElement.scrollWidth,
-          // Diagnostics only: the deepest elements whose right edge passes the viewport.
+          // Diagnostics only: the deepest elements whose right edge passes the viewport,
+          // including sub-pixel edges that round scrollWidth up by one.
           overflowing: [...document.body.querySelectorAll("*")]
             .filter(
               (element) =>
                 element.getBoundingClientRect().right >
-                document.documentElement.clientWidth + 0.5,
+                document.documentElement.clientWidth,
             )
             .filter(
               (element, _index, all) =>
@@ -2206,7 +2207,7 @@ async function collectMetrics(page) {
                 .filter((attribute) => attribute.name.startsWith("data-fs"))
                 .slice(0, 2)
                 .map((attribute) => `[${attribute.name}=${attribute.value}]`);
-              return `${element.tagName.toLowerCase()}${classes.map((name) => `.${name}`).join("")}${marks.join("")} right=${element.getBoundingClientRect().right.toFixed(2)}`;
+              return `${element.tagName.toLowerCase()}${classes.map((name) => `.${name}`).join("")}${marks.join("")} right=${element.getBoundingClientRect().right.toFixed(3)}`;
             }),
         },
         fontsStatus: document.fonts.status,
