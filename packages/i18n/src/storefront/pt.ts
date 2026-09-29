@@ -93,7 +93,7 @@ const copy = {
     "Sua imagem está pronta. Se o download não começar, toque e segure ou clique com o botão direito na imagem abaixo para salvá-la.",
   orderCertificateFailed: "Não foi possível criar a imagem. Tente novamente.",
   orderCertificateRevoked:
-    "Retirado após reembolso total. Este certificado não pode mais ser salvo.",
+    "Retirado porque o pagamento deste presente foi devolvido. Este certificado não pode mais ser salvo.",
   orderCertificateImageAlt: "Certificado digital de apoio para {artist}",
 
   checkoutTitle: "Finalizar pedido",

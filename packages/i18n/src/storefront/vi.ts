@@ -92,7 +92,7 @@ const copy = {
     "Ảnh đã sẵn sàng. Nếu tệp không tự tải xuống, hãy nhấn giữ hoặc nhấp chuột phải vào ảnh bên dưới để lưu.",
   orderCertificateFailed: "Không thể tạo ảnh. Vui lòng thử lại.",
   orderCertificateRevoked:
-    "Đã thu hồi sau khi hoàn tiền toàn bộ. Không thể lưu chứng nhận này nữa.",
+    "Đã thu hồi vì khoản thanh toán cho món quà này đã được hoàn lại. Không thể lưu chứng nhận này nữa.",
   orderCertificateImageAlt: "Chứng nhận ủng hộ kỹ thuật số cho {artist}",
 
   checkoutTitle: "Thanh toán",

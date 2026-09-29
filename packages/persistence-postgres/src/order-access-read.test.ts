@@ -244,6 +244,73 @@ test("delivered virtual lines carry certificate facts; revoked once refunded in 
   // A delivered virtual row without its delivery time is not a readable history.
   expect(() => item({ ...delivered, delivered_at: null })).toThrow();
 });
+// L3-09a: a lost chargeback returns the whole order's payment, so every certificate is withdrawn.
+test("a lost dispute withdraws the certificate; open or won disputes do not", () => {
+  expect(module).toBeDefined();
+  const delivered = {
+    ...row,
+    gift_kind: "VIRTUAL",
+    fulfillment_status: "DELIVERED",
+    delivered_at: "2026-09-29T12:00:00.000000Z",
+    refunded_in_full: false,
+  };
+  const revoked = (dispute: string, value = delivered) =>
+    module!.orderAccessItem(value, 1, "https://cdn.example.invalid/", dispute)
+      .supportCertificate?.revoked;
+  expect(revoked("LOST")).toBe(true);
+  for (const dispute of ["NONE", "OPEN", "WON"])
+    expect(revoked(dispute)).toBe(false);
+  expect(revoked("WON", { ...delivered, refunded_in_full: true })).toBe(true);
+  expect(
+    module!.orderAccessItem(
+      { ...delivered, gift_kind: "PHYSICAL" },
+      1,
+      "https://cdn.example.invalid/",
+      "LOST",
+    ).supportCertificate,
+  ).toBeNull();
+});
+test("the detail read withdraws every delivered virtual line of a lost-dispute order", async () => {
+  expect(module).toBeDefined();
+  const delivered = {
+    ...row,
+    gift_kind: "VIRTUAL",
+    fulfillment_status: "DELIVERED",
+    delivered_at: "2026-09-29T12:00:00.000000Z",
+    refunded_in_full: false,
+  };
+  const client = {
+    query: async () => ({ rows: [delivered, delivered] }),
+    release: () => {},
+  };
+  const detail = await module!.readOrderAccessDetail(
+    client,
+    {
+      id,
+      public_order_id: "00000000-0000-4000-8000-000000000002",
+      public_order_no: "FS-7K3M9C",
+      presentation_locale: "en",
+      order_status: "OPEN",
+      payment_status: "PAID",
+      dispute_status: "LOST",
+      fulfillment_status: "DELIVERED",
+      currency: "USD",
+      subtotal_minor: "200",
+      tax_amount_minor: "0",
+      shipping_amount_minor: "0",
+      fee_amount_minor: "0",
+      discount_amount_minor: "0",
+      total_amount_minor: "200",
+      created_at: "2026-09-26T00:00:00.000Z",
+      updated_at: "2026-09-26T00:00:00.000Z",
+    },
+    "https://cdn.example.invalid/",
+  );
+  expect(detail.items.map((item) => item.supportCertificate?.revoked)).toEqual([
+    true,
+    true,
+  ]);
+});
 test("the read counts only succeeded refunds against the line total", async () => {
   expect(module).toBeDefined();
   let sql = "";

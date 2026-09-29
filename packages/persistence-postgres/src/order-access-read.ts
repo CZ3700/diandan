@@ -46,11 +46,16 @@ function historicalMedia(row: DraftRow, prefix: string, baseUrl: string) {
     ),
   };
 }
-/** Explicit projection of immutable facts; never load current idol/gift text. */
+/**
+ * Explicit projection of immutable facts; never load current idol/gift text.
+ * A lost dispute returns the whole order's payment (disputes carry no line allocation),
+ * so it withdraws every certificate of the order, like a full refund of the line.
+ */
 export function orderAccessItem(
   row: DraftRow,
   position: number,
   baseUrl: string,
+  orderDisputeStatus: unknown = "NONE",
 ) {
   if (row["schema_version"] !== 1 && row["schema_version"] !== 2)
     return rejectOrderAccess("TEMPORARY_UNAVAILABLE");
@@ -95,7 +100,8 @@ export function orderAccessItem(
       row["fulfillment_status"] === "DELIVERED"
         ? {
             deliveredAt: row["delivered_at"],
-            revoked: row["refunded_in_full"] === true,
+            revoked:
+              row["refunded_in_full"] === true || orderDisputeStatus === "LOST",
           }
         : null,
   });
@@ -157,7 +163,9 @@ export async function readOrderAccessDetail(
       discountAmountMinor: Number(order["discount_amount_minor"]),
       totalAmountMinor: Number(order["total_amount_minor"]),
     },
-    items: rows.map((row, index) => orderAccessItem(row, index + 1, baseUrl)),
+    items: rows.map((row, index) =>
+      orderAccessItem(row, index + 1, baseUrl, order["dispute_status"]),
+    ),
     createdAt: order["created_at"],
     updatedAt: order["updated_at"],
   });

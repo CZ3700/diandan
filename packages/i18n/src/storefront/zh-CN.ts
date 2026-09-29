@@ -81,7 +81,7 @@ const copy = {
   orderCertificateReady:
     "图片已生成。如果没有自动下载，请长按或右键下方图片保存。",
   orderCertificateFailed: "图片生成失败，请重试。",
-  orderCertificateRevoked: "该礼物已全额退款，凭证已撤回，无法再保存。",
+  orderCertificateRevoked: "该礼物的款项已退回，凭证已撤回，无法再保存。",
   orderCertificateImageAlt: "{artist} 的数字应援凭证",
 
   checkoutTitle: "结算",

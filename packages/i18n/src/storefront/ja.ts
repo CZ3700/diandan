@@ -93,7 +93,7 @@ const copy = {
   orderCertificateFailed:
     "画像を作成できませんでした。もう一度お試しください。",
   orderCertificateRevoked:
-    "全額返金のため取り消されました。この証明は保存できません。",
+    "このギフトの代金が返還されたため取り消されました。この証明は保存できません。",
   orderCertificateImageAlt: "{artist}さんのデジタル応援証明",
 
   checkoutTitle: "お会計",

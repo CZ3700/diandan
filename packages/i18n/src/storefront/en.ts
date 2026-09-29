@@ -91,7 +91,7 @@ const copy = {
     "Your image is ready. If the download did not start, press and hold or right-click the image below to save it.",
   orderCertificateFailed: "The image could not be created. Please try again.",
   orderCertificateRevoked:
-    "Withdrawn after a full refund. This certificate can no longer be saved.",
+    "Withdrawn because the payment for this gift was returned. This certificate can no longer be saved.",
   orderCertificateImageAlt: "Digital support certificate for {artist}",
 
   checkoutTitle: "Checkout",
