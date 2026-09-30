@@ -73,3 +73,40 @@ test("TLS gateway forwards an actual owned WebSocket upgrade and bytes", async (
   });
   assert.equal(response, "owned-ping");
 });
+
+test("the TLS gateway binds only an owned loopback address", async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "fan-local-bind-"));
+  const resources = [];
+  t.after(async () => {
+    for (const close of resources.reverse()) await close();
+    await rm(root, { recursive: true, force: true });
+  });
+  const state = await loadLocalState(root, "test");
+  await prepareLocalTls(state);
+  const input = {
+    config: state.config,
+    port: 0,
+    origin: state.config.origins.admin,
+    target: "http://127.0.0.1:9",
+    own: (_name, close) => resources.push(close),
+    name: "bind fixture",
+  };
+  const server = await startLocalProxy({ ...input, address: "127.0.0.2" });
+  assert.equal(server.address().address, "127.0.0.2");
+  assert.equal((await startLocalProxy(input)).address().address, "127.0.0.1");
+  for (const address of [
+    "0.0.0.0",
+    "10.0.0.5",
+    "172.26.5.34",
+    "::",
+    "::1",
+    "localhost",
+    "127.0.0.256",
+  ])
+    await assert.rejects(
+      startLocalProxy({ ...input, address }),
+      /loopback address/u,
+      address,
+    );
+  assert.equal(resources.length, 2);
+});

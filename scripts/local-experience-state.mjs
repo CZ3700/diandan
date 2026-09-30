@@ -293,6 +293,34 @@ export async function setLocalAdminSignIn(workspaceRoot, instance, mode) {
   await writePrivateJson(path.join(stateDirectory, "config.json"), next);
   return next;
 }
+/**
+ * Switches an existing instance between compiled applications (PREBUILT) and development servers.
+ * DEVELOPMENT removes the field, so code from before the switch can read the configuration again.
+ * Takes effect at the next start.
+ */
+export async function setLocalWebMode(workspaceRoot, instance, mode) {
+  if (!["PREBUILT", "DEVELOPMENT"].includes(mode))
+    throw new Error("Web mode must be PREBUILT or DEVELOPMENT");
+  await access(
+    path.join(
+      await localStateDirectory(workspaceRoot, instance),
+      "config.json",
+    ),
+  ).catch(() => {
+    throw new Error("Unknown local instance; start it first");
+  });
+  const { stateDirectory, config } = await loadLocalState(
+    workspaceRoot,
+    instance,
+  );
+  const rest = { ...config };
+  delete rest.webMode;
+  const next = localExperienceConfigSchema.parse(
+    mode === "PREBUILT" ? { ...rest, webMode: mode } : rest,
+  );
+  await writePrivateJson(path.join(stateDirectory, "config.json"), next);
+  return next;
+}
 export async function resetLocalState(workspaceRoot, instance, confirmation) {
   const state = await loadLocalState(workspaceRoot, instance);
   if (confirmation !== state.config.instanceId)

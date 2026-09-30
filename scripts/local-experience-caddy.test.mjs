@@ -156,3 +156,20 @@ test("built-in accounts drop Basic Auth from the admin only", () => {
   assert.match(site(text, "mail.stg.example.com"), /basic_auth \{/u);
   assert.match(site(text, "oidc.stg.example.com"), /basic_auth @picker \{/u);
 });
+
+test("the compiled web mode leaves the edge byte for byte unchanged", () => {
+  const input = {
+    config: { ...config, adminSignIn: "LOCAL_ACCOUNT" },
+    authUser: "tester",
+    authHash: hash,
+    caPath: "/etc/caddy/fan-support-local-ca.crt",
+    bindAddresses: ["172.26.5.34"],
+  };
+  assert.equal(
+    renderLocalExperienceCaddyfile({
+      ...input,
+      config: { ...input.config, webMode: "PREBUILT" },
+    }),
+    renderLocalExperienceCaddyfile(input),
+  );
+});

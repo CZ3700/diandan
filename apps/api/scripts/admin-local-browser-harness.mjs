@@ -57,10 +57,12 @@ export async function freshCode(key, lastStep) {
  * to `output/checks/l3-10/<name>-<time>/`. Registered secrets never reach the report or logs.
  */
 export async function runLocalAccountBrowserAcceptance(name, scenario) {
+  // --compiled: the already built admin with next start in the test tier (stg PREBUILT).
+  const compiled = process.argv.includes("--compiled");
   const output = path.join(
     workspaceRoot,
     "output/checks/l3-10",
-    `${name}-${new Date().toISOString().replaceAll(":", "-")}`,
+    `${name}${compiled ? "-compiled" : ""}-${new Date().toISOString().replaceAll(":", "-")}`,
   );
   await mkdir(output, { recursive: true });
   const checks = [];
@@ -139,6 +141,7 @@ export async function runLocalAccountBrowserAcceptance(name, scenario) {
           accessKey,
           logs: nextLogs,
           mode: "LOCAL_ACCOUNT",
+          compiled,
         });
         own(() => next.stop());
         async function api(route, body, headers = {}) {

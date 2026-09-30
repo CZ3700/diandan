@@ -159,6 +159,14 @@ try {
     let active = await status();
     if (!active) {
       await clearDeadLock();
+      if (config.webMode === "PREBUILT") {
+        const { assertPrebuiltWebCurrent, workspaceRevision } =
+          await import("../apps/api/scripts/local-experience-web-build.mjs");
+        await assertPrebuiltWebCurrent(
+          workspaceRoot,
+          await workspaceRevision(workspaceRoot),
+        );
+      }
       await prepareLocalTls(state);
       const log = await open(
         path.join(stateDirectory, "supervisor.log"),

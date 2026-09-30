@@ -206,3 +206,50 @@ test("built-in accounts keep TLS, canonical origins and the internal secret", ()
       resolveAdminRuntimeConfig({ environment: { ...account, ...patch } }),
     ).toThrow();
 });
+
+// stg production builds (docs/plan/2026-09-30-stg-production-build.md §3): the compiled remote
+// TEST instance runs built-in accounts in the test tier, behind its own loopback API.
+const compiledRemoteTest = {
+  NODE_ENV: "test",
+  FAN_SUPPORT_DEPLOYMENT_ENV: "test",
+  FAN_SUPPORT_SITE_ORIGIN: "https://admin.stg.example.invalid",
+  FAN_SUPPORT_INTERNAL_API_ORIGIN: "http://127.0.0.1:3200",
+  FAN_SUPPORT_ADMIN_MODE: "LOCAL_ACCOUNT",
+  FAN_SUPPORT_ADMIN_ACCESS_KEY: "c".repeat(64),
+};
+
+test("built-in accounts run on the compiled remote TEST instance in the test tier", () => {
+  expect(
+    resolveAdminRuntimeConfig({ environment: compiledRemoteTest }),
+  ).toEqual({
+    schemaVersion: 1,
+    mode: "LOCAL_ACCOUNT",
+    siteOrigin: compiledRemoteTest.FAN_SUPPORT_SITE_ORIGIN,
+    internalApiOrigin: compiledRemoteTest.FAN_SUPPORT_INTERNAL_API_ORIGIN,
+    adminAccessKey: "c".repeat(64),
+  });
+});
+
+test("the test tier opens only built-in accounts with HTTPS, a loopback API and the secret", () => {
+  for (const patch of [
+    {
+      FAN_SUPPORT_ADMIN_MODE: "LOCAL_OIDC",
+      FAN_SUPPORT_ADMIN_OIDC_ISSUER: "https://identity.example.invalid",
+    },
+    { FAN_SUPPORT_ADMIN_MODE: "TEST" },
+    { FAN_SUPPORT_ADMIN_MODE: "OIDC" },
+    { FAN_SUPPORT_SITE_ORIGIN: "http://admin.stg.example.invalid" },
+    { FAN_SUPPORT_SITE_ORIGIN: "http://localhost:3100" },
+    { FAN_SUPPORT_INTERNAL_API_ORIGIN: "https://api.example.com" },
+    { FAN_SUPPORT_INTERNAL_API_ORIGIN: "http://10.0.0.5:3200" },
+    { FAN_SUPPORT_ADMIN_ACCESS_KEY: undefined },
+    { FAN_SUPPORT_ADMIN_ACCESS_KEY: "not-an-access-key" },
+    { NODE_ENV: "production" },
+    { NODE_ENV: "development" },
+  ])
+    expect(() =>
+      resolveAdminRuntimeConfig({
+        environment: { ...compiledRemoteTest, ...patch },
+      }),
+    ).toThrow();
+});

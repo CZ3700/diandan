@@ -799,7 +799,8 @@ export type AdminRuntimeConfig = Readonly<
 /**
  * Formal identity is explicit; TEST and LOCAL_OIDC never become production fallbacks.
  * LOCAL_ACCOUNT checks like OIDC on staging/production and like LOCAL_OIDC on the
- * development-mode remote TEST instance.
+ * development-mode remote TEST instance; the compiled remote TEST instance runs it in the
+ * test tier with a public HTTPS site and a loopback HTTP API, nothing else.
  */
 export function resolveAdminRuntimeConfig(
   sources: RuntimeConfigSources,
@@ -824,11 +825,23 @@ export function resolveAdminRuntimeConfig(
   const runtime = resolveServerRuntimeConfig(sources);
   const internal = resolveInternalApiRuntimeConfig(sources);
   const mode = layered.FAN_SUPPORT_ADMIN_MODE;
+  // The compiled remote TEST instance: built-in accounts in the test tier behind its loopback API.
+  const compiledTest =
+    mode === "LOCAL_ACCOUNT" && runtime.deploymentEnvironment === "test";
   const formal =
     mode === "OIDC" ||
     (mode === "LOCAL_ACCOUNT" &&
-      runtime.deploymentEnvironment !== "development");
-  if (formal) {
+      runtime.deploymentEnvironment !== "development" &&
+      !compiledTest);
+  if (compiledTest) {
+    if (
+      runtime.nodeEnvironment !== "test" ||
+      !isPublicSiteOrigin(runtime.siteOrigin) ||
+      new URL(runtime.siteOrigin).protocol !== "https:" ||
+      !isLoopbackHttpOrigin(internal.origin)
+    )
+      throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
+  } else if (formal) {
     if (
       !["staging", "production"].includes(runtime.deploymentEnvironment) ||
       runtime.nodeEnvironment !== "production" ||

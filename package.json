@@ -68,6 +68,8 @@
     "local:reset": "node ./scripts/local-experience.mjs reset",
     "local:caddy": "node ./scripts/local-experience-caddy.mjs",
     "local:admin-sign-in": "node ./scripts/local-experience-admin-sign-in.mjs",
+    "local:web-mode": "node ./scripts/local-experience-web-mode.mjs",
+    "local:build-web": "node ./scripts/local-experience-build-web.mjs",
     "local:prepare": "node ./scripts/local-experience.mjs prepare",
     "check:infrastructure": "node ./scripts/check-infrastructure.mjs",
     "verify:local-experience": "node ./scripts/verify-local-experience.mjs",

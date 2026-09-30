@@ -100,6 +100,8 @@ export const localExperienceConfigSchema = z
     paymentProvider: z.enum(["fake", "stripe-test"]).optional(),
     // ADR-021: how operators sign in to the admin. Absent means the local identity provider.
     adminSignIn: z.enum(["LOCAL_OIDC", "LOCAL_ACCOUNT"]).optional(),
+    // Compiled admin and storefront (next start, test tier); absent means development servers.
+    webMode: z.literal("PREBUILT").optional(),
     instance: z.string().regex(/^[a-z][a-z0-9-]{0,31}$/u),
     instanceId: z.uuid(),
     workspaceRoot: file,
@@ -195,6 +197,12 @@ export const localExperienceConfigSchema = z
         message: "Invalid local payment profile",
       });
     }
+    if (v.webMode === "PREBUILT" && v.adminSignIn !== "LOCAL_ACCOUNT")
+      ctx.addIssue({
+        code: "custom",
+        path: ["webMode"],
+        message: "Compiled web requires built-in accounts",
+      });
     if (new Set(Object.values(v.ports)).size !== Object.keys(v.ports).length)
       ctx.addIssue({ code: "custom", message: "Duplicate configured port" });
     for (const [key, value] of Object.entries(v.origins))

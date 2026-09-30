@@ -82,8 +82,14 @@ export async function prepareLocalTls({ config, stateDirectory }) {
   await rm(csr);
   await rm(extensions);
 }
+/** An IPv4 loopback address such as 127.0.0.2; public instances give each web app its own. */
+function isLoopbackAddress(value) {
+  const parts = /^127\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/u.exec(value);
+  return parts !== null && parts.slice(1).every((part) => Number(part) <= 255);
+}
 export async function startLocalProxy({
   config,
+  address = "127.0.0.1",
   port,
   origin,
   additionalOrigins = [],
@@ -91,6 +97,8 @@ export async function startLocalProxy({
   own,
   name,
 }) {
+  if (!isLoopbackAddress(address))
+    throw new Error("Proxy must listen on a loopback address");
   const destination = new URL(target);
   // Object storage also answers its public presign host when the instance is exposed.
   const publicHosts = new Set(
@@ -191,7 +199,7 @@ export async function startLocalProxy({
   });
   await new Promise((resolve, reject) => {
     server.once("error", reject);
-    server.listen(port, "127.0.0.1", resolve);
+    server.listen(port, address, resolve);
   });
   own(
     name,

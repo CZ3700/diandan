@@ -15,6 +15,7 @@ import {
   loadLocalState,
   resetLocalState,
   setLocalAdminSignIn,
+  setLocalWebMode,
 } from "./local-experience-state.mjs";
 async function fixture(t) {
   const root = await mkdtemp(path.join(os.tmpdir(), "fan-local-state-"));
@@ -197,4 +198,42 @@ test("admin sign-in switches only an existing instance and keeps everything else
     (await setLocalAdminSignIn(root, "test", "LOCAL_OIDC")).adminSignIn,
     "LOCAL_OIDC",
   );
+});
+
+test("compiled web mode needs built-in accounts, switches back and keeps everything else", async (t) => {
+  const root = await fixture(t);
+  await assert.rejects(
+    setLocalWebMode(root, "missing", "PREBUILT"),
+    /Unknown local instance/u,
+  );
+  const first = await loadLocalState(root, "test");
+  assert.equal(first.config.webMode, undefined);
+  await assert.rejects(
+    setLocalWebMode(root, "test", "production"),
+    /PREBUILT or DEVELOPMENT/u,
+  );
+  // The compiled admin runs in the test tier only with built-in accounts.
+  await assert.rejects(setLocalWebMode(root, "test", "PREBUILT"));
+  assert.equal((await loadLocalState(root, "test")).config.webMode, undefined);
+  await setLocalAdminSignIn(root, "test", "LOCAL_ACCOUNT");
+  const compiled = await setLocalWebMode(root, "test", "PREBUILT");
+  assert.equal(compiled.webMode, "PREBUILT");
+  assert.deepEqual((await loadLocalState(root, "test")).config, {
+    ...first.config,
+    adminSignIn: "LOCAL_ACCOUNT",
+    webMode: "PREBUILT",
+  });
+  await assert.rejects(setLocalAdminSignIn(root, "test", "LOCAL_OIDC"));
+  // DEVELOPMENT removes the field, so older code can read the configuration again.
+  const development = await setLocalWebMode(root, "test", "DEVELOPMENT");
+  assert.equal("webMode" in development, false);
+  const text = await readFile(
+    path.join(first.stateDirectory, "config.json"),
+    "utf8",
+  );
+  assert.doesNotMatch(text, /webMode/u);
+  assert.deepEqual((await loadLocalState(root, "test")).config, {
+    ...first.config,
+    adminSignIn: "LOCAL_ACCOUNT",
+  });
 });

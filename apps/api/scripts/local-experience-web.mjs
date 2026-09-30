@@ -18,6 +18,8 @@ import {
   regressionWebMode,
   startRegressionStorefront,
 } from "./regression-journey-web.mjs";
+import { startPrebuiltApp } from "./local-experience-web-prebuilt.mjs";
+import { createWebEventLog } from "./local-experience-web-events.mjs";
 
 export async function startLocalWeb(context) {
   const { config, workspaceRoot, own, progress } = context;
@@ -28,6 +30,12 @@ export async function startLocalWeb(context) {
     caCertificatePath: config.tls.caCertificatePath,
     targets: localServiceTargets(config),
   });
+  const eventLog =
+    config.webMode === "PREBUILT"
+      ? createWebEventLog({
+          file: path.join(context.stateDirectory, "web-events.log"),
+        })
+      : undefined;
   for (const app of ["storefront", "admin"]) {
     // Next builds request URLs from --hostname:--port, so a public instance serves each app on
     // 443 of its own loopback address (the DNS preload maps the hostname there).
@@ -59,6 +67,10 @@ export async function startLocalWeb(context) {
       NEXT_TELEMETRY_DISABLED: "1",
       NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --import=${new URL("./local-experience-dns.mjs", import.meta.url).href}`,
     });
+    if (eventLog) {
+      await startPrebuiltApp({ ...context, fetcher }, app, env, { eventLog });
+      continue;
+    }
     if (app === "storefront" && mode === "production") {
       await startRegressionStorefront({
         ...context,
