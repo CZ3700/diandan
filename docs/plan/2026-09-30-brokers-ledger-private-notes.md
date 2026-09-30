@@ -186,3 +186,54 @@
 - 经纪人自助注册，艺人本人登录；
 - 上传证件照片；
 - 前台商城的任何变化。
+
+## 9. 实现入口（2026-09-30 代码勘查，开工前按当时代码复核行号）
+
+**权限与角色**
+
+- 权限目录 `packages/contracts/src/admin-local-access.ts:16-31`（`adminPermissionKeySchema`），标准角色常量 `ADMIN_STAFF_ROLE_KEYS` 在 `:48-51`。
+- 服务器命令 `apps/api/scripts/admin-account.mjs`：`ensureStandardRoles` 在 `:78-102`（目前硬写两行），运营排除清单 `OPERATOR_EXCLUDED` 在 `:37-45`，`--role` 校验在 `:193-195`。
+- 员工页：
+  - `packages/persistence-postgres/src/admin-local-staff-repository.ts`：`findRoles` 白名单 `:79-96`，新建时授予全部七语言 `:158-234`，改角色 `:277-300`；
+  - 界面 `apps/admin/src/management-staff/`：`model.ts` 的 `roleLabel`、`copy.ts` 七语言、`staff-workspace.tsx` 的角色勾选 `:232-270`。
+- 固定两个角色的测试要一并改：
+  - `contracts/src/admin-local-access.test.ts`、`application/src/admin-local-access.test.ts`、`apps/api/src/admin-local-access-route.test.ts`；
+  - `staff-workspace.test.tsx`、`account-operations.test.ts`；
+  - `persistence-postgres/scripts/postgres-admin-local-access.mjs`；
+  - `apps/api/scripts/{admin-account-postgres,admin-staff-browser,admin-local-fixtures,production-admin-local-http,admin-local-sign-in-browser}.mjs`。
+- 迁移只登记自己引入的权限键（参照 `0035:2-3`），标准角色由服务器命令补齐（`0054` 的约定）。
+
+**日常管理中心按归属过滤（L3-11）**
+
+- 应用层授权 `packages/persistence-postgres/src/management-center-operation-data.ts:80-134`：`:121` 写死查 `management.direct`，另外还要求语言授权。
+- 数据库再校验：`0022_daily-management-publication.up.sql` 的 `assert_management_authority`（约 `:107-119`）和 `guard_management_operation`（约 `:120-149`），两处都写死 `'management.direct'`。0057 用替换函数放开“持 `management.assigned` 且目标是新建或名下艺人”，down 逐字恢复原函数（`0056` 就是这么做的）。
+- 艺人列表 `management-center-operation-read.ts:161-190`（全局，未带操作者）；仓储在 `management-center-operation-repository.ts:86-88` 丢掉了 principal；保存时的目标检查在 `:137-150`。
+- worker 新建艺人：`daily-publication-repository.ts:206-250`（句柄 `idol-<uuidhex>`），经纪人新建时在同一事务写归属。
+- 删除艺人走 `admin-catalog`（`content.edit` 加全部七语言），经纪人没有这两个条件，天然拒绝。
+- 侧栏：`apps/admin/src/management-center/access.ts:11-35`、`hub.tsx:136-177`、`shell.tsx:81-196`。
+- 不要给 `idols` 表加列：`0019` 的守卫要求每次 UPDATE 都把 `version` 加 1，会和日常编辑的 `expectedVersion` 冲突。
+- 员工 DTO 给的是 `admin_local_accounts.id`，归属表存 `admin_identities.id`，经 `admin_local_accounts.admin_identity_id` 换算。
+
+**账目（L3-12）**
+
+- 按 `order_items.idol_id` 行级统计：一单可多艺人，币种按订单。
+- 付款时间取 `payment_attempts.succeeded_at`（成功那一笔）；逐行履约状态取 `fulfillments.status`，不要用订单级汇总状态。
+- 已成功退款：`refund_items` 关联 `refunds.status='SUCCEEDED'`；拒付看 `orders.dispute_status='LOST'`，整单算退回（与 `order-access-read.ts:98-106` 的凭证撤回规则一致）。
+- 未付款、已取消的订单，其行仍是 PENDING，所以“待处理”必须先要求已付款。
+- TEST 与 LIVE 分开：`payment_attempts.environment`。
+- 相关表目前都没有索引：`order_items.idol_id`、付款时间、`refund_items.order_item_id`。
+- 订单列表的接口契约：`packages/contracts/src/admin-orders.ts:79-98`。CONTEXT 的权限数组上限 `.max(8)` 在 `:305-309`，再加订单类权限键要放宽，所以账目用独立的 `ledger.*` 键。
+- 经纪人读留言可照搬 `READ_MESSAGE`：
+  - 语言授权与审计 `ORDER_PRIVATE_READ`；
+  - 访问记录 `admin_order_private_accesses`：`0031:39-53,140-178`、`persistence-postgres/src/admin-orders-private.ts`、`application/src/admin-orders.ts:84-124`。
+- 金额格式化复用 `packages/ui/src/format-minor-amount.ts`。
+- 浏览器端导出的先例：翻译包导出 `apps/admin/src/workspace/editor-state.ts:526-550`，审计动作 `TRANSLATION_EXPORT`。BFF 只转 JSON（`admin-api-client.ts:104-111`）。
+
+**私密备注（L3-13）**
+
+- 照搬订单备注：
+  - `admin_order_notes` 与查看审计：`0031:31-53`；
+  - 加解密：`application/src/admin-orders-private.ts:82-142`；
+  - 界面：`apps/admin/src/management-orders/private-notes.tsx`。
+- 新的信封加密用途，按 `packages/contracts/src/admin-order-note-key.ts` 的独立扩展写法，不动冻结的 v1 枚举。
+- 两步验证门槛：内置会话的 `authenticated_with_mfa` 恒为 true（ADR-021 增补第 1 条），不能用它判断。要读内置登录记录里本次实际使用的认证因素（验证码或恢复码），并要求账号已绑定 TOTP。
