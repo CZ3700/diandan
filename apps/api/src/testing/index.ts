@@ -5,6 +5,7 @@ export * from "./admin-content-composition.js";
 export * from "./admin-exceptions-composition.js";
 export * from "./admin-finance-composition.js";
 export * from "./admin-orders-composition.js";
+export * from "./admin-ledger-composition.js";
 export * from "./admin-payment-configuration-composition.js";
 export * from "./admin-session-composition.js";
 export * from "./admin-workspace-composition.js";

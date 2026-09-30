@@ -198,6 +198,7 @@ export type CreateApiApplicationOptions = Readonly<{
   publishedGiftCommerceRoute?: PublishedGiftCommerceRouteDependencies;
   adminOrdersRoute?: AdminOrdersRouteDependencies;
   adminLedgerRoute?: AdminLedgerRouteDependencies;
+  adminLedgerRuntime?: ApiLifecycleResource;
   adminOrdersRuntime?: ApiLifecycleResource;
   adminFinanceRoute?: AdminFinanceRouteDependencies;
   adminFinanceRuntime?: ApiLifecycleResource;
@@ -248,6 +249,7 @@ function registerApiLifecycle(
     | "API payment configuration projection"
     | "API admin access"
     | "API admin orders"
+    | "API admin ledger"
     | "API admin finance"
     | "API admin exceptions"
     | "API payment configuration"
@@ -461,6 +463,7 @@ export async function createApiApplication(
     "API admin workspace",
   );
   registerApiLifecycle(adapter, options.adminOrdersRuntime, "API admin orders");
+  registerApiLifecycle(adapter, options.adminLedgerRuntime, "API admin ledger");
   registerApiLifecycle(
     adapter,
     options.adminFinanceRuntime,

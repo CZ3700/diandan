@@ -14,6 +14,7 @@ import {
   createLocalOidcAdminAccessComposition,
   createLocalAccountAdminAccessComposition,
   createLocalAdminOrdersComposition,
+  createLocalAdminLedgerComposition,
   createLocalAdminFinanceComposition,
   createLocalAdminPaymentConfigurationComposition,
   createLocalAdminExceptionsComposition,
@@ -245,6 +246,7 @@ export async function startLocalExperienceRuntime({
     }),
   );
   add(createLocalAdminExceptionsComposition(localAdmin));
+  add(createLocalAdminLedgerComposition({ ...localAdmin, keys: kms.adapter }));
   const reliable = createApiReliableEventsComposition(environment, {
     logger,
     keyManagement: kms.adapter,
