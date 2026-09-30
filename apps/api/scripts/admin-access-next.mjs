@@ -116,6 +116,8 @@ export async function startAdminAccessNext({
         {
           hostname: "127.0.0.1",
           servername: new URL(adminOrigin).hostname,
+          // The compiled path's proxy answers only its public host.
+          ...(compiled ? { headers: { host: new URL(adminOrigin).host } } : {}),
           ca: tls.cert,
           timeout: 2000,
         },
