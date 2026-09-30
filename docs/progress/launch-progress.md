@@ -1,5 +1,16 @@
 # 当前上线进度
 
+## C-20260930 礼物与海报内容研究及原创导入
+
+- 状态：DONE（仅本项公开 TEST 内容与排序）；执行者 Codex root / research_gifts_a / research_gifts_b / catalog_integration_audit；2026-09-30。
+- 研究：五个指定参考站共 1823 条商品记录，保存 456 份参考素材；全表保留选用、题材合并、延后和排除依据，原站素材仅作研究。
+- 发布：通过现有管理中心发布 68 款原创礼物（26 PHYSICAL / 42 VIRTUAL），均为英文源内容；新增首页海报 1 张并保留恢复历史，另存收藏海报备选。
+- 内容：每款严格 30 英文词、两句、150–160 字符，仅描写产品；多彩摄影与幻想风格兼容深浅主题。价格按选定参考 USD 原价的 95% 四舍五入至分，GLOBAL/USD；用户确认实物由我方采购转交。
+- 排序：用户追加授权后，经展示顺序 UI 保存全部 74 款：44 虚拟在前、30 实物在后，组内相对次序不变；现有 6 款未删除，七页前台顺序逐项匹配。
+- 验证：68 PNG 解码/尺寸/价格/唯一 ID 与最终文案通过；68 前台名称、全文、价格、媒体链接和英文 alt 全匹配；样本详情七语双端 390×844/1440×900 共 14 组无横溢、图文完整；浅粉手机/浅蓝桌面及 Motion Off 预览、键盘与空筛选恢复通过，临时主题选择已放弃。
+- 范围：无源码修改，未执行系统级 reduced-motion 仿真或完整结账回归；未改生产、未创建订单/资金动作。内容操作复用现有授权/审计管线，未覆盖并行工程任务。
+- 证据与复验：`output/reference-gifts-2026-09-30/README.md`、`verification/FINAL.md`、`publication-log.json`、`validate-publication.py`；输出为忽略目录，当前提交只记录本结论。
+
 > 当前方案：[可配置装修与完整交易上线计划](../plan/2026-09-28-flexible-storefront-launch.md)；用户于 2026-09-28 确认，见 ADR-020。
 > 状态：`PENDING / READY / IN_PROGRESS / LOCAL_ACCEPTED / BLOCKED_EXTERNAL / DONE`；DONE 必须满足该项明确验收，不等于整站已上线。
 > 旧成果与未完证据保留在 [v2-progress.md](v2-progress.md)，不复算旧 49 项百分比。每项结论不超过十行，详细日志在 `output/`。
