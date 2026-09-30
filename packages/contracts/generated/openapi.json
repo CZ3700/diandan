@@ -664,6 +664,40 @@
               }
             ]
           },
+          "image": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "alt": {
+                    "maxLength": 300,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "url": {
+                    "format": "uri",
+                    "maxLength": 8192,
+                    "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                    "type": "string",
+                    "x-runtime-invariants": [
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                      "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                      "storage and CDN signing credentials are rejected"
+                    ]
+                  }
+                },
+                "required": [
+                  "url",
+                  "alt"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "label": {
             "anyOf": [
               {
@@ -1483,6 +1517,40 @@
                         }
                       ]
                     },
+                    "image": {
+                      "anyOf": [
+                        {
+                          "additionalProperties": false,
+                          "properties": {
+                            "alt": {
+                              "maxLength": 300,
+                              "minLength": 1,
+                              "type": "string"
+                            },
+                            "url": {
+                              "format": "uri",
+                              "maxLength": 8192,
+                              "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                              "type": "string",
+                              "x-runtime-invariants": [
+                                "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                "storage and CDN signing credentials are rejected"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "url",
+                            "alt"
+                          ],
+                          "type": "object"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
                     "label": {
                       "anyOf": [
                         {
@@ -1833,6 +1901,40 @@
                         "minLength": 1,
                         "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
                         "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "image": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "alt": {
+                            "maxLength": 300,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "url": {
+                            "format": "uri",
+                            "maxLength": 8192,
+                            "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                            "type": "string",
+                            "x-runtime-invariants": [
+                              "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                              "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                              "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                              "storage and CDN signing credentials are rejected"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "url",
+                          "alt"
+                        ],
+                        "type": "object"
                       },
                       {
                         "type": "null"

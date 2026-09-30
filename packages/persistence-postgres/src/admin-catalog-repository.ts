@@ -25,7 +25,7 @@ export function createAdminCatalogRepository(
     read(input) {
       const parsed = adminCatalogReadCommandSchema.safeParse(input);
       return parsed.success
-        ? run(() => readAdminCatalog(client, parsed.data))
+        ? run(() => readAdminCatalog(client, parsed.data, publicMediaBaseUrl))
         : Promise.resolve(catalogFailure("INVALID_COMMAND"));
     },
     write(input) {

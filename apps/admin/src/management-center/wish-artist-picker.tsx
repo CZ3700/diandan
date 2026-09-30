@@ -5,10 +5,34 @@ import type {
   SupportedLocale,
   WishGiftSummary,
 } from "@fan-support/contracts";
-import { Button, Field } from "@fan-support/ui";
+import { Button, Field, Icon } from "@fan-support/ui";
 import type { ManagementApi } from "./api";
 import type { ManagementCopy } from "./copy";
 import { wishStatusLabel } from "./form-fields";
+import { PhotoView } from "./photo-view";
+
+function artistPortrait(artist: AdminCatalogOwner, copy: ManagementCopy) {
+  return (
+    <span className="mc-wish-portrait">
+      {artist.image ? (
+        <PhotoView
+          src={artist.image.url}
+          alt={artist.image.alt}
+          unavailable={copy.imageUnavailable}
+          lazy
+        />
+      ) : (
+        <span
+          className="mc-photo-empty"
+          role="img"
+          aria-label={copy.imageUnavailable}
+        >
+          <Icon name="warning" decorative />
+        </span>
+      )}
+    </span>
+  );
+}
 
 /** A bounded artist search inside the daily gift form; it never nests another form. */
 export function WishArtistPicker({
@@ -58,9 +82,9 @@ export function WishArtistPicker({
       active = false;
     };
   }, [api, locale, page, query, wish, attempt]);
-  const name =
+  const selectedArtist =
     chosen?.target.kind === "IDOL" && chosen.target.idolId === value
-      ? (chosen.label ?? chosen.handle)
+      ? chosen
       : null;
   return (
     <fieldset
@@ -80,9 +104,10 @@ export function WishArtistPicker({
         </>
       ) : (
         <div data-management-wish-picker>
-          {name ? (
+          {selectedArtist ? (
             <div className="mc-wish-selected">
-              <strong>{name}</strong>
+              {artistPortrait(selectedArtist, copy)}
+              <strong>{selectedArtist.label?.trim() || copy.untitled}</strong>
               <Button
                 type="button"
                 variant="quiet"
@@ -162,14 +187,15 @@ export function WishArtistPicker({
                       setChosen(artist);
                     }}
                   >
-                    <span>
-                      {artist.label ?? artist.handle ?? copy.untitled}
+                    {artistPortrait(artist, copy)}
+                    <span className="mc-wish-choice-label">
+                      <strong>{artist.label?.trim() || copy.untitled}</strong>
+                      <small>
+                        {eligible
+                          ? copy.wishArtistChoose
+                          : copy.wishArtistUnavailable}
+                      </small>
                     </span>
-                    <small>
-                      {eligible
-                        ? copy.wishArtistChoose
-                        : copy.wishArtistUnavailable}
-                    </small>
                   </button>
                 );
               })}

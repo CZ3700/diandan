@@ -618,7 +618,10 @@
 }
 .mc-wish-choice {
   display: grid;
-  gap: var(--space-1);
+  grid-template-columns: var(--space-16) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+  min-inline-size: 0;
   min-block-size: var(--space-12);
   padding: var(--space-3);
   text-align: start;
@@ -629,6 +632,34 @@
   border-radius: var(--radius-control);
   cursor: pointer;
   overflow-wrap: anywhere;
+}
+.mc-wish-choice-label {
+  display: grid;
+  gap: var(--space-1);
+  min-inline-size: 0;
+}
+.mc-wish-portrait {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 var(--space-16);
+  inline-size: var(--space-16);
+  block-size: var(--space-16);
+  overflow: hidden;
+  background: var(--color-surface-raised);
+  border-radius: var(--radius-control);
+}
+.mc-wish-portrait img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+.mc-wish-portrait .mc-photo-empty {
+  padding: var(--space-2);
+}
+.mc-wish-portrait .mc-photo-empty > span {
+  display: none;
 }
 .mc-wish-choice small {
   color: var(--color-text-muted);
@@ -647,4 +678,8 @@
 .mc-wish-recipient,
 .mc-wish-selected strong {
   overflow-wrap: anywhere;
+}
+.mc-wish-selected strong {
+  flex: 1;
+  min-inline-size: 0;
 }

@@ -1,5 +1,22 @@
 # 当前上线进度
 
+## C-20261001 心愿艺人头像选择修复
+
+- LOCAL_ACCEPTED（本项源码与本地验证；公开 TEST 待部署）；Codex root / wish_picker_data / wish_picker_ui / hero_swatch_review；2026-10-01。基线同步至 316f7d75；修复添加心愿时艺人列表和已选项展示内部 handle、没有头像的问题。
+- 姓名依次取当前语言、日常原稿、默认语言；既有受权目录增加可选公开头像，沿用已发布图片及来源权利校验，不输出原图或内部存储字段。头像/姓名整行可选，保留搜索、分页、已选状态、缺图回退与既有心愿不可改派；无新依赖或迁移。
+- 先红后绿：合同 8、数据层 7、后台全部 601 测试通过；实际 PG 投影 69、完整目录权限/迁移 317、目录时序 10 断言通过。新投影回归接入目标及全量 PG 门禁，schema/OpenAPI 生成物已同步。
+- 真实 Chromium 组件夹具：七语言 × 390×844/1440×900，共 14 组/294 项通过；头像/姓名点击、键盘、横竖图裁切、缺图/坏图、搜索/翻页/错误重试保持已选、实际 reduced-motion 已验，无横溢或页面异常。假 catalog/合成图片仅用于 UI，未冒充公开站点整链。
+- 隔离 `pnpm check:dev` 全部通过：workspace/domain/format/lint、typecheck 69/test 69/build 38 任务；独立数据/UI审查、S.U.P.E.R 十项复核通过本项范围。源码与隔离验证副本逐文件一致，未触碰已有体验服务、业务数据或部署。
+- 完整 `pnpm check` 仍在既有字体生成物校验失败（15 项，日/中文 corpus 与 manifest 不一致）；直接设计检查仍有 `storefront/wishes.css` 11 项，`check:contracts` 仍为既有 5 处 locale 声明问题且无生成物漂移。本项未更改这些基线文件，不能宣称整仓正式门禁通过。
+- 证据 `output/wish-picker-fix-20261001/FINAL.md`、`output/playwright/wish-picker-fix-20261001/REVIEW.md`；服务器需同时更新后台/API，同步后还须用已有艺人资料复验新建心愿流程。
+
+## C-20261001 后台海报色块设计令牌修复
+
+- LOCAL_ACCEPTED（本项源码与本地验证；公开 TEST 待部署）；Codex root / hero_swatch_review；2026-10-01。修复 3415a527 中 `management-decoration/decoration.css` 的 STARLIGHT/PETALS 两个渐变声明，原始像素尺寸改为既有 `--space-1` 比例，不改全局令牌或门禁。
+- 设计检查中本文件的两项失败已消除；实际 ThemeEditor 七语双端 14 组、键盘及 reduced-motion 通过；28 对色块及 2 对完整选择器前后 PNG 逐字节相同，默认字号下计算尺寸/颜色不变。
+- 合并隔离 `check:dev` 通过；完整门禁其余基线阻断见上项。CI quality 实际包含 `pnpm check`，此前前置检查短路会使其未执行；`check:dev` 确实不含设计基础检查，本轮未弱化检查规则。
+- 证据 `output/playwright/hero-swatch-token-fix-20261001/REVIEW.md`、`output/checks/hero-swatch-tokens-20261001/`；组件夹具不是公开部署验收，未发布主题或改动用户当前配置。
+
 ## C-20261001 心愿礼物绑定与心愿展馆
 
 - LOCAL_ACCEPTED（源码与本地验收；公开TEST待部署）；Codex root / catalog_integration_audit / research_gifts_a / research_gifts_b；2026-10-01。用户确认每个心愿仅支持一次，可信付款后显示“Wish supported”，可不公开；方案见 SPEC §0.8 / ADR-023。

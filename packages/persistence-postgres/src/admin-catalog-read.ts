@@ -36,6 +36,7 @@ async function historyPage(
 export async function readAdminCatalog(
   client: TransactionClient,
   command: AdminCatalogReadCommand,
+  publicMediaBaseUrl?: string,
 ): Promise<AdminCatalogResponse> {
   await client.query("SET LOCAL TIME ZONE 'UTC'");
   if (command.action === "READ_OWNER") {
@@ -43,6 +44,7 @@ export async function readAdminCatalog(
       client,
       command.target,
       command.locale,
+      publicMediaBaseUrl,
     );
     return owner
       ? { schemaVersion: 1, outcome: "SUCCESS", kind: "OWNER", owner }
@@ -70,7 +72,7 @@ export async function readAdminCatalog(
       outcome: "SUCCESS",
       kind: "OWNERS",
       items: ((row?.["items"] as DraftRow[]) ?? []).map((item) =>
-        mapCatalogOwner(command.kind, item, command.locale),
+        mapCatalogOwner(command.kind, item, command.locale, publicMediaBaseUrl),
       ),
       totalItems: Number(row?.["total"] ?? 0),
       page: command.page,

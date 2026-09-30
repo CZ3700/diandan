@@ -120,9 +120,21 @@
 }
 [data-hero-effect-swatch="STARLIGHT"] {
   background-image:
-    radial-gradient(circle at 20% 30%, currentColor 0 1px, transparent 2px),
-    radial-gradient(circle at 50% 65%, currentColor 0 2px, transparent 3px),
-    radial-gradient(circle at 80% 30%, currentColor 0 1px, transparent 2px);
+    radial-gradient(
+      circle at 20% 30%,
+      currentColor 0 calc(var(--space-1) * 0.25),
+      transparent calc(var(--space-1) * 0.5)
+    ),
+    radial-gradient(
+      circle at 50% 65%,
+      currentColor 0 calc(var(--space-1) * 0.5),
+      transparent calc(var(--space-1) * 0.75)
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      currentColor 0 calc(var(--space-1) * 0.25),
+      transparent calc(var(--space-1) * 0.5)
+    );
 }
 [data-hero-effect-swatch="AURORA"] {
   background-image: linear-gradient(
@@ -151,9 +163,21 @@
 }
 [data-hero-effect-swatch="PETALS"] {
   background-image:
-    radial-gradient(ellipse 4px 2px at 25% 35%, currentColor 80%, transparent),
-    radial-gradient(ellipse 3px 5px at 55% 65%, currentColor 80%, transparent),
-    radial-gradient(ellipse 5px 3px at 80% 25%, currentColor 80%, transparent);
+    radial-gradient(
+      ellipse var(--space-1) calc(var(--space-1) * 0.5) at 25% 35%,
+      currentColor 80%,
+      transparent
+    ),
+    radial-gradient(
+      ellipse calc(var(--space-1) * 0.75) calc(var(--space-1) * 1.25) at 55% 65%,
+      currentColor 80%,
+      transparent
+    ),
+    radial-gradient(
+      ellipse calc(var(--space-1) * 1.25) calc(var(--space-1) * 0.75) at 80% 25%,
+      currentColor 80%,
+      transparent
+    );
 }
 .decoration-theme-palettes legend {
   font-weight: 600;
