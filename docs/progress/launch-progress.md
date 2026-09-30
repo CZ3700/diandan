@@ -1,5 +1,12 @@
 # 当前上线进度
 
+## C-20260930 虚拟礼物按价格降序
+
+- DONE（仅本项公开 TEST 排序）；Codex root / research_gifts_b；2026-09-30；通过后台展示顺序 UI 保存全部 74 款：44 款虚拟礼物按当前 USD 售价降序，30 款实体礼物仍在其后；同价和实体组内原相对顺序保留。
+- 验证：44 款虚拟价格现场读取，其中 42 款与独立归档核对一致；后台保存成功后 74 个 ID 全量回读匹配，商城 Recommended 默认排序七页 74 项逐项一致，价格降序和虚拟/实体交界通过。
+- 范围：未改价格、商品内容或源码；S.U.P.E.R 1–9 无新增代码适用项，第 10 项以本次 UI 操作与顺序核验覆盖，未重跑全仓工程门禁。仅提交进度记录并执行文档格式与 diff 检查。
+- 证据：`output/virtual-price-sort-2026-09-30/before-and-plan.json`、`saved-admin-order.json`、`verification.json`、`admin-saved-order.png`；保存了原顺序用于复原。
+
 ## C-20260930 群像海报与动效调整
 
 - 状态：LOCAL_ACCEPTED（海报内容已在公开 TEST；前台代码待远程部署）；Codex root / catalog_integration_audit / research_gifts_a / research_gifts_b；2026-09-30。
