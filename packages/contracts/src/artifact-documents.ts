@@ -8,6 +8,7 @@ import { adminPaymentConfigurationPaths } from "./admin-payment-configuration-op
 import { adminExceptionsPaths } from "./admin-exceptions-openapi.js";
 import { adminFinancePaths } from "./admin-finance-openapi.js";
 import { adminOrdersPaths } from "./admin-orders-openapi.js";
+import { adminLedgerPaths } from "./admin-ledger-openapi.js";
 import { orderAccessPaths } from "./order-access-openapi.js";
 import { checkoutPreflightPaths } from "./checkout-preflight-openapi.js";
 import { paymentRuntimePaths } from "./payment-runtime-openapi.js";
@@ -222,6 +223,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...checkoutPreflightPaths(),
         ...paymentRuntimePaths(),
         ...adminOrdersPaths(),
+        ...adminLedgerPaths(),
         ...adminFinancePaths(),
         ...adminPaymentConfigurationPaths(),
         ...adminExceptionsPaths(),

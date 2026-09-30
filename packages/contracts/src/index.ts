@@ -103,6 +103,8 @@ export * from "./admin-local-access.js";
 export * from "./admin-local-access-persistence.js";
 export * from "./admin-orders.js";
 export * from "./admin-orders-persistence.js";
+export * from "./admin-ledger.js";
+export * from "./admin-ledger-persistence.js";
 export * from "./admin-order-note-key.js";
 export * from "./payment-health.js";
 

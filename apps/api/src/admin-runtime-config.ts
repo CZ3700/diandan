@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
   adminAccessSettingsSchema,
+  adminLedgerTimeZoneSchema,
   paymentRuntimeOriginSchema,
   type AdminAccessSettings,
 } from "@fan-support/contracts";
@@ -16,6 +17,8 @@ export type AdminApiRuntimeConfig = Readonly<{
   provider?: OidcIdentityProviderOptions;
   /** ADR-021 built-in accounts. */
   localAccounts?: Readonly<{ totpIssuer: string }>;
+  /** ADR-022 / L3-12: the IANA zone whose calendar days the artist ledger reports. */
+  ledgerTimeZone: string;
 }>;
 
 // Keys owned only by the API decide presence. The Admin app shares the access key and issuer
@@ -30,6 +33,15 @@ const API_ONLY_KEYS = [
   "FAN_SUPPORT_ADMIN_TOTP_ISSUER",
 ] as const;
 const DEFAULT_TOTP_ISSUER = "Studio Admin";
+// The user chose Beijing time for reconciliation (2026-09-30); a deployment may name another zone.
+const DEFAULT_LEDGER_TIME_ZONE = "Asia/Shanghai";
+function ledgerTimeZone(value: string | undefined): string {
+  const zone = adminLedgerTimeZoneSchema.parse(
+    value ?? DEFAULT_LEDGER_TIME_ZONE,
+  );
+  new Intl.DateTimeFormat("en", { timeZone: zone });
+  return zone;
+}
 // Authenticator apps split the otpauth label on ":"; keep the label plain.
 const totpIssuerSchema = z.string().regex(/^[\p{L}\p{N} ._-]{1,64}$/u);
 const CALLBACK_PATH = "/api/admin/auth/callback";
@@ -80,7 +92,15 @@ export function resolveAdminApiRuntimeConfig(
     );
     if (new Set([accessKey, tokenPepper, subjectPepper]).size !== 3)
       throw new Error("Administration secrets must be independent");
-    const base = { allowedOrigin, accessKey, tokenPepper, subjectPepper };
+    const base = {
+      allowedOrigin,
+      accessKey,
+      tokenPepper,
+      subjectPepper,
+      ledgerTimeZone: ledgerTimeZone(
+        environment["FAN_SUPPORT_LEDGER_TIME_ZONE"],
+      ),
+    };
     const switchValue = environment["FAN_SUPPORT_ADMIN_LOCAL_ACCOUNTS"];
     const issuerValue = environment["FAN_SUPPORT_ADMIN_TOTP_ISSUER"];
     if (switchValue !== undefined && switchValue !== "ENABLED")

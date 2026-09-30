@@ -3,6 +3,10 @@ import {
   type AdminOrdersRouteDependencies,
 } from "./admin-orders-route.js";
 import {
+  registerAdminLedgerRoute,
+  type AdminLedgerRouteDependencies,
+} from "./admin-ledger-route.js";
+import {
   registerAdminFinanceRoute,
   type AdminFinanceRouteDependencies,
 } from "./admin-finance-route.js";
@@ -193,6 +197,7 @@ export type CreateApiApplicationOptions = Readonly<{
   giftCommerceRuntime?: ApiLifecycleResource;
   publishedGiftCommerceRoute?: PublishedGiftCommerceRouteDependencies;
   adminOrdersRoute?: AdminOrdersRouteDependencies;
+  adminLedgerRoute?: AdminLedgerRouteDependencies;
   adminOrdersRuntime?: ApiLifecycleResource;
   adminFinanceRoute?: AdminFinanceRouteDependencies;
   adminFinanceRuntime?: ApiLifecycleResource;
@@ -485,6 +490,8 @@ export async function createApiApplication(
     );
   if (options.adminOrdersRoute)
     registerAdminOrdersRoute(adapter.getInstance(), options.adminOrdersRoute);
+  if (options.adminLedgerRoute)
+    registerAdminLedgerRoute(adapter.getInstance(), options.adminLedgerRoute);
   if (options.adminAccessRoute)
     registerAdminAccessRoute(adapter.getInstance(), options.adminAccessRoute);
   if (options.adminLocalAccessRoute)

@@ -44,9 +44,12 @@ import type {
   PaymentHealthTransactionManager,
 } from "@fan-support/persistence-port";
 import { createAdminOrdersRepository } from "./admin-orders-repository.js";
+import { createAdminLedgerRepository } from "./admin-ledger-repository.js";
 import { createAdminOrderResendRepository } from "./admin-notification-resend-repository.js";
 import { createAdminOrderResendNotificationRepository } from "./admin-notification-resend-worker.js";
 import type {
+  AdminLedgerRepositories,
+  AdminLedgerTransactionManager,
   AdminOrdersRepositories,
   AdminOrdersTransactionManager,
 } from "@fan-support/persistence-port";
@@ -248,6 +251,7 @@ export interface PostgresPersistence {
   readonly adminFinanceTransactionManager: AdminFinanceTransactionManager;
   readonly paymentHealthTransactionManager: PaymentHealthTransactionManager;
   readonly adminOrdersTransactionManager: AdminOrdersTransactionManager;
+  readonly adminLedgerTransactionManager: AdminLedgerTransactionManager;
   readonly adminOrderResendNotificationTransactionManager: NotificationTransactionManager;
   readonly adminAccessTransactionManager: AdminAccessTransactionManager;
   readonly adminLocalAccessTransactionManager: AdminLocalAccessTransactionManager;
@@ -463,6 +467,12 @@ export function createPostgresPersistenceWithPoolFactory(
         publicMediaBaseUrl: options?.catalogPublicMediaBaseUrl ?? "",
       }),
       adminOrderResends: createAdminOrderResendRepository(client, scope),
+    }),
+  });
+  const adminLedgerRunner = createTransactionRunner<AdminLedgerRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      adminLedger: createAdminLedgerRepository(client, scope),
     }),
   });
   const adminOrderResendRunner =
@@ -1378,6 +1388,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return adminOrdersRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    adminLedgerTransactionManager: {
+      async runInAdminLedgerTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminLedgerRunner.run(
           { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );

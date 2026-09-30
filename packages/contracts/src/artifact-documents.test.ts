@@ -359,6 +359,11 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/information-pages/save",
     "/api/v1/admin/information-pages/submit",
     "/api/v1/admin/information-pages/unpublish",
+    "/api/v1/admin/ledger/artist",
+    "/api/v1/admin/ledger/context",
+    "/api/v1/admin/ledger/export",
+    "/api/v1/admin/ledger/message/read",
+    "/api/v1/admin/ledger/overview",
     "/api/v1/admin/management/artists/assign",
     "/api/v1/admin/management/context",
     "/api/v1/admin/management/images/read",
@@ -611,6 +616,16 @@ test("marks every registered top-level contract with an explicit version policy"
     "$defs"
   ] as JsonObject;
   const unversionedValueObjects = new Set([
+    "AdminLedgerTimeZone",
+    "AdminLedgerPeriod",
+    "AdminLedgerResolvedPeriod",
+    "AdminLedgerBrokerFilter",
+    "AdminLedgerExportScope",
+    "AdminLedgerTotal",
+    "AdminLedgerArtist",
+    "AdminLedgerArtistRow",
+    "AdminLedgerLine",
+    "AdminLedgerExportLine",
     "AdminOrdersPermission",
     "AdminOrdersListItem",
     "AdminOrdersLine",

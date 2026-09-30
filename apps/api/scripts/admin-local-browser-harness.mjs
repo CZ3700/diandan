@@ -280,6 +280,8 @@ export async function runLocalAccountBrowserAcceptance(
             state.stage = value;
           },
           client,
+          /** The instance key service, for fixtures that must seed decryptable private content. */
+          keys: kms.adapter,
           adminOrigin,
           api,
           access,

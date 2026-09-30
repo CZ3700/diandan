@@ -548,6 +548,42 @@ const entries = {
     "MUTATION",
     true,
   ),
+  // ADR-022 / L3-12: the artist ledger. Every read is audited or scoped by the API; an export writes a receipt.
+  "ledger-context": operation(
+    "/api/v1/admin/ledger/context",
+    contract.adminLedgerCommandSchema,
+    contract.adminLedgerResponseSchema,
+    "CONTEXT",
+    "CONTEXT",
+  ),
+  "ledger-overview": operation(
+    "/api/v1/admin/ledger/overview",
+    contract.adminLedgerCommandSchema,
+    contract.adminLedgerResponseSchema,
+    "OVERVIEW",
+    "OVERVIEW",
+  ),
+  "ledger-artist": operation(
+    "/api/v1/admin/ledger/artist",
+    contract.adminLedgerCommandSchema,
+    contract.adminLedgerResponseSchema,
+    "ARTIST",
+    "ARTIST",
+  ),
+  "ledger-export": operation(
+    "/api/v1/admin/ledger/export",
+    contract.adminLedgerCommandSchema,
+    contract.adminLedgerResponseSchema,
+    "EXPORT",
+    "EXPORT",
+  ),
+  "ledger-message-read": operation(
+    "/api/v1/admin/ledger/message/read",
+    contract.adminLedgerCommandSchema,
+    contract.adminLedgerMessageResponseSchema,
+    "READ_MESSAGE",
+    "MESSAGE",
+  ),
   "orders-context": operation(
     "/api/v1/admin/orders/context",
     contract.adminOrdersCommandSchema,

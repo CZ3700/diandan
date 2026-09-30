@@ -30,6 +30,8 @@ import * as paymentHealth from "./payment-health.js";
 import * as adminOrderNoteKey from "./admin-order-note-key.js";
 import * as adminOrdersPersistence from "./admin-orders-persistence.js";
 import * as adminOrders from "./admin-orders.js";
+import * as adminLedger from "./admin-ledger.js";
+import * as adminLedgerPersistence from "./admin-ledger-persistence.js";
 import * as adminAccess from "./admin-access.js";
 import * as adminLocalAccess from "./admin-local-access.js";
 import * as adminLocalAccessPersistence from "./admin-local-access-persistence.js";
@@ -677,6 +679,16 @@ export type ContractRegistration = Readonly<{
 // Scalars and embedded snapshot value objects follow their versioned parent;
 // they must never be used as standalone API, event, or queue roots.
 const unversionedValueObjectNames = new Set([
+  "AdminLedgerTimeZone",
+  "AdminLedgerPeriod",
+  "AdminLedgerResolvedPeriod",
+  "AdminLedgerBrokerFilter",
+  "AdminLedgerExportScope",
+  "AdminLedgerTotal",
+  "AdminLedgerArtist",
+  "AdminLedgerArtistRow",
+  "AdminLedgerLine",
+  "AdminLedgerExportLine",
   "AdminOrdersPermission",
   "AdminOrdersListItem",
   "AdminOrdersLine",
@@ -1274,6 +1286,86 @@ const registrations = [
     name: "AdminOrdersProofRenditionLocation",
     audience: "internal",
     schema: adminOrdersPersistence.adminOrdersProofRenditionLocationSchema,
+  },
+  {
+    name: "AdminLedgerFailure",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerFailureSchema,
+  },
+  {
+    name: "AdminLedgerTimeZone",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerTimeZoneSchema,
+  },
+  {
+    name: "AdminLedgerPeriod",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerPeriodSchema,
+  },
+  {
+    name: "AdminLedgerResolvedPeriod",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerResolvedPeriodSchema,
+  },
+  {
+    name: "AdminLedgerBrokerFilter",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerBrokerFilterSchema,
+  },
+  {
+    name: "AdminLedgerExportScope",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerExportScopeSchema,
+  },
+  {
+    name: "AdminLedgerCommand",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerCommandSchema,
+  },
+  {
+    name: "AdminLedgerRequest",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerRequestSchema,
+  },
+  {
+    name: "AdminLedgerTotal",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerTotalSchema,
+  },
+  {
+    name: "AdminLedgerArtist",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerArtistSchema,
+  },
+  {
+    name: "AdminLedgerArtistRow",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerArtistRowSchema,
+  },
+  {
+    name: "AdminLedgerLine",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerLineSchema,
+  },
+  {
+    name: "AdminLedgerExportLine",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerExportLineSchema,
+  },
+  {
+    name: "AdminLedgerResponse",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerResponseSchema,
+  },
+  {
+    name: "AdminLedgerMessageResponse",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerMessageResponseSchema,
+  },
+  {
+    name: "AdminLedgerStoreRequest",
+    audience: "internal",
+    schema: adminLedgerPersistence.adminLedgerStoreRequestSchema,
   },
   {
     name: "AdminOrderNoteEncryptCommand",

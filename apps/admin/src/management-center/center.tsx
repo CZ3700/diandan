@@ -14,6 +14,7 @@ import { createOrdersApi } from "../management-orders/api";
 import { createPaymentConfigurationApi } from "../management-payments/api";
 import { createExceptionsApi } from "../management-exceptions/api";
 import { createFinanceApi } from "../management-finance/api";
+import { createLedgerApi } from "../management-ledger/api";
 import { ManagementLogin } from "./login";
 import { LocalSignIn } from "./local-sign-in";
 import "./management-center.css";
@@ -47,6 +48,7 @@ export function ManagementCenter({
   );
   const exceptionsApi = useMemo(() => createExceptionsApi(client), [client]);
   const financeApi = useMemo(() => createFinanceApi(client), [client]);
+  const ledgerApi = useMemo(() => createLedgerApi(client), [client]);
   const layoutApi = useMemo(() => createHomeLayoutApi(client), [client]);
   const navigationApi = useMemo(
     () => createStorefrontNavigationApi(client),
@@ -122,6 +124,7 @@ export function ManagementCenter({
       api={api}
       ordersApi={ordersApi}
       financeApi={financeApi}
+      ledgerApi={ledgerApi}
       paymentsApi={paymentsApi}
       exceptionsApi={exceptionsApi}
       layoutApi={layoutApi}

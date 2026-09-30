@@ -580,6 +580,16 @@
         "up": "c25b7d58c514ee39b7f0d7e0ed822b102c835016255c7171aead8dae7b67d6ea",
         "down": "0db82a079c73ee194b0802180b9db70b53b4aa79c21744ffaa6f5149438b0dad"
       }
+    },
+    {
+      "version": "0059",
+      "name": "artist-ledger",
+      "up": "database/migrations/0059_artist-ledger.up.sql",
+      "down": "database/migrations/0059_artist-ledger.down.sql",
+      "sha256": {
+        "up": "1c5d55e0cf1bb178b0951eb48451605573e8cf70931ecd8dd5d91021ff9ca632",
+        "down": "39f7664b165ce8541c1337acea0153c385e973684fae08222597a2171f8c7aca"
+      }
     }
   ]
 }

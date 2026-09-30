@@ -68,6 +68,7 @@ export function ManagementWorkspace({
   onInfoPages,
   onStaff,
   onAccount,
+  onLedger,
   accountWarning,
   initialSection = "ARTISTS",
   accessNotice,
@@ -85,6 +86,8 @@ export function ManagementWorkspace({
   onDecoration?: (() => void) | undefined;
   onStaff?: (() => void) | undefined;
   onAccount?: (() => void) | undefined;
+  /** ADR-022 / L3-12: a broker's own ledger entry. */
+  onLedger?: (() => void) | undefined;
   accountWarning?: string | undefined;
   initialSection?: ManagementSection;
   accessNotice?: ReactNode;
@@ -329,6 +332,7 @@ export function ManagementWorkspace({
             "INFO_PAGES",
             "STAFF",
             "ACCOUNT",
+            "LEDGER",
           ].includes(next) &&
           !canLeave()
         )
@@ -340,9 +344,11 @@ export function ManagementWorkspace({
         else if (next === "EXCEPTIONS") onExceptions?.();
         else if (next === "STAFF") onStaff?.();
         else if (next === "ACCOUNT") onAccount?.();
+        else if (next === "LEDGER") onLedger?.();
         else chooseSection(next);
       }}
       ordersAvailable={Boolean(onOrders)}
+      ledgerAvailable={Boolean(onLedger)}
       paymentsAvailable={Boolean(onPayments)}
       exceptionsAvailable={Boolean(onExceptions)}
       infoPagesAvailable={Boolean(onInfoPages)}

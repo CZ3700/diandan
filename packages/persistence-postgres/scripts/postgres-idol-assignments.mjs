@@ -6,6 +6,7 @@
 import assert from "node:assert/strict";
 import { Buffer } from "node:buffer";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { fileURLToPath, URL } from "node:url";
 import { Client } from "pg";
 import {
@@ -1086,18 +1087,43 @@ async function behavior() {
 
       // ---------- History blocks the downgrade ----------
       const kept = (await history()).length;
+      // Later migrations come off first, so what refuses below is 0057's own down and not a version mismatch.
+      for (const later of ["0059", "0058"])
+        await migrate({ direction: "down", confirmVersion: later });
+      // The runner reports only which down failed; the down script itself says why.
+      await client.query("BEGIN");
+      const reason = await client
+        .query(
+          readFileSync(
+            new URL(
+              "../../../database/migrations/0057_idol-assignments.down.sql",
+              import.meta.url,
+            ),
+            "utf8",
+          ),
+        )
+        .then(
+          () => "APPLIED",
+          (error) => `${error.code}: ${error.message}`,
+        );
+      await client.query("ROLLBACK");
+      equal(
+        reason,
+        "55000: artist assignment history cannot be downgraded",
+        "0057's down refuses while assignment history exists",
+      );
       await client.end();
       const refused = await migrate({
         direction: "down",
         confirmVersion: "0057",
       }).then(
         () => "MIGRATED",
-        () => "REFUSED",
+        (error) => String(error?.message ?? error),
       );
       equal(
         refused,
-        "REFUSED",
-        "0057 refuses to go down while assignment history exists",
+        "migration 0057 down failed",
+        "and the runner leaves 0057 in place",
       );
       const check = new Client(configuration);
       await check.connect();

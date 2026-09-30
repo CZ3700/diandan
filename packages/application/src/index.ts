@@ -110,6 +110,11 @@ export {
   type AdminOrdersDependencies,
   type AdminOrdersUseCases,
 } from "./admin-orders.js";
+export {
+  createAdminLedgerUseCases,
+  type AdminLedgerDependencies,
+  type AdminLedgerUseCases,
+} from "./admin-ledger.js";
 export type { AdminOrderProofDependencies } from "./admin-order-proofs.js";
 export {
   createAdminFinanceUseCases,

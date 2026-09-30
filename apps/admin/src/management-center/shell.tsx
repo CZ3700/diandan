@@ -13,6 +13,7 @@ import { informationCopy } from "../management-info-pages/copy";
 import { decorationCopy } from "../management-decoration/copy";
 import { accountCopy } from "../management-account/copy";
 import { staffCopy } from "../management-staff/copy";
+import { ledgerCopy } from "../management-ledger/copy";
 
 export function ManagementShell({
   locale,
@@ -24,6 +25,7 @@ export function ManagementShell({
   contentAllowed = true,
   artistsOnly = false,
   ordersAvailable = false,
+  ledgerAvailable = false,
   paymentsAvailable = false,
   exceptionsAvailable = false,
   decorationAvailable = false,
@@ -43,7 +45,8 @@ export function ManagementShell({
     | "DECORATION"
     | "INFO_PAGES"
     | "STAFF"
-    | "ACCOUNT";
+    | "ACCOUNT"
+    | "LEDGER";
   onSection: (
     section:
       | ManagementSection
@@ -53,7 +56,8 @@ export function ManagementShell({
       | "DECORATION"
       | "INFO_PAGES"
       | "STAFF"
-      | "ACCOUNT",
+      | "ACCOUNT"
+      | "LEDGER",
   ) => void;
   children: ReactNode;
   disabled?: boolean;
@@ -62,6 +66,8 @@ export function ManagementShell({
   /** ADR-022: a broker manages artists only; gifts and posters are not offered. */
   artistsOnly?: boolean;
   ordersAvailable?: boolean;
+  /** ADR-022 / L3-12: its own entry only for readers without the orders area (brokers); others reach it there. */
+  ledgerAvailable?: boolean;
   paymentsAvailable?: boolean;
   exceptionsAvailable?: boolean;
   decorationAvailable?: boolean;
@@ -147,6 +153,17 @@ export function ManagementShell({
               onClick={() => onSection("ORDERS")}
             >
               {ordersCopy(locale).orders}
+            </button>
+          ) : null}
+          {ledgerAvailable ? (
+            <button
+              type="button"
+              data-management-section="LEDGER"
+              aria-current={section === "LEDGER" ? "page" : undefined}
+              disabled={disabled}
+              onClick={() => onSection("LEDGER")}
+            >
+              {ledgerCopy(locale).title}
             </button>
           ) : null}
           {paymentsAvailable ? (

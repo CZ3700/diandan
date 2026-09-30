@@ -18,6 +18,8 @@ import { ExceptionsWorkspace } from "../management-exceptions/workspace";
 import type { FinanceApi } from "../management-finance/api";
 import { OrdersWorkspace } from "../management-orders/workspace";
 import { ordersCopy } from "../management-orders/copy";
+import type { LedgerApi } from "../management-ledger/api";
+import { LedgerWorkspace } from "../management-ledger/workspace";
 import { ManagementWorkspace } from "./workspace";
 import { ManagementShell } from "./shell";
 import { ManagementLogout } from "./logout";
@@ -37,6 +39,7 @@ export function ManagementHub({
   api,
   ordersApi,
   financeApi,
+  ledgerApi,
   paymentsApi,
   exceptionsApi,
   layoutApi,
@@ -56,6 +59,7 @@ export function ManagementHub({
   api: ManagementApi;
   ordersApi: OrdersApi;
   financeApi?: FinanceApi | undefined;
+  ledgerApi?: LedgerApi | undefined;
   paymentsApi?: PaymentConfigurationApi | undefined;
   exceptionsApi?: ExceptionsApi | undefined;
   layoutApi?: HomeLayoutApi | undefined;
@@ -87,6 +91,7 @@ export function ManagementHub({
       | "INFO_PAGES"
       | "STAFF"
       | "ACCOUNT"
+      | "LEDGER"
       | null
     >(null),
     [busy, setBusy] = useState(false);
@@ -141,7 +146,8 @@ export function ManagementHub({
       ordersApi.context(),
       paymentsApi?.read() ?? Promise.resolve(null),
       exceptionsApi?.context() ?? Promise.resolve(null),
-    ] as const).then(([content, orders, payments, exceptions]) => {
+      ledgerApi?.context() ?? Promise.resolve(null),
+    ] as const).then(([content, orders, payments, exceptions, ledger]) => {
       if (!canceled)
         setAccess(
           resolveManagementAccess(
@@ -157,13 +163,18 @@ export function ManagementHub({
               : exceptions.value
                 ? { status: "fulfilled", value: exceptions.value }
                 : undefined,
+            ledger.status === "rejected"
+              ? ledger
+              : ledger.value
+                ? { status: "fulfilled", value: ledger.value }
+                : undefined,
           ),
         );
     });
     return () => {
       canceled = true;
     };
-  }, [api, ordersApi, paymentsApi, exceptionsApi, attempt]);
+  }, [api, ordersApi, paymentsApi, exceptionsApi, ledgerApi, attempt]);
   const active =
     section ??
     (access?.contentAllowed
@@ -174,7 +185,9 @@ export function ManagementHub({
           ? "PAYMENTS"
           : access?.orders
             ? "ORDERS"
-            : "EXCEPTIONS");
+            : access?.ledger
+              ? "LEDGER"
+              : "EXCEPTIONS");
   function canLeaveWorkspace() {
     return canLeaveDecoration(
       { busy, dirty: layoutDirty || paymentDirty || infoDirty },
@@ -200,7 +213,8 @@ export function ManagementHub({
       | "DECORATION"
       | "INFO_PAGES"
       | "STAFF"
-      | "ACCOUNT",
+      | "ACCOUNT"
+      | "LEDGER",
   ) {
     if (next !== active && !canLeaveWorkspace()) return;
     setSection(next);
@@ -237,7 +251,8 @@ export function ManagementHub({
     active !== "INFO_PAGES" &&
     active !== "EXCEPTIONS" &&
     active !== "STAFF" &&
-    active !== "ACCOUNT"
+    active !== "ACCOUNT" &&
+    active !== "LEDGER"
   )
     return (
       <ManagementWorkspace
@@ -265,6 +280,11 @@ export function ManagementHub({
         }
         onStaff={staffAvailable ? () => chooseSection("STAFF") : undefined}
         onAccount={account ? () => chooseSection("ACCOUNT") : undefined}
+        onLedger={
+          access.ledger && !access.orders
+            ? () => chooseSection("LEDGER")
+            : undefined
+        }
         accountWarning={accountWarning}
         accessNotice={notice}
         canDeleteArtists={canDeleteArtists}
@@ -278,6 +298,7 @@ export function ManagementHub({
       contentAllowed={access?.contentAllowed ?? false}
       artistsOnly={access?.artistsOnly ?? false}
       ordersAvailable={Boolean(access?.orders)}
+      ledgerAvailable={Boolean(access?.ledger && !access.orders)}
       paymentsAvailable={Boolean(access?.payments)}
       exceptionsAvailable={Boolean(access?.exceptions)}
       infoPagesAvailable={Boolean(infoPagesAccess?.allowed && infoPagesApi)}
@@ -329,6 +350,14 @@ export function ManagementHub({
           onBusy={setBusy}
           onDirtyChange={setLayoutDirty}
         />
+      ) : active === "LEDGER" && access?.ledger && ledgerApi ? (
+        <LedgerWorkspace
+          api={ledgerApi}
+          context={access.ledger}
+          locale={locale}
+          onBusy={setBusy}
+          standalone
+        />
       ) : active === "EXCEPTIONS" && access?.exceptions && exceptionsApi ? (
         <ExceptionsWorkspace
           api={exceptionsApi}
@@ -348,6 +377,8 @@ export function ManagementHub({
         <OrdersWorkspace
           api={ordersApi}
           financeApi={financeApi}
+          ledgerApi={access.ledger && ledgerApi ? ledgerApi : undefined}
+          ledgerContext={access.ledger ?? undefined}
           context={access.orders}
           locale={locale}
           onBusy={setBusy}

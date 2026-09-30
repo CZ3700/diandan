@@ -38,6 +38,7 @@ const supportedHeads = [
   "0056",
   "0057",
   "0058",
+  "0059",
 ];
 const latestKnownHead = supportedHeads.at(-1);
 const protectedHistory = [
@@ -104,6 +105,7 @@ const protectedHistory = [
   "information_audits",
   "native_submissions",
   "artist_assignments",
+  "ledger_exports",
 ];
 function fixture(version, retained) {
   const migrations = [];
@@ -158,7 +160,7 @@ for (const history of protectedHistory) {
     assert.deepEqual(options.migrations, []);
   });
 }
-for (const head of [null, "0028", "0059"]) {
+for (const head of [null, "0028", "0060"]) {
   test(`unknown head ${head} is not silently rewound`, async () => {
     const options = fixture(head);
     await assert.rejects(rollbackEmptyNotifications(options), /known .*head/u);

@@ -5,6 +5,7 @@ import {
   createAdminContentUseCases,
   createAdminExceptionsUseCases,
   createAdminFinanceUseCases,
+  createAdminLedgerUseCases,
   createAdminOrdersUseCases,
   createAdminPaymentConfigurationUseCases,
   createAdminPreviewMediaUseCases,
@@ -39,6 +40,7 @@ import type { AdminContentRouteOptions } from "./admin-content-route.js";
 import type { AdminExceptionsRouteDependencies } from "./admin-exceptions-route.js";
 import type { AdminFinanceRouteDependencies } from "./admin-finance-route.js";
 import type { AdminOrdersRouteDependencies } from "./admin-orders-route.js";
+import type { AdminLedgerRouteDependencies } from "./admin-ledger-route.js";
 import type { AdminPaymentConfigurationRouteDependencies } from "./admin-payment-configuration-route.js";
 import type { AdminApiRuntimeConfig } from "./admin-runtime-config.js";
 import type { AdminSessionRouteDependencies } from "./admin-session-route.js";
@@ -103,6 +105,7 @@ export type ProductionAdminComposition = Readonly<{
   publicationRuntimeRoute: PublicationRuntimeRouteDependencies;
   giftCommerceRoute: GiftCommerceRouteDependencies;
   adminOrdersRoute: AdminOrdersRouteDependencies;
+  adminLedgerRoute: AdminLedgerRouteDependencies;
   adminFinanceRoute: AdminFinanceRouteDependencies;
   adminFinanceRuntime: ApiLifecycleResource;
   adminExceptionsRoute: AdminExceptionsRouteDependencies;
@@ -329,6 +332,15 @@ export function createProductionAdminComposition(
           keys: keys.keyManagement,
           tokenPepper,
           proofs: { storage: media.storage, processor: media.proofProcessor },
+        }),
+      },
+      adminLedgerRoute: {
+        allowedOrigin,
+        useCases: createAdminLedgerUseCases({
+          transactions: persistence.adminLedgerTransactionManager,
+          keys: keys.keyManagement,
+          tokenPepper,
+          timeZone: config.ledgerTimeZone,
         }),
       },
       adminFinanceRoute: { allowedOrigin, useCases: finance },

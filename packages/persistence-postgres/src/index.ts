@@ -2,6 +2,7 @@ export { createAdminPaymentConfigurationRepository } from "./admin-payment-confi
 export { createAdminFinanceRepository } from "./admin-finance-repository.js";
 export { createPaymentHealthRepository } from "./payment-health-repository.js";
 export { createAdminOrdersRepository } from "./admin-orders-repository.js";
+export { createAdminLedgerRepository } from "./admin-ledger-repository.js";
 export { createAdminOrderResendRepository } from "./admin-notification-resend-repository.js";
 export { createAdminOrderResendNotificationRepository } from "./admin-notification-resend-worker.js";
 export { createCheckoutPreflightRepository } from "./checkout-preflight-repository.js";

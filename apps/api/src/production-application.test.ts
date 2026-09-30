@@ -42,6 +42,7 @@ const everyRoute = {
   giftCommerceRoute: true,
   publishedGiftCommerceRoute: true,
   adminOrdersRoute: true,
+  adminLedgerRoute: true,
   adminFinanceRoute: true,
   adminExceptionsRoute: true,
   adminPaymentConfigurationRoute: true,

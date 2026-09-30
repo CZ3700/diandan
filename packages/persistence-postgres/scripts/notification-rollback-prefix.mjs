@@ -32,6 +32,7 @@ const supportedHeads = [
   "0056",
   "0057",
   "0058",
+  "0059",
 ];
 
 /** Legacy probes may rewind only explicitly known, empty migration prefixes. */
@@ -102,6 +103,11 @@ export async function rollbackEmptyNotifications({
     ...(version >= "0057"
       ? {
           artist_assignments: "public.idol_assignments",
+        }
+      : {}),
+    ...(version >= "0059"
+      ? {
+          ledger_exports: "public.artist_ledger_exports",
         }
       : {}),
     ...(version >= "0030"

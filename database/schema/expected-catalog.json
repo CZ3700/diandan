@@ -307,6 +307,10 @@
       "kind": "TABLE"
     },
     {
+      "name": "artist_ledger_exports",
+      "kind": "TABLE"
+    },
+    {
       "name": "audit_logs",
       "kind": "TABLE"
     },
@@ -4901,6 +4905,146 @@
       "position": 10,
       "name": "last_seen_at",
       "dataType": "timestamp with time zone",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 2,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 3,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 4,
+      "name": "scope",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 5,
+      "name": "broker_identity_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 6,
+      "name": "idol_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 7,
+      "name": "period_from",
+      "dataType": "date",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 8,
+      "name": "period_to",
+      "dataType": "date",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 9,
+      "name": "time_zone",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 10,
+      "name": "line_count",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 11,
+      "name": "truncated",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 12,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 13,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_ledger_exports",
+      "position": 14,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
       "identity": "",
@@ -32711,6 +32855,206 @@
       "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
       "deferrable": true,
       "initiallyDeferred": true
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_export_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_broker_identity_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (broker_identity_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_check",
+      "kind": "CHECK",
+      "definition": "CHECK (period_to >= period_from AND (period_to - period_from) < 366)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_check1",
+      "kind": "CHECK",
+      "definition": "CHECK ((scope = 'BROKER'::text) = (broker_identity_id IS NOT NULL) AND (scope = 'ARTIST'::text) = (idol_id IS NOT NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_idol_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (idol_id) REFERENCES idols(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_line_count_check",
+      "kind": "CHECK",
+      "definition": "CHECK (line_count >= 0 AND line_count <= 10000)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_line_count_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL line_count",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_period_from_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL period_from",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_period_to_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL period_to",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_scope_check",
+      "kind": "CHECK",
+      "definition": "CHECK (scope = ANY (ARRAY['ALL'::text, 'UNASSIGNED'::text, 'BROKER'::text, 'ARTIST'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_scope_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL scope",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_time_zone_check",
+      "kind": "CHECK",
+      "definition": "CHECK (length(time_zone) <= 64 AND time_zone ~ '^[A-Za-z][A-Za-z0-9_+-]*(/[A-Za-z0-9_+-]+)*$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_time_zone_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL time_zone",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_truncated_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL truncated",
+      "deferrable": false,
+      "initiallyDeferred": false
     },
     {
       "table": "audit_logs",
@@ -65298,6 +65642,33 @@
       "valid": true
     },
     {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_actor_idx",
+      "definition": "CREATE INDEX artist_ledger_exports_actor_idx ON public.artist_ledger_exports USING btree (actor_id, created_at DESC)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX artist_ledger_exports_audit_log_id_key ON public.artist_ledger_exports USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_pkey",
+      "definition": "CREATE UNIQUE INDEX artist_ledger_exports_pkey ON public.artist_ledger_exports USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "audit_logs",
       "name": "audit_logs_pkey",
       "definition": "CREATE UNIQUE INDEX audit_logs_pkey ON public.audit_logs USING btree (id)",
@@ -68638,6 +69009,15 @@
     },
     {
       "table": "order_items",
+      "name": "order_items_idol_order_idx",
+      "definition": "CREATE INDEX order_items_idol_order_idx ON public.order_items USING btree (idol_id, order_id)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "order_items",
       "name": "order_items_order_created_idx",
       "definition": "CREATE INDEX order_items_order_created_idx ON public.order_items USING btree (order_id, created_at, id)",
       "unique": false,
@@ -68991,6 +69371,15 @@
       "table": "payment_attempts",
       "name": "payment_attempts_reconciliation_idx",
       "definition": "CREATE INDEX payment_attempts_reconciliation_idx ON public.payment_attempts USING btree (updated_at) WHERE (status = 'UNKNOWN'::text)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "payment_attempts",
+      "name": "payment_attempts_succeeded_idx",
+      "definition": "CREATE INDEX payment_attempts_succeeded_idx ON public.payment_attempts USING btree (succeeded_at, order_id) WHERE (status = 'SUCCEEDED'::text)",
       "unique": false,
       "primary": false,
       "exclusion": false,
@@ -69865,6 +70254,15 @@
       "name": "refund_events_sequence_unique",
       "definition": "CREATE UNIQUE INDEX refund_events_sequence_unique ON public.refund_events USING btree (refund_id, sequence)",
       "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "refund_items",
+      "name": "refund_items_order_item_idx",
+      "definition": "CREATE INDEX refund_items_order_item_idx ON public.refund_items USING btree (order_item_id)",
+      "unique": false,
       "primary": false,
       "exclusion": false,
       "valid": true
@@ -70946,6 +71344,24 @@
       "table": "admin_sessions",
       "name": "local_admin_session_revocation_audit",
       "definition": "CREATE CONSTRAINT TRIGGER local_admin_session_revocation_audit AFTER UPDATE ON admin_sessions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_local_admin_session_revocation_audit()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_export_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER artist_ledger_export_complete AFTER INSERT ON artist_ledger_exports DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_artist_ledger_export()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_append_only",
+      "definition": "CREATE TRIGGER artist_ledger_exports_append_only BEFORE DELETE OR UPDATE ON artist_ledger_exports FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_ledger_exports",
+      "name": "artist_ledger_exports_no_truncate",
+      "definition": "CREATE TRIGGER artist_ledger_exports_no_truncate BEFORE TRUNCATE ON artist_ledger_exports FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
     },
     {
@@ -75386,7 +75802,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_order_receipt_authority()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE required_permission text; intent public.support_intents%ROWTYPE; a public.admin_order_private_accesses%ROWTYPE;\nBEGIN\n required_permission:=CASE TG_TABLE_NAME WHEN 'admin_order_notes' THEN 'orders.note'\n WHEN 'admin_order_private_accesses' THEN CASE to_jsonb(NEW)->>'kind' WHEN 'MESSAGE' THEN 'orders.message.read' ELSE 'orders.note' END\n WHEN 'admin_order_message_reviews' THEN 'orders.message.review'\n WHEN 'admin_order_fulfillment_receipts' THEN CASE WHEN to_jsonb(NEW)->>'action' IN('HOLD','RESUME') THEN 'orders.manage' ELSE 'orders.fulfillment' END END;\n IF NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,'orders.read',NEW.created_at)\n OR NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,required_permission,NEW.created_at) THEN\n RAISE EXCEPTION 'order receipt requires current canonical session permission' USING ERRCODE='23514'; END IF;\n IF (TG_TABLE_NAME='admin_order_private_accesses' AND to_jsonb(NEW)->>'kind'='MESSAGE') OR TG_TABLE_NAME='admin_order_message_reviews' THEN\n  SELECT * INTO intent FROM public.support_intents WHERE id=NEW.support_intent_id;\n  IF NOT EXISTS(SELECT 1 FROM public.admin_order_message_locale_grants WHERE admin_identity_id=NEW.actor_id AND locale=NEW.review_locale AND revoked_at IS NULL AND granted_at<=NEW.created_at)\n   OR (intent.fan_message_locale<>NEW.review_locale AND NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,'orders.message.triage',NEW.created_at)) THEN\n   RAISE EXCEPTION 'order message requires explicit language and triage authority' USING ERRCODE='23514'; END IF;\n END IF;\n IF TG_TABLE_NAME='admin_order_private_accesses' THEN\n  IF NEW.expires_at>(SELECT expires_at FROM public.admin_sessions WHERE id=NEW.session_id) THEN\n   RAISE EXCEPTION 'private read may not outlive its session' USING ERRCODE='23514';\n  END IF;\n END IF;\n RETURN NULL;\nEND; $function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_order_receipt_authority()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE required_permission text; intent public.support_intents%ROWTYPE; a public.admin_order_private_accesses%ROWTYPE; broker_read boolean:=false;\nBEGIN\n IF TG_TABLE_NAME='admin_order_private_accesses' AND to_jsonb(NEW)->>'kind'='MESSAGE' THEN\n  broker_read:=public.admin_order_authorized(NEW.session_id,NEW.actor_id,'ledger.messages',NEW.created_at)\n   AND EXISTS(SELECT 1 FROM public.order_items i JOIN public.support_intents s ON s.id=i.support_intent_id\n    JOIN public.payment_attempts pa ON pa.order_id=i.order_id AND pa.status='SUCCEEDED'\n    WHERE i.id=NEW.item_id AND i.order_id=NEW.order_id AND s.id=NEW.support_intent_id\n     AND public.idol_current_broker(i.idol_id)=NEW.actor_id AND s.moderation_status NOT IN('REJECTED','REDACTED'));\n END IF;\n IF NOT broker_read THEN\n  required_permission:=CASE TG_TABLE_NAME WHEN 'admin_order_notes' THEN 'orders.note'\n  WHEN 'admin_order_private_accesses' THEN CASE to_jsonb(NEW)->>'kind' WHEN 'MESSAGE' THEN 'orders.message.read' ELSE 'orders.note' END\n  WHEN 'admin_order_message_reviews' THEN 'orders.message.review'\n  WHEN 'admin_order_fulfillment_receipts' THEN CASE WHEN to_jsonb(NEW)->>'action' IN('HOLD','RESUME') THEN 'orders.manage' ELSE 'orders.fulfillment' END END;\n  IF NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,'orders.read',NEW.created_at)\n  OR NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,required_permission,NEW.created_at) THEN\n  RAISE EXCEPTION 'order receipt requires current canonical session permission' USING ERRCODE='23514'; END IF;\n  IF (TG_TABLE_NAME='admin_order_private_accesses' AND to_jsonb(NEW)->>'kind'='MESSAGE') OR TG_TABLE_NAME='admin_order_message_reviews' THEN\n   SELECT * INTO intent FROM public.support_intents WHERE id=NEW.support_intent_id;\n   IF NOT EXISTS(SELECT 1 FROM public.admin_order_message_locale_grants WHERE admin_identity_id=NEW.actor_id AND locale=NEW.review_locale AND revoked_at IS NULL AND granted_at<=NEW.created_at)\n    OR (intent.fan_message_locale<>NEW.review_locale AND NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,'orders.message.triage',NEW.created_at)) THEN\n    RAISE EXCEPTION 'order message requires explicit language and triage authority' USING ERRCODE='23514'; END IF;\n  END IF;\n END IF;\n IF TG_TABLE_NAME='admin_order_private_accesses' THEN\n  IF NEW.expires_at>(SELECT expires_at FROM public.admin_sessions WHERE id=NEW.session_id) THEN\n   RAISE EXCEPTION 'private read may not outlive its session' USING ERRCODE='23514';\n  END IF;\n END IF;\n RETURN NULL;\nEND; $function$"
     },
     {
       "name": "assert_admin_order_review",
@@ -75397,6 +75813,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_admin_order_review()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE intent public.support_intents%ROWTYPE; access public.admin_order_private_accesses%ROWTYPE; a public.audit_logs%ROWTYPE;\nBEGIN\n SELECT * INTO intent FROM public.support_intents WHERE id=NEW.support_intent_id;\n SELECT * INTO access FROM public.admin_order_private_accesses WHERE id=NEW.access_id;\n SELECT * INTO a FROM public.audit_logs WHERE id=NEW.audit_log_id;\n IF intent.version IS DISTINCT FROM NEW.result_intent_version OR intent.moderation_status IS DISTINCT FROM NEW.decision OR intent.moderation_decision_kind IS DISTINCT FROM 'HUMAN' OR intent.moderation_reviewer_id IS DISTINCT FROM NEW.actor_id OR intent.reviewed_at IS DISTINCT FROM NEW.created_at OR intent.privacy_state IS DISTINCT FROM 'ACTIVE'\n OR access.kind IS DISTINCT FROM 'MESSAGE' OR access.actor_id IS DISTINCT FROM NEW.actor_id OR access.session_id IS DISTINCT FROM NEW.session_id OR access.order_id IS DISTINCT FROM NEW.order_id OR access.item_id IS DISTINCT FROM NEW.item_id OR access.support_intent_id IS DISTINCT FROM NEW.support_intent_id OR access.intent_version IS DISTINCT FROM NEW.expected_intent_version OR access.review_locale IS DISTINCT FROM NEW.review_locale OR access.expires_at<=clock_timestamp() OR NOT EXISTS(SELECT 1 FROM public.admin_order_private_confirmations WHERE access_id=access.id)\n OR NOT EXISTS(SELECT 1 FROM public.admin_order_message_locale_grants WHERE admin_identity_id=NEW.actor_id AND locale=NEW.review_locale AND revoked_at IS NULL AND granted_at<=clock_timestamp())\n OR a.actor_type IS DISTINCT FROM 'ADMIN' OR a.actor_id IS DISTINCT FROM NEW.actor_id OR a.action IS DISTINCT FROM 'ORDER_MESSAGE_REVIEWED' OR a.subject_type IS DISTINCT FROM 'SUPPORT_INTENT' OR a.subject_id IS DISTINCT FROM NEW.support_intent_id OR a.reason_code IS DISTINCT FROM NEW.reason_code OR a.outcome IS DISTINCT FROM 'SUCCEEDED' OR a.created_at IS DISTINCT FROM NEW.created_at THEN RAISE EXCEPTION 'review requires exact private access, language, mutation and audit' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_artist_ledger_export",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_artist_ledger_export()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM public.audit_logs a JOIN public.admin_sessions s ON s.id=NEW.session_id WHERE a.id=NEW.audit_log_id AND a.actor_type='ADMIN' AND a.actor_id=NEW.actor_id\n  AND a.action='ARTIST_LEDGER_EXPORT' AND a.subject_type='ARTIST_LEDGER_EXPORT' AND a.subject_id=NEW.id AND a.outcome='SUCCEEDED' AND a.field_category='ARTIST_LEDGER'\n  AND a.request_id=NEW.request_id AND a.created_at=NEW.created_at AND s.admin_identity_id=NEW.actor_id) THEN\n  RAISE EXCEPTION 'ledger export requires its exact audit record' USING ERRCODE='23514'; END IF;\n -- A broker exports only itself or one of its current artists; everything else needs ledger.read.\n IF NOT(public.admin_order_authorized(NEW.session_id,NEW.actor_id,'ledger.read',NEW.created_at)\n  OR (public.admin_order_authorized(NEW.session_id,NEW.actor_id,'ledger.assigned',NEW.created_at)\n   AND ((NEW.scope='BROKER' AND NEW.broker_identity_id=NEW.actor_id) OR (NEW.scope='ARTIST' AND public.idol_current_broker(NEW.idol_id)=NEW.actor_id)))) THEN\n  RAISE EXCEPTION 'ledger export requires ledger authority over its whole scope' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
     },
     {
       "name": "assert_base_content_preview_grant_audit",

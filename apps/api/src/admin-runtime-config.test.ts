@@ -26,6 +26,7 @@ test("a complete configuration derives the callback and binds MFA and client aut
     accessKey: "1".repeat(64),
     tokenPepper: "2".repeat(64),
     subjectPepper: "3".repeat(64),
+    ledgerTimeZone: "Asia/Shanghai",
     settings: {
       schemaVersion: 1,
       issuer: "https://identity.example.invalid",
@@ -116,6 +117,7 @@ test("built-in accounts can run with or without OIDC and default the authenticat
     accessKey: "1".repeat(64),
     tokenPepper: "2".repeat(64),
     subjectPepper: "3".repeat(64),
+    ledgerTimeZone: "Asia/Shanghai",
     localAccounts: { totpIssuer: "Studio Admin" },
   });
   const both = resolveAdminApiRuntimeConfig({
@@ -168,4 +170,23 @@ test("built-in account switches accept only exact, safe values", () => {
     }
     expect(message).toBe("Invalid admin runtime configuration");
   }
+});
+
+test("the artist ledger reports Beijing days unless the deployment names another real zone", () => {
+  expect(resolveAdminApiRuntimeConfig(adminEnvironment)?.ledgerTimeZone).toBe(
+    "Asia/Shanghai",
+  );
+  expect(
+    resolveAdminApiRuntimeConfig({
+      ...adminEnvironment,
+      FAN_SUPPORT_LEDGER_TIME_ZONE: "UTC",
+    })?.ledgerTimeZone,
+  ).toBe("UTC");
+  for (const zone of ["Mars/Olympus", "+08:00", ""])
+    expect(() =>
+      resolveAdminApiRuntimeConfig({
+        ...adminEnvironment,
+        FAN_SUPPORT_LEDGER_TIME_ZONE: zone,
+      }),
+    ).toThrow(TypeError);
 });

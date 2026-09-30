@@ -22,6 +22,8 @@
 
 依赖关系：管理后台、订单查询、支付运行时都依赖密钥管理组；缺少它时，这三组中任何一组有配置都会启动失败。
 
+艺人账目（ADR-022 / L3-12）的“今天、本周、本月”和自定义日期按 `FAN_SUPPORT_LEDGER_TIME_ZONE` 指定的 IANA 时区划分，缺省 `Asia/Shanghai`（北京时间，用户决定）；它是普通变量，只在管理后台组启用时生效，写错（不是真实时区）会让启动失败。页面与导出表头都会写明所用时区。
+
 管理后台组由 API 专属的键决定是否启用（源站、两个 pepper、OIDC 配置、客户端密钥）。`FAN_SUPPORT_ADMIN_ACCESS_KEY` 和 `FAN_SUPPORT_ADMIN_OIDC_ISSUER` 与 Admin 应用共用，单独出现不会启用 API 的后台接口。三个 64 位十六进制密钥（访问密钥、会话 pepper、主体 pepper）必须互不相同。
 
 ### 商城装修预览
