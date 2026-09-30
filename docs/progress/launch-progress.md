@@ -1,5 +1,11 @@
 # 当前上线进度
 
+## C-20261001 心愿礼物绑定与心愿展馆
+
+- IN_PROGRESS；Codex root / catalog_integration_audit / research_gifts_a / research_gifts_b；2026-10-01。用户新增授权：WISH 添加时绑定唯一艺人，艺人页展示专属心愿，购买固定收礼人；每个心愿仅完成一次，成功后停售；可信付款成功即生成“已支持心愿”纪念，买家可选择不公开展馆。
+- 验证计划：先冻结合同与失败测试，覆盖后台绑定/历史兼容、并发与超时/晚到支付、公开选择与撤回、退款/拒付、真实PG迁移、正常鉴权HTTP、七语双端浏览器、check:dev与独立S.U.P.E.R。root负责方案/接线/前台整合，三代理先只读审计，合同冻结后分配互斥实现文件；不修改已部署TEST内容或真实资金。
+- 已冻结业务边界见 ADR-023 / `docs/plan/2026-10-01-artist-wishes.md`。与远端 be6899f9 对齐：L3-12保留0059，本项领取0060绑定与0061展馆；L3-13尚未开工，原预留0060须顺延至当时下一空闲号。0059源码到达后再生成连续manifest和组合PG验收，禁止覆盖并行迁移。
+
 ## C-20261001 海报动效选择与圆点开关
 
 - LOCAL_ACCEPTED（代码、数据库与本地验证；公开 TEST 待部署）；Codex root / catalog_integration_audit / research_gifts_a / research_gifts_b；2026-10-01。开工按 storefront/合同后端/admin/独立验收分工登记；整合远端至 c30c6852，保留其并行改动。
