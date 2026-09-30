@@ -235,11 +235,19 @@ test.each(SUPPORTED_LOCALES)(
     const hero =
       html.split('data-home-hero="true"')[1]?.split("</section>")[0] ?? "";
     expect(hero).toContain('data-hero-motion="idle"');
-    expect(hero).toContain(
-      'class="storefront-hero-sparkles" aria-hidden="true"',
-    );
+    expect(hero).toContain('class="storefront-hero-motion" aria-hidden="true"');
     expect(hero).toContain(copy.heroPauseMotion);
     expect(copy.heroPauseMotion).not.toBe(copy.heroPlayMotion);
+    expect(hero).toContain(`aria-label="${copy.heroPauseMotion}"`);
+    expect(hero).not.toContain(`>${copy.heroPauseMotion}<`);
+    const actions =
+      hero.split('class="storefront-hero-actions"')[1]?.split("</div>")[0] ??
+      "";
+    expect(actions.indexOf('data-home-hero-link="artists"')).toBeLessThan(
+      actions.indexOf("storefront-hero-motion-control"),
+    );
+    for (const effect of ["STARLIGHT", "AURORA", "SPOTLIGHT", "PETALS"])
+      expect(hero).toContain(`data-hero-layer="${effect}"`);
   },
 );
 

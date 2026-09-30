@@ -33,6 +33,7 @@ test("theme exposes only deployed presentation attributes and rejects arbitrary 
     "data-storefront-gift-layout": "GRID",
     "data-storefront-motion": "STANDARD",
     "data-storefront-motion-speed": "STANDARD",
+    "data-storefront-hero-effect": "STARLIGHT",
     "data-storefront-artist-template": "IMMERSIVE",
     "data-storefront-gift-template": "IMAGE_LEFT",
   });
@@ -84,6 +85,7 @@ test("layout and motion attributes use one complete set and legacy themes reset 
     "data-storefront-gift-layout": "GRID",
     "data-storefront-motion": "STANDARD",
     "data-storefront-motion-speed": "STANDARD",
+    "data-storefront-hero-effect": "STARLIGHT",
   });
 });
 function luminance(hex: string) {
@@ -225,3 +227,25 @@ test("preset CSS agrees with palette tokens and keeps touch, fonts and reduced m
   expect(css).not.toMatch(/--(?:space-\d+|font-ui|motion-reduced)\s*:/u);
   expect(css).not.toMatch(/url\(|!important|animation:/u);
 });
+
+test.each(["STARLIGHT", "AURORA", "SPOTLIGHT", "PETALS"])(
+  "hero effect %s reaches public rendering and legacy restores clear it",
+  (heroEffect) => {
+    const { storefrontThemeAttributes } = subject();
+    expect(
+      storefrontThemeAttributes({
+        ...theme,
+        presentation: {
+          heroLayout: "IMMERSIVE",
+          giftLayout: "GRID",
+          motion: "STANDARD",
+          motionSpeed: "STANDARD",
+          heroEffect,
+        },
+      })["data-storefront-hero-effect"],
+    ).toBe(heroEffect);
+    expect(
+      storefrontThemeAttributes(theme)["data-storefront-hero-effect"],
+    ).toBe("STARLIGHT");
+  },
+);

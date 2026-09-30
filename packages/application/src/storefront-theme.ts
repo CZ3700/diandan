@@ -8,7 +8,10 @@ import {
   type StorefrontThemeResponse,
   type PublicStorefrontThemeResponse,
 } from "@fan-support/contracts";
-import type { StorefrontThemeTransactionManager } from "@fan-support/persistence-port";
+import type {
+  JsonValue,
+  StorefrontThemeTransactionManager,
+} from "@fan-support/persistence-port";
 import {
   digestAdminContentToken,
   validateAdminContentTokenPepper,
@@ -17,6 +20,10 @@ import {
   adminContentErrorResult,
   adminContentFailure,
 } from "./admin-content-results.js";
+// Optional schema fields must be absent, never undefined, in transaction snapshots.
+const transactionJson = (
+  value: StorefrontThemeResponse | PublicStorefrontThemeResponse,
+): JsonValue => JSON.parse(JSON.stringify(value)) as JsonValue;
 export function createStorefrontThemeUseCases(
   dependencies: Readonly<{
     transactions: StorefrontThemeTransactionManager;
@@ -60,15 +67,17 @@ export function createStorefrontThemeUseCases(
                 ),
               );
               if (authorized.outcome === "FAILURE") return authorized;
-              return storefrontThemeResponseSchema.parse(
-                await storefrontTheme.execute({
-                  command: request.command,
-                  principal: authorized.principal,
-                  requestId: request.requestId,
-                  requestHash: createHash("sha256")
-                    .update(JSON.stringify(request.command))
-                    .digest("hex"),
-                }),
+              return transactionJson(
+                storefrontThemeResponseSchema.parse(
+                  await storefrontTheme.execute({
+                    command: request.command,
+                    principal: authorized.principal,
+                    requestId: request.requestId,
+                    requestHash: createHash("sha256")
+                      .update(JSON.stringify(request.command))
+                      .digest("hex"),
+                  }),
+                ),
               );
             },
           ),
@@ -87,7 +96,12 @@ export function createPublicStorefrontThemeUseCases(
       try {
         return publicStorefrontThemeResponseSchema.parse(
           await dependencies.transactions.runInStorefrontThemeTransaction(
-            ({ storefrontTheme }) => storefrontTheme.readPublished(),
+            async ({ storefrontTheme }) =>
+              transactionJson(
+                publicStorefrontThemeResponseSchema.parse(
+                  await storefrontTheme.readPublished(),
+                ),
+              ),
           ),
         );
       } catch {

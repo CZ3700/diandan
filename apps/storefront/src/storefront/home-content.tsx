@@ -12,7 +12,7 @@ import type { StorefrontCopy } from "./copy";
 import { HomeKinds } from "./home-kinds";
 import { HowItWorks, PageState, StudioPromise } from "./page-parts";
 import { HomeArtistSearch } from "./home-artist-search";
-import { HeroMotion } from "./hero-motion";
+import { HeroMotion, HeroMotionLayer } from "./hero-motion";
 
 export function HomeContent({
   data,
@@ -59,26 +59,9 @@ export function HomeContent({
   const artists = data.slots.filter((slot) => slot.kind === "FEATURED_IDOL");
   const sections: Record<HomeLayout["sections"][number]["id"], ReactNode> = {
     HERO: (
-      <section
-        className="storefront-hero"
-        data-home-hero="true"
-        aria-labelledby="hero-title"
-      >
-        <div className="storefront-hero-copy">
-          <h1
-            id="hero-title"
-            className="storefront-eyebrow storefront-home-hero-heading"
-            lang={locale}
-          >
-            {copy.artistEyebrow}
-          </h1>
-          <p
-            className="storefront-hero-body"
-            lang={view.localeContext.resolvedLocale}
-          >
-            {view.heroSubtitle}
-          </p>
-          {/* User request 2026-09-29 (L2-13): one gold button to all the artists. */}
+      <HeroMotion
+        copy={copy}
+        action={
           <a
             className="storefront-primary"
             data-home-hero-link="artists"
@@ -87,15 +70,31 @@ export function HomeContent({
             {copy.heroAllArtists}
             <Icon name="arrow-right" decorative />
           </a>
-        </div>
-        <PublishedHeroImage
-          desktop={view.heroDesktop}
-          mobile={view.heroMobile}
-          fallbackLabel={copy.mediaFallback}
+        }
+        image={
+          <PublishedHeroImage
+            desktop={view.heroDesktop}
+            mobile={view.heroMobile}
+            fallbackLabel={copy.mediaFallback}
+          >
+            <HeroMotionLayer />
+          </PublishedHeroImage>
+        }
+      >
+        <h1
+          id="hero-title"
+          className="storefront-eyebrow storefront-home-hero-heading"
+          lang={locale}
         >
-          <HeroMotion copy={copy} />
-        </PublishedHeroImage>
-      </section>
+          {copy.artistEyebrow}
+        </h1>
+        <p
+          className="storefront-hero-body"
+          lang={view.localeContext.resolvedLocale}
+        >
+          {view.heroSubtitle}
+        </p>
+      </HeroMotion>
     ),
     KINDS: (
       <HomeKinds locale={locale} copy={copy} contextQuery={contextQuery} />

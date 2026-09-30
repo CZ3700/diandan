@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { expect, test, vi } from "vitest";
 import {
   createDefaultStorefrontTheme,
+  createDefaultStorefrontPresentation,
   type StorefrontThemeResponse,
 } from "@fan-support/contracts";
 import type {
@@ -69,7 +70,7 @@ function setup(denied = false) {
       csrfToken: "b".repeat(42) + "A",
       command,
     });
-  return { request, authorize, execute, transactions };
+  return { request, authorize, execute, transactions, repositories };
 }
 test("authorization is action-scoped without granting or requiring translations", async () => {
   const fixture = setup();
@@ -121,4 +122,70 @@ test("unauthorized requests never reach theme data and public database failures 
     outcome: "FAILURE",
     code: "CONTENT_UNAVAILABLE",
   });
+});
+
+test("optional hero effects cross the transaction boundary as canonical JSON", async () => {
+  const fixture = setup();
+  const theme = {
+    ...createDefaultStorefrontTheme(),
+    presentation: {
+      ...createDefaultStorefrontPresentation(),
+      heroEffect: undefined,
+    },
+  };
+  fixture.repositories.storefrontTheme.readPublished = async () => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "STOREFRONT_THEME",
+    source: "DEFAULT",
+    theme,
+    version: 0,
+    publicationId: null,
+  });
+  const app = createPublicStorefrontThemeUseCases({
+    transactions: {
+      runInStorefrontThemeTransaction: async (work) => {
+        const result = await work(fixture.repositories);
+        expect(result).toStrictEqual(JSON.parse(JSON.stringify(result)));
+        return result;
+      },
+    },
+  });
+  const result = await app.execute();
+  expect(result.outcome).toBe("SUCCESS");
+  if (result.outcome === "SUCCESS")
+    expect(result.theme).toEqual({
+      ...createDefaultStorefrontTheme(),
+      presentation: createDefaultStorefrontPresentation(),
+    });
+});
+
+test("new effect commands preserve their exact effect, motion and speed", async () => {
+  const fixture = setup();
+  for (const heroEffect of [
+    "STARLIGHT",
+    "AURORA",
+    "SPOTLIGHT",
+    "PETALS",
+  ] as const) {
+    const command = {
+      schemaVersion: 1,
+      action: "SAVE_DRAFT",
+      expectedVersion: 0,
+      idempotencyKey: "hero-effect-save-0000001",
+      theme: {
+        ...createDefaultStorefrontTheme(),
+        presentation: {
+          ...createDefaultStorefrontPresentation(),
+          heroEffect,
+          motion: "NONE",
+          motionSpeed: "QUICK",
+        },
+      },
+    };
+    expect((await fixture.request(command)).outcome).toBe("SUCCESS");
+    expect(fixture.execute).toHaveBeenLastCalledWith(
+      expect.objectContaining({ command }),
+    );
+  }
 });

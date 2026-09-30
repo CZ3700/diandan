@@ -25,6 +25,12 @@ type ThemeLabels = {
   density: string;
   corners: string;
   heroLayout: string;
+  heroEffect: string;
+  heroEffectHint: string;
+  heroEffectOptions: Record<
+    NonNullable<StorefrontPresentation["heroEffect"]>,
+    string
+  >;
   giftLayout: string;
   artistTemplate: string;
   giftTemplate: string;
@@ -53,6 +59,15 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
   switch (locale) {
     case "en":
       return {
+        heroEffect: "Hero motion",
+        heroEffectHint:
+          "Hero effects play only with Standard motion. They stay still when the device’s reduced motion setting is on.",
+        heroEffectOptions: {
+          STARLIGHT: "Starlight",
+          AURORA: "Aurora",
+          SPOTLIGHT: "Spotlight",
+          PETALS: "Petals",
+        },
         title: "Storewide theme",
         intro: "Choose the storewide appearance, page layouts and motion.",
         reset: "Use default theme",
@@ -123,6 +138,15 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
       };
     case "zh-CN":
       return {
+        heroEffect: "海报动效",
+        heroEffectHint:
+          "海报动效仅在“标准动效”下播放；设备开启“减少动态效果”时，海报保持静止。",
+        heroEffectOptions: {
+          STARLIGHT: "星光漫游",
+          AURORA: "极光流动",
+          SPOTLIGHT: "舞台追光",
+          PETALS: "花瓣轻舞",
+        },
         title: "全站主题",
         intro: "统一调整全站外观、页面布局、详情模板与动效。",
         reset: "使用默认主题",
@@ -180,6 +204,15 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
       };
     case "ja":
       return {
+        heroEffect: "メイン画像の演出",
+        heroEffectHint:
+          "メイン画像の動く演出は、動きが「標準」の場合のみ表示されます。端末の「動きを減らす」設定が有効な場合は静止します。",
+        heroEffectOptions: {
+          STARLIGHT: "星のきらめき",
+          AURORA: "オーロラ",
+          SPOTLIGHT: "スポットライト",
+          PETALS: "舞う花びら",
+        },
         title: "ストア全体のテーマ",
         intro:
           "ストア全体の外観、ページの配置、詳細テンプレートと動きを調整します。",
@@ -250,6 +283,15 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
       };
     case "th":
       return {
+        heroEffect: "เอฟเฟกต์ภาพหลัก",
+        heroEffectHint:
+          "เอฟเฟกต์ภาพหลักจะเคลื่อนไหวเฉพาะเมื่อเลือกการเคลื่อนไหวแบบ “มาตรฐาน” หากอุปกรณ์เปิดการลดการเคลื่อนไหว ภาพจะอยู่นิ่ง",
+        heroEffectOptions: {
+          STARLIGHT: "แสงดาวระยิบระยับ",
+          AURORA: "แสงออโรรา",
+          SPOTLIGHT: "สปอตไลต์",
+          PETALS: "กลีบดอกไม้พลิ้วไหว",
+        },
         title: "ธีมทั้งร้าน",
         intro:
           "ปรับรูปลักษณ์ทั้งร้าน รูปแบบหน้าเว็บ หน้ารายละเอียด และการเคลื่อนไหว",
@@ -319,6 +361,15 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
       };
     case "vi":
       return {
+        heroEffect: "Hiệu ứng ảnh chính",
+        heroEffectHint:
+          "Hiệu ứng ảnh chính chỉ chuyển động khi chọn chế độ “Tiêu chuẩn”. Nếu thiết bị bật giảm chuyển động, ảnh sẽ đứng yên.",
+        heroEffectOptions: {
+          STARLIGHT: "Ánh sao",
+          AURORA: "Cực quang",
+          SPOTLIGHT: "Đèn sân khấu",
+          PETALS: "Cánh hoa bay",
+        },
         title: "Giao diện toàn cửa hàng",
         intro:
           "Chỉnh giao diện toàn cửa hàng, bố cục trang, mẫu trang chi tiết và hiệu ứng chuyển động.",
@@ -393,6 +444,15 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
       };
     case "es":
       return {
+        heroEffect: "Efecto de portada",
+        heroEffectHint:
+          "Los efectos de portada solo se animan con el movimiento «Estándar». Permanecen estáticos si el dispositivo tiene activada la opción de reducir movimiento.",
+        heroEffectOptions: {
+          STARLIGHT: "Luz de estrellas",
+          AURORA: "Aurora",
+          SPOTLIGHT: "Focos de escenario",
+          PETALS: "Pétalos",
+        },
         title: "Tema de toda la tienda",
         intro:
           "Ajusta la apariencia de la tienda, los diseños de página, las plantillas de detalle y el movimiento.",
@@ -475,6 +535,15 @@ function themeLabels(locale: SupportedLocale): ThemeLabels {
       };
     case "pt":
       return {
+        heroEffect: "Efeito da imagem principal",
+        heroEffectHint:
+          "Os efeitos da imagem principal só são animados com o movimento “Padrão”. Ficam estáticos se a opção de reduzir movimento estiver ativada no dispositivo.",
+        heroEffectOptions: {
+          STARLIGHT: "Luz das estrelas",
+          AURORA: "Aurora",
+          SPOTLIGHT: "Luzes do palco",
+          PETALS: "Pétalas",
+        },
         title: "Tema de toda a loja",
         intro:
           "Ajuste a aparência da loja, os layouts de página, os modelos de detalhes e o movimento.",

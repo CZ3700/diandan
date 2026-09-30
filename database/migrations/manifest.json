@@ -570,6 +570,16 @@
         "up": "a69d69b476d7e28aff0eaee412b1dafc696c17fbc1f9099eabe211b9cb2dc1b8",
         "down": "587b964b4e52389ea3eb46f8dd90f502c0eda7709188e3aeb839969f1d776fef"
       }
+    },
+    {
+      "version": "0058",
+      "name": "storefront-hero-effects",
+      "up": "database/migrations/0058_storefront-hero-effects.up.sql",
+      "down": "database/migrations/0058_storefront-hero-effects.down.sql",
+      "sha256": {
+        "up": "c25b7d58c514ee39b7f0d7e0ed822b102c835016255c7171aead8dae7b67d6ea",
+        "down": "0db82a079c73ee194b0802180b9db70b53b4aa79c21744ffaa6f5149438b0dad"
+      }
     }
   ]
 }

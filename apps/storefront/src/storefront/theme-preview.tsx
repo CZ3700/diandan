@@ -41,7 +41,7 @@ export function ThemePreview({
       // new settings; NONE/reduced motion have no CSS animations to replay.
       if (changed) {
         for (const element of root.querySelectorAll(
-          ":is([data-home-hero], .storefront-artist-hero) .storefront-hero-copy :is(h1, .storefront-primary)",
+          ":is([data-home-hero], .storefront-artist-hero) .storefront-hero-copy :is(h1, .storefront-primary, .storefront-hero-actions)",
         )) {
           for (const animation of element.getAnimations()) {
             animation.cancel();

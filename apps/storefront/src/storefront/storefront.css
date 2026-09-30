@@ -257,6 +257,16 @@ html[data-storefront-scheme="LIGHT"][data-storefront-hero-layout="IMMERSIVE"]
   line-height: var(--type-body-leading);
   letter-spacing: var(--type-label-tracking);
 }
+@media (min-width: 48rem) {
+  [data-home-hero] .storefront-home-hero-heading {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+    border: var(--border-width) solid
+      color-mix(in srgb, var(--color-accent) 20%, transparent);
+  }
+}
 .storefront-hero-body {
   color: var(--color-text);
   max-inline-size: calc(var(--layout-reading-max) / 1.5);
@@ -689,7 +699,8 @@ html[data-storefront-scheme="LIGHT"][data-storefront-hero-layout="IMMERSIVE"]
 }
 @media (prefers-reduced-motion: no-preference) {
   .storefront-hero-copy h1,
-  .storefront-hero-copy > .storefront-primary {
+  .storefront-hero-copy > .storefront-primary,
+  .storefront-hero-actions {
     animation: storefront-enter var(--motion-hero-effective) var(--ease-out)
       both;
   }

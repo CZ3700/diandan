@@ -15,11 +15,27 @@ test.each([
   { motion: "SUBTLE" as const },
   { motion: "NONE" as const },
   { motionSpeed: "QUICK" as const },
+  { heroEffect: "AURORA" as const },
+  { heroEffect: "SPOTLIGHT" as const },
+  { heroEffect: "PETALS" as const },
 ])("presentation-only edits are unsaved changes: %j", (change) => {
   const legacy = createDefaultStorefrontTheme();
   const next = { ...legacy, presentation: { ...presentation, ...change } };
   expect(sameTheme(legacy, next)).toBe(false);
   expect(sameTheme(next, legacy)).toBe(false);
+});
+
+test("starlight is the semantic default without rewriting an old presentation", () => {
+  const legacy = { ...createDefaultStorefrontTheme(), presentation };
+  const before = JSON.stringify(legacy);
+  const explicit = {
+    ...legacy,
+    presentation: { ...presentation, heroEffect: "STARLIGHT" as const },
+  };
+  expect(sameTheme(legacy, explicit)).toBe(true);
+  expect(sameTheme(explicit, legacy)).toBe(true);
+  expect(JSON.stringify(legacy)).toBe(before);
+  expect(legacy.presentation).not.toHaveProperty("heroEffect");
 });
 
 test("explicit presentation defaults compare equally without rewriting legacy DTOs", () => {

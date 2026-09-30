@@ -53,3 +53,26 @@ test("the light mobile homepage protects all subtitle lines only at the foot of 
   expect(background).toContain("85%, transparent) 10%");
   expect(background).toContain("transparent 24%");
 });
+
+test("the small homepage heading receives a desktop-only reading tint", async () => {
+  const sheet = postcss.parse(
+    await readFile(new URL("./storefront.css", import.meta.url), "utf8"),
+  );
+  const tints: string[] = [];
+  const inks: string[] = [];
+  sheet.walkAtRules("media", (media) => {
+    if (media.params !== "(min-width: 48rem)") return;
+    media.walkRules((rule) => {
+      if (!rule.selector.includes(".storefront-home-hero-heading")) return;
+      rule.walkDecls("background", (declaration) => {
+        tints.push(declaration.value);
+      });
+      rule.walkDecls("color", (declaration) => {
+        inks.push(declaration.value);
+      });
+    });
+  });
+  expect(tints).toHaveLength(1);
+  expect(inks).toEqual(["var(--color-text)"]);
+  expect(tints[0]).toContain("var(--color-bg)");
+});

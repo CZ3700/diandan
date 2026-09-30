@@ -65,6 +65,37 @@ export function ThemeEditor({
   }
   return (
     <div data-theme-editor>
+      <fieldset
+        disabled={disabled}
+        className="decoration-hero-effects"
+        data-theme-effect-picker
+        aria-describedby="theme-hero-effect-hint"
+      >
+        <legend>{copy.heroEffect}</legend>
+        <p className="mc-hint" id="theme-hero-effect-hint">
+          {copy.heroEffectHint}
+        </p>
+        <div className="decoration-hero-effect-options">
+          {Object.entries(copy.heroEffectOptions).map(([value, label]) => (
+            <label key={value}>
+              <input
+                type="radio"
+                name="storefront-hero-effect"
+                data-theme-setting="heroEffect"
+                value={value}
+                checked={(presentation.heroEffect ?? "STARLIGHT") === value}
+                onChange={() => changePresentation("heroEffect", value)}
+              />
+              <span
+                className="decoration-hero-effect-swatch"
+                data-hero-effect-swatch={value}
+                aria-hidden="true"
+              />
+              <span>{label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <fieldset disabled={disabled} className="decoration-theme-palettes">
         <legend>{copy.palette}</legend>
         {(["DARK", "LIGHT"] as const).map((scheme) => (

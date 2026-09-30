@@ -1,4 +1,9 @@
-import { isValidElement, type ReactElement } from "react";
+import {
+  Children,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 import type * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { beforeEach, expect, test, vi } from "vitest";
@@ -31,9 +36,21 @@ beforeEach(() => {
 test("pause and play change only decorative playback and the button's next action", () => {
   const render = () => HeroMotion({ copy: en });
   const button = (view: ReturnType<typeof render>) => {
-    const result = view.props.children[1];
-    if (!isValidElement(result)) throw new Error("Missing motion control");
-    return result as ReactElement<{ onClick: () => void }>;
+    function find(
+      node: ReactNode,
+    ): ReactElement<{ onClick: () => void }> | undefined {
+      for (const child of Children.toArray(node)) {
+        if (!isValidElement<{ children?: ReactNode }>(child)) continue;
+        if (child.type === "button")
+          return child as ReactElement<{ onClick: () => void }>;
+        const found = find(child.props.children);
+        if (found) return found;
+      }
+      return undefined;
+    }
+    const result = find(view);
+    if (!result) throw new Error("Missing motion control");
+    return result;
   };
   expect(render().props["data-hero-motion"]).toBe("idle");
   state.mount?.();
@@ -56,4 +73,6 @@ test("server markup is deterministic and needs no browser preference or random v
   expect(first).toContain('type="button"');
   expect(first).toContain('aria-hidden="true"');
   expect(first).not.toContain("tabindex=");
+  expect(first).toContain(`aria-label="${en.heroPauseMotion}"`);
+  expect(first).not.toContain(`>${en.heroPauseMotion}<`);
 });

@@ -51,6 +51,7 @@ html[data-storefront-motion="NONE"]
   :is(
     .storefront-hero-copy h1,
     .storefront-hero-copy > .storefront-primary,
+    .storefront-hero-actions,
     .cart-add-button[data-cart-add-state="confirmed"]
   ) {
   animation: none;
@@ -101,7 +102,11 @@ html[data-storefront-motion="SUBTLE"]
 }
 @media (prefers-reduced-motion: no-preference) {
   html[data-storefront-motion="SUBTLE"]
-    :is(.storefront-hero-copy h1, .storefront-hero-copy > .storefront-primary) {
+    :is(
+      .storefront-hero-copy h1,
+      .storefront-hero-copy > .storefront-primary,
+      .storefront-hero-actions
+    ) {
     animation-name: storefront-presentation-fade;
   }
   @keyframes storefront-presentation-fade {

@@ -1,5 +1,16 @@
 # 当前上线进度
 
+## C-20261001 海报动效选择与圆点开关
+
+- LOCAL_ACCEPTED（代码、数据库与本地验证；公开 TEST 待部署）；Codex root / catalog_integration_audit / research_gifts_a / research_gifts_b；2026-10-01。开工按 storefront/合同后端/admin/独立验收分工登记；整合远端至 c30c6852，保留其并行改动。
+- 首页 CTA 右侧为 16px 视觉圆点、44px 点击区域，无可见 Pause/Play 字样；增加 STARLIGHT/AURORA/SPOTLIGHT/PETALS 四个有明显运动的装饰预设。桌面小标题加局部半透明底与主题正文色，手机不改；照片静止，STANDARD/速度/暂停/减少动态规则独立保留。
+- 全站主题新增七语效果选择和真实预览；`presentation.heroEffect` 可选四值，缺省仅显示回退 STARLIGHT，旧 JSON/hash 不变。0058 只扩展 SQL validator，历史含新字段时拒绝有损 down；下一任务迁移须重新分配序号。
+- 先红后绿：受影响测试、实际 PG 409 项、58 迁移/228 表往返通过；回退探针登记0058后97项（含实际PG）通过。隔离全仓 check:dev 原计划强制无缓存 typecheck69/test69/build38 通过，末次桌面颜色增量再跑商城 test/typecheck/build 与 format/lint 通过；admin 提示文案65测试/typecheck/format/lint及强制build通过，独立 S.U.P.E.R/收敛复核通过。
+- 浏览器：前台七语×双端×深浅 28 组、四效果播放/暂停、键盘、错误图片、实际 Chrome reduced-motion 双端8组通过；实际 admin/ThemePreview 组件跨 origin 切换4效果及键盘通过，七语双端14组无横溢；仅组件夹具，不冒充远程整链。
+- 新隔离实例 `test-regression-hero-1001` 正常 HTTPS/BFF/TEST OIDC/CSRF 的保存草稿→发布→公开回读→恢复及鉴权负例70项通过，无直接写 session/DB；重启两端health200、主题hash不变、七语SSR读取PUBLISHED主题。新实例无海报内容，图像由组件浏览器验证；保留既有实例。
+- 限制：额外 check:contracts 有5处与基线相同的 locale 声明问题，生成契约无漂移；未证明低端真机帧率。Mac 缺少远程 TEST 连接，新代码尚未部署；公开端浏览器发布恢复待现有部署端更新后复核。
+- 证据 `output/hero-motion-2026-10-01/FINAL.md`；部署、0058降级边界与后续迁移提醒见 [交接](../handoff/2026-10-01-hero-effects.md)。
+
 ## C-20260930 虚拟礼物按价格降序
 
 - DONE（仅本项公开 TEST 排序）；Codex root / research_gifts_b；2026-09-30；通过后台展示顺序 UI 保存全部 74 款：44 款虚拟礼物按当前 USD 售价降序，30 款实体礼物仍在其后；同价和实体组内原相对顺序保留。

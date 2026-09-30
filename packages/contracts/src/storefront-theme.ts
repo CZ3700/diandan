@@ -12,6 +12,7 @@ export const storefrontPresentationSchema = z.strictObject({
   giftLayout: z.enum(["GRID", "SHOWCASE"]),
   motion: z.enum(["STANDARD", "SUBTLE", "NONE"]),
   motionSpeed: z.enum(["STANDARD", "QUICK"]),
+  heroEffect: z.enum(["STARLIGHT", "AURORA", "SPOTLIGHT", "PETALS"]).optional(),
 });
 export type StorefrontPresentation = z.infer<
   typeof storefrontPresentationSchema

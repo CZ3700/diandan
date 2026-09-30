@@ -121858,6 +121858,15 @@
                             ],
                             "type": "string"
                           },
+                          "heroEffect": {
+                            "enum": [
+                              "STARLIGHT",
+                              "AURORA",
+                              "SPOTLIGHT",
+                              "PETALS"
+                            ],
+                            "type": "string"
+                          },
                           "heroLayout": {
                             "enum": [
                               "IMMERSIVE",
@@ -122050,6 +122059,15 @@
                             "enum": [
                               "GRID",
                               "SHOWCASE"
+                            ],
+                            "type": "string"
+                          },
+                          "heroEffect": {
+                            "enum": [
+                              "STARLIGHT",
+                              "AURORA",
+                              "SPOTLIGHT",
+                              "PETALS"
                             ],
                             "type": "string"
                           },
@@ -142815,6 +142833,15 @@
                     ],
                     "type": "string"
                   },
+                  "heroEffect": {
+                    "enum": [
+                      "STARLIGHT",
+                      "AURORA",
+                      "SPOTLIGHT",
+                      "PETALS"
+                    ],
+                    "type": "string"
+                  },
                   "heroLayout": {
                     "enum": [
                       "IMMERSIVE",
@@ -143010,6 +143037,15 @@
                     ],
                     "type": "string"
                   },
+                  "heroEffect": {
+                    "enum": [
+                      "STARLIGHT",
+                      "AURORA",
+                      "SPOTLIGHT",
+                      "PETALS"
+                    ],
+                    "type": "string"
+                  },
                   "heroLayout": {
                     "enum": [
                       "IMMERSIVE",
@@ -143171,6 +143207,15 @@
                         "enum": [
                           "GRID",
                           "SHOWCASE"
+                        ],
+                        "type": "string"
+                      },
+                      "heroEffect": {
+                        "enum": [
+                          "STARLIGHT",
+                          "AURORA",
+                          "SPOTLIGHT",
+                          "PETALS"
                         ],
                         "type": "string"
                       },
@@ -143366,6 +143411,15 @@
                         "enum": [
                           "GRID",
                           "SHOWCASE"
+                        ],
+                        "type": "string"
+                      },
+                      "heroEffect": {
+                        "enum": [
+                          "STARLIGHT",
+                          "AURORA",
+                          "SPOTLIGHT",
+                          "PETALS"
                         ],
                         "type": "string"
                       },
@@ -143597,6 +143651,15 @@
                                         ],
                                         "type": "string"
                                       },
+                                      "heroEffect": {
+                                        "enum": [
+                                          "STARLIGHT",
+                                          "AURORA",
+                                          "SPOTLIGHT",
+                                          "PETALS"
+                                        ],
+                                        "type": "string"
+                                      },
                                       "heroLayout": {
                                         "enum": [
                                           "IMMERSIVE",
@@ -143789,6 +143852,15 @@
                                         "enum": [
                                           "GRID",
                                           "SHOWCASE"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "heroEffect": {
+                                        "enum": [
+                                          "STARLIGHT",
+                                          "AURORA",
+                                          "SPOTLIGHT",
+                                          "PETALS"
                                         ],
                                         "type": "string"
                                       },
@@ -143995,6 +144067,15 @@
                                         ],
                                         "type": "string"
                                       },
+                                      "heroEffect": {
+                                        "enum": [
+                                          "STARLIGHT",
+                                          "AURORA",
+                                          "SPOTLIGHT",
+                                          "PETALS"
+                                        ],
+                                        "type": "string"
+                                      },
                                       "heroLayout": {
                                         "enum": [
                                           "IMMERSIVE",
@@ -144187,6 +144268,15 @@
                                         "enum": [
                                           "GRID",
                                           "SHOWCASE"
+                                        ],
+                                        "type": "string"
+                                      },
+                                      "heroEffect": {
+                                        "enum": [
+                                          "STARLIGHT",
+                                          "AURORA",
+                                          "SPOTLIGHT",
+                                          "PETALS"
                                         ],
                                         "type": "string"
                                       },
@@ -144432,6 +144522,15 @@
                                   ],
                                   "type": "string"
                                 },
+                                "heroEffect": {
+                                  "enum": [
+                                    "STARLIGHT",
+                                    "AURORA",
+                                    "SPOTLIGHT",
+                                    "PETALS"
+                                  ],
+                                  "type": "string"
+                                },
                                 "heroLayout": {
                                   "enum": [
                                     "IMMERSIVE",
@@ -144624,6 +144723,15 @@
                                   "enum": [
                                     "GRID",
                                     "SHOWCASE"
+                                  ],
+                                  "type": "string"
+                                },
+                                "heroEffect": {
+                                  "enum": [
+                                    "STARLIGHT",
+                                    "AURORA",
+                                    "SPOTLIGHT",
+                                    "PETALS"
                                   ],
                                   "type": "string"
                                 },
@@ -144896,6 +145004,15 @@
                                 ],
                                 "type": "string"
                               },
+                              "heroEffect": {
+                                "enum": [
+                                  "STARLIGHT",
+                                  "AURORA",
+                                  "SPOTLIGHT",
+                                  "PETALS"
+                                ],
+                                "type": "string"
+                              },
                               "heroLayout": {
                                 "enum": [
                                   "IMMERSIVE",
@@ -145088,6 +145205,15 @@
                                 "enum": [
                                   "GRID",
                                   "SHOWCASE"
+                                ],
+                                "type": "string"
+                              },
+                              "heroEffect": {
+                                "enum": [
+                                  "STARLIGHT",
+                                  "AURORA",
+                                  "SPOTLIGHT",
+                                  "PETALS"
                                 ],
                                 "type": "string"
                               },
@@ -145294,6 +145420,15 @@
                                 ],
                                 "type": "string"
                               },
+                              "heroEffect": {
+                                "enum": [
+                                  "STARLIGHT",
+                                  "AURORA",
+                                  "SPOTLIGHT",
+                                  "PETALS"
+                                ],
+                                "type": "string"
+                              },
                               "heroLayout": {
                                 "enum": [
                                   "IMMERSIVE",
@@ -145486,6 +145621,15 @@
                                 "enum": [
                                   "GRID",
                                   "SHOWCASE"
+                                ],
+                                "type": "string"
+                              },
+                              "heroEffect": {
+                                "enum": [
+                                  "STARLIGHT",
+                                  "AURORA",
+                                  "SPOTLIGHT",
+                                  "PETALS"
                                 ],
                                 "type": "string"
                               },
@@ -200898,6 +201042,15 @@
                                 ],
                                 "type": "string"
                               },
+                              "heroEffect": {
+                                "enum": [
+                                  "STARLIGHT",
+                                  "AURORA",
+                                  "SPOTLIGHT",
+                                  "PETALS"
+                                ],
+                                "type": "string"
+                              },
                               "heroLayout": {
                                 "enum": [
                                   "IMMERSIVE",
@@ -201090,6 +201243,15 @@
                                 "enum": [
                                   "GRID",
                                   "SHOWCASE"
+                                ],
+                                "type": "string"
+                              },
+                              "heroEffect": {
+                                "enum": [
+                                  "STARLIGHT",
+                                  "AURORA",
+                                  "SPOTLIGHT",
+                                  "PETALS"
                                 ],
                                 "type": "string"
                               },

@@ -8,6 +8,7 @@ import { Client } from "pg";
 import { verifyStorefrontPresentation } from "./storefront-theme-presentation-cases.mjs";
 import { verifyStorefrontDetailTemplates } from "./storefront-theme-detail-template-cases.mjs";
 import { verifyStorefrontLightPalettes } from "./storefront-theme-light-palette-cases.mjs";
+import { verifyStorefrontHeroEffects } from "./storefront-theme-hero-effect-cases.mjs";
 import {
   createDefaultStorefrontTheme,
   createDefaultHomeLayout,
@@ -441,7 +442,7 @@ await runtime(async (config) => {
       previousVersion,
       check,
     });
-    const finalVersion = await verifyStorefrontLightPalettes({
+    const lightVersion = await verifyStorefrontLightPalettes({
       client,
       migrate,
       execute,
@@ -449,6 +450,17 @@ await runtime(async (config) => {
       publicLayout,
       priorLayout,
       previousVersion: detailVersion,
+      check,
+    });
+    const finalVersion = await verifyStorefrontHeroEffects({
+      client,
+      migrate,
+      execute,
+      publicApp,
+      publicLayout,
+      priorLayout,
+      previousVersion: lightVersion,
+      saveCommand,
       check,
     });
     await persistence.close();

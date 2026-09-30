@@ -113,6 +113,7 @@ export function storefrontThemeAttributes(input: unknown) {
     "data-storefront-gift-layout": presentation.giftLayout,
     "data-storefront-motion": presentation.motion,
     "data-storefront-motion-speed": presentation.motionSpeed,
+    "data-storefront-hero-effect": presentation.heroEffect ?? "STARLIGHT",
     "data-storefront-artist-template": details.artist,
     "data-storefront-gift-template": details.gift,
   } as const;

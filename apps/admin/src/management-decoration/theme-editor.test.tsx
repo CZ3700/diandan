@@ -28,7 +28,7 @@ test.each(SUPPORTED_LOCALES)(
         copy={copyModule!.themeCopy(locale)}
       />,
     );
-    expect(html.match(/type="radio"/gu)).toHaveLength(7);
+    expect(html.match(/data-theme-palette=/gu)).toHaveLength(7);
     expect(html.match(/<select/gu)).toHaveLength(9);
     expect(html.match(/<details/gu)).toHaveLength(1);
     expect(html).not.toMatch(/<details[^>]*\bopen/u);
@@ -102,26 +102,127 @@ test.each(SUPPORTED_LOCALES)(
     }
     expect(new Set(Object.values(copy.palettes)).size).toBe(7);
     expect(html).toMatch(/data-theme-palette="IVORY_GOLD"[^>]*checked/u);
-    expect(html.match(/checked=""/gu)).toHaveLength(1);
+    expect(
+      html.match(/data-theme-palette="[A-Z_]+"[^>]*checked/gu),
+    ).toHaveLength(1);
   },
 );
 
 function control(
   node: unknown,
   field: string,
+  value?: string,
 ): ReactElement<{ onChange: (event: unknown) => void }> | undefined {
   if (Array.isArray(node)) {
     for (const child of node) {
-      const result = control(child, field);
+      const result = control(child, field, value);
       if (result) return result;
     }
     return;
   }
   if (!isValidElement<Record<string, unknown>>(node)) return;
-  if (node.props["data-theme-setting"] === field)
+  if (
+    node.props["data-theme-setting"] === field &&
+    (value === undefined || node.props["value"] === value)
+  )
     return node as ReactElement<{ onChange: (event: unknown) => void }>;
-  return control(node.props["children"], field);
+  return control(node.props["children"], field, value);
 }
+
+test.each(SUPPORTED_LOCALES)(
+  "%s shows four labeled hero effects outside advanced settings",
+  (locale) => {
+    const copy = copyModule!.themeCopy(locale);
+    const onChange = vi.fn();
+    const theme = createDefaultStorefrontTheme();
+    const html = renderToStaticMarkup(
+      editor!.ThemeEditor({ theme, onChange, disabled: true, copy }),
+    );
+    expect(html).toContain("data-theme-effect-picker");
+    const picker = html.match(
+      /<fieldset[^>]*data-theme-effect-picker[^>]*>(.*?)<\/fieldset>/u,
+    );
+    expect(picker).not.toBeNull();
+    expect(picker![0]).toContain('disabled=""');
+    expect(html.indexOf("data-theme-effect-picker")).toBeLessThan(
+      html.indexOf("<details"),
+    );
+    for (const effect of ["STARLIGHT", "AURORA", "SPOTLIGHT", "PETALS"])
+      expect(picker![0]).toContain(`value="${effect}"`);
+    expect(new Set(Object.values(copy.heroEffectOptions)).size).toBe(4);
+    for (const label of Object.values(copy.heroEffectOptions))
+      expect(picker![0]).toContain(label);
+    expect(picker![0]).toMatch(
+      /<input(?=[^>]*value="STARLIGHT")(?=[^>]*checked)[^>]*>/u,
+    );
+    expect(picker![0].match(/type="radio"/gu)).toHaveLength(4);
+    expect(picker![0]).not.toMatch(/undefined|\[object Object\]/u);
+    expect(onChange).not.toHaveBeenCalled();
+    expect(theme).not.toHaveProperty("presentation");
+  },
+);
+
+test.each(["STARLIGHT", "AURORA", "SPOTLIGHT", "PETALS"] as const)(
+  "selecting %s keeps all other theme settings",
+  (heroEffect) => {
+    const theme = {
+      ...createDefaultStorefrontTheme(),
+      palette: "SKY_BLUE" as const,
+      presentation: {
+        heroLayout: "SPLIT" as const,
+        giftLayout: "SHOWCASE" as const,
+        motion: "SUBTLE" as const,
+        motionSpeed: "QUICK" as const,
+      },
+    };
+    const onChange = vi.fn();
+    const tree = editor!.ThemeEditor({
+      theme,
+      onChange,
+      disabled: false,
+      copy: copyModule!.themeCopy("en"),
+    });
+    const option = control(tree, "heroEffect", heroEffect);
+    expect(option).toBeDefined();
+    option!.props.onChange({ currentTarget: { value: heroEffect } });
+    expect(onChange).toHaveBeenCalledExactlyOnceWith({
+      ...theme,
+      presentation: { ...theme.presentation, heroEffect },
+    });
+  },
+);
+
+test.each([
+  ["motion", "NONE"],
+  ["motionSpeed", "QUICK"],
+  ["heroLayout", "SPLIT"],
+  ["artistTemplate", "SPLIT"],
+  ["density", "COMPACT"],
+] as const)(
+  "changing %s preserves the selected hero effect",
+  (field, value) => {
+    const theme = {
+      ...createDefaultStorefrontTheme(),
+      presentation: {
+        heroLayout: "IMMERSIVE" as const,
+        giftLayout: "GRID" as const,
+        motion: "STANDARD" as const,
+        motionSpeed: "STANDARD" as const,
+        heroEffect: "AURORA" as const,
+      },
+    };
+    const onChange = vi.fn();
+    const tree = editor!.ThemeEditor({
+      theme,
+      onChange,
+      disabled: false,
+      copy: copyModule!.themeCopy("en"),
+    });
+    control(tree, field)!.props.onChange({ currentTarget: { value } });
+    expect(onChange).toHaveBeenCalledOnce();
+    expect(onChange.mock.calls[0]?.[0].presentation.heroEffect).toBe("AURORA");
+  },
+);
 
 test("legacy themes show presentation defaults without silently rewriting their saved shape", () => {
   const theme = createDefaultStorefrontTheme();

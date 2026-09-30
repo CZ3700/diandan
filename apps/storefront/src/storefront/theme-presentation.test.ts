@@ -26,6 +26,7 @@ test("published appearance carries its actual version and visual presets without
     "data-storefront-gift-layout": "GRID",
     "data-storefront-motion": "STANDARD",
     "data-storefront-motion-speed": "STANDARD",
+    "data-storefront-hero-effect": "STARLIGHT",
     "data-storefront-artist-template": "IMMERSIVE",
     "data-storefront-gift-template": "IMAGE_LEFT",
     "data-theme-source": "PUBLISHED",

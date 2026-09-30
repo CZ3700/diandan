@@ -30,6 +30,8 @@ export function sameTheme(
     leftPresentation.giftLayout === rightPresentation.giftLayout &&
     leftPresentation.motion === rightPresentation.motion &&
     leftPresentation.motionSpeed === rightPresentation.motionSpeed &&
+    (leftPresentation.heroEffect ?? "STARLIGHT") ===
+      (rightPresentation.heroEffect ?? "STARLIGHT") &&
     leftDetails.artist === rightDetails.artist &&
     leftDetails.gift === rightDetails.gift
   );

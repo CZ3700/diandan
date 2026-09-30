@@ -59,6 +59,102 @@
   border: 0;
   min-width: 0;
 }
+.decoration-hero-effects {
+  padding: 0;
+  margin: 0 0 var(--space-8);
+  min-inline-size: 0;
+  border: 0;
+}
+.decoration-hero-effects legend {
+  margin-block-end: var(--space-2);
+  padding: 0;
+  font-weight: 600;
+}
+.decoration-hero-effect-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin-block-start: var(--space-4);
+}
+.decoration-hero-effect-options label {
+  display: grid;
+  grid-template-columns: var(--space-4) minmax(0, 1fr);
+  gap: var(--space-2);
+  align-items: center;
+  min-block-size: var(--space-12);
+  padding: var(--space-3);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.decoration-hero-effect-options label:has(input:checked) {
+  border-color: var(--color-accent);
+  background: var(--color-surface-raised);
+}
+.decoration-hero-effect-options label:has(input:focus-visible) {
+  outline: var(--focus-ring-width) solid var(--color-accent);
+  outline-offset: var(--focus-ring-offset);
+}
+.decoration-hero-effect-options input {
+  inline-size: var(--space-4);
+  block-size: var(--space-4);
+  margin: 0;
+  accent-color: var(--color-accent);
+}
+.decoration-hero-effect-options input:disabled,
+.decoration-hero-effects:disabled label {
+  cursor: not-allowed;
+}
+.decoration-hero-effect-options label > span:last-child {
+  grid-column: 1 / -1;
+}
+/* Static symbols identify choices; the live storefront iframe remains the preview. */
+.decoration-hero-effect-swatch {
+  display: block;
+  block-size: var(--space-6);
+  border-radius: var(--radius-control);
+  background-color: var(--color-bg);
+  color: var(--color-accent);
+}
+[data-hero-effect-swatch="STARLIGHT"] {
+  background-image:
+    radial-gradient(circle at 20% 30%, currentColor 0 1px, transparent 2px),
+    radial-gradient(circle at 50% 65%, currentColor 0 2px, transparent 3px),
+    radial-gradient(circle at 80% 30%, currentColor 0 1px, transparent 2px);
+}
+[data-hero-effect-swatch="AURORA"] {
+  background-image: linear-gradient(
+    135deg,
+    transparent 10%,
+    color-mix(in srgb, currentColor 70%, transparent) 35%,
+    transparent 55%,
+    color-mix(in srgb, currentColor 45%, transparent) 75%,
+    transparent
+  );
+}
+[data-hero-effect-swatch="SPOTLIGHT"] {
+  background-image:
+    conic-gradient(
+      from 155deg at 25% 0%,
+      transparent,
+      currentColor 18deg,
+      transparent 40deg
+    ),
+    conic-gradient(
+      from 165deg at 80% 0%,
+      transparent,
+      color-mix(in srgb, currentColor 65%, transparent) 18deg,
+      transparent 40deg
+    );
+}
+[data-hero-effect-swatch="PETALS"] {
+  background-image:
+    radial-gradient(ellipse 4px 2px at 25% 35%, currentColor 80%, transparent),
+    radial-gradient(ellipse 3px 5px at 55% 65%, currentColor 80%, transparent),
+    radial-gradient(ellipse 5px 3px at 80% 25%, currentColor 80%, transparent);
+}
 .decoration-theme-palettes legend {
   font-weight: 600;
   padding: 0;

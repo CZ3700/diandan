@@ -109,6 +109,7 @@ test.each([
   { giftLayout: "SHOWCASE" as const },
   { motion: "SUBTLE" as const },
   { motionSpeed: "QUICK" as const },
+  { heroEffect: "AURORA" as const },
 ])(
   "theme save rejects a different presentation-only receipt: %j",
   async (change) => {
@@ -155,6 +156,7 @@ test("theme save sends and accepts the complete presentation without changing th
       giftLayout: "SHOWCASE" as const,
       motion: "SUBTLE" as const,
       motionSpeed: "QUICK" as const,
+      heroEffect: "PETALS" as const,
     },
   };
   const requests: RequestInit[] = [];
