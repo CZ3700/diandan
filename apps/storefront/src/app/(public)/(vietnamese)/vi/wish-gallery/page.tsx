@@ -1,0 +1,4 @@
+import { createWishGalleryPage } from "../../../../../storefront/wish-gallery-page-factory";
+export const dynamic = "force-dynamic";
+export const metadata = { robots: { index: false, follow: false } };
+export default createWishGalleryPage("vi");

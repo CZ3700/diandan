@@ -2,9 +2,10 @@
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { Button, Field } from "@fan-support/ui";
 import type { SupportedLocale } from "@fan-support/contracts";
-import type { OriginalImage, ManagementContext } from "./api";
+import type { OriginalImage, ManagementContext, ManagementApi } from "./api";
 import {
   contentDraftErrors,
+  changeDraftGiftKind,
   initialContentDraft,
   type FormErrors,
   type ContentDraft,
@@ -14,8 +15,10 @@ import type { PhotoEdit } from "./focal-model";
 import { managementCopy } from "./copy";
 import { PhotoInput } from "./photo-input";
 import { ContentOptions, giftKindLabel, ManagementSelect } from "./form-fields";
+import { WishArtistPicker } from "./wish-artist-picker";
 export type ContentFormProps = {
   locale: SupportedLocale;
+  api?: Pick<ManagementApi, "wishArtists">;
   context: ManagementContext;
   kind: "SAVE_ARTIST" | "SAVE_GIFT";
   item: EditableItem | null;
@@ -31,6 +34,7 @@ export type ContentFormProps = {
   assignment?: ReactNode;
 };
 export function ContentForm({
+  api,
   locale,
   context,
   kind,
@@ -46,6 +50,16 @@ export function ContentForm({
     initialContentDraft(locale, context, item),
   );
   const initial = useRef(draft);
+  const ordinaryInventory = useRef({
+    policy:
+      item?.kind === "GIFT"
+        ? (item.inventory?.policy ?? "PROCURE_ON_DEMAND")
+        : "PROCURE_ON_DEMAND",
+    quantity:
+      item?.kind === "GIFT" && item.inventory?.policy === "TRACKED"
+        ? String(item.inventory.quantity)
+        : "",
+  } as Pick<ContentDraft, "policy" | "quantity">);
   const [image, setImage] = useState<PhotoEdit | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -60,6 +74,7 @@ export function ContentForm({
   const update = (patch: Partial<ContentDraft>) =>
     setDraft((current) => ({ ...current, ...patch }));
   const gift = kind === "SAVE_GIFT";
+  const wish = item?.kind === "GIFT" && "wish" in item ? item.wish : undefined;
   return (
     <form
       ref={form}
@@ -159,9 +174,21 @@ export function ContentForm({
                 name="giftKind"
                 label={copy.kind}
                 value={draft.giftKind}
-                onChange={(value) =>
-                  update({ giftKind: value as ContentDraft["giftKind"] })
-                }
+                disabled={Boolean(wish)}
+                onChange={(value) => {
+                  if (draft.giftKind !== "WISH")
+                    ordinaryInventory.current = {
+                      policy: draft.policy,
+                      quantity: draft.quantity,
+                    };
+                  setDraft((current) =>
+                    changeDraftGiftKind(
+                      current,
+                      value as ContentDraft["giftKind"],
+                      ordinaryInventory.current,
+                    ),
+                  );
+                }}
               >
                 {context.giftKinds.map((type) => (
                   <option key={type} value={type}>
@@ -170,6 +197,26 @@ export function ContentForm({
                 ))}
               </ManagementSelect>
             </div>
+          ) : null}
+          {gift && draft.giftKind === "WISH" ? (
+            <>
+              <WishArtistPicker
+                api={api}
+                locale={locale}
+                copy={copy}
+                value={draft.wishArtistId}
+                wish={wish}
+                onChange={(wishArtistId) => update({ wishArtistId })}
+                error={
+                  errors.wishArtistId ? copy[errors.wishArtistId] : undefined
+                }
+              />
+              {errors.quantity || errors.locationId ? (
+                <p className="mc-error" role="alert">
+                  {copy[errors.quantity ?? errors.locationId!]}
+                </p>
+              ) : null}
+            </>
           ) : null}
           <ContentOptions
             draft={draft}

@@ -342,6 +342,7 @@ function render(context: DailyPublicationContext): PublishedContentResponse {
           status: context.current.status,
           ...fields,
           ...structure,
+          ...(context.wish ? { wish: context.wish } : {}),
           primaryMedia: role("PRIMARY"),
           gallery,
           variants: document.variants.map((frozenVariant) => {

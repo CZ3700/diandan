@@ -349,5 +349,42 @@ const copy = {
   marketSelected: "Selected",
   marketInvalid:
     "This market or currency is unavailable. Please select an available combination.",
+  wishTitle: "Artist wishes",
+  wishOnlyFor: "A wish for {artist}",
+  wishOpen: "Available to support",
+  wishPaymentPending: "Payment in progress",
+  wishSupported: "Wish supported",
+  wishDelivered: "Delivered",
+  wishUnavailable: "This wish is unavailable.",
+  wishShowcaseTitle: "Wish gallery",
+  wishShowcaseIntro: "A collection of wishes supported by fans.",
+  wishShowcaseEmpty: "No shared wishes yet.",
+  wishShowcaseMore: "View all wishes",
+  wishDisplayOptIn: "Show this support in the wish gallery",
+  wishDisplayAnonymous: "Anonymous supporter",
+  wishDisplayAlias: "Public name",
+  wishAliasLabel: "Your public name",
+  wishAliasHint:
+    "This name will be public. Your private name and message will not be shared.",
+  wishAliasInvalid: "Enter a public name of 1–40 characters.",
+  wishRecordPlanned: "Share after payment",
+  wishEdit: "Edit wish details",
+  wishRecordTitle: "Gallery record",
+  wishRecordPrivate: "Not shared",
+  wishRecordPublic: "Shared in the gallery",
+  wishRecordSave: "Save gallery settings",
+  wishRecordSaving: "Saving…",
+  wishRecordSaved: "Gallery settings saved.",
+  wishRecordSaveFailed:
+    "The settings could not be saved. Your changes are still here; try again.",
+  wishRecordHidden: "This record is hidden from the gallery.",
+  wishRecordHide: "Hide from gallery",
+  wishSupportedBy: "{supporter} supported a wish for {artist} on {date}.",
+  wishGalleryError: "The wish gallery is unavailable. Please try again.",
+  wishOnlyOnce:
+    "Each wish can be supported once. It is no longer available after payment is confirmed.",
+  wishReversed: "Support withdrawn",
+  wishPrivacyWithdrawHint:
+    "You can hide this record from the gallery at any time in your order details.",
 } as const;
 export default copy;

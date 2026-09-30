@@ -43,6 +43,49 @@ const row = {
   gift_image_alt_daily_translation_id: null,
   delivery_proofs: [],
 };
+test("a privately authorized wish record reflects withdrawal and financial revocation without claiming delivery", () => {
+  const wish = {
+    ...row,
+    gift_kind: "WISH",
+    wish_entry_id: id,
+    wish_supported_at: "2026-10-01T00:00:00.000Z",
+    wish_visibility: "PUBLIC_NAMED",
+    wish_public_alias: "Moon friend",
+    wish_withdrawn: true,
+  };
+  const record = module!.orderAccessItem(
+    wish,
+    1,
+    "https://cdn.example.invalid/",
+  );
+  expect(record).toMatchObject({
+    fulfillmentStatus: "PENDING",
+    supportCertificate: null,
+    wishSupport: {
+      entryId: id,
+      visibility: "PUBLIC_NAMED",
+      publicAlias: "Moon friend",
+      withdrawn: true,
+      revoked: false,
+    },
+  });
+  for (const change of [{ refunded_in_full: true }, {}]) {
+    const value = module!.orderAccessItem(
+      { ...wish, ...change },
+      1,
+      "https://cdn.example.invalid/",
+      "LOST",
+    );
+    expect(value).toMatchObject({ wishSupport: { revoked: true } });
+  }
+  expect(
+    module!.orderAccessItem(
+      { ...row, gift_kind: "WISH" },
+      1,
+      "https://cdn.example.invalid/",
+    ),
+  ).not.toHaveProperty("wishSupport");
+});
 test("legacy historical items have no invented variant label or private references", () => {
   expect(module).toBeDefined();
   const result = module!.orderAccessItem(

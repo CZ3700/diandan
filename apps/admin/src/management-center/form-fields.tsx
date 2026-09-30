@@ -1,4 +1,8 @@
-import { LOCALE_NATIVE_NAMES, SUPPORTED_LOCALES } from "@fan-support/contracts";
+import {
+  LOCALE_NATIVE_NAMES,
+  SUPPORTED_LOCALES,
+  type WishGiftSummary,
+} from "@fan-support/contracts";
 import type { ReactNode } from "react";
 import type { ManagementContext } from "./api";
 import type { ManagementCopy } from "./copy";
@@ -74,6 +78,18 @@ export function giftKindLabel(
     case "OTHER":
       return copy.other;
   }
+}
+export function wishStatusLabel(
+  status: WishGiftSummary["status"],
+  copy: ManagementCopy,
+) {
+  const keys = {
+    AVAILABLE: "wishAvailable",
+    RESERVED: "wishReserved",
+    SUPPORTED: "wishSupported",
+    UNAVAILABLE: "wishUnavailable",
+  } as const;
+  return copy[keys[status]];
 }
 function categoryLabel(
   category: ContentDraft["category"],
@@ -206,23 +222,25 @@ export function ContentOptions({
                 </option>
               ))}
             </ManagementSelect>
-            <ManagementSelect
-              name="policy"
-              label={copy.inventory}
-              value={draft.policy}
-              disabled={inventoryPolicyLocked}
-              description={
-                inventoryPolicyLocked ? copy.inventoryPolicyLocked : undefined
-              }
-              onChange={(value) =>
-                update({ policy: value as ContentDraft["policy"] })
-              }
-            >
-              <option value="PROCURE_ON_DEMAND">{copy.madeToOrder}</option>
-              <option value="TRACKED">{copy.tracked}</option>
-              <option value="PREORDER">{copy.preorder}</option>
-            </ManagementSelect>
-            {draft.policy === "TRACKED" ? (
+            {draft.giftKind !== "WISH" ? (
+              <ManagementSelect
+                name="policy"
+                label={copy.inventory}
+                value={draft.policy}
+                disabled={inventoryPolicyLocked}
+                description={
+                  inventoryPolicyLocked ? copy.inventoryPolicyLocked : undefined
+                }
+                onChange={(value) =>
+                  update({ policy: value as ContentDraft["policy"] })
+                }
+              >
+                <option value="PROCURE_ON_DEMAND">{copy.madeToOrder}</option>
+                <option value="TRACKED">{copy.tracked}</option>
+                <option value="PREORDER">{copy.preorder}</option>
+              </ManagementSelect>
+            ) : null}
+            {draft.giftKind !== "WISH" && draft.policy === "TRACKED" ? (
               <div className="mc-field">
                 <label htmlFor="management-quantity">{copy.quantity}</label>
                 <input

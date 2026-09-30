@@ -4,11 +4,13 @@ import type {
   IdolDirectoryResponse,
   StorefrontGiftRecipient,
   SupportedLocale,
+  WishGiftSummary,
 } from "@fan-support/contracts";
-import type { StorefrontCopy } from "./copy";
+import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
 import { GiftRecipientPicker } from "./gift-recipient";
 import { PublishedImage } from "./published-image";
 import { storefrontHref } from "./navigation";
+import { wishStatusLabel } from "./wish-status";
 
 type Recipient =
   | Extract<StorefrontGiftRecipient, { kind: "PUBLISHED" }>
@@ -20,6 +22,7 @@ type Props = Readonly<{
   copy: StorefrontCopy;
   contextQuery: string;
   path: string;
+  wish?: WishGiftSummary;
 }>;
 
 function selectedRecipient(
@@ -101,6 +104,35 @@ async function RecipientPicker({ artists, recipient, ...props }: Props) {
 }
 
 export function GiftDetailRecipient(props: Props) {
+  if (props.wish) {
+    const { wish, copy, locale } = props;
+    const query = new URLSearchParams(props.contextQuery);
+    query.delete("idol");
+    return (
+      <section
+        className="gift-recipient-summary wish-recipient"
+        data-wish-status={wish.status}
+        aria-labelledby="gift-recipient-title"
+      >
+        <h2 id="gift-recipient-title">
+          {formatStorefrontMessage(copy, "wishOnlyFor", locale, {
+            artist: wish.artistName,
+          })}
+        </h2>
+        <a
+          href={storefrontHref(
+            locale,
+            `/idols/${wish.artistHandle}`,
+            query.toString(),
+          )}
+        >
+          {wish.artistName}
+        </a>
+        <p role="status">{wishStatusLabel(wish.status, copy)}</p>
+        <p className="wish-fine-print">{copy.wishOnlyOnce}</p>
+      </section>
+    );
+  }
   const recipient =
     props.recipient ??
     (new URLSearchParams(props.contextQuery).has("idol")

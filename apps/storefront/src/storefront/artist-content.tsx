@@ -15,12 +15,14 @@ export function ArtistContent({
   copy,
   contextQuery,
   gifts,
+  wishes,
 }: Readonly<{
   artist: PublishedIdolView;
   locale: SupportedLocale;
   copy: StorefrontCopy;
   contextQuery: string;
   gifts?: ReactNode;
+  wishes?: ReactNode;
 }>) {
   const query = new URLSearchParams(contextQuery);
   query.set("idol", artist.id);
@@ -70,6 +72,7 @@ export function ArtistContent({
         artist.localeContext.fallbackUsed && (
           <p className="storefront-announcement">{copy.fallbackNotice}</p>
         )}
+      {wishes}
       <section className="storefront-section storefront-story">
         <h2>{copy.aboutArtist}</h2>
         <div lang={artist.localeContext.resolvedLocale}>

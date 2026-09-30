@@ -52,6 +52,7 @@ test("TEST composition validates its boundary before creating persistence and ow
   const manager = { runInOrderAccessTransaction: vi.fn() };
   const createPersistence = vi.fn(() => ({
     orderAccessTransactionManager: manager,
+    wishGalleryTransactionManager: { runInWishGalleryTransaction: vi.fn() },
     close,
   }));
   const keyManagement = {
@@ -82,6 +83,10 @@ test("TEST composition validates its boundary before creating persistence and ow
   } as never);
   expect(composition.orderAccessRoute.configuration).toEqual(configuration);
   expect(composition.orderAccessRoute.useCases.read).toBeTypeOf("function");
+  expect(composition.orderAccessRoute.wishGallery?.read).toBeTypeOf("function");
+  expect(composition.orderAccessRoute.wishGallery?.withdraw).toBeTypeOf(
+    "function",
+  );
   expect(createPersistence).toHaveBeenCalledWith(options.database, {
     catalogPublicMediaBaseUrl: options.publicMediaBaseUrl,
   });

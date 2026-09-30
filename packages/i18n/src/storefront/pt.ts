@@ -351,5 +351,42 @@ const copy = {
   marketSelected: "Selecionado",
   marketInvalid:
     "Este mercado ou moeda não está disponível. Escolha uma combinação disponível.",
+  wishTitle: "Desejos dos artistas",
+  wishOnlyFor: "Um desejo para {artist}",
+  wishOpen: "Disponível para apoiar",
+  wishPaymentPending: "Pagamento em andamento",
+  wishSupported: "Desejo apoiado",
+  wishDelivered: "Entregue",
+  wishUnavailable: "Este desejo está indisponível.",
+  wishShowcaseTitle: "Galeria de desejos",
+  wishShowcaseIntro: "Uma coleção de desejos apoiados por fãs.",
+  wishShowcaseEmpty: "Ainda não há registros compartilhados.",
+  wishShowcaseMore: "Ver todos os desejos",
+  wishDisplayOptIn: "Mostrar este apoio na galeria de desejos",
+  wishDisplayAnonymous: "Apoiador anônimo",
+  wishDisplayAlias: "Nome público",
+  wishAliasLabel: "Seu nome público",
+  wishAliasHint:
+    "Este nome será público. Seu nome privado e sua mensagem não serão compartilhados.",
+  wishAliasInvalid: "Digite um nome público de 1 a 40 caracteres.",
+  wishRecordPlanned: "Compartilhar após o pagamento",
+  wishEdit: "Editar detalhes do desejo",
+  wishRecordTitle: "Registro da galeria",
+  wishRecordPrivate: "Não compartilhado",
+  wishRecordPublic: "Compartilhado na galeria",
+  wishRecordSave: "Salvar ajustes da galeria",
+  wishRecordSaving: "Salvando…",
+  wishRecordSaved: "Ajustes da galeria salvos.",
+  wishRecordSaveFailed:
+    "Não foi possível salvar. Suas alterações foram mantidas; tente novamente.",
+  wishRecordHidden: "Este registro está oculto na galeria.",
+  wishRecordHide: "Ocultar na galeria",
+  wishSupportedBy: "{supporter} apoiou um desejo de {artist} em {date}.",
+  wishGalleryError: "A galeria está indisponível. Tente novamente.",
+  wishOnlyOnce:
+    "Cada desejo pode receber apoio apenas uma vez. A venda termina após a confirmação do pagamento.",
+  wishReversed: "Apoio retirado",
+  wishPrivacyWithdrawHint:
+    "Você pode ocultar este registro na galeria a qualquer momento nos detalhes do pedido.",
 } as const;
 export default copy;

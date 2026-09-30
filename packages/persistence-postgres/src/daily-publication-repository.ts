@@ -1,3 +1,4 @@
+import { prepareDailyWishBinding } from "./wish-binding.js";
 import { validateDailyGiftCommerceEdit } from "./daily-publication-commerce.js";
 import { resolveManagementClaimImageSource } from "./management-image-source.js";
 import { randomUUID } from "node:crypto";
@@ -136,6 +137,11 @@ async function prepareCatalog(
         prior["status"] === "archived"
   )
     return null;
+  if (intent.kind === "SAVE_GIFT")
+    await client.query(
+      "SELECT wish_id FROM public.wish_bindings WHERE gift_id=$1 FOR UPDATE",
+      [targetId],
+    );
   if (intent.kind === "SAVE_GIFT" && "commerceEdit" in intent) {
     const rows = await draftRows(
       client,
@@ -306,6 +312,7 @@ async function prepareCatalog(
       `INSERT INTO public.gift_variant_recipient_rules(gift_variant_id,rule,operation_id) VALUES($1,'ALL_ACTIVE_ARTISTS',$2) ON CONFLICT(gift_variant_id) DO NOTHING`,
       [variantId, claim.operation.operationId],
     );
+    await prepareDailyWishBinding(client, claim, targetId, variantId, time);
     const variant = giftVariantDefinitionSchema.parse({
       schemaVersion: 1,
       id: variantId,

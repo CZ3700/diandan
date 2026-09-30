@@ -6,6 +6,7 @@
  */
 import assert from "node:assert/strict";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
@@ -232,11 +233,11 @@ function rendition(uploadId, fill, width, height) {
 
 async function main() {
   await withEphemeralPostgres(async (clientConfig) => {
-    // Pin the scenario to its own migration so the rollback refusal below exercises 0040.
-    await runMigrations({
+    // The fan read projection uses current repository code and therefore needs the current schema.
+    const migrated = await runMigrations({
       clientConfig,
       workspaceRoot,
-      command: { direction: "up", targetVersion: "0040" },
+      command: { direction: "up" },
     });
     const client = new Client(clientConfig);
     await client.connect();
@@ -719,21 +720,29 @@ async function main() {
       );
 
       // 9. Rollback refuses to discard delivery evidence.
-      let refused = false;
+      // Probe the historical guard directly so a newer registered head cannot produce a false pass
+      // merely because runMigrations rejects confirmVersion=0040 before executing the guard.
+      await client.query("BEGIN");
       try {
-        await runMigrations({
-          clientConfig,
-          workspaceRoot,
-          command: { direction: "down", confirmVersion: "0040" },
-        });
-      } catch {
-        refused = true;
+        const down = await readFile(
+          path.join(
+            workspaceRoot,
+            "database/migrations/0040_delivery-proofs.down.sql",
+          ),
+          "utf8",
+        );
+        await expectFailure(
+          () => client.query(down),
+          "55000",
+          "0040 down refuses to discard existing delivery evidence",
+        );
+      } finally {
+        await client.query("ROLLBACK");
       }
-      check(refused, "0040 down is refused while proofs exist");
       check(
         (await sql("SELECT max(version) v FROM schema_migrations"))[0].v ===
-          "0040",
-        "the schema stays at 0040",
+          migrated.currentVersion,
+        "the current registered schema head is unchanged by the historical rollback probe",
       );
     } catch (error) {
       // The harness replaces callback errors; report only safe classification first.

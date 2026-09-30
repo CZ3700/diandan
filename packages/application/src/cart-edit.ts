@@ -162,6 +162,9 @@ export function createCartEditUseCases({
           displayMode: command.change.displayMode,
           fanMessageLocale: command.change.fanMessageLocale,
           privateContent: prepared.privateContent,
+          ...(command.change.galleryPreference
+            ? { galleryPreference: command.change.galleryPreference }
+            : {}),
         };
       }
       return persist(

@@ -1,5 +1,18 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  wishArtist: "受け取るアーティスト",
+  wishArtistRequired: "このウィッシュを受け取るアーティストを選んでください。",
+  wishArtistChoose: "このアーティストを選ぶ",
+  wishArtistChange: "別のアーティストを選ぶ",
+  wishArtistLocked: "このウィッシュの受取人は確定しており、変更できません。",
+  wishOnlyOnce:
+    "各ウィッシュは一度だけサポートできます。お支払い確認後に販売を終了します。",
+  wishArtistUnavailable:
+    "このアーティストは現在ウィッシュギフトを受け取れません。",
+  wishAvailable: "サポート受付中",
+  wishReserved: "お支払いを確認中",
+  wishSupported: "サポート済み",
+  wishUnavailable: "受付停止中",
   interfaceLanguage: "表示言語",
   discardEdits: "未保存の変更を破棄して、このページを離れますか？",
   adjustFocus: "画像の焦点を調整",

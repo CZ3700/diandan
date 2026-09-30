@@ -1,3 +1,4 @@
+import { wishGiftSummarySchema } from "./wish-binding.js";
 import { z } from "zod";
 import {
   priceBookRevisionSchema,
@@ -153,6 +154,7 @@ export const dailyPublicationContextSchema = z.strictObject({
   schemaVersion: z.literal(3),
   publicationMode: z.literal("DIRECT_OPERATOR_V1"),
   locale: supportedLocaleSchema,
+  wish: wishGiftSummarySchema.optional(),
   publication: z.strictObject({
     publicationId: uuid,
     revisionId: uuid,

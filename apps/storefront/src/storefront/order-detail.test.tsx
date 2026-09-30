@@ -437,3 +437,35 @@ describe("private delivery photos", () => {
     expect(japanese).toContain("お届け写真 1/2 を表示");
   });
 });
+
+it("shows a paid wish record before delivery, without exposing private personalization", async () => {
+  const { OrderDetail } = await import("./order-detail");
+  const detail = orderAccessDetailSchema.parse({
+    ...order,
+    items: [
+      {
+        ...order.items[0],
+        giftKind: "WISH",
+        wishSupport: {
+          entryId: "20000000-0000-4000-8000-000000000001",
+          supportedAt: "2026-10-01T02:00:00.000Z",
+          visibility: "PUBLIC_ANONYMOUS",
+          withdrawn: false,
+          revoked: false,
+        },
+      },
+    ],
+  });
+  const html = renderToStaticMarkup(
+    <OrderDetail
+      order={detail}
+      locale="en"
+      copy={copy}
+      onWithdrawWish={async () => true}
+    />,
+  );
+  expect(html).toContain(copy.wishSupported);
+  expect(html).toContain(copy.wishRecordPublic);
+  expect(html).toContain(copy.wishRecordHide);
+  expect(html).not.toContain("Your private name");
+});

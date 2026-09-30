@@ -6,6 +6,7 @@ import {
 } from "@fan-support/contracts";
 
 export type OrderOperation =
+  | { kind: "wish-withdraw"; publicOrderId: string; entryId: string }
   | { kind: "exchange" }
   | { kind: "bootstrap" }
   | { kind: "read"; publicOrderId: string }
@@ -51,7 +52,7 @@ export function validateOrderResponse(
   value: unknown,
   status: number,
   headers: Headers,
-  operation: OrderOperation,
+  operation: Exclude<OrderOperation, { kind: "wish-withdraw" }>,
 ): {
   result: OrderAccessResponse;
   csrf?: string;

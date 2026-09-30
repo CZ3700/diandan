@@ -1,3 +1,4 @@
+import { lockCartWishBindings } from "./wish-binding.js";
 import {
   checkoutPreflightCurrentSchema,
   checkoutPreflightInventoryFactsSchema,
@@ -225,6 +226,7 @@ export async function loadCheckoutCurrent(
     `SELECT i.id,i.gift_variant_id,i.observed_price_id,i.quantity,i.display_mode,i.version::text,s.id intent_id,s.idol_id,s.version::text intent_version,s.status intent_status,s.privacy_state,s.expires_at<=clock_timestamp() intent_expired,g.handle gift_handle FROM public.cart_items i JOIN public.support_intents s ON s.cart_item_id=i.id JOIN public.gift_variants v ON v.id=i.gift_variant_id JOIN public.gifts g ON g.id=v.gift_id WHERE i.cart_id=$1::uuid AND s.status IS DISTINCT FROM 'CANCELED' ORDER BY i.id LIMIT 501 FOR UPDATE OF i,s`,
     [cart.id],
   );
+  await lockCartWishBindings(client, cart.id);
   if (items.length === 0) return rejectCheckout("EMPTY_CART");
   if (items.length > 500) return rejectCheckout("CONTENT_UNAVAILABLE");
   const lines: CheckoutPreflightLineFacts[] = [],

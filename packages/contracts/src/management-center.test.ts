@@ -27,6 +27,35 @@ const gift = {
   eligibility: { rule: "ALL_ACTIVE_ARTISTS" },
 };
 describe("management center boundary", () => {
+  it("requires a single artist and one tracked unit for new wish submissions without rewriting legacy intents", () => {
+    const legacy = { ...gift, giftKind: "WISH" };
+    expect(managementCenterIntentSchema.parse(legacy)).toEqual(legacy);
+    const submit = (intent: unknown) =>
+      managementCenterCommandSchema.safeParse({
+        schemaVersion: 1,
+        action: "SUBMIT",
+        intent,
+        idempotencyKey: "wish-create-0000001",
+      }).success;
+    const wish = {
+      ...legacy,
+      eligibility: { rule: "SINGLE_ARTIST", idolId: id },
+      inventory: { policy: "TRACKED", locationId: id, quantity: 1 },
+    };
+    expect(submit(wish)).toBe(true);
+    expect(submit(legacy)).toBe(false);
+    for (const invalid of [
+      { ...wish, giftKind: "PHYSICAL" },
+      { ...wish, eligibility: { rule: "SINGLE_ARTIST" } },
+      { ...wish, inventory: { policy: "PROCURE_ON_DEMAND" } },
+      {
+        ...wish,
+        inventory: { policy: "TRACKED", locationId: id, quantity: 2 },
+      },
+    ])
+      expect(submit(invalid)).toBe(false);
+    expect(managementCenterIntentSchema.parse(gift)).toEqual(gift);
+  });
   it("exposes an explicit inventory policy lock without disabling gift editing", () => {
     const item = {
       kind: "GIFT",

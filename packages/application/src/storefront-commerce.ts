@@ -28,17 +28,19 @@ const failure = <
 const sameId = (left: string, right: string) =>
   left.toLowerCase() === right.toLowerCase();
 type Loaded = Extract<StorefrontGiftContextResponse, { outcome: "SUCCESS" }>;
-function projectRecipient(loaded: Loaded): StorefrontGiftRecipient {
+function projectRecipient(
+  loaded: Loaded,
+  boundArtistId?: string,
+): StorefrontGiftRecipient {
   const { recipient, command } = loaded;
+  const recipientId = boundArtistId ?? command.idolId;
   if (recipient.kind === "NONE") {
-    if (command.idolId !== undefined)
-      throw new Error("Invalid recipient binding");
+    if (recipientId !== undefined) throw new Error("Invalid recipient binding");
     return recipient;
   }
-  if (command.idolId === undefined)
-    throw new Error("Invalid recipient binding");
+  if (recipientId === undefined) throw new Error("Invalid recipient binding");
   if (recipient.kind === "UNAVAILABLE") {
-    if (!sameId(command.idolId, recipient.idolId))
+    if (!sameId(recipientId, recipient.idolId))
       throw new Error("Invalid recipient binding");
     return recipient;
   }
@@ -55,7 +57,7 @@ function projectRecipient(loaded: Loaded): StorefrontGiftRecipient {
     portrait,
   } = result.content.view;
   if (
-    !sameId(command.idolId, id) ||
+    !sameId(recipientId, id) ||
     localeContext.requestedLocale !== command.locale ||
     (localeContext.schemaVersion === 2
       ? localeContext.resolvedLocale !== localeContext.sourceLocale ||
@@ -162,7 +164,12 @@ export function createStorefrontCommerceUseCases({
                 )
                   return failure("CONTENT_UNAVAILABLE");
               }
-              const recipient = projectRecipient(loaded);
+              const recipient = projectRecipient(
+                loaded,
+                "wish" in gift.content.view
+                  ? gift.content.view.wish?.artistId
+                  : undefined,
+              );
               const offers = projectStorefrontGiftOffers({
                 schemaVersion: 1,
                 giftStatus: gift.content.view.status,

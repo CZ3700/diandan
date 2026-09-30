@@ -1,7 +1,12 @@
 "use client";
 import { useId, useRef, useState, useEffect } from "react";
 import { Quantity } from "@fan-support/ui/client";
-import type { SupportedLocale } from "@fan-support/contracts";
+import {
+  wishGalleryPreferenceSchema,
+  type SupportedLocale,
+  type WishGalleryPreference,
+} from "@fan-support/contracts";
+import { WishGalleryChoice } from "./wish-gallery-choice";
 import type { StorefrontCopy } from "./copy";
 import { useCartSession } from "./cart-provider";
 import { createCartMutation, type CartMutation } from "./cart-session";
@@ -23,6 +28,7 @@ export type GiftAddProps = Readonly<{
   market: string;
   currency: string;
   max: number;
+  wish?: boolean;
 }>;
 /** Buying now adds the gift to the bag, then checks out the whole bag in the same locale. */
 export function giftCheckoutHref(locale: SupportedLocale): string {
@@ -33,6 +39,8 @@ export function GiftAdd(props: GiftAddProps) {
   const session = useCartSession();
   const id = useId();
   const [quantity, setQuantity] = useState(1);
+  const [galleryPreference, setGalleryPreference] =
+    useState<WishGalleryPreference>({ visibility: "PRIVATE" });
   const [draft, setDraft] = useState(() => emptyCartDraft(locale));
   const [status, setStatus] = useState<
     "idle" | "pending" | "confirmed" | "error"
@@ -49,6 +57,7 @@ export function GiftAdd(props: GiftAddProps) {
       epoch.current++;
       pending.current = null;
       setDraft(emptyCartDraft(locale));
+      setGalleryPreference({ visibility: "PRIVATE" });
       setStatus("idle");
       setError(null);
     };
@@ -64,6 +73,13 @@ export function GiftAdd(props: GiftAddProps) {
     if (running.current) return;
     if (!session || !validCartDraft(draft)) {
       setError(copy.cartInvalid);
+      return;
+    }
+    if (
+      props.wish &&
+      !wishGalleryPreferenceSchema.safeParse(galleryPreference).success
+    ) {
+      setError(copy.wishAliasInvalid);
       return;
     }
     const generation = epoch.current;
@@ -93,7 +109,8 @@ export function GiftAdd(props: GiftAddProps) {
           giftVariantId: props.giftVariantId,
           idolId: props.idolId,
           observedPriceId: props.observedPriceId,
-          quantity,
+          quantity: props.wish ? 1 : quantity,
+          ...(props.wish ? { galleryPreference } : {}),
           ...cartPersonalization(draft),
         },
       );
@@ -102,6 +119,7 @@ export function GiftAdd(props: GiftAddProps) {
       if (result.outcome === "SUCCESS") {
         pending.current = null;
         setDraft(emptyCartDraft(locale));
+        setGalleryPreference({ visibility: "PRIVATE" });
         // Stay pending while the browser leaves for checkout.
         if (buyNow) window.location.assign(giftCheckoutHref(locale));
         else setStatus("confirmed");
@@ -123,20 +141,22 @@ export function GiftAdd(props: GiftAddProps) {
         void add();
       }}
     >
-      <Quantity
-        id={id}
-        label={copy.giftQuantity}
-        decreaseLabel={copy.giftQuantityDecrease}
-        increaseLabel={copy.giftQuantityIncrease}
-        min={1}
-        max={max}
-        value={quantity}
-        disabled={status === "pending" || pending.current !== null}
-        onValueChange={(value) => {
-          setQuantity(value);
-          setStatus("idle");
-        }}
-      />
+      {!props.wish && (
+        <Quantity
+          id={id}
+          label={copy.giftQuantity}
+          decreaseLabel={copy.giftQuantityDecrease}
+          increaseLabel={copy.giftQuantityIncrease}
+          min={1}
+          max={max}
+          value={quantity}
+          disabled={status === "pending" || pending.current !== null}
+          onValueChange={(value) => {
+            setQuantity(value);
+            setStatus("idle");
+          }}
+        />
+      )}
       <CartPersonalization
         draft={draft}
         onChange={(value) => {
@@ -146,6 +166,18 @@ export function GiftAdd(props: GiftAddProps) {
         copy={copy}
         disabled={status === "pending" || pending.current !== null}
       />
+      {props.wish && (
+        <WishGalleryChoice
+          value={galleryPreference}
+          onChange={(value) => {
+            setGalleryPreference(value);
+            setError(null);
+          }}
+          copy={copy}
+          invalid={error === copy.wishAliasInvalid}
+          disabled={status === "pending" || pending.current !== null}
+        />
+      )}
       <div className="gift-add-actions">
         <button
           className="storefront-primary gift-buy-now"

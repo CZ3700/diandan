@@ -1,0 +1,10 @@
+import { handleWishWithdrawRequest } from "../../../../../../../../server/wish-withdraw-proxy";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const POST = handleWishWithdrawRequest;
+export const GET = handleWishWithdrawRequest;
+export const HEAD = handleWishWithdrawRequest;
+export const OPTIONS = handleWishWithdrawRequest;
+export const PUT = handleWishWithdrawRequest;
+export const PATCH = handleWishWithdrawRequest;
+export const DELETE = handleWishWithdrawRequest;

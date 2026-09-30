@@ -88,11 +88,11 @@ export async function readStorefrontVariantFacts(
     WHERE balance.inventory_item_id=item.id),'0') available_quantity,
    coalesce((SELECT jsonb_agg(jsonb_build_object('priceId',price.id,'priceRevision',price.revision,'unitAmountMinor',price.amount_minor))
     ${currentBook} ${priceJoin} WHERE ${leaf} AND h.market=$3 AND h.currency=$4 AND price.gift_variant_id=variant.id),'[]'::jsonb) prices,
-   (EXISTS(SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=$5)
+   (public.wish_recipient_allowed(variant.id,$5) AND (EXISTS(SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=$5)
     OR EXISTS(SELECT 1 FROM public.gift_variant_recipient_rules eligibility
      JOIN public.idols recipient ON recipient.id=$5 AND recipient.status='active' AND recipient.accepting_gifts
      JOIN public.idol_publication_heads recipient_head ON recipient_head.idol_id=recipient.id AND recipient_head.idol_revision_id=recipient.published_revision_id
-     WHERE eligibility.gift_variant_id=variant.id AND eligibility.rule='ALL_ACTIVE_ARTISTS')) eligible_for_selected,
+     WHERE eligibility.gift_variant_id=variant.id AND eligibility.rule='ALL_ACTIVE_ARTISTS'))) eligible_for_selected,
    witness.id witness_id,witness.handle witness_handle
    FROM public.gift_variants variant LEFT JOIN public.inventory_items item ON item.gift_variant_id=variant.id
    LEFT JOIN LATERAL (SELECT idol.id,idol.handle FROM public.idols idol
@@ -101,7 +101,7 @@ export async function readStorefrontVariantFacts(
      AND publication.idol_id=idol.id AND publication.idol_revision_id=head.idol_revision_id
     JOIN public.idol_revisions revision ON revision.id=head.idol_revision_id AND revision.idol_id=idol.id
      AND revision.lifecycle=CASE publication.action WHEN 'PUBLISH' THEN 'PUBLISHED' ELSE 'SUPERSEDED' END
-    WHERE idol.status='active' AND idol.accepting_gifts
+    WHERE idol.status='active' AND idol.accepting_gifts AND public.wish_recipient_allowed(variant.id,idol.id)
      AND (EXISTS(SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=idol.id)
       OR EXISTS(SELECT 1 FROM public.gift_variant_recipient_rules eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.rule='ALL_ACTIVE_ARTISTS'))
      AND NOT EXISTS(SELECT 1 FROM public.content_publications successor WHERE successor.replaces_publication_id=publication.id)

@@ -1,3 +1,5 @@
+import { writeWishPurchaseLink } from "./wish-binding.js";
+import { freezeWishGalleryPreference } from "./wish-gallery-preference.js";
 import { randomUUID } from "node:crypto";
 import { Buffer } from "node:buffer";
 import {
@@ -229,6 +231,22 @@ export async function writeCheckout(
       gift_kind: giftKind,
       created_at: eventTime,
     });
+    if (
+      await writeWishPurchaseLink(client, {
+        orderItemId: ids.orderItemId,
+        cartItemId: line.cartItemId,
+        giftId: line.giftId,
+        giftVariantId: line.giftVariantId,
+        idolId: line.idolId,
+        quantity: line.quantity,
+        giftKind,
+      })
+    ) {
+      await freezeWishGalleryPreference(client, {
+        cartItemId: line.cartItemId,
+        orderItemId: ids.orderItemId,
+      });
+    }
     await insert(client, "fulfillments", {
       id: ids.fulfillmentId,
       order_id: command.orderId,

@@ -43,3 +43,20 @@ it("sends a successful buy-now straight to the checkout of the same locale", () 
   expect(giftCheckoutHref("zh-CN")).toBe("/zh-CN/checkout");
   expect(giftCheckoutHref("en")).toBe("/en/checkout");
 });
+
+it("keeps wish quantity fixed and public gallery consent off until chosen", () => {
+  const html = renderToStaticMarkup(
+    <GiftAdd {...props} locale="en" copy={en} wish />,
+  );
+  expect(html).toContain(en.wishDisplayOptIn);
+  expect(html).not.toContain('type="number"');
+  expect(html).not.toMatch(/<input[^>]*type="checkbox"[^>]*checked/u);
+  expect(html).not.toContain(en.wishAliasLabel);
+  expect(html).toContain(en.cartAdd);
+});
+it("keeps ordinary gifts outside the wish gallery", () => {
+  const html = renderToStaticMarkup(
+    <GiftAdd {...props} locale="en" copy={en} />,
+  );
+  expect(html).not.toContain(en.wishDisplayOptIn);
+});

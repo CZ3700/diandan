@@ -90,3 +90,24 @@ describe("cart row preserves current public facts", () => {
     expect(html).toContain(copy.cartUnavailable);
   });
 });
+
+it("shows the selected gallery visibility and keeps wish quantity fixed in the bag", () => {
+  const html = renderToStaticMarkup(
+    <CartItem
+      item={{
+        ...item,
+        quantity: 1,
+        galleryPreference: { visibility: "PUBLIC_ANONYMOUS" },
+      }}
+      cartVersion={1}
+      currency={"USD" as never}
+      locale="en"
+      copy={copy}
+      session={createCartSession("en")}
+    />,
+  );
+  expect(html).toContain(copy.wishRecordPlanned);
+  expect(html).toContain(copy.wishDisplayAnonymous);
+  expect(html).not.toContain("data-cart-quantity-save");
+  expect(html).toContain("data-cart-editor-open");
+});

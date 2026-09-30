@@ -33,6 +33,8 @@ const supportedHeads = [
   "0057",
   "0058",
   "0059",
+  "0060",
+  "0061",
 ];
 
 /** Legacy probes may rewind only explicitly known, empty migration prefixes. */
@@ -108,6 +110,21 @@ export async function rollbackEmptyNotifications({
     ...(version >= "0059"
       ? {
           ledger_exports: "public.artist_ledger_exports",
+        }
+      : {}),
+    ...(version >= "0060"
+      ? {
+          wish_bindings: "public.wish_bindings",
+          wish_purchase_links: "public.wish_purchase_links",
+          wish_supports: "public.wish_supports",
+        }
+      : {}),
+    ...(version >= "0061"
+      ? {
+          wish_preferences: "public.cart_wish_gallery_preferences",
+          wish_consents: "public.wish_gallery_consents",
+          wish_entries: "public.wish_gallery_entries",
+          wish_withdrawals: "public.wish_gallery_withdrawals",
         }
       : {}),
     ...(version >= "0030"

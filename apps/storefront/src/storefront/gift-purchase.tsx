@@ -205,6 +205,9 @@ function Offer({
         offer.price &&
         gift.recipient.kind === "PUBLISHED" && (
           <GiftAdd
+            {...("wish" in gift.content.view && gift.content.view.wish
+              ? { wish: true }
+              : {})}
             key={`${offer.giftVariantId}:${offer.maxQuantity}:${gift.recipient.idol.id}`}
             locale={locale}
             copy={copy}

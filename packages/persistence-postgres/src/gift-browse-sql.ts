@@ -14,6 +14,7 @@ function versionState(): string {
     "SELECT jsonb_build_array(id,gift_id,status,version) value FROM public.gift_variants",
     "SELECT jsonb_build_array(gift_variant_id,idol_id) value FROM public.gift_variant_idol_eligibility",
     "SELECT jsonb_build_array(gift_variant_id,rule,operation_id) value FROM public.gift_variant_recipient_rules",
+    "SELECT jsonb_build_array(wish_id,gift_id,gift_variant_id,idol_id) value FROM public.wish_bindings",
     "SELECT jsonb_build_array(id,status,accepting_gifts,published_revision_id,version) value FROM public.idols",
     "SELECT jsonb_build_array(idol_id,publication_id,idol_revision_id,version) value FROM public.idol_publication_heads",
     "SELECT jsonb_build_array(id,content_type,action,replaces_publication_id,proof_version) value FROM public.content_publications",
@@ -70,6 +71,7 @@ export function buildGiftBrowseQuery(
         AND ($3::uuid IS NULL OR EXISTS (
           SELECT 1 FROM public.gift_variants variant
           WHERE variant.gift_id = gift.id AND variant.status IN ('active','paused')
+            AND public.wish_recipient_matches(variant.id,$3)
             AND (EXISTS (SELECT 1 FROM public.gift_variant_idol_eligibility eligibility
               WHERE eligibility.gift_variant_id = variant.id AND eligibility.idol_id = $3::uuid)
             OR EXISTS (SELECT 1 FROM public.gift_variant_recipient_rules rule

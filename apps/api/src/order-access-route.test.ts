@@ -111,7 +111,13 @@ const paths = {
   locate: "/api/v1/order-access/locate",
 };
 type Action = keyof typeof paths;
-async function setup(readProof?: (command: unknown) => Promise<unknown>) {
+async function setup(
+  readProof?: (command: unknown) => Promise<unknown>,
+  wishGallery?: {
+    read(command: unknown): Promise<unknown>;
+    withdraw(command: unknown): Promise<unknown>;
+  },
+) {
   const app = Fastify({ logger: false });
   const keyManagement = {
     async computeBlindIndex(command: ComputeBlindIndexCommand) {
@@ -175,6 +181,7 @@ async function setup(readProof?: (command: unknown) => Promise<unknown>) {
     cartCredentials,
     useCases,
     readProof,
+    wishGallery,
   });
   const send = (
     action: Action,
@@ -597,5 +604,80 @@ test("delivery photos stream only to this order's session with inert image heade
     expect(response.statusCode).toBe(503);
   } finally {
     await unconfigured.app.close();
+  }
+});
+
+test("wish withdrawal uses the existing order session, CSRF, origin and REVOKE rate limit", async () => {
+  const entryId = otherId;
+  const withdrawn = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    withdrawn: { schemaVersion: 1, entryId, withdrawn: true },
+  };
+  const wishGallery = {
+    read: vi.fn(),
+    withdraw: vi.fn().mockResolvedValue(withdrawn),
+  };
+  const { app, send, session, useCases } = await setup(undefined, wishGallery);
+  const url = `/api/v1/orders/${publicId}/wish-gallery/${entryId}/withdraw`;
+  try {
+    for (const headers of [
+      { cookie: "" },
+      { "x-csrf-token": "" },
+      { origin: "https://foreign.invalid" },
+      { "sec-fetch-site": "same-site" },
+    ]) {
+      expect(
+        (await send("revoke", { url, body: { schemaVersion: 1 }, headers }))
+          .statusCode,
+      ).toBeGreaterThanOrEqual(400);
+    }
+    expect(wishGallery.withdraw).not.toHaveBeenCalled();
+    const response = await send("revoke", { url, body: { schemaVersion: 1 } });
+    expect(response.statusCode).toBe(200);
+    expect(response.json()).toEqual(withdrawn);
+    expect(response.headers["cache-control"]).toBe("private, no-store");
+    expect(response.headers["set-cookie"]).toBeUndefined();
+    expect(response.headers["x-csrf-token"]).toBeUndefined();
+    expect(wishGallery.withdraw).toHaveBeenCalledWith(
+      expect.objectContaining({
+        publicOrderId: publicId,
+        entryId,
+        sessionCandidates: [session.access],
+      }),
+    );
+    expect(JSON.stringify(wishGallery.withdraw.mock.calls)).not.toContain(
+      session.token,
+    );
+    expect(useCases.consumeRateLimit).toHaveBeenLastCalledWith(
+      expect.objectContaining({ scope: "REVOKE" }),
+    );
+    useCases.consumeRateLimit.mockResolvedValueOnce({
+      schemaVersion: 1,
+      allowed: false,
+      retryAfterSeconds: 20,
+    });
+    const limited = await send("revoke", { url, body: { schemaVersion: 1 } });
+    expect(limited.statusCode).toBe(429);
+    expect(limited.json().code).toBe("RATE_LIMITED");
+    expect(limited.headers["retry-after"]).toBe("20");
+    expect(wishGallery.withdraw).toHaveBeenCalledTimes(1);
+    expect(
+      (
+        await send("revoke", {
+          url,
+          body: { schemaVersion: 1, privateName: "secret" },
+        })
+      ).statusCode,
+    ).toBe(400);
+    wishGallery.withdraw.mockResolvedValueOnce({
+      ...withdrawn,
+      withdrawn: { ...withdrawn.withdrawn, entryId: publicId },
+    });
+    expect(
+      (await send("revoke", { url, body: { schemaVersion: 1 } })).statusCode,
+    ).toBe(503);
+  } finally {
+    await app.close();
   }
 });

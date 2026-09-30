@@ -188,7 +188,12 @@ export function OrderClient({
       />
       {state.order && (
         <>
-          <OrderDetail order={state.order} locale={locale} copy={copy} />
+          <OrderDetail
+            order={state.order}
+            locale={locale}
+            copy={copy}
+            onWithdrawWish={(id) => controller.withdrawWish(id)}
+          />
           <div className="order-actions">
             <button
               type="button"

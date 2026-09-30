@@ -38,6 +38,18 @@ export function parseOrderRoute(
     orderAccessBootstrapRequestSchema.parse(body);
     return { kind: "bootstrap" };
   }
+  const wish =
+    /^\/api\/storefront\/orders\/([a-f\d-]+)\/wish-gallery\/([a-f\d-]+)\/withdraw$/iu.exec(
+      path,
+    );
+  if (wish && method === "POST") {
+    orderAccessBootstrapRequestSchema.parse(body);
+    return {
+      kind: "wish-withdraw",
+      publicOrderId: publicOrderIdSchema.parse(wish[1]),
+      entryId: publicOrderIdSchema.parse(wish[2]),
+    };
+  }
   const read = /^\/api\/storefront\/orders\/([a-f\d-]+)$/iu.exec(path);
   if (read && method === "GET")
     return { kind: "read", publicOrderId: publicOrderIdSchema.parse(read[1]) };
@@ -64,7 +76,11 @@ export function orderRequestCredentials(
       throw new Error("Invalid cart cookie");
   } else orderAccessRawTokenSchema.parse(token);
   headers.set("cookie", `${name}=${token}`);
-  if (operation.kind === "bootstrap" || operation.kind === "revoke") {
+  if (
+    operation.kind === "bootstrap" ||
+    operation.kind === "revoke" ||
+    operation.kind === "wish-withdraw"
+  ) {
     const csrf = request.headers.get("x-csrf-token");
     if (operation.kind === "bootstrap") {
       if (!/^[A-Za-z0-9_-]{43}$/u.test(csrf ?? ""))

@@ -347,5 +347,43 @@ const copy = {
   marketSelected: "選択中",
   marketInvalid:
     "このマーケットと通貨の組み合わせは利用できません。選び直してください。",
+  wishTitle: "アーティストのウィッシュ",
+  wishOnlyFor: "{artist}へのウィッシュギフト",
+  wishOpen: "サポート受付中",
+  wishPaymentPending: "お支払いを確認中",
+  wishSupported: "サポート済み",
+  wishDelivered: "お届け済み",
+  wishUnavailable: "このウィッシュは現在サポートできません。",
+  wishShowcaseTitle: "ウィッシュギャラリー",
+  wishShowcaseIntro: "ファンがサポートしたウィッシュの記録。",
+  wishShowcaseEmpty: "公開された記録はまだありません。",
+  wishShowcaseMore: "すべてのウィッシュを見る",
+  wishDisplayOptIn: "このサポートをギャラリーで公開する",
+  wishDisplayAnonymous: "匿名のサポーター",
+  wishDisplayAlias: "公開用の名前",
+  wishAliasLabel: "あなたの公開用の名前",
+  wishAliasHint:
+    "この名前は公開されます。非公開の署名やメッセージは公開されません。",
+  wishAliasInvalid: "公開用の名前を1〜40文字で入力してください。",
+  wishRecordPlanned: "支払い後に公開",
+  wishEdit: "心願の詳細を編集",
+  wishRecordTitle: "ギャラリーの記録",
+  wishRecordPrivate: "非公開",
+  wishRecordPublic: "ギャラリーで公開中",
+  wishRecordSave: "公開設定を保存",
+  wishRecordSaving: "保存中…",
+  wishRecordSaved: "公開設定を保存しました。",
+  wishRecordSaveFailed:
+    "保存できませんでした。変更は保持されています。もう一度お試しください。",
+  wishRecordHidden: "この記録はギャラリーで非表示になっています。",
+  wishRecordHide: "ギャラリーで非表示にする",
+  wishSupportedBy:
+    "{supporter}が{date}に{artist}のウィッシュをサポートしました。",
+  wishGalleryError: "ギャラリーを読み込めません。もう一度お試しください。",
+  wishOnlyOnce:
+    "各ウィッシュは一度だけサポートできます。お支払いの確認後は販売を終了します。",
+  wishReversed: "サポート取り消し済み",
+  wishPrivacyWithdrawHint:
+    "注文の詳細から、いつでもこの記録をギャラリーで非表示にできます。",
 } as const;
 export default copy;

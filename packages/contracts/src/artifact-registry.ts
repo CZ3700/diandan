@@ -1,3 +1,5 @@
+import * as wishBinding from "./wish-binding.js";
+import * as wishGallery from "./wish-gallery.js";
 import * as informationPages from "./information-pages.js";
 import * as storefrontNavigation from "./storefront-navigation.js";
 import * as storefrontTheme from "./storefront-theme.js";
@@ -689,6 +691,9 @@ const unversionedValueObjectNames = new Set([
   "AdminLedgerArtistRow",
   "AdminLedgerLine",
   "AdminLedgerExportLine",
+  "WishGalleryPreference",
+  "WishGalleryEntry",
+  "WishSupportRecord",
   "AdminOrdersPermission",
   "AdminOrdersListItem",
   "AdminOrdersLine",
@@ -719,6 +724,62 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "WishBinding",
+    audience: "internal",
+    schema: wishBinding.wishBindingSchema,
+  },
+  {
+    name: "WishGiftSummary",
+    audience: "public-http",
+    schema: wishBinding.wishGiftSummarySchema,
+  },
+  {
+    name: "WishGalleryPreference",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryPreferenceSchema,
+  },
+  {
+    name: "WishGalleryEntry",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryEntrySchema,
+  },
+  {
+    name: "WishGalleryPage",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryPageSchema,
+  },
+  {
+    name: "WishGalleryReadCommand",
+    audience: "internal",
+    schema: wishGallery.wishGalleryReadCommandSchema,
+  },
+  {
+    name: "WishGalleryReadResponse",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryReadResponseSchema,
+  },
+  {
+    name: "WishGalleryWithdrawCommand",
+    audience: "internal",
+    schema: wishGallery.wishGalleryWithdrawCommandSchema,
+  },
+  {
+    name: "WishGalleryWithdrawn",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryWithdrawnSchema,
+  },
+  {
+    name: "WishGalleryWithdrawResponse",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryWithdrawResponseSchema,
+  },
+  {
+    name: "WishSupportRecord",
+    audience: "public-http",
+    schema: wishGallery.wishSupportRecordSchema,
+  },
+
   {
     name: "InformationPageAuthorizationCommand",
     audience: "internal",

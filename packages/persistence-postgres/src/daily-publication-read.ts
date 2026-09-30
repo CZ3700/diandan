@@ -1,3 +1,4 @@
+import { readWishGiftSummary } from "./wish-binding.js";
 import {
   dailyPublicationContextSchema,
   dailyPublicationDocumentSchema,
@@ -125,9 +126,14 @@ export async function loadDailyPublicationContext(
       unitAmountMinor: Number(row["amount_minor"]),
     }),
   );
+  const wish =
+    document.kind === "GIFT" && document.giftKind === "WISH"
+      ? await readWishGiftSummary(client, document.ownerId, locale)
+      : undefined;
   const context = dailyPublicationContextSchema.parse({
     schemaVersion: 3,
     publicationMode: "DIRECT_OPERATOR_V1",
+    ...(wish ? { wish } : {}),
     locale,
     publication: {
       publicationId: publication["id"],

@@ -8,6 +8,7 @@ import type { StorefrontCopy } from "./copy";
 import { giftKindLabel, isBrowsableGiftKind } from "./gift-kind-copy";
 import { giftDetailHref } from "./gift-query";
 import { PublishedImage } from "./published-image";
+import { wishStatusLabel } from "./wish-status";
 
 /**
  * One directory card for every gift list: kind, name, a clamped summary and the price.
@@ -54,6 +55,11 @@ export function GiftCard({
           <Heading lang={gift.localeContext.resolvedLocale}>
             {gift.title}
           </Heading>
+          {"wish" in gift && gift.wish && (
+            <p className="wish-card-status" data-wish-status={gift.wish.status}>
+              {wishStatusLabel(gift.wish.status, copy)}
+            </p>
+          )}
           {gift.shortDescription.trim() !== "" && (
             <p
               className="gift-directory-card__summary"

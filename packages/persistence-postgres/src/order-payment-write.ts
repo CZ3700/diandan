@@ -22,6 +22,10 @@ import { applyOrderPaymentInventory } from "./order-payment-inventory.js";
 import { deliverDigitalFulfillments } from "./digital-fulfillment.js";
 import { deriveFulfillmentAggregate } from "./fulfillment-aggregate.js";
 import {
+  lockOrderWishBindings,
+  recordPaidWishSupports,
+} from "./wish-gallery-payment.js";
+import {
   rejectOrderPayment,
   recordOrderPaymentResult,
 } from "./order-payment-data.js";
@@ -352,6 +356,8 @@ export async function applyOrderPaymentAggregate(input: Input) {
   // The existing inventory guard permits release only after trusted failure is visible on this same client.
   if (!success && attempt["status"] !== event["normalized_status"])
     await setAttempt(input, at);
+  const hasWish = lines.some((line) => line["gift_kind"] === "WISH");
+  if (hasWish) await lockOrderWishBindings(client, refs.orderId);
   await applyOrderPaymentInventory({
     repository: input.inventory,
     targets: reservations.map((r, i) => ({
@@ -467,6 +473,12 @@ export async function applyOrderPaymentAggregate(input: Input) {
       `UPDATE public.orders SET order_status='OPEN',payment_status='PAID',fulfillment_status=$2,version=version+1,updated_at=$3::timestamptz WHERE id=$1::uuid`,
       [order["id"], held, at],
     );
+    if (hasWish)
+      await recordPaidWishSupports(client, {
+        orderId: refs.orderId,
+        providerEventId: String(event["id"]),
+        supportedAt: at,
+      });
     await insertPaymentRow(client, "order_events", {
       id: randomUUID(),
       order_id: order["id"],

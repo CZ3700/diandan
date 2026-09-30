@@ -38,6 +38,8 @@ export function CartItem({
   onRemove?: (request: CartMutation) => Promise<CartResult>;
 }>) {
   const id = useId();
+  const gallery =
+    "galleryPreference" in item ? item.galleryPreference : undefined;
   const article = useRef<HTMLElement>(null);
   const editorTrigger = useRef<HTMLButtonElement>(null);
   const Heading = headingLevel === 2 ? "h2" : "h3";
@@ -199,6 +201,22 @@ export function CartItem({
               : copy.cartAnonymousSaved}
           </span>
         </div>
+        {gallery && (
+          <p className="cart-gallery-state">
+            {gallery.visibility === "PRIVATE"
+              ? copy.wishRecordPrivate
+              : copy.wishRecordPlanned}
+            {gallery.visibility !== "PRIVATE" && (
+              <>
+                {" "}
+                ·{" "}
+                {gallery.visibility === "PUBLIC_NAMED"
+                  ? gallery.publicAlias
+                  : copy.wishDisplayAnonymous}
+              </>
+            )}
+          </p>
+        )}
         {item.price.current ? (
           <Price
             locale={locale}
@@ -214,50 +232,55 @@ export function CartItem({
         {item.availability.status === "UNAVAILABLE" && (
           <p className="cart-notice">{copy.cartUnavailable}</p>
         )}
-        <div data-cart-quantity>
-          <Quantity
-            id={`${id}-quantity`}
-            label={copy.giftQuantity}
-            decreaseLabel={copy.giftQuantityDecrease}
-            increaseLabel={copy.giftQuantityIncrease}
-            min={1}
-            max={max}
-            value={quantity}
-            disabled={
-              busy !== null || request.current !== null || !item.price.current
-            }
-            onValueChange={(value) => {
-              if (item.price.current)
-                quantityBaseline.current ??= {
-                  cartVersion,
-                  itemVersion: item.version,
-                  priceId: item.price.current.priceId,
-                };
-              setQuantity(value);
-              setAttempted(null);
-              setNotice(null);
-            }}
-          />
-        </div>
+        {!gallery && (
+          <div data-cart-quantity>
+            <Quantity
+              id={`${id}-quantity`}
+              label={copy.giftQuantity}
+              decreaseLabel={copy.giftQuantityDecrease}
+              increaseLabel={copy.giftQuantityIncrease}
+              min={1}
+              max={max}
+              value={quantity}
+              disabled={
+                busy !== null || request.current !== null || !item.price.current
+              }
+              onValueChange={(value) => {
+                if (item.price.current)
+                  quantityBaseline.current ??= {
+                    cartVersion,
+                    itemVersion: item.version,
+                    priceId: item.price.current.priceId,
+                  };
+                setQuantity(value);
+                setAttempted(null);
+                setNotice(null);
+              }}
+            />
+          </div>
+        )}
         <div className="cart-actions">
-          <button
-            data-cart-quantity-save
-            type="button"
-            disabled={
-              busy !== null ||
-              !item.price.current ||
-              (request.current !== null && request.current.method === "DELETE")
-            }
-            onClick={() => {
-              void mutate("quantity");
-            }}
-          >
-            {busy === "quantity"
-              ? copy.cartSaving
-              : request.current?.method === "PATCH"
-                ? copy.cartRetry
-                : copy.cartConfirmQuantity}
-          </button>
+          {!gallery && (
+            <button
+              data-cart-quantity-save
+              type="button"
+              disabled={
+                busy !== null ||
+                !item.price.current ||
+                (request.current !== null &&
+                  request.current.method === "DELETE")
+              }
+              onClick={() => {
+                void mutate("quantity");
+              }}
+            >
+              {busy === "quantity"
+                ? copy.cartSaving
+                : request.current?.method === "PATCH"
+                  ? copy.cartRetry
+                  : copy.cartConfirmQuantity}
+            </button>
+          )}
           <button
             type="button"
             ref={editorTrigger}
@@ -266,7 +289,7 @@ export function CartItem({
             onClick={() => setEditing((value) => !value)}
             aria-expanded={editing}
           >
-            {copy.cartPrivateEdit}
+            {gallery ? copy.wishEdit : copy.cartPrivateEdit}
           </button>
           <button
             type="button"

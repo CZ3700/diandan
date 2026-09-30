@@ -343,5 +343,42 @@ const copy = {
   marketSelected: "Đã chọn",
   marketInvalid:
     "Thị trường hoặc tiền tệ này không khả dụng. Hãy chọn tổ hợp có sẵn.",
+  wishTitle: "Nguyện vọng của nghệ sĩ",
+  wishOnlyFor: "Quà theo nguyện vọng dành cho {artist}",
+  wishOpen: "Đang chờ ủng hộ",
+  wishPaymentPending: "Đang xử lý thanh toán",
+  wishSupported: "Đã ủng hộ nguyện vọng",
+  wishDelivered: "Đã trao tặng",
+  wishUnavailable: "Hiện không thể ủng hộ nguyện vọng này.",
+  wishShowcaseTitle: "Phòng trưng bày nguyện vọng",
+  wishShowcaseIntro: "Những nguyện vọng đã được người hâm mộ ủng hộ.",
+  wishShowcaseEmpty: "Chưa có bản ghi công khai.",
+  wishShowcaseMore: "Xem tất cả nguyện vọng",
+  wishDisplayOptIn: "Công khai lượt ủng hộ này trong phòng trưng bày",
+  wishDisplayAnonymous: "Người ủng hộ ẩn danh",
+  wishDisplayAlias: "Tên công khai",
+  wishAliasLabel: "Tên công khai của bạn",
+  wishAliasHint:
+    "Tên này sẽ được công khai. Tên và lời nhắn riêng tư của bạn sẽ không được chia sẻ.",
+  wishAliasInvalid: "Nhập tên công khai gồm 1–40 ký tự.",
+  wishRecordPlanned: "Công khai sau khi thanh toán",
+  wishEdit: "Sửa thông tin điều ước",
+  wishRecordTitle: "Bản ghi trưng bày",
+  wishRecordPrivate: "Không công khai",
+  wishRecordPublic: "Đã công khai trong phòng trưng bày",
+  wishRecordSave: "Lưu cài đặt trưng bày",
+  wishRecordSaving: "Đang lưu…",
+  wishRecordSaved: "Đã lưu cài đặt trưng bày.",
+  wishRecordSaveFailed:
+    "Không thể lưu. Nội dung chỉnh sửa vẫn được giữ lại; vui lòng thử lại.",
+  wishRecordHidden: "Bản ghi này đã được ẩn khỏi phòng trưng bày.",
+  wishRecordHide: "Ẩn khỏi phòng trưng bày",
+  wishSupportedBy: "{supporter} đã ủng hộ nguyện vọng của {artist} vào {date}.",
+  wishGalleryError: "Không thể tải phòng trưng bày. Vui lòng thử lại.",
+  wishOnlyOnce:
+    "Mỗi nguyện vọng chỉ nhận một lượt ủng hộ. Quà sẽ ngừng bán sau khi thanh toán được xác nhận.",
+  wishReversed: "Lượt ủng hộ đã được rút lại",
+  wishPrivacyWithdrawHint:
+    "Bạn có thể ẩn bản ghi này khỏi phòng trưng bày bất cứ lúc nào trong chi tiết đơn hàng.",
 } as const;
 export default copy;

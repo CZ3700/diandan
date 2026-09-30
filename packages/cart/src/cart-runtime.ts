@@ -169,6 +169,9 @@ function safeFlags(item: CartRuntimeItemRecord) {
     displayMode: item.displayMode,
     nicknameProvided: item.nicknameProvided,
     hasFanMessage: item.hasFanMessage,
+    ...("galleryPreference" in item
+      ? { galleryPreference: item.galleryPreference }
+      : {}),
   };
 }
 

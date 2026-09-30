@@ -343,6 +343,9 @@ export function createCartRuntimeUseCases({
               fanMessageLocale: command.fanMessageLocale,
               displayMode: command.displayMode,
               privateContent,
+              ...(command.galleryPreference
+                ? { galleryPreference: command.galleryPreference }
+                : {}),
               requestId: request.requestId,
               correlationId: request.correlationId,
             }),

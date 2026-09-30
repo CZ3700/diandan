@@ -251,3 +251,46 @@ test("locate posts only the public number, keeps no authority and never dispatch
   // A locate reply carrying a CSRF proof is forged and becomes UNKNOWN.
   expect((await transport.locate("FS-7K3M9C")).outcome).toBe("UNKNOWN");
 });
+
+test("wish withdrawal requires current order authority and validates the returned gallery entry", async () => {
+  const { createOrderTransport } = (await load())!;
+  const entryId = otherOrderTestId;
+  const value = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    withdrawn: { schemaVersion: 1, entryId, withdrawn: true },
+  };
+  const fetcher = vi
+    .fn<typeof fetch>()
+    .mockResolvedValueOnce(reply(orderTestRead))
+    .mockResolvedValueOnce(orderTestResponse(value));
+  const transport = createOrderTransport(fetcher);
+  expect((await transport.withdrawWish(orderTestId, entryId)).outcome).toBe(
+    "FAILURE",
+  );
+  expect(fetcher).not.toHaveBeenCalled();
+  await transport.read(orderTestId);
+  expect(
+    (await transport.withdrawWish(otherOrderTestId, entryId)).outcome,
+  ).toBe("FAILURE");
+  expect(await transport.withdrawWish(orderTestId, entryId)).toEqual(value);
+  const [path, init] = fetcher.mock.calls[1]!;
+  expect(path).toBe(
+    `/api/storefront/orders/${orderTestId}/wish-gallery/${entryId}/withdraw`,
+  );
+  expect(new Headers(init?.headers).get("x-csrf-token")).toBe(orderTestCsrf);
+  expect(JSON.parse(String(init?.body))).toEqual({ schemaVersion: 1 });
+  fetcher.mockResolvedValueOnce(
+    orderTestResponse({
+      ...value,
+      withdrawn: { ...value.withdrawn, entryId: orderTestId },
+    }),
+  );
+  expect((await transport.withdrawWish(orderTestId, entryId)).outcome).toBe(
+    "UNKNOWN",
+  );
+  transport.dispose();
+  expect((await transport.withdrawWish(orderTestId, entryId)).outcome).toBe(
+    "UNKNOWN",
+  );
+});

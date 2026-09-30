@@ -1,6 +1,7 @@
 import type {
   ManagementCenterIntent,
   ManagementCenterListItem,
+  WishGiftSummary,
 } from "@fan-support/contracts";
 import { AdminClientError } from "../workspace/client";
 
@@ -8,7 +9,7 @@ type GiftIntent = Extract<ManagementCenterIntent, { kind: "SAVE_GIFT" }>;
 type Baseline = Pick<
   Extract<ManagementCenterListItem, { kind: "GIFT" }>,
   "price" | "inventory"
->;
+> & { wish?: WishGiftSummary };
 type Next = Pick<GiftIntent, "price" | "inventory">;
 type Edit = Extract<GiftIntent, { commerceEdit: unknown }>["commerceEdit"];
 
@@ -30,8 +31,9 @@ export function giftCommerceEdit(baseline: Baseline, next: Next): Edit {
     price: priceUnchanged
       ? { mode: "PRESERVE" }
       : { mode: "SET", baseline: baseline.price },
-    inventory: inventoryUnchanged
-      ? { mode: "PRESERVE" }
-      : { mode: "SET", baseline: baseline.inventory },
+    inventory:
+      baseline.wish || inventoryUnchanged
+        ? { mode: "PRESERVE" }
+        : { mode: "SET", baseline: baseline.inventory },
   };
 }

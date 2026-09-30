@@ -12,6 +12,7 @@ import { GiftCard } from "./gift-card";
 import { BROWSABLE_GIFT_KINDS, giftKindLabel } from "./gift-kind-copy";
 import { GiftPagination } from "./gift-pagination";
 import { GiftToolbar } from "./gift-toolbar";
+import { storefrontHref } from "./navigation";
 
 type Sort = GiftDiscoveryQuery["sort"];
 
@@ -60,6 +61,10 @@ export function GiftListing({
 }>) {
   const Heading = headingLevel === 1 ? "h2" : "h3";
   const outOfRange = pageInfo.page > Math.max(1, pageInfo.totalPages);
+  const artistId = new URLSearchParams(cardContext).get("idol");
+  const galleryQuery = artistId
+    ? new URLSearchParams({ idol: artistId }).toString()
+    : "";
   const kinds = [
     ...BROWSABLE_GIFT_KINDS,
     ...(kind === "OTHER" ? (["OTHER"] as const) : []),
@@ -104,6 +109,17 @@ export function GiftListing({
           }
         }
       />
+      {kind === "WISH" && (
+        <div className="wish-directory-intro">
+          <p>{copy.wishOnlyOnce}</p>
+          <a
+            className="storefront-text-link"
+            href={storefrontHref(locale, "/wish-gallery", galleryQuery)}
+          >
+            {copy.wishShowcaseTitle}
+          </a>
+        </div>
+      )}
       {applied && applied.labels.length > 0 && (
         <div className="gift-filter-summary" data-gift-applied-filters>
           <ul aria-label={copy.giftFilters}>

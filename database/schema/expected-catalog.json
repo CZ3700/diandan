@@ -339,6 +339,10 @@
       "kind": "TABLE"
     },
     {
+      "name": "cart_wish_gallery_preferences",
+      "kind": "TABLE"
+    },
+    {
       "name": "carts",
       "kind": "TABLE"
     },
@@ -1096,6 +1100,30 @@
     },
     {
       "name": "webhook_processing_attempts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "wish_bindings",
+      "kind": "TABLE"
+    },
+    {
+      "name": "wish_gallery_consents",
+      "kind": "TABLE"
+    },
+    {
+      "name": "wish_gallery_entries",
+      "kind": "TABLE"
+    },
+    {
+      "name": "wish_gallery_withdrawals",
+      "kind": "TABLE"
+    },
+    {
+      "name": "wish_purchase_links",
+      "kind": "TABLE"
+    },
+    {
+      "name": "wish_supports",
       "kind": "TABLE"
     }
   ],
@@ -6034,6 +6062,46 @@
       "table": "cart_private_access_receipts",
       "position": 11,
       "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "position": 1,
+      "name": "cart_item_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "position": 2,
+      "name": "visibility",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "position": 3,
+      "name": "public_alias",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "position": 4,
+      "name": "updated_at",
       "dataType": "finite_timestamptz",
       "notNull": true,
       "defaultExpression": "clock_timestamp()",
@@ -27549,6 +27617,286 @@
       "defaultExpression": null,
       "identity": "",
       "generation": ""
+    },
+    {
+      "table": "wish_bindings",
+      "position": 1,
+      "name": "wish_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_bindings",
+      "position": 2,
+      "name": "gift_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_bindings",
+      "position": 3,
+      "name": "gift_variant_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_bindings",
+      "position": 4,
+      "name": "idol_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_bindings",
+      "position": 5,
+      "name": "inventory_location_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_bindings",
+      "position": 6,
+      "name": "operation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_bindings",
+      "position": 7,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_consents",
+      "position": 1,
+      "name": "order_item_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_consents",
+      "position": 2,
+      "name": "visibility",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_consents",
+      "position": 3,
+      "name": "public_alias",
+      "dataType": "text",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_consents",
+      "position": 4,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_entries",
+      "position": 1,
+      "name": "entry_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_entries",
+      "position": 2,
+      "name": "order_item_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_entries",
+      "position": 3,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "position": 1,
+      "name": "entry_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "position": 2,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "position": 3,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "position": 4,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "position": 5,
+      "name": "task_name",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "position": 6,
+      "name": "withdrawn_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_purchase_links",
+      "position": 1,
+      "name": "order_item_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_purchase_links",
+      "position": 2,
+      "name": "wish_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_purchase_links",
+      "position": 3,
+      "name": "cart_item_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_purchase_links",
+      "position": 4,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_supports",
+      "position": 1,
+      "name": "wish_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_supports",
+      "position": 2,
+      "name": "order_item_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_supports",
+      "position": 3,
+      "name": "provider_event_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "wish_supports",
+      "position": 4,
+      "name": "supported_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
     }
   ],
   "constraints": [
@@ -34281,6 +34629,14 @@
       "initiallyDeferred": false
     },
     {
+      "table": "cart_items",
+      "name": "wish_cart_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
       "table": "cart_private_access_receipts",
       "name": "cart_private_access_receipts_access_audit_id_fkey",
       "kind": "FOREIGN_KEY",
@@ -34413,6 +34769,54 @@
       "name": "cart_private_access_receipts_support_intent_id_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL support_intent_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "name": "cart_wish_gallery_preferences_cart_item_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (cart_item_id) REFERENCES cart_items(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "name": "cart_wish_gallery_preferences_cart_item_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_item_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "name": "cart_wish_gallery_preferences_check",
+      "kind": "CHECK",
+      "definition": "CHECK (wish_gallery_preference_valid(visibility, public_alias))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "name": "cart_wish_gallery_preferences_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (cart_item_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "name": "cart_wish_gallery_preferences_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "name": "cart_wish_gallery_preferences_visibility_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL visibility",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -43543,6 +43947,14 @@
       "definition": "NOT NULL version",
       "deferrable": false,
       "initiallyDeferred": false
+    },
+    {
+      "table": "gifts",
+      "name": "wish_gift_kind_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
     },
     {
       "table": "homepage_layout_heads",
@@ -54481,6 +54893,14 @@
       "initiallyDeferred": false
     },
     {
+      "table": "order_items",
+      "name": "wish_order_line_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
       "table": "order_payment_application_receipts",
       "name": "order_payment_application_r_canonical_provider_event_i_not_null",
       "kind": "NOT_NULL",
@@ -63937,6 +64357,14 @@
       "initiallyDeferred": false
     },
     {
+      "table": "support_intents",
+      "name": "wish_intent_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
       "table": "translation_export_receipts",
       "name": "translation_export_receipt_validate",
       "kind": "CONSTRAINT_TRIGGER",
@@ -64781,6 +65209,502 @@
       "name": "webhook_processing_attempts_webhook_inbox_id_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL webhook_inbox_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_binding_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_gift_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (gift_id) REFERENCES gifts(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_gift_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (gift_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_gift_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL gift_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_gift_variant_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (gift_variant_id) REFERENCES gift_variants(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_gift_variant_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (gift_variant_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_gift_variant_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL gift_variant_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_idol_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (idol_id) REFERENCES idols(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_idol_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idol_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_inventory_location_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (inventory_location_id) REFERENCES inventory_locations(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_inventory_location_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL inventory_location_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_operation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (operation_id) REFERENCES management_operations(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_operation_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (operation_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_operation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL operation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (wish_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_wish_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL wish_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_consents",
+      "name": "wish_gallery_consent_guard",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "wish_gallery_consents",
+      "name": "wish_gallery_consents_check",
+      "kind": "CHECK",
+      "definition": "CHECK (wish_gallery_preference_valid(visibility, public_alias))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_consents",
+      "name": "wish_gallery_consents_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_consents",
+      "name": "wish_gallery_consents_order_item_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_item_id) REFERENCES wish_purchase_links(order_item_id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_consents",
+      "name": "wish_gallery_consents_order_item_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_item_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_consents",
+      "name": "wish_gallery_consents_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (order_item_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_consents",
+      "name": "wish_gallery_consents_visibility_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL visibility",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_entry_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL entry_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_order_item_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_item_id) REFERENCES wish_supports(order_item_id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_order_item_id_fkey1",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_item_id) REFERENCES wish_gallery_consents(order_item_id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_order_item_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (order_item_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_order_item_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_item_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (entry_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_entry_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (entry_id) REFERENCES wish_gallery_entries(entry_id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_entry_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL entry_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (entry_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES order_access_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_task_name_check",
+      "kind": "CHECK",
+      "definition": "CHECK (task_name ~ '^[a-z][a-z0-9]*([-_:][a-z0-9]+)*$'::text AND char_length(task_name) <= 128)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_task_name_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL task_name",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_withdrawn_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL withdrawn_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_link_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_cart_item_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (cart_item_id) REFERENCES cart_items(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_cart_item_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (cart_item_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_cart_item_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL cart_item_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_order_item_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (order_item_id) REFERENCES order_items(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_order_item_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_item_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (order_item_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_wish_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (wish_id) REFERENCES wish_bindings(wish_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_wish_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL wish_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_wish_id_order_item_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (wish_id, order_item_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_support_validate",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_order_item_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (order_item_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_order_item_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL order_item_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (wish_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_provider_event_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (provider_event_id) REFERENCES provider_events(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_provider_event_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL provider_event_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_supported_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL supported_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_wish_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (wish_id) REFERENCES wish_bindings(wish_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_wish_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL wish_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_wish_id_order_item_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (wish_id, order_item_id) REFERENCES wish_purchase_links(wish_id, order_item_id)",
       "deferrable": false,
       "initiallyDeferred": false
     }
@@ -65906,6 +66830,15 @@
       "table": "cart_private_access_receipts",
       "name": "cart_private_access_receipts_pkey",
       "definition": "CREATE UNIQUE INDEX cart_private_access_receipts_pkey ON public.cart_private_access_receipts USING btree (access_audit_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "name": "cart_wish_gallery_preferences_pkey",
+      "definition": "CREATE UNIQUE INDEX cart_wish_gallery_preferences_pkey ON public.cart_wish_gallery_preferences USING btree (cart_item_id)",
       "unique": true,
       "primary": true,
       "exclusion": false,
@@ -70743,6 +71676,132 @@
       "primary": true,
       "exclusion": false,
       "valid": true
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_gift_id_key",
+      "definition": "CREATE UNIQUE INDEX wish_bindings_gift_id_key ON public.wish_bindings USING btree (gift_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_gift_variant_id_key",
+      "definition": "CREATE UNIQUE INDEX wish_bindings_gift_variant_id_key ON public.wish_bindings USING btree (gift_variant_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_operation_id_key",
+      "definition": "CREATE UNIQUE INDEX wish_bindings_operation_id_key ON public.wish_bindings USING btree (operation_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_pkey",
+      "definition": "CREATE UNIQUE INDEX wish_bindings_pkey ON public.wish_bindings USING btree (wish_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_gallery_consents",
+      "name": "wish_gallery_consents_pkey",
+      "definition": "CREATE UNIQUE INDEX wish_gallery_consents_pkey ON public.wish_gallery_consents USING btree (order_item_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_order_item_id_key",
+      "definition": "CREATE UNIQUE INDEX wish_gallery_entries_order_item_id_key ON public.wish_gallery_entries USING btree (order_item_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_page",
+      "definition": "CREATE INDEX wish_gallery_entries_page ON public.wish_gallery_entries USING btree (created_at DESC, entry_id DESC)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_pkey",
+      "definition": "CREATE UNIQUE INDEX wish_gallery_entries_pkey ON public.wish_gallery_entries USING btree (entry_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_pkey",
+      "definition": "CREATE UNIQUE INDEX wish_gallery_withdrawals_pkey ON public.wish_gallery_withdrawals USING btree (entry_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_cart_item_id_key",
+      "definition": "CREATE UNIQUE INDEX wish_purchase_links_cart_item_id_key ON public.wish_purchase_links USING btree (cart_item_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_pkey",
+      "definition": "CREATE UNIQUE INDEX wish_purchase_links_pkey ON public.wish_purchase_links USING btree (order_item_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_wish_id_order_item_id_key",
+      "definition": "CREATE UNIQUE INDEX wish_purchase_links_wish_id_order_item_id_key ON public.wish_purchase_links USING btree (wish_id, order_item_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_order_item_id_key",
+      "definition": "CREATE UNIQUE INDEX wish_supports_order_item_id_key ON public.wish_supports USING btree (order_item_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_pkey",
+      "definition": "CREATE UNIQUE INDEX wish_supports_pkey ON public.wish_supports USING btree (wish_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
     }
   ],
   "triggers": [
@@ -71485,6 +72544,12 @@
       "enabled": "O"
     },
     {
+      "table": "cart_items",
+      "name": "wish_cart_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER wish_cart_validate AFTER INSERT OR UPDATE OF quantity, gift_variant_id ON cart_items DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_wish_cart_recipient()",
+      "enabled": "O"
+    },
+    {
       "table": "cart_private_access_receipts",
       "name": "cart_private_access_authority",
       "definition": "CREATE TRIGGER cart_private_access_authority BEFORE INSERT ON cart_private_access_receipts FOR EACH ROW EXECUTE FUNCTION assert_cart_private_access()",
@@ -71500,6 +72565,12 @@
       "table": "cart_private_access_receipts",
       "name": "cart_private_access_receipts_no_truncate",
       "definition": "CREATE TRIGGER cart_private_access_receipts_no_truncate BEFORE TRUNCATE ON cart_private_access_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "cart_wish_gallery_preferences",
+      "name": "cart_wish_gallery_preference_guard",
+      "definition": "CREATE TRIGGER cart_wish_gallery_preference_guard BEFORE INSERT OR UPDATE ON cart_wish_gallery_preferences FOR EACH ROW EXECUTE FUNCTION guard_cart_wish_gallery_preference()",
       "enabled": "O"
     },
     {
@@ -72721,6 +73792,12 @@
       "enabled": "O"
     },
     {
+      "table": "gift_variants",
+      "name": "wish_variant_guard",
+      "definition": "CREATE TRIGGER wish_variant_guard BEFORE INSERT OR UPDATE ON gift_variants FOR EACH ROW EXECUTE FUNCTION guard_wish_variant()",
+      "enabled": "O"
+    },
+    {
       "table": "gifts",
       "name": "gift_identity_change_receipt",
       "definition": "CREATE CONSTRAINT TRIGGER gift_identity_change_receipt AFTER INSERT OR UPDATE ON gifts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_gift_identity_change()",
@@ -72742,6 +73819,12 @@
       "table": "gifts",
       "name": "gifts_publication_head_consistency_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER gifts_publication_head_consistency_trigger AFTER INSERT OR DELETE OR UPDATE ON gifts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_content_publication_heads()",
+      "enabled": "O"
+    },
+    {
+      "table": "gifts",
+      "name": "wish_gift_kind_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER wish_gift_kind_validate AFTER UPDATE OF published_revision_id ON gifts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_wish_gift_kind()",
       "enabled": "O"
     },
     {
@@ -73471,6 +74554,12 @@
       "enabled": "O"
     },
     {
+      "table": "inventory_ledger",
+      "name": "wish_restock_guard",
+      "definition": "CREATE TRIGGER wish_restock_guard BEFORE INSERT ON inventory_ledger FOR EACH ROW EXECUTE FUNCTION guard_wish_restock()",
+      "enabled": "O"
+    },
+    {
       "table": "inventory_locations",
       "name": "gift_inventory_location_managed",
       "definition": "CREATE CONSTRAINT TRIGGER gift_inventory_location_managed AFTER INSERT ON inventory_locations DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_gift_inventory_location_managed()",
@@ -73510,6 +74599,12 @@
       "table": "inventory_reservations",
       "name": "inventory_reservations_transition_trigger",
       "definition": "CREATE TRIGGER inventory_reservations_transition_trigger BEFORE INSERT OR UPDATE ON inventory_reservations FOR EACH ROW EXECUTE FUNCTION guard_inventory_reservation_transition()",
+      "enabled": "O"
+    },
+    {
+      "table": "inventory_reservations",
+      "name": "wish_reservation_guard",
+      "definition": "CREATE TRIGGER wish_reservation_guard BEFORE INSERT ON inventory_reservations FOR EACH ROW EXECUTE FUNCTION guard_wish_reservation()",
       "enabled": "O"
     },
     {
@@ -74152,6 +75247,12 @@
       "table": "order_items",
       "name": "order_items_snapshot_validate_trigger",
       "definition": "CREATE CONSTRAINT TRIGGER order_items_snapshot_validate_trigger AFTER INSERT OR UPDATE ON order_items DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION validate_order_item_snapshot()",
+      "enabled": "O"
+    },
+    {
+      "table": "order_items",
+      "name": "wish_order_line_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER wish_order_line_validate AFTER INSERT ON order_items DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_wish_order_line()",
       "enabled": "O"
     },
     {
@@ -75493,6 +76594,12 @@
       "enabled": "O"
     },
     {
+      "table": "support_intents",
+      "name": "wish_intent_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER wish_intent_validate AFTER INSERT OR UPDATE OF idol_id ON support_intents DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_wish_cart_recipient()",
+      "enabled": "O"
+    },
+    {
       "table": "translation_export_receipts",
       "name": "translation_export_receipt_validate",
       "definition": "CREATE CONSTRAINT TRIGGER translation_export_receipt_validate AFTER INSERT ON translation_export_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_translation_export_receipt()",
@@ -75580,6 +76687,114 @@
       "table": "webhook_processing_attempts",
       "name": "webhook_processing_attempts_no_truncate_trigger",
       "definition": "CREATE TRIGGER webhook_processing_attempts_no_truncate_trigger BEFORE TRUNCATE ON webhook_processing_attempts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_binding_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER wish_binding_validate AFTER INSERT ON wish_bindings DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_wish_binding()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_immutable",
+      "definition": "CREATE TRIGGER wish_bindings_immutable BEFORE DELETE OR UPDATE ON wish_bindings FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_bindings",
+      "name": "wish_bindings_no_truncate",
+      "definition": "CREATE TRIGGER wish_bindings_no_truncate BEFORE TRUNCATE ON wish_bindings FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_gallery_consents",
+      "name": "wish_gallery_consent_guard",
+      "definition": "CREATE CONSTRAINT TRIGGER wish_gallery_consent_guard AFTER INSERT ON wish_gallery_consents DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION guard_wish_gallery_consent()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_gallery_consents",
+      "name": "wish_gallery_consents_immutable",
+      "definition": "CREATE TRIGGER wish_gallery_consents_immutable BEFORE DELETE OR UPDATE ON wish_gallery_consents FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_gallery_consents",
+      "name": "wish_gallery_consents_no_truncate",
+      "definition": "CREATE TRIGGER wish_gallery_consents_no_truncate BEFORE TRUNCATE ON wish_gallery_consents FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_immutable",
+      "definition": "CREATE TRIGGER wish_gallery_entries_immutable BEFORE DELETE OR UPDATE ON wish_gallery_entries FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entries_no_truncate",
+      "definition": "CREATE TRIGGER wish_gallery_entries_no_truncate BEFORE TRUNCATE ON wish_gallery_entries FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_gallery_entries",
+      "name": "wish_gallery_entry_guard",
+      "definition": "CREATE TRIGGER wish_gallery_entry_guard BEFORE INSERT ON wish_gallery_entries FOR EACH ROW EXECUTE FUNCTION guard_wish_gallery_entry()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawal_guard",
+      "definition": "CREATE TRIGGER wish_gallery_withdrawal_guard BEFORE INSERT ON wish_gallery_withdrawals FOR EACH ROW EXECUTE FUNCTION guard_wish_gallery_withdrawal()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_immutable",
+      "definition": "CREATE TRIGGER wish_gallery_withdrawals_immutable BEFORE DELETE OR UPDATE ON wish_gallery_withdrawals FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_gallery_withdrawals",
+      "name": "wish_gallery_withdrawals_no_truncate",
+      "definition": "CREATE TRIGGER wish_gallery_withdrawals_no_truncate BEFORE TRUNCATE ON wish_gallery_withdrawals FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_link_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER wish_purchase_link_validate AFTER INSERT ON wish_purchase_links DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_wish_purchase_link()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_immutable",
+      "definition": "CREATE TRIGGER wish_purchase_links_immutable BEFORE DELETE OR UPDATE ON wish_purchase_links FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_purchase_links",
+      "name": "wish_purchase_links_no_truncate",
+      "definition": "CREATE TRIGGER wish_purchase_links_no_truncate BEFORE TRUNCATE ON wish_purchase_links FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_support_validate",
+      "definition": "CREATE CONSTRAINT TRIGGER wish_support_validate AFTER INSERT ON wish_supports DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_wish_support()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_immutable",
+      "definition": "CREATE TRIGGER wish_supports_immutable BEFORE DELETE OR UPDATE ON wish_supports FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "wish_supports",
+      "name": "wish_supports_no_truncate",
+      "definition": "CREATE TRIGGER wish_supports_no_truncate BEFORE TRUNCATE ON wish_supports FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
       "enabled": "O"
     }
   ],
@@ -77055,6 +78270,66 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_translation_package(translation_table regclass, parent_column text, parent_id uuid, review_table regclass, review_translation_column text)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  english_hash sha256_hex;\n  translation_count integer;\n  approved_count integer;\n  lineage_count integer;\nBEGIN\n  EXECUTE format(\n    'SELECT source_hash FROM %s WHERE %I = $1 AND locale = ''en''',\n    translation_table,\n    parent_column\n  ) INTO english_hash USING parent_id;\n\n  IF english_hash IS NULL THEN\n    RAISE EXCEPTION 'publication requires an English translation row'\n      USING ERRCODE = '23514';\n  END IF;\n\n  EXECUTE format(\n    'SELECT count(*), '\n    'count(*) FILTER (WHERE latest.status = ''APPROVED''), '\n    'count(*) FILTER (WHERE t.translated_from_source_hash = $2) '\n    'FROM %s t '\n    'LEFT JOIN LATERAL ('\n    '  SELECT r.status FROM %s r '\n    '  WHERE r.%I = t.id ORDER BY r.sequence DESC LIMIT 1'\n    ') latest ON true '\n    'WHERE t.%I = $1',\n    translation_table,\n    review_table,\n    review_translation_column,\n    parent_column\n  ) INTO translation_count, approved_count, lineage_count\n    USING parent_id, english_hash;\n\n  IF translation_count <> 7 OR approved_count <> 7 OR lineage_count <> 7 THEN\n    RAISE EXCEPTION 'publication requires seven approved translations with current English lineage'\n      USING ERRCODE = '23514';\n  END IF;\nEND;\n$function$"
     },
     {
+      "name": "assert_wish_binding",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_wish_binding()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE o management_operations%ROWTYPE;\nBEGIN\n SELECT * INTO o FROM management_operations WHERE id=NEW.operation_id;\n PERFORM assert_management_authority(NEW.operation_id);\n IF o.target_id IS DISTINCT FROM NEW.gift_id OR o.intent->>'kind' IS DISTINCT FROM 'SAVE_GIFT'\n  OR o.intent->>'giftKind' IS DISTINCT FROM 'WISH'\n  OR o.intent#>>'{eligibility,rule}' IS DISTINCT FROM 'SINGLE_ARTIST'\n  OR o.intent#>>'{eligibility,idolId}' IS DISTINCT FROM NEW.idol_id::text\n  OR o.intent#>>'{inventory,policy}' IS DISTINCT FROM 'TRACKED'\n  OR o.intent#>>'{inventory,locationId}' IS DISTINCT FROM NEW.inventory_location_id::text\n  OR (o.intent#>>'{inventory,quantity}')::bigint IS DISTINCT FROM 1\n  OR NOT EXISTS(SELECT 1 FROM gift_variants v WHERE v.id=NEW.gift_variant_id AND v.gift_id=NEW.gift_id AND v.inventory_policy='TRACKED')\n  OR (SELECT count(*) FROM gift_variants WHERE gift_id=NEW.gift_id)<>1\n  OR NOT EXISTS(SELECT 1 FROM idols WHERE id=NEW.idol_id AND status='active' AND accepting_gifts AND published_revision_id IS NOT NULL)\n  OR current_gift_kind(NEW.gift_id) IS DISTINCT FROM 'WISH'\n  OR NOT EXISTS(SELECT 1 FROM inventory_items i JOIN inventory_balances bal ON bal.inventory_item_id=i.id\n    WHERE i.gift_variant_id=NEW.gift_variant_id AND i.policy='TRACKED' AND i.status='ACTIVE'\n      AND bal.location_id=NEW.inventory_location_id AND bal.on_hand=1 AND bal.reserved=0)\n  OR EXISTS(SELECT 1 FROM inventory_items i JOIN inventory_balances bal ON bal.inventory_item_id=i.id\n    WHERE i.gift_variant_id=NEW.gift_variant_id AND bal.location_id<>NEW.inventory_location_id AND (bal.on_hand<>0 OR bal.reserved<>0))\n  OR EXISTS(SELECT 1 FROM order_items WHERE gift_id=NEW.gift_id)\n  OR EXISTS(SELECT 1 FROM inventory_reservations WHERE gift_variant_id=NEW.gift_variant_id)\n THEN RAISE EXCEPTION 'wish binding requires its exact authorized single artist and unused tracked variant' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "assert_wish_cart_recipient",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_wish_cart_recipient()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE item cart_items%ROWTYPE; artist uuid;\nBEGIN\n IF TG_TABLE_NAME='cart_items' AND TG_OP='UPDATE' THEN\n  IF NEW.quantity=OLD.quantity AND NEW.gift_variant_id=OLD.gift_variant_id THEN RETURN NEW; END IF;\n END IF;\n IF TG_TABLE_NAME='cart_items' THEN SELECT * INTO item FROM cart_items WHERE id=NEW.id;\n ELSE SELECT * INTO item FROM cart_items WHERE id=NEW.cart_item_id; END IF;\n SELECT idol_id INTO artist FROM support_intents WHERE cart_item_id=item.id;\n IF (current_gift_kind((SELECT gift_id FROM gift_variants WHERE id=item.gift_variant_id))='WISH'\n   OR EXISTS(SELECT 1 FROM wish_bindings WHERE gift_variant_id=item.gift_variant_id))\n  AND (item.quantity<>1 OR NOT coalesce(wish_recipient_allowed(item.gift_variant_id,artist),false)) THEN\n  RAISE EXCEPTION 'wish cart line must target its sole available artist' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "assert_wish_gift_kind",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_wish_gift_kind()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF EXISTS(SELECT 1 FROM wish_bindings WHERE gift_id=NEW.id) AND current_gift_kind(NEW.id) IS DISTINCT FROM 'WISH' THEN\n  RAISE EXCEPTION 'a bound wish cannot change gift kind' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "assert_wish_order_line",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_wish_order_line()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NEW.gift_kind='WISH' AND NOT EXISTS(SELECT 1 FROM wish_purchase_links l WHERE l.order_item_id=NEW.id) THEN\n  RAISE EXCEPTION 'new wish order lines require a purchase binding' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "assert_wish_purchase_link",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_wish_purchase_link()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM order_items i JOIN wish_bindings b ON b.wish_id=NEW.wish_id\n   WHERE i.id=NEW.order_item_id AND i.cart_item_id=NEW.cart_item_id AND i.gift_id=b.gift_id AND i.gift_variant_id=b.gift_variant_id\n    AND i.idol_id=b.idol_id AND i.quantity=1 AND i.gift_kind='WISH') THEN\n  RAISE EXCEPTION 'wish purchase link must bind the exact immutable order line' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "assert_wish_support",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_wish_support()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n PERFORM 1 FROM wish_bindings WHERE wish_id=NEW.wish_id FOR UPDATE;\n IF NOT EXISTS(SELECT 1 FROM wish_purchase_links l JOIN wish_bindings b ON b.wish_id=l.wish_id JOIN order_items i ON i.id=l.order_item_id JOIN orders o ON o.id=i.order_id\n   JOIN payment_attempts a ON a.id=o.current_payment_attempt_id AND a.order_id=o.id\n   JOIN provider_events e ON e.id=NEW.provider_event_id AND e.id=a.provider_event_id\n   JOIN inventory_reservations r ON r.cart_item_id=i.cart_item_id AND r.locked_order_id=o.id\n   WHERE l.wish_id=NEW.wish_id AND l.order_item_id=NEW.order_item_id AND a.status='SUCCEEDED'\n    AND e.normalized_status='SUCCEEDED' AND e.provider_transaction_type='CAPTURE'\n    AND e.evidence_kind IN('VERIFIED_WEBHOOK','AUTHENTICATED_RECONCILE') AND r.status='COMMITTED' AND r.quantity=1 AND r.gift_variant_id=b.gift_variant_id AND r.location_id=b.inventory_location_id\n    AND o.payment_status IN('PAID','PARTIALLY_REFUNDED','REFUNDED')) THEN\n  RAISE EXCEPTION 'wish support requires committed stock and trusted captured payment' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
       "name": "block_content_extension_publication",
       "identityArguments": "",
       "resultType": "trigger",
@@ -77113,6 +78388,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.content_authoring_revision_sealed(parent_column text, revision_id uuid)\n RETURNS boolean\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE sealed boolean;\nBEGIN\n  IF parent_column NOT IN ('idol_revision_id','gift_revision_id','homepage_revision_id','policy_revision_id','media_metadata_revision_id') THEN\n    RAISE EXCEPTION 'unsupported authoring parent' USING ERRCODE='55000';\n  END IF;\n  EXECUTE format('SELECT EXISTS(SELECT 1 FROM public.content_authoring_receipts WHERE %I=$1 OR %I=$1)',parent_column,'source_'||parent_column) INTO sealed USING revision_id;\n  RETURN sealed;\nEND;\n$function$"
+    },
+    {
+      "name": "current_gift_kind",
+      "identityArguments": "gift uuid",
+      "resultType": "text",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "STABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.current_gift_kind(gift uuid)\n RETURNS text\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT coalesce(d.document->>'giftKind',p.gift_kind) FROM gifts g\n LEFT JOIN daily_publication_revisions d ON d.gift_revision_id=g.published_revision_id\n LEFT JOIN gift_revision_profiles p ON p.gift_revision_id=g.published_revision_id AND p.gift_id=g.id WHERE g.id=gift\n$function$"
     },
     {
       "name": "derive_outbox_payload_status",
@@ -77353,6 +78638,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.guard_cart_transition()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.version <> OLD.version + 1 THEN\n    RAISE EXCEPTION 'cart version must increment exactly once' USING ERRCODE = '23514';\n  END IF;\n  IF NEW.id <> OLD.id OR NEW.token_digest <> OLD.token_digest\n     OR NEW.token_pepper_version <> OLD.token_pepper_version\n     OR NEW.market <> OLD.market OR NEW.currency <> OLD.currency THEN\n    RAISE EXCEPTION 'cart identity and commerce context are immutable' USING ERRCODE = '55000';\n  END IF;\n  IF NOT (\n    NEW.status = OLD.status\n    OR (OLD.status = 'ACTIVE' AND NEW.status IN ('LOCKED', 'EXPIRED'))\n    OR (OLD.status = 'LOCKED' AND NEW.status IN ('CONVERTED', 'EXPIRED'))\n  ) THEN\n    RAISE EXCEPTION 'invalid cart status transition' USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
+    },
+    {
+      "name": "guard_cart_wish_gallery_preference",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_cart_wish_gallery_preference()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF TG_OP='UPDATE' AND NEW.cart_item_id<>OLD.cart_item_id THEN RAISE EXCEPTION 'wish gallery preference identity is immutable' USING ERRCODE='23514'; END IF;\n IF NOT EXISTS(SELECT 1 FROM public.cart_items i JOIN public.carts c ON c.id=i.cart_id\n  JOIN public.wish_bindings w ON w.gift_variant_id=i.gift_variant_id\n  JOIN public.support_intents s ON s.cart_item_id=i.id AND s.idol_id=w.idol_id\n  WHERE i.id=NEW.cart_item_id AND i.quantity=1 AND c.status='ACTIVE' AND s.status='ACTIVE' AND c.expires_at>clock_timestamp())\n THEN RAISE EXCEPTION 'gallery preference belongs only to an active bound wish cart line' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
     },
     {
       "name": "guard_catalog_display_order",
@@ -78065,6 +79360,66 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_webhook_payload_transition()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP = 'DELETE' THEN\n    RAISE EXCEPTION 'webhook payload retention rows cannot be deleted'\n      USING ERRCODE = '55000';\n  END IF;\n  IF TG_OP = 'INSERT' THEN\n    IF NEW.created_at <> transaction_timestamp() THEN\n      RAISE EXCEPTION 'webhook payload creation time must be server anchored'\n        USING ERRCODE = '23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF (to_jsonb(NEW) - 'status' - 'payload_ciphertext' - 'encrypted_data_key'\n      - 'encryption_key_version' - 'purged_at') IS DISTINCT FROM\n     (to_jsonb(OLD) - 'status' - 'payload_ciphertext' - 'encrypted_data_key'\n      - 'encryption_key_version' - 'purged_at') THEN\n    RAISE EXCEPTION 'webhook payload identity and retention evidence are immutable'\n      USING ERRCODE = '55000';\n  END IF;\n  IF NOT (OLD.status = 'RETAINED' AND NEW.status = 'PURGED') THEN\n    RAISE EXCEPTION 'webhook payloads only support RETAINED to PURGED'\n      USING ERRCODE = '23514';\n  END IF;\n  IF NEW.purged_at <> transaction_timestamp() THEN\n    RAISE EXCEPTION 'webhook payload purge time must be server anchored'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
     },
     {
+      "name": "guard_wish_gallery_consent",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_wish_gallery_consent()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE link public.wish_purchase_links%ROWTYPE; preference public.cart_wish_gallery_preferences%ROWTYPE;\nBEGIN\n SELECT * INTO link FROM public.wish_purchase_links WHERE order_item_id=NEW.order_item_id;\n SELECT * INTO preference FROM public.cart_wish_gallery_preferences WHERE cart_item_id=link.cart_item_id;\n IF link.order_item_id IS NULL OR NEW.visibility<>coalesce(preference.visibility,'PRIVATE') OR NEW.public_alias IS DISTINCT FROM preference.public_alias\n OR NOT EXISTS(SELECT 1 FROM public.order_items i JOIN public.orders o ON o.id=i.order_id\n  WHERE i.id=NEW.order_item_id AND i.gift_kind='WISH' AND i.quantity=1 AND o.order_status='PENDING_PAYMENT' AND o.payment_status='UNPAID')\n THEN RAISE EXCEPTION 'wish consent must freeze the exact checkout preference before payment' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_wish_gallery_entry",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_wish_gallery_entry()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM public.wish_supports s WHERE s.order_item_id=NEW.order_item_id AND s.supported_at=NEW.created_at)\n THEN RAISE EXCEPTION 'gallery history requires the exact unique paid wish support' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_wish_gallery_withdrawal",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_wish_gallery_withdrawal()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM public.wish_gallery_entries e JOIN public.order_items i ON i.id=e.order_item_id\n  JOIN public.order_access_sessions s ON s.id=NEW.session_id AND s.order_id=i.order_id\n  WHERE e.entry_id=NEW.entry_id AND s.status='ACTIVE' AND s.created_at<=clock_timestamp() AND s.expires_at>clock_timestamp()\n   AND NEW.withdrawn_at>=e.created_at AND NEW.withdrawn_at<=clock_timestamp())\n THEN RAISE EXCEPTION 'gallery withdrawal requires an active session of the same order' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_wish_reservation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_wish_reservation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE b wish_bindings%ROWTYPE; artist uuid;\nBEGIN\n SELECT b0.* INTO b FROM wish_bindings b0 JOIN gift_variants v ON v.gift_id=b0.gift_id WHERE v.id=NEW.gift_variant_id;\n IF b.wish_id IS NOT NULL THEN\n  SELECT idol_id INTO artist FROM support_intents WHERE cart_item_id=NEW.cart_item_id;\n  IF NEW.gift_variant_id<>b.gift_variant_id OR NEW.location_id<>b.inventory_location_id OR NEW.quantity<>1\n   OR NOT wish_recipient_allowed(NEW.gift_variant_id,artist) THEN\n   RAISE EXCEPTION 'wish reservation requires its sole available gift and artist' USING ERRCODE='23514'; END IF;\n ELSIF current_gift_kind((SELECT gift_id FROM gift_variants WHERE id=NEW.gift_variant_id))='WISH' THEN\n  RAISE EXCEPTION 'unbound wish cannot be reserved' USING ERRCODE='23514';\n END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_wish_restock",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_wish_restock()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE b wish_bindings%ROWTYPE;\nBEGIN\n -- Reservation, commit, release and expiry already own inventory locks. They never replenish.\n IF NEW.delta_on_hand<=0 THEN RETURN NEW; END IF;\n SELECT w.* INTO b FROM wish_bindings w JOIN inventory_items i ON i.gift_variant_id=w.gift_variant_id WHERE i.id=NEW.inventory_item_id FOR UPDATE OF w;\n IF b.wish_id IS NOT NULL AND\n  (NEW.location_id<>b.inventory_location_id OR NEW.delta_on_hand<>1\n   OR EXISTS(SELECT 1 FROM inventory_ledger l WHERE l.inventory_item_id=NEW.inventory_item_id AND l.delta_on_hand>0)\n   OR EXISTS(SELECT 1 FROM wish_supports s WHERE s.wish_id=b.wish_id)) THEN\n  RAISE EXCEPTION 'a wish cannot be replenished or reopened' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
+      "name": "guard_wish_variant",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_wish_variant()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE b wish_bindings%ROWTYPE;\nBEGIN\n SELECT * INTO b FROM wish_bindings WHERE gift_id=NEW.gift_id OR gift_variant_id=NEW.id FOR UPDATE;\n IF b.wish_id IS NOT NULL AND (NEW.id<>b.gift_variant_id OR NEW.gift_id<>b.gift_id OR NEW.inventory_policy<>'TRACKED') THEN\n  RAISE EXCEPTION 'wish gift cannot change its bound variant or stock policy' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
       "name": "idol_current_broker",
       "identityArguments": "idol uuid",
       "resultType": "uuid",
@@ -78773,6 +80128,36 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.validate_webhook_inbox_endpoint_window()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF NEW.received_at <> transaction_timestamp() THEN\n    RAISE EXCEPTION 'webhook receipt time must be server anchored'\n      USING ERRCODE = '23514';\n  END IF;\n  IF NOT EXISTS (\n    SELECT 1\n    FROM public.webhook_payloads payload\n    WHERE payload.id = NEW.webhook_payload_id\n      AND payload.status = 'RETAINED'\n      AND payload.created_at = NEW.received_at\n  ) THEN\n    RAISE EXCEPTION 'webhook payload and receipt must share one server transaction'\n      USING ERRCODE = '23514';\n  END IF;\n  IF NOT EXISTS (\n    SELECT 1 FROM public.payment_webhook_endpoints endpoint\n    WHERE endpoint.id = NEW.endpoint_id\n      AND endpoint.provider_account_id = NEW.provider_account_id\n      AND endpoint.environment = NEW.environment\n      AND endpoint.verification_key_reference_hash = NEW.verification_key_reference_hash\n      AND endpoint.status IN ('ACTIVE', 'ROTATION_OVERLAP')\n      AND endpoint.active_from <= NEW.received_at\n      AND (\n        (endpoint.status = 'ACTIVE' AND endpoint.retired_at IS NULL)\n        OR (endpoint.status = 'ROTATION_OVERLAP'\n          AND endpoint.overlap_started_at <= NEW.received_at\n          AND endpoint.retired_at > NEW.received_at)\n      )\n  ) THEN\n    RAISE EXCEPTION 'webhook endpoint is not active at receipt time'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
+    },
+    {
+      "name": "wish_gallery_preference_valid",
+      "identityArguments": "visibility text, alias text",
+      "resultType": "boolean",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.wish_gallery_preference_valid(visibility text, alias text)\n RETURNS boolean\n LANGUAGE sql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT CASE WHEN visibility IN('PRIVATE','PUBLIC_ANONYMOUS') THEN alias IS NULL\n WHEN visibility='PUBLIC_NAMED' THEN alias IS NOT NULL AND char_length(alias) BETWEEN 1 AND 40\n   AND alias=btrim(alias) AND alias !~ '[[:cntrl:]]' AND alias !~ U&'[\\200B-\\200F\\202A-\\202E\\2060-\\206F\\FEFF]'\n ELSE false END\n$function$"
+    },
+    {
+      "name": "wish_recipient_allowed",
+      "identityArguments": "variant uuid, artist uuid",
+      "resultType": "boolean",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "STABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.wish_recipient_allowed(variant uuid, artist uuid)\n RETURNS boolean\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT coalesce(wish_recipient_matches(variant,artist),false)\n AND NOT EXISTS(SELECT 1 FROM wish_bindings b JOIN wish_supports s ON s.wish_id=b.wish_id WHERE b.gift_variant_id=variant)\n$function$"
+    },
+    {
+      "name": "wish_recipient_matches",
+      "identityArguments": "variant uuid, artist uuid",
+      "resultType": "boolean",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "STABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.wish_recipient_matches(variant uuid, artist uuid)\n RETURNS boolean\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT coalesce(CASE WHEN b.wish_id IS NOT NULL THEN b.idol_id=artist AND b.gift_variant_id=v.id\n   AND current_gift_kind(v.gift_id)='WISH'\n  ELSE current_gift_kind(v.gift_id) IS DISTINCT FROM 'WISH' END,false)\n FROM gift_variants v LEFT JOIN wish_bindings b ON b.gift_id=v.gift_id WHERE v.id=variant\n$function$"
     }
   ]
 }

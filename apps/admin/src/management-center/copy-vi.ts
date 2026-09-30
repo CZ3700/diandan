@@ -1,5 +1,19 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  wishArtist: "Nghệ sĩ nhận quà",
+  wishArtistRequired: "Chọn nghệ sĩ nhận món quà theo nguyện vọng này.",
+  wishArtistChoose: "Chọn nghệ sĩ này",
+  wishArtistChange: "Chọn nghệ sĩ khác",
+  wishArtistLocked:
+    "Nguyện vọng này đã gắn với nghệ sĩ và không thể đổi người nhận.",
+  wishOnlyOnce:
+    "Mỗi nguyện vọng chỉ nhận một lượt ủng hộ. Ngừng bán sau khi xác nhận thanh toán.",
+  wishArtistUnavailable:
+    "Nghệ sĩ này hiện không thể nhận quà theo nguyện vọng.",
+  wishAvailable: "Đang chờ ủng hộ",
+  wishReserved: "Đang xử lý thanh toán",
+  wishSupported: "Đã ủng hộ nguyện vọng",
+  wishUnavailable: "Không khả dụng",
   interfaceLanguage: "Ngôn ngữ giao diện",
   discardEdits: "Bỏ các thay đổi chưa lưu và rời trang này?",
   adjustFocus: "Điều chỉnh tiêu điểm ảnh",

@@ -1,3 +1,4 @@
+import { writeCartWishGalleryPreference } from "./wish-gallery-preference.js";
 import { Buffer } from "node:buffer";
 import {
   cartRuntimeInitializeRecordCommandSchema,
@@ -145,9 +146,10 @@ export function createCartRuntimeRepository(
         const rows = await draftRows(
           client,
           `SELECT item.id,item.cart_id,variant.gift_id,item.gift_variant_id,intent.idol_id,
-         item.version::text,item.quantity,item.observed_price_id,item.display_mode,item.has_fan_message
+         item.version::text,item.quantity,item.observed_price_id,item.display_mode,item.has_fan_message,preference.visibility gallery_visibility,preference.public_alias gallery_public_alias
          FROM public.cart_items item LEFT JOIN public.support_intents intent ON intent.cart_item_id=item.id
          LEFT JOIN public.gift_variants variant ON variant.id=item.gift_variant_id
+         LEFT JOIN public.cart_wish_gallery_preferences preference ON preference.cart_item_id=item.id
          WHERE item.cart_id=$1 AND intent.status IS DISTINCT FROM 'CANCELED' ORDER BY item.created_at,item.id`,
           [cartId],
         );
@@ -223,6 +225,11 @@ export function createCartRuntimeRepository(
             cart.expiresAt,
           ],
         );
+        if (command.galleryPreference)
+          await writeCartWishGalleryPreference(client, {
+            cartItemId: command.cartItemId,
+            preference: command.galleryPreference,
+          });
         const updated = await draftRows(
           client,
           `UPDATE public.carts AS c SET version=c.version+1,presentation_locale=$3,

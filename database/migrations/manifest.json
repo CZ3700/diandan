@@ -590,6 +590,26 @@
         "up": "1c5d55e0cf1bb178b0951eb48451605573e8cf70931ecd8dd5d91021ff9ca632",
         "down": "39f7664b165ce8541c1337acea0153c385e973684fae08222597a2171f8c7aca"
       }
+    },
+    {
+      "version": "0060",
+      "name": "wish-bindings",
+      "up": "database/migrations/0060_wish-bindings.up.sql",
+      "down": "database/migrations/0060_wish-bindings.down.sql",
+      "sha256": {
+        "up": "2eaef8d20d07f1b4a8a32716032fd242444201d5b65325c9a323b3ea43f4102a",
+        "down": "f15ebdb1d039361f492b681fb3a62a312512912464813d5407541c59b9a6a89e"
+      }
+    },
+    {
+      "version": "0061",
+      "name": "wish-gallery",
+      "up": "database/migrations/0061_wish-gallery.up.sql",
+      "down": "database/migrations/0061_wish-gallery.down.sql",
+      "sha256": {
+        "up": "d04c1ae331a823b6194602f133f03b4f034fa0a0e60d8ee59382a1a6791e0cec",
+        "down": "d1417f9170adb07b579359d5b288f1cb6d2b6b0bdf61199bbca19991feaec72e"
+      }
     }
   ]
 }

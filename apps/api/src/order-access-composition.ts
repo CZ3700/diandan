@@ -1,4 +1,7 @@
-import { createOrderAccessUseCases } from "@fan-support/application";
+import {
+  createOrderAccessUseCases,
+  createWishGalleryUseCases,
+} from "@fan-support/application";
 import {
   orderAccessConfigurationSchema,
   paymentRuntimeOriginSchema,
@@ -14,7 +17,7 @@ import type { OrderAccessRouteDependencies } from "./order-access-route.js";
 
 type Persistence = Pick<
   PostgresPersistence,
-  "orderAccessTransactionManager" | "close"
+  "orderAccessTransactionManager" | "wishGalleryTransactionManager" | "close"
 >;
 export type OrderAccessCompositionOptions = Readonly<{
   /** Called once after validation; stopping the runtime closes what it returned. */
@@ -58,6 +61,9 @@ export function createOrderAccessComposition(
         cartCredentials,
         useCases,
         readProof: useCases.readProof,
+        wishGallery: createWishGalleryUseCases({
+          transactions: persistence.wishGalleryTransactionManager,
+        }),
       },
       orderAccessRuntime: { start: async () => undefined, stop },
     });

@@ -26,6 +26,40 @@ function setup(response: unknown) {
   );
   return { api: createManagementApi(client), calls };
 }
+it("loads wish artist choices through the existing bounded catalog search", async () => {
+  const { api, calls } = setup({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "OWNERS",
+    page: 2,
+    pageSize: 10,
+    totalItems: 0,
+    items: [],
+  });
+  await api.wishArtists("ja", 2, "Mira");
+  expect(calls[0]?.url).toBe("/api/admin/catalog-list");
+  expect(JSON.parse(String(calls[0]?.init.body))).toEqual({
+    schemaVersion: 1,
+    kind: "IDOL",
+    locale: "ja",
+    status: "active",
+    page: 2,
+    pageSize: 10,
+    q: "Mira",
+  });
+});
+it("refuses another page of artist choices rather than making stale results selectable", async () => {
+  const { api } = setup({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "OWNERS",
+    page: 1,
+    pageSize: 10,
+    totalItems: 0,
+    items: [],
+  });
+  await expect(api.wishArtists("en", 2)).rejects.toThrow("INVALID_RESPONSE");
+});
 it("keeps CSRF and idempotency in the existing BFF transport", async () => {
   const { api, calls } = setup({
     schemaVersion: 1,

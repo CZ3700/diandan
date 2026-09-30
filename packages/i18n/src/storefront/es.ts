@@ -354,5 +354,42 @@ const copy = {
   marketSelected: "Seleccionado",
   marketInvalid:
     "Este mercado o moneda no está disponible. Elige una combinación disponible.",
+  wishTitle: "Deseos de artistas",
+  wishOnlyFor: "Un deseo para {artist}",
+  wishOpen: "Disponible para apoyar",
+  wishPaymentPending: "Pago en curso",
+  wishSupported: "Deseo apoyado",
+  wishDelivered: "Entregado",
+  wishUnavailable: "Este deseo no está disponible.",
+  wishShowcaseTitle: "Galería de deseos",
+  wishShowcaseIntro: "Una colección de deseos apoyados por fans.",
+  wishShowcaseEmpty: "Aún no hay registros compartidos.",
+  wishShowcaseMore: "Ver todos los deseos",
+  wishDisplayOptIn: "Mostrar este apoyo en la galería de deseos",
+  wishDisplayAnonymous: "Persona anónima",
+  wishDisplayAlias: "Nombre público",
+  wishAliasLabel: "Tu nombre público",
+  wishAliasHint:
+    "Este nombre será público. Tu nombre privado y tu mensaje no se compartirán.",
+  wishAliasInvalid: "Introduce un nombre público de 1 a 40 caracteres.",
+  wishRecordPlanned: "Compartir después del pago",
+  wishEdit: "Editar detalles del deseo",
+  wishRecordTitle: "Registro de la galería",
+  wishRecordPrivate: "No compartido",
+  wishRecordPublic: "Compartido en la galería",
+  wishRecordSave: "Guardar ajustes de la galería",
+  wishRecordSaving: "Guardando…",
+  wishRecordSaved: "Ajustes de la galería guardados.",
+  wishRecordSaveFailed:
+    "No se pudieron guardar los ajustes. Tus cambios se conservan; inténtalo de nuevo.",
+  wishRecordHidden: "Este registro está oculto en la galería.",
+  wishRecordHide: "Ocultar en la galería",
+  wishSupportedBy: "{supporter} apoyó un deseo de {artist} el {date}.",
+  wishGalleryError: "La galería no está disponible. Inténtalo de nuevo.",
+  wishOnlyOnce:
+    "Cada deseo puede recibir apoyo una sola vez. Deja de estar disponible al confirmarse el pago.",
+  wishReversed: "Apoyo retirado",
+  wishPrivacyWithdrawHint:
+    "Puedes ocultar este registro en la galería en cualquier momento desde los detalles del pedido.",
 } as const;
 export default copy;

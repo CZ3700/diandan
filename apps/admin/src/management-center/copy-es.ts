@@ -1,5 +1,19 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  wishArtist: "Artista destinatario",
+  wishArtistRequired: "Elige al artista que recibirá este regalo de deseo.",
+  wishArtistChoose: "Elegir este artista",
+  wishArtistChange: "Elegir otro artista",
+  wishArtistLocked:
+    "Este deseo está vinculado a este artista y no se puede reasignar.",
+  wishOnlyOnce:
+    "Cada deseo recibe apoyo una sola vez. La venta termina al confirmarse el pago.",
+  wishArtistUnavailable:
+    "Este artista no puede recibir regalos de deseo ahora.",
+  wishAvailable: "Disponible para apoyar",
+  wishReserved: "Pago en curso",
+  wishSupported: "Deseo apoyado",
+  wishUnavailable: "No disponible",
   interfaceLanguage: "Idioma de la interfaz",
   discardEdits: "¿Descartar los cambios sin guardar y salir de esta página?",
   adjustFocus: "Ajustar el enfoque del recorte",

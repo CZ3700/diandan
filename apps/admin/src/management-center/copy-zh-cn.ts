@@ -1,5 +1,16 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  wishArtist: "所属艺人",
+  wishArtistRequired: "请选择这份心愿的收礼艺人。",
+  wishArtistChoose: "选择这位艺人",
+  wishArtistChange: "重新选择艺人",
+  wishArtistLocked: "这份心愿已绑定艺人，保存后不能更换。",
+  wishOnlyOnce: "一份心愿仅可支持一次，付款确认后停止售卖。",
+  wishArtistUnavailable: "这位艺人暂不可接收心愿礼物。",
+  wishAvailable: "等待支持",
+  wishReserved: "付款处理中",
+  wishSupported: "已支持心愿",
+  wishUnavailable: "暂不可支持",
   interfaceLanguage: "界面语言",
   discardEdits: "放弃尚未保存的修改并离开此页？",
   adjustFocus: "调整图片焦点",

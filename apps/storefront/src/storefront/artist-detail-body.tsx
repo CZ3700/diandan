@@ -7,6 +7,7 @@ import type {
 import type { StorefrontCopy } from "./copy";
 import { ArtistContent } from "./artist-content";
 import { ArtistGiftDirectory } from "./artist-gift-directory";
+import { ArtistWishes } from "./artist-wishes";
 import { queryString } from "./navigation";
 
 export function ArtistDetailBody({
@@ -26,6 +27,11 @@ export function ArtistDetailBody({
       locale={locale}
       copy={copy}
       contextQuery={queryString(values)}
+      wishes={
+        <Suspense fallback={null}>
+          <ArtistWishes artist={artist} locale={locale} copy={copy} />
+        </Suspense>
+      }
       gifts={
         <Suspense
           fallback={

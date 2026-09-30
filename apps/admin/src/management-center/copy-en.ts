@@ -1,4 +1,17 @@
 export const copy = {
+  wishArtist: "Recipient artist",
+  wishArtistRequired: "Choose the artist for this wish.",
+  wishArtistChoose: "Choose this artist",
+  wishArtistChange: "Choose another artist",
+  wishArtistLocked:
+    "This wish is tied to this artist and cannot be reassigned.",
+  wishOnlyOnce:
+    "One gift, one successful support. Sales stop after payment is confirmed.",
+  wishArtistUnavailable: "This artist is not available to receive wishes.",
+  wishAvailable: "Available to support",
+  wishReserved: "Payment in progress",
+  wishSupported: "Wish supported",
+  wishUnavailable: "Unavailable",
   interfaceLanguage: "Interface language",
   discardEdits: "Discard unsaved changes and leave this page?",
   adjustFocus: "Adjust crop focus",

@@ -1,4 +1,9 @@
 import { createInformationPageRepository } from "./information-pages-repository.js";
+import { createWishGalleryRepository } from "./wish-gallery-repository.js";
+import type {
+  WishGalleryRepository,
+  WishGalleryTransactionManager,
+} from "@fan-support/persistence-port";
 import { createInformationPageAuthorizationRepository } from "./admin-authorization-repository.js";
 import type {
   InformationPageRepositories,
@@ -246,6 +251,7 @@ export interface PostgresPersistence {
   readonly informationPageTransactionManager: InformationPageTransactionManager;
   readonly storefrontNavigationTransactionManager: StorefrontNavigationTransactionManager;
   readonly storefrontThemeTransactionManager: StorefrontThemeTransactionManager;
+  readonly wishGalleryTransactionManager: WishGalleryTransactionManager;
   readonly adminPaymentConfigurationTransactionManager: AdminPaymentConfigurationTransactionManager;
   readonly adminExceptionsTransactionManager: AdminExceptionsTransactionManager;
   readonly adminFinanceTransactionManager: AdminFinanceTransactionManager;
@@ -683,6 +689,15 @@ export function createPostgresPersistenceWithPoolFactory(
         ),
       }),
     });
+  const wishGalleryRunner = createTransactionRunner<WishGalleryRepository>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) =>
+      createWishGalleryRepository(
+        client,
+        scope,
+        options?.catalogPublicMediaBaseUrl ?? "",
+      ),
+  });
   const storefrontThemeRunner =
     createTransactionRunner<StorefrontThemeRepositories>({
       acquireClient: async () => pool.connect(),
@@ -1655,6 +1670,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return catalogDisplayOrderRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    wishGalleryTransactionManager: {
+      async runInWishGalleryTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return wishGalleryRunner.run(
           { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );

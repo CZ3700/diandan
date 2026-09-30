@@ -449,6 +449,7 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/order-access/revoke",
     "/api/v1/orders/{publicOrderId}",
     "/api/v1/orders/{publicOrderId}/delivery-proofs/{proofId}/{rendition}",
+    "/api/v1/orders/{publicOrderId}/wish-gallery/{entryId}/withdraw",
     "/api/v1/policies/{policyKey}",
     "/api/v1/storefront-context",
     "/api/v1/storefront-gifts/{handle}",
@@ -461,6 +462,7 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/storefront/information-pages/{pageKey}",
     "/api/v1/storefront/storefront-navigation",
     "/api/v1/storefront/storefront-theme",
+    "/api/v1/storefront/wish-gallery",
     "/api/v1/webhooks/payments/{endpointId}",
   ]);
   expect(operation["operationId"]).toBe("receivePaymentWebhook");
@@ -626,6 +628,9 @@ test("marks every registered top-level contract with an explicit version policy"
     "AdminLedgerArtistRow",
     "AdminLedgerLine",
     "AdminLedgerExportLine",
+    "WishGalleryPreference",
+    "WishGalleryEntry",
+    "WishSupportRecord",
     "AdminOrdersPermission",
     "AdminOrdersListItem",
     "AdminOrdersLine",

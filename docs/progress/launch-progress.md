@@ -2,9 +2,15 @@
 
 ## C-20261001 心愿礼物绑定与心愿展馆
 
-- IN_PROGRESS；Codex root / catalog_integration_audit / research_gifts_a / research_gifts_b；2026-10-01。用户新增授权：WISH 添加时绑定唯一艺人，艺人页展示专属心愿，购买固定收礼人；每个心愿仅完成一次，成功后停售；可信付款成功即生成“已支持心愿”纪念，买家可选择不公开展馆。
-- 验证计划：先冻结合同与失败测试，覆盖后台绑定/历史兼容、并发与超时/晚到支付、公开选择与撤回、退款/拒付、真实PG迁移、正常鉴权HTTP、七语双端浏览器、check:dev与独立S.U.P.E.R。root负责方案/接线/前台整合，三代理先只读审计，合同冻结后分配互斥实现文件；不修改已部署TEST内容或真实资金。
-- 已冻结业务边界见 ADR-023 / `docs/plan/2026-10-01-artist-wishes.md`。与远端 be6899f9 对齐：L3-12保留0059，本项领取0060绑定与0061展馆；L3-13尚未开工，原预留0060须顺延至当时下一空闲号。0059源码到达后再生成连续manifest和组合PG验收，禁止覆盖并行迁移。
+- LOCAL_ACCEPTED（源码与本地验收；公开TEST待部署）；Codex root / catalog_integration_audit / research_gifts_a / research_gifts_b；2026-10-01。用户确认每个心愿仅支持一次，可信付款后显示“Wish supported”，可不公开；方案见 SPEC §0.8 / ADR-023。
+- 后台WISH必选唯一艺人、TRACKED一份；艺人专属列表与展馆入口、固定收礼人、一次性停售已接通。旧未绑定心愿安全阻止购买，不猜测绑定、不追溯公开历史；已支持不可改艺人、补货或变普通礼物重卖。
+- 默认PRIVATE，可匿名或独立公开署名；购物车可修改选择，安全查单可撤回。公开记录保留四个来源语言的购买快照；整行成功退款/LOST隐藏，历史和停售状态保留；晚到支付保留PAID/ON_HOLD事实、不重复发勋章。
+- 已保护本地改动并合并远端0059艺人账本3ddc960e，登记连续0060/0061与catalog；真实PG61迁移/236表往返、0061→0059→0061精确恢复、108回退保护与8锁序/谓词检查通过，正式测试源码不再含候选迁移旁路。
+- 正常管理鉴权/图片上传/发布→cart→checkout→签名TEST付款→查单/展馆/撤回/退款/拒付/实际超时与晚到capture整链6267项通过（含公共内容fixture）；原送达53、其它cart/order/commerce回归202断言及33准备SQL通过。无真实资金或业务数据直灌。
+- 最终隔离check:dev计划完整通过：workspace/domain/format/lint、强制零缓存typecheck69/test69/build38；合并后的API/worker30任务及契约14测试通过。独立S.U.P.E.R、代码收敛、合并完整性复核完成，发现的问题均有回归。
+- 浏览器为真实组件/CSS夹具：商城及后台各七语×双端均无横溢，深浅、键盘、公开三态、错误保稿和撤回交互已验；新增组件静态。Mac锁屏阻止系统reduced-motion仿真，未声称已执行；公开TEST同版本整页旅程待部署端复验。
+- 限制：check:contracts仍有与基线相同5处locale声明问题，生成物无漂移；翻译review仍DRAFT。早期分工曾主目录Next构建，旧监听未重启且HTTP超时，不能声明旧实例健康；随后均隔离构建。
+- 证据 `output/wish-gifts-2026-10-01/FINAL.md`、`output/wish-gallery-2026-10-01/implementation-review.md`；升级、不可有损回退和复验入口见 [交接](../handoff/2026-10-01-artist-wishes.md)。Mac缺远程TEST连接，本地通过不等于公开部署。
 
 ## C-20261001 海报动效选择与圆点开关
 

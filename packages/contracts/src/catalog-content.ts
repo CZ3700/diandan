@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { wishGiftSummarySchema } from "./wish-binding.js";
 
 import {
   catalogOperationalStatusSchema,
@@ -307,6 +308,7 @@ function createPublishedGiftView<
       category: giftRevisionSchema.shape.category,
       /** Attached by directory reads only; null is an unclassified legacy revision (ADR-019). */
       giftKind: giftKindSchema.nullable().optional(),
+      wish: wishGiftSummarySchema.optional(),
       contents: fields.contents,
       deliveryEstimate: fields.deliveryEstimate,
       shippingMode: giftRevisionSchema.shape.shippingMode,

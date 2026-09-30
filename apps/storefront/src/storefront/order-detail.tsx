@@ -10,6 +10,7 @@ import { Media } from "@fan-support/ui/client";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
 import { OrderDeliveryPhotos } from "./order-delivery-photos";
 import { OrderSupportCertificate } from "./order-support-certificate";
+import { OrderWishRecord } from "./order-wish-record";
 import {
   fanOrderStatus,
   orderItemStatus,
@@ -58,11 +59,13 @@ function OrderLine({
   publicOrderNo,
   locale,
   copy,
+  onWithdrawWish,
 }: Presentation &
   Readonly<{
     item: OrderAccessItem;
     publicOrderId: string;
     publicOrderNo: string;
+    onWithdrawWish?: ((entryId: string) => Promise<boolean>) | undefined;
   }>) {
   return (
     <li className="order-line" data-order-line={item.position}>
@@ -138,6 +141,14 @@ function OrderLine({
         >
           {orderItemStatus(item, copy)}
         </p>
+        {"wishSupport" in item && (
+          <OrderWishRecord
+            record={item.wishSupport}
+            locale={locale}
+            copy={copy}
+            onWithdraw={onWithdrawWish}
+          />
+        )}
         {item.supportCertificate && (
           <OrderSupportCertificate
             item={item}
@@ -175,7 +186,12 @@ export function OrderDetail({
   order,
   locale,
   copy,
-}: Presentation & Readonly<{ order: OrderAccessDetail }>) {
+  onWithdrawWish,
+}: Presentation &
+  Readonly<{
+    order: OrderAccessDetail;
+    onWithdrawWish?: ((entryId: string) => Promise<boolean>) | undefined;
+  }>) {
   const amount = order.amount;
   const help = orderProgressHelp(order, copy);
   const status = fanOrderStatus(order, copy);
@@ -211,6 +227,7 @@ export function OrderDetail({
           <ol className="order-lines">
             {order.items.map((item) => (
               <OrderLine
+                onWithdrawWish={onWithdrawWish}
                 key={item.position}
                 item={item}
                 publicOrderId={order.publicOrderId}

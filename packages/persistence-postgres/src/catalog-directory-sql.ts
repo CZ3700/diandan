@@ -87,6 +87,12 @@ function versionState(includeCommerce: boolean): string {
         `SELECT jsonb_build_array(gift_variant_id,rule,operation_id) value FROM public.gift_variant_recipient_rules`,
       ),
       aggregateState(
+        `SELECT jsonb_build_array(wish_id,gift_id,gift_variant_id,idol_id) value FROM public.wish_bindings`,
+      ),
+      aggregateState(
+        `SELECT jsonb_build_array(wish_id,order_item_id) value FROM public.wish_supports`,
+      ),
+      aggregateState(
         `SELECT jsonb_build_array(id, market, status, version) value FROM public.markets WHERE market = $2`,
       ),
       aggregateState(
@@ -228,6 +234,7 @@ const giftOffer = `LEFT JOIN LATERAL (
         AND recipient_head.idol_revision_id = recipient.published_revision_id
       WHERE recipient.status = 'active' AND recipient.accepting_gifts
         AND ($4::uuid IS NULL OR recipient.id = $4)
+        AND public.wish_recipient_allowed(variant.id,recipient.id)
         AND (EXISTS (SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=recipient.id)
           OR EXISTS (SELECT 1 FROM public.gift_variant_recipient_rules eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.rule='ALL_ACTIVE_ARTISTS'))
     )
@@ -300,6 +307,7 @@ export function buildGiftDirectoryQuery(
         AND ($4::uuid IS NULL OR EXISTS (
           SELECT 1 FROM public.gift_variants variant
           WHERE variant.gift_id = gift.id AND variant.status IN ('active', 'paused')
+            AND public.wish_recipient_matches(variant.id,$4)
             AND (EXISTS (SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=$4)
               OR EXISTS (SELECT 1 FROM public.gift_variant_recipient_rules eligibility
                 JOIN public.idols recipient ON recipient.id=$4 AND recipient.status = 'active' AND recipient.accepting_gifts

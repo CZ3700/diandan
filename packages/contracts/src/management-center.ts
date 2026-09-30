@@ -13,6 +13,7 @@ import {
 import { currencySchema, marketSchema, minorAmountSchema } from "./commerce.js";
 import { giftCategorySchema } from "./catalog-content.js";
 import { giftKindSchema } from "./gift-commerce-profile.js";
+import { wishGiftSummarySchema } from "./wish-binding.js";
 import { publicMediaViewSchema, slugSchema } from "./presentation.js";
 import { mediaMimeTypeSchema } from "./media-content.js";
 import { MEDIA_IMAGE_PROFILE } from "./media-processing.js";
@@ -79,7 +80,10 @@ const giftEditable = {
   category: giftCategorySchema,
   price: managementCenterPriceSchema,
   inventory: managementCenterInventorySchema,
-  eligibility: z.strictObject({ rule: z.literal("ALL_ACTIVE_ARTISTS") }),
+  eligibility: z.discriminatedUnion("rule", [
+    z.strictObject({ rule: z.literal("ALL_ACTIVE_ARTISTS") }),
+    z.strictObject({ rule: z.literal("SINGLE_ARTIST"), idolId: uuid }),
+  ]),
 };
 export const managementCenterIntentSchema = z
   .union([
@@ -105,6 +109,16 @@ export const managementCenterIntentSchema = z
     }),
   ])
   .superRefine((value, context) => {
+    if (
+      value.kind === "SAVE_GIFT" &&
+      value.eligibility.rule === "SINGLE_ARTIST" &&
+      value.giftKind !== "WISH"
+    )
+      context.addIssue({
+        code: "custom",
+        path: ["eligibility"],
+        message: "Only wish gifts bind a single artist",
+      });
     if (
       value.kind === "SAVE_GIFT" &&
       "commerceEdit" in value &&
@@ -245,12 +259,34 @@ export const managementCenterCommandSchema = z.discriminatedUnion("action", [
     rightsConfirmed: z.literal(true),
     ...mutation,
   }),
-  z.strictObject({
-    schemaVersion: version,
-    action: z.literal("SUBMIT"),
-    intent: managementCenterIntentSchema,
-    ...mutation,
-  }),
+  z
+    .strictObject({
+      schemaVersion: version,
+      action: z.literal("SUBMIT"),
+      intent: managementCenterIntentSchema,
+      ...mutation,
+    })
+    .superRefine(({ intent }, context) => {
+      if (intent.kind !== "SAVE_GIFT" || intent.giftKind !== "WISH") return;
+      // Historical operation intents remain parseable; only new submissions require a binding.
+      if (intent.eligibility.rule !== "SINGLE_ARTIST")
+        context.addIssue({
+          code: "custom",
+          path: ["intent", "eligibility"],
+          message: "Wish gifts require one artist",
+        });
+      if (
+        intent.inventory.policy !== "TRACKED" ||
+        intent.inventory.quantity > 1 ||
+        (intent.id === null && intent.inventory.quantity !== 1)
+      )
+        context.addIssue({
+          code: "custom",
+          path: ["intent", "inventory"],
+          message:
+            "Wish gifts require one tracked unit; existing stock may be preserved",
+        });
+    }),
   z.strictObject({
     schemaVersion: version,
     action: z.literal("READ_OPERATION"),
@@ -299,26 +335,28 @@ const listingBase = {
   status: z.enum(["draft", "active", "paused", "archived"]),
   handle: slugSchema,
 };
-export const managementCenterListItemSchema = z.discriminatedUnion("kind", [
+const managementCenterGiftListItemSchema = z.strictObject({
+  kind: z.literal("GIFT"),
+  ...listingBase,
+  giftKind: giftKindSchema,
+  category: giftCategorySchema,
+  price: managementCenterPriceSchema.nullable(),
+  inventory: managementCenterInventorySchema.nullable(),
+  eligibility: z.strictObject({
+    rule: z.enum(["ALL_ACTIVE_ARTISTS", "EXPLICIT_ARTISTS"]),
+  }),
+  canEdit: z.boolean(),
+  inventoryPolicyLocked: z.boolean(),
+});
+export const managementCenterListItemSchema = z.union([
   z.strictObject({
     kind: z.literal("ARTIST"),
     ...listingBase,
     /** The broker the artist belongs to; null is unassigned. A broker's list holds only its own. */
     assignment: managementCenterBrokerSchema.nullable(),
   }),
-  z.strictObject({
-    kind: z.literal("GIFT"),
-    ...listingBase,
-    giftKind: giftKindSchema,
-    category: giftCategorySchema,
-    price: managementCenterPriceSchema.nullable(),
-    inventory: managementCenterInventorySchema.nullable(),
-    eligibility: z.strictObject({
-      rule: z.enum(["ALL_ACTIVE_ARTISTS", "EXPLICIT_ARTISTS"]),
-    }),
-    canEdit: z.boolean(),
-    inventoryPolicyLocked: z.boolean(),
-  }),
+  managementCenterGiftListItemSchema,
+  managementCenterGiftListItemSchema.extend({ wish: wishGiftSummarySchema }),
   z
     .strictObject({
       kind: z.literal("POSTER"),

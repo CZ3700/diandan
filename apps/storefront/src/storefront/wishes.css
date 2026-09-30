@@ -1,0 +1,176 @@
+.wish-gallery-heading,
+.wish-directory-intro {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  margin-block-end: var(--space-8);
+}
+.wish-gallery-heading h1,
+.wish-gallery-heading h2 {
+  margin-block: 0 var(--space-3);
+}
+.wish-gallery-heading p,
+.wish-directory-intro p {
+  max-width: 44rem;
+  color: var(--color-text-muted);
+}
+.wish-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.wish-gallery-card {
+  min-width: 0;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-media);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+.wish-gallery-art {
+  position: relative;
+  aspect-ratio: 1;
+  padding: var(--space-8);
+  background: color-mix(in srgb, var(--color-accent) 5%, var(--color-bg));
+}
+.wish-gallery-art > *:first-child {
+  width: 100%;
+  height: 100%;
+}
+.wish-gallery-seal {
+  position: absolute;
+  inset-inline-end: var(--space-4);
+  inset-block-end: calc(-1 * var(--space-6));
+  width: var(--space-16);
+  height: var(--space-16);
+  padding: var(--space-2);
+  border-radius: 50%;
+  color: var(--color-accent);
+  background: var(--color-surface);
+}
+.wish-gallery-seal .wish-medallion {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.wish-gallery-card-body {
+  padding: var(--space-6);
+  overflow-wrap: anywhere;
+}
+.wish-gallery-card-body h2 {
+  margin-block: var(--space-3) var(--space-6);
+  font-size: calc(var(--type-body-size) * 1.125);
+}
+.wish-gallery-card-body > p:not(.storefront-eyebrow),
+.wish-gallery-card-body time,
+.wish-fine-print {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+.wish-gallery-card-body time {
+  font-size: var(--type-label-size);
+}
+.wish-gallery-artist {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.wish-gallery-artist > *:first-child {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.wish-gallery-empty {
+  padding-block: var(--space-16);
+  color: var(--color-text-muted);
+  border-block: var(--border-width) solid var(--color-border);
+}
+.wish-gallery-more {
+  display: inline-block;
+  margin-block-start: var(--space-8);
+}
+.wish-gallery-choice {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  margin-block: var(--space-6);
+  min-width: 0;
+}
+.wish-gallery-choice legend {
+  padding-inline: var(--space-2);
+  font-weight: 600;
+}
+.wish-gallery-choice .wish-checkbox {
+  display: flex;
+  align-items: start;
+  gap: var(--space-3);
+  line-height: 1.5;
+}
+.wish-checkbox input {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-block-start: 0.15rem;
+  accent-color: var(--color-accent);
+}
+.wish-gallery-choice input:not([type="checkbox"]),
+.wish-gallery-choice select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: var(--space-3);
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  font: inherit;
+}
+.wish-fine-print {
+  font-size: var(--type-label-size);
+  margin: 0;
+}
+.wish-card-status {
+  font-size: var(--type-label-size);
+  color: var(--color-accent);
+}
+.order-wish-record {
+  border-block-start: var(--border-width) solid var(--color-border);
+  margin-block-start: var(--space-6);
+  padding-block-start: var(--space-6);
+}
+.order-wish-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.order-wish-heading .wish-medallion {
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-accent);
+}
+.order-wish-record button {
+  min-height: 2.75rem;
+  margin-block: var(--space-3);
+}
+@media (max-width: 64rem) {
+  .wish-gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 40rem) {
+  .wish-gallery-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wish-gallery-heading,
+  .wish-directory-intro {
+    align-items: start;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+}

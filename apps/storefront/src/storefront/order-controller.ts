@@ -239,6 +239,64 @@ export function createOrderController(
     async revoke() {
       await closeAccess(false);
     },
+    async withdrawWish(entryId: string): Promise<boolean> {
+      const order = state.order;
+      if (
+        !active ||
+        state.busy ||
+        state.revoked ||
+        !order ||
+        (state.retryAt !== null && now() < state.retryAt)
+      )
+        return false;
+      const item = order.items.find(
+        (line) => "wishSupport" in line && line.wishSupport.entryId === entryId,
+      );
+      if (
+        !item ||
+        !("wishSupport" in item) ||
+        item.wishSupport.withdrawn ||
+        item.wishSupport.revoked ||
+        item.wishSupport.visibility === "PRIVATE"
+      )
+        return false;
+      const version = epoch;
+      update({ busy: true, error: null, retryAt: null });
+      const reply = await api
+        .withdrawWish(order.publicOrderId, entryId)
+        .catch(() => ({ schemaVersion: 1, outcome: "UNKNOWN" }) as const);
+      if (!active || version !== epoch) return false;
+      if (reply.outcome === "SUCCESS" && reply.withdrawn.entryId === entryId) {
+        update({
+          busy: false,
+          order: {
+            ...order,
+            items: order.items.map((line) =>
+              "wishSupport" in line && line.wishSupport.entryId === entryId
+                ? {
+                    ...line,
+                    wishSupport: { ...line.wishSupport, withdrawn: true },
+                  }
+                : line,
+            ),
+          },
+        });
+        return true;
+      }
+      if (reply.outcome === "FAILURE" && reply.code === "ACCESS_DENIED")
+        fail(reply);
+      else
+        update({
+          busy: false,
+          ...(reply.outcome === "FAILURE" && reply.code === "RATE_LIMITED"
+            ? {
+                error: reply.code,
+                retryAt: now() + (reply.retryAfterSeconds ?? 1) * 1000,
+              }
+            : {}),
+        });
+      return false;
+    },
     /** A public number only finds the order this browser already holds a session for. */
     async locate(publicOrderNo: string): Promise<string | null> {
       if (state.busy) return null;

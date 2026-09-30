@@ -56,7 +56,8 @@
     "test:postgres:storefront-navigation": "pnpm run build:with-dependencies && node ./scripts/postgres-storefront-navigation.mjs",
     "test:postgres:information-pages": "pnpm run build:with-dependencies && node ./scripts/postgres-information-pages.mjs",
     "test:postgres:notification-submissions": "pnpm turbo run build --filter @fan-support/api --filter @fan-support/worker --output-logs=errors-only && node ./scripts/postgres-notification-submissions.mjs && node ./scripts/notification-submission-integration.mjs",
-    "test:postgres:payment-action-refresh": "pnpm turbo run build --filter @fan-support/api --output-logs=errors-only && node ./scripts/payment-action-refresh-integration.mjs"
+    "test:postgres:payment-action-refresh": "pnpm turbo run build --filter @fan-support/api --output-logs=errors-only && node ./scripts/payment-action-refresh-integration.mjs",
+    "test:postgres:wishes": "pnpm turbo run build --filter @fan-support/api --filter @fan-support/worker --output-logs=errors-only && node ./scripts/postgres-wish-migrations.mjs && node ./scripts/postgres-wish-restock-locks.mjs && node ./scripts/wish-gallery-integration.mjs"
   },
   "dependencies": {
     "@fan-support/catalog": "workspace:*",

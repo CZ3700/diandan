@@ -1,3 +1,4 @@
+import { readWishGiftSummary } from "./wish-binding.js";
 import {
   giftCategorySchema,
   giftKindSchema,
@@ -150,10 +151,15 @@ async function giftDetails(client: TransactionClient, row: DraftRow) {
         ],
       )
     : [];
+  const wish =
+    row["gift_kind"] === "WISH"
+      ? await readWishGiftSummary(client, String(row["id"]), "en")
+      : undefined;
   const locationId =
     variant?.["location_id"] ?? variant?.["configured_location_id"] ?? null;
   return {
     giftKind: row["gift_kind"] ?? "OTHER",
+    ...(wish ? { wish } : {}),
     category: row["category"] ?? "OTHER",
     price: price
       ? {

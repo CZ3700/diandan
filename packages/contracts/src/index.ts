@@ -125,3 +125,5 @@ export * from "./management-image.js";
 export * from "./storefront-navigation.js";
 
 export * from "./information-pages.js";
+export * from "./wish-binding.js";
+export * from "./wish-gallery.js";

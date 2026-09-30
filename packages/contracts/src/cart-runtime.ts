@@ -28,6 +28,7 @@ import { publishedMediaViewSchema } from "./media-content.js";
 import { portKeyVersionSchema } from "./port-common.js";
 import { slugSchema } from "./presentation.js";
 import { storefrontGiftResponseSchema } from "./storefront-commerce.js";
+import { wishGalleryPreferenceSchema } from "./wish-gallery.js";
 
 const version = z.literal(1);
 const positiveVersion = z
@@ -91,6 +92,7 @@ const addFields = {
   observedPriceId: priceIdSchema,
   fanMessageLocale: fanMessageLocaleSchema,
   fanMessage: privateText(280).optional(),
+  galleryPreference: wishGalleryPreferenceSchema.optional(),
 } as const;
 export const cartRuntimeAddCommandSchema = z.discriminatedUnion("displayMode", [
   z.strictObject({ ...addFields, displayMode: z.literal("anonymous") }),
@@ -190,15 +192,21 @@ const itemFields = {
   nicknameProvided: z.boolean(),
   hasFanMessage: z.boolean(),
 } as const;
+const legacyCartRuntimeItemRecordSchema = z.strictObject({
+  ...itemFields,
+  cartId: cartIdSchema,
+  giftId: giftIdSchema,
+  giftVariantId: giftVariantIdSchema,
+  idolId: idolIdSchema,
+  observedPriceId: priceIdSchema,
+});
 export const cartRuntimeItemRecordSchema = z
-  .strictObject({
-    ...itemFields,
-    cartId: cartIdSchema,
-    giftId: giftIdSchema,
-    giftVariantId: giftVariantIdSchema,
-    idolId: idolIdSchema,
-    observedPriceId: priceIdSchema,
-  })
+  .union([
+    legacyCartRuntimeItemRecordSchema,
+    legacyCartRuntimeItemRecordSchema.extend({
+      galleryPreference: wishGalleryPreferenceSchema,
+    }),
+  ])
   .refine(flagsAgree, "Display mode and nickname projection must agree");
 
 export const cartRuntimePrivateContentSchema = z.strictObject({
@@ -250,6 +258,7 @@ export const cartRuntimeAppendItemCommandSchema = z
     fanMessageLocale: fanMessageLocaleSchema,
     displayMode: displayModeSchema,
     privateContent: cartRuntimePrivateContentSchema,
+    galleryPreference: wishGalleryPreferenceSchema.optional(),
     requestId: z.uuid(),
     correlationId: z.uuid(),
   })
@@ -337,14 +346,20 @@ const availability = z
     (value) => (value.status === "UNAVAILABLE") === (value.reason !== null),
     "Availability and its reason must agree",
   );
+const legacyCartRuntimeItemViewSchema = z.strictObject({
+  ...itemFields,
+  idol: idolView.nullable(),
+  gift: giftView.nullable(),
+  price: priceView,
+  availability,
+});
 export const cartRuntimeItemViewSchema = z
-  .strictObject({
-    ...itemFields,
-    idol: idolView.nullable(),
-    gift: giftView.nullable(),
-    price: priceView,
-    availability,
-  })
+  .union([
+    legacyCartRuntimeItemViewSchema,
+    legacyCartRuntimeItemViewSchema.extend({
+      galleryPreference: wishGalleryPreferenceSchema,
+    }),
+  ])
   .superRefine((value, ctx) => {
     if (!flagsAgree(value))
       ctx.addIssue({ code: "custom", message: "Display flags disagree" });

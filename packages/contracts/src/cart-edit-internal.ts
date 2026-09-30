@@ -1,3 +1,4 @@
+import { wishGalleryPreferenceSchema } from "./wish-gallery.js";
 import { z } from "zod";
 import {
   cartRuntimeAccessesSchema,
@@ -73,6 +74,7 @@ const personalization = z
     displayMode: displayModeSchema,
     fanMessageLocale: fanMessageLocaleSchema,
     privateContent: cartRuntimePrivateContentSchema,
+    galleryPreference: wishGalleryPreferenceSchema.optional(),
   })
   .refine(
     (value) =>

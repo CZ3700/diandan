@@ -1,6 +1,8 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 import {
+  wishGalleryWithdrawCommandSchema,
+  wishGalleryWithdrawResponseSchema,
   checkoutSessionIdSchema,
   deliveryProofRenditionNameSchema,
   publicOrderIdSchema,
@@ -21,6 +23,7 @@ import {
   type OrderAccessConfiguration,
   type OrderAccessFailureCode,
 } from "@fan-support/contracts";
+import { registerWishGalleryRoute } from "./wish-gallery-route.js";
 import { resolveRequestId } from "@fan-support/observability";
 import { currentRequestContext } from "@fan-support/observability/node";
 import { cookieToken, privacy, singleHeader } from "./cart-route.js";
@@ -39,6 +42,12 @@ export type OrderAccessRouteDependencies = Readonly<{
     Action | "consumeRateLimit",
     (command: unknown) => Promise<unknown>
   >;
+  wishGallery?:
+    | {
+        read(command: unknown): Promise<unknown>;
+        withdraw(command: unknown): Promise<unknown>;
+      }
+    | undefined;
   /** Session-authorized private delivery photo bytes; absent deployments answer 503. */
   readProof?: ((command: unknown) => Promise<unknown>) | undefined;
 }>;
@@ -126,7 +135,15 @@ export function registerOrderAccessRoute(
   const configuration = orderAccessConfigurationSchema.parse(
     options.configuration,
   );
+  if (options.wishGallery) registerWishGalleryRoute(app, options.wishGallery);
   for (const [method, url, action, scopeName, limit] of [
+    [
+      "POST",
+      "/api/v1/orders/:publicOrderId/wish-gallery/:entryId/withdraw",
+      "wish-withdraw",
+      "REVOKE",
+      configuration.rateLimit.revokeMax,
+    ],
     [
       "POST",
       "/api/v1/order-access/exchange",
@@ -276,6 +293,49 @@ export function registerOrderAccessRoute(
                   "content-length": String(bytes.byteLength),
                 })
                 .send(bytes);
+            } catch {
+              return fail(reply, "TEMPORARY_UNAVAILABLE");
+            }
+          }
+          if (action === "wish-withdraw") {
+            const params = z
+              .strictObject({
+                publicOrderId: publicOrderIdSchema,
+                entryId: z.uuid(),
+              })
+              .safeParse(request.params);
+            if (
+              !params.success ||
+              !orderAccessBootstrapRequestSchema.safeParse(request.body).success
+            )
+              return fail(reply, "INVALID_REQUEST");
+            try {
+              const token = orderCookie(request);
+              if (!token) return fail(reply, "ACCESS_DENIED");
+              const proof = await options.credentials.resolveSession(
+                token,
+                singleHeader(request, "x-csrf-token"),
+              );
+              if (!proof.csrfValid) return fail(reply, "ACCESS_DENIED", 403);
+              if (!options.wishGallery)
+                return fail(reply, "TEMPORARY_UNAVAILABLE");
+              const result = wishGalleryWithdrawResponseSchema.parse(
+                await options.wishGallery.withdraw(
+                  wishGalleryWithdrawCommandSchema.parse({
+                    schemaVersion: 1,
+                    ...params.data,
+                    sessionCandidates: proof.accesses,
+                    ...trace(request),
+                  }),
+                ),
+              );
+              if (result.outcome === "FAILURE") return fail(reply, result.code);
+              if (
+                result.withdrawn.entryId.toLowerCase() !==
+                params.data.entryId.toLowerCase()
+              )
+                return fail(reply, "TEMPORARY_UNAVAILABLE");
+              return reply.code(200).send(result);
             } catch {
               return fail(reply, "TEMPORARY_UNAVAILABLE");
             }

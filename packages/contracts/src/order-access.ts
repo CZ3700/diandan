@@ -36,6 +36,7 @@ import {
 import { orderPaymentStatusSchema } from "./payment.js";
 import { publicMediaUrlSchema, slugSchema } from "./presentation.js";
 import { paymentRuntimeOriginSchema } from "./payment-runtime-config.js";
+import { wishSupportRecordSchema } from "./wish-gallery.js";
 
 const version = z.literal(1);
 const sessionTtl = z.number().int().min(1).max(86_400);
@@ -219,43 +220,52 @@ export const orderAccessSupportCertificateSchema = z.strictObject({
   deliveredAt: contentTimestampSchema,
   revoked: z.boolean(),
 });
+const legacyOrderAccessItemSchema = z.strictObject({
+  schemaVersion: version,
+  position: z.number().int().min(1).max(500),
+  idol: z.strictObject({
+    handle: slugSchema,
+    displayName: checkoutText(40),
+    locale: orderAccessLocaleSchema,
+    portrait: orderAccessMediaSchema,
+  }),
+  gift: z.strictObject({
+    title: checkoutText(160),
+    variantLabel: checkoutText(80).nullable(),
+    locale: orderAccessLocaleSchema,
+    image: orderAccessMediaSchema,
+  }),
+  quantity: cartRuntimeQuantitySchema,
+  unitAmountMinor: minorAmountSchema,
+  lineSubtotalMinor: minorAmountSchema,
+  taxAmountMinor: minorAmountSchema,
+  discountAmountMinor: minorAmountSchema,
+  lineTotalMinor: minorAmountSchema,
+  currency: currencySchema,
+  displayMode: z.enum(["anonymous", "nickname"]),
+  /** Purchase-time classification snapshot; null only for pre-profile legacy lines (ADR-019). */
+  giftKind: giftKindSchema.nullable(),
+  fulfillmentStatus: fulfillmentStatusSchema,
+  /** Studio photos shown only after a physical line is delivered (V2 §4-6). */
+  deliveryProofs: z
+    .array(orderAccessDeliveryProofSchema)
+    .max(DELIVERY_PROOF_PROFILE.maxActiveProofsPerLine),
+  /**
+   * ADR-019 supplement (L3-09): facts for the fan's savable support certificate, present
+   * exactly on delivered virtual lines. `revoked` once succeeded refunds cover the whole
+   * line. Never carries the message, the fan's name, amounts or contact details.
+   */
+  supportCertificate: orderAccessSupportCertificateSchema.nullable(),
+});
 export const orderAccessItemSchema = z
-  .strictObject({
-    schemaVersion: version,
-    position: z.number().int().min(1).max(500),
-    idol: z.strictObject({
-      handle: slugSchema,
-      displayName: checkoutText(40),
-      locale: orderAccessLocaleSchema,
-      portrait: orderAccessMediaSchema,
+  .union([
+    legacyOrderAccessItemSchema,
+    legacyOrderAccessItemSchema.extend({
+      wishSupport: wishSupportRecordSchema,
     }),
-    gift: z.strictObject({
-      title: checkoutText(160),
-      variantLabel: checkoutText(80).nullable(),
-      locale: orderAccessLocaleSchema,
-      image: orderAccessMediaSchema,
-    }),
-    quantity: cartRuntimeQuantitySchema,
-    unitAmountMinor: minorAmountSchema,
-    lineSubtotalMinor: minorAmountSchema,
-    taxAmountMinor: minorAmountSchema,
-    discountAmountMinor: minorAmountSchema,
-    lineTotalMinor: minorAmountSchema,
-    currency: currencySchema,
-    displayMode: z.enum(["anonymous", "nickname"]),
-    /** Purchase-time classification snapshot; null only for pre-profile legacy lines (ADR-019). */
-    giftKind: giftKindSchema.nullable(),
-    fulfillmentStatus: fulfillmentStatusSchema,
-    /** Studio photos shown only after a physical line is delivered (V2 §4-6). */
-    deliveryProofs: z
-      .array(orderAccessDeliveryProofSchema)
-      .max(DELIVERY_PROOF_PROFILE.maxActiveProofsPerLine),
-    /**
-     * ADR-019 supplement (L3-09): facts for the fan's savable support certificate, present
-     * exactly on delivered virtual lines. `revoked` once succeeded refunds cover the whole
-     * line. Never carries the message, the fan's name, amounts or contact details.
-     */
-    supportCertificate: orderAccessSupportCertificateSchema.nullable(),
+  ])
+  .refine((value) => !("wishSupport" in value) || value.giftKind === "WISH", {
+    message: "Only a wish can carry a wish support record",
   })
   .refine(
     (value) =>

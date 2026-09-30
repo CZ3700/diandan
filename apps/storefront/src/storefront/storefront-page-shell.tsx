@@ -10,6 +10,7 @@ import { PolicyLinks } from "./commerce-context";
 import { readCommerceContext } from "./storefront-page-reads";
 import { CartProvider } from "./cart-provider";
 import "./cart.css";
+import "./wishes.css";
 import { SiteHeader } from "./site-header";
 import { SiteFooter } from "./page-parts";
 import { regionEntries } from "./region-entry";

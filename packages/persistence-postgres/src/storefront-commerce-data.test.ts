@@ -1,5 +1,40 @@
 import { expect, test, vi } from "vitest";
 
+test("selected and automatic recipients both require the authoritative wish restriction", async () => {
+  const { readStorefrontVariantFacts } = await moduleUnderTest();
+  let capturedSql = "";
+  const query = vi.fn(async (sql: string) => {
+    capturedSql = sql;
+    return {
+      rows: [
+        {
+          id: id(1),
+          prices: [],
+          inventory_policy: null,
+          inventory_status: null,
+          available_quantity: "0",
+          eligible_for_selected: false,
+          witness_id: null,
+          witness_handle: null,
+        },
+      ],
+    };
+  });
+  await readStorefrontVariantFacts(
+    { query, release: vi.fn() },
+    {
+      giftId: id(9),
+      variantIds: [id(1)],
+      market: "TEST",
+      currency: "USD",
+      idolId: null,
+    },
+  );
+  const sql = capturedSql;
+  expect(sql).toContain("public.wish_recipient_allowed(variant.id,$5)");
+  expect(sql).toContain("public.wish_recipient_allowed(variant.id,idol.id)");
+});
+
 const id = (n: number) =>
   `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 async function moduleUnderTest() {

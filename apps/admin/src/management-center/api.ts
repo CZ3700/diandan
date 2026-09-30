@@ -5,6 +5,7 @@ import {
   type ManagementCenterIntent,
   type ManagementCenterListItem,
   type ManagementCenterResponse,
+  type SupportedLocale,
 } from "@fan-support/contracts";
 import { AdminClientError, type AdminClient } from "../workspace/client";
 import { callCommerce } from "../workspace/gift-commerce-client";
@@ -61,6 +62,31 @@ export function createManagementApi(client: AdminClient) {
     );
   const invalid = () => new AdminClientError("INVALID_RESPONSE");
   return {
+    async wishArtists(locale: SupportedLocale, page: number, query = "") {
+      const result = await client.call(
+        "catalog-list",
+        {
+          schemaVersion: 1,
+          kind: "IDOL",
+          locale,
+          status: "active",
+          page,
+          pageSize: 10,
+          ...(query.trim() ? { q: query.trim() } : {}),
+        },
+        adminCatalogResponseSchema,
+      );
+      if (
+        result.kind !== "OWNERS" ||
+        result.page !== page ||
+        result.pageSize !== 10 ||
+        result.items.some(
+          (item) => item.target.kind !== "IDOL" || item.locale !== locale,
+        )
+      )
+        throw invalid();
+      return result;
+    },
     async readImageSource(target: ImageSourceTarget): Promise<OriginalImage> {
       const result = await call("read-image-source", { target });
       if (

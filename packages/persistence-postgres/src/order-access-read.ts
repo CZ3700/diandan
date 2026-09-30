@@ -104,6 +104,21 @@ export function orderAccessItem(
               row["refunded_in_full"] === true || orderDisputeStatus === "LOST",
           }
         : null,
+    ...(row["gift_kind"] === "WISH" && typeof row["wish_entry_id"] === "string"
+      ? {
+          wishSupport: {
+            entryId: row["wish_entry_id"],
+            supportedAt: row["wish_supported_at"],
+            visibility: row["wish_visibility"],
+            ...(row["wish_visibility"] === "PUBLIC_NAMED"
+              ? { publicAlias: row["wish_public_alias"] }
+              : {}),
+            withdrawn: row["wish_withdrawn"] === true,
+            revoked:
+              row["refunded_in_full"] === true || orderDisputeStatus === "LOST",
+          },
+        }
+      : {}),
   });
 }
 export async function readOrderAccessDetail(
@@ -122,10 +137,16 @@ export async function readOrderAccessDetail(
       i.quantity,i.unit_amount_minor::text,i.line_subtotal_minor::text,i.tax_amount_minor::text,i.discount_amount_minor::text,i.line_total_minor::text,i.currency,i.display_mode,i.gift_kind,f.status fulfillment_status,
       original.line->>'giftVariantLabel' variant_label,delivery_proofs.proofs delivery_proofs,
       ${cartTimestamp("f.delivered_at")} delivered_at,
+      wish_entry.entry_id wish_entry_id,${cartTimestamp("wish_support.supported_at")} wish_supported_at,
+      wish_consent.visibility wish_visibility,wish_consent.public_alias wish_public_alias,
+      EXISTS(SELECT 1 FROM public.wish_gallery_withdrawals withdrawal WHERE withdrawal.entry_id=wish_entry.entry_id) wish_withdrawn,
       (i.line_total_minor>0 AND coalesce((SELECT sum(ri.amount_minor) FROM public.refund_items ri
         JOIN public.refunds refund ON refund.id=ri.refund_id AND refund.order_id=i.order_id
         WHERE ri.order_item_id=i.id AND refund.status='SUCCEEDED'),0)>=i.line_total_minor) refunded_in_full
       FROM public.order_items i LEFT JOIN public.fulfillments f ON f.order_item_id=i.id AND f.order_id=i.order_id
+      LEFT JOIN public.wish_gallery_entries wish_entry ON wish_entry.order_item_id=i.id AND i.gift_kind='WISH'
+      LEFT JOIN public.wish_gallery_consents wish_consent ON wish_consent.order_item_id=wish_entry.order_item_id
+      LEFT JOIN public.wish_supports wish_support ON wish_support.order_item_id=wish_entry.order_item_id
       LEFT JOIN public.checkout_preflight_observations observation ON observation.id=i.checkout_preflight_id
       LEFT JOIN LATERAL(SELECT line FROM jsonb_array_elements(observation.observation#>'{consent,lines}') line WHERE (line->>'cartItemId')::uuid=i.cart_item_id) original ON true
       LEFT JOIN LATERAL(SELECT v.object_key FROM public.media_assets asset JOIN public.media_variants v ON v.media_asset_id=asset.id

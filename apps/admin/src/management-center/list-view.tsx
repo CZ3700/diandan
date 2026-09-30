@@ -8,7 +8,7 @@ import { Button, Icon, Price } from "@fan-support/ui";
 import type { ManagementList, PosterItem } from "./api";
 import { managementCopy } from "./copy";
 import { brokerName } from "./artist-assignment";
-import { giftKindLabel } from "./form-fields";
+import { giftKindLabel, wishStatusLabel } from "./form-fields";
 import { PhotoView } from "./photo-view";
 export type ListViewProps = {
   locale: SupportedLocale;
@@ -121,6 +121,12 @@ export function ManagementListView({
                   {item.kind === "GIFT" ? (
                     <span className="mc-item-line">
                       <span>{giftKindLabel(item.giftKind, copy)}</span>
+                      {"wish" in item ? (
+                        <span data-management-wish-status={item.wish.status}>
+                          {item.wish.artistName} ·{" "}
+                          {wishStatusLabel(item.wish.status, copy)}
+                        </span>
+                      ) : null}
                       {item.price ? (
                         <Price
                           locale={locale}

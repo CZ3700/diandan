@@ -126,6 +126,11 @@ export function registerStorefrontCommerceRoute(
           );
           if (result.outcome === "FAILURE") return failure(reply, result.code);
           const recipient = result.recipient;
+          const expectedRecipientId =
+            result.classification.kind === "CLASSIFIED" &&
+            result.classification.giftKind === "WISH"
+              ? (result.content.view.wish?.artistId ?? command.data.idolId)
+              : command.data.idolId;
           const contexts = [
             result.content.view.localeContext,
             ...(recipient.kind === "PUBLISHED"
@@ -141,12 +146,12 @@ export function registerStorefrontCommerceRoute(
                 !matchesPublicContentLocale(locale, command.data.locale),
             ) ||
             (recipient.kind === "NONE"
-              ? command.data.idolId !== undefined
-              : command.data.idolId === undefined ||
+              ? expectedRecipientId !== undefined
+              : expectedRecipientId === undefined ||
                 (recipient.kind === "PUBLISHED"
                   ? recipient.idol.id
                   : recipient.idolId
-                ).toLowerCase() !== command.data.idolId.toLowerCase())
+                ).toLowerCase() !== expectedRecipientId.toLowerCase())
           )
             return failure(reply, "CONTENT_UNAVAILABLE");
           return sendRevalidatedPublicJson(request, reply, result, {

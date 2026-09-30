@@ -135,3 +135,4 @@ export * from "./storefront-theme.js";
 export * from "./storefront-navigation.js";
 
 export * from "./information-pages.js";
+export * from "./wish-gallery.js";

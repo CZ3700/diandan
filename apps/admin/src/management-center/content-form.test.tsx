@@ -7,6 +7,7 @@ import {
 } from "@fan-support/contracts";
 import { ContentForm } from "./content-form";
 import type { ManagementContext } from "./api";
+import { managementCopy } from "./copy";
 const context = managementCenterResponseSchema.parse({
   schemaVersion: 1,
   outcome: "SUCCESS",
@@ -139,3 +140,59 @@ it("locks only an existing inventory policy while leaving zero quantity and cont
   );
   expect(html).not.toContain('data-management-field="locationId"');
 });
+
+it.each(SUPPORTED_LOCALES)(
+  "keeps a bound wish's recipient, kind and stock fixed in %s",
+  (locale) => {
+    const item = {
+      kind: "GIFT" as const,
+      id: "10000000-0000-4000-8000-000000000001",
+      version: 2,
+      sourceLocale: "en" as const,
+      name: "Studio wish",
+      description: "An individual wish",
+      image: null,
+      status: "active" as const,
+      handle: slugSchema.parse("studio-wish"),
+      giftKind: "WISH" as const,
+      category: "OTHER" as const,
+      price: null,
+      inventory: {
+        policy: "TRACKED" as const,
+        quantity: 0,
+        locationId: "10000000-0000-4000-8000-000000000003",
+      },
+      eligibility: { rule: "EXPLICIT_ARTISTS" as const },
+      canEdit: true,
+      inventoryPolicyLocked: true,
+      wish: {
+        schemaVersion: 1 as const,
+        wishId: "10000000-0000-4000-8000-000000000004",
+        artistId: "10000000-0000-4000-8000-000000000002",
+        artistName: "Mira",
+        artistHandle: slugSchema.parse("mira"),
+        status: "SUPPORTED" as const,
+      },
+    };
+    const html = renderToStaticMarkup(
+      <ContentForm
+        locale={locale}
+        context={context}
+        kind="SAVE_GIFT"
+        item={item}
+        busy={false}
+        onSubmit={() => {}}
+      />,
+    );
+    expect(html).toContain("Mira");
+    expect(html).toContain('data-management-wish="SUPPORTED"');
+    expect(html).toMatch(
+      /<select[^>]*data-management-field="giftKind"[^>]*disabled=""/u,
+    );
+    expect(html).not.toContain('data-management-field="quantity"');
+    expect(html).not.toContain('data-management-field="policy"');
+    expect(html).not.toContain("data-management-wish-picker");
+    expect(html).toContain(managementCopy(locale).wishArtistLocked);
+    expect(html.match(/<form\b/gu)).toHaveLength(1);
+  },
+);

@@ -8,9 +8,6 @@ import {
   useState,
 } from "react";
 import {
-  currencySchema,
-  marketSchema,
-  minorAmountSchema,
   type ManagementCenterListItem,
   type ManagementCenterOperation,
   type SupportedLocale,
@@ -32,7 +29,7 @@ import { managementError } from "./errors";
 import type { ContentDraft, EditableItem } from "./form-model";
 import type { PhotoEdit } from "./focal-model";
 import { giftCommerceEdit } from "./gift-commerce-edit";
-import { parseManagementPrice } from "./inputs";
+import { giftSubmissionFields } from "./gift-submission";
 
 export type EditorSelection =
   | { kind: "SAVE_ARTIST" | "SAVE_GIFT"; item: EditableItem | null }
@@ -213,24 +210,7 @@ export function ManagementEditor({
           : {
               kind: "SAVE_GIFT",
               ...base,
-              giftKind: draft.giftKind,
-              category: draft.category,
-              price: {
-                market: marketSchema.parse(draft.market),
-                currency: currencySchema.parse(draft.currency),
-                amountMinor: minorAmountSchema.parse(
-                  parseManagementPrice(draft.price, locale, draft.currency),
-                ),
-              },
-              inventory:
-                draft.policy === "TRACKED"
-                  ? {
-                      policy: "TRACKED",
-                      locationId: draft.locationId,
-                      quantity: Number(draft.quantity),
-                    }
-                  : { policy: draft.policy },
-              eligibility: { rule: "ALL_ACTIVE_ARTISTS" },
+              ...giftSubmissionFields(draft, locale),
             };
       const guarded =
         intent.kind === "SAVE_GIFT" && selection.item?.kind === "GIFT"
@@ -287,6 +267,7 @@ export function ManagementEditor({
         />
       ) : (
         <ContentForm
+          api={api}
           locale={locale}
           context={context}
           kind={selection.kind}

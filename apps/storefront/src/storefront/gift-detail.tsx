@@ -53,6 +53,7 @@ export function GiftDetail({
   const summary = giftDetailSummary(gift, content.content.details);
   const recipient = (
     <GiftDetailRecipient
+      {...("wish" in gift && gift.wish ? { wish: gift.wish } : {})}
       artists={artists}
       {...(commerce ? { recipient: commerce.recipient } : {})}
       locale={locale}
