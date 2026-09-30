@@ -130,4 +130,19 @@ export const copy = {
   posterDeleteConfirm: "ยืนยันการลบ",
   posterDeleteCancel: "เก็บไว้",
   posterDeleted: "ลบภาพแล้ว หน้าหลักไม่เปลี่ยนแปลง",
+  assignment: "ผู้จัดการศิลปิน",
+  assignmentNone: "ยังไม่ได้มอบหมาย",
+  assignmentStudio: "ยังไม่ได้มอบหมาย (สตูดิโอดูแลเอง)",
+  assignmentAll: "ศิลปินทั้งหมด",
+  assignmentFilter: "แสดงศิลปินของ",
+  assignmentInactive: "{name} (ปิดใช้งาน)",
+  assignmentImmediate: "การเปลี่ยนแปลงตรงนี้มีผลทันที ไม่ต้องกดบันทึก",
+  assignmentOnCreate:
+    "เมื่อเพิ่มศิลปินแล้ว จะอยู่ในความดูแลของผู้จัดการคนนี้ทันที",
+  assignmentSaved: "อัปเดตผู้จัดการแล้ว",
+  assignmentFailed: "บันทึกผู้จัดการไม่สำเร็จ โปรดลองอีกครั้ง",
+  assignmentStale:
+    "มีผู้อื่นเปลี่ยนผู้จัดการแล้ว โปรดกลับไปที่รายการแล้วเปิดศิลปินอีกครั้ง",
+  assignmentMissed:
+    "เพิ่มศิลปินแล้ว แต่ยังไม่ได้บันทึกผู้จัดการ โปรดเปิดศิลปินแล้วเลือกผู้จัดการอีกครั้ง",
 } satisfies ManagementCopy;

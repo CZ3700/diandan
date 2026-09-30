@@ -9,6 +9,7 @@ import {
 import {
   SUPPORTED_LOCALES,
   adminPermissionKeySchema,
+  adminStandardRolePermissions,
 } from "@fan-support/contracts";
 
 export async function provisionFirstAdministrator(
@@ -25,12 +26,15 @@ export async function provisionFirstAdministrator(
         [randomUUID(), key],
       );
     await client.query(
-      "INSERT INTO roles(id,role_key,description) VALUES($1,'studio:owner','Studio administrator'),($2,'studio:operator','Daily operations')",
-      [randomUUID(), randomUUID()],
+      "INSERT INTO roles(id,role_key,description) VALUES($1,'studio:owner','Studio administrator'),($2,'studio:operator','Daily operations'),($3,'studio:broker','Broker')",
+      [randomUUID(), randomUUID(), randomUUID()],
     );
-    await client.query(
-      "INSERT INTO role_permissions(role_id,permission_id) SELECT r.id,p.id FROM roles r CROSS JOIN permissions p WHERE r.role_key='studio:owner'",
-    );
+    // ADR-022: the owner holds everything except the keys that make an account a broker.
+    for (const role of ["studio:owner", "studio:broker"])
+      await client.query(
+        "INSERT INTO role_permissions(role_id,permission_id) SELECT r.id,p.id FROM roles r JOIN permissions p ON p.permission_key=ANY($2::text[]) WHERE r.role_key=$1",
+        [role, adminStandardRolePermissions(role)],
+      );
     await client.query(
       "INSERT INTO role_permissions(role_id,permission_id) SELECT r.id,p.id FROM roles r JOIN permissions p ON p.permission_key IN ('content.read','orders.read') WHERE r.role_key='studio:operator'",
     );

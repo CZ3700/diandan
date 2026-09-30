@@ -153,6 +153,7 @@ import {
   managementCenterCommandSchema,
   managementCenterRequestSchema,
   managementCenterListItemSchema,
+  managementCenterBrokerSchema,
   managementCenterResponseSchema,
 } from "./management-center.js";
 import {
@@ -695,6 +696,7 @@ const unversionedValueObjectNames = new Set([
   "ManagementCenterIntent",
   "ManagementCenterOperation",
   "ManagementCenterListItem",
+  "ManagementCenterBroker",
   "ManagementCenterCheckpoint",
   "ManagementCenterPreparedMedia",
   "DailyPublicationCurrentMedia",
@@ -4481,6 +4483,11 @@ const registrations = [
     name: "ManagementCenterListItem",
     audience: "admin-http",
     schema: managementCenterListItemSchema,
+  },
+  {
+    name: "ManagementCenterBroker",
+    audience: "admin-http",
+    schema: managementCenterBrokerSchema,
   },
   {
     name: "ManagementCenterResponse",

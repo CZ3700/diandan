@@ -25,6 +25,11 @@ export type ManagementList = Extract<
   { kind: "LIST" }
 >;
 export type ManagementSection = ManagementList["section"];
+export type ManagementBroker = ManagementContext["artists"]["brokers"][number];
+/** Narrows the artist list for accounts that manage every artist. */
+export type AssignmentFilter = NonNullable<
+  Extract<ManagementCenterCommand, { action: "LIST" }>["assignment"]
+>;
 export type PreparedUpload = Extract<
   ManagementCenterResponse,
   { kind: "UPLOAD_GRANT" }
@@ -75,8 +80,14 @@ export function createManagementApi(client: AdminClient) {
     async list(
       section: ManagementSection,
       page: number,
+      assignment?: AssignmentFilter | null,
     ): Promise<ManagementList> {
-      const result = await call("list", { section, page, pageSize: 12 });
+      const result = await call("list", {
+        section,
+        page,
+        pageSize: 12,
+        ...(assignment ? { assignment } : {}),
+      });
       if (
         result.kind !== "LIST" ||
         result.section !== section ||
@@ -168,6 +179,26 @@ export function createManagementApi(client: AdminClient) {
         throw invalid();
       if (result.giftId.toLowerCase() !== item.id.toLowerCase())
         throw invalid();
+    },
+    /** L3-11: `idols.assign` only. A null broker returns the artist to the studio. */
+    async assignArtist(
+      artistId: string,
+      brokerId: string | null,
+      expectedBrokerId: string | null,
+    ): Promise<ManagementBroker | null> {
+      const result = await call(
+        "assign-artist",
+        { artistId, brokerId, expectedBrokerId },
+        true,
+      );
+      if (
+        result.kind !== "ARTIST_ASSIGNED" ||
+        result.artistId.toLowerCase() !== artistId.toLowerCase() ||
+        (result.assignment?.brokerId.toLowerCase() ?? null) !==
+          (brokerId?.toLowerCase() ?? null)
+      )
+        throw invalid();
+      return result.assignment;
     },
     /** L2-09: an old poster leaves the history; the current one is refused by the server. */
     async archivePoster(item: PosterItem) {

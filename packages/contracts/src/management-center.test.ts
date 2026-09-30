@@ -267,3 +267,135 @@ describe("management center boundary", () => {
     ).toBe(true);
   });
 });
+
+// ADR-022 / L3-11: brokers and artist assignment.
+describe("artist assignment boundary", () => {
+  const brokerId = "00000000-0000-4000-8000-000000000002";
+  const broker = { brokerId, displayName: "Mina Park", active: true };
+  const listed = {
+    kind: "ARTIST",
+    id,
+    version: 2,
+    sourceLocale: "th",
+    name: "Artist",
+    description: "Description",
+    image: null,
+    status: "active",
+    handle: "artist",
+  };
+  const context = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "CONTEXT",
+    capability: "DIRECT_OPERATOR_V1",
+    markets: [],
+    defaults: null,
+    giftKinds: ["VIRTUAL"],
+    categories: ["OTHER"],
+    poster: { available: false, version: 0, currentRevisionId: null },
+    operations: [],
+  };
+  it("filters the artist list by assignment and never another section", () => {
+    const list = {
+      schemaVersion: 1,
+      action: "LIST",
+      section: "ARTISTS",
+      page: 1,
+      pageSize: 12,
+    };
+    const accepts = (value: unknown) =>
+      managementCenterCommandSchema.safeParse(value).success;
+    expect(accepts(list)).toBe(true);
+    expect(accepts({ ...list, assignment: { kind: "UNASSIGNED" } })).toBe(true);
+    expect(accepts({ ...list, assignment: { kind: "BROKER", brokerId } })).toBe(
+      true,
+    );
+    expect(accepts({ ...list, assignment: { kind: "BROKER" } })).toBe(false);
+    expect(accepts({ ...list, assignment: { kind: "ALL" } })).toBe(false);
+    expect(
+      accepts({
+        ...list,
+        section: "GIFTS",
+        assignment: { kind: "UNASSIGNED" },
+      }),
+    ).toBe(false);
+  });
+  it("lists every artist with its broker or as unassigned", () => {
+    const accepts = (value: unknown) =>
+      managementCenterListItemSchema.safeParse(value).success;
+    expect(accepts(listed)).toBe(false);
+    expect(accepts({ ...listed, assignment: null })).toBe(true);
+    expect(accepts({ ...listed, assignment: broker })).toBe(true);
+    expect(
+      accepts({ ...listed, assignment: { ...broker, active: false } }),
+    ).toBe(true);
+    // Neither a login name nor any contact detail travels with the assignment.
+    expect(
+      accepts({ ...listed, assignment: { ...broker, loginName: "mina" } }),
+    ).toBe(false);
+  });
+  it("tells the center whose artists the account manages", () => {
+    const accepts = (artists: unknown) =>
+      managementCenterResponseSchema.safeParse({ ...context, artists }).success;
+    expect(managementCenterResponseSchema.safeParse(context).success).toBe(
+      false,
+    );
+    expect(accepts({ scope: "ALL", canAssign: true, brokers: [broker] })).toBe(
+      true,
+    );
+    expect(accepts({ scope: "ALL", canAssign: false, brokers: [broker] })).toBe(
+      true,
+    );
+    expect(accepts({ scope: "ASSIGNED", canAssign: false, brokers: [] })).toBe(
+      true,
+    );
+    // A broker never assigns and never receives the directory of other brokers.
+    expect(accepts({ scope: "ASSIGNED", canAssign: true, brokers: [] })).toBe(
+      false,
+    );
+    expect(
+      accepts({ scope: "ASSIGNED", canAssign: false, brokers: [broker] }),
+    ).toBe(false);
+  });
+  it("assigns an artist to a broker or back to unassigned", () => {
+    const command = {
+      schemaVersion: 1,
+      action: "ASSIGN_ARTIST",
+      artistId: id,
+      brokerId,
+      expectedBrokerId: null,
+      idempotencyKey: "management-assign-01",
+    };
+    const accepts = (value: unknown) =>
+      managementCenterCommandSchema.safeParse(value).success;
+    expect(accepts(command)).toBe(true);
+    expect(
+      accepts({ ...command, brokerId: null, expectedBrokerId: brokerId }),
+    ).toBe(true);
+    const missing: Record<string, unknown> = { ...command };
+    delete missing["expectedBrokerId"];
+    expect(accepts(missing)).toBe(false);
+    expect(accepts({ ...command, actorId: id })).toBe(false);
+    const response = {
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      kind: "ARTIST_ASSIGNED",
+      artistId: id,
+    };
+    expect(
+      managementCenterResponseSchema.safeParse({
+        ...response,
+        assignment: broker,
+      }).success,
+    ).toBe(true);
+    expect(
+      managementCenterResponseSchema.safeParse({
+        ...response,
+        assignment: null,
+      }).success,
+    ).toBe(true);
+    expect(managementCenterResponseSchema.safeParse(response).success).toBe(
+      false,
+    );
+  });
+});

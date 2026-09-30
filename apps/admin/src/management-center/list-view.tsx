@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Button, Icon, Price } from "@fan-support/ui";
 import type { ManagementList, PosterItem } from "./api";
 import { managementCopy } from "./copy";
+import { brokerName } from "./artist-assignment";
 import { giftKindLabel } from "./form-fields";
 import { PhotoView } from "./photo-view";
 export type ListViewProps = {
@@ -17,6 +18,10 @@ export type ListViewProps = {
   onPage: (page: number) => void;
   /** L2-09: old posters can be deleted after an inline confirmation. */
   onDeletePoster?: (item: PosterItem) => void;
+  /** ADR-022: accounts that manage every artist see whom each one belongs to. */
+  showAssignment?: boolean;
+  /** An assignment filter is on, so an empty list is "no match", not "add the first". */
+  filtered?: boolean;
 };
 export function ManagementListView({
   locale,
@@ -25,15 +30,19 @@ export function ManagementListView({
   onSelect,
   onPage,
   onDeletePoster,
+  showAssignment = false,
+  filtered = false,
 }: ListViewProps) {
   const copy = managementCopy(locale);
   const [confirming, setConfirming] = useState<string | null>(null);
   const poster = list.section === "POSTERS";
   const empty = poster
     ? copy.emptyPosters
-    : list.section === "ARTISTS"
-      ? copy.emptyArtists
-      : copy.emptyGifts;
+    : list.section !== "ARTISTS"
+      ? copy.emptyGifts
+      : filtered
+        ? copy.noResults
+        : copy.emptyArtists;
   const pages = Math.max(1, Math.ceil(list.totalItems / list.pageSize));
   return (
     <div data-management-list={list.section}>
@@ -129,6 +138,18 @@ export function ManagementListView({
                       ? ` · ${copy.original} · ${LOCALE_NATIVE_NAMES[item.sourceLocale]}`
                       : ""}
                   </span>
+                  {showAssignment && item.kind === "ARTIST" ? (
+                    <span
+                      className="mc-item-meta"
+                      data-management-assignment={
+                        item.assignment?.brokerId ?? "UNASSIGNED"
+                      }
+                    >
+                      {item.assignment
+                        ? `${copy.assignment} · ${brokerName(item.assignment, copy)}`
+                        : copy.assignmentNone}
+                    </span>
+                  ) : null}
                 </button>
                 {item.kind === "POSTER" && item.canDelete && onDeletePoster ? (
                   confirming === item.id ? (

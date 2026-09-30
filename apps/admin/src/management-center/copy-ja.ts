@@ -135,4 +135,18 @@ export const copy = {
   posterDeleteConfirm: "削除する",
   posterDeleteCancel: "残す",
   posterDeleted: "画像を削除しました。トップページは変わりません。",
+  assignment: "担当マネージャー",
+  assignmentNone: "未割り当て",
+  assignmentStudio: "未割り当て（スタジオが直接管理）",
+  assignmentAll: "すべてのアーティスト",
+  assignmentFilter: "担当で絞り込む",
+  assignmentInactive: "{name}（停止中）",
+  assignmentImmediate: "ここでの変更はすぐに反映されます。保存は不要です。",
+  assignmentOnCreate: "追加と同時に、このマネージャーの担当になります。",
+  assignmentSaved: "担当を更新しました。",
+  assignmentFailed: "担当を保存できませんでした。もう一度お試しください。",
+  assignmentStale:
+    "ほかの人が担当を変更しました。一覧に戻って開き直してください。",
+  assignmentMissed:
+    "アーティストは追加されましたが、担当が保存されていません。アーティストを開いて担当を選び直してください。",
 } satisfies ManagementCopy;

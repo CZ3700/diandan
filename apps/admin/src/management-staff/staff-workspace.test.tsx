@@ -221,3 +221,43 @@ test("availability is false without the permission or without built-in accounts"
     expect.anything(),
   );
 });
+
+test.each(SUPPORTED_LOCALES)(
+  "%s names the broker role in its own words and says what it is limited to",
+  (locale) => {
+    const copy = staffCopy(locale);
+    const broker = {
+      roleKey: "studio:broker",
+      description: "Broker",
+      permissions: ["management.assigned"],
+    };
+    expect(roleLabel(broker, locale)).toEqual({
+      name: copy.roleBroker,
+      detail: copy.roleBrokerDetail,
+    });
+    expect(copy.roleBroker).not.toBe(copy.roleOperator);
+    const html = renderToStaticMarkup(
+      <StaffWorkspace
+        api={api}
+        locale={locale}
+        initial={{
+          listing: {
+            members: [
+              ...members,
+              member({
+                accountId: "10000000-0000-4000-8000-000000000004",
+                loginName: "mina.park",
+                displayName: "Mina Park",
+                roleKeys: ["studio:broker"],
+                self: false,
+              }),
+            ],
+            roles: [...roles, broker],
+          },
+        }}
+      />,
+    );
+    expect(row(html, "mina.park")).toContain(copy.roleBroker);
+    expect(row(html, "mina.park")).not.toContain("studio:broker");
+  },
+);

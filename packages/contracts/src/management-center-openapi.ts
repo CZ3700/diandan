@@ -11,6 +11,7 @@ const paths = [
   ["operations/read", "READ_OPERATION"],
   ["operations/retry", "RETRY_OPERATION"],
   ["posters/archive", "ARCHIVE_POSTER"],
+  ["artists/assign", "ASSIGN_ARTIST"],
 ] as const;
 export function managementCenterPaths(): JsonObject {
   return Object.fromEntries(
@@ -41,7 +42,7 @@ export function managementCenterPaths(): JsonObject {
               .join("")}`,
             summary: action.toLowerCase().replaceAll("_", " "),
             description:
-              "Current MFA session, exact Origin, CSRF and management.direct capability are required. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
+              "Current MFA session, exact Origin, CSRF and management.direct capability are required; management.assigned permits only the account's own artists, and assigning an artist requires idols.assign. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
             security: [{ AdminSession: [], AdminCsrf: [] }],
             parameters: [
               {

@@ -146,3 +146,23 @@ test("a healthy active workspace does not display another workspace's discovery 
   expect(access.managementSectionUnavailable(result, "ARTISTS")).toBe(true);
   expect(access.managementSectionUnavailable(null, "EXCEPTIONS")).toBe(false);
 });
+
+test("a broker's center is its artists only, and nobody else is narrowed by accident", () => {
+  const denied = {
+    status: "rejected",
+    reason: new AdminClientError("FORBIDDEN"),
+  } as const;
+  const content = (scope: string) =>
+    ({ status: "fulfilled", value: { artists: { scope } } }) as const;
+  expect(
+    access.resolveManagementAccess(content("ASSIGNED"), denied),
+  ).toMatchObject({ contentAllowed: true, artistsOnly: true, orders: null });
+  expect(access.resolveManagementAccess(content("ALL"), denied)).toMatchObject({
+    contentAllowed: true,
+    artistsOnly: false,
+  });
+  expect(access.resolveManagementAccess(denied, denied)).toMatchObject({
+    contentAllowed: false,
+    artistsOnly: false,
+  });
+});

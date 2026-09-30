@@ -189,6 +189,13 @@
 .mc-item-meta {
   display: block;
 }
+.mc-list-filter {
+  max-inline-size: calc(var(--space-16) * 5);
+  margin-block-end: var(--space-6);
+}
+.mc-assignment [role="status"]:not(:empty) {
+  margin-block-start: var(--space-2);
+}
 .mc-pagination {
   margin-block-start: var(--space-12);
   padding-block-start: var(--space-6);

@@ -23,6 +23,7 @@ const context = managementCenterResponseSchema.parse({
   categories: ["OTHER", "FLOWERS"],
   poster: { available: false, version: 0, currentRevisionId: null },
   operations: [],
+  artists: { scope: "ALL", canAssign: false, brokers: [] },
 }) as ManagementContext;
 it.each(SUPPORTED_LOCALES)(
   "renders one artist submit action, real file input and optional source-language settings in %s",

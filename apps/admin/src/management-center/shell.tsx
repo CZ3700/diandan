@@ -22,6 +22,7 @@ export function ManagementShell({
   disabled = false,
   accountAction,
   contentAllowed = true,
+  artistsOnly = false,
   ordersAvailable = false,
   paymentsAvailable = false,
   exceptionsAvailable = false,
@@ -58,6 +59,8 @@ export function ManagementShell({
   disabled?: boolean;
   accountAction?: ReactNode;
   contentAllowed?: boolean;
+  /** ADR-022: a broker manages artists only; gifts and posters are not offered. */
+  artistsOnly?: boolean;
   ordersAvailable?: boolean;
   paymentsAvailable?: boolean;
   exceptionsAvailable?: boolean;
@@ -89,24 +92,28 @@ export function ManagementShell({
               >
                 {copy.artists}
               </button>
-              <button
-                type="button"
-                data-management-section="GIFTS"
-                aria-current={section === "GIFTS" ? "page" : undefined}
-                disabled={disabled}
-                onClick={() => onSection("GIFTS")}
-              >
-                {copy.gifts}
-              </button>
-              <button
-                type="button"
-                data-management-section="POSTERS"
-                aria-current={section === "POSTERS" ? "page" : undefined}
-                disabled={disabled}
-                onClick={() => onSection("POSTERS")}
-              >
-                {copy.posters}
-              </button>
+              {artistsOnly ? null : (
+                <>
+                  <button
+                    type="button"
+                    data-management-section="GIFTS"
+                    aria-current={section === "GIFTS" ? "page" : undefined}
+                    disabled={disabled}
+                    onClick={() => onSection("GIFTS")}
+                  >
+                    {copy.gifts}
+                  </button>
+                  <button
+                    type="button"
+                    data-management-section="POSTERS"
+                    aria-current={section === "POSTERS" ? "page" : undefined}
+                    disabled={disabled}
+                    onClick={() => onSection("POSTERS")}
+                  >
+                    {copy.posters}
+                  </button>
+                </>
+              )}
             </>
           ) : null}
           {infoPagesAvailable && (

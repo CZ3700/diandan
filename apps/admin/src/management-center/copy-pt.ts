@@ -134,4 +134,20 @@ export const copy = {
   posterDeleteConfirm: "Excluir imagem",
   posterDeleteCancel: "Manter",
   posterDeleted: "Imagem excluída. A página inicial não mudou.",
+  assignment: "Agente",
+  assignmentNone: "Sem agente",
+  assignmentStudio: "Sem agente (gerido pelo estúdio)",
+  assignmentAll: "Todos os artistas",
+  assignmentFilter: "Mostrar artistas de",
+  assignmentInactive: "{name} (inativo)",
+  assignmentImmediate:
+    "A alteração é aplicada de imediato; não é preciso guardar.",
+  assignmentOnCreate:
+    "O artista passa para este agente assim que for adicionado.",
+  assignmentSaved: "Agente atualizado.",
+  assignmentFailed: "Não foi possível guardar o agente. Tente novamente.",
+  assignmentStale:
+    "Outra pessoa alterou o agente. Volte à lista e abra o artista novamente.",
+  assignmentMissed:
+    "O artista foi adicionado, mas o agente não foi guardado. Abra o artista e escolha o agente novamente.",
 } satisfies ManagementCopy;

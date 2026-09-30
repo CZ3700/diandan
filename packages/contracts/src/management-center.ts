@@ -201,6 +201,17 @@ const pagination = {
   page: sequence.positive().max(1_000_000),
   pageSize: z.number().int().min(1).max(50),
 };
+/** ADR-022: the broker an artist belongs to. `brokerId` is the staff identity; no login name or contact detail. */
+export const managementCenterBrokerSchema = z.strictObject({
+  brokerId: uuid,
+  displayName: z.string().min(1).max(80),
+  /** False once the account is suspended or no longer a broker; the artist then needs reassigning. */
+  active: z.boolean(),
+});
+const assignmentFilter = z.discriminatedUnion("kind", [
+  z.strictObject({ kind: z.literal("UNASSIGNED") }),
+  z.strictObject({ kind: z.literal("BROKER"), brokerId: uuid }),
+]);
 export const managementCenterCommandSchema = z.discriminatedUnion("action", [
   z.strictObject({ schemaVersion: version, action: z.literal("CONTEXT") }),
   z.strictObject({
@@ -208,12 +219,19 @@ export const managementCenterCommandSchema = z.discriminatedUnion("action", [
     action: z.literal("READ_IMAGE_SOURCE"),
     target: managementImageTargetSchema,
   }),
-  z.strictObject({
-    schemaVersion: version,
-    action: z.literal("LIST"),
-    section: z.enum(["ARTISTS", "GIFTS", "POSTERS"]),
-    ...pagination,
-  }),
+  z
+    .strictObject({
+      schemaVersion: version,
+      action: z.literal("LIST"),
+      section: z.enum(["ARTISTS", "GIFTS", "POSTERS"]),
+      ...pagination,
+      /** Omitted lists every artist the account may manage. */
+      assignment: assignmentFilter.optional(),
+    })
+    .refine(
+      (value) => value.assignment === undefined || value.section === "ARTISTS",
+      { path: ["assignment"], message: "Only artists are assigned" },
+    ),
   z.strictObject({
     schemaVersion: version,
     action: z.literal("PREPARE_UPLOAD"),
@@ -254,6 +272,15 @@ export const managementCenterCommandSchema = z.discriminatedUnion("action", [
     sourceLocale: supportedLocaleSchema,
     ...mutation,
   }),
+  // L3-11: `idols.assign` only. `expectedBrokerId` is the assignment the editor showed.
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("ASSIGN_ARTIST"),
+    artistId: uuid,
+    brokerId: uuid.nullable(),
+    expectedBrokerId: uuid.nullable(),
+    ...mutation,
+  }),
 ]);
 export const managementCenterRequestSchema = z.strictObject({
   schemaVersion: version,
@@ -273,7 +300,12 @@ const listingBase = {
   handle: slugSchema,
 };
 export const managementCenterListItemSchema = z.discriminatedUnion("kind", [
-  z.strictObject({ kind: z.literal("ARTIST"), ...listingBase }),
+  z.strictObject({
+    kind: z.literal("ARTIST"),
+    ...listingBase,
+    /** The broker the artist belongs to; null is unassigned. A broker's list holds only its own. */
+    assignment: managementCenterBrokerSchema.nullable(),
+  }),
   z.strictObject({
     kind: z.literal("GIFT"),
     ...listingBase,
@@ -317,6 +349,12 @@ export const managementCenterResponseSchema = z.union([
     ...success,
     kind: z.literal("POSTER_ARCHIVED"),
     revisionId: uuid,
+  }),
+  z.strictObject({
+    ...success,
+    kind: z.literal("ARTIST_ASSIGNED"),
+    artistId: uuid,
+    assignment: managementCenterBrokerSchema.nullable(),
   }),
   z
     .strictObject({
@@ -384,6 +422,18 @@ export const managementCenterResponseSchema = z.union([
           : value.version === 0 && value.currentRevisionId === null,
       ),
     operations: z.array(managementCenterOperationSchema).max(10),
+    /** ADR-022: ASSIGNED accounts (brokers) manage only their own artists and no other section. */
+    artists: z
+      .strictObject({
+        scope: z.enum(["ALL", "ASSIGNED"]),
+        canAssign: z.boolean(),
+        brokers: z.array(managementCenterBrokerSchema).max(500),
+      })
+      .refine(
+        (value) =>
+          value.scope === "ALL" ||
+          (!value.canAssign && value.brokers.length === 0),
+      ),
   }),
 ]);
 export type ManagementCenterIntent = z.infer<
@@ -406,4 +456,7 @@ export type ManagementCenterFailure = z.infer<
 >;
 export type ManagementCenterListItem = z.infer<
   typeof managementCenterListItemSchema
+>;
+export type ManagementCenterBroker = z.infer<
+  typeof managementCenterBrokerSchema
 >;

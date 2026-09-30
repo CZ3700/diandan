@@ -46,6 +46,7 @@
   4. `pnpm local:build-web`：按容器镜像的方式构建 admin、api、storefront、worker（`--concurrency=1`），退出码如实返回，成功才写戳记（`node_modules/.cache/fan-support-local-experience/web-build.json`，记录提交与两个 `BUILD_ID`）。有实例在运行时它拒绝执行。2026-09-30 首次实测：全量未命中缓存约 470 秒，内存峰值约 3.5GB、swap 约 235MB，必须先停实例；
   5. 只有看到 `build exit 0` 才启动：root `systemctl start fan-support-remote-test@stg`，约 16–18 秒就绪；
   6. 抽查动态路由（政策、艺人/礼物详情、查单入口、后台 `/en`）。
+  7. 更新里含新的权限键或标准角色时（例如 L3-11 的经纪人角色），启动后以 `xiadan` 执行一次 `node apps/api/scripts/admin-account.mjs sync-roles --instance stg`。它只补不删，可重复执行；不执行的话，员工页创建该角色会报“角色不存在”，已有角色也拿不到新权限。
 - **切换 Web 模式**：`pnpm local:web-mode --instance stg --mode PREBUILT|DEVELOPMENT`，下次启动生效。`PREBUILT` 要求当前提交已 `local:build-web`；`DEVELOPMENT` 会删掉 `webMode` 字段（旧代码不认识这个字段，回退代码前必须先切回）。开发模式下更新代码仍是"reset、install、构建依赖包、restart"，Next 在运行时编译，健康等待 10 分钟。
 - **回滚**：最快是切回 `DEVELOPMENT` 再重启（同一版本回到开发服务器，不用重新构建）；回退代码时先切回 `DEVELOPMENT`，再 reset 到冷备份 `.revision` 记录的版本，必要时用冷备份替换实例目录。
 - **状态**：`pnpm local:status --instance stg`；supervisor 日志在 `~/app/node_modules/.cache/fan-support-local-experience/stg/supervisor.log`，只含结构化阶段。
@@ -60,10 +61,12 @@
 - **切换登录方式**：`pnpm local:admin-sign-in --instance stg --mode LOCAL_ACCOUNT`（或 `LOCAL_OIDC`），下次启动生效，之后重新生成 Caddyfile。
 - **服务器命令**（以 `xiadan` 身份在 `~/app` 执行，都加 `--instance stg`，审计记为 SYSTEM `admin-account-cli`）：
   - `node apps/api/scripts/admin-account.mjs list`
-  - `node apps/api/scripts/admin-account.mjs create --login <登录名> --name <显示名> [--role studio:owner|studio:operator] --password-stdin`
+  - `node apps/api/scripts/admin-account.mjs create --login <登录名> --name <显示名> [--role studio:owner|studio:operator|studio:broker] --password-stdin`
+  - `node apps/api/scripts/admin-account.mjs sync-roles`：补齐权限目录和三个标准角色，不创建账号（代码更新带来新权限或新角色后执行）。
   - `reset-password --login <登录名> --password-stdin`、`clear-2fa --login <登录名>`、`suspend --login <登录名>`、`reactivate --login <登录名>`
   - 密码只从标准输入或无回显提示读取，不能写进参数。从开发机远程执行时，把密码经 SSH 的标准输入传过去，不要写在命令行里。
-  - 第一次 `create` 会幂等补齐权限目录和"工作室管理员 / 日常运营"两个标准角色。
+  - `create` 和 `sync-roles` 都会幂等补齐权限目录和"工作室管理员 / 日常运营 / 经纪人"三个标准角色（只补不删）。
+- **经纪人与艺人归属（ADR-022）**：经纪人账号在后台"员工账号"里创建（角色选"经纪人"），或用上面的 `create --role studio:broker`。艺人归属由工作室管理员在艺人编辑页的"归属经纪人"里选择，修改后立即生效；经纪人自己添加的艺人自动归自己。暂停经纪人账号不会改动名下艺人，列表里显示"（已停用）"，需要管理员改派。
 - **当前账号**：`studio.owner`（工作室管理员，用户已自行开启两步验证，自动化验收不要动它；密码只保存在开发机 `C:\Users\admin\.tools\xiadan-stg-admin.txt`）；`qa.check` 是真实域名验收用的账号：验收脚本自己生成随机密码，经 SSH 标准输入交给 `reset-password`，用完清除两步验证并暂停。
 - **重新生成 Caddyfile**：Basic Auth 哈希没有另存时，以 root 用 `grep -oE '[$]2[aby][$][0-9]{2}[$][./A-Za-z0-9]{53}'` 从现有 `/etc/caddy/Caddyfile` 提取到只有 `xiadan` 可读的临时文件，再以 `xiadan` 执行 `pnpm local:caddy ... --auth-hash-file <临时文件>`。对比时先把哈希替换成占位符再 `diff`，确认只有预期的变化；`caddy validate` 通过后安装，`systemctl reload caddy`，最后删除临时文件。远程执行时用 `ssh ... 'bash -s' <<'EOF'` 传脚本，避免 `$[` 被当成算术展开。
 

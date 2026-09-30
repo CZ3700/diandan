@@ -12,12 +12,43 @@ import {
   managementOperationSql,
   mapManagementOperation,
 } from "./management-center-operation-data.js";
+import {
+  readBrokerDirectory,
+  readBrokers,
+} from "./management-center-assignment.js";
+import type { ManagementGrants } from "./management-center-scope.js";
 import type { TransactionClient } from "./transaction-runner.js";
+
+/** Which artists a listing covers: every artist with its broker, or one broker's own. */
+export type ArtistVisibility =
+  | Readonly<{ scope: "ALL" }>
+  | Readonly<{ scope: "ASSIGNED"; brokerId: string }>;
 
 export async function readManagementCenterContext(
   client: TransactionClient,
   principal: AdminPrincipal,
+  grants: ManagementGrants,
 ) {
+  const operations = await draftRows(
+    client,
+    `${managementOperationSql} WHERE o.actor_id=$1 ORDER BY o.updated_at DESC,o.id DESC LIMIT 10`,
+    [principal.actorId],
+  );
+  // A broker manages artists only: no markets, gift defaults, poster or broker directory.
+  if (!grants.direct)
+    return managementCenterResponseSchema.parse({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      kind: "CONTEXT",
+      capability: "DIRECT_OPERATOR_V1",
+      markets: [],
+      defaults: null,
+      giftKinds: giftKindSchema.options,
+      categories: giftCategorySchema.options,
+      poster: { available: false, version: 0, currentRevisionId: null },
+      operations: operations.map(mapManagementOperation),
+      artists: { scope: "ASSIGNED", canAssign: false, brokers: [] },
+    });
   const markets = await draftRows(
     client,
     `SELECT m.market,to_jsonb(ARRAY(SELECT currency FROM(SELECT m.default_currency AS currency UNION SELECT b.currency FROM public.price_books b WHERE b.market_id=m.id) currencies ORDER BY currency)) AS currencies FROM public.markets m WHERE m.status='ACTIVE' ORDER BY m.market LIMIT 251`,
@@ -29,11 +60,6 @@ export async function readManagementCenterContext(
   const [poster] = await draftRows(
     client,
     `SELECT h.version,h.homepage_revision_id,EXISTS(SELECT 1 FROM public.homepage_slots s WHERE s.homepage_revision_id=h.homepage_revision_id AND s.kind='HERO_IDOL') AS available FROM public.homepage_publication_heads h`,
-  );
-  const operations = await draftRows(
-    client,
-    `${managementOperationSql} WHERE o.actor_id=$1 ORDER BY o.updated_at DESC,o.id DESC LIMIT 10`,
-    [principal.actorId],
   );
   return managementCenterResponseSchema.parse({
     schemaVersion: 1,
@@ -63,6 +89,11 @@ export async function readManagementCenterContext(
           }
         : { available: false, version: 0, currentRevisionId: null },
     operations: operations.map(mapManagementOperation),
+    artists: {
+      scope: "ALL",
+      canAssign: grants.assign,
+      brokers: await readBrokerDirectory(client),
+    },
   });
 }
 export async function thumbnail(
@@ -162,32 +193,60 @@ export async function readManagementCenterList(
   client: TransactionClient,
   command: Extract<ManagementCenterCommand, { action: "LIST" }>,
   publicMediaBaseUrl: string,
+  visibility: ArtistVisibility,
 ) {
   if (command.section === "POSTERS")
     return readPosters(client, command, publicMediaBaseUrl);
   const artist = command.section === "ARTISTS",
     table = artist ? "idols" : "gifts",
     revision = artist ? "idol" : "gift";
+  // ADR-022: a broker's list is its own artists; everyone else may narrow by assignment.
+  const owner = !artist
+    ? undefined
+    : visibility.scope === "ASSIGNED"
+      ? visibility.brokerId
+      : command.assignment?.kind === "BROKER"
+        ? command.assignment.brokerId
+        : command.assignment?.kind === "UNASSIGNED"
+          ? null
+          : undefined;
+  const assigned =
+    owner === undefined
+      ? ""
+      : owner === null
+        ? " AND public.idol_current_broker(o.id) IS NULL"
+        : " AND public.idol_current_broker(o.id)=$1";
+  const scoped = typeof owner === "string" ? [owner] : [];
   const [count] = await draftRows(
     client,
     // Deleted (archived) artists and gifts leave the daily list; orders keep their own snapshots.
-    `SELECT count(*)::text total FROM public.${table} WHERE status<>'archived'`,
+    `SELECT count(*)::text total FROM public.${table} o WHERE o.status<>'archived'${assigned}`,
+    scoped,
   );
   const rows = await draftRows(
     client,
     `SELECT o.id,o.handle,o.version,o.status,r.id revision_id,coalesce(d.source_locale::text,t.locale::text,'en') source_locale,
     coalesce(d.document->'source'->'fields'->>'${artist ? "displayName" : "title"}',t.${artist ? "display_name" : "title"},o.handle) name,
     coalesce(d.document->'source'->'fields'->>'${artist ? "fullBio" : "description"}',t.${artist ? "full_bio" : "description"},'') description,
-    media.media_asset_id ${artist ? "" : ",r.category,coalesce(d.document->>'giftKind',profile.gift_kind) gift_kind"}
+    media.media_asset_id ${artist ? ",public.idol_current_broker(o.id) broker_id" : ",r.category,coalesce(d.document->>'giftKind',profile.gift_kind) gift_kind"}
     FROM public.${table} o LEFT JOIN public.${revision}_revisions r ON r.id=coalesce(o.published_revision_id,o.draft_revision_id)
     LEFT JOIN public.daily_publication_revisions d ON d.revision_id=r.id
     LEFT JOIN public.${revision}_revision_translations t ON t.${revision}_revision_id=r.id AND t.locale='en'
     LEFT JOIN LATERAL(SELECT media_asset_id FROM public.${revision}_revision_media m WHERE m.${revision}_revision_id=r.id AND m.role='${artist ? "PORTRAIT" : "PRIMARY"}' ORDER BY m.sort_order LIMIT 1) media ON true
     ${artist ? "" : "LEFT JOIN public.gift_revision_profiles profile ON profile.gift_revision_id=r.id"}
-    WHERE o.status<>'archived'
-    ORDER BY o.created_at DESC,o.id DESC LIMIT $1 OFFSET $2`,
-    [command.pageSize, (command.page - 1) * command.pageSize],
+    WHERE o.status<>'archived'${assigned}
+    ORDER BY o.created_at DESC,o.id DESC LIMIT $${scoped.length + 1} OFFSET $${scoped.length + 2}`,
+    [...scoped, command.pageSize, (command.page - 1) * command.pageSize],
   );
+  const brokers = artist
+    ? await readBrokers(client, [
+        ...new Set(
+          rows
+            .map((row) => row["broker_id"])
+            .filter((id): id is string => typeof id === "string"),
+        ),
+      ])
+    : null;
   const items = [];
   for (const row of rows)
     items.push({
@@ -206,6 +265,14 @@ export async function readManagementCenterList(
       status: row["status"],
       handle: row["handle"],
       ...(!artist ? await giftDetails(client, row) : {}),
+      ...(brokers
+        ? {
+            assignment:
+              typeof row["broker_id"] === "string"
+                ? (brokers.get(row["broker_id"]) ?? null)
+                : null,
+          }
+        : {}),
     });
   return managementCenterResponseSchema.parse({
     schemaVersion: 1,

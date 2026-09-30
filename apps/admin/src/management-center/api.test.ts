@@ -227,3 +227,75 @@ it("archives an old poster through its own mutation and refuses another poster's
   });
   await expect(other.api.archivePoster(poster)).rejects.toThrow();
 });
+
+// ADR-022 / L3-11
+const brokerId = "10000000-0000-4000-8000-000000000002";
+it("sends the assignment filter only when one is chosen", async () => {
+  const { api, calls } = setup({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "LIST",
+    section: "ARTISTS",
+    page: 1,
+    pageSize: 12,
+    totalItems: 0,
+    items: [],
+  });
+  await api.list("ARTISTS", 1);
+  await api.list("ARTISTS", 1, null);
+  await api.list("ARTISTS", 1, { kind: "UNASSIGNED" });
+  await api.list("ARTISTS", 1, { kind: "BROKER", brokerId });
+  const bodies = calls.map((call) => JSON.parse(String(call.init.body)));
+  expect(calls.every((call) => call.url === "/api/admin/management-list")).toBe(
+    true,
+  );
+  expect(bodies.map((body) => body.assignment)).toEqual([
+    undefined,
+    undefined,
+    { kind: "UNASSIGNED" },
+    { kind: "BROKER", brokerId },
+  ]);
+});
+it("assigns through an idempotent mutation and accepts only the artist and broker it asked for", async () => {
+  const assigned = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "ARTIST_ASSIGNED",
+    artistId: id,
+    assignment: { brokerId, displayName: "Mina Park", active: true },
+  };
+  const { api, calls } = setup(assigned);
+  expect(await api.assignArtist(id, brokerId, null)).toEqual(
+    assigned.assignment,
+  );
+  expect(calls[0]?.url).toBe("/api/admin/management-assign-artist");
+  expect(JSON.parse(String(calls[0]?.init.body))).toEqual({
+    schemaVersion: 1,
+    artistId: id,
+    brokerId,
+    expectedBrokerId: null,
+  });
+  expect(
+    new Headers(calls[0]?.init.headers).get("Idempotency-Key"),
+  ).toBeTruthy();
+  // The server answered about another broker, another artist, or "unassigned".
+  await expect(api.assignArtist(id, id, null)).rejects.toThrow(
+    "INVALID_RESPONSE",
+  );
+  await expect(api.assignArtist(brokerId, brokerId, null)).rejects.toThrow(
+    "INVALID_RESPONSE",
+  );
+  await expect(api.assignArtist(id, null, brokerId)).rejects.toThrow(
+    "INVALID_RESPONSE",
+  );
+  const cleared = setup({ ...assigned, assignment: null });
+  expect(await cleared.api.assignArtist(id, null, brokerId)).toBeNull();
+  const refused = setup({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "TARGET_CONFLICT",
+  });
+  await expect(refused.api.assignArtist(id, brokerId, null)).rejects.toThrow(
+    "TARGET_CONFLICT",
+  );
+});

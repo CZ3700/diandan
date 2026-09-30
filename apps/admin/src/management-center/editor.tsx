@@ -15,7 +15,9 @@ import {
   type ManagementCenterOperation,
   type SupportedLocale,
 } from "@fan-support/contracts";
+import { AdminClientError } from "../workspace/client";
 import type { DeletableItem, ManagementApi, ManagementContext } from "./api";
+import { ArtistAssignment, type AssignmentState } from "./artist-assignment";
 import { ContentForm } from "./content-form";
 import { DeletePanel } from "./delete-panel";
 import { PosterForm } from "./poster-form";
@@ -54,7 +56,11 @@ export function ManagementEditor({
   locale: SupportedLocale;
   context: ManagementContext;
   selection: EditorSelection;
-  onPublished: (operation: ManagementCenterOperation) => void;
+  /** `assignmentMissed`: the new artist is published but its broker could not be saved. */
+  onPublished: (
+    operation: ManagementCenterOperation,
+    assignmentMissed?: boolean,
+  ) => void;
   onDeleted?: ((item: DeletableItem) => void) | undefined;
   canDelete?: boolean;
   onBusy: (busy: boolean) => void;
@@ -92,15 +98,60 @@ export function ManagementEditor({
       mounted.current = false;
     };
   }, []);
+  // ADR-022: only accounts holding `idols.assign` are offered the broker choice.
+  const artist =
+    selection.kind === "SAVE_ARTIST" && selection.item?.kind === "ARTIST"
+      ? selection.item
+      : null;
+  const assignable =
+    selection.kind === "SAVE_ARTIST" && context.artists.canAssign;
+  const [brokerId, setBrokerId] = useState<string | null>(
+    artist?.assignment?.brokerId ?? null,
+  );
+  const [assignmentState, setAssignmentState] =
+    useState<AssignmentState>("IDLE");
+  const pendingBroker = useRef<string | null>(null);
+  async function chooseBroker(next: string | null) {
+    if (!artist) {
+      // A new artist has no id yet; the choice is applied once it is published.
+      pendingBroker.current = next;
+      setBrokerId(next);
+      return;
+    }
+    const previous = brokerId;
+    setBrokerId(next);
+    setAssignmentState("SAVING");
+    try {
+      await api.assignArtist(artist.id, next, previous);
+      if (mounted.current) setAssignmentState("SAVED");
+    } catch (failure) {
+      if (!mounted.current) return;
+      setBrokerId(previous);
+      setAssignmentState(
+        failure instanceof AdminClientError &&
+          failure.code === "TARGET_CONFLICT"
+          ? "STALE"
+          : "FAILED",
+      );
+    }
+  }
   const change = useCallback(
     (next: ManagementCenterOperation) => {
       setOperation(next);
-      if (next.status === "PUBLISHED") {
-        onDirtyChange?.(false);
+      if (next.status !== "PUBLISHED") return;
+      onDirtyChange?.(false);
+      const broker = pendingBroker.current;
+      if (broker === null || !next.result) {
         onPublished(next);
+        return;
       }
+      pendingBroker.current = null;
+      void api.assignArtist(next.result.targetId, broker, null).then(
+        () => onPublished(next),
+        () => onPublished(next, true),
+      );
     },
-    [onPublished, onDirtyChange],
+    [api, onPublished, onDirtyChange],
   );
   async function submit(intent: SubmissionIntent, file: File | null) {
     if (active.current || operation) return;
@@ -244,6 +295,18 @@ export function ManagementEditor({
           onSubmit={submitContent}
           loadOriginal={loadOriginal}
           onDirtyChange={onDirtyChange}
+          assignment={
+            assignable ? (
+              <ArtistAssignment
+                copy={copy}
+                brokers={context.artists.brokers}
+                value={brokerId}
+                state={assignmentState}
+                existing={artist !== null}
+                onChange={(next) => void chooseBroker(next)}
+              />
+            ) : undefined
+          }
         />
       )}
       {deletable && canDelete ? (

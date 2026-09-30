@@ -560,6 +560,16 @@
         "up": "7d6630ba6e3a145716fe539a3bafcdc4d00ea408e67db06dead67952c0af6059",
         "down": "9bd8d5fe84a53783cbee6879506f6b99cdbe0bf9e330ffec76b6eeae23d187da"
       }
+    },
+    {
+      "version": "0057",
+      "name": "idol-assignments",
+      "up": "database/migrations/0057_idol-assignments.up.sql",
+      "down": "database/migrations/0057_idol-assignments.down.sql",
+      "sha256": {
+        "up": "a69d69b476d7e28aff0eaee412b1dafc696c17fbc1f9099eabe211b9cb2dc1b8",
+        "down": "587b964b4e52389ea3eb46f8dd90f502c0eda7709188e3aeb839969f1d776fef"
+      }
     }
   ]
 }

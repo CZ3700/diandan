@@ -26,6 +26,7 @@ import { publishDailyDocument } from "./daily-publication-write.js";
 import { publishDailyGiftPrice } from "./daily-publication-price.js";
 import { publishDailyGiftInventory } from "./daily-publication-inventory.js";
 import { managementFailure } from "./management-center-operation-data.js";
+import { assignCreatedArtistToBroker } from "./management-center-assignment.js";
 import { createResourceRun } from "./resource-management-data.js";
 import type {
   TransactionClient,
@@ -172,11 +173,15 @@ async function prepareCatalog(
   const handle = prior
     ? String(prior["handle"])
     : `${kind.toLowerCase()}-${targetId.replaceAll("-", "")}`;
-  if (!prior)
+  if (!prior) {
     await client.query(
       `INSERT INTO public.${table}(id,handle,status,${kind === "IDOL" ? "accepting_gifts," : ""}version,created_at,updated_at) VALUES($1,$2,'draft',${kind === "IDOL" ? "false," : ""}1,$3,$3)`,
       [targetId, handle, time],
     );
+    // ADR-022: a broker's new artist belongs to that broker from the same transaction on.
+    if (kind === "IDOL")
+      await assignCreatedArtistToBroker(client, claim, targetId);
+  }
   const [revision] = await draftRows(
     client,
     `SELECT coalesce(max(revision),0)+1 revision FROM public.${kind.toLowerCase()}_revisions WHERE ${kind.toLowerCase()}_id=$1`,

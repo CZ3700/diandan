@@ -3,7 +3,11 @@ import { createManagementCenterOperationRepository } from "./management-center-o
 const id = "00000000-0000-4000-8000-000000000001";
 const target = { kind: "ARTIST" as const, id, expectedVersion: 2 };
 test("source reader rejects stale targets and cannot sign or guess from a shared master", async () => {
+  const scope = "p.permission_key=ANY($2::text[])";
   const query = vi.fn(async (sql: string) => {
+    // ADR-022: the account manages every artist, so only the target itself is read.
+    if (sql.includes(scope))
+      return { rows: [{ permission_key: "management.direct" }] };
     return {
       rows: sql.startsWith("SELECT")
         ? [{ id, version: 3, status: "active", published_revision_id: id }]
@@ -31,6 +35,10 @@ test("source reader rejects stale targets and cannot sign or guess from a shared
   });
   expect(result).toMatchObject({ outcome: "FAILURE", code: "TARGET_CONFLICT" });
   expect(
-    query.mock.calls.filter((call) => String(call[0]).startsWith("SELECT")),
+    query.mock.calls.filter(
+      (call) =>
+        String(call[0]).startsWith("SELECT") &&
+        !String(call[0]).includes(scope),
+    ),
   ).toHaveLength(1);
 });

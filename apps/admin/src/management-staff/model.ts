@@ -7,7 +7,7 @@ import { staffCopy } from "./copy";
 import type { StaffRole } from "./api";
 
 // ADR-021 staff accounts: role names people understand, input checks, and failure messages.
-export const [OWNER_ROLE, OPERATOR_ROLE] = ADMIN_STAFF_ROLE_KEYS;
+export const [OWNER_ROLE, OPERATOR_ROLE, BROKER_ROLE] = ADMIN_STAFF_ROLE_KEYS;
 
 export function roleLabel(
   role: Pick<StaffRole, "roleKey" | "description">,
@@ -18,6 +18,8 @@ export function roleLabel(
     return { name: copy.roleOwner, detail: copy.roleOwnerDetail };
   if (role.roleKey === OPERATOR_ROLE)
     return { name: copy.roleOperator, detail: copy.roleOperatorDetail };
+  if (role.roleKey === BROKER_ROLE)
+    return { name: copy.roleBroker, detail: copy.roleBrokerDetail };
   return { name: role.roleKey, detail: role.description };
 }
 

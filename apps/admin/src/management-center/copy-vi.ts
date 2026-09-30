@@ -131,4 +131,18 @@ export const copy = {
   posterDeleteConfirm: "Xác nhận xóa",
   posterDeleteCancel: "Giữ lại",
   posterDeleted: "Đã xóa ảnh. Trang chủ không thay đổi.",
+  assignment: "Quản lý nghệ sĩ",
+  assignmentNone: "Chưa phân công",
+  assignmentStudio: "Chưa phân công (studio trực tiếp quản lý)",
+  assignmentAll: "Tất cả nghệ sĩ",
+  assignmentFilter: "Hiển thị nghệ sĩ của",
+  assignmentInactive: "{name} (đã ngừng hoạt động)",
+  assignmentImmediate: "Thay đổi ở đây có hiệu lực ngay, không cần bấm lưu.",
+  assignmentOnCreate: "Nghệ sĩ sẽ thuộc về quản lý này ngay khi được thêm.",
+  assignmentSaved: "Đã cập nhật quản lý.",
+  assignmentFailed: "Không lưu được quản lý. Vui lòng thử lại.",
+  assignmentStale:
+    "Người khác đã đổi quản lý. Hãy quay lại danh sách và mở lại nghệ sĩ.",
+  assignmentMissed:
+    "Đã thêm nghệ sĩ nhưng chưa lưu được quản lý. Hãy mở nghệ sĩ và chọn lại quản lý.",
 } satisfies ManagementCopy;

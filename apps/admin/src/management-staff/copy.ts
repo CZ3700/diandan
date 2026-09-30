@@ -13,6 +13,8 @@ type StaffCopy = Readonly<
     | "roleOwnerDetail"
     | "roleOperator"
     | "roleOperatorDetail"
+    | "roleBroker"
+    | "roleBrokerDetail"
     | "createAction"
     | "creating"
     | "temporaryTitle"
@@ -71,6 +73,9 @@ const en: StaffCopy = {
   roleOperator: "Daily operations",
   roleOperatorDetail:
     "Content, gifts, orders and fan messages. No finance, payment settings or staff.",
+  roleBroker: "Broker",
+  roleBrokerDetail:
+    "Only the artists assigned to them. Combined with another role, that role's wider access applies.",
   createAction: "Create account",
   creating: "Creating…",
   temporaryTitle: "Temporary password for {account}",
@@ -133,6 +138,9 @@ const zhCN: StaffCopy = {
   roleOperator: "日常运营",
   roleOperatorDetail:
     "内容、礼物、订单和粉丝留言；不含财务、支付设置和员工管理。",
+  roleBroker: "经纪人",
+  roleBrokerDetail:
+    "只能查看和管理自己名下的艺人。同时勾选其他角色时，按其他角色的更大权限生效。",
   createAction: "创建账号",
   creating: "正在创建…",
   temporaryTitle: "{account} 的临时密码",
@@ -194,6 +202,9 @@ const ja: StaffCopy = {
   roleOperator: "日常運営",
   roleOperatorDetail:
     "コンテンツ、ギフト、注文、ファンのメッセージ。経理、支払い設定、スタッフ管理は含みません。",
+  roleBroker: "マネージャー",
+  roleBrokerDetail:
+    "自分が担当するアーティストのみ。ほかのロールと併用すると、そのロールの広い権限が適用されます。",
   createAction: "アカウントを作成",
   creating: "作成しています…",
   temporaryTitle: "{account} の仮パスワード",
@@ -259,6 +270,9 @@ const th: StaffCopy = {
   roleOperator: "งานประจำวัน",
   roleOperatorDetail:
     "เนื้อหา ของขวัญ คำสั่งซื้อ และข้อความจากแฟน ไม่รวมการเงิน การตั้งค่าการชำระเงิน และพนักงาน",
+  roleBroker: "ผู้จัดการศิลปิน",
+  roleBrokerDetail:
+    "เฉพาะศิลปินที่ได้รับมอบหมายเท่านั้น หากเลือกบทบาทอื่นร่วมด้วย จะใช้สิทธิ์ที่กว้างกว่าของบทบาทนั้น",
   createAction: "สร้างบัญชี",
   creating: "กำลังสร้าง…",
   temporaryTitle: "รหัสผ่านชั่วคราวของ {account}",
@@ -322,6 +336,9 @@ const vi: StaffCopy = {
   roleOperator: "Vận hành hằng ngày",
   roleOperatorDetail:
     "Nội dung, quà tặng, đơn hàng và lời nhắn của người hâm mộ. Không gồm tài chính, cài đặt thanh toán hay nhân viên.",
+  roleBroker: "Quản lý nghệ sĩ",
+  roleBrokerDetail:
+    "Chỉ các nghệ sĩ được phân công cho họ. Nếu chọn thêm vai trò khác, quyền rộng hơn của vai trò đó sẽ được áp dụng.",
   createAction: "Tạo tài khoản",
   creating: "Đang tạo…",
   temporaryTitle: "Mật khẩu tạm thời của {account}",
@@ -387,6 +404,9 @@ const es: StaffCopy = {
   roleOperator: "Operación diaria",
   roleOperatorDetail:
     "Contenido, regalos, pedidos y mensajes de fans. Sin finanzas, configuración de pagos ni equipo.",
+  roleBroker: "Representante",
+  roleBrokerDetail:
+    "Solo los artistas que tiene asignados. Si se combina con otro rol, se aplica el acceso más amplio de ese rol.",
   createAction: "Crear cuenta",
   creating: "Creando…",
   temporaryTitle: "Contraseña temporal de {account}",
@@ -452,6 +472,9 @@ const pt: StaffCopy = {
   roleOperator: "Operação diária",
   roleOperatorDetail:
     "Conteúdo, presentes, pedidos e mensagens de fãs. Sem finanças, configurações de pagamento ou equipe.",
+  roleBroker: "Agente",
+  roleBrokerDetail:
+    "Apenas os artistas atribuídos a essa pessoa. Combinada com outra função, vale o acesso mais amplo dessa função.",
   createAction: "Criar conta",
   creating: "Criando…",
   temporaryTitle: "Senha temporária de {account}",

@@ -12,7 +12,7 @@ import { giftCommercePermissionSchema } from "./gift-commerce.js";
 /** Issuer of every built-in identity in admin_identities; OIDC identities keep their IdP issuer. */
 export const ADMIN_LOCAL_ISSUER = "urn:fan-support:local";
 
-/** Every permission a role can hold. Migration 0052 seeds the same keys into `permissions`. */
+/** Every permission a role can hold. Migration 0052 lists the keys up to `staff.manage`; later keys are registered by their own migrations. */
 export const adminPermissionKeySchema = z.enum([
   ...new Set([
     ...adminSessionPermissionSchema.options,
@@ -27,6 +27,13 @@ export const adminPermissionKeySchema = z.enum([
     "exceptions.read",
     "exceptions.replay",
     "staff.manage",
+    // ADR-022: artist assignment, the artist ledger and private artist notes.
+    "idols.assign",
+    "idols.private",
+    "management.assigned",
+    "ledger.read",
+    "ledger.assigned",
+    "ledger.messages",
   ] as const),
 ] as [string, ...string[]]);
 
@@ -44,11 +51,52 @@ export const adminDisplayNameSchema = z
 export const adminRoleKeySchema = z
   .string()
   .regex(/^[a-z][a-z0-9.:-]{1,127}$/u);
-/** The two standard roles (ADR-021): the only ones the staff page lists and grants. */
+/** The three standard roles (ADR-021, ADR-022): the only ones the staff page lists and grants. */
 export const ADMIN_STAFF_ROLE_KEYS = [
   "studio:owner",
   "studio:operator",
+  "studio:broker",
 ] as const;
+export type AdminStaffRoleKey = (typeof ADMIN_STAFF_ROLE_KEYS)[number];
+/** Keys that narrow an account to the artists assigned to it; the two studio roles never hold them. */
+const BROKER_SCOPED_KEYS = [
+  "management.assigned",
+  "ledger.assigned",
+  "ledger.messages",
+];
+/** L3-10 design §6 and ADR-022: daily operations have none of these. */
+const OPERATOR_EXCLUDED_KEYS = [
+  "orders.manage",
+  "finance.manage",
+  "payments.configure",
+  "payments.review",
+  "payments.publish",
+  "exceptions.replay",
+  "staff.manage",
+  "idols.assign",
+  "idols.private",
+];
+/** A broker publishes photos of their own artists through the same media pipeline as everyone else. */
+const BROKER_KEYS = [
+  ...BROKER_SCOPED_KEYS,
+  "content.media.upload",
+  "content.media.read",
+  "content.media.process",
+  "content.media.rights",
+];
+/** What each standard role holds; the server command grants exactly these. */
+export function adminStandardRolePermissions(
+  role: AdminStaffRoleKey,
+): readonly string[] {
+  const catalog = adminPermissionKeySchema.options;
+  if (role === "studio:broker")
+    return catalog.filter((key) => BROKER_KEYS.includes(key));
+  const excluded =
+    role === "studio:owner"
+      ? BROKER_SCOPED_KEYS
+      : [...BROKER_SCOPED_KEYS, ...OPERATOR_EXCLUDED_KEYS];
+  return catalog.filter((key) => !excluded.includes(key));
+}
 /** Raw input; length and login-name rules are checked where the account is known. */
 const passwordInputSchema = z.string().min(1).max(512);
 const totpCodeSchema = z.string().regex(/^\d{6}$/u);

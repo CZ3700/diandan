@@ -131,4 +131,19 @@ export const copy = {
   posterDeleteConfirm: "Delete poster",
   posterDeleteCancel: "Keep",
   posterDeleted: "Poster deleted. The homepage is unchanged.",
+  assignment: "Broker",
+  assignmentNone: "Unassigned",
+  assignmentStudio: "Unassigned (managed by the studio)",
+  assignmentAll: "All artists",
+  assignmentFilter: "Show artists of",
+  assignmentInactive: "{name} (inactive)",
+  assignmentImmediate:
+    "A change here applies right away; there is nothing to save.",
+  assignmentOnCreate: "The artist goes to this broker as soon as it is added.",
+  assignmentSaved: "Broker updated.",
+  assignmentFailed: "The broker could not be saved. Please try again.",
+  assignmentStale:
+    "Someone else changed the broker. Go back to the list and open the artist again.",
+  assignmentMissed:
+    "The artist was added, but the broker was not saved. Open the artist and choose the broker again.",
 };

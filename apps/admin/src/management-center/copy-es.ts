@@ -136,4 +136,19 @@ export const copy = {
   posterDeleteConfirm: "Eliminar imagen",
   posterDeleteCancel: "Conservar",
   posterDeleted: "Imagen eliminada. La página de inicio no cambia.",
+  assignment: "Representante",
+  assignmentNone: "Sin asignar",
+  assignmentStudio: "Sin asignar (gestionado por el estudio)",
+  assignmentAll: "Todos los artistas",
+  assignmentFilter: "Mostrar artistas de",
+  assignmentInactive: "{name} (inactivo)",
+  assignmentImmediate: "El cambio se aplica al momento; no hace falta guardar.",
+  assignmentOnCreate:
+    "El artista pasará a este representante en cuanto se añada.",
+  assignmentSaved: "Representante actualizado.",
+  assignmentFailed: "No se pudo guardar el representante. Inténtalo de nuevo.",
+  assignmentStale:
+    "Otra persona cambió el representante. Vuelve a la lista y abre de nuevo al artista.",
+  assignmentMissed:
+    "El artista se añadió, pero no se guardó el representante. Abre al artista y elige de nuevo el representante.",
 } satisfies ManagementCopy;

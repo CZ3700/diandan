@@ -8,7 +8,10 @@ import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 import { Client } from "pg";
-import { adminPermissionKeySchema } from "@fan-support/contracts";
+import {
+  adminPermissionKeySchema,
+  adminStandardRolePermissions,
+} from "@fan-support/contracts";
 import {
   createPostgresPersistence,
   runMigrations,
@@ -165,14 +168,18 @@ await withEphemeralPostgres(async (config) => {
       [randomUUID(), key],
     );
   await client.query(
-    "INSERT INTO roles(id,role_key,description) VALUES($1,'studio:owner','Studio administrator'),($2,'studio:operator','Daily operations')",
-    [randomUUID(), randomUUID()],
+    "INSERT INTO roles(id,role_key,description) VALUES($1,'studio:owner','Studio administrator'),($2,'studio:operator','Daily operations'),($3,'studio:broker','Broker')",
+    [randomUUID(), randomUUID(), randomUUID()],
   );
   await client.query(
     "INSERT INTO role_permissions(role_id,permission_id) SELECT r.id,p.id FROM roles r CROSS JOIN permissions p WHERE r.role_key='studio:owner'",
   );
   await client.query(
     "INSERT INTO role_permissions(role_id,permission_id) SELECT r.id,p.id FROM roles r JOIN permissions p ON p.permission_key IN ('content.read','orders.read') WHERE r.role_key='studio:operator'",
+  );
+  await client.query(
+    "INSERT INTO role_permissions(role_id,permission_id) SELECT r.id,p.id FROM roles r JOIN permissions p ON p.permission_key=ANY($1::text[]) WHERE r.role_key='studio:broker'",
+    [adminStandardRolePermissions("studio:broker")],
   );
   // The local experience seeds roles like this for its TEST sign-in identities (L3-10a).
   await client.query(
@@ -395,7 +402,7 @@ await withEphemeralPostgres(async (config) => {
       (await create({ roleKeys: ["studio:operator", "local:manager:fixture"] }))
         .code,
       "UNKNOWN_ROLE",
-      "roles other than the two standard ones cannot be granted",
+      "roles other than the standard ones cannot be granted",
     );
     const created = await create();
     equal(created.kind, "STAFF_SAVED", "staff account created");
@@ -1107,8 +1114,13 @@ await withEphemeralPostgres(async (config) => {
     );
     equal(
       list.roles.map((r) => r.roleKey),
-      ["studio:operator", "studio:owner"],
-      "only the two standard roles are listed",
+      ["studio:broker", "studio:operator", "studio:owner"],
+      "only the three standard roles are listed (ADR-022)",
+    );
+    equal(
+      list.roles.find((r) => r.roleKey === "studio:broker").permissions,
+      [...adminStandardRolePermissions("studio:broker")].sort(),
+      "the broker role lists only its own scope and the media pipeline",
     );
     ok(
       list.roles
@@ -1130,6 +1142,58 @@ await withEphemeralPostgres(async (config) => {
         "ADMIN_STAFF_TOTP_CLEARED",
       ],
       "every staff change audited",
+    );
+
+    stage = "broker staff";
+    const brokerAccount = randomUUID(),
+      brokerIdentity = randomUUID();
+    const broker = await create({
+      loginName: "mina.park",
+      displayName: "Mina Park",
+      roleKeys: ["studio:broker"],
+      accountId: brokerAccount,
+      identityId: brokerIdentity,
+      subjectDigest: digest(),
+      passwordHash: hash(),
+    });
+    equal(
+      [broker.kind, broker.member.roleKeys, broker.member.mustChangePassword],
+      ["STAFF_SAVED", ["studio:broker"], true],
+      "the staff page creates a broker account",
+    );
+    equal(
+      (
+        await q(
+          `SELECT p.permission_key FROM admin_identity_roles ar JOIN role_permissions rp ON rp.role_id=ar.role_id
+          JOIN permissions p ON p.id=rp.permission_id WHERE ar.admin_identity_id=$1 ORDER BY 1`,
+          [brokerIdentity],
+        )
+      ).map((row) => row.permission_key),
+      [...adminStandardRolePermissions("studio:broker")].sort(),
+      "a broker holds management.assigned and nothing of the studio's own permissions",
+    );
+    const movedRole = await staff(ownerSession, {
+      action: "UPDATE_ROLES",
+      accountId: brokerAccount,
+      expectedVersion: broker.member.version,
+      roleKeys: ["studio:operator"],
+    });
+    equal(
+      movedRole.member.roleKeys,
+      ["studio:operator"],
+      "a broker can be moved to another standard role",
+    );
+    equal(
+      (
+        await staff(ownerSession, {
+          action: "UPDATE_ROLES",
+          accountId: brokerAccount,
+          expectedVersion: movedRole.member.version,
+          roleKeys: ["studio:broker"],
+        })
+      ).member.roleKeys,
+      ["studio:broker"],
+      "and back to broker",
     );
 
     stage = "0052 triggers";

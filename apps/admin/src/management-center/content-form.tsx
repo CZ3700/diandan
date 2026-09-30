@@ -1,5 +1,5 @@
 "use client";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { Button, Field } from "@fan-support/ui";
 import type { SupportedLocale } from "@fan-support/contracts";
 import type { OriginalImage, ManagementContext } from "./api";
@@ -27,6 +27,8 @@ export type ContentFormProps = {
   ) => void;
   loadOriginal?: (() => Promise<OriginalImage>) | undefined;
   onDirtyChange?: ((dirty: boolean) => void) | undefined;
+  /** ADR-022: the broker choice, for accounts that may assign an artist. */
+  assignment?: ReactNode;
 };
 export function ContentForm({
   locale,
@@ -37,6 +39,7 @@ export function ContentForm({
   onSubmit,
   loadOriginal,
   onDirtyChange,
+  assignment,
 }: ContentFormProps) {
   const copy = managementCopy(locale);
   const [draft, setDraft] = useState(() =>
@@ -137,6 +140,7 @@ export function ContentForm({
               </p>
             ) : null}
           </div>
+          {assignment}
           {gift ? (
             <div className="mc-field-pair">
               <Field

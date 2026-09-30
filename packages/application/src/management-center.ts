@@ -173,6 +173,16 @@ export function createManagementCenterUseCases(
                       expectedVersion: command.expectedVersion,
                     }),
                   );
+                case "ASSIGN_ARTIST":
+                  return managementCenterResponseSchema.parse(
+                    await operations.assignArtist({
+                      principal,
+                      requestId: request.requestId,
+                      artistId: command.artistId,
+                      brokerId: command.brokerId,
+                      expectedBrokerId: command.expectedBrokerId,
+                    }),
+                  );
                 case "PREPARE_UPLOAD":
                   return {
                     schemaVersion: 1 as const,

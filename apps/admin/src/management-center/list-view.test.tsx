@@ -48,6 +48,7 @@ it("shows a true original-language name and editable photograph without technica
         },
         status: "active",
         handle: "fixture-artist",
+        assignment: null,
       },
     ],
   });
@@ -144,4 +145,70 @@ it("offers delete for an old poster only, never for the homepage poster", () => 
   expect(html).not.toContain(`data-management-poster-delete="${current}"`);
   expect(html).toContain(">删除<");
   expect(render()).not.toContain("data-management-poster-delete");
+});
+
+// ADR-022 / L3-11
+const artist = (assignment: object | null) => ({
+  kind: "ARTIST",
+  id,
+  version: 1,
+  sourceLocale: "en",
+  name: "Aria",
+  description: "Description",
+  image: null,
+  status: "active",
+  handle: "aria",
+  assignment,
+});
+const render = (
+  assignment: object | null,
+  props: { showAssignment?: boolean; filtered?: boolean } = {},
+) =>
+  renderToStaticMarkup(
+    <ManagementListView
+      locale="zh-CN"
+      list={listing({ totalItems: 1, items: [artist(assignment)] })}
+      busy={false}
+      onSelect={() => {}}
+      onPage={() => {}}
+      {...props}
+    />,
+  );
+it("shows whom each artist belongs to only to accounts that manage every artist", () => {
+  const broker = {
+    brokerId: "10000000-0000-4000-8000-000000000002",
+    displayName: "Mina Park",
+    active: true,
+  };
+  const assigned = render(broker, { showAssignment: true });
+  expect(assigned).toContain("归属经纪人 · Mina Park");
+  expect(assigned).toContain(`data-management-assignment="${broker.brokerId}"`);
+  const inactive = render(
+    { ...broker, active: false },
+    { showAssignment: true },
+  );
+  expect(inactive).toContain("Mina Park（已停用）");
+  const unassigned = render(null, { showAssignment: true });
+  expect(unassigned).toContain("未分配");
+  expect(unassigned).toContain('data-management-assignment="UNASSIGNED"');
+  // A broker's own list needs no such line.
+  const own = render(broker);
+  expect(own).not.toContain("归属经纪人");
+  expect(own).not.toContain("data-management-assignment");
+});
+it("says nothing matched, not 'add the first artist', when a filter is on", () => {
+  const empty = (filtered: boolean) =>
+    renderToStaticMarkup(
+      <ManagementListView
+        locale="zh-CN"
+        list={listing({})}
+        busy={false}
+        onSelect={() => {}}
+        onPage={() => {}}
+        filtered={filtered}
+      />,
+    );
+  expect(empty(true)).toContain("没有找到匹配内容");
+  expect(empty(true)).not.toContain("添加第一位艺人");
+  expect(empty(false)).toContain("添加第一位艺人");
 });

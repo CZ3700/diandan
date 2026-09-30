@@ -18,6 +18,7 @@ const context = managementCenterResponseSchema.parse({
   categories: ["OTHER"],
   poster: { available: false, version: 0, currentRevisionId: null },
   operations: [],
+  artists: { scope: "ALL", canAssign: false, brokers: [] },
 }) as ManagementContext;
 it("starts with the interface content language and actual configured scope without fake stock", () => {
   const draft = initialContentDraft("zh-CN", context, null);

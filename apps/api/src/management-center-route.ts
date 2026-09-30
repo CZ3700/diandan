@@ -21,6 +21,7 @@ const routes = [
   ["operations/read", "READ_OPERATION", false],
   ["operations/retry", "RETRY_OPERATION", true],
   ["posters/archive", "ARCHIVE_POSTER", true],
+  ["artists/assign", "ASSIGN_ARTIST", true],
 ] as const;
 const same = (left: string, right: string) =>
   left.toLowerCase() === right.toLowerCase();
@@ -58,6 +59,15 @@ function matches(
       return (
         result.kind === "POSTER_ARCHIVED" &&
         same(result.revisionId, command.revisionId)
+      );
+    case "ASSIGN_ARTIST":
+      return (
+        result.kind === "ARTIST_ASSIGNED" &&
+        same(result.artistId, command.artistId) &&
+        (command.brokerId === null
+          ? result.assignment === null
+          : result.assignment !== null &&
+            same(result.assignment.brokerId, command.brokerId))
       );
     case "SUBMIT":
       return (

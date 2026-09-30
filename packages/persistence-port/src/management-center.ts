@@ -60,6 +60,16 @@ export interface ManagementCenterOperationRepository {
       expectedVersion: number;
     }>,
   ): Promise<ManagementCenterResponse>;
+  /** L3-11: set or change the broker an artist belongs to; `idols.assign` only. */
+  assignArtist(
+    input: Readonly<{
+      principal: AdminPrincipal;
+      requestId: string;
+      artistId: string;
+      brokerId: string | null;
+      expectedBrokerId: string | null;
+    }>,
+  ): Promise<ManagementCenterResponse>;
   retry(
     input: Readonly<{
       principal: AdminPrincipal;

@@ -77,7 +77,7 @@ export function createAdminLocalStaffRepository(
     return member(row, actorId);
   }
   async function findRoles(keys: readonly string[]) {
-    // Only the two standard roles can be granted here; other roles (such as the local
+    // Only the standard roles can be granted here; other roles (such as the local
     // experience's TEST roles) stay out of the staff page.
     if (
       !keys.every((key) =>

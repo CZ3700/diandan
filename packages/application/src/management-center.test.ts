@@ -77,6 +77,13 @@ function fixture() {
       kind: "POSTER_ARCHIVED",
       revisionId: id,
     }),
+    assignArtist: vi.fn().mockResolvedValue({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      kind: "ARTIST_ASSIGNED",
+      artistId: id,
+      assignment: { brokerId: id, displayName: "Mina Park", active: true },
+    }),
     context: vi.fn(),
     list: vi.fn(),
     claim: vi.fn().mockResolvedValue(claim),
@@ -526,6 +533,57 @@ describe("management publication rollback outcomes", () => {
   });
 });
 describe("management orchestration", () => {
+  it("assigns an artist without a source-locale authority and passes only ids", async () => {
+    const f = fixture();
+    const result = await f.useCases.execute({
+      ...f.request,
+      command: {
+        schemaVersion: 1,
+        action: "ASSIGN_ARTIST",
+        artistId: id,
+        brokerId: id,
+        expectedBrokerId: null,
+        idempotencyKey: "management-assign-01",
+      },
+    });
+    expect(result).toMatchObject({
+      kind: "ARTIST_ASSIGNED",
+      artistId: id,
+      assignment: { brokerId: id },
+    });
+    expect(f.operations.authorize.mock.calls[0]?.[0]).not.toHaveProperty(
+      "sourceLocale",
+    );
+    expect(f.operations.assignArtist).toHaveBeenCalledWith({
+      principal,
+      requestId: id,
+      artistId: id,
+      brokerId: id,
+      expectedBrokerId: null,
+    });
+    expect(f.operations.submit).not.toHaveBeenCalled();
+  });
+  it("returns the repository's refusal to assign unchanged", async () => {
+    const f = fixture();
+    f.operations.assignArtist.mockResolvedValue({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "FORBIDDEN",
+    });
+    expect(
+      await f.useCases.execute({
+        ...f.request,
+        command: {
+          schemaVersion: 1,
+          action: "ASSIGN_ARTIST",
+          artistId: id,
+          brokerId: null,
+          expectedBrokerId: id,
+          idempotencyKey: "management-assign-02",
+        },
+      }),
+    ).toEqual({ schemaVersion: 1, outcome: "FAILURE", code: "FORBIDDEN" });
+  });
   it("archives an old poster under the poster's source-locale authority", async () => {
     const f = fixture();
     const result = await f.useCases.execute({

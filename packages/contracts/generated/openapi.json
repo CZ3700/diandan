@@ -106305,6 +106305,31 @@
         ],
         "x-fan-support-audience": "public-http"
       },
+      "ManagementCenterBroker": {
+        "additionalProperties": false,
+        "properties": {
+          "active": {
+            "type": "boolean"
+          },
+          "brokerId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "displayName": {
+            "maxLength": 80,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "brokerId",
+          "displayName",
+          "active"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
       "ManagementCenterCommand": {
         "oneOf": [
           {
@@ -106379,6 +106404,42 @@
               "action": {
                 "const": "LIST",
                 "type": "string"
+              },
+              "assignment": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "UNASSIGNED",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "brokerId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "kind": {
+                        "const": "BROKER",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "brokerId"
+                    ],
+                    "type": "object"
+                  }
+                ]
               },
               "page": {
                 "exclusiveMinimum": 0,
@@ -107671,6 +107732,63 @@
               "idempotencyKey"
             ],
             "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "ASSIGN_ARTIST",
+                "type": "string"
+              },
+              "artistId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "brokerId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "expectedBrokerId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "idempotencyKey": {
+                "maxLength": 256,
+                "minLength": 16,
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "artistId",
+              "brokerId",
+              "expectedBrokerId",
+              "idempotencyKey"
+            ],
+            "type": "object"
           }
         ],
         "x-fan-support-audience": "admin-http"
@@ -108869,6 +108987,37 @@
           {
             "additionalProperties": false,
             "properties": {
+              "assignment": {
+                "anyOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "active": {
+                        "type": "boolean"
+                      },
+                      "brokerId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "displayName": {
+                        "maxLength": 80,
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "brokerId",
+                      "displayName",
+                      "active"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
               "description": {
                 "maxLength": 600,
                 "type": "string"
@@ -108963,7 +109112,8 @@
               "description",
               "image",
               "status",
-              "handle"
+              "handle",
+              "assignment"
             ],
             "type": "object"
           },
@@ -109599,6 +109749,42 @@
                   "action": {
                     "const": "LIST",
                     "type": "string"
+                  },
+                  "assignment": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "kind": {
+                            "const": "UNASSIGNED",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "brokerId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "BROKER",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "brokerId"
+                        ],
+                        "type": "object"
+                      }
+                    ]
                   },
                   "page": {
                     "exclusiveMinimum": 0,
@@ -110891,6 +111077,63 @@
                   "idempotencyKey"
                 ],
                 "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "ASSIGN_ARTIST",
+                    "type": "string"
+                  },
+                  "artistId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "brokerId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "expectedBrokerId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "idempotencyKey": {
+                    "maxLength": 256,
+                    "minLength": 16,
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "artistId",
+                  "brokerId",
+                  "expectedBrokerId",
+                  "idempotencyKey"
+                ],
+                "type": "object"
               }
             ]
           },
@@ -111443,12 +111686,104 @@
           {
             "additionalProperties": false,
             "properties": {
+              "artistId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "assignment": {
+                "anyOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "active": {
+                        "type": "boolean"
+                      },
+                      "brokerId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "displayName": {
+                        "maxLength": 80,
+                        "minLength": 1,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "brokerId",
+                      "displayName",
+                      "active"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "kind": {
+                "const": "ARTIST_ASSIGNED",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "artistId",
+              "assignment"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
               "items": {
                 "items": {
                   "oneOf": [
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "assignment": {
+                          "anyOf": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "active": {
+                                  "type": "boolean"
+                                },
+                                "brokerId": {
+                                  "format": "uuid",
+                                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                  "type": "string"
+                                },
+                                "displayName": {
+                                  "maxLength": 80,
+                                  "minLength": 1,
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "brokerId",
+                                "displayName",
+                                "active"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
                         "description": {
                           "maxLength": 600,
                           "type": "string"
@@ -111543,7 +111878,8 @@
                         "description",
                         "image",
                         "status",
-                        "handle"
+                        "handle",
+                        "assignment"
                       ],
                       "type": "object"
                     },
@@ -111943,6 +112279,55 @@
           {
             "additionalProperties": false,
             "properties": {
+              "artists": {
+                "additionalProperties": false,
+                "properties": {
+                  "brokers": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "brokerId": {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        "displayName": {
+                          "maxLength": 80,
+                          "minLength": 1,
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "brokerId",
+                        "displayName",
+                        "active"
+                      ],
+                      "type": "object"
+                    },
+                    "maxItems": 500,
+                    "type": "array"
+                  },
+                  "canAssign": {
+                    "type": "boolean"
+                  },
+                  "scope": {
+                    "enum": [
+                      "ALL",
+                      "ASSIGNED"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "scope",
+                  "canAssign",
+                  "brokers"
+                ],
+                "type": "object"
+              },
               "capability": {
                 "const": "DIRECT_OPERATOR_V1",
                 "type": "string"
@@ -112316,7 +112701,8 @@
               "giftKinds",
               "categories",
               "poster",
-              "operations"
+              "operations",
+              "artists"
             ],
             "type": "object"
           }
@@ -183238,9 +183624,339 @@
         "x-fan-support-rbac": "content.publish"
       }
     },
+    "/api/v1/admin/management/artists/assign": {
+      "post": {
+        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required; management.assigned permits only the account's own artists, and assigning an artist requires idols.assign. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
+        "operationId": "managementCenterAssignArtist",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "artistId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "brokerId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "expectedBrokerId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "artistId",
+                  "brokerId",
+                  "expectedBrokerId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 65536
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagementCenterResponse"
+                }
+              }
+            },
+            "description": "Strict current authorized management result; PROCESSING is not publication success.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagementCenterResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without storage keys, worker leases or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagementCenterResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without storage keys, worker leases or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagementCenterResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without storage keys, worker leases or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagementCenterResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without storage keys, worker leases or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagementCenterResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without storage keys, worker leases or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagementCenterResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without storage keys, worker leases or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagementCenterResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without storage keys, worker leases or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "assign artist"
+      }
+    },
     "/api/v1/admin/management/context": {
       "post": {
-        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
+        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required; management.assigned permits only the account's own artists, and assigning an artist requires idols.assign. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
         "operationId": "managementCenterContext",
         "parameters": [
           {
@@ -183527,7 +184243,7 @@
     },
     "/api/v1/admin/management/images/read": {
       "post": {
-        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
+        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required; management.assigned permits only the account's own artists, and assigning an artist requires idols.assign. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
         "operationId": "managementCenterReadImageSource",
         "parameters": [
           {
@@ -183844,7 +184560,7 @@
     },
     "/api/v1/admin/management/list": {
       "post": {
-        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
+        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required; management.assigned permits only the account's own artists, and assigning an artist requires idols.assign. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
         "operationId": "managementCenterList",
         "parameters": [
           {
@@ -183863,6 +184579,42 @@
               "schema": {
                 "additionalProperties": false,
                 "properties": {
+                  "assignment": {
+                    "oneOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "kind": {
+                            "const": "UNASSIGNED",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "brokerId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "kind": {
+                            "const": "BROKER",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "brokerId"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  },
                   "page": {
                     "exclusiveMinimum": 0,
                     "maximum": 1000000,
@@ -184152,7 +184904,7 @@
     },
     "/api/v1/admin/management/operations/read": {
       "post": {
-        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
+        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required; management.assigned permits only the account's own artists, and assigning an artist requires idols.assign. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
         "operationId": "managementCenterReadOperation",
         "parameters": [
           {
@@ -184445,7 +185197,7 @@
     },
     "/api/v1/admin/management/operations/retry": {
       "post": {
-        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
+        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required; management.assigned permits only the account's own artists, and assigning an artist requires idols.assign. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
         "operationId": "managementCenterRetryOperation",
         "parameters": [
           {
@@ -184755,7 +185507,7 @@
     },
     "/api/v1/admin/management/posters/archive": {
       "post": {
-        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
+        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required; management.assigned permits only the account's own artists, and assigning an artist requires idols.assign. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
         "operationId": "managementCenterArchivePoster",
         "parameters": [
           {
@@ -185078,7 +185830,7 @@
     },
     "/api/v1/admin/management/submit": {
       "post": {
-        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
+        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required; management.assigned permits only the account's own artists, and assigning an artist requires idols.assign. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
         "operationId": "managementCenterSubmit",
         "parameters": [
           {
@@ -186449,7 +187201,7 @@
     },
     "/api/v1/admin/management/uploads/prepare": {
       "post": {
-        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
+        "description": "Current MFA session, exact Origin, CSRF and management.direct capability are required; management.assigned permits only the account's own artists, and assigning an artist requires idols.assign. The server injects action and credentials. Submission stores one target-bound durable operation; the browser uploads original bytes and polls its safe operation result. Actual sourceLocale is original copy, not an approved translation. Media processing and direct publication recheck current authority; only a committed content and price head is PUBLISHED. Unknown fields, query parameters and caller-supplied authority are rejected. No policies, checkout or payments are modified.",
         "operationId": "managementCenterPrepareUpload",
         "parameters": [
           {

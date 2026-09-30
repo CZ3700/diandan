@@ -4,12 +4,13 @@
 // appear in arguments, shell history or output. Every change is audited as SYSTEM admin-account-cli.
 //
 //   node apps/api/scripts/admin-account.mjs <command> [--instance <name>] [options]
-//     create --login <name> --name <display name> [--role studio:owner|studio:operator] [--password-stdin]
+//     create --login <name> --name <display name> [--role studio:owner|studio:operator|studio:broker] [--password-stdin]
 //     reset-password --login <name> [--password-stdin]
 //     clear-2fa --login <name>
 //     suspend --login <name>
 //     reactivate --login <name>
 //     list
+//     sync-roles   (after an update that adds permissions or a standard role)
 //
 // Without --instance the database comes from FAN_SUPPORT_DATABASE_URL and the identity key from
 // FAN_SUPPORT_ADMIN_SUBJECT_PEPPER, as for the API.
@@ -29,20 +30,19 @@ import {
   SUPPORTED_LOCALES,
   adminLoginNameSchema,
   adminPermissionKeySchema,
+  adminStandardRolePermissions,
 } from "@fan-support/contracts";
 
 const TASK = "admin-account-cli";
-export const [OWNER_ROLE, OPERATOR_ROLE] = ADMIN_STAFF_ROLE_KEYS;
-/** Design §6: daily operations have no finance, payment configuration, replay or staff management. */
-const OPERATOR_EXCLUDED = new Set([
-  "orders.manage",
-  "finance.manage",
-  "payments.configure",
-  "payments.review",
-  "payments.publish",
-  "exceptions.replay",
-  "staff.manage",
-]);
+export const [OWNER_ROLE, OPERATOR_ROLE, BROKER_ROLE] = ADMIN_STAFF_ROLE_KEYS;
+const ROLE_DESCRIPTIONS = {
+  [OWNER_ROLE]:
+    "Studio administrator: every permission, including staff, finance and payment configuration",
+  [OPERATOR_ROLE]:
+    "Daily operations: content, gifts, orders and messages; no finance, payment configuration, exception replay or staff management",
+  [BROKER_ROLE]:
+    "Broker: only the artists assigned to the account, their ledger and the messages they received",
+};
 
 async function audit(client, input) {
   const id = randomUUID();
@@ -74,31 +74,28 @@ async function now(client) {
   ).rows[0].at;
 }
 
-/** Idempotently completes the permission catalog and the two standard roles (migration 0054 left them to this command). */
+/**
+ * Idempotently completes the permission catalog and the three standard roles (migration 0054 left
+ * them to this command). It only adds: a permission already granted to a role is never removed.
+ */
 export async function ensureStandardRoles(client) {
   for (const key of adminPermissionKeySchema.options)
     await client.query(
       "INSERT INTO permissions(id,permission_key,description) VALUES($1,$2,'Platform permission') ON CONFLICT (permission_key) DO NOTHING",
       [randomUUID(), key],
     );
-  await client.query(
-    `INSERT INTO roles(id,role_key,description) VALUES
-      ($1,$3,'Studio administrator: every permission, including staff, finance and payment configuration'),
-      ($2,$4,'Daily operations: content, gifts, orders and messages; no finance, payment configuration, exception replay or staff management')
-    ON CONFLICT (role_key) DO NOTHING`,
-    [randomUUID(), randomUUID(), OWNER_ROLE, OPERATOR_ROLE],
-  );
-  const catalog = [...adminPermissionKeySchema.options];
-  for (const [role, keys] of [
-    [OWNER_ROLE, catalog],
-    [OPERATOR_ROLE, catalog.filter((key) => !OPERATOR_EXCLUDED.has(key))],
-  ])
+  for (const role of ADMIN_STAFF_ROLE_KEYS) {
+    await client.query(
+      "INSERT INTO roles(id,role_key,description) VALUES($1,$2,$3) ON CONFLICT (role_key) DO NOTHING",
+      [randomUUID(), role, ROLE_DESCRIPTIONS[role]],
+    );
     await client.query(
       `INSERT INTO role_permissions(role_id,permission_id)
       SELECT r.id,p.id FROM roles r JOIN permissions p ON p.permission_key=ANY($2::text[])
       WHERE r.role_key=$1 ON CONFLICT DO NOTHING`,
-      [role, keys],
+      [role, adminStandardRolePermissions(role)],
     );
+  }
 }
 
 async function lockedAccount(client, loginName) {
@@ -188,11 +185,30 @@ export async function runAdminAccountCommand({
       lastLoginAt: row.last_login_at,
     }));
   }
+  if (command === "sync-roles") {
+    await client.query("BEGIN");
+    try {
+      await ensureStandardRoles(client);
+      await audit(client, {
+        action: "ADMIN_STANDARD_ROLES_SYNCED",
+        subjectType: "ADMIN_ROLE_CATALOG",
+        subjectId: requestId,
+        reasonCode: "ADMIN_ACCOUNT_CLI",
+        requestId,
+        at: await now(client),
+      });
+      await client.query("COMMIT");
+      return { synced: [...ADMIN_STAFF_ROLE_KEYS] };
+    } catch (error) {
+      await client.query("ROLLBACK").catch(() => undefined);
+      throw error;
+    }
+  }
   const name = loginName();
   if (command === "create") {
     const role = options.role ?? OWNER_ROLE;
-    if (![OWNER_ROLE, OPERATOR_ROLE].includes(role))
-      throw new Error(`--role must be ${OWNER_ROLE} or ${OPERATOR_ROLE}`);
+    if (!ADMIN_STAFF_ROLE_KEYS.includes(role))
+      throw new Error(`--role must be ${ADMIN_STAFF_ROLE_KEYS.join(", ")}`);
     const displayName = String(options.name ?? "").trim();
     if (
       [...displayName].length < 1 ||
@@ -293,7 +309,7 @@ export async function runAdminAccountCommand({
     !["reset-password", "clear-2fa", "suspend", "reactivate"].includes(command)
   )
     throw new Error(
-      "Use create, reset-password, clear-2fa, suspend, reactivate or list",
+      "Use create, reset-password, clear-2fa, suspend, reactivate, list or sync-roles",
     );
   const passwordHash =
     command === "reset-password" ? await newPassword(name) : undefined;

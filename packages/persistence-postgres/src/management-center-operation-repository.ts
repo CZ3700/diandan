@@ -27,6 +27,11 @@ import {
   readManagementCenterContext,
   readManagementCenterList,
 } from "./management-center-operation-read.js";
+import { assignArtist } from "./management-center-assignment.js";
+import {
+  currentArtistBroker,
+  managementGrants,
+} from "./management-center-scope.js";
 import type {
   TransactionClient,
   TransactionScopeControl,
@@ -77,19 +82,60 @@ export function createManagementCenterOperationRepository(
     );
     return response(input.operationId);
   }
+  /** ADR-022: true when the account manages every artist; a broker only those assigned to it. */
+  const managesAll = async (actorId: string) =>
+    (await managementGrants(client, actorId)).direct;
+  const ownsArtist = async (actorId: string, artistId: string) =>
+    (await currentArtistBroker(client, artistId))?.toLowerCase() ===
+    actorId.toLowerCase();
   return {
     authorize: (input) => run(() => authorizeManagementSession(client, input)),
     readImageSource: (input) =>
-      run(() => readManagementImageSource(client, input.target)),
-    context: (principal) =>
-      run(() => readManagementCenterContext(client, principal)),
-    list: (input) =>
-      run(() =>
-        readManagementCenterList(client, input.command, publicMediaBaseUrl),
+      run(async () =>
+        (await managesAll(input.principal.actorId)) ||
+        (input.target.kind === "ARTIST" &&
+          (await ownsArtist(input.principal.actorId, input.target.id)))
+          ? readManagementImageSource(client, input.target)
+          : managementFailure("FORBIDDEN"),
       ),
+    context: (principal) =>
+      run(async () =>
+        readManagementCenterContext(
+          client,
+          principal,
+          await managementGrants(client, principal.actorId),
+        ),
+      ),
+    list: (input) =>
+      run(async () => {
+        if (await managesAll(input.principal.actorId))
+          return readManagementCenterList(
+            client,
+            input.command,
+            publicMediaBaseUrl,
+            { scope: "ALL" },
+          );
+        // A broker has no gifts or posters, and its list is already its own assignment.
+        if (input.command.section !== "ARTISTS" || input.command.assignment)
+          return managementFailure("FORBIDDEN");
+        return readManagementCenterList(
+          client,
+          input.command,
+          publicMediaBaseUrl,
+          { scope: "ASSIGNED", brokerId: input.principal.actorId },
+        );
+      }),
+    assignArtist: (input) => run(() => assignArtist(client, input)),
     submit: (input) =>
       run(async () => {
         const intent = managementCenterIntentSchema.parse(input.intent);
+        if (
+          !(await managesAll(input.principal.actorId)) &&
+          (intent.kind !== "SAVE_ARTIST" ||
+            (intent.id !== null &&
+              !(await ownsArtist(input.principal.actorId, intent.id))))
+        )
+          return managementFailure("FORBIDDEN");
         const [existing] = await draftRows(
           client,
           `${managementOperationSql} WHERE o.actor_id=$1 AND o.idempotency_key=$2 FOR UPDATE OF o`,
@@ -247,6 +293,8 @@ export function createManagementCenterOperationRepository(
       }),
     archivePoster: (input) =>
       run(async () => {
+        if (!(await managesAll(input.principal.actorId)))
+          return managementFailure("FORBIDDEN");
         // Same lock as poster publication, so a replace/restore never races an archive.
         await client.query(
           "SELECT pg_advisory_xact_lock(hashtextextended('fan-support:homepage',0))",

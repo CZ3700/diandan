@@ -12,6 +12,7 @@ import {
   withEphemeralPostgres,
 } from "@fan-support/persistence-postgres";
 import { createAdminLocalAccessUseCases } from "@fan-support/application";
+import { adminStandardRolePermissions } from "@fan-support/contracts";
 import {
   ensureStandardRoles,
   runAdminAccountCommand,
@@ -174,6 +175,76 @@ try {
         before,
         "idempotent",
       );
+
+      stage = "ADR-022 roles";
+      const brokerPermissions = await permissionsOf("studio:broker");
+      same(
+        brokerPermissions,
+        [...adminStandardRolePermissions("studio:broker")].sort(),
+        "the broker role holds its own scope and the media pipeline only",
+      );
+      ok(
+        brokerPermissions.includes("management.assigned") &&
+          !brokerPermissions.includes("management.direct"),
+        "a broker manages assigned artists, never all of them",
+      );
+      ok(
+        ownerPermissions.includes("idols.assign") &&
+          ownerPermissions.includes("idols.private") &&
+          !ownerPermissions.includes("management.assigned"),
+        "owners assign artists and are not themselves brokers",
+      );
+      ok(
+        !operatorPermissions.includes("idols.assign") &&
+          !operatorPermissions.includes("idols.private") &&
+          !operatorPermissions.includes("management.assigned") &&
+          operatorPermissions.includes("management.direct"),
+        "daily operations manage every artist but neither assign nor read private notes",
+      );
+      // A database provisioned before ADR-022 has two roles and none of the new grants.
+      await client.query(
+        "DELETE FROM role_permissions rp USING roles r WHERE rp.role_id=r.id AND r.role_key='studio:broker'",
+      );
+      await client.query("DELETE FROM roles WHERE role_key='studio:broker'");
+      await client.query(
+        "DELETE FROM role_permissions rp USING permissions p WHERE rp.permission_id=p.id AND p.permission_key IN('idols.assign','idols.private','ledger.read')",
+      );
+      same(
+        await run("sync-roles", {}),
+        { synced: ["studio:owner", "studio:operator", "studio:broker"] },
+        "sync-roles reports the standard roles",
+      );
+      same(
+        [
+          await permissionsOf("studio:owner"),
+          await permissionsOf("studio:operator"),
+          await permissionsOf("studio:broker"),
+        ],
+        [ownerPermissions, operatorPermissions, brokerPermissions],
+        "sync-roles completes an older database without creating an account",
+      );
+      same(await run("sync-roles", {}), await run("sync-roles", {}), "again");
+      same(
+        await count("SELECT count(*) AS n FROM role_permissions"),
+        before,
+        "repeating sync-roles grants nothing twice",
+      );
+      same(
+        await count(
+          "SELECT count(*) AS n FROM audit_logs WHERE task_name='admin-account-cli' AND action='ADMIN_STANDARD_ROLES_SYNCED'",
+        ),
+        3,
+        "each sync is audited as the server command",
+      );
+      await assert.rejects(
+        run("create", {
+          login: "some.body",
+          name: "Some Body",
+          role: "local:manager:fixture",
+        }),
+        /--role must be/u,
+      );
+      checks++;
 
       stage = "operator";
       const operatorPassword = `night ${randomBytes(9).toString("base64url")}`;
@@ -366,6 +437,32 @@ try {
         "a password flag does not exist",
       );
 
+      stage = "broker";
+      const brokerPassword = `mina ${randomBytes(9).toString("base64url")}`;
+      same(
+        await run(
+          "create",
+          { login: "mina.park", name: "Mina Park", role: "studio:broker" },
+          brokerPassword,
+        ),
+        { created: "mina.park", role: "studio:broker" },
+        "broker created by the server command",
+      );
+      const broker = await login("mina.park", brokerPassword);
+      same(
+        (
+          await useCases.staff({
+            schemaVersion: 1,
+            requestId: randomUUID(),
+            sessionToken: broker.sessionToken,
+            csrfToken: broker.csrfToken,
+            command: { action: "CONTEXT" },
+          })
+        ).code,
+        "FORBIDDEN",
+        "a broker signs in and does not manage staff",
+      );
+
       stage = "list and evidence";
       const list = await run("list", {});
       same(
@@ -374,6 +471,7 @@ try {
           ["studio.owner", "ACTIVE", ["studio:owner"]],
           ["night.shift", "ACTIVE", ["studio:operator"]],
           ["cli.user", "ACTIVE", ["studio:operator"]],
+          ["mina.park", "ACTIVE", ["studio:broker"]],
         ],
         "accounts listed",
       );
@@ -385,7 +483,7 @@ try {
         await count(
           "SELECT count(*) AS n FROM audit_logs WHERE task_name='admin-account-cli' AND action LIKE 'ADMIN_LOCAL_%'",
         ),
-        7,
+        8,
         "each command audited as the server command",
       );
       same(

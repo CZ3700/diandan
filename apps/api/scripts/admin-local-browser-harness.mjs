@@ -54,14 +54,19 @@ export async function freshCode(key, lastStep) {
 
 /**
  * Runs `scenario` with the whole stack up and writes `report.json` (and the scenario's screenshots)
- * to `output/checks/l3-10/<name>-<time>/`. Registered secrets never reach the report or logs.
+ * to `output/checks/<item>/<name>-<time>/`. Registered secrets never reach the report or logs.
  */
-export async function runLocalAccountBrowserAcceptance(name, scenario) {
+export async function runLocalAccountBrowserAcceptance(
+  name,
+  scenario,
+  { item = "l3-10" } = {},
+) {
   // --compiled: the already built admin with next start in the test tier (stg PREBUILT).
   const compiled = process.argv.includes("--compiled");
   const output = path.join(
     workspaceRoot,
-    "output/checks/l3-10",
+    "output/checks",
+    item,
     `${name}${compiled ? "-compiled" : ""}-${new Date().toISOString().replaceAll(":", "-")}`,
   );
   await mkdir(output, { recursive: true });

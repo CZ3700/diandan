@@ -102,3 +102,33 @@ test("original-image BFF binds the private descriptor to the exact requested tar
     }),
   ).toBe(true);
 });
+
+test("assigning an artist is a private idempotent mutation with no caller-supplied authority", () => {
+  const operation = getAdminOperation("management-assign-artist");
+  expect(operation).toBeDefined();
+  const body = {
+    schemaVersion: 1,
+    artistId: id,
+    brokerId: id,
+    expectedBrokerId: null,
+  };
+  expect(operation!.path).toBe("/api/v1/admin/management/artists/assign");
+  expect(operation!.readOnly).toBe(false);
+  expect(operation!.parseCommand(body, id)).toEqual({
+    ...body,
+    action: "ASSIGN_ARTIST",
+    idempotencyKey: id,
+  });
+  expect(operation!.apiBody(operation!.parseCommand(body, id))).toEqual(body);
+  for (const extra of [{ actorId: id }, { action: "SUBMIT" }])
+    expect(() => operation!.parseCommand({ ...body, ...extra }, id)).toThrow();
+  expect(() => operation!.parseCommand(body)).toThrow();
+  expect(() =>
+    operation!.parseResponse({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      kind: "POSTER_ARCHIVED",
+      revisionId: id,
+    }),
+  ).toThrow();
+});

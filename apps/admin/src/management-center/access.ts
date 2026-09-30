@@ -8,6 +8,11 @@ const unavailable = (result: PromiseSettledResult<unknown>) =>
     result.reason instanceof AdminClientError &&
     ["FORBIDDEN", "NOT_FOUND"].includes(result.reason.code)
   );
+/** ADR-022: a broker's daily center is its own artists and nothing else. */
+const assignedOnly = (content: PromiseSettledResult<unknown>) =>
+  content.status === "fulfilled" &&
+  (content.value as { artists?: { scope?: unknown } } | null)?.artists
+    ?.scope === "ASSIGNED";
 export function resolveManagementAccess(
   content: PromiseSettledResult<unknown>,
   orders: PromiseSettledResult<OrdersContext>,
@@ -16,6 +21,7 @@ export function resolveManagementAccess(
 ) {
   return {
     contentAllowed: content.status === "fulfilled",
+    artistsOnly: assignedOnly(content),
     orders:
       orders.status === "fulfilled" &&
       orders.value.permissions.includes("orders.read")

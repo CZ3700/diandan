@@ -599,6 +599,10 @@
       "kind": "TABLE"
     },
     {
+      "name": "idol_assignments",
+      "kind": "TABLE"
+    },
+    {
       "name": "idol_daily_search_projections",
       "kind": "TABLE"
     },
@@ -13387,6 +13391,126 @@
       "position": 5,
       "name": "normalized_name",
       "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 2,
+      "name": "idol_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 3,
+      "name": "sequence",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 4,
+      "name": "broker_identity_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 5,
+      "name": "previous_broker_identity_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 6,
+      "name": "reason",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 7,
+      "name": "operation_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 8,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 9,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 10,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 11,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "idol_assignments",
+      "position": 12,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
       "notNull": true,
       "defaultExpression": null,
       "identity": "",
@@ -44621,6 +44745,198 @@
       "initiallyDeferred": false
     },
     {
+      "table": "idol_assignments",
+      "name": "idol_assignments_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_broker_identity_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (broker_identity_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_check",
+      "kind": "CHECK",
+      "definition": "CHECK (broker_identity_id IS DISTINCT FROM previous_broker_identity_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_check1",
+      "kind": "CHECK",
+      "definition": "CHECK ((reason = 'BROKER_CREATED'::text) = (operation_id IS NOT NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_check2",
+      "kind": "CHECK",
+      "definition": "CHECK (reason <> 'BROKER_CREATED'::text OR sequence = 1 AND broker_identity_id = actor_id AND previous_broker_identity_id IS NULL)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_idol_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (idol_id) REFERENCES idols(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_idol_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idol_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_idol_id_sequence_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (idol_id, sequence)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_operation_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (operation_id) REFERENCES management_operations(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_previous_broker_identity_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (previous_broker_identity_id) REFERENCES admin_identities(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_reason_check",
+      "kind": "CHECK",
+      "definition": "CHECK (reason = ANY (ARRAY['BROKER_CREATED'::text, 'ASSIGNED'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_reason_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL reason",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_sequence_check",
+      "kind": "CHECK",
+      "definition": "CHECK (sequence >= 1 AND sequence <= '9007199254740991'::bigint)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_sequence_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL sequence",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id) ON DELETE RESTRICT",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "idol_daily_search_projections",
       "name": "idol_daily_search_projections_algorithm_version_check",
       "kind": "CHECK",
@@ -66944,6 +67260,42 @@
       "valid": true
     },
     {
+      "table": "idol_assignments",
+      "name": "idol_assignments_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX idol_assignments_audit_log_id_key ON public.idol_assignments USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_broker",
+      "definition": "CREATE INDEX idol_assignments_broker ON public.idol_assignments USING btree (broker_identity_id, idol_id)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_idol_id_sequence_key",
+      "definition": "CREATE UNIQUE INDEX idol_assignments_idol_id_sequence_key ON public.idol_assignments USING btree (idol_id, sequence)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_pkey",
+      "definition": "CREATE UNIQUE INDEX idol_assignments_pkey ON public.idol_assignments USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "idol_daily_search_projections",
       "name": "idol_daily_search_projections_pkey",
       "definition": "CREATE UNIQUE INDEX idol_daily_search_projections_pkey ON public.idol_daily_search_projections USING btree (revision_id)",
@@ -72217,6 +72569,24 @@
       "enabled": "O"
     },
     {
+      "table": "idol_assignments",
+      "name": "idol_assignment_guard",
+      "definition": "CREATE TRIGGER idol_assignment_guard BEFORE INSERT ON idol_assignments FOR EACH ROW EXECUTE FUNCTION guard_idol_assignment()",
+      "enabled": "O"
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_immutable",
+      "definition": "CREATE TRIGGER idol_assignments_immutable BEFORE DELETE OR UPDATE ON idol_assignments FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "idol_assignments",
+      "name": "idol_assignments_no_truncate",
+      "definition": "CREATE TRIGGER idol_assignments_no_truncate BEFORE TRUNCATE ON idol_assignments FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "idol_daily_search_projections",
       "name": "idol_daily_search_projection_guard",
       "definition": "CREATE TRIGGER idol_daily_search_projection_guard BEFORE INSERT OR UPDATE ON idol_daily_search_projections FOR EACH ROW EXECUTE FUNCTION guard_idol_daily_search_projection()",
@@ -75756,7 +76126,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.assert_management_authority(operation_id uuid)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE o public.management_operations%ROWTYPE; session public.admin_sessions%ROWTYPE;\nBEGIN\n SELECT * INTO o FROM public.management_operations WHERE id=operation_id FOR SHARE;\n SELECT * INTO session FROM public.admin_sessions WHERE id=o.session_id FOR SHARE;\n IF o.id IS NULL OR o.capability<>'DIRECT_OPERATOR_V1' OR o.status NOT IN('RUNNING','SUCCEEDED')\n OR o.authorized_until>session.expires_at OR o.authorized_until<=clock_timestamp()\n OR (o.status='RUNNING' AND o.lease_expires_at<=clock_timestamp()) THEN\n  RAISE EXCEPTION 'daily publication requires a current bounded operation grant' USING ERRCODE='23514';\n END IF;\n PERFORM public.assert_admin_catalog_authority(o.actor_id,o.session_id,clock_timestamp(),NULL,'management.direct',ARRAY[(o.intent->>'sourceLocale')::public.supported_locale]);\nEND; $function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_management_authority(operation_id uuid)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE o public.management_operations%ROWTYPE; session public.admin_sessions%ROWTYPE;\nBEGIN\n SELECT * INTO o FROM public.management_operations WHERE id=operation_id FOR SHARE;\n SELECT * INTO session FROM public.admin_sessions WHERE id=o.session_id FOR SHARE;\n IF o.id IS NULL OR o.capability<>'DIRECT_OPERATOR_V1' OR o.status NOT IN('RUNNING','SUCCEEDED')\n OR o.authorized_until>session.expires_at OR o.authorized_until<=clock_timestamp()\n OR (o.status='RUNNING' AND o.lease_expires_at<=clock_timestamp()) THEN\n  RAISE EXCEPTION 'daily publication requires a current bounded operation grant' USING ERRCODE='23514';\n END IF;\n PERFORM public.assert_management_scope(o.actor_id,o.session_id,o.intent,o.target_id);\nEND; $function$"
     },
     {
       "name": "assert_management_completion",
@@ -75767,6 +76137,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_management_completion()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE m public.daily_publication_manifests%ROWTYPE; d public.daily_publication_revisions%ROWTYPE;\nBEGIN\n IF NEW.status<>'SUCCEEDED' THEN RETURN NULL; END IF;\n SELECT * INTO m FROM public.daily_publication_manifests WHERE operation_id=NEW.id AND publication_id=(NEW.result->>'publicationId')::uuid AND revision_id=(NEW.result->>'revisionId')::uuid;\n SELECT * INTO d FROM public.daily_publication_revisions WHERE revision_id=m.revision_id;\n IF m.publication_id IS NULL OR d.object_kind='MEDIA_METADATA' OR NEW.target_id<>(NEW.result->>'targetId')::uuid OR d.object_id<>NEW.target_id OR (NEW.result->>'version')::bigint<>coalesce(m.result_base_version,m.head_version) THEN RAISE EXCEPTION 'successful management operation requires its exact main publication result' USING ERRCODE='23514'; END IF;\n PERFORM public.assert_daily_publication(m.publication_id);\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_management_scope",
+      "identityArguments": "actor uuid, session_id uuid, intent jsonb, target uuid",
+      "resultType": "void",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_management_scope(actor uuid, session_id uuid, intent jsonb, target uuid)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE locales public.supported_locale[]:=ARRAY[(intent->>'sourceLocale')::public.supported_locale];\nBEGIN\n IF EXISTS(SELECT 1 FROM public.admin_identity_roles ar JOIN public.role_permissions rp ON rp.role_id=ar.role_id JOIN public.permissions p ON p.id=rp.permission_id\n  WHERE ar.admin_identity_id=actor AND p.permission_key='management.direct' AND ar.granted_at<=clock_timestamp() AND rp.granted_at<=clock_timestamp()) THEN\n  PERFORM public.assert_admin_catalog_authority(actor,session_id,clock_timestamp(),NULL,'management.direct',locales);\n  RETURN;\n END IF;\n PERFORM public.assert_admin_catalog_authority(actor,session_id,clock_timestamp(),NULL,'management.assigned',locales);\n IF intent->>'kind' IS DISTINCT FROM 'SAVE_ARTIST' OR NOT coalesce(public.idol_current_broker(target)=actor\n  OR (intent->'id'='null'::jsonb AND NOT EXISTS(SELECT 1 FROM public.idols WHERE id=target)),false) THEN\n  RAISE EXCEPTION 'assigned management covers only the account''s own artists' USING ERRCODE='23514'; END IF;\nEND; $function$"
     },
     {
       "name": "assert_media_processing_admin_receipt",
@@ -76779,6 +77159,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_idempotency_record_mutation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF (to_jsonb(NEW) - 'status' - 'safe_result_reference' - 'updated_at') IS DISTINCT FROM\n     (to_jsonb(OLD) - 'status' - 'safe_result_reference' - 'updated_at') THEN\n    RAISE EXCEPTION 'idempotency request identity is immutable' USING ERRCODE = '55000';\n  END IF;\n  IF NOT (\n    NEW.status = OLD.status\n    OR (OLD.status = 'IN_PROGRESS' AND NEW.status IN ('SUCCEEDED', 'FAILED'))\n  ) THEN\n    RAISE EXCEPTION 'invalid idempotency status transition' USING ERRCODE = '23514';\n  END IF;\n  IF OLD.status <> 'IN_PROGRESS' AND to_jsonb(NEW) IS DISTINCT FROM to_jsonb(OLD) THEN\n    RAISE EXCEPTION 'terminal idempotency evidence is immutable' USING ERRCODE = '55000';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
     },
     {
+      "name": "guard_idol_assignment",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_idol_assignment()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE latest public.idol_assignments%ROWTYPE; o public.management_operations%ROWTYPE; artist_status text;\nBEGIN\n -- One writer per artist, so the sequence and the previous broker are read under the same lock.\n PERFORM pg_advisory_xact_lock(hashtextextended('fan-support:idol-assignment:'||NEW.idol_id::text,0));\n SELECT * INTO latest FROM public.idol_assignments WHERE idol_id=NEW.idol_id ORDER BY sequence DESC LIMIT 1;\n IF NEW.sequence<>coalesce(latest.sequence,0)+1 OR NEW.previous_broker_identity_id IS DISTINCT FROM latest.broker_identity_id\n OR NEW.created_at<coalesce(latest.created_at,NEW.created_at) THEN RAISE EXCEPTION 'artist assignment must extend its exact current history' USING ERRCODE='23514'; END IF;\n IF NOT EXISTS(SELECT 1 FROM public.audit_logs l WHERE l.id=NEW.audit_log_id AND l.actor_type='ADMIN' AND l.actor_id=NEW.actor_id AND l.action='IDOL_ASSIGNMENT'\n  AND l.subject_type='IDOL' AND l.subject_id=NEW.idol_id AND l.outcome='SUCCEEDED' AND l.request_id=NEW.request_id AND l.created_at=NEW.created_at) THEN\n  RAISE EXCEPTION 'artist assignment requires its exact audit record' USING ERRCODE='23514'; END IF;\n IF NEW.broker_identity_id IS NOT NULL THEN\n  PERFORM 1 FROM public.admin_identities i WHERE i.id=NEW.broker_identity_id AND i.status='ACTIVE' FOR SHARE;\n  IF NOT FOUND OR NOT EXISTS(SELECT 1 FROM public.admin_identity_roles ar JOIN public.role_permissions rp ON rp.role_id=ar.role_id JOIN public.permissions p ON p.id=rp.permission_id\n   WHERE ar.admin_identity_id=NEW.broker_identity_id AND p.permission_key='management.assigned' AND ar.granted_at<=clock_timestamp() AND rp.granted_at<=clock_timestamp()) THEN\n   RAISE EXCEPTION 'an artist can only be assigned to an active broker' USING ERRCODE='23514'; END IF;\n END IF;\n IF NEW.reason='BROKER_CREATED' THEN\n  -- Written by the daily publication that creates the artist, inside that same transaction.\n  SELECT * INTO o FROM public.management_operations WHERE id=NEW.operation_id FOR SHARE;\n  IF o.id IS NULL OR o.actor_id<>NEW.actor_id OR o.session_id<>NEW.session_id OR o.target_id IS DISTINCT FROM NEW.idol_id OR o.status<>'RUNNING'\n  OR o.intent->>'kind' IS DISTINCT FROM 'SAVE_ARTIST' OR o.intent->'id' IS DISTINCT FROM 'null'::jsonb THEN RAISE EXCEPTION 'a broker owns only the artist its own running operation creates' USING ERRCODE='23514'; END IF;\n  PERFORM public.assert_admin_catalog_authority(NEW.actor_id,NEW.session_id,NEW.created_at,latest.created_at,'management.assigned',ARRAY[(o.intent->>'sourceLocale')::public.supported_locale]);\n ELSE\n  SELECT status INTO artist_status FROM public.idols WHERE id=NEW.idol_id FOR SHARE;\n  IF artist_status IS NULL OR artist_status='archived' THEN RAISE EXCEPTION 'only a current artist can be assigned' USING ERRCODE='23514'; END IF;\n  PERFORM public.assert_admin_catalog_authority(NEW.actor_id,NEW.session_id,NEW.created_at,latest.created_at,'idols.assign',ARRAY[]::public.supported_locale[]);\n END IF;\n RETURN NEW;\nEND; $function$"
+    },
+    {
       "name": "guard_idol_daily_search_projection",
       "identityArguments": "",
       "resultType": "trigger",
@@ -76916,7 +77306,7 @@
       "kind": "FUNCTION",
       "volatility": "VOLATILE",
       "securityDefiner": false,
-      "definition": "CREATE OR REPLACE FUNCTION public.guard_management_operation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE session public.admin_sessions%ROWTYPE;\nBEGIN\n IF NEW.intent_hash<>sha256(convert_to(public.canonical_publication_json(NEW.intent),'UTF8')) THEN RAISE EXCEPTION 'operation intent digest must match canonical payload' USING ERRCODE='23514'; END IF;\n IF TG_OP='UPDATE' THEN\n  IF NEW.id<>OLD.id OR NEW.actor_id<>OLD.actor_id OR NEW.intent IS DISTINCT FROM OLD.intent OR NEW.intent_hash<>OLD.intent_hash OR NEW.idempotency_key<>OLD.idempotency_key OR NEW.capability<>OLD.capability OR NEW.created_at<>OLD.created_at\n  OR NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at OR OLD.status='SUCCEEDED' THEN RAISE EXCEPTION 'operation identity, intent and completed history are immutable' USING ERRCODE='23514'; END IF;\n  IF NEW.session_id<>OLD.session_id OR NEW.authorized_until<>OLD.authorized_until OR NEW.retry_key IS DISTINCT FROM OLD.retry_key THEN\n   IF OLD.status<>'FAILED' OR NOT OLD.failure_retryable OR NEW.status<>'QUEUED' OR NEW.retry_key IS NULL OR NEW.retry_key IS NOT DISTINCT FROM OLD.retry_key THEN RAISE EXCEPTION 'operation reauthorization requires exact failed retry' USING ERRCODE='23514'; END IF;\n  END IF;\n  IF NEW.lease_token_digest IS DISTINCT FROM OLD.lease_token_digest AND NEW.lease_token_digest IS NOT NULL THEN\n   IF (OLD.status='RUNNING' AND OLD.lease_expires_at>clock_timestamp()) OR OLD.status NOT IN('QUEUED','RUNNING') OR NEW.attempt_count<>OLD.attempt_count+1\n   OR NEW.lease_expires_at>clock_timestamp()+interval '900 seconds' OR NEW.lease_expires_at>NEW.authorized_until THEN RAISE EXCEPTION 'operation claim requires a due bounded fresh lease' USING ERRCODE='23514'; END IF;\n  ELSIF NEW.attempt_count<>OLD.attempt_count THEN RAISE EXCEPTION 'only claiming increments attempts' USING ERRCODE='23514'; END IF;\n ELSE\n  IF NEW.status<>'QUEUED' OR NEW.version<>1 OR NEW.attempt_count<>0 OR NEW.phase<>'PREPARE_MEDIA' OR NEW.retry_key IS NOT NULL OR NEW.checkpoint<>'{\"sourceAssetId\":null,\"jobs\":[],\"preparedMedia\":null,\"retryRequested\":false}'::jsonb THEN RAISE EXCEPTION 'operation starts with an exact empty durable checkpoint' USING ERRCODE='23514'; END IF;\n END IF;\n -- Expired work may become an honest retryable authorization failure, never a publication.\n IF NEW.status='FAILED' AND NEW.failure_code='NEEDS_AUTHORIZATION' THEN RETURN NEW; END IF;\n SELECT * INTO session FROM public.admin_sessions WHERE id=NEW.session_id FOR SHARE;\n IF session.id IS NULL OR session.admin_identity_id<>NEW.actor_id OR NEW.authorized_until>session.expires_at OR NEW.authorized_until<=clock_timestamp() THEN RAISE EXCEPTION 'operation expiry must be bounded by its actual session' USING ERRCODE='23514'; END IF;\n PERFORM public.assert_admin_catalog_authority(NEW.actor_id,NEW.session_id,clock_timestamp(),NULL,'management.direct',ARRAY[(NEW.intent->>'sourceLocale')::public.supported_locale]);\n RETURN NEW;\nEND; $function$"
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_management_operation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE session public.admin_sessions%ROWTYPE;\nBEGIN\n IF NEW.intent_hash<>sha256(convert_to(public.canonical_publication_json(NEW.intent),'UTF8')) THEN RAISE EXCEPTION 'operation intent digest must match canonical payload' USING ERRCODE='23514'; END IF;\n IF TG_OP='UPDATE' THEN\n  IF NEW.id<>OLD.id OR NEW.actor_id<>OLD.actor_id OR NEW.intent IS DISTINCT FROM OLD.intent OR NEW.intent_hash<>OLD.intent_hash OR NEW.idempotency_key<>OLD.idempotency_key OR NEW.capability<>OLD.capability OR NEW.created_at<>OLD.created_at\n  OR NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at OR OLD.status='SUCCEEDED' THEN RAISE EXCEPTION 'operation identity, intent and completed history are immutable' USING ERRCODE='23514'; END IF;\n  IF NEW.session_id<>OLD.session_id OR NEW.authorized_until<>OLD.authorized_until OR NEW.retry_key IS DISTINCT FROM OLD.retry_key THEN\n   IF OLD.status<>'FAILED' OR NOT OLD.failure_retryable OR NEW.status<>'QUEUED' OR NEW.retry_key IS NULL OR NEW.retry_key IS NOT DISTINCT FROM OLD.retry_key THEN RAISE EXCEPTION 'operation reauthorization requires exact failed retry' USING ERRCODE='23514'; END IF;\n  END IF;\n  IF NEW.lease_token_digest IS DISTINCT FROM OLD.lease_token_digest AND NEW.lease_token_digest IS NOT NULL THEN\n   IF (OLD.status='RUNNING' AND OLD.lease_expires_at>clock_timestamp()) OR OLD.status NOT IN('QUEUED','RUNNING') OR NEW.attempt_count<>OLD.attempt_count+1\n   OR NEW.lease_expires_at>clock_timestamp()+interval '900 seconds' OR NEW.lease_expires_at>NEW.authorized_until THEN RAISE EXCEPTION 'operation claim requires a due bounded fresh lease' USING ERRCODE='23514'; END IF;\n  ELSIF NEW.attempt_count<>OLD.attempt_count THEN RAISE EXCEPTION 'only claiming increments attempts' USING ERRCODE='23514'; END IF;\n ELSE\n  IF NEW.status<>'QUEUED' OR NEW.version<>1 OR NEW.attempt_count<>0 OR NEW.phase<>'PREPARE_MEDIA' OR NEW.retry_key IS NOT NULL OR NEW.checkpoint<>'{\"sourceAssetId\":null,\"jobs\":[],\"preparedMedia\":null,\"retryRequested\":false}'::jsonb THEN RAISE EXCEPTION 'operation starts with an exact empty durable checkpoint' USING ERRCODE='23514'; END IF;\n END IF;\n -- Expired work may become an honest retryable authorization failure, never a publication.\n IF NEW.status='FAILED' AND NEW.failure_code='NEEDS_AUTHORIZATION' THEN RETURN NEW; END IF;\n SELECT * INTO session FROM public.admin_sessions WHERE id=NEW.session_id FOR SHARE;\n IF session.id IS NULL OR session.admin_identity_id<>NEW.actor_id OR NEW.authorized_until>session.expires_at OR NEW.authorized_until<=clock_timestamp() THEN RAISE EXCEPTION 'operation expiry must be bounded by its actual session' USING ERRCODE='23514'; END IF;\n PERFORM public.assert_management_scope(NEW.actor_id,NEW.session_id,NEW.intent,NEW.target_id);\n RETURN NEW;\nEND; $function$"
     },
     {
       "name": "guard_media_processing_attempt",
@@ -77247,6 +77637,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.guard_webhook_payload_transition()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  IF TG_OP = 'DELETE' THEN\n    RAISE EXCEPTION 'webhook payload retention rows cannot be deleted'\n      USING ERRCODE = '55000';\n  END IF;\n  IF TG_OP = 'INSERT' THEN\n    IF NEW.created_at <> transaction_timestamp() THEN\n      RAISE EXCEPTION 'webhook payload creation time must be server anchored'\n        USING ERRCODE = '23514';\n    END IF;\n    RETURN NEW;\n  END IF;\n  IF (to_jsonb(NEW) - 'status' - 'payload_ciphertext' - 'encrypted_data_key'\n      - 'encryption_key_version' - 'purged_at') IS DISTINCT FROM\n     (to_jsonb(OLD) - 'status' - 'payload_ciphertext' - 'encrypted_data_key'\n      - 'encryption_key_version' - 'purged_at') THEN\n    RAISE EXCEPTION 'webhook payload identity and retention evidence are immutable'\n      USING ERRCODE = '55000';\n  END IF;\n  IF NOT (OLD.status = 'RETAINED' AND NEW.status = 'PURGED') THEN\n    RAISE EXCEPTION 'webhook payloads only support RETAINED to PURGED'\n      USING ERRCODE = '23514';\n  END IF;\n  IF NEW.purged_at <> transaction_timestamp() THEN\n    RAISE EXCEPTION 'webhook payload purge time must be server anchored'\n      USING ERRCODE = '23514';\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
+    },
+    {
+      "name": "idol_current_broker",
+      "identityArguments": "idol uuid",
+      "resultType": "uuid",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "STABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.idol_current_broker(idol uuid)\n RETURNS uuid\n LANGUAGE sql\n STABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT a.broker_identity_id FROM public.idol_assignments a WHERE a.idol_id=$1 ORDER BY a.sequence DESC LIMIT 1\n$function$"
     },
     {
       "name": "information_page_effective_review",

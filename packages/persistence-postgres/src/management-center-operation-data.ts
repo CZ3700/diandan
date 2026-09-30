@@ -8,6 +8,11 @@ import {
 } from "@fan-support/contracts";
 import { draftRows, type DraftRow } from "./content-draft-data.js";
 import { utcTimestampSql } from "./resource-management-data.js";
+import {
+  brokerCoversOperation,
+  managementGrants,
+  type ManagementOperationTarget,
+} from "./management-center-scope.js";
 import type { TransactionClient } from "./transaction-runner.js";
 
 export const managementFailure = (
@@ -111,17 +116,24 @@ export async function authorizeManagementSession(
     },
   });
 }
+/**
+ * Without an operation this is the session-level entry: each command then narrows a broker
+ * to its own artists. With one, a broker is covered only for saving such an artist.
+ */
 async function currentManagementPermission(
   client: TransactionClient,
   actorId: string,
   sourceLocale?: string,
+  operation?: ManagementOperationTarget,
 ): Promise<boolean> {
-  const grants = await draftRows(
-    client,
-    `SELECT ar.role_id FROM public.admin_identity_roles ar JOIN public.roles r ON r.id=ar.role_id JOIN public.role_permissions rp ON rp.role_id=r.id JOIN public.permissions p ON p.id=rp.permission_id WHERE ar.admin_identity_id=$1 AND p.permission_key='management.direct' AND ar.granted_at<=clock_timestamp() AND rp.granted_at<=clock_timestamp() FOR SHARE OF ar,r,rp,p`,
-    [actorId],
-  );
-  if (grants.length === 0) return false;
+  const grants = await managementGrants(client, actorId);
+  if (!grants.direct && !grants.assigned) return false;
+  if (
+    !grants.direct &&
+    operation &&
+    !(await brokerCoversOperation(client, actorId, operation))
+  )
+    return false;
   if (sourceLocale !== undefined) {
     const locales = await draftRows(
       client,
@@ -141,12 +153,19 @@ export async function currentManagementDelegation(
     `SELECT s.id FROM public.admin_sessions s JOIN public.admin_identities i ON i.id=s.admin_identity_id WHERE s.id=$1 AND s.admin_identity_id=$2 AND s.revoked_at IS NULL AND s.authenticated_with_mfa AND s.created_at<=clock_timestamp() AND s.expires_at>clock_timestamp() AND $3::timestamptz>clock_timestamp() AND $3::timestamptz<=s.expires_at AND i.status='ACTIVE' FOR SHARE OF s,i`,
     [row["session_id"], row["actor_id"], row["authorized_until"]],
   );
+  const intent = row["intent"] as Record<string, unknown>;
   return (
     session !== undefined &&
     (await currentManagementPermission(
       client,
       String(row["actor_id"]),
-      String((row["intent"] as Record<string, unknown>)["sourceLocale"]),
+      String(intent["sourceLocale"]),
+      {
+        kind: String(intent["kind"]),
+        creates: intent["id"] === null,
+        targetId:
+          typeof row["target_id"] === "string" ? row["target_id"] : null,
+      },
     ))
   );
 }

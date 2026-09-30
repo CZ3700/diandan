@@ -268,6 +268,7 @@ export function ManagementHub({
         accountWarning={accountWarning}
         accessNotice={notice}
         canDeleteArtists={canDeleteArtists}
+        artistsOnly={access.artistsOnly}
       />
     );
   return (
@@ -275,6 +276,7 @@ export function ManagementHub({
       locale={locale}
       section={active}
       contentAllowed={access?.contentAllowed ?? false}
+      artistsOnly={access?.artistsOnly ?? false}
       ordersAvailable={Boolean(access?.orders)}
       paymentsAvailable={Boolean(access?.payments)}
       exceptionsAvailable={Boolean(access?.exceptions)}

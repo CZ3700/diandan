@@ -49,6 +49,7 @@ test("daily price editing stays in the current published operation scope while r
       pageSize: 10,
     },
     "https://media.example.test",
+    { scope: "ALL" },
   );
   expect(result).toMatchObject({
     items: [
@@ -102,6 +103,7 @@ test("gift listing reads the current daily gift kind before the legacy profile",
       pageSize: 10,
     },
     "https://media.example.test",
+    { scope: "ALL" },
   );
   expect(result).toMatchObject({
     items: [{ giftKind: "WISH", canEdit: true }],
@@ -155,6 +157,7 @@ test.each([false, true])(
         pageSize: 10,
       },
       "https://media.example.test",
+      { scope: "ALL" },
     );
     expect(value).toMatchObject({
       items: [
@@ -177,6 +180,13 @@ test.each([false, true])(
     expect(sql).not.toMatch(/INSERT|UPDATE public.inventory/u);
   },
 );
+const principal = {
+  schemaVersion: 1,
+  actorId: id,
+  sessionId: id,
+  authorizedAt: "2026-09-08T00:00:00Z",
+  expiresAt: "2026-09-08T01:00:00Z",
+} as const;
 function client(replies: unknown[][]): TransactionClient {
   return {
     query: vi.fn(async () => ({ rows: replies.shift() ?? [] })),
@@ -185,12 +195,10 @@ function client(replies: unknown[][]): TransactionClient {
 }
 test("empty configuration stays explicit and never invents a region or currency", async () => {
   const db = client([[], [], [], []]);
-  const result = await readManagementCenterContext(db, {
-    schemaVersion: 1,
-    actorId: id,
-    sessionId: id,
-    authorizedAt: "2026-09-08T00:00:00Z",
-    expiresAt: "2026-09-08T01:00:00Z",
+  const result = await readManagementCenterContext(db, principal, {
+    direct: true,
+    assigned: false,
+    assign: true,
   });
   expect(result).toMatchObject({
     kind: "CONTEXT",
@@ -198,7 +206,116 @@ test("empty configuration stays explicit and never invents a region or currency"
     defaults: null,
     poster: { available: false },
     operations: [],
+    artists: { scope: "ALL", canAssign: true, brokers: [] },
   });
+});
+test("a broker's context carries no markets, defaults, poster or broker directory", async () => {
+  const db = client([[]]);
+  const result = await readManagementCenterContext(db, principal, {
+    direct: false,
+    assigned: true,
+    assign: false,
+  });
+  expect(result).toMatchObject({
+    kind: "CONTEXT",
+    markets: [],
+    defaults: null,
+    poster: { available: false },
+    artists: { scope: "ASSIGNED", canAssign: false, brokers: [] },
+  });
+  // Only the account's own recent operations are read.
+  expect(vi.mocked(db.query)).toHaveBeenCalledTimes(1);
+  expect(vi.mocked(db.query).mock.calls[0]![1]).toEqual([id]);
+});
+const broker = "00000000-0000-4000-8000-000000000002";
+const artistRow = {
+  id,
+  version: 2,
+  source_locale: "th",
+  name: "Artist",
+  description: "Description",
+  status: "active",
+  handle: "artist",
+  media_asset_id: null,
+};
+const artists = {
+  schemaVersion: 1,
+  action: "LIST",
+  section: "ARTISTS",
+  page: 1,
+  pageSize: 10,
+} as const;
+test("a broker's artist list counts and reads only the artists assigned to it", async () => {
+  const db = client([
+    [{ total: "1" }],
+    [{ ...artistRow, broker_id: broker }],
+    [{ broker_id: broker, display_name: "Mina Park", active: true }],
+  ]);
+  const result = await readManagementCenterList(
+    db,
+    artists,
+    "https://media.example.test/",
+    { scope: "ASSIGNED", brokerId: broker },
+  );
+  expect(result).toMatchObject({
+    totalItems: 1,
+    items: [
+      {
+        assignment: {
+          brokerId: broker,
+          displayName: "Mina Park",
+          active: true,
+        },
+      },
+    ],
+  });
+  const [count, page] = vi.mocked(db.query).mock.calls;
+  for (const [sql, values] of [count!, page!]) {
+    expect(String(sql)).toContain("public.idol_current_broker(o.id)=$1");
+    expect((values as unknown[])[0]).toBe(broker);
+  }
+  expect(page![1]).toEqual([broker, 10, 0]);
+});
+test("a broker's own scope is not widened by an assignment filter", async () => {
+  const db = client([[{ total: "0" }], []]);
+  await readManagementCenterList(
+    db,
+    { ...artists, assignment: { kind: "UNASSIGNED" } },
+    "https://media.example.test/",
+    { scope: "ASSIGNED", brokerId: broker },
+  );
+  for (const [sql, values] of vi.mocked(db.query).mock.calls) {
+    expect(String(sql)).toContain("public.idol_current_broker(o.id)=$1");
+    expect(String(sql)).not.toContain("IS NULL");
+    expect((values as unknown[])[0]).toBe(broker);
+  }
+});
+test("everyone else narrows the artist list to unassigned or one broker", async () => {
+  const unassigned = client([[{ total: "1" }], [{ ...artistRow }]]);
+  expect(
+    await readManagementCenterList(
+      unassigned,
+      { ...artists, assignment: { kind: "UNASSIGNED" } },
+      "https://media.example.test/",
+      { scope: "ALL" },
+    ),
+  ).toMatchObject({ items: [{ assignment: null }] });
+  for (const [sql] of vi.mocked(unassigned.query).mock.calls)
+    expect(String(sql)).toContain("public.idol_current_broker(o.id) IS NULL");
+  const one = client([[{ total: "0" }], []]);
+  await readManagementCenterList(
+    one,
+    { ...artists, assignment: { kind: "BROKER", brokerId: broker } },
+    "https://media.example.test/",
+    { scope: "ALL" },
+  );
+  expect(vi.mocked(one.query).mock.calls[1]![1]).toEqual([broker, 10, 0]);
+  const all = client([[{ total: "0" }], []]);
+  await readManagementCenterList(all, artists, "https://media.example.test/", {
+    scope: "ALL",
+  });
+  for (const [sql] of vi.mocked(all.query).mock.calls)
+    expect(String(sql)).not.toContain("idol_current_broker(o.id)=");
 });
 test("artist list returns the actual source language and a safe processed image only", async () => {
   const db = client([
@@ -227,6 +344,7 @@ test("artist list returns the actual source language and a safe processed image 
       pageSize: 10,
     },
     "https://media.example.test/",
+    { scope: "ALL" },
   );
   expect(result).toMatchObject({
     kind: "LIST",
@@ -247,11 +365,12 @@ test.each(["ARTISTS", "GIFTS"] as const)(
       db,
       { schemaVersion: 1, action: "LIST", section, page: 1, pageSize: 10 },
       "https://media.example.test/",
+      { scope: "ALL" },
     );
     const [count, page] = vi
       .mocked(db.query)
       .mock.calls.map(([sql]) => String(sql));
-    expect(count).toContain("WHERE status<>'archived'");
+    expect(count).toContain("WHERE o.status<>'archived'");
     expect(page).toContain("WHERE o.status<>'archived'");
   },
 );
@@ -283,6 +402,7 @@ test("corrupt thumbnail keys cannot turn into a foreign private response URL", a
         pageSize: 10,
       },
       "https://media.example.test/",
+      { scope: "ALL" },
     ),
   ).rejects.toThrow("origin");
 });
@@ -312,6 +432,7 @@ test("a missing history image does not erase its historical entry or authorize r
         pageSize: 10,
       },
       "https://media.example.test/",
+      { scope: "ALL" },
     ),
   ).toMatchObject({
     items: [
@@ -344,6 +465,7 @@ test("deleted posters leave the history and the homepage poster is never deletab
         pageSize: 10,
       },
       "https://media.example.test/",
+      { scope: "ALL" },
     ),
   ).toMatchObject({ items: [{ current: true, canDelete: false }] });
   const sql = vi.mocked(db.query).mock.calls.map(([text]) => String(text));
@@ -364,6 +486,7 @@ test("missing result rows cannot masquerade as a successful complete page", asyn
         pageSize: 10,
       },
       "https://media.example.test/",
+      { scope: "ALL" },
     ),
   ).rejects.toThrow();
 });
@@ -410,6 +533,7 @@ test("a gift without a current price cannot be edited by inventing one", async (
       pageSize: 10,
     },
     "https://media.example.test",
+    { scope: "ALL" },
   );
   expect(response).toMatchObject({ items: [{ price: null, canEdit: false }] });
 });

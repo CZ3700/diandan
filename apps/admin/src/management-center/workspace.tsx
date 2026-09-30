@@ -14,12 +14,15 @@ import type {
   SupportedLocale,
 } from "@fan-support/contracts";
 import type {
+  AssignmentFilter,
   ManagementApi,
   ManagementContext,
   ManagementList,
   ManagementSection,
   PosterItem,
 } from "./api";
+import { brokerName } from "./artist-assignment";
+import { ManagementSelect } from "./form-fields";
 import { managementCopy } from "./copy";
 import { ManagementShell } from "./shell";
 import { ManagementListView } from "./list-view";
@@ -69,6 +72,7 @@ export function ManagementWorkspace({
   initialSection = "ARTISTS",
   accessNotice,
   canDeleteArtists = false,
+  artistsOnly = false,
 }: {
   api: ManagementApi;
   locale: SupportedLocale;
@@ -85,10 +89,13 @@ export function ManagementWorkspace({
   initialSection?: ManagementSection;
   accessNotice?: ReactNode;
   canDeleteArtists?: boolean;
+  /** ADR-022: a broker's center has no gifts or posters. */
+  artistsOnly?: boolean;
 }) {
   const copy = managementCopy(locale);
   const [section, setSection] = useState<ManagementSection>(initialSection);
   const [page, setPage] = useState(1);
+  const [assignment, setAssignment] = useState<AssignmentFilter | null>(null);
   const [refresh, setRefresh] = useState(0);
   const [context, setContext] = useState<ManagementContext | null>(null);
   const [list, setList] = useState<ManagementList | null>(null);
@@ -116,6 +123,8 @@ export function ManagementWorkspace({
     null,
   );
   const [deleted, setDeleted] = useState<string | null>(null);
+  /** The operation whose new artist was published without its chosen broker. */
+  const [assignmentMissed, setAssignmentMissed] = useState<string | null>(null);
   const [canDeleteGifts, setCanDeleteGifts] = useState(false);
   const restoreActive = useRef(false);
   const writeBlocked = !canStartManagementWrite(busy, operations);
@@ -132,7 +141,10 @@ export function ManagementWorkspace({
     setLoading(true);
     setError(null);
     setList(null);
-    void Promise.all([api.context(), api.list(section, page)])
+    void Promise.all([
+      api.context(),
+      api.list(section, page, section === "ARTISTS" ? assignment : null),
+    ])
       .then(([nextContext, nextList]) => {
         if (canceled) return;
         setContext(nextContext);
@@ -153,7 +165,7 @@ export function ManagementWorkspace({
     return () => {
       canceled = true;
     };
-  }, [api, section, page, refresh]);
+  }, [api, section, page, assignment, refresh]);
   useEffect(() => {
     let canceled = false;
     void api.canDeleteGifts().then((allowed) => {
@@ -193,9 +205,10 @@ export function ManagementWorkspace({
     [api, removed, copy.posterDeleted],
   );
   const published = useCallback(
-    (operation: ManagementCenterOperation) => {
+    (operation: ManagementCenterOperation, missed = false) => {
       setDirty(false);
       setDeleted(null);
+      setAssignmentMissed(missed ? operation.operationId : null);
       setSuccess(operation);
       setSelection(null);
       setPage(1);
@@ -229,6 +242,7 @@ export function ManagementWorkspace({
     setDirty(false);
     setSelection(null);
     setSection(next);
+    setAssignment(null);
     setPage(1);
     setSuccess(null);
     setDeleted(null);
@@ -303,6 +317,7 @@ export function ManagementWorkspace({
     <ManagementShell
       locale={locale}
       section={section}
+      artistsOnly={artistsOnly}
       beforeLeave={() => !busy}
       onSection={(next) => {
         if (
@@ -437,6 +452,11 @@ export function ManagementWorkspace({
           ) : null}
         </div>
       ) : null}
+      {success && assignmentMissed === success.operationId ? (
+        <p className="mc-error" role="alert" data-management-assignment-missed>
+          {copy.assignmentMissed}
+        </p>
+      ) : null}
       {deleted ? (
         <div
           className="mc-success"
@@ -477,6 +497,40 @@ export function ManagementWorkspace({
               onDismiss={() => dismissOperation(operation.operationId)}
             />
           ))}
+          {/* Stays mounted while the list reloads, so keyboard focus is not lost. */}
+          {section === "ARTISTS" && context?.artists.scope === "ALL" ? (
+            <div className="mc-list-filter">
+              <ManagementSelect
+                name="assignment-filter"
+                label={copy.assignmentFilter}
+                value={
+                  assignment === null
+                    ? ""
+                    : assignment.kind === "BROKER"
+                      ? assignment.brokerId
+                      : "UNASSIGNED"
+                }
+                onChange={(value) => {
+                  setAssignment(
+                    value === ""
+                      ? null
+                      : value === "UNASSIGNED"
+                        ? { kind: "UNASSIGNED" }
+                        : { kind: "BROKER", brokerId: value },
+                  );
+                  setPage(1);
+                }}
+              >
+                <option value="">{copy.assignmentAll}</option>
+                <option value="UNASSIGNED">{copy.assignmentNone}</option>
+                {context.artists.brokers.map((broker) => (
+                  <option key={broker.brokerId} value={broker.brokerId}>
+                    {brokerName(broker, copy)}
+                  </option>
+                ))}
+              </ManagementSelect>
+            </div>
+          ) : null}
           {error ? (
             <div className="mc-error-state" role="alert">
               <p>{list ? managementError(error, copy) : copy.loadFailed}</p>
@@ -500,6 +554,8 @@ export function ManagementWorkspace({
               <ManagementListView
                 locale={locale}
                 list={list}
+                showAssignment={context?.artists.scope === "ALL"}
+                filtered={assignment !== null}
                 busy={writeBlocked}
                 onSelect={select}
                 onDeletePoster={(item) => void archivePoster(item)}

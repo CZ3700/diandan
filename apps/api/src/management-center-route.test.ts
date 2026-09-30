@@ -229,3 +229,68 @@ test("status checks exact operation ID and never returns another operation", asy
     await app.close();
   }
 });
+test("assigning an artist is a private mutation bound to the artist and broker it asked for", async () => {
+  const app = Fastify({ logger: false });
+  const brokerId = id.replace(/1$/u, "2");
+  const assigned = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "ARTIST_ASSIGNED",
+    artistId: id,
+    assignment: { brokerId, displayName: "Mina Park", active: true },
+  };
+  const execute = vi.fn().mockResolvedValue(assigned);
+  registerManagementCenterRoute(app, {
+    allowedOrigin: origin,
+    useCases: { execute },
+  });
+  const assign = (payload: Record<string, unknown>, extra = {}) =>
+    app.inject({
+      method: "POST",
+      url: "/api/v1/admin/management/artists/assign",
+      headers: { ...headers, ...extra },
+      payload: { schemaVersion: 1, ...payload },
+    });
+  const body = { artistId: id, brokerId, expectedBrokerId: null };
+  try {
+    const response = await assign(body);
+    expect(response.statusCode).toBe(200);
+    expect(response.headers["cache-control"]).toBe("private, no-store");
+    expect(execute).toHaveBeenCalledWith(
+      expect.objectContaining({
+        command: {
+          schemaVersion: 1,
+          action: "ASSIGN_ARTIST",
+          ...body,
+          idempotencyKey: headers["idempotency-key"],
+        },
+      }),
+    );
+    // Another artist, another broker, or "unassigned" when a broker was asked for.
+    for (const wrong of [
+      { ...assigned, artistId: brokerId },
+      { ...assigned, assignment: { ...assigned.assignment, brokerId: id } },
+      { ...assigned, assignment: null },
+    ]) {
+      execute.mockResolvedValueOnce(wrong);
+      expect((await assign(body)).statusCode).toBe(503);
+    }
+    execute.mockResolvedValueOnce({ ...assigned, assignment: null });
+    expect(
+      (await assign({ ...body, brokerId: null, expectedBrokerId: brokerId }))
+        .statusCode,
+    ).toBe(200);
+    execute.mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "FORBIDDEN",
+    });
+    expect((await assign(body)).statusCode).toBe(403);
+    expect((await assign({ ...body, actorId: id })).statusCode).toBe(400);
+    expect(
+      (await assign(body, { origin: "https://other.invalid" })).statusCode,
+    ).toBe(403);
+  } finally {
+    await app.close();
+  }
+});
