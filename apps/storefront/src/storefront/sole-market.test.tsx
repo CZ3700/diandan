@@ -18,6 +18,7 @@ const reads = vi.hoisted(() => ({
   browse: vi.fn(),
 }));
 vi.mock("server-only", () => ({}));
+vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
 vi.mock("./storefront-page-reads", () => ({
   readCommerceContext: reads.context,
 }));
@@ -30,7 +31,6 @@ vi.mock("../server/public-gift-browse", () => ({
 }));
 
 import { giftFilterHref, giftPageHref, giftResetHref } from "./gift-query";
-import { validateGiftFilterDraft } from "./gift-filter-validation";
 import { SoleMarketGiftDirectory } from "./sole-market-directory";
 import { GiftDirectorySection } from "./gift-directory-section";
 import { GiftBrowseBody } from "./gift-browse-section";
@@ -153,23 +153,6 @@ test("an implicit scope prices the page without writing the market into its link
       "https://fixture.invalid",
     ).searchParams.get("market"),
   ).toBe("US");
-  const validated = validateGiftFilterDraft(
-    {
-      sort: "RECOMMENDED",
-      kind: "",
-      category: "",
-      availability: "ALL",
-      minimum: "",
-      maximum: "",
-    },
-    "en",
-    query,
-    "/gifts",
-    "",
-    "IMPLICIT",
-  );
-  if (validated.kind !== "VALID") throw new Error("Expected a valid draft");
-  expect(validated.href).not.toContain("market=");
 });
 
 test("one published market reads the priced directory for the unscoped query and hands it to the page's renderer", async () => {
@@ -299,12 +282,14 @@ test("the unscoped gift directory streams its content first and is priced in pla
   await vi.waitFor(() => expect(html).toContain("data-gift-browse"), {
     timeout: 300,
   });
-  expect(html).not.toContain("gift-directory-card__price");
+  // The content card holds its price line; no price is shown before the market is known.
+  expect(html).toContain("data-gift-price-pending");
+  expect(html).not.toContain("fs-price");
   expect(reads.directory).not.toHaveBeenCalled();
   slow.resolve(sole);
   await ended;
   expect(html).toContain("data-gift-directory");
-  expect(html).toContain("gift-directory-card__price");
+  expect(html).toContain("fs-price");
   expect(html).not.toContain("data-market-choices");
 });
 

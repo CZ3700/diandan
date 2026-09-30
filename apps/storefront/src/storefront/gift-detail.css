@@ -45,8 +45,10 @@
   color: var(--color-text-muted);
   font-size: var(--type-body-size);
 }
+/* The full description lives here (L2-17); an operator's line breaks are kept. */
 .gift-short-description {
   margin-block-start: var(--space-4) !important;
+  white-space: pre-line;
 }
 .gift-detail-summary h2 {
   font-size: var(--type-body-size);
@@ -208,62 +210,6 @@
   font-size: var(--type-label-size);
   color: var(--color-text-muted);
 }
-.gift-detail-information {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
-  gap: var(--space-8);
-  border-block-start: var(--border-width) solid var(--color-border);
-}
-.gift-detail-information h2 {
-  margin-block-end: var(--space-6);
-}
-.gift-detail-information p {
-  color: var(--color-text-muted);
-  white-space: pre-line;
-}
-.gift-description-blocks {
-  display: grid;
-  gap: var(--space-6);
-}
-.gift-description-blocks h2 {
-  font-size: calc(var(--type-body-size) + var(--space-2));
-  margin-block-end: 0;
-}
-.gift-description-blocks h3 {
-  font-size: calc(var(--type-body-size) + var(--space-1));
-  font-weight: 500;
-}
-.gift-description-blocks ol,
-.gift-description-blocks ul {
-  margin: 0;
-  padding-inline-start: var(--space-6);
-}
-.gift-description-blocks li {
-  margin-block: var(--space-2);
-}
-.gift-description-blocks dl {
-  margin: 0;
-}
-.gift-description-blocks dl > div {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
-  gap: var(--space-4);
-  padding-block: var(--space-3);
-  border-bottom: var(--border-width) solid var(--color-border);
-}
-.gift-description-blocks dd {
-  margin: 0;
-  color: var(--color-text-muted);
-}
-.gift-description-blocks figcaption {
-  color: var(--color-text-muted);
-  margin-block-start: var(--space-3);
-}
-.gift-delivery-copy {
-  display: grid;
-  gap: var(--space-6);
-  align-content: start;
-}
 .gift-policy-links {
   display: flex;
   flex-wrap: wrap;
@@ -339,13 +285,6 @@
   }
   .gift-detail-summary {
     padding-block: 0;
-  }
-  .gift-detail-information {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-6);
-  }
-  .gift-detail-information h2 {
-    margin-block-end: var(--space-4);
   }
   .gift-market-list {
     display: grid;

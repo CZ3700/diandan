@@ -1039,11 +1039,15 @@ export async function verifyManagementCenterBrowser({
               `${locale} ${gift.giftKind} offers cart entry without bypassing cart validation`,
             );
             publicCheck.stage = "CONTENT";
+            // L2-17: the description is read under the gift's name; there is no details section.
             await expect(
               publicPage.locator(
-                '[aria-labelledby="gift-information-title"] .gift-description-text',
+                ".gift-detail-summary .gift-short-description",
               ),
             ).toContainText(description);
+            await expect(
+              publicPage.locator(".gift-detail-information"),
+            ).toHaveCount(0);
           } else {
             publicCheck.stage = "CONTENT";
             await expect(publicPage.locator(".storefront-story")).toContainText(

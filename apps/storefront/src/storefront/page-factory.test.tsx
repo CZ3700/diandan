@@ -1,3 +1,4 @@
+import type * as NextNavigation from "next/navigation";
 import { PassThrough } from "node:stream";
 import { isValidElement, type ReactElement } from "react";
 import { renderToPipeableStream, renderToStaticMarkup } from "react-dom/server";
@@ -31,6 +32,11 @@ vi.mock("../server/public-home-layout", () => ({
   readPublicHomeLayout: reads.layout,
 }));
 vi.mock("server-only", () => ({}));
+// The gift section follows its own links in place; outside Next there is no router.
+vi.mock("next/navigation", async (original) => ({
+  ...(await original<typeof NextNavigation>()),
+  useRouter: () => ({ push: vi.fn() }),
+}));
 vi.mock("next/headers", () => ({
   cookies: async () => ({ has: () => false }),
 }));

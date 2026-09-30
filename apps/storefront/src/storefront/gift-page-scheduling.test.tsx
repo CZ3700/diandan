@@ -379,10 +379,19 @@ test.each(SUPPORTED_LOCALES)(
     expect(rendered.errors).toEqual([]);
     expect(rendered.html()).toContain('data-gift-recipient-picker="true"');
     expect(rendered.html()).toContain('data-market="GLOBAL"');
-    const params = new URLSearchParams(values);
+    // L2-17: the page has no delivery section; its policies are the footer's, which carry
+    // browsing scope only (never the chosen variant or the cart).
     expect(rendered.html()).toContain(
-      `/${locale}/policies/studio-delivery?${params.toString().replaceAll("&", "&amp;")}`,
+      `/${locale}/policies/studio-delivery?market=GLOBAL&amp;currency=USD&amp;idol=${data.artist.id}"`,
     );
+    for (const gone of ["gift-detail-information", "gift-delivery-title"])
+      expect(rendered.html()).not.toContain(gone);
+    // The description itself stays, under the name, after the summary.
+    expect(rendered.html()).toContain(
+      `<p class="gift-short-description" lang="${locale}">Verified gift summary</p><p class="gift-short-description" lang="${locale}">Verified gift details</p>`,
+    );
+    expect(rendered.html()).not.toContain("The studio delivers to the artist.");
+    expect(rendered.html()).not.toContain("Fictional test only");
     expect(rendered.html()).toContain(
       `/${locale}/gifts/rose-palace?market=GLOBAL&amp;currency=JPY&amp;idol=${data.artist.id}&amp;cart=preserved`,
     );

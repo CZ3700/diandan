@@ -6,6 +6,7 @@ import {
   type SupportedLocale,
 } from "@fan-support/contracts";
 import { GiftBrowseBody } from "./gift-browse-section";
+import { GiftNavigationFrame } from "./gift-navigation-frame";
 import { giftDirectoryRead } from "./gift-page-reads";
 import { prepareGiftQuery } from "./gift-query";
 import { GiftDirectory } from "./gift-directory";
@@ -130,15 +131,13 @@ export async function GiftDirectorySection({
       id="artist-gifts"
       data-gift-directory-section
     >
-      <div className="storefront-section-heading">
-        <div>
-          <p className="storefront-eyebrow" data-gift-kind-heading={kind.data}>
-            {kind.success ? giftKindLabel(copy, kind.data) : copy.giftEyebrow}
-          </p>
-          <Heading>{copy.giftTitle}</Heading>
-        </div>
-        <p>{copy.giftBody}</p>
-      </div>
+      {/* User request 2026-09-30 (L2-17): no visible title; the toolbar shows the chosen kind. */}
+      <Heading
+        className="storefront-sr-only"
+        data-gift-kind-heading={kind.data}
+      >
+        {kind.success ? giftKindLabel(copy, kind.data) : copy.navGifts}
+      </Heading>
       {artist && (
         <p
           className="gift-directory-recipient"
@@ -153,7 +152,7 @@ export async function GiftDirectorySection({
           · {artist.acceptingGifts ? copy.artistAccepting : copy.artistPaused}
         </p>
       )}
-      {body}
+      <GiftNavigationFrame>{body}</GiftNavigationFrame>
     </section>
   );
 }

@@ -34,30 +34,38 @@ async function inspectHomepageControls({
   report,
 }) {
   const initialContext = new URL(page.url());
-  const selector = page.locator("#gifts [data-gift-browse-category]");
-  const category = await selector
-    .locator("option")
-    .evaluateAll((options) => options.find((option) => option.value)?.value);
-  assert(category, "Homepage offers a real category filter");
-  await tools.select(page, selector, category, "home-category");
+  // L2-17: the gift section offers kinds as links that take effect at once.
+  const kind = await page
+    .locator("#gifts [data-gift-kind-option]")
+    .evaluateAll(
+      (links) =>
+        links
+          .map((link) => link.getAttribute("data-gift-kind-option"))
+          .find((value) => value && value !== "ALL") ?? null,
+    );
+  assert(kind, "Homepage offers a real gift kind filter");
+  assert(
+    (await page.locator("#gifts form, #gifts select").count()) === 0,
+    "Homepage gift kinds need no form or apply step",
+  );
   await tools.activate(
     page,
-    page.locator('#gifts form[method="get"] button[type=submit]'),
-    "home-apply-category",
+    page.locator(`#gifts [data-gift-kind-option="${kind}"]`),
+    "home-kind",
   );
-  await page.waitForURL((url) => url.searchParams.get("category") === category);
+  await page.waitForURL((url) => url.searchParams.get("kind") === kind);
   await expect(
     page.locator('#gifts [data-gift-browse][data-outcome="success"]'),
   ).toBeVisible();
-  await tools.select(page, selector, "", "home-clear-category");
+  await expect(
+    page.locator(`#gifts [data-gift-kind-option="${kind}"]`),
+  ).toHaveAttribute("aria-current", "true");
   await tools.activate(
     page,
-    page.locator('#gifts form[method="get"] button[type=submit]'),
-    "home-clear-apply",
+    page.locator('#gifts [data-gift-kind-option="ALL"]'),
+    "home-all-kinds",
   );
-  await page.waitForURL(
-    (url) => (url.searchParams.get("category") ?? "") === "",
-  );
+  await page.waitForURL((url) => !url.searchParams.has("kind"));
   await expect(
     page.locator(`#gifts [data-gift-link="${facts.giftId}"]`),
   ).toBeVisible();
@@ -65,7 +73,7 @@ async function inspectHomepageControls({
     assert(
       new URL(page.url()).searchParams.get(key) ===
         initialContext.searchParams.get(key),
-      "Homepage category changes preserve the economic context",
+      "Homepage kind changes preserve the economic context",
     );
   await navigate(page, `${config.origins.storefront}/${cell.locale}?page=999`);
   await expect(
@@ -92,8 +100,8 @@ async function inspectHomepageControls({
     "Out-of-range recovery reaches the actual first page",
   );
   report.homepageControls = {
-    categoryGet: true,
-    clearGet: true,
+    kindLink: true,
+    allKindsLink: true,
     outOfRangeRecovery: true,
     economicContextUnchanged: true,
     paginationNextBack: "NOT_EXERCISED_SINGLE_PUBLISHED_GIFT",

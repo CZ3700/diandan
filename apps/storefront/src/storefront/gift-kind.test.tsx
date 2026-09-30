@@ -4,6 +4,7 @@ import {
   SUPPORTED_LOCALES,
   giftBrowseQuerySchema,
   giftBrowseResponseSchema,
+  giftDirectoryResponseSchema,
   giftDiscoveryQuerySchema,
 } from "@fan-support/contracts";
 import { loadStorefrontCopy } from "@fan-support/i18n/storefront";
@@ -14,8 +15,7 @@ import {
   giftKindEntryHref,
   prepareGiftBrowse,
 } from "./gift-browse-query";
-import { GiftFilters } from "./gift-filters";
-import { validateGiftFilterDraft } from "./gift-filter-validation";
+import { GiftDirectory } from "./gift-directory";
 import { giftFilterHref, giftResetHref, prepareGiftQuery } from "./gift-query";
 import { HomeKinds } from "./home-kinds";
 import { createSeoIdentity } from "./seo-identity";
@@ -30,8 +30,13 @@ const escaped = (text: string) =>
     .replaceAll("&", "&amp;")
     .replaceAll("'", "&#x27;")
     .replaceAll('"', "&quot;");
-const kindSelect = (html: string) =>
-  /<select name="kind"[^>]*>(.*?)<\/select>/su.exec(html)?.[1] ?? "";
+/** The toolbar link carrying `marker`, e.g. one kind ("ALL" shows every kind). */
+const link = (html: string, marker: string) =>
+  new RegExp(`<a\\b[^>]*${marker}[^>]*>`, "u").exec(html)?.[0] ?? "";
+const kindLink = (html: string, kind: string) =>
+  link(html, `data-gift-kind-option="${kind}"`);
+const hrefOf = (anchor: string) =>
+  url((/href="([^"]+)"/u.exec(anchor)?.[1] ?? "").replaceAll("&amp;", "&"));
 const page = (totalItems: number) => ({
   schemaVersion: 1 as const,
   page: 1,
@@ -118,25 +123,9 @@ test("the priced directory carries the kind to the API, keeps it across sorting 
   expect(url(giftResetHref(query, "/gifts", "")).searchParams.has("kind")).toBe(
     false,
   );
-  const validated = validateGiftFilterDraft(
-    {
-      sort: "RECOMMENDED",
-      kind: "WISH",
-      category: "",
-      availability: "ALL",
-      minimum: "",
-      maximum: "",
-    },
-    "en",
-    query,
-    "/gifts",
-    "",
-  );
-  if (validated.kind !== "VALID") throw new Error("Expected a valid draft");
-  expect(url(validated.href).searchParams.get("kind")).toBe("WISH");
 });
 
-test("priced filters present the applied kind and start from it", async () => {
+test("the priced directory shows the chosen kind and keeps it across both price orders", async () => {
   const copy = await loadStorefrontCopy("es");
   const query = giftDiscoveryQuerySchema.parse({
     schemaVersion: 1,
@@ -145,19 +134,30 @@ test("priced filters present the applied kind and start from it", async () => {
     currency: "USD",
     kind: "PHYSICAL",
   });
-  const boundary = GiftFilters({
-    locale: "es",
-    copy,
-    query,
-    contextQuery: "",
-    basePath: "/gifts",
-  });
-  expect(boundary.props.initialDraft.kind).toBe("PHYSICAL");
-  expect(boundary.props.appliedFilters).toContain(
-    `${copy.giftKindLabel}: ${copy.giftKindPhysical}`,
+  const html = renderToStaticMarkup(
+    <GiftDirectory
+      locale="es"
+      copy={copy}
+      query={query}
+      initial={giftDirectoryResponseSchema.parse({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        catalogVersion: "a".repeat(64),
+        items: [],
+        pageInfo: page(0),
+      })}
+    />,
   );
-  for (const option of boundary.props.sortOptions)
-    expect(url(option.href).searchParams.get("kind")).toBe("PHYSICAL");
+  expect(kindLink(html, "PHYSICAL")).toContain('aria-current="true"');
+  expect(kindLink(html, "ALL")).not.toContain("aria-current");
+  expect(hrefOf(kindLink(html, "ALL")).searchParams.has("kind")).toBe(false);
+  expect(hrefOf(kindLink(html, "WISH")).searchParams.get("kind")).toBe("WISH");
+  for (const order of ["PRICE_ASC", "PRICE_DESC"]) {
+    const option = hrefOf(link(html, `data-gift-sort-option="${order}"`));
+    expect(option.searchParams.get("kind")).toBe("PHYSICAL");
+    expect(option.searchParams.get("sort")).toBe(order);
+    expect(option.searchParams.get("page")).toBe("1");
+  }
 });
 
 test.each(SUPPORTED_LOCALES)(
@@ -185,16 +185,17 @@ test.each(SUPPORTED_LOCALES)(
         headingLevel={1}
       />,
     );
-    const select = kindSelect(html);
-    expect(select).toContain('value="VIRTUAL" selected=""');
-    for (const kind of ["PHYSICAL", "WISH", "MERCHANDISE"])
-      expect(select).toContain(`value="${kind}"`);
-    expect(select).not.toContain('value="OTHER"');
-    expect(select).toContain(escaped(copy.giftKindAll));
+    expect(kindLink(html, "VIRTUAL")).toContain('aria-current="true"');
+    for (const kind of ["PHYSICAL", "WISH", "MERCHANDISE"]) {
+      expect(kindLink(html, kind)).not.toContain("aria-current");
+      expect(hrefOf(kindLink(html, kind)).searchParams.get("kind")).toBe(kind);
+    }
+    expect(kindLink(html, "OTHER")).toBe("");
+    expect(html).toContain(`>${escaped(copy.giftKindAll)}</a>`);
+    expect(html).toContain(`aria-label="${escaped(copy.giftKindLabel)}"`);
     expect(html).toContain(
       `<p class="gift-directory-card__kind">${escaped(copy.giftKindVirtual)}</p>`,
     );
-    expect(html).not.toContain('type="hidden" name="kind"');
   },
 );
 

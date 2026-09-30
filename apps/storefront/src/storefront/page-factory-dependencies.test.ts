@@ -37,11 +37,7 @@ test.each(SUPPORTED_LOCALES)(
     );
     expect(
       dependencies.filter((file) =>
-        [
-          "gift-filters.tsx",
-          "gift-recipient.tsx",
-          "gift-purchase.tsx",
-        ].includes(file),
+        ["gift-recipient.tsx", "gift-purchase.tsx"].includes(file),
       ),
     ).toEqual([]);
     expect(dependencies).toContain("home-content.tsx");

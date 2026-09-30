@@ -1,6 +1,7 @@
 import {
   giftBrowseQuerySchema,
   type GiftBrowseQuery,
+  type GiftDiscoveryQuery,
   type GiftKind,
   type SupportedLocale,
 } from "@fan-support/contracts";
@@ -53,6 +54,32 @@ export function giftBrowseHref(
   if (query.category && !reset) values.set("category", query.category);
   if (query.kind && !reset) values.set("kind", query.kind);
   return `${storefrontHref(query.locale, basePath, values.toString())}#gifts`;
+}
+
+/**
+ * A toolbar choice returns to the first page and keeps every other choice. `kind: null`
+ * shows all kinds; the recommended order is the address without a sort.
+ */
+export function giftBrowseChoiceHref(
+  query: GiftBrowseQuery,
+  basePath: string,
+  contextQuery: string,
+  choice: Readonly<{
+    kind?: GiftKind | null;
+    category?: null;
+    sort?: GiftDiscoveryQuery["sort"];
+  }>,
+) {
+  const url = new URL(
+    giftBrowseHref(query, basePath, contextQuery, 1),
+    "https://storefront.invalid",
+  );
+  if (choice.kind === null) url.searchParams.delete("kind");
+  else if (choice.kind) url.searchParams.set("kind", choice.kind);
+  if (choice.category === null) url.searchParams.delete("category");
+  if (choice.sort === "RECOMMENDED") url.searchParams.delete("sort");
+  else if (choice.sort) url.searchParams.set("sort", choice.sort);
+  return `${url.pathname}${url.search}${url.hash}`;
 }
 
 /** A kind entry opens the first page of that kind, keeping only navigation context. */

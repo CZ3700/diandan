@@ -82,7 +82,6 @@ export function createStorefrontPage(
                 values={values}
                 basePath="/"
                 headingLevel={2}
-                eyebrow={false}
                 initial={gifts}
                 pricing={{}}
               />

@@ -7,11 +7,9 @@ import { withAcceptanceBrowser } from "./storefront-acceptance-browser.mjs";
 
 /** Identify emitted export registrations, never guessed hashes or valid-response substitutes. */
 export async function findAcceptanceValidationChunks(directory) {
-  const exports = {
-    gift: "validateGiftFilterDraft",
-    artist: "prepareArtistSearch",
-  };
-  const found = { gift: [], artist: [] };
+  // The gift directory no longer has a draft to validate (L2-17): its choices are links.
+  const exports = { artist: "prepareArtistSearch" };
+  const found = { artist: [] };
   for (const filename of await readdir(directory)) {
     if (!filename.endsWith(".js")) continue;
     const bytes = await readFile(path.join(directory, filename));
@@ -68,17 +66,11 @@ export async function verifyAcceptanceLazyValidation({
       path.join(outputDirectory, "results.json"),
       JSON.stringify(report, null, 2) + "\n",
     );
-  const scope = new globalThis.URLSearchParams(fixtures.markets[0]);
-  // Start with a real applied sort: the toolbar is submitted separately, while
-  // this suite isolates the advanced form's lazy validation and cancellation.
-  const giftUrl = `${origin}/en/gifts?${scope}&sort=PRICE_DESC`;
   await withAcceptanceBrowser({ gateway }, async (browser) => {
     report.browserVersion = browser.version();
-    async function run(name, kind, verify, mobile = false) {
+    async function run(name, kind, verify) {
       const context = await browser.newContext({
-        viewport: mobile
-          ? { width: 390, height: 844 }
-          : { width: 1440, height: 900 },
+        viewport: { width: 1440, height: 900 },
         reducedMotion: "reduce",
       });
       const page = await context.newPage();
@@ -108,8 +100,9 @@ export async function verifyAcceptanceLazyValidation({
       };
       let release = () => {};
       try {
-        const url = kind === "gift" ? giftUrl : `${origin}/en/idols`;
-        const response = await page.goto(url, { waitUntil: "networkidle" });
+        const response = await page.goto(`${origin}/en/idols`, {
+          waitUntil: "networkidle",
+        });
         check(response?.status() === 200, "actual compiled page HTTP 200");
         check(
           !record.scripts.includes(chunks[kind][0].path),
@@ -155,24 +148,9 @@ export async function verifyAcceptanceLazyValidation({
             "real first interaction requests identified emitted validation chunk",
           );
         };
-        const form = page.locator(
-          `[data-gift-filters="${mobile ? "mobile" : "desktop"}"]`,
-        );
-        if (kind === "gift") {
-          await page.locator("[data-gift-card]").first().waitFor();
-          if (mobile) {
-            await page
-              .locator('.gift-filters__mobile [data-overlay-trigger="drawer"]')
-              .click();
-            await page.getByRole("dialog").waitFor();
-          } else {
-            await page.locator(".gift-filter-disclosure summary").click();
-            await form.waitFor({ state: "visible" });
-          }
-        } else await page.locator("[data-artist-search]").waitFor();
+        await page.locator("[data-artist-search]").waitFor();
         await verify({
           page,
-          form,
           check,
           record,
           pending,
@@ -198,96 +176,6 @@ export async function verifyAcceptanceLazyValidation({
         await save();
       }
     }
-    async function applied(page, form, check) {
-      if ((await form.getAttribute("data-gift-filters")) === "mobile")
-        await form.locator("[data-gift-sort]").selectOption("PRICE_DESC");
-      else {
-        const disclosure = page.locator(".gift-filter-disclosure");
-        if ((await disclosure.getAttribute("open")) === null)
-          await disclosure.locator("summary").click();
-        await form.waitFor({ state: "visible" });
-      }
-      await form.locator("[data-gift-price-min]").fill("2");
-      await form.locator("[data-gift-apply]").click();
-      await page.waitForURL(
-        (url) =>
-          url.searchParams.get("sort") === "PRICE_DESC" &&
-          url.searchParams.get("priceMinMinor") === "200",
-      );
-      await page.locator("[data-gift-card]").first().waitFor();
-      check(
-        new globalThis.URL(page.url()).searchParams.get("market") ===
-          fixtures.markets[0].market,
-        "successful recovery uses actual schema and preserves TEST market",
-      );
-    }
-    for (const cancel of ["edit", "ime", "close"]) {
-      await run(
-        `gift-delay-${cancel}`,
-        "gift",
-        async ({ page, form, check, pending, release, record }) => {
-          if (cancel === "close")
-            await form.locator("[data-gift-sort]").selectOption("PRICE_DESC");
-          else await form.locator("[data-gift-price-min]").fill("1");
-          await form.locator("[data-gift-apply]").click();
-          await pending();
-          check(
-            await form.locator("[data-gift-apply]").isDisabled(),
-            "pending first apply is visibly disabled",
-          );
-          if (cancel === "edit")
-            await form.locator("[data-gift-price-min]").fill("2");
-          if (cancel === "ime")
-            await form
-              .locator("[data-gift-price-min]")
-              .dispatchEvent("compositionstart", { data: "二" });
-          if (cancel === "close") {
-            await page.keyboard.press("Escape");
-            await page.getByRole("dialog").waitFor({ state: "hidden" });
-          }
-          release();
-          await page.waitForTimeout(800);
-          record.observations.cancelledUrl = page.url();
-          check(
-            page.url() === giftUrl,
-            "cancelled pending import cannot navigate with stale draft",
-          );
-          if (cancel === "ime")
-            await form
-              .locator("[data-gift-price-min]")
-              .dispatchEvent("compositionend", { data: "" });
-          if (cancel === "close") {
-            await page
-              .locator('.gift-filters__mobile [data-overlay-trigger="drawer"]')
-              .click();
-            await page.getByRole("dialog").waitFor();
-          }
-          await applied(page, form, check);
-        },
-        cancel === "close",
-      );
-    }
-    await run(
-      "gift-script-failure-recovery",
-      "gift",
-      async ({ page, form, check, pending, mode, record }) => {
-        mode("failure");
-        await form.locator("[data-gift-apply]").click();
-        await pending();
-        const recovery = form.locator("[data-gift-filter-recovery]");
-        await recovery.getByRole("alert").waitFor();
-        const href = await recovery.locator("a[href]").getAttribute("href");
-        record.observations.recoveryHref = href;
-        check(
-          new globalThis.URL(href, origin).href === giftUrl,
-          "visible recovery link returns the actual applied page context",
-        );
-        mode("real");
-        await recovery.locator("a[href]").click();
-        await page.waitForLoadState("networkidle");
-        await applied(page, form, check);
-      },
-    );
     for (const cancel of ["escape", "clear", "ime"]) {
       await run(
         `artist-delay-${cancel}`,

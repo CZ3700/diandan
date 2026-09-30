@@ -3,14 +3,12 @@ import type {
   GiftBrowseQuery,
   GiftBrowseResponse,
   GiftDirectoryResponse,
+  GiftDiscoveryQuery,
   PublishedGiftView,
 } from "@fan-support/contracts";
-import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
-import { GiftCard } from "./gift-card";
-import { GiftPagination } from "./gift-pagination";
-import { giftBrowseHref } from "./gift-browse-query";
-import { BROWSABLE_GIFT_KINDS, giftKindLabel } from "./gift-kind-copy";
-import { storefrontHref } from "./navigation";
+import type { StorefrontCopy } from "./copy";
+import { GiftListing } from "./gift-listing";
+import { giftBrowseChoiceHref, giftBrowseHref } from "./gift-browse-query";
 
 export function GiftBrowse({
   query,
@@ -19,6 +17,8 @@ export function GiftBrowse({
   contextQuery,
   basePath,
   headingLevel,
+  sort,
+  pricePending = false,
 }: Readonly<{
   query: GiftBrowseQuery;
   /** A priced response comes from the sole published market (ADR-017 addendum). */
@@ -27,6 +27,10 @@ export function GiftBrowse({
   contextQuery: string;
   basePath: string;
   headingLevel: 1 | 2;
+  /** The order of a priced response; a content list has no price to order by. */
+  sort?: GiftDiscoveryQuery["sort"] | undefined;
+  /** The content list shown while the sole market's prices are still being read. */
+  pricePending?: boolean;
 }>) {
   const Heading = headingLevel === 1 ? "h2" : "h3";
   const href = (page: number) =>
@@ -49,7 +53,6 @@ export function GiftBrowse({
         </a>
       </div>
     );
-  const { pageInfo } = initial;
   const entries: ReadonlyArray<
     | PublishedGiftView
     | Readonly<{ gift: PublishedGiftView; offer: CatalogDirectoryOffer }>
@@ -57,7 +60,6 @@ export function GiftBrowse({
   const items = entries.map((entry) =>
     "offer" in entry ? entry : { gift: entry, offer: undefined },
   );
-  const outOfRange = pageInfo.page > Math.max(1, pageInfo.totalPages);
   const categories = {
     FLOWERS: copy.giftCategoryFlowers,
     FOOD: copy.giftCategoryFood,
@@ -65,19 +67,6 @@ export function GiftBrowse({
     ACCESSORY: copy.giftCategoryAccessory,
     OTHER: copy.giftCategoryOther,
   };
-  const retained = [...new URLSearchParams(contextQuery)].filter(
-    ([key]) =>
-      ![
-        "category",
-        "kind",
-        "page",
-        "pageSize",
-        "sort",
-        "priceMinMinor",
-        "priceMaxMinor",
-        "availability",
-      ].includes(key),
-  );
   return (
     <div
       id={basePath !== "/" ? "gifts" : undefined}
@@ -86,105 +75,41 @@ export function GiftBrowse({
       data-gift-priced={items.some((item) => item.offer) || undefined}
       data-outcome="success"
     >
-      <form
-        className="gift-filter-toolbar gift-browse-filters"
-        action={`${storefrontHref(query.locale, basePath, "")}#gifts`}
-        method="get"
-      >
-        {retained.map(([name, value], index) => (
-          <input
-            key={`${name}-${index}`}
-            type="hidden"
-            name={name}
-            value={value}
-          />
-        ))}
-        <input type="hidden" name="page" value="1" />
-        <input type="hidden" name="pageSize" value={query.pageSize} />
-        <label className="gift-filter-sort">
-          <span>{copy.giftKindLabel}</span>
-          <select
-            name="kind"
-            defaultValue={query.kind ?? ""}
-            data-gift-browse-kind
-          >
-            <option value="">{copy.giftKindAll}</option>
-            {[
-              ...BROWSABLE_GIFT_KINDS,
-              ...(query.kind === "OTHER" ? (["OTHER"] as const) : []),
-            ].map((kind) => (
-              <option key={kind} value={kind}>
-                {giftKindLabel(copy, kind)}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="gift-filter-sort">
-          <span>{copy.giftCategoryLabel}</span>
-          <select
-            name="category"
-            defaultValue={query.category ?? ""}
-            data-gift-browse-category
-          >
-            <option value="">{copy.giftCategoryAll}</option>
-            {Object.entries(categories).map(([value, label]) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <button className="storefront-text-link" type="submit">
-          {copy.giftApplyFilters}
-        </button>
-      </form>
-      <p className="gift-directory-count">
-        {formatStorefrontMessage(copy, "giftResultsCount", query.locale, {
-          count: pageInfo.totalItems,
-        })}
-      </p>
-      {items.length > 0 ? (
-        <ul className="gift-directory-grid">
-          {items.map(({ gift, offer }) => (
-            <GiftCard
-              key={gift.id}
-              gift={gift}
-              offer={offer}
-              locale={query.locale}
-              copy={copy}
-              contextQuery={contextQuery}
-              headingLevel={headingLevel === 1 ? 2 : 3}
-              description
-            />
-          ))}
-        </ul>
-      ) : (
-        <div
-          className="gift-directory-state"
-          data-gift-empty
-          data-gift-page-out-of-range={outOfRange || undefined}
-        >
-          <Heading>
-            {outOfRange
-              ? copy.giftPageOutOfRangeTitle
-              : copy.giftNoResultsTitle}
-          </Heading>
-          <p>
-            {outOfRange ? copy.giftPageOutOfRangeBody : copy.giftNoResultsBody}
-          </p>
-          <a
-            className="storefront-primary"
-            href={giftBrowseHref(query, basePath, contextQuery, 1, !outOfRange)}
-          >
-            {outOfRange ? copy.giftFirstPage : copy.giftResetFilters}
-          </a>
-        </div>
-      )}
-      <GiftPagination
-        pageInfo={pageInfo}
+      <GiftListing
         locale={query.locale}
         copy={copy}
-        href={href}
+        headingLevel={headingLevel}
+        items={items}
+        pageInfo={initial.pageInfo}
+        cardContext={contextQuery}
+        kind={query.kind}
+        kindHref={(kind) =>
+          giftBrowseChoiceHref(query, basePath, contextQuery, {
+            kind: kind ?? null,
+          })
+        }
+        sort={
+          sort && {
+            current: sort,
+            href: (next) =>
+              giftBrowseChoiceHref(query, basePath, contextQuery, {
+                sort: next,
+              }),
+          }
+        }
+        applied={
+          query.category && {
+            labels: [
+              `${copy.giftCategoryLabel}: ${categories[query.category]}`,
+            ],
+            clearHref: giftBrowseChoiceHref(query, basePath, contextQuery, {
+              category: null,
+            }),
+          }
+        }
+        pageHref={href}
+        resetHref={giftBrowseHref(query, basePath, contextQuery, 1, true)}
+        pricePending={pricePending}
       />
     </div>
   );

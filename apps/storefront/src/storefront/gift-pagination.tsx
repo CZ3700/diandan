@@ -58,7 +58,11 @@ export function GiftPagination({
           </p>
           <div className="gift-pagination__controls">
             {pageInfo.hasPreviousPage ? (
-              <a href={href(pageInfo.page - 1)} data-gift-previous>
+              <a
+                href={href(pageInfo.page - 1)}
+                data-gift-nav="page"
+                data-gift-previous
+              >
                 {copy.giftPaginationPrevious}
               </a>
             ) : (
@@ -76,6 +80,7 @@ export function GiftPagination({
                   )}
                   <a
                     href={href(page)}
+                    data-gift-nav="page"
                     data-gift-page={page}
                     aria-current={page === pageInfo.page ? "page" : undefined}
                     aria-label={formatStorefrontMessage(
@@ -91,7 +96,11 @@ export function GiftPagination({
               ))}
             </ol>
             {pageInfo.hasNextPage ? (
-              <a href={href(pageInfo.page + 1)} data-gift-next>
+              <a
+                href={href(pageInfo.page + 1)}
+                data-gift-nav="page"
+                data-gift-next
+              >
                 {copy.giftPaginationNext}
               </a>
             ) : (

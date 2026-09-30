@@ -9,7 +9,10 @@ import { giftKindLabel, isBrowsableGiftKind } from "./gift-kind-copy";
 import { giftDetailHref } from "./gift-query";
 import { PublishedImage } from "./published-image";
 
-/** One directory card for both the content and the priced catalog. */
+/**
+ * One directory card for every gift list: kind, name, a clamped summary and the price.
+ * The full summary is on the gift's own page.
+ */
 export function GiftCard({
   gift,
   offer,
@@ -17,7 +20,7 @@ export function GiftCard({
   copy,
   contextQuery,
   headingLevel,
-  description = false,
+  pricePending = false,
 }: Readonly<{
   gift: PublishedGiftView;
   offer?: CatalogDirectoryOffer | undefined;
@@ -25,7 +28,8 @@ export function GiftCard({
   copy: StorefrontCopy;
   contextQuery: string;
   headingLevel: 2 | 3;
-  description?: boolean;
+  /** Holds the price line while a single market's offers are still being read. */
+  pricePending?: boolean;
 }>) {
   const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
@@ -50,16 +54,16 @@ export function GiftCard({
           <Heading lang={gift.localeContext.resolvedLocale}>
             {gift.title}
           </Heading>
-          {description && (
+          {gift.shortDescription.trim() !== "" && (
             <p
-              className="gift-browse-description"
+              className="gift-directory-card__summary"
               lang={gift.localeContext.resolvedLocale}
             >
               {gift.shortDescription}
             </p>
           )}
-          {offer &&
-            (offer.priceMinor === null ? (
+          {offer ? (
+            offer.priceMinor === null ? (
               <Status>{copy.giftNotAvailable}</Status>
             ) : (
               <p className="gift-directory-card__price">
@@ -70,7 +74,18 @@ export function GiftCard({
                   locale={locale}
                 />
               </p>
-            ))}
+            )
+          ) : (
+            pricePending && (
+              <p
+                className="gift-directory-card__pending"
+                data-gift-price-pending
+                aria-hidden="true"
+              >
+                <span />
+              </p>
+            )
+          )}
           {gift.localeContext.schemaVersion === 1 &&
             gift.localeContext.fallbackUsed && (
               <p className="gift-directory-card__fallback">

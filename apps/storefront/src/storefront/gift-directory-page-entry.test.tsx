@@ -24,6 +24,7 @@ vi.mock("next/navigation", () => ({
   notFound: () => {
     throw new Error("NEXT_NOT_FOUND");
   },
+  useRouter: () => ({ push: vi.fn() }),
 }));
 vi.mock("../server/runtime-config", () => ({
   loadStorefrontRuntimeConfig: () => ({ deploymentEnvironment: "test" }),
@@ -187,14 +188,25 @@ test.each(SUPPORTED_LOCALES)(
     const html = await directoryMarkup(tree);
     const copy = await loadStorefrontCopy(locale, { requireApproved: false });
     expect(routeFor(locale).dynamic).toBe("force-dynamic");
-    expect(html).toContain(`<h1>${copy.giftTitle}</h1>`);
+    // L2-17: no visible title; the page outline keeps a hidden level-one name.
+    expect(html).toContain(
+      `<h1 class="storefront-sr-only">${copy.navGifts}</h1>`,
+    );
+    for (const gone of [copy.giftTitle, copy.giftBody, copy.giftEyebrow])
+      expect(html).not.toContain(gone);
     expect(html).toContain(`data-directory-recipient="${selectedArtist.id}"`);
     expect(html).toContain(selectedArtist.displayName);
     expect(html).not.toContain("Fictional 1");
-    expect(html).toContain('data-gift-filters="desktop"');
-    expect(html).toContain('value="PRICE_DESC" selected=""');
-    expect(html).toContain('value="OTHER" selected=""');
-    expect(html).toContain('value="PURCHASABLE" selected=""');
+    expect(html).toContain('data-gift-navigation="true"');
+    expect(html).toMatch(
+      /<a\b[^>]*data-gift-sort-option="PRICE_DESC"[^>]*aria-current="true"/u,
+    );
+    expect(html).toContain(
+      `${copy.giftCategoryLabel}: ${copy.giftCategoryOther}`,
+    );
+    expect(html).toContain(
+      `${copy.giftAvailabilityLabel}: ${copy.giftAvailabilityPurchasable}`,
+    );
     expect(html).toContain('data-gift-page-out-of-range="true"');
     expect(html).toContain(`href="/${locale}/idols/${selectedArtist.handle}?`);
     expect(html).toContain("cart=one&amp;cart=two");
