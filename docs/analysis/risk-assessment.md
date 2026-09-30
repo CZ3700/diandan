@@ -8,7 +8,7 @@
 | ID | 风险 | P | I | 分 | 预防/缓解 | 门禁/责任域 |
 |:--|:--|--:|--:|--:|:--|:--|
 | R-01 | 浏览器提供的 idol/gift/price 被信任，导致错送或低价购买 | 4 | 5 | 20 | 同一 canonical PostgreSQL 事务重验；订单保存快照 | Phase 1/4，Domain/API |
-| R-02 | 粉丝留言、邮箱或偶像地址进入公共 DTO、管理导出、日志、分析、对象元数据或截图 | 4 | 5 | 20 | 加密 support_intent；字段 allowlist；敏感访问审计；PII 测试 | Phase 1/4/6，Security |
+| R-02 | 粉丝留言、邮箱或偶像地址进入公共 DTO、管理导出、日志、分析、对象元数据或截图 | 4 | 5 | 20 | 加密 support_intent；字段 allowlist；敏感访问审计；PII 测试；艺人账目导出只含订单号、礼物与金额，经纪人读留言限名下艺人并逐次审计（ADR-022） | Phase 1/4/6，Security；L3-12 |
 | R-03 | 回跳、重复/乱序 webhook 或支付创建超时导致重复扣款、发货、退款、通知 | 4 | 5 | 20 | 两事务幂等 attempt Saga；原始 body 验签；inbox/outbox；reconcile；状态机；重放测试 | Phase 1/4/6，Payments |
 | R-04 | 将“支付适配器”误实现为可上传任意代码的运行时插件 | 3 | 5 | 15 | 代码部署接新 PSP；后台只能发布版本化规则；RBAC/审计 | Phase 5，Architecture |
 | R-05 | 对外承诺全球支付，但商户主体、地区、币种或资格不支持 | 4 | 5 | 20 | capability API 只返回真实能力；决策门；真实小额验收 | Phase 4/7，Business/Finance |
@@ -24,6 +24,8 @@
 | R-15 | 过度工程导致 MVP 延期 | 4 | 4 | 16 | 严守非目标；模块化单体；MVP 无 Redis、无多 PSP 表演性接入 | 全阶段，Lead |
 | R-16 | 无恢复证据却认为备份和回滚可用 | 3 | 5 | 15 | PITR、不可变部署、配置回退与实操演练 | Phase 6/7，SRE |
 | R-17 | locale 串线、缺译/过期翻译、错误 fallback 或 locale 与市场/币种耦合，导致错语言、错价、重复 SEO 页面或错误法律文案 | 4 | 5 | 20 | 严格 SupportedLocale；locale-aware revision/cache；locale/market/currency 分离；七语言发布门；fallback noindex；SEO/E2E | Phase 1/2/3/4/5/6/7，i18n/Content/Commerce |
+| R-18 | 艺人私密备注（真实姓名、联系方式、身份信息）被越权读取或进入日志、导出、截图 | 2 | 5 | 10 | 信封加密、只追加版本；仅 `idols.private`（超管）且账号已开启两步验证、本次登录经过验证码；每次查看写审计；不上传证件照片；存储前取得艺人同意并写入隐私政策（经营方） | L3-13，Security/Operations |
+| R-19 | 经纪人越权看到或修改非名下艺人的资料、账目或留言 | 3 | 4 | 12 | 仓储层按归属过滤并由数据库校验函数再校验；实际 PG 越权反例；改派即时生效且原经纪人立即失去访问 | L3-11/L3-12，Admin |
 
 ## 2. 必须防止的架构热点
 
