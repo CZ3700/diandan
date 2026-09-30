@@ -482,18 +482,31 @@ export async function verifyLocalExperienceBrowser({
       x: globalThis.scrollX,
       y: globalThis.scrollY,
     }));
-    for (const picture of await page.locator("img").all()) {
-      if (!(await picture.isVisible())) continue;
-      await picture.scrollIntoViewIfNeeded();
-      await expect
-        .poll(() =>
-          picture.evaluate((element) =>
-            Boolean(element.complete && element.naturalWidth > 0),
-          ),
-        )
-        .toBe(true);
-      check(true, "Rendered screenshot image loaded successfully");
-    }
+    // Judged inside the page on every poll: a list that re-renders replaces its images, so
+    // element handles collected up front can go stale (CI 2026-09-30, ja management).
+    await expect
+      .poll(
+        () =>
+          page.evaluate(() => {
+            // Same rule as Playwright's isVisible: a non-empty box and not visibility:hidden.
+            const visible = [...globalThis.document.images].filter((image) => {
+              const box = image.getBoundingClientRect();
+              return (
+                box.width > 0 &&
+                box.height > 0 &&
+                globalThis.getComputedStyle(image).visibility !== "hidden"
+              );
+            });
+            const pending = visible.find(
+              (image) => !(image.complete && image.naturalWidth > 0),
+            );
+            pending?.scrollIntoView({ block: "center" });
+            return pending ? -1 : visible.length;
+          }),
+        { timeout: 30_000 },
+      )
+      .toBeGreaterThanOrEqual(0);
+    check(true, "Every rendered screenshot image loaded successfully");
     for (const selector of requiredImages)
       check(
         await page
