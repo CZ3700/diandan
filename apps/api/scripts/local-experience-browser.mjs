@@ -438,36 +438,32 @@ export async function verifyLocalExperienceBrowser({
           .locator("[data-market-choices] [data-market][data-currency]")
           .first(),
       ).toBeVisible();
-      let detailPolicyPaths;
-      for (const scope of ["[data-gift-detail]", "footer"]) {
-        const group = page.locator(
-          `${scope} .gift-deferred-policies .gift-policy-links`,
+      // L2-17 (user request 2026-09-30): the gift page has no details or delivery section;
+      // its complete policy set is the footer's.
+      await expect(
+        page.locator(
+          "[data-gift-detail] .gift-policy-links, [data-gift-detail] .gift-detail-information",
+        ),
+      ).toHaveCount(0);
+      const group = page.locator(
+        "footer .gift-deferred-policies .gift-policy-links",
+      );
+      await expect(group).toHaveCount(1);
+      await expect(group.locator("a")).toHaveCount(
+        policyKindSchema.options.length,
+      );
+      const paths = await group
+        .locator("a")
+        .evaluateAll((links) =>
+          links.map((link) => new URL(link.href).pathname),
         );
-        await expect(group).toHaveCount(1);
-        await expect(group.locator("a")).toHaveCount(
-          policyKindSchema.options.length,
-        );
-        const paths = (
-          await group
-            .locator("a")
-            .evaluateAll((links) =>
-              links.map((link) => new URL(link.href).pathname),
-            )
-        ).sort();
-        check(
-          new Set(paths).size === policyKindSchema.options.length &&
-            paths.every((pathname) =>
-              pathname.startsWith(`/${route[0]}/policies/`),
-            ),
-          "Each actual policy group has complete distinct localized policy identities",
-        );
-        if (detailPolicyPaths)
-          check(
-            JSON.stringify(paths) === JSON.stringify(detailPolicyPaths),
-            "Gift detail and footer expose the same complete policy set",
-          );
-        else detailPolicyPaths = paths;
-      }
+      check(
+        new Set(paths).size === policyKindSchema.options.length &&
+          paths.every((pathname) =>
+            pathname.startsWith(`/${route[0]}/policies/`),
+          ),
+        "The footer has complete distinct localized policy identities",
+      );
       await expect(
         page.locator(
           ".storefront-state, [data-gift-context-pending], [data-gift-recipient-pending], main [aria-busy=true]",
