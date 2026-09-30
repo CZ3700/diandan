@@ -217,7 +217,21 @@ export async function verifyRegressionSeoRecovery({
       document.title.includes(view.seoTitle ?? view.title),
       "actual metadata uses the proven full English object during recovery",
     );
-    const headline = view.displayName ?? view.title ?? view.heroTitle;
+    // The homepage uses a localized interface heading; its published copy is
+    // the subtitle. Verify that source-language content still survives fallback.
+    const isHomepage = sample.locator.kind === "HOMEPAGE";
+    const headline = isHomepage
+      ? view.heroSubtitle
+      : (view.displayName ?? view.title);
+    if (isHomepage) {
+      const copy = await loadStorefrontCopy(locale);
+      const heading = page.locator("[data-home-hero] #hero-title");
+      check(
+        (await heading.textContent()) === copy.artistEyebrow &&
+          (await heading.getAttribute("lang")) === locale,
+        "homepage interface heading remains localized during content fallback",
+      );
+    }
     if (sample.locator.kind === "POLICY" && fallback) {
       const copy = await loadStorefrontCopy(locale);
       check(
@@ -255,7 +269,7 @@ export async function verifyRegressionSeoRecovery({
       }
       check(
         document.text.includes(headline),
-        "rendered content includes the proven object headline",
+        "rendered content includes the proven published copy",
       );
     }
     assert.deepEqual(
@@ -270,11 +284,12 @@ export async function verifyRegressionSeoRecovery({
           document.text.includes(copy.fallbackNotice),
           "actual incident fallback has its localized notice",
         );
+        const sourceCopy = isHomepage
+          ? page.locator("[data-home-hero] .storefront-hero-body")
+          : page.getByRole("heading", { name: headline, exact: true });
         check(
-          (await page
-            .getByRole("heading", { name: headline, exact: true })
-            .getAttribute("lang")) === "en",
-          "fallback object heading explicitly declares English while page retains requested locale",
+          (await sourceCopy.getAttribute("lang")) === "en",
+          "fallback object copy explicitly declares English while page retains requested locale",
         );
       }
       check(

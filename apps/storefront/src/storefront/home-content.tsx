@@ -12,6 +12,7 @@ import type { StorefrontCopy } from "./copy";
 import { HomeKinds } from "./home-kinds";
 import { HowItWorks, PageState, StudioPromise } from "./page-parts";
 import { HomeArtistSearch } from "./home-artist-search";
+import { HeroMotion } from "./hero-motion";
 
 export function HomeContent({
   data,
@@ -64,9 +65,12 @@ export function HomeContent({
         aria-labelledby="hero-title"
       >
         <div className="storefront-hero-copy">
-          <p className="storefront-eyebrow">{copy.artistEyebrow}</p>
-          <h1 id="hero-title" lang={view.localeContext.resolvedLocale}>
-            {view.heroTitle}
+          <h1
+            id="hero-title"
+            className="storefront-eyebrow storefront-home-hero-heading"
+            lang={locale}
+          >
+            {copy.artistEyebrow}
           </h1>
           <p
             className="storefront-hero-body"
@@ -88,7 +92,9 @@ export function HomeContent({
           desktop={view.heroDesktop}
           mobile={view.heroMobile}
           fallbackLabel={copy.mediaFallback}
-        />
+        >
+          <HeroMotion copy={copy} />
+        </PublishedHeroImage>
       </section>
     ),
     KINDS: (

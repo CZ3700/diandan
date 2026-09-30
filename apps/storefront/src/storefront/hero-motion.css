@@ -1,0 +1,107 @@
+/* CSS gates both decoration and its control before hydration, and reacts to
+   live theme previews. No script reads a browser preference during SSR. */
+[data-home-hero] > .storefront-hero-image {
+  /* Let the button sit above the hero scrim; keep the stars below it. */
+  z-index: auto;
+}
+.storefront-hero-motion {
+  display: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.storefront-hero-motion-control {
+  z-index: calc(var(--layer-raised) + 2);
+  position: absolute;
+  inset-inline-end: var(--layout-gutter);
+  inset-block-end: var(--space-6);
+  pointer-events: auto;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+.storefront-hero-sparkles {
+  z-index: 0;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  color: var(--color-accent);
+}
+.storefront-hero-sparkles > span {
+  position: absolute;
+  inline-size: var(--space-4);
+  block-size: var(--space-4);
+  background: currentColor;
+  clip-path: polygon(
+    50% 0%,
+    58% 42%,
+    100% 50%,
+    58% 58%,
+    50% 100%,
+    42% 58%,
+    0% 50%,
+    42% 42%
+  );
+  opacity: 0;
+}
+.storefront-hero-sparkles > span:nth-child(1) {
+  inset: 18% auto auto 10%;
+  --sparkle-phase: -1;
+}
+.storefront-hero-sparkles > span:nth-child(2) {
+  inset: 12% auto auto 38%;
+  --sparkle-phase: -5;
+}
+.storefront-hero-sparkles > span:nth-child(3) {
+  inset: 20% auto auto 78%;
+  --sparkle-phase: -9;
+}
+.storefront-hero-sparkles > span:nth-child(4) {
+  inset: 50% auto auto 90%;
+  --sparkle-phase: -3;
+}
+.storefront-hero-sparkles > span:nth-child(5) {
+  inset: 74% auto auto 60%;
+  --sparkle-phase: -7;
+}
+.storefront-hero-sparkles > span:nth-child(6) {
+  inset: 66% auto auto 18%;
+  --sparkle-phase: -11;
+}
+@media (width < 48rem) {
+  .storefront-hero-motion-control {
+    /* Keep clear of the existing copy's negative mobile margin. */
+    inset-block-end: calc(var(--space-16) + var(--space-4));
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-storefront-motion="STANDARD"]
+    .storefront-hero-motion:not([data-hero-motion="idle"]) {
+    display: block;
+  }
+  html[data-storefront-motion="STANDARD"]
+    :where([data-hero-motion]:not([data-hero-motion="idle"]))
+    .storefront-hero-sparkles
+    > span {
+    animation: storefront-hero-sparkle calc(var(--motion-hero-effective) * 12)
+      ease-in-out infinite;
+    animation-delay: calc(var(--motion-hero-effective) * var(--sparkle-phase));
+  }
+  html[data-storefront-motion="STANDARD"]
+    [data-hero-motion="paused"]
+    .storefront-hero-sparkles
+    > span {
+    animation-play-state: paused;
+  }
+  @keyframes storefront-hero-sparkle {
+    0%,
+    36%,
+    100% {
+      opacity: 0;
+      transform: scale(0.55);
+    }
+    18% {
+      opacity: 0.8;
+      transform: scale(1);
+    }
+  }
+}

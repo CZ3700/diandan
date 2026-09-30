@@ -1,7 +1,13 @@
 "use client";
 
 import { getImageProps } from "next/image";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 
 import type { PublishedMediaView } from "@fan-support/contracts";
 import { Media } from "@fan-support/ui/client";
@@ -72,10 +78,12 @@ export function PublishedHeroImage({
   desktop,
   mobile,
   fallbackLabel,
+  children,
 }: Readonly<{
   desktop: PublishedMediaView;
   mobile: PublishedMediaView;
   fallbackLabel: string;
+  children?: ReactNode;
 }>) {
   const image = useRef<HTMLImageElement>(null);
   const desktopSource = responsiveSource(desktop, "100vw");
@@ -154,6 +162,7 @@ export function PublishedHeroImage({
           />
         </picture>
       )}
+      {failedIdentity !== identity ? children : null}
     </div>
   );
 }

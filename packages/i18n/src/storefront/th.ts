@@ -223,6 +223,8 @@ const copy = {
   artistEyebrow: "ในสปอตไลต์",
   artistTitle: "ค้นพบคนที่เป็นแรงบันดาลใจให้คุณ",
   heroAllArtists: "พบกับศิลปินทั้งหมด",
+  heroPauseMotion: "หยุดภาพเคลื่อนไหว",
+  heroPlayMotion: "เล่นภาพเคลื่อนไหว",
   artistBody: "ใบหน้าที่คุ้นเคย เรื่องราวใหม่ ใกล้กันอีกนิด",
   giftEyebrow: "คัดสรรด้วยใจ",
   giftTitle: "ของขวัญที่มีความหมาย",

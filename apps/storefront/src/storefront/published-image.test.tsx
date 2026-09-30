@@ -188,3 +188,20 @@ test("a source smaller than the smallest optimizer width keeps its real intrinsi
   expect(img.src).toBe(tiny.url);
   expect(img.srcSet).toBe(`${tiny.url} 16w`);
 });
+
+test("hero decorations belong to its image frame without changing the published photograph", () => {
+  const html = renderToStaticMarkup(
+    <PublishedHeroImage
+      desktop={media}
+      mobile={media}
+      fallbackLabel="Unavailable"
+    >
+      <button type="button">Pause motion</button>
+    </PublishedHeroImage>,
+  );
+  expect(html).toContain(
+    '</picture><button type="button">Pause motion</button>',
+  );
+  expect(attributes(html, "img").alt).toBe(media.alt);
+  expect(html).toContain("--hero-desktop-focus:40% 30%");
+});

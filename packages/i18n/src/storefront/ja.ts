@@ -232,6 +232,8 @@ const copy = {
   artistEyebrow: "スポットライト",
   artistTitle: "心に響くアーティストとの出会い",
   heroAllArtists: "すべてのアーティストを見る",
+  heroPauseMotion: "動きを一時停止",
+  heroPlayMotion: "動きを再生",
   artistBody: "親しみのある表情、新しい物語。少し近くに。",
   giftEyebrow: "心を込めて選ぶ",
   giftTitle: "想いを届けるギフト",

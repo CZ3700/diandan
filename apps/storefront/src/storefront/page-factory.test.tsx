@@ -16,6 +16,7 @@ import {
 } from "@fan-support/contracts";
 import { directoryFixturePage } from "./directory-fixture";
 import { HomeContent } from "./home-content";
+import { ArtistContent } from "./artist-content";
 import { loadStorefrontCopy } from "@fan-support/i18n/storefront";
 
 const reads = vi.hoisted(() => ({
@@ -211,6 +212,67 @@ test("homepage hero has one gold button to all artists and the search sits under
   expect(below).toContain(`placeholder="${copy.artistSearchLabel}"`);
   expect(artists).not.toContain(copy.artistEyebrow);
   expect(artists).not.toContain(copy.backArtists);
+});
+
+test.each(SUPPORTED_LOCALES)(
+  "homepage %s provides a localized pause control for decorative hero motion",
+  async (locale) => {
+    const copy = await loadStorefrontCopy(locale);
+    const html = renderToStaticMarkup(
+      <HomeContent
+        data={publishedHome(locale)}
+        locale={locale}
+        copy={copy}
+        contextQuery=""
+      />,
+    );
+    const hero =
+      html.split('data-home-hero="true"')[1]?.split("</section>")[0] ?? "";
+    expect(hero).toContain('data-hero-motion="idle"');
+    expect(hero).toContain(
+      'class="storefront-hero-sparkles" aria-hidden="true"',
+    );
+    expect(hero).toContain(copy.heroPauseMotion);
+    expect(copy.heroPauseMotion).not.toBe(copy.heroPlayMotion);
+  },
+);
+
+test.each(SUPPORTED_LOCALES)(
+  "homepage %s uses a compact localized heading instead of the published large title",
+  async (locale) => {
+    const home = publishedHome(locale);
+    const copy = await loadStorefrontCopy(locale);
+    const html = renderToStaticMarkup(
+      <HomeContent data={home} locale={locale} copy={copy} contextQuery="" />,
+    );
+    const hero =
+      html.split('data-home-hero="true"')[1]?.split("</section>")[0] ?? "";
+    expect(hero).not.toContain("Verified hero before directory");
+    expect(hero).toContain("Published introduction");
+    expect(hero).toContain('aria-labelledby="hero-title"');
+    expect(hero.match(/<h1\b/gu)).toHaveLength(1);
+    expect(hero).toContain(
+      `class="storefront-eyebrow storefront-home-hero-heading" lang="${locale}">${copy.artistEyebrow}</h1>`,
+    );
+    expect(hero).toContain(copy.heroAllArtists);
+  },
+);
+
+test("the artist detail still presents the actual artist name as its large heading", async () => {
+  const published = publishedArtist("en");
+  const artist = published.content.view;
+  const html = renderToStaticMarkup(
+    <ArtistContent
+      artist={artist}
+      locale="en"
+      copy={await loadStorefrontCopy("en")}
+      contextQuery=""
+    />,
+  );
+  expect(html).toContain(
+    `<h1 id="artist-title" lang="en">${artist.displayName}</h1>`,
+  );
+  expect(html).not.toContain("storefront-home-hero-heading");
 });
 
 function publishedArtist(locale: (typeof SUPPORTED_LOCALES)[number]) {

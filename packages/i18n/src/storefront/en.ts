@@ -231,6 +231,8 @@ const copy = {
   artistEyebrow: "In the spotlight",
   artistTitle: "Find the one who inspires you.",
   heroAllArtists: "Meet all the artists",
+  heroPauseMotion: "Pause motion",
+  heroPlayMotion: "Play motion",
   artistBody: "A familiar face. A new story. A little closer.",
   giftEyebrow: "Thoughtfully chosen",
   giftTitle: "A gift, with meaning.",

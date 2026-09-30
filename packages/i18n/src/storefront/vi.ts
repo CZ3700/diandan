@@ -229,6 +229,8 @@ const copy = {
   artistEyebrow: "Trong ánh đèn",
   artistTitle: "Tìm người truyền cảm hứng cho bạn.",
   heroAllArtists: "Gặp gỡ tất cả nghệ sĩ",
+  heroPauseMotion: "Tạm dừng chuyển động",
+  heroPlayMotion: "Phát chuyển động",
   artistBody: "Gương mặt quen. Câu chuyện mới. Gần nhau hơn một chút.",
   giftEyebrow: "Được chọn bằng cả tấm lòng",
   giftTitle: "Món quà mang ý nghĩa.",

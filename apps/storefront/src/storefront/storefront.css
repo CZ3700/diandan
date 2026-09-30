@@ -1,3 +1,5 @@
+@import "./hero-motion.css";
+
 .storefront {
   isolation: isolate;
   color: var(--color-text);
@@ -200,6 +202,16 @@
       transparent 64%
     );
 }
+/* A light homepage needs a small reading area, not a pale wash over the group. */
+html[data-storefront-scheme="LIGHT"][data-storefront-hero-layout="IMMERSIVE"]
+  [data-home-hero]::after {
+  background: radial-gradient(
+    ellipse 62% 72% at left bottom,
+    color-mix(in srgb, var(--color-bg) 65%, transparent) 0%,
+    color-mix(in srgb, var(--color-bg) 28%, transparent) 42%,
+    transparent 78%
+  );
+}
 .storefront-hero-copy {
   z-index: calc(var(--layer-raised) + 1);
   display: flex;
@@ -237,6 +249,13 @@
 .storefront-hero h1:lang(ja),
 .storefront-hero h1:lang(th) {
   letter-spacing: normal;
+}
+[data-home-hero] .storefront-home-hero-heading {
+  margin: 0;
+  font-size: var(--type-label-size);
+  font-weight: 600;
+  line-height: var(--type-body-leading);
+  letter-spacing: var(--type-label-tracking);
 }
 .storefront-hero-body {
   color: var(--color-text);
@@ -565,6 +584,15 @@
       var(--color-bg) 0%,
       color-mix(in srgb, var(--color-bg) 60%, transparent) 22%,
       transparent 45%
+    );
+  }
+  html[data-storefront-scheme="LIGHT"][data-storefront-hero-layout="IMMERSIVE"]
+    [data-home-hero]::after {
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--color-bg) 95%, transparent) 0%,
+      color-mix(in srgb, var(--color-bg) 85%, transparent) 10%,
+      transparent 24%
     );
   }
   .storefront-hero-image img {

@@ -1,5 +1,15 @@
 # 当前上线进度
 
+## C-20260930 群像海报与动效调整
+
+- 状态：LOCAL_ACCEPTED（海报内容已在公开 TEST；前台代码待远程部署）；Codex root / catalog_integration_audit / research_gifts_a / research_gifts_b；2026-09-30。
+- 海报：参考群体 idol 宣传形式，最终为原创六人明亮浅紫舞台照；英文源、71%/50%上传焦点，后台确认当前图并保留恢复历史。用户明确拒绝图文分栏，最终保留 IMMERSIVE 和用户选择的浅粉主题。
+- 文案与布局：按用户追加要求去掉首页大号发布标题（含旧 Demo 占位）；原 eyebrow 作为小号语义 h1，副句和按钮仍在左下。浅色首页桌面蒙层收窄到左下，手机仅底部24%渐变托住文字；艺人详情不受影响。
+- 动效：自有 CSS 六枚星光，仅 STANDARD + 系统允许动态 + 水合就绪时启用；照片静止，键盘暂停/恢复可用，SUBTLE/NONE/reduced-motion 与图片错误时静态降级。七语按钮文案已加入，review 仍为 DRAFT。
+- 验证：公开 TEST 新图七语双端14/14；最终组件七语×双端×深浅28/28、键盘与暂停稳定样本、模式/速度/图片错误、Chrome Rendering实际 reduced-motion 全过，仿真已恢复。前台最终139文件943测试；全仓强制无缓存 typecheck69/test69/build38，末次手机CSS增量强制test/build及format/lint通过；独立复核/S.U.P.E.R通过。
+- SEO 回退验收脚本随新展示行为核验已发布副句及其语言，并独立核验本地化小h1；语法/format/lint通过，实际PG全栈SEO回退旅程未重跑。无数据库/支付/生产改动。
+- 部署缺口：当前Mac没有远程TEST连接，新增代码尚未到PREBUILT服务器；由现有Windows部署维护端串行构建/重启后复核，不能把图片发布当作代码部署。证据与具体交接：`output/group-idol-hero-2026-09-30/FINAL.md`、`independent-immersive-final-review.md`、`deployment-readiness.md`；旧SPLIT/屋顶/蓝色版本为历史，不是最终方案。
+
 ## C-20260930 礼物与海报内容研究及原创导入
 
 - 状态：DONE（仅本项公开 TEST 内容与排序）；执行者 Codex root / research_gifts_a / research_gifts_b / catalog_integration_audit；2026-09-30。

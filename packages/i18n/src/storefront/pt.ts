@@ -233,6 +233,8 @@ const copy = {
   artistEyebrow: "Em destaque",
   artistTitle: "Encontre quem inspira você.",
   heroAllArtists: "Conheça todos os artistas",
+  heroPauseMotion: "Pausar animação",
+  heroPlayMotion: "Reproduzir animação",
   artistBody: "Um rosto familiar. Uma nova história. Um pouco mais perto.",
   giftEyebrow: "Escolhidos com carinho",
   giftTitle: "Um presente com significado.",
