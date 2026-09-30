@@ -16,8 +16,8 @@
 |:--|:--|:--|
 | 进度登记（开工前） | c49e89a5 | — |
 | L2-17 全部代码、七语言文案、SPEC 6.1.0 §0.6、上线计划、完整栈浏览器脚本改写 | e84d347e | 见下 |
-| journey 脚本：详情页政策组改为只核对页脚 | 9896c879 | CI 结果见“在途” |
-| 依赖安全升级：`@nestjs` 三个包 12.0.2、fastify 5.12.4（GHSA-9c5c-9qcx-q35q） | 26b9fb3c | 本机审计无已知漏洞；类型检查、构建 38、受影响包测试通过；**stg 尚未部署** |
+| journey 脚本：详情页政策组改为只核对页脚 | 9896c879 | CI journey 通过（run 36749861993） |
+| 依赖安全升级：`@nestjs` 三个包 12.0.2、fastify 5.12.4（GHSA-9c5c-9qcx-q35q） | 26b9fb3c | 本机审计无已知漏洞；类型检查、构建 38、受影响包测试通过；CI Security、commerce、journey 通过；**stg 尚未部署** |
 | 进度表、本交接 | 本次提交 | — |
 
 L2-17 的七项与做法（用户原话在上线计划“2026-09-30 晚 用户追加”）：
@@ -55,9 +55,10 @@ L2-17 的七项与做法（用户原话在上线计划“2026-09-30 晚 用户�
 - **没有脚本的浏览器**：部署前就只看到整页的加载状态（流式渲染需要脚本），这次没有改变，也没有为它另做回退。
 - **文案**：新增一个键 `giftSortPrice`，删掉 13 个不再使用的键，七语言同步；审校记录仍是 DRAFT，哈希已刷新。
 
-需要用户知情的两点（已写进进度表 L2-17 行的“缺口”）：
+需要用户知情的三点（已写进进度表 L2-17 行）：
 
 - 旧内容编辑器里的结构化长描述、转交说明、预计时间和安全提示不再在详情页显示。stg 现有礼物没有这些内容；政策链接仍在页脚，结账页仍逐条展示政策并取得同意。如果以后要恢复“预计转交时间”，可以在购买区加一行。
+- 艺人页最底部的收尾引导（“每份礼物，都有心意” + “挑选礼物”按钮，`artist-content.tsx` 的 `storefront-final`）没有动：它是艺人页的收尾引导，不是礼物板块的标题，只是用了同一句话。stg 艺人页礼物区的验收 95 项里因此有 2 项（“旧标题不再出现”）不通过，其余 93 项通过。用户若希望这一处也去掉，改这一个标题即可。
 - “先写失败测试”没有严格做到：测试与实现同批完成，第 6 项以部署前在 stg 的复现（`output/checks/l2-17/stg-before.mjs`）作为失败基线。
 
 ## 在途
@@ -66,8 +67,8 @@ L2-17 的七项与做法（用户原话在上线计划“2026-09-30 晚 用户�
 - **CI（草稿 PR #16）**：
   - run 36741772819（080ce206，含 L2-17）：Security、commerce 通过；journey 停在七语矩阵，原因是脚本还在详情页里找政策链接组，9896c879 已改。
   - 9896c879 的这一轮（run 36748809693）里 Security 失败：当天新公布的 GHSA-9c5c-9qcx-q35q（`@nestjs/platform-fastify` 低于 12.0.2，高危）。已升级并在本机审计通过。
-  - 本文件所在的推送会取消上一轮并触发新的一轮，**journey 与 Security 是否通过要在新会话里核对**。
-  - catalog、operations、quality 仍停在各自既有的第一处失败。
+  - run 36749861993（0fe151d6，含以上全部）：**Security、commerce、journey 通过**；catalog、operations、quality 仍停在各自既有的第一处失败（`catalog-fallback-seo`、`operations-refunds-disputes`、`quality-ui-composites`）。
+  - 之后只推送了本文件的补充，它触发的那一轮只含文档改动。
 - **CI 还没有执行到的改写脚本**：catalog 组的后三步（`storefront-acceptance-matrix`、`gift-storefront-browser`、`management-center-browser`）排在既有失败的 `catalog-fallback-seo` 之后。这些脚本只做了语法检查和 lint；逻辑与本机验收脚本相同，但没有在完整栈上跑过。`accessibility-flows`、`storefront-drawer-lazy-browser`、`storefront-acceptance-lazy-validation` 不在回归计划里，同样没有跑。
 - **stg 没有带上依赖升级**：stg 在 e84d347e，`@nestjs` 仍是 12.0.1。下次部署（例如 L3-12）会一并带上；API 与 worker 是随 `local:build-web` 重新构建的，部署后照常抽查公开路由和后台登录即可。
 - stg 上没有新增测试数据。回滚点：`~/backups/stg-pre-e84d347e-20260930`（回滚版本 cfcdfde1）。
@@ -75,10 +76,10 @@ L2-17 的七项与做法（用户原话在上线计划“2026-09-30 晚 用户�
 
 ## 下一步
 
-1. **核对最新一轮 CI 的 journey 与 Security**（`gh run list --branch v2/r1-production --limit 1`）。journey 再失败就下载 `regression-journey` 附件，看 `artifacts/playwright/p5-08-local-experience/*/report.json` 的 `failure.sourceLine`，对照 `apps/api/scripts/local-experience-browser.mjs`。
-2. **L3-12 艺人收礼账目与导出**：开工清单在上一份交接的“下一步”第 1 条，内容不变（先写失败测试 → 迁移 0058 → 合同、应用层、仓储、接口 → 后台“艺人账目” → 验收、部署 stg 后执行 `sync-roles`）。开工前在进度表把状态改为 IN_PROGRESS 并写明验证计划。
-3. **CI 回归，先修 `catalog-fallback-seo`**（HOMEPAGE 故障回退）：它修好后 catalog 组才会执行到 L2-17 改写的三个脚本。上次的诊断结论在进度表“CI 回归”行：嫌疑是首页聚合读取 `storefront-homepage-repository.ts` 的 `loadPublishedContentContext` 在译文缺失时不回退。Mario 在 b30e1cb3 里改过 `regression-seo-recovery.mjs`，动手前先看他的改动。
-4. **T-12**、**L3-13**：不变。
+1. **L3-12 艺人收礼账目与导出**：开工清单在上一份交接的“下一步”第 1 条，内容不变（先写失败测试 → 迁移 0058 → 合同、应用层、仓储、接口 → 后台“艺人账目” → 验收、部署 stg 后执行 `sync-roles`）。开工前在进度表把状态改为 IN_PROGRESS 并写明验证计划。
+2. **CI 回归，先修 `catalog-fallback-seo`**（HOMEPAGE 故障回退）：它修好后 catalog 组才会执行到 L2-17 改写的三个脚本。上次的诊断结论在进度表“CI 回归”行：嫌疑是首页聚合读取 `storefront-homepage-repository.ts` 的 `loadPublishedContentContext` 在译文缺失时不回退。Mario 在 b30e1cb3 里改过 `regression-seo-recovery.mjs`，动手前先看他的改动。
+3. **T-12**、**L3-13**：不变。
+4. **下次部署 stg** 会带上 26b9fb3c 的依赖升级（commerce、journey 已在 CI 的完整栈上跑通）。
 
 ## 环境注意
 
