@@ -7,11 +7,19 @@ import {
   type ReactNode,
   type SetStateAction,
 } from "react";
-import {
-  createDefaultStorefrontBrandView,
-  type PublicStorefrontBrandResponse,
-  type StorefrontBrandView,
+import type {
+  PublicStorefrontBrandResponse,
+  StorefrontBrandView,
 } from "@fan-support/contracts";
+
+// Mirrors createDefaultStorefrontBrandView(). The root layout ships this provider on
+// every page, and a runtime import from the contracts barrel brings its Zod schemas
+// into every page's JavaScript (+118KB on the motion budget).
+const createDefaultStorefrontBrandView = (): StorefrontBrandView => ({
+  schemaVersion: 1,
+  lightLogo: null,
+  darkLogo: null,
+});
 
 type BrandingContext = Readonly<{
   brand: StorefrontBrandView;
