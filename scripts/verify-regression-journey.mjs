@@ -79,7 +79,12 @@ try {
         instance,
         output: path.join(output, "browser"),
       }),
-    diagnose: () => diagnoseJourneyInstance({ config: state.config, output }),
+    diagnose: () =>
+      diagnoseJourneyInstance({
+        config: state.config,
+        stateDirectory: state.stateDirectory,
+        output,
+      }),
     stop: () => local("stop"),
     reset: () => local("reset", ["--confirm", state.config.instanceId]),
   });

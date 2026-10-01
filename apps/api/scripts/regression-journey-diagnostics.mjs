@@ -1,7 +1,8 @@
 // Read-only evidence for a failed journey, taken while the owned TEST instance still runs.
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { Client } from "pg";
+import { summarizePostgresFailures } from "./local-experience-postgres-failures.mjs";
 
 const code = (value) =>
   typeof value === "string" && /^[A-Z][A-Z0-9_]{0,63}$/u.test(value)
@@ -96,7 +97,21 @@ export async function snapshotJourneyWork(client) {
 }
 
 /** Connects to the owned instance's own database; credentials stay in its local config. */
-export async function diagnoseJourneyInstance({ config, output }) {
+export async function diagnoseJourneyInstance({
+  config,
+  stateDirectory,
+  output,
+}) {
+  // API and worker rolled-back writes, as SQLSTATE, trigger function and constraint only.
+  const postgresFailures = summarizePostgresFailures(
+    await readFile(path.join(stateDirectory, "supervisor.log"), "utf8").catch(
+      () => "",
+    ),
+  );
+  await writeFile(
+    path.join(output, "postgres-failures.json"),
+    JSON.stringify({ schemaVersion: 1, postgresFailures }, null, 2) + "\n",
+  );
   const client = new Client({
     host: "127.0.0.1",
     port: config.ports.postgres,

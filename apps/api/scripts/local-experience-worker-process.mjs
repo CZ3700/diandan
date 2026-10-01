@@ -95,6 +95,11 @@ if (process.argv[2] === "--local-experience-worker" && process.send) {
     if (message?.kind !== "START" || startup || closing) return;
     startup = (async () => {
       try {
+        // The worker owns its own pools; its rolled-back writes reach the supervisor log too.
+        const { Client } = await import("pg");
+        const { reportPostgresFailures } =
+          await import("./local-experience-postgres-failures.mjs");
+        reportPostgresFailures(Client, (line) => process.stdout.write(line));
         const { createLocalExperienceMailTransport } =
           await import("./local-experience-services-mail.mjs");
         const { startLocalExperienceWorker } =
