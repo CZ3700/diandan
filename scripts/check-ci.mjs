@@ -240,7 +240,7 @@ function validateManifest(manifest, errors) {
     "security:dependencies":
       "node --test ./scripts/security-dependencies.test.mjs && corepack pnpm audit --registry=https://registry.npmjs.org --audit-level=high",
     "security:regressions":
-      "corepack pnpm exec turbo run build --filter=@fan-support/observability... --output-logs=errors-only && node --test ./scripts/security-rate-limit.test.mjs ./apps/api/scripts/local-experience-services.test.mjs ./scripts/render-rum-dashboard.test.mjs",
+      "corepack pnpm exec turbo run build --filter=@fan-support/observability... --filter=@fan-support/payment-stripe... --output-logs=errors-only && node --test ./scripts/security-rate-limit.test.mjs ./apps/api/scripts/local-experience-services.test.mjs ./scripts/render-rum-dashboard.test.mjs",
     "security:secrets": "node ./scripts/scan-secrets.mjs",
   };
 
