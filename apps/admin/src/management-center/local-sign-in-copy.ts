@@ -379,15 +379,21 @@ const pt: SignInCopy = {
   codeFormat: "Digite os 6 dígitos mostrados no app.",
 };
 
-const COPY: Readonly<Record<SupportedLocale, SignInCopy>> = {
-  en,
-  "zh-CN": zhCN,
-  th,
-  vi,
-  ja,
-  es,
-  pt,
-};
 export function signInCopy(locale: SupportedLocale): SignInCopy {
-  return COPY[locale];
+  switch (locale) {
+    case "en":
+      return en;
+    case "zh-CN":
+      return zhCN;
+    case "th":
+      return th;
+    case "vi":
+      return vi;
+    case "ja":
+      return ja;
+    case "es":
+      return es;
+    case "pt":
+      return pt;
+  }
 }

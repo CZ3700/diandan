@@ -307,15 +307,21 @@ const pt: ArtistNotesCopy = {
   retry: "Tentar de novo",
 };
 
-const copies: Record<SupportedLocale, ArtistNotesCopy> = {
-  en,
-  "zh-CN": zhCN,
-  ja,
-  th,
-  vi,
-  es,
-  pt,
-};
 export function artistNotesCopy(locale: SupportedLocale): ArtistNotesCopy {
-  return copies[locale];
+  switch (locale) {
+    case "en":
+      return en;
+    case "zh-CN":
+      return zhCN;
+    case "ja":
+      return ja;
+    case "th":
+      return th;
+    case "vi":
+      return vi;
+    case "es":
+      return es;
+    case "pt":
+      return pt;
+  }
 }

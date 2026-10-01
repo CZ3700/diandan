@@ -1,5 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { orderAccessItemSchema } from "@fan-support/contracts";
+import {
+  orderAccessItemSchema,
+  SUPPORTED_LOCALES,
+} from "@fan-support/contracts";
 import { loadStorefrontCopy } from "@fan-support/i18n/storefront";
 import {
   certificateFileName,
@@ -144,11 +147,15 @@ describe("certificate layout helpers", () => {
   });
 
   it("spaces and capitalizes the title only in Latin-script locales", () => {
-    expect(
-      (["en", "es", "pt", "vi", "zh-CN", "ja", "th"] as const).map((locale) =>
-        certificateTracked(locale),
-      ),
-    ).toEqual([true, true, true, true, false, false, false]);
+    const latin = ["en", "es", "pt", "vi"] as const;
+    const other = ["zh-CN", "ja", "th"] as const;
+    expect([...latin, ...other].sort()).toEqual([...SUPPORTED_LOCALES].sort());
+    expect(latin.map((locale) => certificateTracked(locale))).toEqual(
+      latin.map(() => true),
+    );
+    expect(other.map((locale) => certificateTracked(locale))).toEqual(
+      other.map(() => false),
+    );
   });
 
   it("names the file after the public order number and line", () => {

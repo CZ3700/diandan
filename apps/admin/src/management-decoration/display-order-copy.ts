@@ -231,15 +231,21 @@ const pt: DisplayOrderCopy = {
   saveFailed: "A ordem não foi salva. Tente novamente.",
   discard: "Descartar as alterações de ordem não salvas?",
 };
-const copies: Record<SupportedLocale, DisplayOrderCopy> = {
-  en,
-  "zh-CN": zhCN,
-  ja,
-  th,
-  vi,
-  es,
-  pt,
-};
 export function displayOrderCopy(locale: SupportedLocale): DisplayOrderCopy {
-  return copies[locale];
+  switch (locale) {
+    case "en":
+      return en;
+    case "zh-CN":
+      return zhCN;
+    case "ja":
+      return ja;
+    case "th":
+      return th;
+    case "vi":
+      return vi;
+    case "es":
+      return es;
+    case "pt":
+      return pt;
+  }
 }

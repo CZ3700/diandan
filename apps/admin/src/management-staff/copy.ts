@@ -598,15 +598,21 @@ const pt: StaffCopy = {
     "{account} foi excluída; {count} artistas voltaram para a gestão do estúdio.",
 };
 
-const COPY: Readonly<Record<SupportedLocale, StaffCopy>> = {
-  en,
-  "zh-CN": zhCN,
-  th,
-  vi,
-  ja,
-  es,
-  pt,
-};
 export function staffCopy(locale: SupportedLocale): StaffCopy {
-  return COPY[locale];
+  switch (locale) {
+    case "en":
+      return en;
+    case "zh-CN":
+      return zhCN;
+    case "th":
+      return th;
+    case "vi":
+      return vi;
+    case "ja":
+      return ja;
+    case "es":
+      return es;
+    case "pt":
+      return pt;
+  }
 }
