@@ -2877,6 +2877,7 @@ async function runNativeZoomPass({
       devicePixelRatio: window.devicePixelRatio,
       innerHeight: window.innerHeight,
       innerWidth: window.innerWidth,
+      layoutViewportWidth: document.documentElement.clientWidth,
       outerHeight: window.outerHeight,
       outerWidth: window.outerWidth,
       visualViewport:

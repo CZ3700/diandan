@@ -633,12 +633,12 @@ export function assessNativeZoomMeasurements({
     ["baseline", baseline],
     ["zoomed", zoomed],
   ]) {
+    // The visual viewport excludes a classic scrollbar; innerWidth includes it.
+    const layoutWidth = Number.isFinite(measurement?.layoutViewportWidth)
+      ? measurement.layoutViewportWidth
+      : measurement?.innerWidth;
     if (
-      !approximatelyEqual(
-        measurement?.visualViewport?.width,
-        measurement?.innerWidth,
-        2,
-      ) ||
+      !approximatelyEqual(measurement?.visualViewport?.width, layoutWidth, 2) ||
       !approximatelyEqual(
         measurement?.visualViewport?.height,
         measurement?.innerHeight,
@@ -3077,6 +3077,7 @@ async function collectNativeWindowMeasurement(page) {
     devicePixelRatio: window.devicePixelRatio,
     innerHeight: window.innerHeight,
     innerWidth: window.innerWidth,
+    layoutViewportWidth: document.documentElement.clientWidth,
     outerHeight: window.outerHeight,
     outerWidth: window.outerWidth,
     screen: {

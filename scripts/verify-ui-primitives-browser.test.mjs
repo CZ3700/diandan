@@ -478,6 +478,39 @@ test("accepts only measurements proving native Chrome 200 percent page zoom", as
   assert.ok(errors.some((error) => error.includes("device pixel ratio")));
   assert.ok(errors.some((error) => error.includes("visual viewport scale")));
 
+  // Linux Chrome draws a classic 15 device-px scrollbar: the visual viewport
+  // excludes it, innerWidth does not. The layout viewport is the comparison.
+  const classic = (measurement, layoutViewportWidth, visualWidth) => ({
+    ...measurement,
+    layoutViewportWidth,
+    visualViewport: { ...measurement.visualViewport, width: visualWidth },
+  });
+  assert.deepEqual(
+    assessNativeZoomMeasurements({
+      baseline: classic(baseline, 1695, 1695),
+      expectedPercent: 200,
+      zoomed: classic(zoomed, 847, 847.5),
+    }),
+    [],
+  );
+  assert.ok(
+    assessNativeZoomMeasurements({
+      baseline: classic(baseline, 1695, 1695),
+      expectedPercent: 200,
+      zoomed: classic(zoomed, 847, 600),
+    }).some((error) => error.includes("zoomed visual viewport")),
+  );
+  assert.ok(
+    assessNativeZoomMeasurements({
+      baseline: {
+        ...baseline,
+        visualViewport: { ...baseline.visualViewport, width: 1695 },
+      },
+      expectedPercent: 200,
+      zoomed,
+    }).some((error) => error.includes("baseline visual viewport")),
+  );
+
   const completeScreenshot = {
     captureMethod: "CDP Page.captureScreenshot without emulation",
     localeMarker: {
