@@ -161,7 +161,8 @@ await withEphemeralPostgres(async (configuration) => {
             [`payment_runtime_${index}`],
           )
         ).rows[0];
-        assert.equal(types.length, 11);
+        // $12 is the evidence reason code (status reconciled or action refreshed, b0270006).
+        assert.equal(types.length, 12);
         assert.ok(types.every((type) => type !== "unknown"));
         preparedRecoveryBranches.push({
           restoresNonterminal: entry.restoresNonterminal,
