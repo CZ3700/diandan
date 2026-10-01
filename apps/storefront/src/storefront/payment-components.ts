@@ -47,6 +47,8 @@ export type AirwallexSdk = Readonly<{
 
 export type PaymentComponentHost = Readonly<{
   origin: string;
+  /** A departed page or superseded pay action must not launch after SDK work completes. */
+  isCurrent?: () => boolean;
   /** Resolves once the script has executed; rejects when it cannot load in time. */
   loadScript(url: string): Promise<void>;
   airwallex(): AirwallexSdk | undefined;
@@ -57,9 +59,11 @@ export async function launchPaymentComponent(
   action: ProviderComponentAction,
   host: PaymentComponentHost,
 ): Promise<boolean> {
-  if (!canLaunchPaymentComponent(action)) return false;
+  if (host.isCurrent?.() === false || !canLaunchPaymentComponent(action))
+    return false;
   try {
     const { launchers } = await import("./payment-component-launchers");
+    if (host.isCurrent?.() === false) return false;
     const launcher = Object.hasOwn(launchers, action.componentKey)
       ? launchers[action.componentKey]
       : undefined;
@@ -72,9 +76,12 @@ export async function launchPaymentComponent(
 const SCRIPT_TIMEOUT_MS = 15_000;
 const scripts = new Map<string, Promise<void>>();
 
-export function browserPaymentComponentHost(): PaymentComponentHost {
+export function browserPaymentComponentHost(
+  isCurrent: () => boolean = () => true,
+): PaymentComponentHost {
   return {
     origin: window.location.origin,
+    isCurrent,
     loadScript(url) {
       let loading = scripts.get(url);
       if (!loading) {

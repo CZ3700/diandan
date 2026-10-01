@@ -130,6 +130,55 @@ it("refuses tampered tokens, foreign return origins and SDK failures, leaving th
   expect(fake.loadScript).not.toHaveBeenCalled();
 });
 
+it("does not load or launch a component for an already abandoned payment action", async () => {
+  const fake = fakeHost();
+  expect(
+    await launchPaymentComponent(action(), {
+      ...fake.host,
+      isCurrent: () => false,
+    }),
+  ).toBe(false);
+  expect(fake.loadScript).not.toHaveBeenCalled();
+  expect(fake.init).not.toHaveBeenCalled();
+  expect(fake.redirectToCheckout).not.toHaveBeenCalled();
+});
+
+it.each(["load", "init"] as const)(
+  "does not redirect an abandoned payment when SDK %s completes late",
+  async (stage) => {
+    const fake = fakeHost();
+    let current = true;
+    let resume!: () => void;
+    const pending = new Promise<void>((resolve) => {
+      resume = resolve;
+    });
+    if (stage === "load") {
+      const load = fake.loadScript.getMockImplementation()!;
+      fake.loadScript.mockImplementationOnce(async () => {
+        await pending;
+        await load();
+      });
+    } else {
+      fake.init.mockImplementationOnce(async () => {
+        await pending;
+        return { payments: { redirectToCheckout: fake.redirectToCheckout } };
+      });
+    }
+    const payment = launchPaymentComponent(action(), {
+      ...fake.host,
+      isCurrent: () => current,
+    });
+    await vi.waitFor(() =>
+      expect(stage === "load" ? fake.loadScript : fake.init).toHaveBeenCalled(),
+    );
+    current = false;
+    resume();
+    expect(await payment).toBe(false);
+    expect(fake.redirectToCheckout).not.toHaveBeenCalled();
+    if (stage === "load") expect(fake.init).not.toHaveBeenCalled();
+  },
+);
+
 it("the browser host injects one script per URL and loads it again after a failure", async () => {
   const appended: EventTarget[] = [];
   vi.stubGlobal("document", {
@@ -144,8 +193,12 @@ it("the browser host injects one script per URL and loads it again after a failu
     head: { append: (script: EventTarget) => appended.push(script) },
   });
   vi.stubGlobal("window", { location: { origin }, setTimeout, clearTimeout });
-  const browser = browserPaymentComponentHost();
+  let current = true;
+  const browser = browserPaymentComponentHost(() => current);
   expect(browser.origin).toBe(origin);
+  expect(browser.isCurrent?.()).toBe(true);
+  current = false;
+  expect(browser.isCurrent?.()).toBe(false);
   const first = browser.loadScript(AIRWALLEX_SDK_URL);
   expect(browser.loadScript(AIRWALLEX_SDK_URL)).toBe(first);
   expect(appended).toHaveLength(1);

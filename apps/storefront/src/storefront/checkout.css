@@ -3,7 +3,7 @@
   margin-inline: auto;
 }
 .checkout-page > h1 {
-  margin-block: 0 var(--space-8);
+  margin-block: 0 var(--space-6);
 }
 .checkout-content {
   display: grid;
@@ -12,18 +12,23 @@
 .checkout-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: var(--space-16);
+  gap: var(--space-12);
   align-items: start;
 }
 .checkout-review,
 .checkout-workspace,
 .checkout-form,
 .checkout-methods,
-.checkout-policies,
 .payment-status {
   display: grid;
   gap: var(--space-6);
   min-width: 0;
+}
+.checkout-review {
+  gap: var(--space-4);
+}
+.checkout-form {
+  gap: var(--space-3);
 }
 .checkout-review h2,
 .checkout-methods h2 {
@@ -36,8 +41,11 @@
   margin: 0;
 }
 .checkout-lines li {
-  padding-block: var(--space-6);
+  padding-block: var(--space-4);
   border-block-end: var(--border-width) solid var(--color-border);
+}
+.checkout-lines li:last-child {
+  border-block-end: 0;
 }
 .checkout-lines h3 {
   margin-block: var(--space-2);
@@ -48,7 +56,7 @@
 }
 .checkout-lines h3,
 .checkout-lines p,
-.checkout-policies {
+.checkout-consent {
   overflow-wrap: anywhere;
 }
 .checkout-artist,
@@ -100,26 +108,43 @@
   border-radius: var(--radius-control);
   padding: var(--space-3);
 }
-.checkout-policies label {
+.checkout-consent {
   display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+.checkout-consent-toggle {
+  display: flex;
+  flex: none;
   align-items: center;
-  gap: var(--space-3);
-  padding-block: var(--space-2);
+  justify-content: center;
+  min-inline-size: calc(var(--space-12) - var(--space-1));
+  min-block-size: calc(var(--space-12) - var(--space-1));
   cursor: pointer;
 }
-.checkout-policies input {
-  flex: none;
+.checkout-consent input {
+  margin: 0;
   accent-color: var(--color-accent);
 }
-.checkout-policies summary {
-  cursor: pointer;
-  display: list-item;
-  align-content: center;
+.checkout-consent-text {
+  min-inline-size: 0;
+  line-height: var(--type-body-leading);
 }
-.checkout-policies details > div {
-  max-block-size: calc(var(--space-16) * 4);
-  overflow: auto;
-  padding: var(--space-4) 0;
+.checkout-consent-text label {
+  cursor: pointer;
+}
+.checkout-policy-link .fs-overlay-trigger {
+  max-inline-size: 100%;
+  padding: var(--space-1);
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-weight: 400;
+  line-height: inherit;
+  text-align: start;
+  text-decoration: underline;
+  text-underline-offset: var(--link-underline-offset);
+  vertical-align: baseline;
 }
 .checkout-test {
   color: var(--color-accent);
@@ -149,9 +174,7 @@
 .checkout-content button,
 .checkout-content select,
 .checkout-content input:not([type="checkbox"]),
-.checkout-content a,
-.checkout-policies label,
-.checkout-policies summary {
+.checkout-content a {
   min-block-size: calc(var(--space-12) - var(--space-1));
 }
 .checkout-content button,
@@ -166,8 +189,7 @@
 .checkout-content button:focus-visible,
 .checkout-content a:focus-visible,
 .checkout-content input:focus-visible,
-.checkout-content select:focus-visible,
-.checkout-policies summary:focus-visible {
+.checkout-content select:focus-visible {
   outline: var(--focus-ring-width) solid var(--color-accent);
   outline-offset: var(--focus-ring-offset);
 }
@@ -177,6 +199,6 @@
 @media (max-width: 48rem) {
   .checkout-layout {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-8);
+    gap: var(--space-6);
   }
 }

@@ -144,11 +144,15 @@ export async function verifyPaymentActionRecoveryBrowser(context) {
             action,
             schema = paymentRuntimeResponseSchema,
           ) => {
-            const waiting = page.waitForResponse(
-              (response) =>
-                new globalThis.URL(response.url()).pathname === suffix &&
-                response.request().method() === "POST",
-            );
+            const waiting = page.waitForResponse((response) => {
+              const pathname = new globalThis.URL(response.url()).pathname;
+              return (
+                (typeof suffix === "string"
+                  ? pathname === suffix
+                  : suffix.test(pathname)) &&
+                response.request().method() === "POST"
+              );
+            });
             await action();
             const response = await waiting;
             const parsed = schema.safeParse(await response.json());
@@ -258,20 +262,23 @@ export async function verifyPaymentActionRecoveryBrowser(context) {
             .locator("[data-checkout-policy]")
             .all())
             await policy.check();
-          const created = await responsePost(
-            "/api/storefront/checkout/sessions",
-            () => page.locator("[data-checkout-confirm]").click(),
-            checkoutPreflightResponseSchema,
-          );
-          const sessionId = created.checkout.id;
           const beforeCreate = await psp.counts();
-          const initial = await responsePost(
-            `/api/storefront/checkout/sessions/${sessionId}/attempts`,
-            () => page.locator("[data-payment-create]").first().click(),
-          );
+          const [initial, created] = await Promise.all([
+            responsePost(
+              /^\/api\/storefront\/checkout\/sessions\/[^/]+\/attempts$/u,
+              async () => {},
+            ),
+            responsePost(
+              "/api/storefront/checkout/sessions",
+              () => page.locator("[data-checkout-confirm]").click(),
+              checkoutPreflightResponseSchema,
+            ),
+          ]);
+          const sessionId = created.checkout.id;
           let attemptId = initial.attempt.id;
           check(
             initial.attempt.status === "REQUIRES_ACTION" &&
+              initial.attempt.checkoutSessionId === sessionId &&
               initial.attempt.environment === "TEST",
             "Real checkout creates a payable TEST attempt",
           );
@@ -281,6 +288,11 @@ export async function verifyPaymentActionRecoveryBrowser(context) {
               afterCreate.createCalls === beforeCreate.createCalls + 1,
             "Initial explicit payment creates exactly one PSP session",
           );
+          await page.waitForURL((url) => url.origin === psp.origin);
+          // Leave the hosted page unpaid; restore the existing attempt before testing expiration.
+          await page.goto(`${origin}/${locale}/checkout`, {
+            waitUntil: "networkidle",
+          });
           const immutable = async () => {
             const { rows } = await client.query(
               "SELECT a.id,a.provider_account_id,a.amount_minor::text,a.currency,a.requested_locale,a.provider_locale,o.presentation_locale,o.checkout_session_id,o.total_amount_minor::text FROM payment_attempts a JOIN orders o ON o.id=a.order_id WHERE a.id=$1::uuid",
@@ -511,7 +523,6 @@ export async function verifyPaymentActionRecoveryBrowser(context) {
               "Explicit retry after trusted cancellation creates a new attempt on the original valid checkout",
             );
             attemptId = next.attempt.id;
-            await page.locator("[data-payment-continue]").click();
             await page.waitForURL((url) => url.origin === psp.origin);
           }
           stage = `${name}:SUCCESS_RETURN`;

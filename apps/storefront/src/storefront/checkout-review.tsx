@@ -5,10 +5,6 @@ import type {
 } from "@fan-support/contracts";
 import { Price } from "@fan-support/ui";
 import type { StorefrontCopy } from "./copy";
-import { PolicyBody } from "./gift-content";
-/** The consent sentence links each policy title to its full text here. */
-export const checkoutPolicyAnchor = (policyKey: string) =>
-  `checkout-policy-${policyKey}`;
 export function CheckoutReview({
   review,
   locale,
@@ -19,6 +15,13 @@ export function CheckoutReview({
   copy: StorefrontCopy;
 }>) {
   const amount = review.amount;
+  const adjustments = [
+    [copy.checkoutTax, amount.taxAmountMinor],
+    [copy.checkoutShipping, amount.shippingAmountMinor],
+    [copy.checkoutFees, amount.feeAmountMinor],
+    [copy.checkoutDiscount, amount.discountAmountMinor],
+  ] as const;
+  const hasAdjustments = adjustments.some(([, value]) => value > 0);
   return (
     <div className="checkout-review" data-checkout-review>
       <h2>{copy.checkoutReview}</h2>
@@ -34,9 +37,11 @@ export function CheckoutReview({
             <h3 lang={line.giftLocaleContext.resolvedLocale}>
               {line.giftTitle}
             </h3>
-            <p lang={line.giftLocaleContext.resolvedLocale}>
-              {line.giftVariantLabel}
-            </p>
+            {line.giftVariantLabel !== line.giftTitle ? (
+              <p lang={line.giftLocaleContext.resolvedLocale}>
+                {line.giftVariantLabel}
+              </p>
+            ) : null}
             <div className="checkout-line-price">
               <span>
                 {copy.checkoutQuantity}:{" "}
@@ -52,28 +57,27 @@ export function CheckoutReview({
         ))}
       </ol>
       <dl className="checkout-totals">
-        {(
-          [
-            [copy.checkoutSubtotal, amount.subtotalMinor],
-            [copy.checkoutTax, amount.taxAmountMinor],
-            [copy.checkoutShipping, amount.shippingAmountMinor],
-            [copy.checkoutFees, amount.feeAmountMinor],
-            [copy.checkoutDiscount, amount.discountAmountMinor],
-          ] as const
-        )
-          .filter(([, value], index) => index === 0 || value > 0)
-          .map(([label, value]) => (
-            <div key={label}>
-              <dt>{label}</dt>
-              <dd>
-                <Price
-                  locale={locale}
-                  currency={review.currency}
-                  amountMinor={value}
-                />
-              </dd>
-            </div>
-          ))}
+        {hasAdjustments
+          ? (
+              [
+                [copy.checkoutSubtotal, amount.subtotalMinor],
+                ...adjustments,
+              ] as const
+            )
+              .filter(([, value], index) => index === 0 || value > 0)
+              .map(([label, value]) => (
+                <div key={label}>
+                  <dt>{label}</dt>
+                  <dd>
+                    <Price
+                      locale={locale}
+                      currency={review.currency}
+                      amountMinor={value}
+                    />
+                  </dd>
+                </div>
+              ))
+          : null}
         <div className="checkout-total">
           <dt>{copy.cartTotal}</dt>
           <dd data-checkout-total>
@@ -85,18 +89,6 @@ export function CheckoutReview({
           </dd>
         </div>
       </dl>
-      <div className="checkout-policies">
-        {review.policies.map((policy) => (
-          <details
-            key={policy.policyKey}
-            id={checkoutPolicyAnchor(policy.policyKey)}
-            lang={policy.locale}
-          >
-            <summary>{policy.title}</summary>
-            <PolicyBody body={policy.body} />
-          </details>
-        ))}
-      </div>
     </div>
   );
 }

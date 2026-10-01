@@ -20,7 +20,7 @@ type Content = Extract<PublishedGiftCommerceResponse, { outcome: "SUCCESS" }>;
 type Commerce = Extract<StorefrontGiftResponse, { outcome: "SUCCESS" }>;
 /**
  * User request 2026-09-30 (L2-17): the page is the photo, the summary and the purchase.
- * Policies stay in the footer and are shown in full before payment at checkout.
+ * Policies stay in the footer and can be read from the consent at checkout.
  */
 export function GiftDetail({
   content,

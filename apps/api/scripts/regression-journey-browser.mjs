@@ -212,13 +212,17 @@ export async function beginJourney({
     "Checkout freezes chosen locale and commerce context",
   );
   mark("checkout");
-  await page.locator("[data-payment-create]").first().waitFor();
+  await page.waitForURL((url) => url.origin === config.origins.psp);
+  await expect(page.locator("[data-test-psp-capture]")).toBeVisible();
+  // Confirm now goes straight to the sole method. Revisit to also verify safe resume/locale changes.
+  await page.goto(`${config.origins.storefront}/${locale}/checkout`, {
+    waitUntil: "networkidle",
+  });
+  await page.locator("[data-payment-continue]").waitFor();
   assert(
     (await page.locator("[data-payment-country]").count()) === 0,
-    "Checkout lists methods without asking for a country",
+    "Single-method confirmation hands off without an extra country or method action",
   );
-  await page.locator("[data-payment-create]").first().click();
-  await page.locator("[data-payment-continue]").waitFor();
   return { checkout: result.checkout };
 }
 

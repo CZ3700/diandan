@@ -72,7 +72,28 @@ export async function cancelLocalExistingOrder({
   await admin.locator("[data-finance-confirm]").check();
   const changed = financeDetail(admin, config);
   await admin.locator("[data-finance-submit]").click();
-  const facts = await readCanceled(await changed, check);
+  let response = await changed;
+  // A payable attempt needs trusted provider cancellation before the order can close.
+  // Only reread the normal detail route while its existing operation completes.
+  await expect
+    .poll(
+      async () => {
+        const detail = adminFinanceResponseSchema.parse(await response.json());
+        if (
+          detail.outcome === "SUCCESS" &&
+          detail.kind === "DETAIL" &&
+          detail.order.orderStatus === "CANCELED"
+        )
+          return true;
+        const refreshed = financeDetail(admin, config);
+        await selectOrder(publicOrderId);
+        response = await refreshed;
+        return false;
+      },
+      { timeout: 90000, intervals: [250, 1000] },
+    )
+    .toBe(true);
+  const facts = await readCanceled(response, check);
   await expect(admin.locator("[data-finance-cancel]")).toHaveCount(0);
   await capture(admin, "en-1440-canceled-unpaid-order");
   return facts;
@@ -132,7 +153,8 @@ export async function verifyLocalCancellation({
       checkout.outcome === "SUCCESS" && "checkout" in checkout,
       "Created checkout satisfies its canonical contract",
     );
-    await page.locator("[data-payment-create]").first().waitFor();
+    await page.waitForURL((url) => url.origin === config.origins.psp);
+    await expect(page.locator("[data-test-psp-capture]")).toBeVisible();
     return await cancelLocalExistingOrder({
       admin,
       config,

@@ -19,8 +19,14 @@ type Launcher = (
  */
 const launchAirwallexHostedPage: Launcher = async (clientToken, host) => {
   const launch = decodeAirwallexHppClientToken(clientToken);
-  if (!launch || new URL(launch.cancelUrl).origin !== host.origin) return false;
+  if (
+    host.isCurrent?.() === false ||
+    !launch ||
+    new URL(launch.cancelUrl).origin !== host.origin
+  )
+    return false;
   if (!host.airwallex()) await host.loadScript(AIRWALLEX_SDK_URL);
+  if (host.isCurrent?.() === false) return false;
   const sdk = host.airwallex();
   if (!sdk) return false;
   const initialized = await sdk.init({
@@ -28,7 +34,7 @@ const launchAirwallexHostedPage: Launcher = async (clientToken, host) => {
     enabledElements: ["payments"],
   });
   const payments = initialized?.payments;
-  if (!payments) return false;
+  if (host.isCurrent?.() === false || !payments) return false;
   payments.redirectToCheckout({
     env: launch.env,
     mode: "payment",

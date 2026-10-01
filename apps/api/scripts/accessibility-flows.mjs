@@ -275,27 +275,6 @@ export async function accessibilityCustomerFlow({
     `a11y-${randomUUID()}@example.test`,
     "checkout-email",
   );
-  const resultPromise = page.waitForResponse(
-    (response) =>
-      new URL(response.url()).pathname ===
-        "/api/storefront/checkout/sessions" &&
-      response.request().method() === "POST",
-  );
-  await tools.activate(
-    page,
-    page.locator("[data-checkout-confirm]"),
-    "confirm-checkout",
-  );
-  const response = await resultPromise;
-  assert(response.status() === 200, "Keyboard checkout creation succeeds");
-  const result = checkoutPreflightResponseSchema.parse(await response.json());
-  assert(
-    result.outcome === "SUCCESS" && "checkout" in result,
-    "Keyboard checkout satisfies the canonical contract",
-  );
-  // One published country: methods appear directly, without a country question.
-  await expect(page.locator("[data-payment-create]").first()).toBeVisible();
-  await expect(page.locator("[data-payment-country]")).toHaveCount(0);
   const observer = observeLocalBrowserPayment({
     page,
     config,
@@ -303,12 +282,32 @@ export async function accessibilityCustomerFlow({
     readBodyForStage: (stage) => stage === "FIRST_PAYMENT_RETURN",
   });
   try {
+    const resultPromise = page.waitForResponse(
+      (response) =>
+        new URL(response.url()).pathname ===
+          "/api/storefront/checkout/sessions" &&
+        response.request().method() === "POST",
+    );
     await tools.activate(
       page,
-      page.locator("[data-payment-create]").first(),
-      "create-payment",
+      page.locator("[data-checkout-confirm]"),
+      "confirm-and-pay",
     );
+    const response = await resultPromise;
+    assert(response.status() === 200, "Keyboard checkout creation succeeds");
+    const result = checkoutPreflightResponseSchema.parse(await response.json());
+    assert(
+      result.outcome === "SUCCESS" && "checkout" in result,
+      "Keyboard checkout satisfies the canonical contract",
+    );
+    await page.waitForURL((url) => url.origin === config.origins.psp);
+    await expect(page.locator("[data-test-psp-capture]")).toBeVisible();
+    // Confirmation alone reaches payment; revisiting also checks the keyboard resume path.
+    await page.goto(`${config.origins.storefront}/${locale}/checkout`, {
+      waitUntil: "networkidle",
+    });
     await expect(page.locator("[data-payment-continue]")).toBeVisible();
+    await expect(page.locator("[data-payment-country]")).toHaveCount(0);
     purchase = await state.purchase(result.checkout.publicOrderId);
     const current = await readCurrentPurchase(page);
     assert(

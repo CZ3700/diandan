@@ -1054,14 +1054,16 @@ export async function verifyLocalExperienceBrowser({
           report.facts.publicOrderId = checkout.checkout.publicOrderId;
           report.facts.checkoutSessionId = checkout.checkout.id;
           stage("TEST_PAYMENT");
-          await customer
-            .locator("[data-payment-create]")
-            .waitFor({ timeout: 30000 });
+          await customer.waitForURL((url) => url.origin === config.origins.psp);
+          await customer.locator("[data-test-psp-capture]").waitFor();
+          // The initial confirmation now hands off directly; revisit to verify explicit resume.
+          await customer.goto(`${config.origins.storefront}/en/checkout`, {
+            waitUntil: "networkidle",
+          });
           check(
             (await customer.locator("[data-payment-country]").count()) === 0,
-            "Checkout lists methods without asking for a country",
+            "Single-method confirmation needs no separate country or method action",
           );
-          await customer.locator("[data-payment-create]").click();
           await customer
             .locator("[data-payment-continue]")
             .waitFor({ timeout: 30000 });
