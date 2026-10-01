@@ -320,24 +320,47 @@ describe("management publication transaction retries", () => {
     );
   });
 
-  it("records one fenced failure after three aborts, without a fourth publication", async () => {
+  it("requeues the fenced operation after three aborts instead of failing it, without a fourth publication", async () => {
     vi.useFakeTimers();
     const f = rollbackFixture(3);
     const pending = f.worker.processNext();
     await vi.runAllTimersAsync();
-    expect(await pending).toBe("FAILED");
+    expect(await pending).toBe("PENDING");
     expect(f.state.committed).toBe(0);
     expect(f.publication.publish).toHaveBeenCalledTimes(3);
     expect(f.operations.loadClaim).toHaveBeenCalledTimes(3);
     expect(f.operations.claim).toHaveBeenCalledTimes(1);
     expect(f.media.prepare).toHaveBeenCalledTimes(1);
-    expect(f.operations.fail).toHaveBeenCalledExactlyOnceWith({
+    expect(f.operations.fail).not.toHaveBeenCalled();
+    expect(f.operations.defer).toHaveBeenCalledExactlyOnceWith({
       operationId: id,
       leaseTokenDigest: f.operations.claim.mock.calls[0]![0].leaseTokenDigest,
-      code: "PUBLICATION_FAILED",
-      retryable: true,
     });
   });
+
+  it.each(["revoked", "aborted"])(
+    "does not report PENDING when requeueing after three aborts is %s",
+    async (mode) => {
+      vi.useFakeTimers();
+      const f = rollbackFixture(3);
+      if (mode === "revoked")
+        f.operations.defer.mockResolvedValue({
+          schemaVersion: 1,
+          outcome: "FAILURE",
+          code: "NEEDS_AUTHORIZATION",
+        });
+      else
+        f.operations.defer.mockRejectedValue(
+          transactionFailure("TRANSACTION_ABORTED"),
+        );
+      const pending = f.worker.processNext();
+      await vi.runAllTimersAsync();
+      expect(await pending).toBe("UNAVAILABLE");
+      expect(f.publication.publish).toHaveBeenCalledTimes(3);
+      expect(f.operations.defer).toHaveBeenCalledTimes(1);
+      expect(f.operations.fail).not.toHaveBeenCalled();
+    },
+  );
 
   it.each(["authority-or-lease", "intent", "fence", "operation"])(
     "stops if the next transaction reload rejects %s",
@@ -463,6 +486,7 @@ describe("management publication rollback outcomes", () => {
         code: "PUBLICATION_FAILED",
         retryable: true,
       });
+      expect(f.operations.defer).not.toHaveBeenCalled();
       expect(f.publication.publish).toHaveBeenCalledTimes(1);
       expect(f.operations.complete).toHaveBeenCalledTimes(1);
     },

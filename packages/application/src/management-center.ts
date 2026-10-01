@@ -345,6 +345,35 @@ async function recordRolledBackPublicationFailure(
     return "UNAVAILABLE";
   }
 }
+/** A confirmed rollback that the port says the same command may safely replay (40001/40P01). */
+function isTransientConflict(error: unknown) {
+  return (
+    error instanceof PersistenceTransactionFailureError &&
+    error.code === "TRANSACTION_ABORTED" &&
+    error.recovery === "RETRY_SAME_COMMAND"
+  );
+}
+/**
+ * Serialization conflicts that outlast the in-process retries are contention, not
+ * a broken publication: requeue the fenced operation for a later claim instead of
+ * a terminal failure that waits for an operator. Claiming re-checks the delegation,
+ * so a requeue never outlives the operator's authorization.
+ */
+async function requeueAfterTransientConflict(
+  transactions: ManagementCenterTransactionManager,
+  fence: ManagementCenterFence,
+): Promise<ManagementCenterWorkerResult> {
+  try {
+    const deferred = await transactions.runInManagementCenterTransaction(
+      ({ operations }) => operations.defer(fence),
+    );
+    return managementCenterResponseSchema.parse(deferred).outcome === "SUCCESS"
+      ? "PENDING"
+      : "UNAVAILABLE";
+  } catch {
+    return "UNAVAILABLE";
+  }
+}
 export function createManagementCenterWorker(
   dependencies: Readonly<{
     transactions: ManagementCenterTransactionManager;
@@ -488,11 +517,13 @@ export function createManagementCenterWorker(
             },
           ),
         ).catch((error: unknown) =>
-          recordRolledBackPublicationFailure(
-            error,
-            dependencies.transactions,
-            fence,
-          ),
+          isTransientConflict(error)
+            ? requeueAfterTransientConflict(dependencies.transactions, fence)
+            : recordRolledBackPublicationFailure(
+                error,
+                dependencies.transactions,
+                fence,
+              ),
         );
       } catch {
         // Do not mark a lease failed after an uncertain commit. The next claim reconciles its durable receipt.
