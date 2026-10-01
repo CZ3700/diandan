@@ -4,6 +4,13 @@ const read = vi.hoisted(() => vi.fn());
 vi.mock("./server/public-information-pages", () => ({
   readPublicInformationPage: read,
 }));
+vi.mock("./server/public-storefront-theme", () => ({
+  readPublicStorefrontTheme: async () => ({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "CONTENT_UNAVAILABLE",
+  }),
+}));
 vi.mock("./server/storefront-copy", () => ({
   loadStorefrontCopy: async () => ({
     notFound: "Missing",

@@ -11,11 +11,11 @@ P4-04 在 P4-03 已创建的订单、报价和库存预占上创建支付。公�
 
 ## 配置与 adapter
 
-API 使用 `FAN_SUPPORT_PAYMENT_RUNTIME_CONFIG_JSON` 声明公开 HTTPS 来源、lease、恢复间隔和动作有效期，使用 `FAN_SUPPORT_PAYMENT_PROVIDER_BINDINGS_JSON` 声明账号、环境、已部署 adapter 标识、七语言映射和允许的托管来源。前台 CSP 的动作来源由 `FAN_SUPPORT_PAYMENT_ACTION_ORIGINS_JSON` 配置。格式以 `packages/contracts/src/payment-runtime-config.ts` 为准。
+API 使用 `FAN_SUPPORT_PAYMENT_RUNTIME_CONFIG_JSON` 声明公开 HTTPS 来源、lease、恢复间隔和动作有效期；使用 `FAN_SUPPORT_PAYMENT_ACCOUNT_CONNECTIONS_JSON` 登记不可变的已部署账户连接，包括账号/环境、adapter 键/版本/协议、API 与回跳源站、语言映射、托管来源和凭据引用。每个账户还须有一条匹配的 `FAN_SUPPORT_PAYMENT_HEALTH_POLICIES_JSON` 策略，`FAN_SUPPORT_PAYMENT_WEBHOOK_ENDPOINTS_JSON` 中的端点必须绑定已部署账户。前台 CSP 的动作来源由 `FAN_SUPPORT_PAYMENT_ACTION_ORIGINS_JSON` 配置。配置校验入口为 `apps/api/src/payment-deployment-config.ts`，部署说明见 [生产配置](../runbooks/production-configuration.md#支付代码与激活分离)；旧静态 provider bindings 配置已淘汰，不能继续注入。
 
-这些配置只有元数据。实际 provider 实现通过 composition root 的注册表注入，禁止从配置载入可执行代码。商户凭据留在 secret provider 中，不得写入 JSON 元数据、浏览器或测试报告。
+这些部署配置只有元数据与秘密引用。实际 provider 实现通过 composition root 的注册表注入，禁止从配置载入可执行代码；商户凭据值留在服务端秘密管理，不得写入 JSON 元数据、浏览器或测试报告。收款开关、市场/币种/金额范围和灰度规则由后台“支付设置”发布为 PostgreSQL 中的版本化配置，各实例默认每 10 秒读取完整投影；这不会动态部署新 adapter 或修改旧 attempt 的冻结账户。
 
-可用支付方式还必须通过数据库当前发布的配置、账号健康、商户状态、明确国家、订单市场/币种/金额和浏览器动作支持检查。当前网页支持托管跳转；尚不支持的动作不显示。国家由用户明确选择，语言切换不选择国家或改变交易币种。当前仅开放配置为全量启用的路由；部分比例的灰度配置不会被当作全量启用。
+可用支付方式还必须通过数据库当前发布的配置、账号健康、商户状态、国家、订单市场/币种/金额和浏览器动作支持检查；尚不支持的动作不显示。只有国家会改变可用路由时才询问用户，否则按已发布规则解析，不从语言推断国家或改变交易币种。部分灰度通过稳定的订单准入判断，未入围订单不能使用该路由；返回可用方式不代表已经创建付款。
 
 TLS 在反向代理终止时，Next 的内部 `Request.url` 可能使用内部监听地址。内部监听必须仅对可信反代可达；部署入口应覆盖 `Host`、`X-Forwarded-Host` 和 `X-Forwarded-Proto`，分别传递配置的公开 host、同一 host 和公开 scheme，不能追加客户端传入的值。BFF 只接受公开 URL 本身，或三项同时精确匹配配置的代理请求；缺失、多个值或其他域名仍拒绝。这只是公开来源校验，原 Origin、Fetch Metadata、受保护 Cookie、CSRF 和固定路径校验继续执行。
 

@@ -27,18 +27,18 @@ Worker 在独立事务提交收件人访问审计后才调用 KMS 解密。通�
 
 通知配置的字段由 `apps/worker/src/notification-config.ts` 校验：
 
-| 字段 | 含义 |
-|:--|:--|
-| `schemaVersion` | 固定 1 |
-| `siteName`, `publicStorefrontOrigin` | 实际站名和 HTTPS 前台 Origin，必须与部署、查单配置一致 |
-| `profiles`, `activeProfile` | 保留的邮件发送配置及新任务采用的配置名称；旧任务按其冻结 hash 找原配置 |
-| profile `protocol`, `environment`, `apiOrigin` | `fan-support-mail-v1` 或 `zeptomail-v1`、TEST/LIVE、HTTPS 服务商 Origin |
-| profile `fromEmail`, `fromName`, `replyToEmail` | 经审核的发信与回复身份 |
-| profile `timeoutMs`, `idempotencyRetentionSeconds` | 总请求截止；网关去重窗口或原生发送的本地准入窗口 |
-| `credentialEnvironmentVariable` | 对应 profile 的服务端凭据变量引用 |
-| `linkPepperVersion`, `acceptedPepperVersions` | 与既有 checkout/order-access KMS 版本集合一致 |
-| `linkTtlSeconds`, `leaseSeconds`, `retryDelaySeconds`, `maxAttempts` | 受限链接、租约与重试预算；profile 请求截止须短于租约 |
-| `incidentFallbackLocales` | 事故期间允许整封英语回退的语言，英语本身不可列入 |
+| 字段                                                                 | 含义                                                                    |
+| :------------------------------------------------------------------- | :---------------------------------------------------------------------- |
+| `schemaVersion`                                                      | 固定 1                                                                  |
+| `siteName`, `publicStorefrontOrigin`                                 | 实际站名和 HTTPS 前台 Origin，必须与部署、查单配置一致                  |
+| `profiles`, `activeProfile`                                          | 保留的邮件发送配置及新任务采用的配置名称；旧任务按其冻结 hash 找原配置  |
+| profile `protocol`, `environment`, `apiOrigin`                       | `fan-support-mail-v1` 或 `zeptomail-v1`、TEST/LIVE、HTTPS 服务商 Origin |
+| profile `fromEmail`, `fromName`, `replyToEmail`                      | 经审核的发信与回复身份                                                  |
+| profile `timeoutMs`, `idempotencyRetentionSeconds`                   | 总请求截止；网关去重窗口或原生发送的本地准入窗口                        |
+| `credentialEnvironmentVariable`                                      | 对应 profile 的服务端凭据变量引用                                       |
+| `linkPepperVersion`, `acceptedPepperVersions`                        | 与既有 checkout/order-access KMS 版本集合一致                           |
+| `linkTtlSeconds`, `leaseSeconds`, `retryDelaySeconds`, `maxAttempts` | 受限链接、租约与重试预算；profile 请求截止须短于租约                    |
+| `incidentFallbackLocales`                                            | 事故期间允许整封英语回退的语言，英语本身不可列入                        |
 
 全部活动和保留 profile 的凭据在启动时校验并固定；缺失或非法凭据直接拒绝启动，凭据轮换须重新装配/重启 Worker。
 
@@ -96,6 +96,6 @@ Worker 必须通过 PostgreSQL `notification_submissions` 包装原生接口：�
 
 可重复检查包括通知合同/历史模板单测、真实 PostgreSQL/TLS TEST 网关、持久队列、邮件链接浏览器和真实过期竞争；具体命令、时间、源文件摘要与失败修复记录见 `docs/progress/phase-4-commerce.md` 及 `output/checks/p4-06-notifications/`、`output/checks/p4-06-commerce-expiry/`。
 
-Quality CI 执行预算为 45 分钟：上一轮完整本地检查已耗时 1737.580 秒，本次额外加入两个到期夹具与通知整合，每个实际运行约 2 分钟。原检查项全部保留，Security 仍为 20 分钟；该预算不代表远端 CI 已通过。
+Quality CI 执行预算为 120 分钟（`.github/workflows/ci.yml`）；该预算不代表远端 CI 已通过，结论以对应提交的完整运行结果为准。
 
 本地 TEST 网关持久化接收回执，用独立进程重启、丢 HTTP 响应、并发和真实截止测试副作用。它不执行 SMTP/真实服务商投递，不能替代 SPF/DKIM/DMARC、真实邮箱客户端、退信/投诉、人工译审、云 KMS、商户、staging 与生产验收。
