@@ -38,6 +38,7 @@ const supportedHeads = [
   "0062",
   "0063",
   "0064",
+  "0065",
 ];
 
 /** Legacy probes may rewind only explicitly known, empty migration prefixes. */

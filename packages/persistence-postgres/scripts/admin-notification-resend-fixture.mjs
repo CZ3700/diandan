@@ -15,6 +15,11 @@ import { createWorkerReliableEventsComposition } from "../../../apps/worker/dist
 import { createReliableEventsWorkerRuntime } from "../../../apps/worker/dist/reliable-events-runtime.js";
 import { createTestWorkerNotifications } from "../../../apps/worker/dist/notification-composition.js";
 import { createNotificationFulfillmentFixture } from "./notification-fulfillment-fixture.mjs";
+import {
+  verifyDigitalNotificationResends,
+  verifyDigitalResendDelivery,
+  verifyResendHistoryGuard,
+} from "./admin-notification-resend-digital-fixture.mjs";
 
 const sha = (value) =>
   createHash("sha256").update(JSON.stringify(value)).digest("hex");
@@ -122,7 +127,7 @@ export async function verifyAdminNotificationResends(context) {
     "INSERT INTO admin_sessions(id,admin_identity_id,session_token_digest,csrf_token_digest,authenticated_with_mfa,expires_at) VALUES($1,$2,decode($3,'hex'),decode($4,'hex'),true,clock_timestamp()+interval '1 hour')",
     [sessionId, adminId, sessionDigest, csrfDigest],
   );
-  async function paid(notifications = automatic) {
+  async function paid(notifications = automatic, options = {}) {
     const original = payment.checkout.add;
     payment.checkout.add = async (session, line) => {
       const added = await original(session, line),
@@ -155,7 +160,7 @@ export async function verifyAdminNotificationResends(context) {
     };
     let value;
     try {
-      value = await payment.fresh({ locale: "en" });
+      value = await payment.fresh({ locale: "en", lines: options.lines });
     } finally {
       payment.checkout.add = original;
     }
@@ -170,7 +175,22 @@ export async function verifyAdminNotificationResends(context) {
       [context.endpoint.providerAccountId, JSON.parse(signed.rawBody).event_id],
     );
     await payment.apply(event.id);
-    const state = await payment.assertPaid(value);
+    const state = options.fulfillmentStatus
+      ? await payment.state(value)
+      : await payment.assertPaid(value);
+    if (options.fulfillmentStatus)
+      check(
+        state.payment_status === "PAID" &&
+          state.order_status === "OPEN" &&
+          state.attempt_status === "SUCCEEDED" &&
+          state.cart_status === "CONVERTED" &&
+          state.converted_intents === state.items &&
+          state.fulfillments === state.items &&
+          state.fulfillment_status === options.fulfillmentStatus &&
+          state.captures === 1 &&
+          state.confirmations === 1,
+        "digital resend fixture retains actual canonical capture and line fulfillment",
+      );
     const source = await scalar(
       "SELECT id FROM outbox_events WHERE aggregate_id=$1 AND event_type='ORDER_PAYMENT_CONFIRMED'",
       [state.order_id],
@@ -228,6 +248,22 @@ export async function verifyAdminNotificationResends(context) {
     payment.canaries.push(match[1]);
     return { token: match[1], publicOrderId: match[2] };
   };
+  const digitalContext = {
+    context,
+    paid,
+    command,
+    request,
+    automatic,
+    manual,
+    advance,
+    gateway,
+    captures,
+    access,
+    token,
+    scalar,
+    state,
+  };
+  const preparedMixed = await verifyDigitalNotificationResends(digitalContext);
   progress("operator resend durable receipt, fresh link and receiver recovery");
   const value = await paid(),
     first = await command(value),
@@ -580,6 +616,14 @@ export async function verifyAdminNotificationResends(context) {
     (await manual.deliver(unknown.resultId)).decision === "SKIP",
     "deadline recovery never creates another attempt for terminal unknown history",
   );
+  // The existing real-clock deadline also expires the earlier mixed-order cooldown.
+  await verifyDigitalResendDelivery(
+    digitalContext,
+    preparedMixed,
+    "PREPARING",
+    "MIXED_PREPARING",
+  );
+  const historyGuard = await verifyResendHistoryGuard(digitalContext);
   check(
     payment.canaries.every(
       (value) => !context.logLines.some((line) => line.includes(value)),
@@ -600,6 +644,10 @@ export async function verifyAdminNotificationResends(context) {
     actualPgBoss: true,
     actualUnknownCutoffSeconds: 60,
     transactionRollback: true,
+    digitalPaymentResends: ["VIRTUAL", "MIXED"],
+    mixedPreparingSourceSupersedesBeforeMaterialization: true,
+    mixedPreparingResend: true,
+    historyGuard,
     scope:
       "Synthetic local data and local TEST receiver; no production email or physical delivery",
   };

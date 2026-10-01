@@ -71,7 +71,7 @@ export async function createNotificationFulfillmentFixture(context) {
       command,
     });
 
-  return async function advance(value, status) {
+  return async function advance(value, status, giftKind) {
     const orderId = value.state.order_id;
     const detail = await execute({
       schemaVersion: 1,
@@ -82,11 +82,14 @@ export async function createNotificationFulfillmentFixture(context) {
       detail.outcome === "SUCCESS" && detail.kind === "DETAIL",
       "notification fulfillment fixture reads through authorized admin use case",
     );
+    const lines = giftKind
+      ? detail.items.filter((line) => line.giftKind === giftKind)
+      : detail.items;
     check(
-      detail.items.length === 1,
+      lines.length === 1,
       "notification fulfillment fixture targets one actual order line",
     );
-    const line = detail.items[0];
+    const line = lines[0];
     let action;
     if (status === "ON_HOLD") action = "HOLD";
     else if (status === "DELIVERED") action = "DELIVER";

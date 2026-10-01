@@ -640,6 +640,16 @@
         "up": "ee45bad15772c8822b9e1aa89efddce37a244db437cefd0c45f86393bd0cfa05",
         "down": "85f888eafadfb6fd48a1f32d9a22f111ab6e6639bc3c58d463c26a6274c2ba4c"
       }
+    },
+    {
+      "version": "0065",
+      "name": "notification-current-event",
+      "up": "database/migrations/0065_notification-current-event.up.sql",
+      "down": "database/migrations/0065_notification-current-event.down.sql",
+      "sha256": {
+        "up": "7e8a828e37fd8f04d6489a8ef8565b839207ea36bb00912c56d75e02d6a7b2af",
+        "down": "71f13dca547c035f8df718668892ec7d21343b0ea2a456d3130caf3a732a5dc8"
+      }
     }
   ]
 }
