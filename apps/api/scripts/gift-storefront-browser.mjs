@@ -315,8 +315,12 @@ export async function verifyGiftStorefrontBrowser({
           ".gift-detail-information, .gift-description-blocks, #gift-information-title, #gift-delivery-title",
         )
         .count()) === 0 &&
+        // This fixture's summary repeats its subtitle and its long text is a structured
+        // legacy document, which the page no longer shows (SPEC 6.1.0): the subtitle stays.
         (await page
-          .locator(".gift-detail-summary .gift-short-description")
+          .locator(
+            ".gift-detail-summary :is(.gift-subtitle, .gift-short-description)",
+          )
           .count()) >= 1,
       "the gift page shows its summary and no separate details or delivery section",
     );
