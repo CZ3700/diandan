@@ -11,7 +11,7 @@ vi.mock("../server/public-gift-browse", () => ({
     pageInfo: { totalPages: 0 },
   }),
 }));
-it("retains the artist gallery after the last browsable wish is gone", async () => {
+it("shows only a concise artist-specific empty state when there are no wishes", async () => {
   const html = renderToStaticMarkup(
     await ArtistWishes({
       artist: {
@@ -21,9 +21,8 @@ it("retains the artist gallery after the last browsable wish is gone", async () 
       copy,
     }),
   );
-  expect(html).toContain(
-    "/en/wish-gallery?idol=00000000-0000-4000-8000-000000000001",
-  );
-  expect(html).toContain(copy.giftEmpty);
+  expect(html).toContain("This artist has not added any wish gifts yet.");
+  expect(html).not.toContain(copy.wishOnlyOnce);
+  expect(html).not.toContain("wish-gallery-heading");
   expect(html).not.toContain("gift-directory-grid");
 });

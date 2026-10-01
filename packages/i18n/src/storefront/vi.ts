@@ -344,6 +344,7 @@ const copy = {
   marketInvalid:
     "Thị trường hoặc tiền tệ này không khả dụng. Hãy chọn tổ hợp có sẵn.",
   wishTitle: "Nguyện vọng của nghệ sĩ",
+  artistWishesEmpty: "Nghệ sĩ này chưa thêm quà theo nguyện vọng.",
   wishOnlyFor: "Quà theo nguyện vọng dành cho {artist}",
   wishOpen: "Đang chờ ủng hộ",
   wishPaymentPending: "Đang xử lý thanh toán",

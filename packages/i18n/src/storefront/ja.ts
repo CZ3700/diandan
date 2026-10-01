@@ -348,6 +348,8 @@ const copy = {
   marketInvalid:
     "このマーケットと通貨の組み合わせは利用できません。選び直してください。",
   wishTitle: "アーティストのウィッシュ",
+  artistWishesEmpty:
+    "このアーティストはまだウィッシュギフトを設定していません。",
   wishOnlyFor: "{artist}へのウィッシュギフト",
   wishOpen: "サポート受付中",
   wishPaymentPending: "お支払いを確認中",

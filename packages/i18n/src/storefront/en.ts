@@ -350,6 +350,7 @@ const copy = {
   marketInvalid:
     "This market or currency is unavailable. Please select an available combination.",
   wishTitle: "Artist wishes",
+  artistWishesEmpty: "This artist has not added any wish gifts yet.",
   wishOnlyFor: "A wish for {artist}",
   wishOpen: "Available to support",
   wishPaymentPending: "Payment in progress",

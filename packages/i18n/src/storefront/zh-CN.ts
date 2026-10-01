@@ -318,6 +318,7 @@ const copy = {
   marketSelected: "已选择",
   marketInvalid: "该地区或币种不可用，请重新选择可用组合。",
   wishTitle: "艺人心愿",
+  artistWishesEmpty: "该艺人尚未设置心愿礼物",
   wishOnlyFor: "送给{artist}的心愿礼物",
   wishOpen: "等待支持",
   wishPaymentPending: "付款处理中",

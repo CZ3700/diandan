@@ -31,31 +31,27 @@ export async function ArtistWishes({
   }).toString();
   return (
     <section
-      className="storefront-section artist-wishes"
-      aria-labelledby="artist-wishes-title"
+      className="storefront-section gift-directory artist-wishes"
+      aria-label={copy.wishTitle}
     >
-      <div className="wish-gallery-heading">
-        <div>
-          <h2 id="artist-wishes-title">{copy.wishTitle}</h2>
-          <p>{copy.wishOnlyOnce}</p>
-        </div>
-        <a
-          className="storefront-text-link"
-          href={storefrontHref(
-            locale,
-            "/wish-gallery",
-            new URLSearchParams({ idol: artist.id }).toString(),
-          )}
-        >
-          {copy.wishShowcaseTitle}
-        </a>
-      </div>
       {result.outcome === "FAILURE" ? (
         <p role="status">{copy.contentErrorBody}</p>
       ) : result.items.length === 0 ? (
-        <p>{copy.giftEmpty}</p>
+        <p>{copy.artistWishesEmpty}</p>
       ) : (
         <>
+          <div className="wish-directory-intro">
+            <a
+              className="storefront-text-link wish-gallery-title"
+              href={storefrontHref(
+                locale,
+                "/wish-gallery",
+                new URLSearchParams({ idol: artist.id }).toString(),
+              )}
+            >
+              {copy.wishShowcaseTitle}
+            </a>
+          </div>
           <ul className="gift-directory-grid">
             {result.items.map((gift) => (
               <GiftCard
@@ -64,7 +60,7 @@ export async function ArtistWishes({
                 locale={locale}
                 copy={copy}
                 contextQuery={query}
-                headingLevel={3}
+                headingLevel={2}
               />
             ))}
           </ul>

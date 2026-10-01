@@ -5,6 +5,7 @@ import { loadStorefrontCopy } from "./messages.js";
 
 const keys = [
   "wishTitle",
+  "artistWishesEmpty",
   "wishOnlyFor",
   "wishOpen",
   "wishPaymentPending",

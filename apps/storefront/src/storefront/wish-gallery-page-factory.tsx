@@ -44,7 +44,9 @@ export function createWishGalleryPage(locale: SupportedLocale) {
           <div className="wish-gallery-heading">
             <div>
               <p className="storefront-eyebrow">{copy.wishTitle}</p>
-              <h1 id="wish-gallery-title">{copy.wishShowcaseTitle}</h1>
+              <h1 id="wish-gallery-title" className="wish-gallery-title">
+                {copy.wishShowcaseTitle}
+              </h1>
               <p>{copy.wishShowcaseIntro}</p>
             </div>
             <a

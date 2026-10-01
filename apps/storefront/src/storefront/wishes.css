@@ -12,8 +12,54 @@
 }
 .wish-gallery-heading p,
 .wish-directory-intro p {
-  max-width: 44rem;
+  max-width: var(--layout-reading-max);
   color: var(--color-text-muted);
+}
+.storefront .wish-gallery-title {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block-end: var(--space-3);
+  color: var(--color-accent);
+}
+.wish-gallery-title::before {
+  content: "";
+  flex: none;
+  inline-size: var(--space-4);
+  block-size: var(--space-4);
+  background: currentColor;
+  clip-path: polygon(
+    50% 0,
+    62% 38%,
+    100% 50%,
+    62% 62%,
+    50% 100%,
+    38% 62%,
+    0 50%,
+    38% 38%
+  );
+}
+.wish-gallery-title::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  block-size: var(--border-width);
+  background: linear-gradient(90deg, currentColor, transparent);
+  opacity: 0.45;
+}
+a.wish-gallery-title::before,
+a.wish-gallery-title::after {
+  transition:
+    transform var(--motion-control-effective) var(--ease-out),
+    opacity var(--motion-control-effective) var(--ease-out);
+}
+a.wish-gallery-title:is(:hover, :focus-visible)::before {
+  transform: rotate(90deg);
+}
+a.wish-gallery-title:is(:hover, :focus-visible)::after {
+  opacity: 0.85;
 }
 .wish-gallery-grid {
   display: grid;
@@ -79,8 +125,8 @@
   gap: var(--space-3);
 }
 .wish-gallery-artist > *:first-child {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: calc(var(--space-8) + var(--space-2));
+  height: calc(var(--space-8) + var(--space-2));
   border-radius: 50%;
   overflow: hidden;
 }
@@ -114,15 +160,15 @@
 }
 .wish-checkbox input {
   flex: none;
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-block-start: 0.15rem;
+  width: calc(var(--space-4) + var(--space-1));
+  height: calc(var(--space-4) + var(--space-1));
+  margin-block-start: calc(var(--space-1) * 0.6);
   accent-color: var(--color-accent);
 }
 .wish-gallery-choice input:not([type="checkbox"]),
 .wish-gallery-choice select {
   width: 100%;
-  min-height: 2.75rem;
+  min-height: calc(var(--space-12) - var(--space-1));
   padding: var(--space-3);
   background: var(--color-bg);
   color: var(--color-text);
@@ -150,12 +196,12 @@
 }
 .order-wish-heading .wish-medallion {
   flex: none;
-  width: 3rem;
-  height: 3rem;
+  width: var(--space-12);
+  height: var(--space-12);
   color: var(--color-accent);
 }
 .order-wish-record button {
-  min-height: 2.75rem;
+  min-height: calc(var(--space-12) - var(--space-1));
   margin-block: var(--space-3);
 }
 @media (max-width: 64rem) {
@@ -163,7 +209,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-@media (max-width: 40rem) {
+@media (max-width: 48rem) {
   .wish-gallery-grid {
     grid-template-columns: minmax(0, 1fr);
   }

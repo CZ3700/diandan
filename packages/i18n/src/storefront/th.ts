@@ -334,6 +334,7 @@ const copy = {
   marketSelected: "เลือกแล้ว",
   marketInvalid: "ตลาดหรือสกุลเงินนี้ไม่พร้อม กรุณาเลือกคู่ที่ใช้ได้",
   wishTitle: "ความปรารถนาของศิลปิน",
+  artistWishesEmpty: "ศิลปินคนนี้ยังไม่ได้เพิ่มของขวัญตามความปรารถนา",
   wishOnlyFor: "ของขวัญตามความปรารถนาสำหรับ {artist}",
   wishOpen: "พร้อมรับการสนับสนุน",
   wishPaymentPending: "กำลังดำเนินการชำระเงิน",

@@ -111,9 +111,8 @@ export function GiftListing({
       />
       {kind === "WISH" && (
         <div className="wish-directory-intro">
-          <p>{copy.wishOnlyOnce}</p>
           <a
-            className="storefront-text-link"
+            className="storefront-text-link wish-gallery-title"
             href={storefrontHref(locale, "/wish-gallery", galleryQuery)}
           >
             {copy.wishShowcaseTitle}

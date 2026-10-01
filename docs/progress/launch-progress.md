@@ -1,5 +1,16 @@
 # 当前上线进度
 
+## C-20261001 艺人心愿展示精简
+
+- LOCAL_ACCEPTED（本项本地验收；公开 TEST 待部署）；Codex root / hero_swatch_review / wish_picker_data；2026-10-01。已同步远端 576bd7fa 的人员管理计划，保护其 L3-13/14 并行范围；本项行为见 SPEC 6.4.1 §0.8。
+- 艺人页去掉节标题与一次性支持说明；有礼物直接显示卡片及现有展馆入口，无礼物仅“该艺人尚未设置心愿礼物”的对应语言短句，读取失败仍提示错误，超过四件仍可查看全部。目录的重复规则说明同步删除，购买/隐私/支付限制未变。
+- 展馆标题及入口增加主题色星光、渐变细线，链接悬停/键盘聚焦有轻微反馈，沿用减少动态设置；保留可访问名称，卡片标题调整为正确层级并复用现有目录样式。wishes.css 原11处令牌违规已处理，手机断点统一48rem，表单点击尺寸保持。
+- 空态既有回归先红后绿；七语文案/review 26测试通过，review仅更新DRAFT摘要。中日字形按完整当前词库离线重生，规范格式后两次10文件逐字节一致、20字体测试通过；此前字体词库漂移也已消除。
+- 实际组件/本地字体的 Chromium 七语×390/1440×深浅×6状态共168组合、1652项通过；含空/错/有礼物/更多、标题/入口、键盘、实际字体、无横溢与reduced-motion，另5个断点/表单尺寸组合通过。API为隔离夹具，未冒充线上内容或交易闭环。
+- 隔离check:dev全部通过（workspace/domain/format/lint、typecheck69/test69/build38）；设计基础57项及静态扫描通过，动效12通过/1按本地模式跳过，独立审查与S.U.P.E.R复核完成；交付源与隔离副本逐文件一致。
+- 完整pnpm check现已越过字体/设计/UI检查，停在既有check-ci对security:regressions脚本的旧预期与package.json不一致；这两个文件均与576bd7fa一致，后续正式门禁未执行，不宣称整仓正式验收。
+- 证据 `output/artist-wishes-minimal-20261001/FINAL.md`、`output/playwright/artist-wishes-minimal-20261001/REVIEW.md`；未部署、未修改业务数据或既有体验服务。
+
 ## C-20261001 心愿艺人头像选择修复
 
 - LOCAL_ACCEPTED（本项源码与本地验证；公开 TEST 待部署）；Codex root / wish_picker_data / wish_picker_ui / hero_swatch_review；2026-10-01。基线同步至 316f7d75；修复添加心愿时艺人列表和已选项展示内部 handle、没有头像的问题。
