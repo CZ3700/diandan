@@ -8,7 +8,7 @@ import {
   rm,
   writeFile,
 } from "node:fs/promises";
-import { createServer, type AddressInfo } from "node:net";
+import { createServer, Socket, type AddressInfo } from "node:net";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
@@ -40,6 +40,7 @@ type NativePostgresClient = {
   connect(): Promise<unknown>;
   query(sql: string): Promise<unknown>;
   end(): Promise<unknown>;
+  abort?(): void;
 };
 
 export type NativePostgresOptions = Readonly<{
@@ -165,6 +166,20 @@ async function cleanOwnedCluster({
 
 const settleTimeoutMs = 5_000;
 
+/** Only the shutdown probe owns this socket; normal database clients are unchanged. */
+function createSettleClient(connection: PostgresConnectionConfig) {
+  const socket = new Socket();
+  const client = new pg.Client({ ...connection, stream: () => socket });
+  // Timeout can disconnect an idle probe before pg has observed its socket close.
+  client.on("error", () => undefined);
+  return {
+    connect: () => client.connect(),
+    query: (sql: string) => client.query(sql),
+    end: () => client.end(),
+    abort: () => socket.destroy(),
+  };
+}
+
 /**
  * A pool the operation already closed can still be disconnecting: pg-pool
  * settles end() before its clients' sockets close. A fast shutdown under such
@@ -177,25 +192,49 @@ async function settleClientConnections(
   connection: PostgresConnectionConfig,
 ): Promise<void> {
   const client = createClient({ ...connection, database: "postgres" });
-  try {
-    await client.connect();
-    const deadline = Date.now() + settleTimeoutMs;
-    while (Date.now() < deadline) {
-      const result = (await client.query(
-        "SELECT count(*)::integer AS open FROM pg_stat_activity WHERE backend_type = 'client backend' AND pid <> pg_backend_pid()",
-      )) as { rows?: readonly { open?: unknown }[] } | undefined;
-      const open = result?.rows?.[0]?.open;
-      if (typeof open !== "number" || open === 0) return;
-      await delay(25);
-    }
-  } catch {
-    // Settling is best effort; the owned cluster is stopped either way.
-  } finally {
+  const deadline = new AbortController();
+  let closing: Promise<unknown> | undefined;
+  const close = () => (closing ??= Promise.resolve().then(() => client.end()));
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  const expired = new Promise<void>((resolve) => {
+    timeout = setTimeout(() => {
+      deadline.abort();
+      // Observe late rejection even when a stalled connect/query never finishes.
+      void close().catch(() => undefined);
+      try {
+        client.abort?.();
+      } catch {
+        // The probe may already be disconnected; cluster cleanup is still required.
+      }
+      resolve();
+    }, settleTimeoutMs);
+  });
+  const settle = async () => {
     try {
-      await client.end();
+      await client.connect();
+      while (!deadline.signal.aborted) {
+        const result = (await client.query(
+          "SELECT count(*)::integer AS open FROM pg_stat_activity WHERE backend_type = 'client backend' AND pid <> pg_backend_pid()",
+        )) as { rows?: readonly { open?: unknown }[] } | undefined;
+        const open = result?.rows?.[0]?.open;
+        if (typeof open !== "number" || open === 0) return;
+        await delay(25, undefined, { signal: deadline.signal });
+      }
     } catch {
-      // A failed settle connection may already be closed.
+      // Settling is best effort; the owned cluster is stopped either way.
+    } finally {
+      try {
+        await close();
+      } catch {
+        // A failed settle connection may already be closed.
+      }
     }
+  };
+  try {
+    // One deadline covers connect, every query, and release of this private probe.
+    await Promise.race([settle(), expired]);
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
@@ -320,7 +359,10 @@ export async function withNativeTestPostgres<Result>(
     );
   }
   if (connection !== undefined)
-    await settleClientConnections(createClient, connection);
+    await settleClientConnections(
+      options.createClient ?? createSettleClient,
+      connection,
+    );
   try {
     await cleanOwnedCluster({ directory, dataDirectory, runId, invoke });
   } catch (error) {

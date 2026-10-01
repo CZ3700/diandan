@@ -703,19 +703,22 @@ export async function verifyAdminOrders({ context }) {
         "SELECT i.gift_kind,f.status,f.version::int version,f.prepared_at IS NOT NULL prepared,f.delivered_at IS NOT NULL delivered FROM order_items i JOIN fulfillments f ON f.order_item_id=i.id AND f.order_id=i.order_id WHERE i.order_id=$1 ORDER BY i.created_at,i.id",
         [mixed.orderId],
       );
+      // Checkout lines share an event time; UUID order is not cart insertion order.
       check(
         JSON.stringify(
-          lines.map((l) => [
-            l.gift_kind,
-            l.status,
-            l.version,
-            l.prepared,
-            l.delivered,
-          ]),
+          lines
+            .map((l) => [
+              l.gift_kind,
+              l.status,
+              l.version,
+              l.prepared,
+              l.delivered,
+            ])
+            .toSorted(([left], [right]) => left.localeCompare(right, "en")),
         ) ===
           JSON.stringify([
-            ["VIRTUAL", "DELIVERED", 2, true, true],
             ["PHYSICAL", "PENDING", 1, false, false],
+            ["VIRTUAL", "DELIVERED", 2, true, true],
           ]),
         "the VIRTUAL line is delivered by the system at payment while the studio line stays pending",
       );
@@ -733,8 +736,9 @@ export async function verifyAdminOrders({ context }) {
           typeof events[0].task_name === "string",
         "digital delivery leaves exactly one SYSTEM fulfillment event with its audit record",
       );
+      // Checkout also emits PENDING events; this proof targets digital delivery.
       const outbox = await sql(
-        "SELECT x.payload_status,(SELECT count(*)::int FROM notification_source_authority(x.id)) sources FROM outbox_events x WHERE x.event_type='FULFILLMENT_STATUS_CHANGED' AND x.secondary_subject_id=$1",
+        "SELECT x.payload_status,(SELECT count(*)::int FROM notification_source_authority(x.id)) sources FROM outbox_events x WHERE x.event_type='FULFILLMENT_STATUS_CHANGED' AND x.secondary_subject_id=$1 AND x.payload_status='DELIVERED'",
         [mixed.orderId],
       );
       check(
@@ -748,8 +752,8 @@ export async function verifyAdminOrders({ context }) {
         [mixed.orderId],
       );
       check(
-        JSON.stringify(snapshot[0]?.kinds) ===
-          JSON.stringify(["VIRTUAL", "PHYSICAL"]),
+        JSON.stringify(snapshot[0]?.kinds?.toSorted()) ===
+          JSON.stringify(["PHYSICAL", "VIRTUAL"]),
         "notification variables carry each line's purchase-time gift kind",
       );
       let dd = await detail(mixed.orderId);

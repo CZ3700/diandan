@@ -3,8 +3,6 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { Client } from "pg";
-import { runMigrations } from "../dist/index.js";
-import { rollbackEmptyNotifications } from "./notification-rollback-prefix.mjs";
 
 async function snapshot(client) {
   const result = {};
@@ -29,6 +27,7 @@ async function snapshot(client) {
     "inventory_ledger",
     "idempotency_records",
     "outbox_events",
+    "media_processing_jobs",
     "schema_migrations",
   ]) {
     const rows = (
@@ -52,41 +51,25 @@ export async function verifyCheckoutPreflightRollbackProtection({
   await client.connect();
   let open = false;
   try {
+    const manifest = JSON.parse(
+      await readFile(
+        path.join(workspaceRoot, "database/migrations/manifest.json"),
+        "utf8",
+      ),
+    );
     const head = (
       await client.query(
         "SELECT max(version) version FROM public.schema_migrations",
       )
-    ).rows[0].version;
-    // The shared prefix guard rejects unknown heads or retained history.
-    await rollbackEmptyNotifications({ client, clientConfig, workspaceRoot });
-    const orderAccessDown = await runMigrations({
-      clientConfig,
-      workspaceRoot,
-      command: { direction: "down", confirmVersion: "0028" },
-    });
-    assert.deepEqual(
-      [orderAccessDown.revertedVersions, orderAccessDown.currentVersion],
-      [["0028"], "0027"],
-      "empty order-access migration rolls back before preserved history probes",
+    ).rows[0]?.version;
+    assert.equal(
+      head,
+      manifest.migrations.at(-1).version,
+      "checkout rollback proof requires the latest manifest head",
     );
-    const orderPaymentDown = await runMigrations({
-      clientConfig,
-      workspaceRoot,
-      command: { direction: "down", confirmVersion: "0027" },
-    });
-    assert.deepEqual(
-      [orderPaymentDown.revertedVersions, orderPaymentDown.currentVersion],
-      [["0027"], "0026"],
-    );
-    const paymentDown = await runMigrations({
-      clientConfig,
-      workspaceRoot,
-      command: { direction: "down", confirmVersion: "0026" },
-    });
-    assert.deepEqual(
-      [paymentDown.revertedVersions, paymentDown.currentVersion],
-      [["0026"], "0025"],
-    );
+    // Accepted daily publication retains filled media jobs. Rewinding the later
+    // migrations is both forbidden and unnecessary: exercise 0025's own guard at
+    // the current schema, then roll back the probe without changing migration history.
     const before = await snapshot(client);
     assert.ok(
       before.checkout_preflight_receipts.count > 0,
@@ -99,6 +82,17 @@ export async function verifyCheckoutPreflightRollbackProtection({
     assert.equal(
       before.checkout_outbox_events.count,
       before.checkout_preflight_receipts.count,
+    );
+    const filledMediaJobs = Number(
+      (
+        await client.query(
+          "SELECT count(*)::text AS count FROM public.media_processing_jobs WHERE fit='COVER_ALLOW_ENLARGE'",
+        )
+      ).rows[0]?.count,
+    );
+    assert.ok(
+      Number.isSafeInteger(filledMediaJobs) && filledMediaJobs >= 0,
+      "filled media history count is known",
     );
     const down = await readFile(
       path.join(
@@ -125,45 +119,39 @@ export async function verifyCheckoutPreflightRollbackProtection({
       true,
       "exact immutable checkout history guard refuses down",
     );
-    assert.deepEqual(
-      await snapshot(client),
-      before,
-      "direct SQL rejection preserves all 21 table counts and bytes",
-    );
-    await assert.rejects(
-      runMigrations({
-        clientConfig,
-        workspaceRoot,
-        command: { direction: "down", confirmVersion: "0025" },
-      }),
-      {
-        name: "MigrationExecutionError",
-        message: "migration 0025 down failed",
-      },
-    );
     const after = await snapshot(client);
     assert.deepEqual(
       after,
       before,
-      "normal migration runner rejection preserves every checkout, inventory and private record",
+      "direct SQL rejection preserves all 22 table counts and bytes",
     );
-    const restored = await runMigrations({
-      clientConfig,
-      workspaceRoot,
-      command: { direction: "up" },
-    });
-    assert.equal(restored.currentVersion, head);
+    assert.equal(
+      (
+        await client.query(
+          "SELECT max(version) version FROM public.schema_migrations",
+        )
+      ).rows[0]?.version,
+      head,
+      "direct checkout guard proof leaves the migration head unchanged",
+    );
     return {
       schemaVersion: 1,
       status: "PASS",
-      assertions: 14,
+      proof: "CURRENT_SCHEMA_DIRECT_SQL",
+      migrationHead: head,
+      guards: ["0025"],
+      filledMediaJobs,
+      assertions: 8,
       scope:
-        "Accepted checkout blocks destructive 0025 rollback; 21 table counts and hashes remain exact",
+        "Accepted checkout blocks destructive 0025 down SQL at the current schema; 22 table counts and hashes remain exact",
       before,
       after,
     };
   } finally {
-    if (open) await client.query("ROLLBACK");
-    await client.end();
+    try {
+      if (open) await client.query("ROLLBACK");
+    } finally {
+      await client.end();
+    }
   }
 }

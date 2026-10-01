@@ -8,7 +8,7 @@ import { rollbackEmptyNotifications } from "./notification-rollback-prefix.mjs";
 
 // Test-only verification against the caller's real, already-published fixture.
 // Raw rows, credentials and ciphertext never enter the returned evidence.
-async function snapshot(client) {
+async function snapshot(client, additionalTables = []) {
   const result = {};
   for (const table of [
     "carts",
@@ -17,6 +17,7 @@ async function snapshot(client) {
     "outbox_events",
     "idempotency_records",
     "schema_migrations",
+    ...additionalTables,
   ]) {
     const rows = (
       await client.query(
@@ -29,6 +30,125 @@ async function snapshot(client) {
     };
   }
   return result;
+}
+
+// Normal daily publication retains 0041 media history, so it cannot be rewound
+// to 0023. Probe the original guards transactionally at the current schema;
+// the PENDING path below still exercises the runner with 0023 as the real head.
+async function verifyPublishedDailyGuards({ client, workspaceRoot, head }) {
+  const manifest = JSON.parse(
+    await readFile(
+      path.join(workspaceRoot, "database/migrations/manifest.json"),
+      "utf8",
+    ),
+  );
+  assert.equal(
+    head,
+    manifest.migrations.at(-1).version,
+    "daily guard proof requires the latest manifest head",
+  );
+  const dynamicOnlyIntents = Number(
+    (
+      await client.query(`SELECT count(*)::text AS count FROM public.cart_items item
+      JOIN public.support_intents intent ON intent.cart_item_id=item.id
+      JOIN public.gift_variant_recipient_rules rule ON rule.gift_variant_id=item.gift_variant_id AND rule.rule='ALL_ACTIVE_ARTISTS'
+      WHERE NOT EXISTS (SELECT 1 FROM public.gift_variant_idol_eligibility explicit
+        WHERE explicit.gift_variant_id=item.gift_variant_id AND explicit.idol_id=intent.idol_id)`)
+    ).rows[0]?.count,
+  );
+  assert.ok(
+    Number.isSafeInteger(dynamicOnlyIntents) && dynamicOnlyIntents > 0,
+    "fixture must contain a real accepted cart intent owned only through the daily rule",
+  );
+  const filledMediaJobs = Number(
+    (
+      await client.query(
+        "SELECT count(*)::text AS count FROM public.media_processing_jobs WHERE fit='COVER_ALLOW_ENLARGE'",
+      )
+    ).rows[0]?.count,
+  );
+  assert.ok(
+    Number.isSafeInteger(filledMediaJobs) && filledMediaJobs > 0,
+    "daily fixture must contain retained filled media processing history",
+  );
+  const dailyTables = [
+    "gift_variant_recipient_rules",
+    "gift_variant_idol_eligibility",
+    "gifts",
+    "gift_variants",
+    "media_processing_jobs",
+    "media_assets",
+    "management_operations",
+    "management_defaults",
+    "daily_publication_revisions",
+    "daily_publication_manifests",
+    "audit_logs",
+  ];
+  const before = await snapshot(client, dailyTables);
+  let after;
+  const guards = [
+    [
+      "0023",
+      "0023_cart-runtime-recipient-rules.down.sql",
+      "cart ownership requires the daily recipient rule migration",
+    ],
+    [
+      "0041",
+      "0041_daily-image-fill.down.sql",
+      "daily image fill rollback would discard filled media processing history",
+    ],
+  ];
+  for (const [version, filename, message] of guards) {
+    const down = await readFile(
+      path.join(workspaceRoot, "database/migrations", filename),
+      "utf8",
+    );
+    let rejected = false;
+    await client.query("BEGIN");
+    try {
+      await client.query(down);
+    } catch (error) {
+      rejected = error.code === "55000" && error.message === message;
+    } finally {
+      await client.query("ROLLBACK");
+    }
+    assert.equal(
+      rejected,
+      true,
+      `the exact ${version} history guard must reject rollback`,
+    );
+    after = await snapshot(client, dailyTables);
+    assert.deepEqual(
+      after,
+      before,
+      "direct SQL rejection preserves all cart, daily publication and media history",
+    );
+  }
+  assert.equal(
+    (
+      await client.query(
+        "SELECT max(version) AS version FROM public.schema_migrations",
+      )
+    ).rows[0]?.version,
+    head,
+    "direct historical guard probes preserve the current migration head",
+  );
+  return {
+    schemaVersion: 1,
+    status: "PASS",
+    scope:
+      "Existing daily-rule-only cart ownership and filled media block unsafe 0023 and 0041 rollback at the current schema",
+    mode: "DYNAMIC",
+    proof: "CURRENT_SCHEMA_DIRECT_SQL",
+    migrationHead: head,
+    guards: guards.map(([version]) => version),
+    sqlState: "55000",
+    dynamicOnlyIntents,
+    filledMediaJobs,
+    assertions: 8,
+    before,
+    after,
+  };
 }
 
 export async function verifyCartRuntimeRollbackProtection({
@@ -50,6 +170,10 @@ export async function verifyCartRuntimeRollbackProtection({
         "SELECT version FROM public.schema_migrations ORDER BY version DESC LIMIT 1",
       )
     ).rows[0]?.version;
+    if (mode === "DYNAMIC") {
+      step = "current-schema daily ownership and media guards";
+      return await verifyPublishedDailyGuards({ client, workspaceRoot, head });
+    }
     // The shared prefix guard rejects unknown heads or retained history.
     step = "rewind to 0028";
     await rollbackEmptyNotifications({ client, clientConfig, workspaceRoot });
@@ -125,30 +249,24 @@ export async function verifyCartRuntimeRollbackProtection({
         WHERE explicit.gift_variant_id=item.gift_variant_id AND explicit.idol_id=intent.idol_id)`)
       ).rows[0]?.count,
     );
-    const count =
-      mode === "DYNAMIC"
-        ? dynamicCount
-        : Number(
-            (
-              await client.query(
-                `SELECT count(*)::text count FROM public.support_intents intent
+    const count = Number(
+      (
+        await client.query(
+          `SELECT count(*)::text count FROM public.support_intents intent
        JOIN public.cart_items item ON item.id=intent.cart_item_id
        JOIN public.gift_variant_idol_eligibility explicit ON explicit.gift_variant_id=item.gift_variant_id AND explicit.idol_id=intent.idol_id
        WHERE intent.moderation_status='PENDING' AND intent.moderation_decision_kind IS NULL`,
-              )
-            ).rows[0]?.count,
-          );
-    if (mode === "PENDING")
-      assert.equal(
-        dynamicCount,
-        0,
-        "pending-only rollback proof cannot be satisfied by the dynamic rule guard",
-      );
+        )
+      ).rows[0]?.count,
+    );
+    assert.equal(
+      dynamicCount,
+      0,
+      "pending-only rollback proof cannot be satisfied by the dynamic rule guard",
+    );
     assert.ok(
       Number.isSafeInteger(count) && count > 0,
-      mode === "DYNAMIC"
-        ? "fixture must contain a real accepted cart intent owned only through the daily rule"
-        : "fixture must contain a real explicit-recipient pending intent without fabricated moderation",
+      "fixture must contain a real explicit-recipient pending intent without fabricated moderation",
     );
     const before = await snapshot(client);
     const down = await readFile(
@@ -168,9 +286,7 @@ export async function verifyCartRuntimeRollbackProtection({
       rejected =
         error.code === "55000" &&
         error.message ===
-          (mode === "DYNAMIC"
-            ? "cart ownership requires the daily recipient rule migration"
-            : "pending support intents require null-safe moderation validation");
+          "pending support intents require null-safe moderation validation";
     }
     await client.query("ROLLBACK");
     transactionOpen = false;
@@ -215,15 +331,10 @@ export async function verifyCartRuntimeRollbackProtection({
     return {
       schemaVersion: 1,
       status: "PASS",
-      scope:
-        mode === "DYNAMIC"
-          ? "Existing daily-rule-only cart ownership blocks unsafe 0023 rollback"
-          : "Existing pending moderation intents block unsafe 0023 rollback",
+      scope: "Existing pending moderation intents block unsafe 0023 rollback",
       mode,
-      ...(mode === "DYNAMIC"
-        ? { dynamicOnlyIntents: count }
-        : { pendingIntents: count }),
-      assertions: mode === "DYNAMIC" ? 16 : 17,
+      pendingIntents: count,
+      assertions: 17,
       before,
       after,
     };
