@@ -96,4 +96,47 @@ describe("native TEST PostgreSQL tools", () => {
       "CREATE DATABASE fan_support_test",
     );
   });
+
+  test("stops the cluster only after connections the operation closed have left", async () => {
+    const { mkdir, rm, writeFile } = await import("node:fs/promises");
+    const events: string[] = [];
+    let dataDirectory = "";
+    const run: NativePostgresRun = async (binary, args) => {
+      const tool = path.basename(binary);
+      if (args[0] === "--version")
+        return { stdout: `${tool} (PostgreSQL) 18.6\n` };
+      if (tool === "initdb") {
+        dataDirectory = args[args.indexOf("-D") + 1]!;
+        await mkdir(dataDirectory);
+      } else if (args.includes("start")) {
+        const canonical = dataDirectory.split(path.sep).join("/");
+        await writeFile(
+          path.join(dataDirectory, "postmaster.pid"),
+          `4242\n${canonical}\n1790000000\n5432\n\n127.0.0.1\n\nready   \n`,
+        );
+      } else if (args.includes("stop")) {
+        events.push("stop");
+        await rm(path.join(dataDirectory, "postmaster.pid"));
+      }
+      return { stdout: "" };
+    };
+    // A closed pool's two connections are still leaving when the operation returns.
+    const open = [2, 1, 0];
+    const client = {
+      connect: vi.fn(),
+      end: vi.fn(),
+      query: vi.fn(async (sql: string) => {
+        if (!sql.includes("pg_stat_activity")) return { rows: [] };
+        const count = open.shift() ?? 0;
+        events.push(`open ${count}`);
+        return { rows: [{ open: count }] };
+      }),
+    };
+    await withNativeTestPostgres(async () => "served", {
+      binDirectory: path.resolve("/owned/postgres/bin"),
+      run,
+      createClient: () => client,
+    });
+    expect(events).toEqual(["open 2", "open 1", "open 0", "stop"]);
+  });
 });

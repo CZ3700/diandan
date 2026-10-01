@@ -12,6 +12,7 @@ import { createServer, type AddressInfo } from "node:net";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
+import { setTimeout as delay } from "node:timers/promises";
 import { promisify } from "node:util";
 import pg from "pg";
 
@@ -162,6 +163,42 @@ async function cleanOwnedCluster({
   await rm(directory, { recursive: true });
 }
 
+const settleTimeoutMs = 5_000;
+
+/**
+ * A pool the operation already closed can still be disconnecting: pg-pool
+ * settles end() before its clients' sockets close. A fast shutdown under such
+ * a connection reaches its client as 57P01 after the owner stopped listening,
+ * so the cluster is stopped only once other client backends have left, or
+ * after a short bound for connections an operation never closed.
+ */
+async function settleClientConnections(
+  createClient: NonNullable<NativePostgresOptions["createClient"]>,
+  connection: PostgresConnectionConfig,
+): Promise<void> {
+  const client = createClient({ ...connection, database: "postgres" });
+  try {
+    await client.connect();
+    const deadline = Date.now() + settleTimeoutMs;
+    while (Date.now() < deadline) {
+      const result = (await client.query(
+        "SELECT count(*)::integer AS open FROM pg_stat_activity WHERE backend_type = 'client backend' AND pid <> pg_backend_pid()",
+      )) as { rows?: readonly { open?: unknown }[] } | undefined;
+      const open = result?.rows?.[0]?.open;
+      if (typeof open !== "number" || open === 0) return;
+      await delay(25);
+    }
+  } catch {
+    // Settling is best effort; the owned cluster is stopped either way.
+  } finally {
+    try {
+      await client.end();
+    } catch {
+      // A failed settle connection may already be closed.
+    }
+  }
+}
+
 /** A new, private TEST cluster only; no existing connection or data-directory input. */
 export async function withNativeTestPostgres<Result>(
   operation: (
@@ -207,6 +244,9 @@ export async function withNativeTestPostgres<Result>(
     mode: 0o600,
     flag: "wx",
   });
+  const createClient =
+    options.createClient ?? ((config) => new pg.Client(config));
+  let connection: PostgresConnectionConfig | undefined;
   let value: Result | undefined;
   let failure: Error | undefined;
   try {
@@ -252,7 +292,7 @@ export async function withNativeTestPostgres<Result>(
       "30",
       "start",
     ]);
-    const connection = {
+    connection = {
       host: "127.0.0.1",
       port,
       user: "fan_support_test",
@@ -261,9 +301,7 @@ export async function withNativeTestPostgres<Result>(
       ssl: false,
       connectionTimeoutMillis: 5000,
     };
-    const client = (
-      options.createClient ?? ((config) => new pg.Client(config))
-    )({ ...connection, database: "postgres" });
+    const client = createClient({ ...connection, database: "postgres" });
     try {
       await client.connect();
       await client.query("CREATE DATABASE fan_support_test");
@@ -281,6 +319,8 @@ export async function withNativeTestPostgres<Result>(
       "Native TEST PostgreSQL operation failed; inspect safe scenario evidence",
     );
   }
+  if (connection !== undefined)
+    await settleClientConnections(createClient, connection);
   try {
     await cleanOwnedCluster({ directory, dataDirectory, runId, invoke });
   } catch (error) {
