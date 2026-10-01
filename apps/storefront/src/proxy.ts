@@ -1,5 +1,4 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { resolveStorefrontPreviewConfig } from "@fan-support/config/server";
 import {
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
@@ -13,6 +12,7 @@ import {
   resolveRequestId,
 } from "@fan-support/observability";
 import { informationPageKeyFromPath } from "./storefront/information-page-path";
+import { previewEmbeddingOrigin } from "./server/preview-embedding";
 
 function checkoutPrivacy(response: NextResponse, pathname: string) {
   const orderPage = /^\/[^/]+\/(?:order-access|orders|thank-you)(?:\/|$)/u.test(
@@ -122,14 +122,7 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     );
   }
   if (layoutPreview) {
-    let adminOrigin: string | null = null;
-    try {
-      adminOrigin = resolveStorefrontPreviewConfig({
-        environment: process.env,
-      }).adminOrigin;
-    } catch {
-      /* Invalid configuration cannot broaden embedding. */
-    }
+    const adminOrigin = previewEmbeddingOrigin();
     response.headers.set("cache-control", "private, no-store");
     response.headers.set("x-robots-tag", "noindex, nofollow");
     response.headers.set("referrer-policy", "no-referrer");
