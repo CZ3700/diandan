@@ -19,16 +19,22 @@ function expectedDirectory(fixtures, scope, query) {
       .filter((artist) => artist.acceptingGifts)
       .map((artist) => artist.id),
   );
+  // SPEC 6.3.0: the fixture binds no wish, so its WISH gifts list without an offer and
+  // no artist filter includes them.
+  const unboundWish = (gift) => gift.giftKind === "WISH";
   const items = fixtures.gifts
     .filter((gift) => ["active", "paused"].includes(gift.status))
     .filter(
       (gift) =>
         !query.idol ||
-        gift.variants.some((variant) => variant.eligible.includes(query.idol)),
+        (!unboundWish(gift) &&
+          gift.variants.some((variant) =>
+            variant.eligible.includes(query.idol),
+          )),
     )
     .map((gift) => {
       const prices =
-        gift.status !== "active"
+        gift.status !== "active" || unboundWish(gift)
           ? []
           : gift.variants
               .filter(
