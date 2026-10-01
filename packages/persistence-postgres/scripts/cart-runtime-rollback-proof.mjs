@@ -43,6 +43,7 @@ export async function verifyCartRuntimeRollbackProtection({
   const client = new Client(clientConfig);
   await client.connect();
   let transactionOpen = false;
+  let step = "start";
   try {
     const head = (
       await client.query(
@@ -50,7 +51,9 @@ export async function verifyCartRuntimeRollbackProtection({
       )
     ).rows[0]?.version;
     // The shared prefix guard rejects unknown heads or retained history.
+    step = "rewind to 0028";
     await rollbackEmptyNotifications({ client, clientConfig, workspaceRoot });
+    step = "down 0028";
     const orderAccessDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -61,6 +64,7 @@ export async function verifyCartRuntimeRollbackProtection({
       [["0028"], "0027"],
       "empty order-access migration rolls back before preserved history probes",
     );
+    step = "down 0027";
     const orderPaymentDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -71,6 +75,7 @@ export async function verifyCartRuntimeRollbackProtection({
       [["0027"], "0026"],
       "empty order-payment application rolls back before existing history probes",
     );
+    step = "down 0026";
     const paymentDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -81,6 +86,7 @@ export async function verifyCartRuntimeRollbackProtection({
       [["0026"], "0025"],
       "empty payment runtime rolls back before preserved checkout history probes",
     );
+    step = "down 0025";
     const checkoutDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -100,6 +106,7 @@ export async function verifyCartRuntimeRollbackProtection({
       { mutations: 0, accesses: 0, events: 0 },
       "historical rollback proof cannot discard edit evidence",
     );
+    step = "down 0024";
     const editDown = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -151,6 +158,7 @@ export async function verifyCartRuntimeRollbackProtection({
       ),
       "utf8",
     );
+    step = "0023 guard probe";
     await client.query("BEGIN");
     transactionOpen = true;
     let rejected = false;
@@ -193,6 +201,7 @@ export async function verifyCartRuntimeRollbackProtection({
       before,
       "the normal migration runner preserves all existing data after rejection",
     );
+    step = "restore current head";
     const restored = await runMigrations({
       clientConfig,
       workspaceRoot,
@@ -218,6 +227,16 @@ export async function verifyCartRuntimeRollbackProtection({
       before,
       after,
     };
+  } catch (error) {
+    // The caller reports only RUNTIME or ASSERTION; name the step and the runner or
+    // assertion message (fixed text, no row data) so a CI failure can be located.
+    const fixedText =
+      error?.name === "MigrationExecutionError" ||
+      error?.name === "AssertionError";
+    console.error(
+      `Cart rollback proof diagnostic ${JSON.stringify({ mode, step, name: error?.name ?? null, code: typeof error?.code === "string" ? error.code : null, message: fixedText ? String(error.message).slice(0, 160) : null })}`,
+    );
+    throw error;
   } finally {
     if (transactionOpen) await client.query("ROLLBACK");
     await client.end();
