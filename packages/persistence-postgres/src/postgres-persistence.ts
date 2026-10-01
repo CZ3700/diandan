@@ -332,13 +332,24 @@ type PersistencePoolFactory = (
   config: NormalizedPostgresConnectionConfig,
 ) => ManagedPersistencePool;
 
+const consumeClosingPoolFailure = (): void => {
+  // A connection the pool already let go of has nothing left to report.
+};
+
 function createNodePostgresPool(
   config: NormalizedPostgresConnectionConfig,
 ): ManagedPersistencePool {
   const pool = new Pool(config as PoolConfig);
   return {
     connect: async () => (await pool.connect()) as TransactionClient,
-    end: () => pool.end(),
+    end: () => {
+      // pg-pool settles end() once it has detached its idle clients, before they
+      // finish disconnecting, and still re-emits their server errors (57P01 when
+      // the server stops right after). The owner removes its listener once end()
+      // settles, so those late errors are consumed here instead of crashing.
+      pool.on("error", consumeClosingPoolFailure);
+      return pool.end();
+    },
     on: (_event, listener) => {
       pool.on("error", listener);
     },
