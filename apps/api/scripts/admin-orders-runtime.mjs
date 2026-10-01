@@ -276,11 +276,47 @@ export async function createAdminOrdersRuntime(context, options = {}) {
     idp.setSubject(actor.subject);
     idp.setMode("valid");
     await page.context().clearCookies();
-    await page.goto(`${adminOrigin}/${locale}`, {
-      waitUntil: "domcontentloaded",
-    });
-    await page.locator('form[action="/api/admin/auth/begin"] button').click();
-    await page.locator(".mc-account button").waitFor({ timeout: 60000 });
+    // A sign-in that never reaches the workspace is reported with the request
+    // paths and statuses it made (no query strings, tokens or cookies).
+    const seen = [];
+    const record = (response) => {
+      const url = new URL(response.url());
+      if (url.pathname.startsWith("/api/admin/") || url.origin !== adminOrigin)
+        seen.push(
+          `${response.request().method()} ${url.origin === adminOrigin ? "" : "idp:"}${url.pathname} ${response.status()}`,
+        );
+    };
+    page.on("response", record);
+    try {
+      await page.goto(`${adminOrigin}/${locale}`, {
+        waitUntil: "domcontentloaded",
+      });
+      await page.locator('form[action="/api/admin/auth/begin"] button').click();
+      await page.locator(".mc-account button").waitFor({ timeout: 60000 });
+    } catch (error) {
+      console.error(
+        `Admin sign-in diagnostic ${JSON.stringify({
+          role,
+          locale,
+          width: page.viewportSize()?.width ?? null,
+          path: new URL(page.url()).pathname,
+          loginButtons: await page
+            .locator('form[action="/api/admin/auth/begin"] button')
+            .count()
+            .catch(() => null),
+          alerts: (
+            await page
+              .locator('[role="alert"]')
+              .allInnerTexts()
+              .catch(() => [])
+          ).map((text) => text.slice(0, 80)),
+          responses: seen.slice(-12),
+        })}`,
+      );
+      throw error;
+    } finally {
+      page.off("response", record);
+    }
     for (const cookie of await page.context().cookies())
       registerSecret(cookie.value);
   }
