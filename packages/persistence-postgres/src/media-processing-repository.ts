@@ -84,10 +84,13 @@ export function createMediaProcessingRepository(
           const code =
             parsePersistenceTransactionFailure(error)?.error.code ??
             classifyPostgresFailure(error).code;
+          // 40001/40P01 is contention, not a domain conflict: poison the outer
+          // transaction so its caller replays the whole command.
+          if (code === "TRANSACTION_ABORTED")
+            throw persistenceTransactionFailureFromPostgres(error);
           return failure(
             error instanceof MediaOutputConflict ||
               code === "ALREADY_EXISTS" ||
-              code === "TRANSACTION_ABORTED" ||
               code === "VERSION_CONFLICT"
               ? "CONFLICT"
               : "UNAVAILABLE",

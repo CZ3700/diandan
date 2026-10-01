@@ -537,6 +537,18 @@ describe("management media confirmed transaction aborts", () => {
     expect(sourceReads[1]?.checkpoint).toEqual(sourceReads[0]?.checkpoint);
   });
 
+  test("a media enqueue serialization abort replays its phase instead of failing the operation", async () => {
+    vi.useFakeTimers();
+    const f = transactionFixture(-1, 0);
+    f.resources.enqueueMedia.mockRejectedValueOnce(aborted());
+    const pending = f.preparation.prepare(f.input);
+    await vi.runAllTimersAsync();
+    expect((await pending).outcome).toBe("READY");
+    expect(f.state.attempts).toEqual([1, 2, 1]);
+    expect(f.inspect).toHaveBeenCalledTimes(1);
+    expect(f.resources.enqueueMedia).toHaveBeenCalledTimes(4);
+  });
+
   test.each([0, 1, 2])(
     "phase %s stops after three aborts and preserves its prior durable checkpoint",
     async (phase) => {
