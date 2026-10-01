@@ -10,6 +10,16 @@
 
 上一份交接把“CI 回归，先修 `catalog-fallback-seo`”列为下一步。本轮从它开始，把草稿 PR #16 的 CI 一组一组往前推：catalog、quality、operations 三组此前都停在各自的“既有失败”，后面的步骤自 09-28 前后起就再没被执行过，所以每修通一处都会暴露下一处。同时按计划给 journey 偶发的 SAVE_GIFT 超时加了诊断，并且已经抓到了一次真实失败的证据。远端协作者 Mario 本轮推了 5372a8b3、10c1529b、7af78868 三个商城提交，CI 因并发设置被取消过几次。
 
+## 2026-10-01 更正：decoration.css 已修复，当前 Quality 不是像素值失败
+
+Codex 复核了本轮最新 [run 36841099727](https://github.com/CZ3700/diandan/actions/runs/36841099727)（head `3450a23f`）的实际日志。`decoration.css` 的 STARLIGHT/PETALS 裸像素值已在 `f669e9fb` 改为既有 `--space-1` 的比例，当前源码没有这类违规；Node 24.20.0 下重新运行 `pnpm check:design-foundations`，57 项测试和最终实际源码扫描均通过。
+
+当前工作流的 [Quality 作业](https://github.com/CZ3700/diandan/actions/runs/36841099727/job/110309149108)只执行 `test "$REGRESSION_RESULT" = success`，并不直接运行 `pnpm check`；它因回归汇总为 `failure` 而失败。该轮 [Regression (quality)](https://github.com/CZ3700/diandan/actions/runs/36841099727/job/110300145287)通过 regression-tools 和 ui-composites 后停在 `quality-ui-motion`。不得继续把该失败归因于已经修复的 CSS，也不能据此认定整套 Quality 已通过。
+
+已下载该轮 `regression-quality` 附件核对：首个 `viewport-360x800-en` 场景同时报告一个 **58ms 长任务**与 **JavaScript 传输量268227 bytes（预算小于150KB）**。这是比文末 faf18511 那一轮更新的实际失败证据，不能只沿用“泰语768×1024长任务”的旧结论，也不能只调整长任务统计口径就宣称修复。
+
+同一源码的隔离 `pnpm check` 本轮也越过设计基础与全部 UI 静态检查，随后停在已有的 `scripts/check-ci.mjs`：其 `security:regressions` 期望字符串未包含现有命令中的 Stripe 构建依赖。此处尚未修改；后续正式门禁没有执行。本轮证据在 `output/ci-decoration-css-20261001/`，不把该失败、浏览器长任务或其它回归误记成 CSS 像素违规。
+
 ## 已完成
 
 | 提交 | 内容 | 验证 |
@@ -40,7 +50,7 @@ CI 进度（逐轮最新）：Security、commerce 稳定通过；journey 多数�
 - **没有改到一半的代码**，本地与 origin 同步。
 - **journey 偶发 SAVE_GIFT**（run 36833431183 的附件 `output/checks/ci-catalog-seo/run-36833431183-journey/`）：`SAVE_GIFT` 状态 FAILED、阶段 PUBLISH、失败码 `PUBLICATION_FAILED`（可重试）、尝试 2 次，创建约 4 秒后失败；所有媒体任务 SUCCEEDED。`PUBLICATION_FAILED` 只在发布事务抛出 `INTEGRITY_VIOLATION`、`TRANSACTION_ABORTED` 或 `UNEXPECTED_ADAPTER_FAILURE`（且重试后仍失败）时记录（`packages/application/src/management-center.ts` 的 `recordRolledBackPublicationFailure`）。faf18511 那一轮的 `postgres-failures.json` 已确认是 3 次 40001 可串行化冲突（见“最新 CI”），修法见下一步第 2 项，代码尚未改。
 - **ui-motion 长任务**：待决定，见下一步。
-- **Quality 作业（`pnpm check`）**仍失败在 Mario 3415a527 的 `decoration.css` 像素值（`check:design-foundations`），没动他的文件，需转告。
+- **Quality 作业归因更正**：`3415a527` 的 `decoration.css` 像素值已由 `f669e9fb` 修复；当前汇总作业因 regression 失败而红，quality 回归停在 `ui-motion`。最新实际日志与复验见上方更正，不再列 CSS 为待修项。
 - **stg 没有部署**本轮任何改动。85f4cbcd（后台付款区保持展开）是唯一的产品改动；测试组合与诊断改动也会影响 stg 的本地组装（四个公开接口换连接池、worker 记录数据库错误），行为不变。下次部署 stg 一并带上，并会带上 Mario 的结账精简（10c1529b）和品牌标志（7af78868）。
 
 ## 需要用户知情或决定
@@ -81,6 +91,6 @@ CI 进度（逐轮最新）：Security、commerce 稳定通过；journey 多数�
 | catalog | 前三步通过，停在最后一步 | `fallback-seo`、`storefront-seo-cache`、`gifts` 通过；`management-publication` 失败在 `default management entry exposes only artists, gifts and posters`（`apps/api/scripts/management-center-browser.mjs`，阶段 `initial-entry-and-session`）——此后管理中心陆续加了信息页、装修、订单、付款、异常、员工、账目等分区，属过时期望 |
 | journey | 失败（偶发） | 诊断已给出根因方向，见下 |
 | quality | 停在 `ui-motion` | 长任务预算，待决定 |
-| Quality（`pnpm check`） | 失败 | Mario 的 `decoration.css` 像素值 |
+| Quality（回归汇总） | 失败 | 归因更正：汇总 regression 结果，并非直接运行 `pnpm check`；CSS 像素问题已在 `f669e9fb` 修复，最新日志见上方更正。 |
 
 journey 本轮附件（`output/checks/ci-catalog-seo/run-36836295708-journey/`）：`durable-work.json` 与上一轮相同（SAVE_GIFT 在 PUBLISH 阶段 `PUBLICATION_FAILED`，媒体全部成功）；`postgres-failures.json` 记录到 **3 次 SQLSTATE 40001（可串行化冲突）**，分别在守卫 `assert_management_authority`、`assert_daily_publication` 中和一处无守卫语句上。`retryManagementTransaction`（`packages/application/src/management-transaction-retry.ts`）进程内最多试 3 次，正好用尽，随后 `recordRolledBackPublicationFailure` 把操作记为终态 FAILED（可重试，但要人工点重试）。同一时段有一个 SAVE_ARTIST 也在发布（尝试 3 次后成功），后台页面也在高频轮询。

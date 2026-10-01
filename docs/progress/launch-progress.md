@@ -1,5 +1,12 @@
 # 当前上线进度
 
+## C-20261001 decoration.css CI 复核
+
+- DONE（仅CSS修复状态复核及过期交接更正，整套CI仍未通过）；Codex root / research_gifts_a（只读复核）；2026-10-01。同步3450a23f；STARLIGHT/PETALS像素值已由祖先提交f669e9fb改为设计令牌，本轮未再改应用代码或放宽检查。
+- 当前源码 `pnpm check:design-foundations` 的57测试及最终扫描通过。隔离Node24.20.0实际 `pnpm check` 越过设计/UI门禁后停在既有check-ci的security:regressions字符串预期（缺现有Stripe构建依赖）；后续正式门禁未执行。
+- 最新run36841099727的Quality作业只汇总regression结果，REGRESSION_RESULT=failure；quality回归停在quality-ui-motion，附件首个en/360×800场景为58ms长任务及JS268227bytes超出150KB预算，未报decoration.css。已更正交接中的旧判因；不扩大为其它回归修复，也不宣称CI已绿。
+- 证据：`output/ci-decoration-css-20261001/`；独立源码/历史/hash复核通过，S.U.P.E.R 1–9无实现变动、10按上述检查明确失败边界。未在现有实例目录构建Next，未部署或变更公开内容。
+
 ## C-20261001 店铺品牌标识
 
 - LOCAL_ACCEPTED（源码与本地验收，公开TEST待部署）；Codex root / catalog_integration_audit / research_gifts_a / brand_direction_review；2026-10-01，基线10c1529b，期间快进同步独立验收修复6e5b4227。SPEC6.4.6 §9.4 / ADR-020：店铺装修增加品牌标识，浅/深 Logo 分别上传、替换、移除，页头页脚统一读取。
