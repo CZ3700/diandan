@@ -168,6 +168,17 @@
 .mc-item-line strong {
   font-weight: 600;
 }
+/* A wish's artist and status take their own row so the price never splits. */
+.mc-item-gift {
+  flex-wrap: wrap;
+}
+.mc-item-gift .fs-price {
+  white-space: nowrap;
+}
+.mc-item-wish {
+  flex-basis: 100%;
+  order: 1;
+}
 .mc-item-action {
   display: flex;
   color: var(--color-text-muted);

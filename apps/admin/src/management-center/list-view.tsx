@@ -119,10 +119,13 @@ export function ManagementListView({
                     </span>
                   </span>
                   {item.kind === "GIFT" ? (
-                    <span className="mc-item-line">
+                    <span className="mc-item-line mc-item-gift">
                       <span>{giftKindLabel(item.giftKind, copy)}</span>
                       {"wish" in item ? (
-                        <span data-management-wish-status={item.wish.status}>
+                        <span
+                          className="mc-item-wish"
+                          data-management-wish-status={item.wish.status}
+                        >
                           {item.wish.artistName} ·{" "}
                           {wishStatusLabel(item.wish.status, copy)}
                         </span>

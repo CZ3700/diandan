@@ -212,3 +212,53 @@ it("says nothing matched, not 'add the first artist', when a filter is on", () =
   expect(empty(true)).not.toContain("添加第一位艺人");
   expect(empty(false)).toContain("添加第一位艺人");
 });
+it("puts a wish's artist and status on their own row beside an unsplit price", () => {
+  const html = renderToStaticMarkup(
+    <ManagementListView
+      locale="zh-CN"
+      list={listing({
+        section: "GIFTS",
+        totalItems: 1,
+        items: [
+          {
+            kind: "GIFT",
+            id,
+            version: 1,
+            sourceLocale: "zh-CN",
+            name: "心愿",
+            description: "说明",
+            image: null,
+            status: "active",
+            handle: "fixture-wish",
+            giftKind: "WISH",
+            category: "OTHER",
+            price: { market: "US", currency: "USD", amountMinor: 2300 },
+            inventory: {
+              policy: "TRACKED",
+              quantity: 1,
+              locationId: "10000000-0000-4000-8000-000000000003",
+            },
+            eligibility: { rule: "EXPLICIT_ARTISTS" },
+            canEdit: true,
+            inventoryPolicyLocked: true,
+            wish: {
+              schemaVersion: 1,
+              wishId: "10000000-0000-4000-8000-000000000004",
+              artistId: "10000000-0000-4000-8000-000000000002",
+              artistName: "A long artist display name",
+              artistHandle: "fixture-artist",
+              status: "AVAILABLE",
+            },
+          },
+        ],
+      })}
+      busy={false}
+      onSelect={() => {}}
+      onPage={() => {}}
+    />,
+  );
+  expect(html).toMatch(
+    /<span class="mc-item-line mc-item-gift"><span>[^<]+<\/span><span class="mc-item-wish" data-management-wish-status="AVAILABLE">A long artist display name · /u,
+  );
+  expect(html).toContain('class="fs-price"');
+});
