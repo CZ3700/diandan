@@ -83,5 +83,7 @@
 
 ## 7. stg 与协作
 
-- **stg 运维目前只在 Windows 端**：SSH、部署、`qa.check` 账号都在那边，凭据不在仓库里。你接手期间如果要部署或在 stg 上验收，请先找用户。stg 上留有几笔已退款的 TEST 订单和已归档的 QA 艺人/心愿（都是验收留下的）；`qa.check` 平时是暂停状态。
+- **用户决定（2026-10-02）：你接手期间 stg 不部署**。stg 停在 e07161fa，最后由 Claude 这边统一验收后再部署。所以你的改动在进度表里照旧写“公开 TEST 待部署”，并写清部署后要在真实域名验什么，统一验收时会逐条照着做。
+- stg 运维只在 Windows 端：SSH、部署、`qa.check` 账号都在那边，凭据不在仓库里。stg 上留有几笔已退款的 TEST 订单和已归档的 QA 艺人/心愿，都是验收留下的。
+- 新增后台接口或启动步骤时，请同时挂到 stg 用的本地组装（`apps/api/src/testing/` 下 local-experience 那套）。新增权限或标准角色时，在进度里注明“部署后需 `sync-roles`”，统一部署时才不会漏。
 - 开工前请在 `docs/progress/launch-progress.md` 的“CI 回归（PR #16）”一行登记执行者。交接文档继续写在 `docs/handoff/`。
