@@ -772,7 +772,6 @@ export async function verifyManagementCenterBrowser({
     for (const [index, giftKind] of [
       "VIRTUAL",
       "PHYSICAL",
-      "WISH",
       "MERCHANDISE",
     ].entries()) {
       await begin("GIFTS");
@@ -827,6 +826,46 @@ export async function verifyManagementCenterBrowser({
       );
       gifts.push({ operation: result, item: gift });
     }
+    // SPEC 6.3.0: a wish needs its one artist and is a single purchase held at the
+    // configured default inventory location. This TEST runtime, like stg, configures
+    // none, so the form has to say so and send nothing.
+    await begin("GIFTS");
+    await fillContent({
+      name: `测试礼物 WISH ${suffix}`,
+      description,
+      image: sourceImages.gift,
+      giftKind: "WISH",
+      price: "23",
+    });
+    assert(
+      (await page.locator('[data-management-wish="NEW"]').count()) === 1 &&
+        (await page.locator(field("policy")).count()) === 0 &&
+        (await page.locator(field("quantity")).count()) === 0,
+      "WISH asks for its artist and fixes a single purchase instead of a sale policy",
+    );
+    const beforeWish = observed.submits;
+    await page.locator("[data-management-submit]").click();
+    await expect(
+      page.locator("#management-wish-artist-search"),
+    ).toHaveAttribute("aria-invalid", "true");
+    await page
+      .locator(`[data-management-wish-artist="${artist.result.targetId}"]`)
+      .click();
+    await page.locator(".mc-wish-selected").waitFor();
+    assert(
+      observed.context.defaults.inventoryLocationId === null,
+      "this TEST runtime configures no default inventory location for a wish's single unit",
+    );
+    await page.locator("[data-management-submit]").click();
+    await page.locator('.mc-wish + .mc-error[role="alert"]').waitFor();
+    assert(
+      observed.submits === beforeWish,
+      "a WISH without its artist or an inventory location sends no business mutation",
+    );
+    const discardWish = (dialog) => dialog.accept();
+    page.on("dialog", discardWish);
+    await section("GIFTS");
+    page.off("dialog", discardWish);
     const oldGift = gifts[0].item;
     await (await findItem("GIFTS", oldGift.id)).click();
     const giftUploads = observed.putAttempts;
