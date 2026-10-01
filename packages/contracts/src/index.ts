@@ -106,6 +106,9 @@ export * from "./admin-orders-persistence.js";
 export * from "./admin-ledger.js";
 export * from "./admin-ledger-persistence.js";
 export * from "./admin-order-note-key.js";
+export * from "./admin-artist-notes.js";
+export * from "./admin-artist-notes-persistence.js";
+export * from "./admin-artist-note-key.js";
 export * from "./payment-health.js";
 
 export * from "./payment-rollout.js";

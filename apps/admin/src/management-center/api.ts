@@ -9,6 +9,7 @@ import {
 } from "@fan-support/contracts";
 import { AdminClientError, type AdminClient } from "../workspace/client";
 import { callCommerce } from "../workspace/gift-commerce-client";
+import { createArtistNotesApi } from "../management-artist-notes/api";
 
 export type DeletableItem = Extract<
   ManagementCenterListItem,
@@ -62,6 +63,8 @@ export function createManagementApi(client: AdminClient) {
     );
   const invalid = () => new AdminClientError("INVALID_RESPONSE");
   return {
+    /** ADR-022 / L3-13: private notes in the artist editor; the API decides who may see them. */
+    artistNotes: createArtistNotesApi(client),
     async wishArtists(locale: SupportedLocale, page: number, query = "") {
       const result = await client.call(
         "catalog-list",

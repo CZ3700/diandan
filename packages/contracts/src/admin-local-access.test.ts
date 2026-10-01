@@ -77,6 +77,22 @@ test("migration 0059 registers exactly the three ledger keys and tolerates rows 
   expect(sql).not.toContain("idols.private");
 });
 
+test("migration 0062 registers exactly idols.private and tolerates the row sync-roles already made", () => {
+  const sql = readFileSync(
+    new URL(
+      "../../../database/migrations/0062_artist-private-notes.up.sql",
+      import.meta.url,
+    ),
+    "utf8",
+  );
+  const registered = sql.slice(0, sql.indexOf("CREATE FUNCTION"));
+  const keys = [...registered.matchAll(/'([a-z]+\.[a-z.]+)'/gu)].map(
+    (match) => match[1],
+  );
+  expect(keys).toEqual(["idols.private"]);
+  expect(registered).toContain("ON CONFLICT(permission_key) DO NOTHING");
+});
+
 test("there are three standard roles and the broker holds only its own scope", () => {
   expect(ADMIN_STAFF_ROLE_KEYS).toEqual([
     "studio:owner",

@@ -1,0 +1,78 @@
+/* ADR-022 / L3-13: private notes at the bottom of the artist editor. */
+.mc-artist-notes {
+  margin-top: var(--space-8);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-control);
+  min-width: 0;
+}
+.mc-artist-notes summary {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  min-height: var(--space-12);
+  cursor: pointer;
+}
+.mc-artist-notes-title {
+  margin: 0;
+  font-size: var(--type-body-size);
+  font-weight: 600;
+}
+.mc-artist-notes-body {
+  display: grid;
+  gap: var(--space-4);
+  padding: 0 var(--space-4) var(--space-4);
+  min-width: 0;
+}
+.mc-artist-notes-body > p {
+  margin: 0;
+}
+.mc-artist-notes-alert {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+}
+.mc-artist-notes-fields {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-4);
+}
+.mc-artist-notes-fields dt {
+  color: var(--color-text-muted);
+  font-size: var(--type-label-size);
+}
+.mc-artist-notes-fields dd {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.mc-artist-notes-form {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+.mc-artist-notes-form .mc-field p {
+  margin: 0;
+}
+.mc-artist-notes-actions,
+.mc-artist-notes-history li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+.mc-artist-notes-history h3 {
+  margin: 0 0 var(--space-2);
+  font-size: var(--type-body-size);
+}
+.mc-artist-notes-history ol {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mc-artist-notes-history li {
+  justify-content: space-between;
+  padding-block: var(--space-2);
+  border-top: var(--border-width) solid var(--color-border);
+}

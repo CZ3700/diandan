@@ -13,6 +13,8 @@ import {
   KMSClient,
 } from "@aws-sdk/client-kms";
 import {
+  adminArtistNoteEncryptCommandSchema,
+  adminArtistNoteDecryptCommandSchema,
   adminOrderNoteEncryptCommandSchema,
   adminOrderNoteDecryptCommandSchema,
   keyManagementPortCommandSchema,
@@ -586,9 +588,12 @@ function createConfiguredAdapter(
     },
     async encryptEnvelope(input: unknown) {
       const legacy = keyManagementPortCommandSchema.safeParse(input);
-      const parsed = legacy.success
+      const note = legacy.success
         ? legacy
         : adminOrderNoteEncryptCommandSchema.safeParse(input);
+      const parsed = note.success
+        ? note
+        : adminArtistNoteEncryptCommandSchema.safeParse(input);
       if (!parsed.success || parsed.data.operation !== "ENCRYPT_ENVELOPE") {
         return failure("ENCRYPT_ENVELOPE", "INVALID_COMMAND");
       }
@@ -628,9 +633,12 @@ function createConfiguredAdapter(
 
     async decryptEnvelope(input: unknown) {
       const legacy = keyManagementPortCommandSchema.safeParse(input);
-      const parsed = legacy.success
+      const note = legacy.success
         ? legacy
         : adminOrderNoteDecryptCommandSchema.safeParse(input);
+      const parsed = note.success
+        ? note
+        : adminArtistNoteDecryptCommandSchema.safeParse(input);
       if (!parsed.success || parsed.data.operation !== "DECRYPT_ENVELOPE") {
         return failure("DECRYPT_ENVELOPE", "INVALID_COMMAND");
       }

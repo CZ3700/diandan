@@ -68,6 +68,23 @@ function operation(
     },
   });
 }
+/** ADR-022 / L3-13: a save names its own new version, so it carries no idempotency key. */
+function artistNoteOperation(
+  path: string,
+  action: contract.AdminArtistNoteCommand["action"],
+  kind: string,
+): AdminOperation {
+  return Object.freeze({
+    ...operation(
+      `/api/v1/admin/artist-notes/${path}`,
+      contract.adminArtistNoteCommandSchema,
+      contract.adminArtistNoteResponseSchema,
+      action,
+      kind,
+    ),
+    readOnly: action !== "SAVE",
+  });
+}
 /** ADR-021 account settings: an OIDC session answers NOT_LOCAL instead of the action's kind. */
 function accountOperation(
   path: string,
@@ -584,6 +601,10 @@ const entries = {
     "READ_MESSAGE",
     "MESSAGE",
   ),
+  // ADR-022 / L3-13: private artist notes. Reads are audited by the API before anything is decrypted.
+  "artist-notes-context": artistNoteOperation("context", "CONTEXT", "CONTEXT"),
+  "artist-notes-read": artistNoteOperation("read", "READ", "NOTE"),
+  "artist-notes-save": artistNoteOperation("save", "SAVE", "SAVED"),
   "orders-context": operation(
     "/api/v1/admin/orders/context",
     contract.adminOrdersCommandSchema,

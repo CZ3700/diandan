@@ -304,6 +304,9 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
   ).toEqual([
     "/api/storefront/rum",
     "/api/v1/admin-preview-media/read",
+    "/api/v1/admin/artist-notes/context",
+    "/api/v1/admin/artist-notes/read",
+    "/api/v1/admin/artist-notes/save",
     "/api/v1/admin/catalog/history/read",
     "/api/v1/admin/catalog/idols/create",
     "/api/v1/admin/catalog/idols/rename",
@@ -618,6 +621,10 @@ test("marks every registered top-level contract with an explicit version policy"
     "$defs"
   ] as JsonObject;
   const unversionedValueObjects = new Set([
+    "AdminArtistNoteContent",
+    "AdminArtistNoteGate",
+    "AdminArtistNoteVersion",
+    "AdminArtistNoteEnvelope",
     "AdminLedgerTimeZone",
     "AdminLedgerPeriod",
     "AdminLedgerResolvedPeriod",

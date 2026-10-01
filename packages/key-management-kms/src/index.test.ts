@@ -135,54 +135,66 @@ function createHarness(
   };
 }
 
-test("admin note envelopes bind a distinct purpose and note identity", async () => {
-  const { adapter, commands } = createHarness([
-    {
-      Plaintext: Uint8Array.from(generatedDataKey),
-      CiphertextBlob: Uint8Array.from(encryptedDataKey),
-      KeyId: currentEncryptionKeyArn,
-    },
-    ...Array.from({ length: 3 }, () => ({
-      Plaintext: Uint8Array.from(generatedDataKey),
-      KeyId: currentEncryptionKeyArn,
-    })),
-  ]);
-  const subjectId = "00000000-0000-4000-8000-000000000010";
-  const encrypted = await adapter.encryptEnvelope({
-    schemaVersion: 1,
-    operation: "ENCRYPT_ENVELOPE",
-    purpose: "ADMIN_ORDER_NOTE",
-    subjectId,
-    plaintextBase64,
-  });
-  expect(encrypted.outcome).toBe("SUCCESS");
-  if (encrypted.outcome !== "SUCCESS") return;
-  const command = {
-    schemaVersion: 1 as const,
-    operation: "DECRYPT_ENVELOPE" as const,
-    purpose: "ADMIN_ORDER_NOTE" as const,
-    subjectId,
-    ...encrypted.value,
-  };
-  expect(await adapter.decryptEnvelope(command)).toMatchObject({
-    outcome: "SUCCESS",
-    value: { plaintextBase64 },
-  });
-  expect(
-    await adapter.decryptEnvelope({
-      ...command,
-      purpose: "SUPPORT_INTENT_MESSAGE",
-    }),
-  ).toMatchObject({ outcome: "FAILURE" });
-  expect(
-    await adapter.decryptEnvelope({
-      ...command,
-      subjectId: "00000000-0000-4000-8000-000000000011",
-    }),
-  ).toMatchObject({ outcome: "FAILURE" });
-  expect(JSON.stringify(commands[0])).toContain('"Purpose":"ADMIN_ORDER_NOTE"');
-  expect(JSON.stringify(encrypted)).not.toContain(plaintextBase64);
-});
+test.each(["ADMIN_ORDER_NOTE", "ARTIST_PRIVATE_NOTE"] as const)(
+  "%s envelopes bind a distinct purpose and note identity",
+  async (purpose) => {
+    const { adapter, commands } = createHarness([
+      {
+        Plaintext: Uint8Array.from(generatedDataKey),
+        CiphertextBlob: Uint8Array.from(encryptedDataKey),
+        KeyId: currentEncryptionKeyArn,
+      },
+      ...Array.from({ length: 4 }, () => ({
+        Plaintext: Uint8Array.from(generatedDataKey),
+        KeyId: currentEncryptionKeyArn,
+      })),
+    ]);
+    const subjectId = "00000000-0000-4000-8000-000000000010";
+    const encrypted = await adapter.encryptEnvelope({
+      schemaVersion: 1,
+      operation: "ENCRYPT_ENVELOPE",
+      purpose,
+      subjectId,
+      plaintextBase64,
+    });
+    expect(encrypted.outcome).toBe("SUCCESS");
+    if (encrypted.outcome !== "SUCCESS") return;
+    const command = {
+      schemaVersion: 1 as const,
+      operation: "DECRYPT_ENVELOPE" as const,
+      purpose,
+      subjectId,
+      ...encrypted.value,
+    };
+    expect(await adapter.decryptEnvelope(command)).toMatchObject({
+      outcome: "SUCCESS",
+      value: { plaintextBase64 },
+    });
+    expect(
+      await adapter.decryptEnvelope({
+        ...command,
+        purpose: "SUPPORT_INTENT_MESSAGE",
+      }),
+    ).toMatchObject({ outcome: "FAILURE" });
+    expect(
+      await adapter.decryptEnvelope({
+        ...command,
+        purpose:
+          purpose === "ADMIN_ORDER_NOTE"
+            ? "ARTIST_PRIVATE_NOTE"
+            : "ADMIN_ORDER_NOTE",
+      }),
+    ).toMatchObject({ outcome: "FAILURE" });
+    expect(
+      await adapter.decryptEnvelope({
+        ...command,
+        subjectId: "00000000-0000-4000-8000-000000000011",
+      }),
+    ).toMatchObject({ outcome: "FAILURE" });
+    expect(JSON.stringify(commands[0])).toContain(`"Purpose":"${purpose}"`);
+    expect(JSON.stringify(encrypted)).not.toContain(plaintextBase64);
+  },
+);
 
 describe("AWS KMS key-management adapter", () => {
   test("passes the shared key-management conformance suite", async () => {

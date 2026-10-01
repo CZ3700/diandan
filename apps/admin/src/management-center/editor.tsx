@@ -17,6 +17,7 @@ import type { DeletableItem, ManagementApi, ManagementContext } from "./api";
 import { ArtistAssignment, type AssignmentState } from "./artist-assignment";
 import { ContentForm } from "./content-form";
 import { DeletePanel } from "./delete-panel";
+import { ArtistPrivateNotes } from "../management-artist-notes/panel";
 import { PosterForm } from "./poster-form";
 import { OperationProgress } from "./operation-progress";
 import {
@@ -290,6 +291,13 @@ export function ManagementEditor({
           }
         />
       )}
+      {artist ? (
+        <ArtistPrivateNotes
+          api={api.artistNotes}
+          artistId={artist.id}
+          locale={locale}
+        />
+      ) : null}
       {deletable && canDelete ? (
         <DeletePanel
           locale={locale}

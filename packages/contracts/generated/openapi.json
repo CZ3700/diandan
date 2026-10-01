@@ -17,6 +17,667 @@
       }
     },
     "schemas": {
+      "AdminArtistNoteCommand": {
+        "oneOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "CONTEXT",
+                "type": "string"
+              },
+              "artistId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "artistId"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "READ",
+                "type": "string"
+              },
+              "artistId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "noteId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "artistId",
+              "noteId"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "action": {
+                "const": "SAVE",
+                "type": "string"
+              },
+              "artistId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "content": {
+                "additionalProperties": false,
+                "properties": {
+                  "contact": {
+                    "maxLength": 4000,
+                    "type": "string"
+                  },
+                  "identity": {
+                    "maxLength": 4000,
+                    "type": "string"
+                  },
+                  "other": {
+                    "maxLength": 8000,
+                    "type": "string"
+                  },
+                  "realName": {
+                    "maxLength": 400,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "realName",
+                  "contact",
+                  "identity",
+                  "other"
+                ],
+                "type": "object"
+              },
+              "expectedVersion": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "noteId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "action",
+              "artistId",
+              "noteId",
+              "expectedVersion",
+              "content"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminArtistNoteContent": {
+        "additionalProperties": false,
+        "properties": {
+          "contact": {
+            "maxLength": 4000,
+            "type": "string"
+          },
+          "identity": {
+            "maxLength": 4000,
+            "type": "string"
+          },
+          "other": {
+            "maxLength": 8000,
+            "type": "string"
+          },
+          "realName": {
+            "maxLength": 400,
+            "type": "string"
+          }
+        },
+        "required": [
+          "realName",
+          "contact",
+          "identity",
+          "other"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminArtistNoteFailure": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "enum": [
+              "INVALID_COMMAND",
+              "UNAUTHENTICATED",
+              "CSRF_INVALID",
+              "FORBIDDEN",
+              "NOT_FOUND",
+              "STALE_VERSION",
+              "SECOND_FACTOR_REQUIRED",
+              "PRIVATE_ACCESS_EXPIRED",
+              "TEMPORARY_UNAVAILABLE"
+            ],
+            "type": "string"
+          },
+          "outcome": {
+            "const": "FAILURE",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "outcome",
+          "code"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminArtistNoteGate": {
+        "enum": [
+          "READY",
+          "TOTP_NOT_ENABLED",
+          "SIGN_IN_WITHOUT_CODE"
+        ],
+        "type": "string",
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminArtistNoteRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "command": {
+            "oneOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "CONTEXT",
+                    "type": "string"
+                  },
+                  "artistId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "artistId"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "READ",
+                    "type": "string"
+                  },
+                  "artistId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "noteId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "artistId",
+                  "noteId"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "const": "SAVE",
+                    "type": "string"
+                  },
+                  "artistId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "content": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "contact": {
+                        "maxLength": 4000,
+                        "type": "string"
+                      },
+                      "identity": {
+                        "maxLength": 4000,
+                        "type": "string"
+                      },
+                      "other": {
+                        "maxLength": 8000,
+                        "type": "string"
+                      },
+                      "realName": {
+                        "maxLength": 400,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "realName",
+                      "contact",
+                      "identity",
+                      "other"
+                    ],
+                    "type": "object"
+                  },
+                  "expectedVersion": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "noteId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "action",
+                  "artistId",
+                  "noteId",
+                  "expectedVersion",
+                  "content"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "csrfToken": {
+            "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+            "type": "string"
+          },
+          "requestId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "sessionToken": {
+            "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "requestId",
+          "sessionToken",
+          "csrfToken",
+          "command"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminArtistNoteResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "INVALID_COMMAND",
+                  "UNAUTHENTICATED",
+                  "CSRF_INVALID",
+                  "FORBIDDEN",
+                  "NOT_FOUND",
+                  "STALE_VERSION",
+                  "SECOND_FACTOR_REQUIRED",
+                  "PRIVATE_ACCESS_EXPIRED",
+                  "TEMPORARY_UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "artistId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "gate": {
+                "enum": [
+                  "READY",
+                  "TOTP_NOT_ENABLED",
+                  "SIGN_IN_WITHOUT_CODE"
+                ],
+                "type": "string"
+              },
+              "kind": {
+                "const": "CONTEXT",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "versions": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "noteId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "savedAt": {
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                      "type": "string"
+                    },
+                    "savedBy": {
+                      "maxLength": 200,
+                      "minLength": 1,
+                      "type": "string"
+                    },
+                    "version": {
+                      "maximum": 9007199254740991,
+                      "minimum": 1,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "noteId",
+                    "version",
+                    "savedAt",
+                    "savedBy"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 200,
+                "type": "array"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "artistId",
+              "gate",
+              "versions"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accessId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "artistId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "content": {
+                "additionalProperties": false,
+                "properties": {
+                  "contact": {
+                    "maxLength": 4000,
+                    "type": "string"
+                  },
+                  "identity": {
+                    "maxLength": 4000,
+                    "type": "string"
+                  },
+                  "other": {
+                    "maxLength": 8000,
+                    "type": "string"
+                  },
+                  "realName": {
+                    "maxLength": 400,
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "realName",
+                  "contact",
+                  "identity",
+                  "other"
+                ],
+                "type": "object"
+              },
+              "expiresAt": {
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                "type": "string"
+              },
+              "kind": {
+                "const": "NOTE",
+                "type": "string"
+              },
+              "note": {
+                "additionalProperties": false,
+                "properties": {
+                  "noteId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "savedAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "savedBy": {
+                    "maxLength": 200,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "version": {
+                    "maximum": 9007199254740991,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "noteId",
+                  "version",
+                  "savedAt",
+                  "savedBy"
+                ],
+                "type": "object"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "artistId",
+              "note",
+              "accessId",
+              "expiresAt",
+              "content"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "artistId": {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              "kind": {
+                "const": "SAVED",
+                "type": "string"
+              },
+              "note": {
+                "additionalProperties": false,
+                "properties": {
+                  "noteId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "savedAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "savedBy": {
+                    "maxLength": 200,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "version": {
+                    "maximum": 9007199254740991,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "noteId",
+                  "version",
+                  "savedAt",
+                  "savedBy"
+                ],
+                "type": "object"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "artistId",
+              "note"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "admin-http"
+      },
+      "AdminArtistNoteVersion": {
+        "additionalProperties": false,
+        "properties": {
+          "noteId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "savedAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+            "type": "string"
+          },
+          "savedBy": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "version": {
+            "maximum": 9007199254740991,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "noteId",
+          "version",
+          "savedAt",
+          "savedBy"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
       "AdminCatalogCommand": {
         "oneOf": [
           {
@@ -179347,6 +180008,932 @@
           }
         },
         "security": []
+      }
+    },
+    "/api/v1/admin/artist-notes/context": {
+      "post": {
+        "description": "Requires a current admin session, exact Origin and CSRF, and idols.private. Reading and saving also need a built-in sign-in that used a TOTP code or a recovery code while the account still has TOTP; otherwise the context reports why and the other calls answer SECOND_FACTOR_REQUIRED. Every save is a new encrypted version checked against the version the editor started from. A read commits an audit and a five-minute access receipt before decryption and rechecks authority before returning plaintext. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "operationId": "adminArtistNotesContext",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "artistId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "artistId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 65536
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Strict result; note plaintext only from a read.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "context"
+      }
+    },
+    "/api/v1/admin/artist-notes/read": {
+      "post": {
+        "description": "Requires a current admin session, exact Origin and CSRF, and idols.private. Reading and saving also need a built-in sign-in that used a TOTP code or a recovery code while the account still has TOTP; otherwise the context reports why and the other calls answer SECOND_FACTOR_REQUIRED. Every save is a new encrypted version checked against the version the editor started from. A read commits an audit and a five-minute access receipt before decryption and rechecks authority before returning plaintext. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "operationId": "adminArtistNotesRead",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "artistId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "noteId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "artistId",
+                  "noteId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 65536
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Strict result; note plaintext only from a read.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "read"
+      }
+    },
+    "/api/v1/admin/artist-notes/save": {
+      "post": {
+        "description": "Requires a current admin session, exact Origin and CSRF, and idols.private. Reading and saving also need a built-in sign-in that used a TOTP code or a recovery code while the account still has TOTP; otherwise the context reports why and the other calls answer SECOND_FACTOR_REQUIRED. Every save is a new encrypted version checked against the version the editor started from. A read commits an audit and a five-minute access receipt before decryption and rechecks authority before returning plaintext. Unknown fields, query parameters and caller-supplied authority are rejected.",
+        "operationId": "adminArtistNotesSave",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "artistId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "content": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "contact": {
+                        "maxLength": 4000,
+                        "type": "string"
+                      },
+                      "identity": {
+                        "maxLength": 4000,
+                        "type": "string"
+                      },
+                      "other": {
+                        "maxLength": 8000,
+                        "type": "string"
+                      },
+                      "realName": {
+                        "maxLength": 400,
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "realName",
+                      "contact",
+                      "identity",
+                      "other"
+                    ],
+                    "type": "object"
+                  },
+                  "expectedVersion": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "noteId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "artistId",
+                  "noteId",
+                  "expectedVersion",
+                  "content"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 65536
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Strict result; note plaintext only from a read.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminArtistNoteResponse"
+                }
+              }
+            },
+            "description": "Safe typed rejection without private plaintext, encrypted payloads or credentials.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              },
+              "Referrer-Policy": {
+                "schema": {
+                  "const": "no-referrer",
+                  "type": "string"
+                }
+              },
+              "X-Robots-Tag": {
+                "schema": {
+                  "const": "noindex, nofollow",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "save"
       }
     },
     "/api/v1/admin/catalog/history/read": {

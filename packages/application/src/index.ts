@@ -115,6 +115,11 @@ export {
   type AdminLedgerDependencies,
   type AdminLedgerUseCases,
 } from "./admin-ledger.js";
+export {
+  createAdminArtistNoteUseCases,
+  type AdminArtistNoteDependencies,
+  type AdminArtistNoteUseCases,
+} from "./admin-artist-notes.js";
 export type { AdminOrderProofDependencies } from "./admin-order-proofs.js";
 export {
   createAdminFinanceUseCases,

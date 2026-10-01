@@ -7,6 +7,10 @@ import {
   type AdminLedgerRouteDependencies,
 } from "./admin-ledger-route.js";
 import {
+  registerAdminArtistNotesRoute,
+  type AdminArtistNotesRouteDependencies,
+} from "./admin-artist-notes-route.js";
+import {
   registerAdminFinanceRoute,
   type AdminFinanceRouteDependencies,
 } from "./admin-finance-route.js";
@@ -199,6 +203,8 @@ export type CreateApiApplicationOptions = Readonly<{
   adminOrdersRoute?: AdminOrdersRouteDependencies;
   adminLedgerRoute?: AdminLedgerRouteDependencies;
   adminLedgerRuntime?: ApiLifecycleResource;
+  adminArtistNotesRoute?: AdminArtistNotesRouteDependencies;
+  adminArtistNotesRuntime?: ApiLifecycleResource;
   adminOrdersRuntime?: ApiLifecycleResource;
   adminFinanceRoute?: AdminFinanceRouteDependencies;
   adminFinanceRuntime?: ApiLifecycleResource;
@@ -250,6 +256,7 @@ function registerApiLifecycle(
     | "API admin access"
     | "API admin orders"
     | "API admin ledger"
+    | "API admin artist notes"
     | "API admin finance"
     | "API admin exceptions"
     | "API payment configuration"
@@ -466,6 +473,11 @@ export async function createApiApplication(
   registerApiLifecycle(adapter, options.adminLedgerRuntime, "API admin ledger");
   registerApiLifecycle(
     adapter,
+    options.adminArtistNotesRuntime,
+    "API admin artist notes",
+  );
+  registerApiLifecycle(
+    adapter,
     options.adminFinanceRuntime,
     "API admin finance",
   );
@@ -495,6 +507,11 @@ export async function createApiApplication(
     registerAdminOrdersRoute(adapter.getInstance(), options.adminOrdersRoute);
   if (options.adminLedgerRoute)
     registerAdminLedgerRoute(adapter.getInstance(), options.adminLedgerRoute);
+  if (options.adminArtistNotesRoute)
+    registerAdminArtistNotesRoute(
+      adapter.getInstance(),
+      options.adminArtistNotesRoute,
+    );
   if (options.adminAccessRoute)
     registerAdminAccessRoute(adapter.getInstance(), options.adminAccessRoute);
   if (options.adminLocalAccessRoute)

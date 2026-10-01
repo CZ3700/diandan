@@ -674,6 +674,16 @@ async function verify(context, s3) {
   progress(
     "registered migration refuses to discard existing consent and support history",
   );
+  // Later, still empty migrations come off first, so what refuses below is 0061's own down.
+  const later = await client.query(
+    "SELECT version FROM schema_migrations WHERE version>'0061' ORDER BY version DESC",
+  );
+  for (const { version } of later.rows)
+    await runMigrations({
+      clientConfig: context.database,
+      workspaceRoot,
+      command: { direction: "down", confirmVersion: version },
+    });
   const headBefore = (
     await client.query("SELECT max(version) head FROM schema_migrations")
   ).rows[0].head;

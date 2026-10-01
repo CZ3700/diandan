@@ -610,6 +610,16 @@
         "up": "d04c1ae331a823b6194602f133f03b4f034fa0a0e60d8ee59382a1a6791e0cec",
         "down": "d1417f9170adb07b579359d5b288f1cb6d2b6b0bdf61199bbca19991feaec72e"
       }
+    },
+    {
+      "version": "0062",
+      "name": "artist-private-notes",
+      "up": "database/migrations/0062_artist-private-notes.up.sql",
+      "down": "database/migrations/0062_artist-private-notes.down.sql",
+      "sha256": {
+        "up": "4e4a73e815bd35af412cb4038c4317b052181fd4957bb0fa7f2944aca3f4d151",
+        "down": "721221a7e02eed75a97b92a5e8e64892ad59b887c4d162acf239241e735d5250"
+      }
     }
   ]
 }

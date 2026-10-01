@@ -1242,6 +1242,12 @@ async function behavior() {
       );
 
       // ---------- History blocks the downgrade ----------
+      // Later migrations come off first, so what refuses below is 0059's own down and not a version mismatch.
+      const later = await client.query(
+        "SELECT version FROM schema_migrations WHERE version>'0059' ORDER BY version DESC",
+      );
+      for (const { version } of later.rows)
+        await migrate({ direction: "down", confirmVersion: version });
       // The runner reports only which down failed; the down script itself says why.
       await client.query("BEGIN");
       const reason = await client

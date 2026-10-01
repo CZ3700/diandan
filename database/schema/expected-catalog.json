@@ -311,6 +311,18 @@
       "kind": "TABLE"
     },
     {
+      "name": "artist_private_note_accesses",
+      "kind": "TABLE"
+    },
+    {
+      "name": "artist_private_note_confirmations",
+      "kind": "TABLE"
+    },
+    {
+      "name": "artist_private_notes",
+      "kind": "TABLE"
+    },
+    {
       "name": "audit_logs",
       "kind": "TABLE"
     },
@@ -5071,6 +5083,236 @@
     {
       "table": "artist_ledger_exports",
       "position": 14,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "position": 2,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "position": 3,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "position": 4,
+      "name": "idol_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "position": 5,
+      "name": "note_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "position": 6,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "position": 7,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "position": 8,
+      "name": "correlation_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "position": 9,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "position": 10,
+      "name": "expires_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_confirmations",
+      "position": 1,
+      "name": "access_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_note_confirmations",
+      "position": 2,
+      "name": "confirmed_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_notes",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_notes",
+      "position": 2,
+      "name": "idol_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_notes",
+      "position": 3,
+      "name": "version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_notes",
+      "position": 4,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_notes",
+      "position": 5,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_notes",
+      "position": 6,
+      "name": "ciphertext",
+      "dataType": "ciphertext_bytes",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_notes",
+      "position": 7,
+      "name": "encrypted_data_key",
+      "dataType": "ciphertext_bytes",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_notes",
+      "position": 8,
+      "name": "key_version",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_notes",
+      "position": 9,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_notes",
+      "position": 10,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "artist_private_notes",
+      "position": 11,
       "name": "created_at",
       "dataType": "finite_timestamptz",
       "notNull": true,
@@ -33401,6 +33643,358 @@
       "name": "artist_ledger_exports_truncated_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL truncated",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_access_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_check",
+      "kind": "CHECK",
+      "definition": "CHECK (expires_at::timestamp with time zone > created_at::timestamp with time zone AND expires_at::timestamp with time zone <= (created_at::timestamp with time zone + '00:05:00'::interval))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_correlation_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL correlation_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_expires_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL expires_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_idol_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idol_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_note_id_idol_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (note_id, idol_id) REFERENCES artist_private_notes(id, idol_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_note_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL note_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_confirmations",
+      "name": "artist_private_note_confirmation_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "artist_private_note_confirmations",
+      "name": "artist_private_note_confirmations_access_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (access_id) REFERENCES artist_private_note_accesses(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_confirmations",
+      "name": "artist_private_note_confirmations_access_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL access_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_confirmations",
+      "name": "artist_private_note_confirmations_confirmed_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL confirmed_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_note_confirmations",
+      "name": "artist_private_note_confirmations_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (access_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_note_complete",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_ciphertext_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL ciphertext",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_encrypted_data_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL encrypted_data_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_id_idol_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (id, idol_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_idol_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (idol_id) REFERENCES idols(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_idol_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idol_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_idol_id_version_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (idol_id, version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_key_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (key_version ~ '^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_key_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL key_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
       "deferrable": false,
       "initiallyDeferred": false
     },
@@ -66593,6 +67187,78 @@
       "valid": true
     },
     {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX artist_private_note_accesses_audit_log_id_key ON public.artist_private_note_accesses USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_idol_idx",
+      "definition": "CREATE INDEX artist_private_note_accesses_idol_idx ON public.artist_private_note_accesses USING btree (idol_id, created_at DESC)",
+      "unique": false,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_pkey",
+      "definition": "CREATE UNIQUE INDEX artist_private_note_accesses_pkey ON public.artist_private_note_accesses USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "artist_private_note_confirmations",
+      "name": "artist_private_note_confirmations_pkey",
+      "definition": "CREATE UNIQUE INDEX artist_private_note_confirmations_pkey ON public.artist_private_note_confirmations USING btree (access_id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX artist_private_notes_audit_log_id_key ON public.artist_private_notes USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_id_idol_id_key",
+      "definition": "CREATE UNIQUE INDEX artist_private_notes_id_idol_id_key ON public.artist_private_notes USING btree (id, idol_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_idol_id_version_key",
+      "definition": "CREATE UNIQUE INDEX artist_private_notes_idol_id_version_key ON public.artist_private_notes USING btree (idol_id, version)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_pkey",
+      "definition": "CREATE UNIQUE INDEX artist_private_notes_pkey ON public.artist_private_notes USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "audit_logs",
       "name": "audit_logs_pkey",
       "definition": "CREATE UNIQUE INDEX audit_logs_pkey ON public.audit_logs USING btree (id)",
@@ -72424,6 +73090,66 @@
       "enabled": "O"
     },
     {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_access_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER artist_private_note_access_complete AFTER INSERT ON artist_private_note_accesses DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_artist_private_note_access()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_append_only",
+      "definition": "CREATE TRIGGER artist_private_note_accesses_append_only BEFORE DELETE OR UPDATE ON artist_private_note_accesses FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_private_note_accesses",
+      "name": "artist_private_note_accesses_no_truncate",
+      "definition": "CREATE TRIGGER artist_private_note_accesses_no_truncate BEFORE TRUNCATE ON artist_private_note_accesses FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_private_note_confirmations",
+      "name": "artist_private_note_confirmation_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER artist_private_note_confirmation_complete AFTER INSERT ON artist_private_note_confirmations DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_artist_private_note_confirmation()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_private_note_confirmations",
+      "name": "artist_private_note_confirmations_append_only",
+      "definition": "CREATE TRIGGER artist_private_note_confirmations_append_only BEFORE DELETE OR UPDATE ON artist_private_note_confirmations FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_private_note_confirmations",
+      "name": "artist_private_note_confirmations_no_truncate",
+      "definition": "CREATE TRIGGER artist_private_note_confirmations_no_truncate BEFORE TRUNCATE ON artist_private_note_confirmations FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_note_complete",
+      "definition": "CREATE CONSTRAINT TRIGGER artist_private_note_complete AFTER INSERT ON artist_private_notes DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_artist_private_note()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_note_guard",
+      "definition": "CREATE TRIGGER artist_private_note_guard BEFORE INSERT ON artist_private_notes FOR EACH ROW EXECUTE FUNCTION guard_artist_private_note()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_append_only",
+      "definition": "CREATE TRIGGER artist_private_notes_append_only BEFORE DELETE OR UPDATE ON artist_private_notes FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "artist_private_notes",
+      "name": "artist_private_notes_no_truncate",
+      "definition": "CREATE TRIGGER artist_private_notes_no_truncate BEFORE TRUNCATE ON artist_private_notes FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "audit_logs",
       "name": "audit_logs_append_only_trigger",
       "definition": "CREATE TRIGGER audit_logs_append_only_trigger BEFORE DELETE OR UPDATE ON audit_logs FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
@@ -76830,6 +77556,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.admin_order_authorized(session_id uuid, actor uuid, permission text, event_time timestamp with time zone)\n RETURNS boolean\n LANGUAGE sql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT EXISTS(\n  SELECT 1 FROM public.admin_sessions s JOIN public.admin_identities i ON i.id=s.admin_identity_id\n  JOIN public.admin_identity_roles ar ON ar.admin_identity_id=i.id\n  JOIN public.role_permissions rp ON rp.role_id=ar.role_id JOIN public.permissions p ON p.id=rp.permission_id\n  WHERE s.id=session_id AND i.id=actor AND i.status='ACTIVE' AND s.authenticated_with_mfa\n   AND s.revoked_at IS NULL AND s.created_at<=event_time AND event_time<=clock_timestamp()\n   AND s.expires_at>clock_timestamp() AND p.permission_key=permission\n   AND ar.granted_at<=event_time AND rp.granted_at<=event_time\n );\n$function$"
     },
     {
+      "name": "artist_private_note_authorized",
+      "identityArguments": "p_session uuid, p_actor uuid, p_at timestamp with time zone",
+      "resultType": "boolean",
+      "language": "sql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.artist_private_note_authorized(p_session uuid, p_actor uuid, p_at timestamp with time zone)\n RETURNS boolean\n LANGUAGE sql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\n SELECT public.admin_order_authorized(p_session,p_actor,'idols.private',p_at)\n  AND EXISTS(SELECT 1 FROM public.admin_local_logins l JOIN public.admin_local_accounts a ON a.id=l.account_id\n   WHERE l.session_id=p_session AND a.admin_identity_id=p_actor AND l.state='CONSUMED'\n    AND l.second_factor IN('TOTP','RECOVERY_CODE') AND a.totp_ciphertext IS NOT NULL);\n$function$"
+    },
+    {
       "name": "assert_admin_catalog_authority",
       "identityArguments": "actor uuid, session_id uuid, event_time timestamp with time zone, causal_bound timestamp with time zone, permission text, locales supported_locale[]",
       "resultType": "void",
@@ -77038,6 +77774,36 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.assert_artist_ledger_export()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM public.audit_logs a JOIN public.admin_sessions s ON s.id=NEW.session_id WHERE a.id=NEW.audit_log_id AND a.actor_type='ADMIN' AND a.actor_id=NEW.actor_id\n  AND a.action='ARTIST_LEDGER_EXPORT' AND a.subject_type='ARTIST_LEDGER_EXPORT' AND a.subject_id=NEW.id AND a.outcome='SUCCEEDED' AND a.field_category='ARTIST_LEDGER'\n  AND a.request_id=NEW.request_id AND a.created_at=NEW.created_at AND s.admin_identity_id=NEW.actor_id) THEN\n  RAISE EXCEPTION 'ledger export requires its exact audit record' USING ERRCODE='23514'; END IF;\n -- A broker exports only itself or one of its current artists; everything else needs ledger.read.\n IF NOT(public.admin_order_authorized(NEW.session_id,NEW.actor_id,'ledger.read',NEW.created_at)\n  OR (public.admin_order_authorized(NEW.session_id,NEW.actor_id,'ledger.assigned',NEW.created_at)\n   AND ((NEW.scope='BROKER' AND NEW.broker_identity_id=NEW.actor_id) OR (NEW.scope='ARTIST' AND public.idol_current_broker(NEW.idol_id)=NEW.actor_id)))) THEN\n  RAISE EXCEPTION 'ledger export requires ledger authority over its whole scope' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_artist_private_note",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_artist_private_note()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM public.audit_logs a JOIN public.admin_sessions s ON s.id=NEW.session_id WHERE a.id=NEW.audit_log_id AND a.actor_type='ADMIN' AND a.actor_id=NEW.actor_id\n  AND a.action='ARTIST_PRIVATE_NOTE_SAVED' AND a.subject_type='IDOL' AND a.subject_id=NEW.idol_id AND a.field_category='ARTIST_PRIVATE' AND a.outcome='SUCCEEDED'\n  AND a.request_id=NEW.request_id AND a.created_at=NEW.created_at AND s.admin_identity_id=NEW.actor_id) THEN\n  RAISE EXCEPTION 'private note requires its exact audit record' USING ERRCODE='23514'; END IF;\n IF NOT public.artist_private_note_authorized(NEW.session_id,NEW.actor_id,NEW.created_at) THEN\n  RAISE EXCEPTION 'private note requires idols.private on a second-factor sign-in' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_artist_private_note_access",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_artist_private_note_access()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE s public.admin_sessions%ROWTYPE;\nBEGIN\n SELECT * INTO s FROM public.admin_sessions WHERE id=NEW.session_id;\n IF NOT EXISTS(SELECT 1 FROM public.audit_logs a WHERE a.id=NEW.audit_log_id AND a.actor_type='ADMIN' AND a.actor_id=NEW.actor_id\n  AND a.action='ARTIST_PRIVATE_READ' AND a.subject_type='IDOL' AND a.subject_id=NEW.idol_id AND a.field_category='ARTIST_PRIVATE' AND a.outcome='SUCCEEDED'\n  AND a.created_at=NEW.created_at AND a.request_id=NEW.request_id AND a.correlation_id=NEW.correlation_id) OR s.admin_identity_id IS DISTINCT FROM NEW.actor_id THEN\n  RAISE EXCEPTION 'private note read requires exact session and audit' USING ERRCODE='23514'; END IF;\n IF NOT public.artist_private_note_authorized(NEW.session_id,NEW.actor_id,NEW.created_at) THEN\n  RAISE EXCEPTION 'private note read requires idols.private on a second-factor sign-in' USING ERRCODE='23514'; END IF;\n IF NEW.expires_at>s.expires_at THEN\n  RAISE EXCEPTION 'private read may not outlive its session' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
+    },
+    {
+      "name": "assert_artist_private_note_confirmation",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_artist_private_note_confirmation()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF NOT EXISTS(SELECT 1 FROM public.artist_private_note_accesses a JOIN public.admin_sessions s ON s.id=a.session_id\n  WHERE a.id=NEW.access_id AND a.created_at<=NEW.confirmed_at AND a.expires_at>NEW.confirmed_at AND NEW.confirmed_at<=clock_timestamp()\n   AND s.admin_identity_id=a.actor_id AND public.artist_private_note_authorized(a.session_id,a.actor_id,NEW.confirmed_at)) THEN\n  RAISE EXCEPTION 'private note confirmation requires live same-session authority' USING ERRCODE='23514'; END IF;\n RETURN NULL;\nEND; $function$"
     },
     {
       "name": "assert_base_content_preview_grant_audit",
@@ -78588,6 +79354,16 @@
       "volatility": "VOLATILE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.guard_append_only()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n  RAISE EXCEPTION '% is append-only', TG_TABLE_NAME USING ERRCODE = '55000';\nEND;\n$function$"
+    },
+    {
+      "name": "guard_artist_private_note",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_artist_private_note()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE latest public.artist_private_notes%ROWTYPE;\nBEGIN\n PERFORM pg_advisory_xact_lock(hashtextextended('fan-support:artist-private-note:'||NEW.idol_id::text,0));\n SELECT * INTO latest FROM public.artist_private_notes WHERE idol_id=NEW.idol_id ORDER BY version DESC LIMIT 1;\n IF NEW.version<>coalesce(latest.version,0)+1 OR NEW.created_at<latest.created_at THEN\n  RAISE EXCEPTION 'private note versions continue the artist history' USING ERRCODE='40001'; END IF;\n RETURN NEW;\nEND; $function$"
     },
     {
       "name": "guard_authored_content_payload",

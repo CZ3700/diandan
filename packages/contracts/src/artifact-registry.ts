@@ -34,6 +34,9 @@ import * as adminOrdersPersistence from "./admin-orders-persistence.js";
 import * as adminOrders from "./admin-orders.js";
 import * as adminLedger from "./admin-ledger.js";
 import * as adminLedgerPersistence from "./admin-ledger-persistence.js";
+import * as adminArtistNotes from "./admin-artist-notes.js";
+import * as adminArtistNotesPersistence from "./admin-artist-notes-persistence.js";
+import * as adminArtistNoteKey from "./admin-artist-note-key.js";
 import * as adminAccess from "./admin-access.js";
 import * as adminLocalAccess from "./admin-local-access.js";
 import * as adminLocalAccessPersistence from "./admin-local-access-persistence.js";
@@ -681,6 +684,10 @@ export type ContractRegistration = Readonly<{
 // Scalars and embedded snapshot value objects follow their versioned parent;
 // they must never be used as standalone API, event, or queue roots.
 const unversionedValueObjectNames = new Set([
+  "AdminArtistNoteContent",
+  "AdminArtistNoteGate",
+  "AdminArtistNoteVersion",
+  "AdminArtistNoteEnvelope",
   "AdminLedgerTimeZone",
   "AdminLedgerPeriod",
   "AdminLedgerResolvedPeriod",
@@ -1427,6 +1434,71 @@ const registrations = [
     name: "AdminLedgerStoreRequest",
     audience: "internal",
     schema: adminLedgerPersistence.adminLedgerStoreRequestSchema,
+  },
+  {
+    name: "AdminArtistNoteFailure",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteFailureSchema,
+  },
+  {
+    name: "AdminArtistNoteContent",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteContentSchema,
+  },
+  {
+    name: "AdminArtistNotePlaintext",
+    audience: "internal",
+    schema: adminArtistNotes.adminArtistNotePlaintextSchema,
+  },
+  {
+    name: "AdminArtistNoteGate",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteGateSchema,
+  },
+  {
+    name: "AdminArtistNoteVersion",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteVersionSchema,
+  },
+  {
+    name: "AdminArtistNoteCommand",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteCommandSchema,
+  },
+  {
+    name: "AdminArtistNoteRequest",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteRequestSchema,
+  },
+  {
+    name: "AdminArtistNoteResponse",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteResponseSchema,
+  },
+  {
+    name: "AdminArtistNoteEnvelope",
+    audience: "internal",
+    schema: adminArtistNotesPersistence.adminArtistNoteEnvelopeSchema,
+  },
+  {
+    name: "AdminArtistNoteStoreRequest",
+    audience: "internal",
+    schema: adminArtistNotesPersistence.adminArtistNoteStoreRequestSchema,
+  },
+  {
+    name: "AdminArtistNoteSnapshot",
+    audience: "internal",
+    schema: adminArtistNotesPersistence.adminArtistNoteSnapshotSchema,
+  },
+  {
+    name: "AdminArtistNoteEncryptCommand",
+    audience: "internal",
+    schema: adminArtistNoteKey.adminArtistNoteEncryptCommandSchema,
+  },
+  {
+    name: "AdminArtistNoteDecryptCommand",
+    audience: "internal",
+    schema: adminArtistNoteKey.adminArtistNoteDecryptCommandSchema,
   },
   {
     name: "AdminOrderNoteEncryptCommand",

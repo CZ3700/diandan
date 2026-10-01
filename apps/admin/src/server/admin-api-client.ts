@@ -93,6 +93,7 @@ export async function callAdminApi(
       [
         "/api/v1/admin/orders/context",
         "/api/v1/admin/ledger/context",
+        "/api/v1/admin/artist-notes/context",
         "/api/v1/admin/exceptions/context",
         "/api/v1/admin/account/context",
         "/api/v1/admin/staff/context",

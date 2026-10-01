@@ -9,6 +9,7 @@ import { adminExceptionsPaths } from "./admin-exceptions-openapi.js";
 import { adminFinancePaths } from "./admin-finance-openapi.js";
 import { adminOrdersPaths } from "./admin-orders-openapi.js";
 import { adminLedgerPaths } from "./admin-ledger-openapi.js";
+import { adminArtistNotesPaths } from "./admin-artist-notes-openapi.js";
 import { orderAccessPaths } from "./order-access-openapi.js";
 import { wishGalleryPaths } from "./wish-gallery-openapi.js";
 import { checkoutPreflightPaths } from "./checkout-preflight-openapi.js";
@@ -225,6 +226,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...paymentRuntimePaths(),
         ...adminOrdersPaths(),
         ...adminLedgerPaths(),
+        ...adminArtistNotesPaths(),
         ...adminFinancePaths(),
         ...adminPaymentConfigurationPaths(),
         ...adminExceptionsPaths(),

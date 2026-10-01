@@ -43,6 +43,7 @@ export function adminFailureStatus(code: string): number {
     case "CSRF_INVALID":
     case "SELF_REVIEW":
     case "NEEDS_AUTHORIZATION":
+    case "SECOND_FACTOR_REQUIRED":
       return 403;
     case "NOT_FOUND":
     case "PREVIEW_UNAVAILABLE":

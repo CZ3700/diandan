@@ -50,11 +50,14 @@ import type {
 } from "@fan-support/persistence-port";
 import { createAdminOrdersRepository } from "./admin-orders-repository.js";
 import { createAdminLedgerRepository } from "./admin-ledger-repository.js";
+import { createAdminArtistNoteRepository } from "./admin-artist-notes-repository.js";
 import { createAdminOrderResendRepository } from "./admin-notification-resend-repository.js";
 import { createAdminOrderResendNotificationRepository } from "./admin-notification-resend-worker.js";
 import type {
   AdminLedgerRepositories,
   AdminLedgerTransactionManager,
+  AdminArtistNoteRepositories,
+  AdminArtistNoteTransactionManager,
   AdminOrdersRepositories,
   AdminOrdersTransactionManager,
 } from "@fan-support/persistence-port";
@@ -258,6 +261,7 @@ export interface PostgresPersistence {
   readonly paymentHealthTransactionManager: PaymentHealthTransactionManager;
   readonly adminOrdersTransactionManager: AdminOrdersTransactionManager;
   readonly adminLedgerTransactionManager: AdminLedgerTransactionManager;
+  readonly adminArtistNoteTransactionManager: AdminArtistNoteTransactionManager;
   readonly adminOrderResendNotificationTransactionManager: NotificationTransactionManager;
   readonly adminAccessTransactionManager: AdminAccessTransactionManager;
   readonly adminLocalAccessTransactionManager: AdminLocalAccessTransactionManager;
@@ -481,6 +485,13 @@ export function createPostgresPersistenceWithPoolFactory(
       adminLedger: createAdminLedgerRepository(client, scope),
     }),
   });
+  const adminArtistNoteRunner =
+    createTransactionRunner<AdminArtistNoteRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        adminArtistNotes: createAdminArtistNoteRepository(client, scope),
+      }),
+    });
   const adminOrderResendRunner =
     createTransactionRunner<NotificationRepository>({
       acquireClient: async () => pool.connect(),
@@ -1416,6 +1427,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return adminLedgerRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    adminArtistNoteTransactionManager: {
+      async runInAdminArtistNoteTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminArtistNoteRunner.run(
           { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );
