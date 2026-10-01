@@ -189,7 +189,12 @@ export async function verifyRegressionSeoRecovery({
     const document = await page.evaluate(() => ({
       lang: globalThis.document.documentElement.lang,
       title: globalThis.document.title,
-      text: globalThis.document.querySelector("main")?.textContent,
+      // Rendered copy only: JSON-LD and streamed payload scripts repeat the SEO title.
+      text: (() => {
+        const main = globalThis.document.querySelector("main")?.cloneNode(true);
+        main?.querySelectorAll("script").forEach((node) => node.remove());
+        return main?.textContent;
+      })(),
       canonical: globalThis.document.querySelector('link[rel="canonical"]')
         ?.href,
       robots: [...globalThis.document.querySelectorAll('meta[name="robots"]')]
@@ -224,6 +229,10 @@ export async function verifyRegressionSeoRecovery({
       ? view.heroSubtitle
       : (view.displayName ?? view.title);
     if (isHomepage) {
+      check(
+        (await page.locator("[data-home-hero]").count()) === 1,
+        "homepage renders its published hero rather than the unavailable state",
+      );
       const copy = await loadStorefrontCopy(locale);
       const heading = page.locator("[data-home-hero] #hero-title");
       check(

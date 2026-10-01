@@ -1,4 +1,5 @@
 import { expect, test, vi } from "vitest";
+import { createDefaultHomeLayout } from "@fan-support/contracts";
 import { createTestPublicationRuntimeComposition } from "./publication-runtime-composition.js";
 const options = {
   environment: "TEST" as const,
@@ -117,5 +118,64 @@ test("connects both real use cases and drains one shared test persistence once",
     composition.publicationRuntimeLifecycle.stop(),
     composition.publicationRuntimeLifecycle.stop(),
   ]);
+  expect(close).toHaveBeenCalledOnce();
+});
+test("serves the public presentation reads every storefront page makes from the same test persistence", async () => {
+  const close = vi.fn(async () => undefined);
+  const layout = vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "HOME_LAYOUT",
+    source: "DEFAULT",
+    layout: createDefaultHomeLayout(),
+    version: 0,
+    publicationId: null,
+  }));
+  const theme = vi.fn(async () => ({}));
+  const navigation = vi.fn(async () => ({}));
+  const informationPage = vi.fn(async () => ({}));
+  const createPersistence = vi.fn(() => ({
+    homeLayoutTransactionManager: {
+      runInHomeLayoutTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ homeLayout: { readPublished: layout } }),
+    },
+    storefrontThemeTransactionManager: {
+      runInStorefrontThemeTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ storefrontTheme: { readPublished: theme } }),
+    },
+    storefrontNavigationTransactionManager: {
+      runInStorefrontNavigationTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ storefrontNavigation: { readPublished: navigation } }),
+    },
+    informationPageTransactionManager: {
+      runInInformationPageTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ informationPages: { readPublished: informationPage } }),
+    },
+    close,
+  }));
+  const composition = createTestPublicationRuntimeComposition(options, {
+    createPersistence: createPersistence as never,
+  });
+  // Without these the storefront renders its unavailable state on every homepage.
+  await expect(
+    composition.publicHomeLayoutRoute.useCases.execute(),
+  ).resolves.toMatchObject({ outcome: "SUCCESS", source: "DEFAULT" });
+  await composition.publicStorefrontThemeRoute.useCases.execute();
+  await composition.publicStorefrontNavigationRoute.useCases.execute();
+  await composition.publicInformationPagesRoute.useCases.read({
+    schemaVersion: 1,
+    pageKey: "ABOUT",
+    locale: "ja",
+  });
+  expect(layout).toHaveBeenCalledOnce();
+  expect(theme).toHaveBeenCalledOnce();
+  expect(navigation).toHaveBeenCalledOnce();
+  expect(informationPage).toHaveBeenCalledOnce();
+  expect(createPersistence).toHaveBeenCalledOnce();
+  await composition.publicationRuntimeLifecycle.stop();
   expect(close).toHaveBeenCalledOnce();
 });

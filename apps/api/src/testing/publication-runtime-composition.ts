@@ -5,6 +5,10 @@ import {
   createStorefrontHomepageUseCases,
   createStorefrontCommerceUseCases,
   createStorefrontSeoUseCases,
+  createPublicHomeLayoutUseCases,
+  createPublicStorefrontThemeUseCases,
+  createPublicStorefrontNavigationUseCases,
+  createPublicInformationPageUseCases,
 } from "@fan-support/application";
 import {
   createPostgresPersistence,
@@ -16,6 +20,10 @@ import type { PublishedContentRouteDependencies } from "../published-content-rou
 import type { StorefrontHomepageRouteDependencies } from "../storefront-homepage-route.js";
 import type { ApiLifecycleResource } from "../bootstrap.js";
 import type { PublicationRuntimeRouteDependencies } from "../publication-runtime-route.js";
+import type { PublicHomeLayoutRouteDependencies } from "../home-layout-route.js";
+import type { PublicStorefrontThemeRouteDependencies } from "../storefront-theme-route.js";
+import type { PublicStorefrontNavigationRouteDependencies } from "../storefront-navigation-route.js";
+import type { PublicInformationPagesRouteDependencies } from "../information-pages-route.js";
 
 type BasePersistence = Pick<
   PostgresPersistence,
@@ -24,6 +32,10 @@ type BasePersistence = Pick<
   | "storefrontHomepageTransactionManager"
   | "storefrontCommerceTransactionManager"
   | "storefrontSeoTransactionManager"
+  | "homeLayoutTransactionManager"
+  | "storefrontThemeTransactionManager"
+  | "storefrontNavigationTransactionManager"
+  | "informationPageTransactionManager"
   | "close"
 >;
 export type TestPublicationRuntimeCompositionOptions = Readonly<{
@@ -49,6 +61,10 @@ export function createTestPublicationRuntimeComposition(
   storefrontHomepageRoute: StorefrontHomepageRouteDependencies;
   storefrontCommerceRoute: StorefrontCommerceRouteDependencies;
   storefrontSeoRoute: StorefrontSeoRouteDependencies;
+  publicHomeLayoutRoute: PublicHomeLayoutRouteDependencies;
+  publicStorefrontThemeRoute: PublicStorefrontThemeRouteDependencies;
+  publicStorefrontNavigationRoute: PublicStorefrontNavigationRouteDependencies;
+  publicInformationPagesRoute: PublicInformationPagesRouteDependencies;
 }> {
   if (
     options?.environment !== "TEST" ||
@@ -89,8 +105,34 @@ export function createTestPublicationRuntimeComposition(
     transactions: persistence.publicationRuntimeTransactionManager,
     tokenPepper: options.tokenPepper,
   });
+  const informationPages = createPublicInformationPageUseCases({
+    transactions: persistence.informationPageTransactionManager,
+  });
   let closePromise: Promise<void> | undefined;
   return Object.freeze({
+    // Every deployed storefront page reads these; without them the homepage
+    // renders its unavailable state (same wiring as the published composition).
+    publicHomeLayoutRoute: {
+      useCases: createPublicHomeLayoutUseCases({
+        transactions: persistence.homeLayoutTransactionManager,
+      }),
+    },
+    publicStorefrontThemeRoute: {
+      useCases: createPublicStorefrontThemeUseCases({
+        transactions: persistence.storefrontThemeTransactionManager,
+      }),
+    },
+    publicStorefrontNavigationRoute: {
+      useCases: createPublicStorefrontNavigationUseCases({
+        transactions: persistence.storefrontNavigationTransactionManager,
+      }),
+    },
+    publicInformationPagesRoute: {
+      useCases: {
+        read: informationPages.execute,
+        index: informationPages.index,
+      },
+    },
     storefrontSeoRoute: {
       useCases: createStorefrontSeoUseCases({
         transactions: persistence.storefrontSeoTransactionManager,
