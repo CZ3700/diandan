@@ -1,5 +1,14 @@
 # 当前上线进度
 
+## C-20261001 页脚精简
+
+- LOCAL_ACCEPTED（本项本地验收；公开 TEST 待部署）；Codex root / wish_picker_data / hero_swatch_review；2026-10-01。基线90f89e09，SPEC 6.4.3 §5.2；删除共用页脚固定转交标语与多余箭头，桌面品牌/链接分区、手机纵向左对齐，政策与信息页各自成行。
+- DESCRIPTION从前台及后台编辑项退休；保留schemaVersion1及五项存储合同/旧历史，默认隐藏；后台移动跳过保留项且不改其原槽位和值，其余排序/显隐、政策必显与单市场地区规则保持，无迁移。
+- 先红后绿：前台相关5文件10测试、后台导航7文件25测试、合同4测试通过；旧DESCRIPTION=true仍不会显示标语，后台边界与可逆排序回归通过。
+- 真实组件/本地字体的Chromium七语390/1440及自定义排序、单市场、读失败、空信息与长品牌/标题边界共24组752项通过，零页面/控制台错误；全部链接键盘/实际触点、减少动态与上下文已验，中文/葡语截图人工复核。
+- 隔离check:dev全部通过（format/lint、typecheck69/test69/build38）；设计基础57及完整静态扫描通过。独立审查与S.U.P.E.R十项复核完成，交付源与隔离副本逐文件一致；未重跑完整pnpm check，既有正式门禁缺口仍以此前记录为准。
+- 证据 `output/footer-minimal-20261001/FINAL.md`、`output/playwright/footer-minimal-20261001/REVIEW.md`；浏览器读取使用夹具，未冒充真实发布/支付验收；未操作业务数据、未部署，测试自建服务已关闭。
+
 ## C-20261001 艺人描述去重与展开
 
 - LOCAL_ACCEPTED（本项本地验收；公开 TEST 待部署）；Codex root / hero_swatch_review / wish_picker_data / wish_picker_ui；2026-10-01。基线 fcd6d8ed，SPEC 6.4.2 §5.4；底部Their story及重复简介删除，照片/心愿/礼物继续展示。

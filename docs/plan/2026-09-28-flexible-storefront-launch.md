@@ -110,7 +110,9 @@ root 负责 API/BFF/存储缓存语义与现场验收；focal_backend_audit 独�
 
 只编辑已有七语入口的非语言结构，保持全站核心浏览、查单、语言及购物车可用。独立导航版本避免恢复首页布局或主题时意外覆盖导航；原布局/主题合同、JSON/hash和恢复语义不变。默认公开画面保持现状。
 
-冻结 `StorefrontNavigation`：`schemaVersion:1`，`header` 为 HOME/ARTISTS/GIFTS 各一次的枚举数组；`footer` 为 DESCRIPTION/REGION/ARTISTS/GIFTS/POLICIES 各一次的 `{id,visible}` 数组。品牌固定；三条主入口不可隐藏，菜单沿其顺序并固定保留查单；POLICIES 不可设置隐藏，但链接只来自有效公开 CommerceContext。默认 footer 顺序如上，GIFTS 默认隐藏，其余显示；地区仍由单市场规则裁定。无自由文字、URL、HTML、CSS 或交易字段。
+冻结 `StorefrontNavigation`：`schemaVersion:1`，`header` 为 HOME/ARTISTS/GIFTS 各一次的枚举数组；`footer` 为 DESCRIPTION/REGION/ARTISTS/GIFTS/POLICIES 各一次的 `{id,visible}` 数组。品牌固定；三条主入口不可隐藏，菜单沿其顺序并固定保留查单；POLICIES 不可设置隐藏，但链接只来自有效公开 CommerceContext。默认 footer 顺序如上，GIFTS 与 DESCRIPTION 默认隐藏，其余显示（DESCRIPTION 的兼容规则见下述 2026-10-01 调整）；地区仍由单市场规则裁定。无自由文字、URL、HTML、CSS 或交易字段。
+
+2026-10-01 用户调整：删除固定页脚标语及对应编辑开关；DESCRIPTION保留在五项合同与旧历史中以兼容读取/恢复，前台不再渲染，新默认visible=false。后台仅对其余四项排序/显隐，移动跨过保留项而不改写旧值；政策必显与单市场规则不变。页脚品牌和链接分区、响应式换行，见SPEC 6.4.3。
 
 独立 `storefront-navigation` 管理 read/draft/publish/restore/history 与公开读取，配置字段为 `navigation`；沿用权限、CAS、幂等及原子审计，追加恢复不改其他业务。预览消息为严格 `STOREFRONT_NAVIGATION_PREVIEW`/`STOREFRONT_NAVIGATION_PREVIEW_READY`；真实商城壳提供顶部/菜单/页脚检查，390×844 与1440×900，仍校验父窗口/origin/channel、inert、无业务写入与埋点。菜单用相同入口组件展示，不能因inert而无法验预览。
 

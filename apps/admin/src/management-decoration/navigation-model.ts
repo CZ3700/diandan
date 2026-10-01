@@ -38,7 +38,9 @@ export function moveNavigationItem(
   const ids =
     section === "header"
       ? navigation.header
-      : navigation.footer.map((item) => item.id);
+      : navigation.footer
+          .filter((item) => item.id !== "DESCRIPTION")
+          .map((item) => item.id);
   const index = ids.findIndex((value) => value === id);
   const target = index + direction;
   if (index < 0 || target < 0 || target >= ids.length) return navigation;
@@ -50,9 +52,13 @@ export function moveNavigationItem(
     return { ...navigation, header };
   }
   const footer = [...navigation.footer];
-  const [item] = footer.splice(index, 1);
-  if (!item) return navigation;
-  footer.splice(target, 0, item);
+  const sourceIndex = footer.findIndex((item) => item.id === id);
+  const targetIndex = footer.findIndex((item) => item.id === ids[target]);
+  const sourceItem = footer[sourceIndex];
+  const targetItem = footer[targetIndex];
+  if (!sourceItem || !targetItem) return navigation;
+  // Move editable rows around the retained legacy slot without changing its value.
+  [footer[sourceIndex], footer[targetIndex]] = [targetItem, sourceItem];
   return { ...navigation, footer };
 }
 export function setNavigationFooterVisible(
@@ -60,7 +66,7 @@ export function setNavigationFooterVisible(
   id: StorefrontNavigation["footer"][number]["id"],
   visible: boolean,
 ): StorefrontNavigation {
-  if (id === "POLICIES") return navigation;
+  if (id === "POLICIES" || id === "DESCRIPTION") return navigation;
   return {
     ...navigation,
     footer: navigation.footer.map((item) =>

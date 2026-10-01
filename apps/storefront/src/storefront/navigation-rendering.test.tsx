@@ -19,7 +19,7 @@ test("published order is semantic and footer visibility cannot replace authorita
       { id: "POLICIES", visible: true },
       { id: "GIFTS", visible: true },
       { id: "ARTISTS", visible: false },
-      { id: "DESCRIPTION", visible: false },
+      { id: "DESCRIPTION", visible: true },
       { id: "REGION", visible: true },
     ],
   };
@@ -65,6 +65,7 @@ test("published order is semantic and footer visibility cannot replace authorita
     footer.indexOf('data-footer-section="GIFTS"'),
   );
   expect(footer).not.toContain('data-footer-section="DESCRIPTION"');
+  expect(footer).not.toContain(copy.giftHandover);
   expect(footer).not.toContain('data-footer-section="ARTISTS"');
   expect(footer).not.toContain("/region");
 });

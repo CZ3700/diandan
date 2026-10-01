@@ -30,12 +30,46 @@ test("policies remain visible while optional footer items can be toggled", () =>
   expect(model!.setNavigationFooterVisible(initial, "POLICIES", false)).toBe(
     initial,
   );
+  expect(model!.setNavigationFooterVisible(initial, "DESCRIPTION", false)).toBe(
+    initial,
+  );
   const changed = model!.setNavigationFooterVisible(initial, "GIFTS", true);
   expect(changed.footer.find((item) => item.id === "GIFTS")?.visible).toBe(
     true,
   );
   expect(initial.footer.find((item) => item.id === "GIFTS")?.visible).toBe(
     false,
+  );
+});
+test("footer moves skip the retained description slot without rewriting its legacy value", () => {
+  const initial = navigationFixture();
+  const legacy = initial.footer[0]!;
+  const withMiddleDescription = {
+    ...initial,
+    footer: [initial.footer[1]!, legacy, ...initial.footer.slice(2)],
+  };
+  const moved = model!.moveNavigationItem(
+    withMiddleDescription,
+    "footer",
+    "ARTISTS",
+    -1,
+  );
+  expect(moved.footer.map((item) => item.id)).toEqual([
+    "ARTISTS",
+    "DESCRIPTION",
+    "REGION",
+    "GIFTS",
+    "POLICIES",
+  ]);
+  expect(moved.footer[1]).toBe(legacy);
+  expect(model!.moveNavigationItem(initial, "footer", "REGION", -1)).toBe(
+    initial,
+  );
+  expect(model!.moveNavigationItem(initial, "footer", "DESCRIPTION", 1)).toBe(
+    initial,
+  );
+  expect(model!.moveNavigationItem(moved, "footer", "ARTISTS", 1)).toEqual(
+    withMiddleDescription,
   );
 });
 test("semantic dirty comparison includes order and visibility and does not mutate saved state", () => {
@@ -66,7 +100,12 @@ test("semantic dirty comparison includes order and visibility and does not mutat
     draft: null,
     published: null,
   };
-  expect(model!.editableNavigation(state)).toEqual(initial);
+  expect(model!.editableNavigation(state)).toEqual({
+    ...initial,
+    footer: initial.footer.map((item) =>
+      item.id === "DESCRIPTION" ? { ...item, visible: false } : item,
+    ),
+  });
   const draft = {
     revisionId: "10000000-0000-4000-8000-000000000001",
     createdAt: "2026-09-28T00:00:00Z",

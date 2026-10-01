@@ -14,14 +14,20 @@ const navigation = () => ({
     (id) => ({ id, visible: id !== "GIFTS" }),
   ),
 });
-test("default preserves existing entry order and enables explicit safe reordering", () => {
+test("default preserves legacy entry order while retiring the description block", () => {
   expect(contracts).toHaveProperty("createDefaultStorefrontNavigation");
   const create = Reflect.get(
     contracts,
     "createDefaultStorefrontNavigation",
   ) as () => unknown;
   const value = navigation();
-  expect(create()).toEqual(value);
+  expect(create()).toEqual({
+    ...value,
+    footer: value.footer.map((item) =>
+      item.id === "DESCRIPTION" ? { ...item, visible: false } : item,
+    ),
+  });
+  // Previously published DESCRIPTION=true values remain byte-compatible.
   expect(contract("storefrontNavigationSchema").parse(value)).toEqual(value);
   expect(
     contract("storefrontNavigationSchema").safeParse({

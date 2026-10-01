@@ -65,13 +65,14 @@ export const storefrontNavigationSchema = z
       });
   });
 export type StorefrontNavigation = z.infer<typeof storefrontNavigationSchema>;
+/** DESCRIPTION stays in version-one payloads for history compatibility, but is no longer a rendered block. */
 export function createDefaultStorefrontNavigation(): StorefrontNavigation {
   return {
     schemaVersion: 1,
     header: [...STOREFRONT_NAVIGATION_HEADER_IDS],
     footer: STOREFRONT_NAVIGATION_FOOTER_IDS.map((id) => ({
       id,
-      visible: id !== "GIFTS",
+      visible: id !== "GIFTS" && id !== "DESCRIPTION",
     })),
   };
 }

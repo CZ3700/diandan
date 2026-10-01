@@ -528,24 +528,53 @@ html[data-storefront-scheme="LIGHT"][data-storefront-hero-layout="IMMERSIVE"]
   color: var(--color-text-muted);
 }
 .storefront-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-8);
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  align-items: start;
+  gap: var(--space-6) var(--space-12);
+  max-inline-size: var(--layout-canvas-max);
+  margin-inline: auto;
   padding: var(--space-8) var(--layout-gutter);
   border-top: var(--border-width) solid var(--color-border);
 }
-.storefront-footer p {
-  max-inline-size: calc(var(--layout-reading-max) / 2);
+.storefront-footer .storefront-wordmark {
+  max-inline-size: 100%;
+  padding-block: var(--space-3);
+}
+.storefront-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: start;
+  gap: 0 var(--space-6);
+  min-inline-size: 0;
+}
+.storefront-footer .gift-policy-links,
+.storefront-footer .information-page-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+  justify-content: flex-end;
+  gap: 0 var(--space-6);
+  margin: 0;
+  padding: 0;
   font-size: var(--type-label-size);
   color: var(--color-text-muted);
 }
 .storefront-footer a {
   display: inline-flex;
   align-items: center;
+  min-inline-size: 0;
   min-block-size: var(--space-12);
-  gap: var(--space-3);
+  text-decoration: none;
+}
+.storefront-footer a:hover {
+  text-decoration: underline;
+  text-underline-offset: var(--space-1);
+}
+.storefront-footer a:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-accent);
+  outline-offset: var(--focus-ring-offset);
 }
 .storefront-state {
   display: flex;
@@ -705,10 +734,13 @@ html[data-storefront-scheme="LIGHT"][data-storefront-hero-layout="IMMERSIVE"]
     margin-block-start: var(--space-6);
   }
   .storefront-footer {
-    gap: var(--space-6);
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-3);
   }
-  .storefront-footer p {
-    max-inline-size: 100%;
+  .storefront-footer-links,
+  .storefront-footer .gift-policy-links,
+  .storefront-footer .information-page-footer-links {
+    justify-content: flex-start;
   }
   .storefront-state {
     padding-block: var(--space-16);

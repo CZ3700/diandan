@@ -20,10 +20,13 @@ test.each(SUPPORTED_LOCALES)(
       />,
     );
     expect(html.match(/data-navigation-header=/gu)).toHaveLength(3);
-    expect(html.match(/data-navigation-footer=/gu)).toHaveLength(5);
-    expect(html.match(/type="checkbox"/gu)).toHaveLength(5);
+    expect(html.match(/data-navigation-footer=/gu)).toHaveLength(4);
+    expect(html.match(/type="checkbox"/gu)).toHaveLength(4);
+    expect(html).not.toContain('data-navigation-footer="DESCRIPTION"');
+    expect(html).not.toContain('data-navigation-visible="DESCRIPTION"');
     expect(html).toMatch(/data-navigation-visible="POLICIES"[^>]*disabled/u);
     expect(html).toMatch(/data-navigation-up="header:HOME"[^>]*disabled/u);
+    expect(html).toMatch(/data-navigation-up="footer:REGION"[^>]*disabled/u);
     expect(html).toContain(copy.fixedControlsHint);
     expect(html).toContain(copy.regionHint);
     expect(html).not.toMatch(/undefined|\[object Object\]/u);

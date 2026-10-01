@@ -27,10 +27,12 @@ export function NavigationEditor({
                 label: copy.headerLabels[id],
                 visible: true,
               }))
-            : navigation.footer.map((item) => ({
-                ...item,
-                label: copy.footerLabels[item.id],
-              }));
+            : navigation.footer
+                .filter((item) => item.id !== "DESCRIPTION")
+                .map((item) => ({
+                  ...item,
+                  label: copy.footerLabels[item.id],
+                }));
         return (
           <section
             key={section}

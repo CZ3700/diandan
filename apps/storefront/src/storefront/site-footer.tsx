@@ -1,6 +1,5 @@
 "use client";
 import type { SupportedLocale } from "@fan-support/contracts";
-import { Icon } from "@fan-support/ui";
 import { Fragment, type ReactNode } from "react";
 import type { StorefrontCopy } from "./copy";
 import { navigationTargetHref } from "./navigation-target";
@@ -26,7 +25,8 @@ export function SiteFooter({
 }>) {
   const { navigation, source, version } = useStorefrontNavigation();
   const sections = {
-    DESCRIPTION: <p data-footer-section="DESCRIPTION">{copy.giftHandover}</p>,
+    // Retained in saved navigation revisions for compatibility, no longer displayed.
+    DESCRIPTION: null,
     REGION: region ?? (
       <a href={navigationTargetHref(locale, "REGION", contextQuery)}>
         {copy.region}
@@ -38,7 +38,6 @@ export function SiteFooter({
         href={navigationTargetHref(locale, "ARTISTS", contextQuery)}
       >
         {copy.backArtists}
-        <Icon name="arrow-right" decorative />
       </a>
     ),
     GIFTS: (
@@ -47,7 +46,6 @@ export function SiteFooter({
         href={navigationTargetHref(locale, "GIFTS", contextQuery)}
       >
         {copy.navGifts}
-        <Icon name="arrow-right" decorative />
       </a>
     ),
     POLICIES: policyLinks,
@@ -62,12 +60,14 @@ export function SiteFooter({
         {name}
         <span aria-hidden="true">.</span>
       </span>
-      {navigation.footer
-        .filter((item) => item.visible)
-        .map(({ id }) => (
-          <Fragment key={id}>{sections[id]}</Fragment>
-        ))}
-      {informationLinks}
+      <div className="storefront-footer-links">
+        {navigation.footer
+          .filter((item) => item.visible)
+          .map(({ id }) => (
+            <Fragment key={id}>{sections[id]}</Fragment>
+          ))}
+        {informationLinks}
+      </div>
     </footer>
   );
 }
