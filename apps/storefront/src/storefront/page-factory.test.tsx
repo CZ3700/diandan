@@ -315,6 +315,31 @@ test.each([false, true])(
   },
 );
 
+test.each(SUPPORTED_LOCALES)(
+  "the %s artist page closes without the gift slogan the gift lists dropped",
+  async (locale) => {
+    const copy = await loadStorefrontCopy(locale);
+    const artist = publishedArtist(locale).content.view;
+    const closing = (acceptingGifts: boolean) => {
+      const html = renderToStaticMarkup(
+        <ArtistContent
+          artist={{ ...artist, acceptingGifts }}
+          locale={locale}
+          copy={copy}
+          contextQuery=""
+        />,
+      );
+      return html.slice(html.indexOf("storefront-final"));
+    };
+    const accepting = closing(true);
+    expect(accepting).not.toContain(copy.giftTitle);
+    expect(accepting).not.toContain("<h2");
+    expect(accepting).toContain(copy.giftHandover);
+    expect(accepting).toContain(copy.giftChoose);
+    expect(closing(false)).toContain(`<h2>${copy.artistPaused}</h2>`);
+  },
+);
+
 function publishedArtist(locale: (typeof SUPPORTED_LOCALES)[number]) {
   const home = publishedHome(locale);
   if (home.outcome !== "SUCCESS") throw new Error("Missing test homepage");

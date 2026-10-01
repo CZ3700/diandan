@@ -97,7 +97,8 @@ export function ArtistContent({
       {gifts}
       <StudioPromise copy={copy} />
       <section className="storefront-section storefront-final">
-        <h2>{artist.acceptingGifts ? copy.giftTitle : copy.artistPaused}</h2>
+        {/* 2026-10-01 user: the gift slogan left the gift lists (L2-17) and leaves here too. */}
+        {artist.acceptingGifts ? null : <h2>{copy.artistPaused}</h2>}
         <p>{copy.giftHandover}</p>
         <a
           className="storefront-primary"

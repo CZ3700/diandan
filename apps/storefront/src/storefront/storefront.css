@@ -569,8 +569,10 @@ html[data-storefront-scheme="LIGHT"][data-storefront-hero-layout="IMMERSIVE"]
   max-inline-size: var(--layout-reading-max);
   margin-inline: auto;
 }
-.storefront-final p {
+.storefront-final h2 + p {
   margin-block-start: var(--space-6);
+}
+.storefront-final p {
   color: var(--color-text-muted);
 }
 .storefront-footer {
