@@ -15,8 +15,31 @@ import {
   seedGiftCommerceMarket,
 } from "./postgres-gift-commerce-fixtures.mjs";
 
-/** Nonempty protected business state is created through normal audited writers, not replica inserts. */
+/**
+ * The current commerce writers lock artist-wish bindings (0060). Callers seed this baseline on a
+ * pre-0060 schema, where no wish can exist, so an empty stand-in lets the normal audited writers
+ * run; it is dropped again before the caller exercises any later migration.
+ */
 export async function seedCommerceBaseline(client, actorId) {
+  const standIn =
+    (
+      await client.query(
+        "SELECT to_regclass('public.wish_bindings') IS NULL AS missing",
+      )
+    ).rows[0].missing === true;
+  if (standIn)
+    await client.query(
+      "CREATE TABLE public.wish_bindings(wish_id uuid, gift_id uuid, gift_variant_id uuid)",
+    );
+  try {
+    await seedCommerceBaselineWithCurrentWriters(client, actorId);
+  } finally {
+    if (standIn) await client.query("DROP TABLE public.wish_bindings");
+  }
+}
+
+/** Nonempty protected business state is created through normal audited writers, not replica inserts. */
+async function seedCommerceBaselineWithCurrentWriters(client, actorId) {
   const credentials = await seedGiftCommerceAuthority(client, { actorId });
   const market = "DISPLAY_TEST",
     currency = "USD";

@@ -62,8 +62,8 @@ export async function verifyStorefrontHeroEffects({
     "0057 rejects hero effect before upgrade",
   );
 
-  // Using the current head makes RED fail on the actual missing SQL behavior.
-  await migrate({ direction: "up" });
+  // Pin 0058: the rollback probes below confirm 0058 as the head, which later migrations would reject.
+  await migrate({ direction: "up", targetVersion: "0058" });
   for (const heroEffect of ["STARLIGHT", "AURORA", "SPOTLIGHT", "PETALS"])
     for (const motion of ["STANDARD", "SUBTLE", "NONE"])
       for (const motionSpeed of ["STANDARD", "QUICK"])
