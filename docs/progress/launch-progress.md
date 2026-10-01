@@ -1,5 +1,13 @@
 # 当前上线进度
 
+## C-20261001 应援凭证礼物图片
+
+- LOCAL_ACCEPTED；Codex root / wish_picker_data / hero_swatch_review；2026-10-01，基线69e368ca。根因是凭证组件与canvas仅传入/绘制艺人图；现保留艺人主图，在礼物名称正下方居中绘制订单快照礼物图，完整等比展示，双图独立降级。
+- PNG与预览统一1080×1620；长名称、署名与底部信息不重叠，沿用同源优化、主题与署名隐私/撤回条件；无API、数据结构或迁移变更。SPEC6.4.4、ADR-019同步。
+- 验证：先红后绿，凭证单测12/12；真实浏览器29场景/372检查通过（七语言×390/1440、横竖图、失败、最长文本、键盘及reduced motion），实际下载PNG与预览一致。独立代码/视觉审阅与S.U.P.E.R十项通过。
+- 隔离工作区Node24.20.0运行`pnpm check:dev`通过：格式、lint、类型69/69、测试任务69/69、构建38/38；源码与当前工作区一致。证据：`output/certificate-gift-image-20261001/`、`output/playwright/certificate-gift-image-20261001/`、`output/checks/certificate-gift-image-20261001/check-dev-final.log`。
+- 边界：浏览器使用真实组件和合成订单/图片夹具；未执行实际Next图片优化、生产媒体/订单、PG/S3、正式`pnpm check`或部署验收。不操作既有业务实例，不发布服务器。
+
 ## C-20261001 本地存储清理
 
 - DONE（仅本机存储维护）；Codex root / storage_turbo_review / storage_output_review / storage_node_review；2026-10-01。按用户要求先从95a09cbc快进至远端746f94e9，工作区初始干净；未修改业务源码、部署或重置数据库。

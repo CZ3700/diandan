@@ -169,9 +169,11 @@ export function readCertificateTheme(element: HTMLElement): CertificateTheme {
   };
 }
 
-const WIDTH = 1080;
-const HEIGHT = 1350;
+export const CERTIFICATE_IMAGE_SIZE = { width: 1080, height: 1620 } as const;
+const { width: WIDTH, height: HEIGHT } = CERTIFICATE_IMAGE_SIZE;
 const MARGIN = 96;
+
+type CertificatePhotos<T> = Readonly<{ artist: T; gift: T }>;
 
 async function loadPhoto(url: string | null): Promise<HTMLImageElement | null> {
   if (url === null) return null;
@@ -219,37 +221,43 @@ function drawPhoto(
   context: CanvasRenderingContext2D,
   theme: CertificateTheme,
   photo: HTMLImageElement | null,
-  artist: string,
+  fallbackLabel: string,
+  frame: Readonly<{ x: number; y: number; width: number; height: number }>,
+  fit: "cover" | "contain",
 ) {
-  const width = 480,
-    height = 600,
-    x = (WIDTH - width) / 2,
-    y = 200;
+  const { x, y, width, height } = frame;
+  const padding = fit === "contain" ? 16 : 0;
+  const imageWidth = width - padding * 2;
+  const imageHeight = height - padding * 2;
   context.save();
   roundedRect(context, x, y, width, height, 28);
   context.fillStyle = theme.surface;
   context.fill();
   context.clip();
   if (photo) {
-    const scale = Math.max(
-      width / photo.naturalWidth,
-      height / photo.naturalHeight,
+    const scale = (fit === "contain" ? Math.min : Math.max)(
+      imageWidth / photo.naturalWidth,
+      imageHeight / photo.naturalHeight,
     );
     const drawWidth = photo.naturalWidth * scale,
       drawHeight = photo.naturalHeight * scale;
     context.drawImage(
       photo,
-      x + (width - drawWidth) / 2,
-      y + (height - drawHeight) / 2,
+      x + padding + (imageWidth - drawWidth) / 2,
+      y + padding + (imageHeight - drawHeight) / 2,
       drawWidth,
       drawHeight,
     );
   } else {
     context.fillStyle = theme.accent;
-    context.font = `500 200px ${theme.fontFamily}`;
+    context.font = `500 ${Math.min(width, height) * 0.42}px ${theme.fontFamily}`;
     context.textAlign = "center";
     context.textBaseline = "middle";
-    context.fillText([...artist][0] ?? "", WIDTH / 2, y + height / 2);
+    context.fillText(
+      [...fallbackLabel][0] ?? "",
+      x + width / 2,
+      y + height / 2,
+    );
   }
   context.restore();
   context.strokeStyle = theme.accent;
@@ -263,7 +271,7 @@ function draw(
   text: CertificateText,
   theme: CertificateTheme,
   locale: SupportedLocale,
-  photo: HTMLImageElement | null,
+  photos: CertificatePhotos<HTMLImageElement | null>,
 ) {
   canvas.width = WIDTH;
   canvas.height = HEIGHT;
@@ -315,15 +323,31 @@ function draw(
     1,
   );
   if ("letterSpacing" in context) context.letterSpacing = "0px";
-  drawPhoto(context, theme, photo, text.artist);
+  drawPhoto(
+    context,
+    theme,
+    photos.artist,
+    text.artist,
+    { x: (WIDTH - 480) / 2, y: 200, width: 480, height: 600 },
+    "cover",
+  );
   let y = line(text.artist, 890, 64, "600", theme.text, 2, 1.15);
   y = line(text.gift, y + 64, 36, "500", theme.muted, 2);
+  const giftTop = y + 24;
+  drawPhoto(
+    context,
+    theme,
+    photos.gift,
+    text.gift,
+    { x: (WIDTH - 224) / 2, y: giftTop, width: 224, height: 224 },
+    "contain",
+  );
   if (text.signature !== null)
-    line(text.signature, y + 72, 36, "600", theme.accent, 2);
+    line(text.signature, giftTop + 224 + 48, 34, "600", theme.accent, 2);
   context.fillStyle = theme.border;
-  context.fillRect(WIDTH / 2 - 60, 1180, 120, 2);
-  line(text.delivered, 1236, 28, "500", theme.muted, 1);
-  line(text.order, 1276, 28, "500", theme.muted, 1);
+  context.fillRect(WIDTH / 2 - 60, HEIGHT - 170, 120, 2);
+  line(text.delivered, HEIGHT - 114, 28, "500", theme.muted, 1);
+  line(text.order, HEIGHT - 74, 28, "500", theme.muted, 1);
 }
 
 function toPng(canvas: HTMLCanvasElement): Promise<Blob> {
@@ -339,22 +363,25 @@ function toPng(canvas: HTMLCanvasElement): Promise<Blob> {
   });
 }
 
-/** Draw the certificate as a 1080×1350 PNG. A photo that cannot be drawn gives way to the initial. */
+/** Draw both order-snapshot images. Each unavailable image gives way to its own initial. */
 export async function renderSupportCertificate(
   text: CertificateText,
   theme: CertificateTheme,
   locale: SupportedLocale,
-  photoUrl: string | null,
+  photoUrls: CertificatePhotos<string | null>,
 ): Promise<Blob> {
-  await loadFonts(theme, text);
-  const photo = await loadPhoto(photoUrl);
+  const [, artist, gift] = await Promise.all([
+    loadFonts(theme, text),
+    loadPhoto(photoUrls.artist),
+    loadPhoto(photoUrls.gift),
+  ]);
   const canvas = document.createElement("canvas");
-  draw(canvas, text, theme, locale, photo);
+  draw(canvas, text, theme, locale, { artist, gift });
   try {
     return await toPng(canvas);
   } catch (error) {
-    if (photo === null) throw error;
-    draw(canvas, text, theme, locale, null);
+    if (artist === null && gift === null) throw error;
+    draw(canvas, text, theme, locale, { artist: null, gift: null });
     return toPng(canvas);
   }
 }

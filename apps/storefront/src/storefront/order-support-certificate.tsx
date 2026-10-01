@@ -13,6 +13,7 @@ import { Button, Field } from "@fan-support/ui";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
 import {
   CERTIFICATE_NAME_MAX,
+  CERTIFICATE_IMAGE_SIZE,
   certificateDeliveredDate,
   certificateFileName,
   certificateGiftLine,
@@ -27,13 +28,13 @@ type Mode = CertificateSignature["mode"];
 type Status = "idle" | "saving" | "ready" | "failed";
 
 /** Same-origin optimizer URL, so the canvas can read the photo without loosening CSP. */
-function sameOriginPhoto(url: string) {
+function sameOriginPhoto(url: string, width: number, height: number) {
   try {
     const { props } = getImageProps({
       src: url,
       alt: "",
-      width: 414,
-      height: 518,
+      width,
+      height,
       quality: 75,
     });
     return props.src.startsWith("/") ? props.src : null;
@@ -116,7 +117,10 @@ export function OrderSupportCertificate({
         ),
         readCertificateTheme(element),
         locale,
-        sameOriginPhoto(item.idol.portrait.url),
+        {
+          artist: sameOriginPhoto(item.idol.portrait.url, 414, 518),
+          gift: sameOriginPhoto(item.gift.image.url, 224, 224),
+        },
       );
       const url = URL.createObjectURL(blob);
       replacePreview(url);
@@ -254,8 +258,8 @@ export function OrderSupportCertificate({
             <img
               className="order-certificate-preview"
               src={preview}
-              width={1080}
-              height={1350}
+              width={CERTIFICATE_IMAGE_SIZE.width}
+              height={CERTIFICATE_IMAGE_SIZE.height}
               alt={formatStorefrontMessage(
                 copy,
                 "orderCertificateImageAlt",
