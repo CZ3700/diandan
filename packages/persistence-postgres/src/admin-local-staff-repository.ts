@@ -21,6 +21,7 @@ import {
   text,
   writeAudit,
 } from "./admin-local-access-data.js";
+import { returnBrokerArtistsToStudio } from "./management-center-assignment.js";
 import {
   persistenceTransactionFailureFromPostgres,
   type TransactionClient,
@@ -37,7 +38,8 @@ const MEMBERS = `SELECT a.id,a.version,a.login_name,a.display_name,i.status,i.id
   a.totp_ciphertext IS NOT NULL AS two_factor,a.must_change_password,
   CASE WHEN a.last_login_at IS NULL THEN NULL ELSE ${text("a.last_login_at")} END AS last_login_at,
   coalesce((SELECT array_agg(r.role_key ORDER BY r.role_key) FROM public.admin_identity_roles ar
-    JOIN public.roles r ON r.id=ar.role_id WHERE ar.admin_identity_id=i.id),'{}') AS role_keys
+    JOIN public.roles r ON r.id=ar.role_id WHERE ar.admin_identity_id=i.id),'{}') AS role_keys,
+  (SELECT count(*)::int FROM public.idols o WHERE o.status<>'archived' AND public.idol_current_broker(o.id)=i.id) AS assigned_artists
 FROM public.admin_local_accounts a JOIN public.admin_identities i ON i.id=a.admin_identity_id
 WHERE i.status IN ('ACTIVE','SUSPENDED')`;
 
@@ -68,6 +70,7 @@ export function createAdminLocalStaffRepository(
     roleKeys: row["role_keys"] as string[],
     lastLoginAt: (row["last_login_at"] as string | null) ?? null,
     self: row["identity_id"] === actorId,
+    assignedArtists: Number(row["assigned_artists"] ?? 0),
   });
   async function readMember(accountId: string, actorId: string) {
     const [row] = await draftRows(client, `${MEMBERS} AND a.id=$1`, [
@@ -245,6 +248,7 @@ export function createAdminLocalStaffRepository(
           self &&
           (change.action === "RESET_PASSWORD" ||
             change.action === "CLEAR_TOTP" ||
+            change.action === "DELETE" ||
             (change.action === "SET_STATUS" && change.status === "SUSPENDED"))
         )
           return failure("SELF_LOCKOUT");
@@ -254,6 +258,12 @@ export function createAdminLocalStaffRepository(
           return failure("NOT_FOUND");
         if (Number(account["version"]) !== change.expectedVersion)
           return failure("STALE_VERSION");
+        // L3-14: the administrator typed this login name; a mismatch means the page aimed at someone else.
+        if (
+          change.action === "DELETE" &&
+          account["login_name"] !== change.loginName
+        )
+          return failure("INVALID_COMMAND");
         const at = String(account["at"]);
         const bump = () =>
           client.query(
@@ -262,7 +272,10 @@ export function createAdminLocalStaffRepository(
           );
         const revokeAll = (
           reasonCode:
-            "PASSWORD_RESET" | "ACCOUNT_SUSPENDED" | "SECOND_FACTOR_CHANGED",
+            | "PASSWORD_RESET"
+            | "ACCOUNT_SUSPENDED"
+            | "SECOND_FACTOR_CHANGED"
+            | "ACCOUNT_DELETED",
         ) =>
           revokeIdentitySessions(client, {
             identityId,
@@ -321,6 +334,54 @@ export function createAdminLocalStaffRepository(
             await revokeAll("SECOND_FACTOR_CHANGED");
             await audit("ADMIN_STAFF_TOTP_CLEARED", change.accountId, at);
             break;
+          case "DELETE": {
+            // Audits and history keep every identity, so a deleted account is marked ARCHIVED for good (0063).
+            const [holding] = await draftRows(
+              client,
+              "SELECT count(*)::int AS n FROM public.idols WHERE public.idol_current_broker(id)=$1::uuid",
+              [identityId],
+            );
+            if (
+              Number(holding?.["n"] ?? 0) > 0 &&
+              !(await holdsPermission(client, actorId, "idols.assign"))
+            )
+              return failure("FORBIDDEN");
+            await revokeAll("ACCOUNT_DELETED");
+            await revokeRecoveryCodes(client, change.accountId, at);
+            await client.query(
+              `UPDATE public.admin_local_accounts SET totp_ciphertext=NULL,totp_encrypted_data_key=NULL,
+                totp_key_version=NULL,totp_enabled_at=NULL,totp_last_step=NULL,totp_pending_ciphertext=NULL,
+                totp_pending_encrypted_data_key=NULL,totp_pending_key_version=NULL,totp_pending_expires_at=NULL,
+                failed_attempts=0,locked_until=NULL,
+                version=version+1,updated_at=greatest(updated_at,$2::timestamptz) WHERE id=$1`,
+              [change.accountId, at],
+            );
+            await client.query(
+              "DELETE FROM public.admin_identity_roles WHERE admin_identity_id=$1",
+              [identityId],
+            );
+            await client.query(
+              "UPDATE public.admin_identities SET status='ARCHIVED',version=version+1,updated_at=greatest(updated_at,$2::timestamptz) WHERE id=$1",
+              [identityId, at],
+            );
+            // After the identity is marked deleted, so the guard also lets its archived artists go back.
+            const transferredArtists = await returnBrokerArtistsToStudio(
+              client,
+              {
+                brokerId: identityId,
+                actorId,
+                sessionId: session.sessionId,
+                requestId: c.requestId,
+              },
+            );
+            await audit("ADMIN_STAFF_DELETED", change.accountId, at);
+            return adminLocalStaffResultSchema.parse({
+              ...success,
+              kind: "STAFF_DELETED",
+              accountId: change.accountId,
+              transferredArtists,
+            });
+          }
           case "SET_STATUS":
             if (status === change.status) break;
             await client.query(

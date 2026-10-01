@@ -312,6 +312,12 @@ export const adminStaffCommandSchema = z.discriminatedUnion("action", [
     ...expected,
     status: z.enum(["ACTIVE", "SUSPENDED"]),
   }),
+  /** L3-14: permanent; the login name typed by the administrator must match the account. */
+  z.strictObject({
+    action: z.literal("DELETE"),
+    ...expected,
+    loginName: adminLoginNameSchema,
+  }),
 ]);
 export const adminStaffRequestSchema = z.strictObject({
   ...envelope,
@@ -330,6 +336,8 @@ export const adminStaffMemberSchema = z.strictObject({
   roleKeys: z.array(adminRoleKeySchema).max(32),
   lastLoginAt: contentTimestampSchema.nullable(),
   self: z.boolean(),
+  /** L3-14: current artists assigned to this account, which a deletion hands back to the studio. */
+  assignedArtists: z.number().int().min(0).max(1_000_000),
 });
 export const adminStaffRoleSchema = z.strictObject({
   roleKey: adminRoleKeySchema,
@@ -370,6 +378,13 @@ export const adminStaffResponseSchema = z.union([
     kind: z.enum(["STAFF_CREATED", "PASSWORD_RESET"]),
     member: adminStaffMemberSchema,
     temporaryPassword: adminTemporaryPasswordSchema,
+  }),
+  z.strictObject({
+    ...success,
+    kind: z.literal("STAFF_DELETED"),
+    accountId: z.uuid(),
+    /** Current artists that went back to the studio (archived ones go back too, uncounted, as in the list). */
+    transferredArtists: z.number().int().min(0).max(1_000_000),
   }),
   adminStaffFailureSchema,
 ]);

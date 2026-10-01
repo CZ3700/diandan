@@ -555,6 +555,11 @@ export function createAdminLocalAccessUseCases(
         }
         const saved = await execute(command);
         if (saved.outcome === "FAILURE") return saved;
+        if (command.action === "DELETE")
+          return saved.kind === "STAFF_DELETED" &&
+            saved.accountId === command.accountId
+            ? adminStaffResponseSchema.parse(saved)
+            : staffFailure("ACCESS_UNAVAILABLE");
         if (saved.kind !== "STAFF_SAVED")
           return staffFailure("ACCESS_UNAVAILABLE");
         return adminStaffResponseSchema.parse({

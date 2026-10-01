@@ -160,6 +160,13 @@ test("staff management maps each operation to its own route, command and result"
       { accountId: id, expectedVersion: 2, status: "SUSPENDED" },
       "STAFF_UPDATED",
     ],
+    [
+      "staff-delete",
+      "delete",
+      "DELETE",
+      { accountId: id, expectedVersion: 2, loginName: "night.shift" },
+      "STAFF_DELETED",
+    ],
   ] as const) {
     const operation = getAdminOperation(key)!;
     expect(operation.path).toBe(`/api/v1/admin/staff/${path}`);

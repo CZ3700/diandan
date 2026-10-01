@@ -148,7 +148,8 @@ export async function revokeIdentitySessions(
       | "PASSWORD_CHANGED"
       | "PASSWORD_RESET"
       | "ACCOUNT_SUSPENDED"
-      | "SECOND_FACTOR_CHANGED";
+      | "SECOND_FACTOR_CHANGED"
+      | "ACCOUNT_DELETED";
     requestId: string;
     correlationId: string;
     at: string;

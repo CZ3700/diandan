@@ -35,7 +35,12 @@ export function displayNameFromInput(input: string): string | null {
 }
 
 export type StaffAction =
-  "CREATE" | "UPDATE_ROLES" | "RESET_PASSWORD" | "CLEAR_TOTP" | "SET_STATUS";
+  | "CREATE"
+  | "UPDATE_ROLES"
+  | "RESET_PASSWORD"
+  | "CLEAR_TOTP"
+  | "SET_STATUS"
+  | "DELETE";
 export function staffFailure(
   error: unknown,
   locale: SupportedLocale,

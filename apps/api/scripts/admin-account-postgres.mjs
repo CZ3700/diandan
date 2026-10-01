@@ -463,6 +463,36 @@ try {
         "a broker signs in and does not manage staff",
       );
 
+      stage = "a deleted account (L3-14)";
+      // What the staff page leaves behind: the identity marked deleted and holding no role.
+      await client.query(
+        "DELETE FROM admin_identity_roles WHERE admin_identity_id=(SELECT admin_identity_id FROM admin_local_accounts WHERE login_name='mina.park')",
+      );
+      await client.query(
+        "UPDATE admin_identities SET status='ARCHIVED' WHERE id=(SELECT admin_identity_id FROM admin_local_accounts WHERE login_name='mina.park')",
+      );
+      for (const command of ["reactivate", "suspend", "clear-2fa"]) {
+        await assert.rejects(
+          run(command, { login: "mina.park" }),
+          /was deleted/u,
+        );
+        checks++;
+      }
+      await assert.rejects(
+        run(
+          "create",
+          { login: "mina.park", name: "Mina Again" },
+          brokerPassword,
+        ),
+        /already in use/u,
+      );
+      checks++;
+      same(
+        (await login("mina.park", brokerPassword)).code,
+        "INVALID_CREDENTIALS",
+        "a deleted account cannot sign in",
+      );
+
       stage = "list and evidence";
       const list = await run("list", {});
       same(
@@ -471,9 +501,9 @@ try {
           ["studio.owner", "ACTIVE", ["studio:owner"]],
           ["night.shift", "ACTIVE", ["studio:operator"]],
           ["cli.user", "ACTIVE", ["studio:operator"]],
-          ["mina.park", "ACTIVE", ["studio:broker"]],
+          ["mina.park", "DELETED", []],
         ],
-        "accounts listed",
+        "accounts listed, the deleted one marked so",
       );
       ok(
         !JSON.stringify(list).includes("scrypt$"),

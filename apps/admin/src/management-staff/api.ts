@@ -92,6 +92,17 @@ export function createStaffApi(client: AdminClient) {
       member("staff-clear-totp", target(value), "STAFF_UPDATED"),
     setStatus: (value: StaffMember, status: "ACTIVE" | "SUSPENDED") =>
       member("staff-set-status", { ...target(value), status }, "STAFF_UPDATED"),
+    /** L3-14: permanent; resolves to the number of artists that went back to the studio. */
+    async remove(value: StaffMember): Promise<number> {
+      const result = (await send(
+        "staff-delete",
+        { ...target(value), loginName: value.loginName },
+        "STAFF_DELETED",
+      )) as Extract<Success, { kind: "STAFF_DELETED" }>;
+      if (result.accountId !== value.accountId)
+        throw new AdminClientError("INVALID_RESPONSE");
+      return result.transferredArtists;
+    },
   };
 }
 export type StaffApi = ReturnType<typeof createStaffApi>;

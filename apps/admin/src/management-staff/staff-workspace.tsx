@@ -30,6 +30,7 @@ type Panel =
       accountId: string;
       action: "RESET_PASSWORD" | "CLEAR_TOTP" | "SUSPEND";
     }>
+  | Readonly<{ kind: "DELETE"; accountId: string }>
   | Readonly<{ kind: "TEMPORARY"; loginName: string; password: string }>;
 type Notice = Readonly<{ text: string; tone: "error" | "done" }>;
 type Listing = Readonly<{
@@ -176,7 +177,9 @@ export function StaffWorkspace({
             roles={listing.roles}
             panel={
               panel &&
-              (panel.kind === "ROLES" || panel.kind === "CONFIRM") &&
+              (panel.kind === "ROLES" ||
+                panel.kind === "CONFIRM" ||
+                panel.kind === "DELETE") &&
               panel.accountId === member.accountId
                 ? panel
                 : null
@@ -218,6 +221,28 @@ export function StaffWorkspace({
               run("SET_STATUS", async () => {
                 replace(await api.setStatus(member, "ACTIVE"));
                 setNotice({ text: copy.saved, tone: "done" });
+              })
+            }
+            onDelete={() =>
+              run("DELETE", async () => {
+                const transferred = await api.remove(member);
+                setListing((current) =>
+                  current
+                    ? {
+                        ...current,
+                        members: current.members.filter(
+                          (value) => value.accountId !== member.accountId,
+                        ),
+                      }
+                    : current,
+                );
+                setPanel(null);
+                setNotice({
+                  text: (transferred > 0 ? copy.deletedArtists : copy.deleted)
+                    .replace("{account}", member.loginName)
+                    .replace("{count}", String(transferred)),
+                  tone: "done",
+                });
               })
             }
           />
@@ -410,16 +435,18 @@ function StaffRow({
   onRoles,
   onConfirm,
   onReactivate,
+  onDelete,
 }: {
   locale: SupportedLocale;
   member: StaffMember;
   roles: readonly StaffRole[];
-  panel: Extract<Panel, { kind: "ROLES" | "CONFIRM" }> | null;
+  panel: Extract<Panel, { kind: "ROLES" | "CONFIRM" | "DELETE" }> | null;
   busy: boolean;
   onPanel: (panel: Panel | null) => void;
   onRoles: (roleKeys: readonly string[]) => void;
   onConfirm: (action: "RESET_PASSWORD" | "CLEAR_TOTP" | "SUSPEND") => void;
   onReactivate: () => void;
+  onDelete: () => void;
 }) {
   const copy = staffCopy(locale);
   const [selected, setSelected] = useState<readonly string[]>(member.roleKeys);
@@ -544,6 +571,17 @@ function StaffRow({
                 {copy.reactivate}
               </Button>
             )}
+            <Button
+              size="compact"
+              variant="quiet"
+              data-staff-delete
+              disabled={busy}
+              onClick={() =>
+                onPanel({ kind: "DELETE", accountId: member.accountId })
+              }
+            >
+              {copy.deleteAccount}
+            </Button>
           </>
         )}
       </div>
@@ -609,6 +647,92 @@ function StaffRow({
           </div>
         </div>
       ) : null}
+      {panel?.kind === "DELETE" ? (
+        <DeleteStaff
+          locale={locale}
+          member={member}
+          busy={busy}
+          onCancel={() => onPanel(null)}
+          onDelete={onDelete}
+        />
+      ) : null}
     </li>
+  );
+}
+
+/** L3-14: permanent deletion, confirmed by typing the account's login name. */
+function DeleteStaff({
+  locale,
+  member,
+  busy,
+  onCancel,
+  onDelete,
+}: {
+  locale: SupportedLocale;
+  member: StaffMember;
+  busy: boolean;
+  onCancel: () => void;
+  onDelete: () => void;
+}) {
+  const copy = staffCopy(locale);
+  const [typed, setTyped] = useState("");
+  const field = useRef<HTMLInputElement>(null);
+  useEffect(() => field.current?.focus(), []);
+  const confirmed = typed.trim() === member.loginName;
+  const titleId = `staff-delete-${member.accountId}`;
+  return (
+    <form
+      className="staff-panel staff-delete"
+      data-staff-delete-panel
+      aria-labelledby={titleId}
+      noValidate
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (confirmed && !busy) onDelete();
+      }}
+    >
+      <p id={titleId}>
+        {copy.confirmDelete.replace("{account}", member.loginName)}
+      </p>
+      {member.assignedArtists > 0 ? (
+        <p data-staff-delete-artists>
+          {copy.confirmDeleteArtists.replace(
+            "{count}",
+            String(member.assignedArtists),
+          )}
+        </p>
+      ) : null}
+      <Field
+        ref={field}
+        id={`staff-delete-name-${member.accountId}`}
+        label={copy.deleteTypeName.replace("{account}", member.loginName)}
+        autoCapitalize="none"
+        autoComplete="off"
+        spellCheck={false}
+        data-staff-delete-name
+        value={typed}
+        disabled={busy}
+        onChange={(event) => setTyped(event.currentTarget.value)}
+      />
+      <div className="staff-actions">
+        <Button
+          type="submit"
+          variant="danger"
+          data-staff-delete-confirm
+          loading={busy}
+          disabled={!confirmed}
+        >
+          {busy ? copy.working : copy.deleteConfirm}
+        </Button>
+        <Button
+          type="button"
+          variant="quiet"
+          disabled={busy}
+          onClick={onCancel}
+        >
+          {copy.cancel}
+        </Button>
+      </div>
+    </form>
   );
 }

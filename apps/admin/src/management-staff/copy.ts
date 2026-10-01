@@ -54,7 +54,14 @@ type StaffCopy = Readonly<
     | "unknownRole"
     | "loadFailed"
     | "failed"
-    | "retry",
+    | "retry"
+    | "deleteAccount"
+    | "confirmDelete"
+    | "confirmDeleteArtists"
+    | "deleteTypeName"
+    | "deleteConfirm"
+    | "deleted"
+    | "deletedArtists",
     string
   >
 >;
@@ -124,6 +131,16 @@ const en: StaffCopy = {
   loadFailed: "The staff list could not be loaded.",
   failed: "That did not go through. Try again in a moment.",
   retry: "Try again",
+  deleteAccount: "Delete account",
+  confirmDelete:
+    "Delete {account} permanently? The account is signed out at once, can no longer sign in and leaves this list. Its login name cannot be used again. This cannot be undone.",
+  confirmDeleteArtists:
+    "Its {count} artists go back to studio management (unassigned).",
+  deleteTypeName: "Type the login name {account} to confirm",
+  deleteConfirm: "Delete permanently",
+  deleted: "{account} was deleted.",
+  deletedArtists:
+    "{account} was deleted; {count} artists went back to studio management.",
 };
 
 const zhCN: StaffCopy = {
@@ -186,6 +203,14 @@ const zhCN: StaffCopy = {
   loadFailed: "无法加载员工列表。",
   failed: "操作没有完成，请稍后再试。",
   retry: "重试",
+  deleteAccount: "删除账号",
+  confirmDelete:
+    "永久删除 {account}？该账号会立即退出登录、不能再登录，并从列表中消失；它的登录名以后不能再用。此操作无法撤销。",
+  confirmDeleteArtists: "名下 {count} 位艺人将转为超管直管（未分配）。",
+  deleteTypeName: "请输入登录名 {account} 以确认",
+  deleteConfirm: "永久删除",
+  deleted: "已删除 {account}。",
+  deletedArtists: "已删除 {account}，{count} 位艺人已转为超管直管。",
 };
 
 const ja: StaffCopy = {
@@ -254,6 +279,16 @@ const ja: StaffCopy = {
   failed:
     "操作を完了できませんでした。しばらくしてからもう一度お試しください。",
   retry: "再試行",
+  deleteAccount: "アカウントを削除",
+  confirmDelete:
+    "{account} を完全に削除しますか？ただちにログアウトされ、再びログインできず、一覧から消えます。このログイン名は今後使えません。元に戻せません。",
+  confirmDeleteArtists:
+    "担当アーティスト {count} 名はスタジオ管理（未割り当て）に戻ります。",
+  deleteTypeName: "確認のためログイン名 {account} を入力してください",
+  deleteConfirm: "完全に削除",
+  deleted: "{account} を削除しました。",
+  deletedArtists:
+    "{account} を削除し、アーティスト {count} 名をスタジオ管理に戻しました。",
 };
 
 const th: StaffCopy = {
@@ -319,6 +354,16 @@ const th: StaffCopy = {
   loadFailed: "โหลดรายชื่อพนักงานไม่ได้",
   failed: "ดำเนินการไม่สำเร็จ โปรดลองอีกครั้งในอีกสักครู่",
   retry: "ลองอีกครั้ง",
+  deleteAccount: "ลบบัญชี",
+  confirmDelete:
+    "ลบ {account} ถาวรหรือไม่ บัญชีจะออกจากระบบทันที เข้าสู่ระบบไม่ได้อีก และหายไปจากรายการ ชื่อเข้าสู่ระบบนี้จะใช้ซ้ำไม่ได้ และย้อนกลับไม่ได้",
+  confirmDeleteArtists:
+    "ศิลปินในความดูแล {count} คนจะกลับไปอยู่ในการดูแลของสตูดิโอ (ยังไม่มอบหมาย)",
+  deleteTypeName: "พิมพ์ชื่อเข้าสู่ระบบ {account} เพื่อยืนยัน",
+  deleteConfirm: "ลบถาวร",
+  deleted: "ลบ {account} แล้ว",
+  deletedArtists:
+    "ลบ {account} แล้ว ศิลปิน {count} คนกลับไปอยู่ในการดูแลของสตูดิโอ",
 };
 
 const vi: StaffCopy = {
@@ -387,6 +432,15 @@ const vi: StaffCopy = {
   loadFailed: "Không tải được danh sách nhân viên.",
   failed: "Thao tác chưa hoàn tất. Hãy thử lại sau ít phút.",
   retry: "Thử lại",
+  deleteAccount: "Xóa tài khoản",
+  confirmDelete:
+    "Xóa vĩnh viễn {account}? Tài khoản bị đăng xuất ngay, không thể đăng nhập lại và biến mất khỏi danh sách. Tên đăng nhập này không thể dùng lại. Không thể hoàn tác.",
+  confirmDeleteArtists:
+    "{count} nghệ sĩ do tài khoản này phụ trách sẽ trở về studio quản lý (chưa phân công).",
+  deleteTypeName: "Nhập tên đăng nhập {account} để xác nhận",
+  deleteConfirm: "Xóa vĩnh viễn",
+  deleted: "Đã xóa {account}.",
+  deletedArtists: "Đã xóa {account}; {count} nghệ sĩ đã trở về studio quản lý.",
 };
 
 const es: StaffCopy = {
@@ -455,6 +509,16 @@ const es: StaffCopy = {
   loadFailed: "No se pudo cargar la lista del equipo.",
   failed: "No se pudo completar. Inténtalo de nuevo en un momento.",
   retry: "Reintentar",
+  deleteAccount: "Eliminar cuenta",
+  confirmDelete:
+    "¿Eliminar {account} para siempre? La cuenta se cierra al instante, ya no puede iniciar sesión y desaparece de esta lista. Su nombre de usuario no podrá volver a usarse. No se puede deshacer.",
+  confirmDeleteArtists:
+    "Sus {count} artistas vuelven a la gestión del estudio (sin asignar).",
+  deleteTypeName: "Escribe el nombre de usuario {account} para confirmar",
+  deleteConfirm: "Eliminar para siempre",
+  deleted: "Se eliminó {account}.",
+  deletedArtists:
+    "Se eliminó {account}; {count} artistas volvieron a la gestión del estudio.",
 };
 
 const pt: StaffCopy = {
@@ -522,6 +586,16 @@ const pt: StaffCopy = {
   loadFailed: "Não foi possível carregar a lista da equipe.",
   failed: "Não foi possível concluir. Tente novamente em instantes.",
   retry: "Tentar de novo",
+  deleteAccount: "Excluir conta",
+  confirmDelete:
+    "Excluir {account} permanentemente? A conta é desconectada na hora, não pode mais entrar e sai desta lista. O nome de login não poderá ser usado de novo. Não é possível desfazer.",
+  confirmDeleteArtists:
+    "Os {count} artistas desta conta voltam para a gestão do estúdio (sem atribuição).",
+  deleteTypeName: "Digite o nome de login {account} para confirmar",
+  deleteConfirm: "Excluir permanentemente",
+  deleted: "{account} foi excluída.",
+  deletedArtists:
+    "{account} foi excluída; {count} artistas voltaram para a gestão do estúdio.",
 };
 
 const COPY: Readonly<Record<SupportedLocale, StaffCopy>> = {

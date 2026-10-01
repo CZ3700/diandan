@@ -42,6 +42,7 @@ const member = {
   roleKeys: ["studio:operator"],
   lastLoginAt: null,
   self: false,
+  assignedArtists: 0,
 };
 
 function setup() {
@@ -342,6 +343,40 @@ test("staff endpoints map one path to one command and check the result kind", as
         })
       ).statusCode,
     ).toBe(409);
+    useCases.staff.mockResolvedValueOnce({
+      ...success,
+      kind: "STAFF_DELETED",
+      accountId,
+      transferredArtists: 2,
+    });
+    const deleted = await post(
+      app,
+      "/api/v1/admin/staff/delete",
+      sessionHeaders,
+      {
+        accountId,
+        expectedVersion: 1,
+        loginName: "night.shift",
+      },
+    );
+    expect(deleted.statusCode).toBe(200);
+    expect((useCases.staff.mock.calls.at(-1) as unknown[])[0]).toMatchObject({
+      command: { action: "DELETE", loginName: "night.shift" },
+    });
+    useCases.staff.mockResolvedValueOnce({
+      ...success,
+      kind: "STAFF_UPDATED",
+      member,
+    });
+    expect(
+      (
+        await post(app, "/api/v1/admin/staff/delete", sessionHeaders, {
+          accountId,
+          expectedVersion: 1,
+          loginName: "night.shift",
+        })
+      ).statusCode,
+    ).toBe(503);
     useCases.staff.mockResolvedValueOnce(fail("FORBIDDEN"));
     expect(
       (await post(app, "/api/v1/admin/staff/list", sessionHeaders, {}))

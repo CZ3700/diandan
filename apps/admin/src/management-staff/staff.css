@@ -160,3 +160,7 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+/* L3-14: permanent deletion stands apart from the other confirmations. */
+.staff-delete {
+  border-color: var(--color-danger);
+}

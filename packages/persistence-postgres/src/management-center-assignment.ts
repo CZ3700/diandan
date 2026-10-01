@@ -64,6 +64,8 @@ async function writeAssignment(
     requestId: string;
     /** The previous assignment's time, so history never runs backwards after a clock correction. */
     after: string | null;
+    /** Why an unassignment happened, when it is not an administrator's own choice. */
+    reasonCode?: "BROKER_DELETED";
   }>,
 ): Promise<void> {
   const [instant] = await draftRows(
@@ -80,11 +82,12 @@ async function writeAssignment(
       auditId,
       entry.actorId,
       entry.artistId,
-      entry.operationId
-        ? "BROKER_CREATED"
-        : entry.brokerId === null
-          ? "UNASSIGNED"
-          : "ASSIGNED",
+      entry.reasonCode ??
+        (entry.operationId
+          ? "BROKER_CREATED"
+          : entry.brokerId === null
+            ? "UNASSIGNED"
+            : "ASSIGNED"),
       entry.requestId,
       entry.sessionId,
       instant["now"],
@@ -208,4 +211,59 @@ export async function assignArtist(
       typeof latest?.["created_at"] === "string" ? latest["created_at"] : null,
   });
   return assigned(input.brokerId);
+}
+
+/**
+ * L3-14: when a broker's account is deleted, every artist it still holds goes back to the studio, archived
+ * ones included, each with its own assignment record. Runs inside the deletion, under the deleting
+ * administrator's session; 0063 lets the database guard accept the archived ones. Counts only current
+ * artists, the same number the staff list showed before the deletion.
+ */
+export async function returnBrokerArtistsToStudio(
+  client: TransactionClient,
+  input: Readonly<{
+    brokerId: string;
+    actorId: string;
+    sessionId: string;
+    requestId: string;
+  }>,
+): Promise<number> {
+  const artists = await draftRows(
+    client,
+    "SELECT id,status<>'archived' AS current FROM public.idols WHERE public.idol_current_broker(id)=$1::uuid ORDER BY id",
+    [input.brokerId],
+  );
+  let returned = 0;
+  for (const row of artists) {
+    const artistId = String(row["id"]);
+    await client.query(
+      "SELECT pg_advisory_xact_lock(hashtextextended('fan-support:idol-assignment:'||$1::uuid::text,0))",
+      [artistId],
+    );
+    const [latest] = await draftRows(
+      client,
+      `SELECT sequence,broker_identity_id,${utcTimestampSql("created_at")} AS created_at FROM public.idol_assignments WHERE idol_id=$1 ORDER BY sequence DESC LIMIT 1`,
+      [artistId],
+    );
+    const current =
+      typeof latest?.["broker_identity_id"] === "string"
+        ? latest["broker_identity_id"]
+        : null;
+    if (!latest || !same(current, input.brokerId)) continue;
+    await writeAssignment(client, {
+      artistId,
+      sequence: Number(latest["sequence"]) + 1,
+      brokerId: null,
+      previousBrokerId: current,
+      operationId: null,
+      actorId: input.actorId,
+      sessionId: input.sessionId,
+      requestId: input.requestId,
+      after:
+        typeof latest["created_at"] === "string" ? latest["created_at"] : null,
+      reasonCode: "BROKER_DELETED",
+    });
+    if (row["current"] === true) returned += 1;
+  }
+  return returned;
 }

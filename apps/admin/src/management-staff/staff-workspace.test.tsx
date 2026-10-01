@@ -23,6 +23,7 @@ const member = (patch: Partial<StaffMember>): StaffMember => ({
   roleKeys: ["studio:owner"],
   lastLoginAt: "2026-09-29T12:00:00.000000Z",
   self: true,
+  assignedArtists: 0,
   ...patch,
 });
 const members = [
@@ -36,6 +37,7 @@ const members = [
     mustChangePassword: true,
     lastLoginAt: null,
     self: false,
+    assignedArtists: 2,
   }),
   member({
     accountId: "10000000-0000-4000-8000-000000000003",
@@ -94,8 +96,14 @@ test("every language has the full staff vocabulary", () => {
       "confirmReset",
       "confirmClear",
       "confirmSuspend",
+      "confirmDelete",
+      "deleteTypeName",
+      "deleted",
+      "deletedArtists",
     ] as const)
       expect(copy[key]).toContain("{account}");
+    expect(copy.confirmDeleteArtists).toContain("{count}");
+    expect(copy.deletedArtists).toContain("{count}");
     expect(copy.lastSignIn).toContain("{date}");
   }
 });
@@ -114,6 +122,7 @@ test.each(SUPPORTED_LOCALES)(
       copy.resetPassword,
       copy.suspend,
       copy.clearTwoFactor,
+      copy.deleteAccount,
     ])
       expect(self).not.toContain(`>${blocked}<`);
     const night = row(html, "night.shift");
@@ -122,6 +131,7 @@ test.each(SUPPORTED_LOCALES)(
     expect(night).toContain(`>${copy.resetPassword}<`);
     expect(night).toContain(`>${copy.suspend}<`);
     expect(night).not.toContain(`>${copy.clearTwoFactor}<`);
+    expect(night).toContain(`>${copy.deleteAccount}<`);
     expect(night).toContain(roleLabel(roles[0]!, locale).name);
     const day = row(html, "day.shift");
     expect(day).toContain('data-status="SUSPENDED"');
@@ -163,6 +173,30 @@ test("a temporary password is shown with copy and done, and confirmations name t
     copy.confirmSuspend.replace("{account}", "night.shift"),
   );
   expect(confirm).toContain("fs-button--danger");
+});
+
+test("deleting asks for the typed login name and says what happens to the artists", () => {
+  for (const locale of SUPPORTED_LOCALES) {
+    const copy = staffCopy(locale);
+    const html = row(
+      render(locale, { kind: "DELETE", accountId: members[1]!.accountId }),
+      "night.shift",
+    );
+    expect(html).toContain(
+      copy.confirmDelete.replace("{account}", "night.shift"),
+    );
+    expect(html).toContain(copy.confirmDeleteArtists.replace("{count}", "2"));
+    expect(html).toContain(
+      copy.deleteTypeName.replace("{account}", "night.shift"),
+    );
+    expect(html).toMatch(/<button[^>]*data-staff-delete-confirm[^>]*disabled/u);
+    expect(html).toContain("fs-button--danger");
+  }
+  const quiet = row(
+    render("en", { kind: "DELETE", accountId: members[2]!.accountId }),
+    "day.shift",
+  );
+  expect(quiet).not.toContain("data-staff-delete-artists");
 });
 
 test("input checks follow the database rules and failures read plainly", () => {

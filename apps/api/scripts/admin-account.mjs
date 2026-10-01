@@ -107,6 +107,9 @@ async function lockedAccount(client, loginName) {
     )
   ).rows;
   if (!row) throw new Error("No built-in account has that login name");
+  // L3-14: a deleted account stays deleted; 0063 refuses to bring its identity back as well.
+  if (row.status === "ARCHIVED")
+    throw new Error("That account was deleted and cannot be changed");
   await client.query("SELECT 1 FROM admin_identities WHERE id=$1 FOR UPDATE", [
     row.admin_identity_id,
   ]);
@@ -177,7 +180,7 @@ export async function runAdminAccountCommand({
     return rows.map((row) => ({
       loginName: row.login_name,
       displayName: row.display_name,
-      status: row.status,
+      status: row.status === "ARCHIVED" ? "DELETED" : row.status,
       twoFactor: row.two_factor,
       mustChangePassword: row.must_change_password,
       locked: row.locked === true,
@@ -231,7 +234,9 @@ export async function runAdminAccountCommand({
           )
         ).rows.length
       )
-        throw new Error("That login name is already in use");
+        throw new Error(
+          "That login name is already in use (names of deleted accounts are not reused)",
+        );
       await ensureStandardRoles(client);
       const accountId = randomUUID(),
         identityId = randomUUID();

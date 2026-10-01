@@ -620,6 +620,16 @@
         "up": "4e4a73e815bd35af412cb4038c4317b052181fd4957bb0fa7f2944aca3f4d151",
         "down": "721221a7e02eed75a97b92a5e8e64892ad59b887c4d162acf239241e735d5250"
       }
+    },
+    {
+      "version": "0063",
+      "name": "staff-account-deletion",
+      "up": "database/migrations/0063_staff-account-deletion.up.sql",
+      "down": "database/migrations/0063_staff-account-deletion.down.sql",
+      "sha256": {
+        "up": "215d048273ca3da27547abe1c597b034e6574eb8977b2f3dbb3f1c55fb774226",
+        "down": "ef22c69742f2e64b8a45b754eb2c99389b751883b0123a9872fcb836928906cd"
+      }
     }
   ]
 }

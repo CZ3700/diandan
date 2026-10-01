@@ -285,6 +285,11 @@ export const adminLocalStaffChangeSchema = z.discriminatedUnion("action", [
     ...expected,
     status: z.enum(["ACTIVE", "SUSPENDED"]),
   }),
+  z.strictObject({
+    action: z.literal("DELETE"),
+    ...expected,
+    loginName: adminLoginNameSchema,
+  }),
 ]);
 export const adminLocalStaffCommandSchema = z.strictObject({
   ...envelope,
@@ -303,6 +308,12 @@ export const adminLocalStaffResultSchema = z.union([
     ...success,
     kind: z.literal("STAFF_SAVED"),
     member: adminStaffMemberSchema,
+  }),
+  z.strictObject({
+    ...success,
+    kind: z.literal("STAFF_DELETED"),
+    accountId: z.uuid(),
+    transferredArtists: z.number().int().min(0).max(1_000_000),
   }),
   adminStaffFailureSchema,
 ]);

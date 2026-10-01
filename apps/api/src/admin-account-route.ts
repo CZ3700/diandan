@@ -32,6 +32,7 @@ const STAFF = [
   ["reset-password", "RESET_PASSWORD", "PASSWORD_RESET"],
   ["clear-totp", "CLEAR_TOTP", "STAFF_UPDATED"],
   ["set-status", "SET_STATUS", "STAFF_UPDATED"],
+  ["delete", "DELETE", "STAFF_DELETED"],
 ] as const;
 const RESERVED = [
   "action",

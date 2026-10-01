@@ -36,6 +36,7 @@ const supportedHeads = [
   "0060",
   "0061",
   "0062",
+  "0063",
 ];
 
 /** Legacy probes may rewind only explicitly known, empty migration prefixes. */
@@ -133,6 +134,11 @@ export async function rollbackEmptyNotifications({
           artist_notes: "public.artist_private_notes",
           artist_note_accesses: "public.artist_private_note_accesses",
           artist_note_confirmations: "public.artist_private_note_confirmations",
+        }
+      : {}),
+    ...(version >= "0063"
+      ? {
+          deleted_accounts: "public.admin_identities WHERE status='ARCHIVED'",
         }
       : {}),
     ...(version >= "0030"

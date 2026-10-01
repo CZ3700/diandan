@@ -1279,6 +1279,8 @@ const entries = {
     "SET_STATUS",
     "STAFF_UPDATED",
   ),
+  // L3-14: permanent; the API rechecks staff.manage and the typed login name.
+  "staff-delete": staffOperation("delete", "DELETE", "STAFF_DELETED"),
 } as const;
 export type AdminOperationKey = Exclude<keyof typeof entries, "session">;
 export const ADMIN_OPERATION_KEYS = Object.freeze(

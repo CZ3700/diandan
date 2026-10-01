@@ -791,6 +791,7 @@ describe("staff accounts", () => {
     roleKeys: ["studio:operator"],
     lastLoginAt: null,
     self: false,
+    assignedArtists: 0,
   };
   test("creation is authorized before a password is generated, then shown once", async () => {
     const denied = harness({
@@ -874,6 +875,43 @@ describe("staff accounts", () => {
       expectedVersion: 2,
       status: "SUSPENDED",
     });
+  });
+  test("a deletion passes the typed login name through and reports the artists handed back", async () => {
+    const execute = vi.fn().mockResolvedValueOnce({
+      ...success,
+      kind: "STAFF_DELETED",
+      accountId,
+      transferredArtists: 3,
+    });
+    const h = harness({ localStaff: { execute } });
+    const command = {
+      action: "DELETE",
+      accountId,
+      expectedVersion: 4,
+      loginName: "night.shift",
+    };
+    expect(await h.useCases.staff(request(command))).toEqual({
+      ...success,
+      kind: "STAFF_DELETED",
+      accountId,
+      transferredArtists: 3,
+    });
+    expect((execute.mock.calls[0]![0] as { change: unknown }).change).toEqual(
+      command,
+    );
+    execute.mockResolvedValueOnce({ ...success, kind: "STAFF_SAVED", member });
+    expect(await h.useCases.staff(request(command))).toEqual(
+      fail("ACCESS_UNAVAILABLE"),
+    );
+    execute.mockResolvedValueOnce({
+      ...success,
+      kind: "STAFF_DELETED",
+      accountId: randomUUID(),
+      transferredArtists: 0,
+    });
+    expect(await h.useCases.staff(request(command))).toEqual(
+      fail("ACCESS_UNAVAILABLE"),
+    );
   });
 });
 
