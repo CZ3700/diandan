@@ -24,6 +24,7 @@ import {
 } from "./local-experience-web-build.mjs";
 import { startLocalMedia } from "./local-experience-media.mjs";
 import { startLocalHomepageBootstrap } from "./local-experience-homepage.mjs";
+import { ensureLocalDefaultInventoryLocation } from "./local-experience-default-location.mjs";
 import { Client } from "pg";
 import { reportPostgresFailures } from "./local-experience-postgres-failures.mjs";
 reportPostgresFailures(Client, (line) => process.stdout.write(line));
@@ -164,6 +165,11 @@ const startup = lifecycle.start(async () => {
   context.runtime = await startLocalExperienceRuntime(context);
   lifecycle.checkStarting();
   context.business = await bootstrapLocalPolicies({
+    ...context,
+    base: `http://127.0.0.1:${config.ports.api}`,
+  });
+  lifecycle.checkStarting();
+  await ensureLocalDefaultInventoryLocation({
     ...context,
     base: `http://127.0.0.1:${config.ports.api}`,
   });

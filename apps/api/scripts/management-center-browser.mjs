@@ -827,11 +827,11 @@ export async function verifyManagementCenterBrowser({
       gifts.push({ operation: result, item: gift });
     }
     // SPEC 6.3.0: a wish needs its one artist and is a single purchase held at the
-    // configured default inventory location. This TEST runtime, like stg, configures
-    // none, so the form has to say so and send nothing.
+    // configured default inventory location.
     await begin("GIFTS");
+    const wishName = `测试礼物 WISH ${suffix}`;
     await fillContent({
-      name: `测试礼物 WISH ${suffix}`,
+      name: wishName,
       description,
       image: sourceImages.gift,
       giftKind: "WISH",
@@ -848,24 +848,53 @@ export async function verifyManagementCenterBrowser({
     await expect(
       page.locator("#management-wish-artist-search"),
     ).toHaveAttribute("aria-invalid", "true");
+    assert(
+      observed.submits === beforeWish,
+      "a WISH without its artist sends no business mutation",
+    );
+    const defaultLocation = observed.context.defaults.inventoryLocationId;
+    assert(
+      typeof defaultLocation === "string",
+      "the TEST runtime configures a default inventory location for a wish's single unit",
+    );
     await page
       .locator(`[data-management-wish-artist="${artist.result.targetId}"]`)
       .click();
     await page.locator(".mc-wish-selected").waitFor();
-    assert(
-      observed.context.defaults.inventoryLocationId === null,
-      "this TEST runtime configures no default inventory location for a wish's single unit",
+    const wishOperation = await operationAfter(
+      () => page.locator("[data-management-submit]").click(),
+      "SAVE_GIFT",
     );
-    await page.locator("[data-management-submit]").click();
-    await page.locator('.mc-wish + .mc-error[role="alert"]').waitFor();
+    await mediaProof(wishOperation, sourceImages.gift, ["GIFT_PRIMARY"]);
+    const wishItem = observed.lists
+      .get("GIFTS")
+      .items.find((entry) => entry.id === wishOperation.result.targetId);
     assert(
-      observed.submits === beforeWish,
-      "a WISH without its artist or an inventory location sends no business mutation",
+      wishItem?.giftKind === "WISH" &&
+        wishItem.inventory?.policy === "TRACKED" &&
+        wishItem.inventory.quantity === 1 &&
+        wishItem.inventory.locationId === defaultLocation &&
+        wishItem.wish?.artistId.toLowerCase() ===
+          artist.result.targetId.toLowerCase() &&
+        wishItem.wish.status === "AVAILABLE",
+      "WISH list holds one unit at the default location, bound to its artist and open",
     );
-    const discardWish = (dialog) => dialog.accept();
-    page.on("dialog", discardWish);
-    await section("GIFTS");
-    page.off("dialog", discardWish);
+    const wishRows = (
+      await client.query(
+        "SELECT w.idol_id,w.inventory_location_id,v.inventory_policy,b.on_hand::integer AS on_hand,b.reserved::integer AS reserved FROM public.wish_bindings w JOIN public.gift_variants v ON v.id=w.gift_variant_id JOIN public.inventory_items i ON i.gift_variant_id=v.id JOIN public.inventory_balances b ON b.inventory_item_id=i.id AND b.location_id=w.inventory_location_id WHERE w.gift_id=$1",
+        [wishOperation.result.targetId],
+      )
+    ).rows;
+    assert(
+      wishRows.length === 1 &&
+        wishRows[0].idol_id === artist.result.targetId.toLowerCase() &&
+        wishRows[0].inventory_location_id === defaultLocation &&
+        wishRows[0].inventory_policy === "TRACKED" &&
+        wishRows[0].on_hand === 1 &&
+        wishRows[0].reserved === 0,
+      "PG binds the wish to its artist with exactly one unit at the default location",
+    );
+    const wish = { operation: wishOperation, item: wishItem };
     const oldGift = gifts[0].item;
     await (await findItem("GIFTS", oldGift.id)).click();
     const giftUploads = observed.putAttempts;
@@ -1155,10 +1184,14 @@ export async function verifyManagementCenterBrowser({
               "aria-valuemax",
               String(CART_RUNTIME_MAX_QUANTITY),
             );
-            await quantity.press("End");
-            await expect(quantity).toHaveValue(
-              String(CART_RUNTIME_MAX_QUANTITY),
-            );
+            // SSR already renders an enabled input; a key pressed before hydration is lost.
+            await expect(async () => {
+              await quantity.press("End");
+              await expect(quantity).toHaveValue(
+                String(CART_RUNTIME_MAX_QUANTITY),
+                { timeout: 1000 },
+              );
+            }).toPass({ timeout: 30000, intervals: [100, 250, 500] });
             await expect(
               offer.locator('[data-quantity-action="increase"]'),
             ).toBeDisabled();
@@ -1298,6 +1331,80 @@ export async function verifyManagementCenterBrowser({
               publicPage,
             );
         }
+        // The wish published above: one unit for its bound artist and no quantity choice.
+        publicCheck = {
+          locale,
+          kind: "wish",
+          viewport,
+          stage: "HTTP",
+          httpStatus: null,
+        };
+        const wishUrl = new globalThis.URL(
+          `/${locale}/gifts/${wish.operation.result.handle}`,
+          storefrontOrigin,
+        );
+        wishUrl.searchParams.set("market", scope.market);
+        wishUrl.searchParams.set("currency", scope.currency);
+        wishUrl.searchParams.set("idol", artist.result.targetId);
+        const wishResponse = await publicPage.goto(wishUrl.href, {
+          waitUntil: "domcontentloaded",
+          timeout: 60_000,
+        });
+        publicCheck.httpStatus = wishResponse?.status() ?? null;
+        assert(
+          wishResponse?.status() === 200,
+          `${locale} wish created through management is public HTTP 200`,
+        );
+        publicCheck.stage = "TITLE";
+        await expect(publicPage.locator("h1")).toHaveText(wishName, {
+          timeout: 45_000,
+        });
+        publicCheck.stage = "IDENTITY";
+        await expect(publicPage.locator("[data-gift-detail]")).toHaveAttribute(
+          "data-gift-detail",
+          wish.item.id,
+        );
+        publicCheck.stage = "RECIPIENT";
+        await expect(
+          publicPage.locator('.wish-recipient[data-wish-status="AVAILABLE"] a'),
+        ).toHaveText(artistName);
+        publicCheck.stage = "INVENTORY_POLICY";
+        const wishOffer = publicPage.locator("[data-gift-offer]");
+        await expect(wishOffer).toHaveAttribute(
+          "data-availability",
+          "AVAILABLE",
+        );
+        await expect(wishOffer).toHaveAttribute(
+          "data-inventory-policy",
+          "TRACKED",
+        );
+        await expect(wishOffer.locator("[data-stock-remaining]")).toContainText(
+          "1",
+        );
+        publicCheck.stage = "PURCHASE_ENTRY";
+        await expect(wishOffer.getByRole("spinbutton")).toHaveCount(0);
+        await expect(
+          wishOffer.locator('form[data-cart-add] button[type="submit"]'),
+        ).toBeEnabled();
+        report.publicPages.push({
+          locale,
+          kind: "wish",
+          width: viewport.width,
+          status: wishResponse.status(),
+          sourceLocale: "zh-CN",
+          giftKind: "WISH",
+          recipientId: artist.result.targetId,
+          availability: "AVAILABLE",
+          inventoryPolicy: "TRACKED",
+          quantityCeiling: 1,
+          purchaseEntry: "ADD_TO_CART_FORM",
+          commerceTransactionVerified: false,
+        });
+        if (locale === "zh-CN")
+          await panel(
+            `${locale}-${viewport.width}-public-gifts-wish`,
+            publicPage,
+          );
         if (locale === "zh-CN") {
           await homeImages();
           publicCheck = {
