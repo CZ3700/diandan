@@ -54,6 +54,85 @@ export function posterVisibilityEvidence({
   };
 }
 
+/** apps/admin `management-center/shell.tsx` section order. */
+const MANAGEMENT_SECTION_ORDER = [
+  "ARTISTS",
+  "GIFTS",
+  "POSTERS",
+  "INFO_PAGES",
+  "DECORATION",
+  "ORDERS",
+  "LEDGER",
+  "PAYMENTS",
+  "EXCEPTIONS",
+  "STAFF",
+  "ACCOUNT",
+];
+/** The admin reads, by BFF operation, that decide which sections the shell offers. */
+const MANAGEMENT_AREA_READS = new Set([
+  "session",
+  "orders-context",
+  "ledger-context",
+  "payment-config-read",
+  "exceptions-context",
+  "staff-context",
+  "account-context",
+]);
+
+/** Whether a read grants its area, as `management-center/access.ts` and `center.tsx` accept it. */
+export function managementAreaGrant(area, body) {
+  if (body?.outcome !== "SUCCESS") return false;
+  switch (area) {
+    case "session":
+      return (
+        Array.isArray(body.permissions) &&
+        body.permissions.includes("content.read")
+      );
+    case "orders-context":
+      return (
+        body.kind === "CONTEXT" &&
+        Array.isArray(body.permissions) &&
+        body.permissions.includes("orders.read")
+      );
+    case "exceptions-context":
+      return body.kind === "CONTEXT" && body.permissions?.canRead === true;
+    case "ledger-context":
+      return body.kind === "CONTEXT";
+    case "payment-config-read":
+      return body.kind === "WORKSPACE";
+    case "staff-context":
+      return body.kind === "STAFF_CONTEXT";
+    case "account-context":
+      return body.kind === "ACCOUNT";
+    default:
+      return false;
+  }
+}
+
+/** The sections the admin shell renders for the access the operator's reads granted. */
+export function expectedManagementSections({ content, artistsOnly, granted }) {
+  const has = (area) => granted.has(area);
+  const visible = new Set();
+  if (content) {
+    visible.add("ARTISTS");
+    if (!artistsOnly) {
+      visible.add("GIFTS");
+      visible.add("POSTERS");
+    }
+  }
+  if (has("content-read")) {
+    visible.add("INFO_PAGES");
+    visible.add("DECORATION");
+  }
+  if (has("orders-context")) visible.add("ORDERS");
+  if (has("ledger-context") && !has("orders-context")) visible.add("LEDGER");
+  if (has("payment-config-read")) visible.add("PAYMENTS");
+  if (has("exceptions-context")) visible.add("EXCEPTIONS");
+  if (has("staff-context")) visible.add("STAFF");
+  if (has("account-context")) visible.add("ACCOUNT");
+  return MANAGEMENT_SECTION_ORDER.filter((value) => visible.has(value));
+}
+
 /** Real TEST operator only. No credential, signed URL, request body, HAR or trace is saved. */
 export async function verifyManagementCenterBrowser({
   adminOrigin,
@@ -144,7 +223,21 @@ export async function verifyManagementCenterBrowser({
     grants: [],
     submits: 0,
     putAttempts: 0,
+    // Area read → granted, from the admin's own reads; no body is kept.
+    areas: new Map(),
+    areaReads: [],
   };
+  page.on("response", (response) => {
+    const url = new globalThis.URL(response.url());
+    const area = url.pathname.replace(/^\/api\/admin\//u, "");
+    if (url.origin !== adminOrigin || !MANAGEMENT_AREA_READS.has(area)) return;
+    observed.areaReads.push(
+      response.json().then(
+        (body) => observed.areas.set(area, managementAreaGrant(area, body)),
+        () => observed.areas.set(area, false),
+      ),
+    );
+  });
   for (const [surface, target] of [
     ["admin", page],
     ["storefront", publicPage],
@@ -542,9 +635,43 @@ export async function verifyManagementCenterBrowser({
       await page.evaluate(() => globalThis.document.cookie === ""),
       "operator credentials are inaccessible to browser JavaScript",
     );
+    await Promise.all(observed.areaReads);
+    const expectedSections = expectedManagementSections({
+      content: observed.context !== null,
+      artistsOnly: observed.context?.artists?.scope === "ASSIGNED",
+      granted: new Set(
+        [...observed.areas]
+          .filter(([, granted]) => granted)
+          .map(([area]) => (area === "session" ? "content-read" : area)),
+      ),
+    });
+    const renderedSections = () =>
+      page
+        .locator("[data-management-section]")
+        .evaluateAll((nodes) =>
+          nodes.map((node) => node.getAttribute("data-management-section")),
+        );
+    let sections = await renderedSections();
+    for (
+      const deadline = Date.now() + 10_000;
+      sections.join() !== expectedSections.join() && Date.now() < deadline;
+      sections = await renderedSections()
+    )
+      await page.waitForTimeout(250);
+    report.managementSections = { expected: expectedSections, sections };
     assert(
-      (await page.locator("[data-management-section]").count()) === 3,
-      "default management entry exposes only artists, gifts and posters",
+      expectedSections.slice(0, 3).join() === "ARTISTS,GIFTS,POSTERS",
+      "the daily operator's content keeps the artists, gifts and posters entries",
+    );
+    assert(
+      sections.join() === expectedSections.join(),
+      "management entry offers exactly the sections the operator's actual access grants",
+    );
+    assert(
+      (await page
+        .locator('[data-management-section="ARTISTS"]')
+        .getAttribute("aria-current")) === "page",
+      "management entry opens on artists",
     );
     assert(
       observed.context?.defaults?.priceScope !== null &&
