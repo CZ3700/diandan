@@ -423,7 +423,13 @@ export function assessPageMetrics(metrics) {
     Number(metrics?.document?.scrollWidth ?? 0),
     Number(metrics?.document?.bodyScrollWidth ?? 0),
   );
-  if (clientWidth <= 0 || scrollWidth > clientWidth + 0.5) {
+  // A fractional layout viewport (native zoom with a classic scrollbar) rounds
+  // clientWidth down and scrollWidth up; content ending at its edge fits.
+  const layoutWidth = Number(metrics?.document?.layoutWidth);
+  const fits = Number.isFinite(layoutWidth)
+    ? Math.max(clientWidth, Math.ceil(layoutWidth))
+    : clientWidth;
+  if (clientWidth <= 0 || scrollWidth > fits + 0.5) {
     const overflowing = metrics?.document?.overflowing;
     errors.push(
       "horizontal overflow: clientWidth=" +

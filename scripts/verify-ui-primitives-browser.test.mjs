@@ -299,6 +299,30 @@ test("blocks overflow, clipping, replacement glyphs, and sub-48px controls", asy
   assert.ok(errors.some((error) => error.includes("replacement glyph")));
 });
 
+test("a fractional layout viewport is not horizontal overflow, a real extra pixel still is", async () => {
+  const { assessPageMetrics } = await loadRunner();
+  // Native 200% zoom: 855 CSS px minus a 15 device-px classic scrollbar is 847.5;
+  // clientWidth rounds down and scrollWidth rounds up although nothing passes the edge.
+  const zoomed = (layoutWidth, scrollWidth = 848) => ({
+    clippedText: [],
+    controls: [],
+    document: {
+      bodyScrollWidth: scrollWidth,
+      clientWidth: 847,
+      scrollWidth,
+      ...(layoutWidth === undefined ? {} : { layoutWidth }),
+    },
+    replacementGlyphs: 0,
+  });
+  assert.deepEqual(assessPageMetrics(zoomed(847.5)), []);
+  for (const metrics of [zoomed(847), zoomed(undefined), zoomed(847.5, 849)])
+    assert.ok(
+      assessPageMetrics(metrics).some((error) =>
+        error.includes("horizontal overflow"),
+      ),
+    );
+});
+
 test("blocks primitive boundaries below 3:1 non-text contrast", async () => {
   const { assessPageMetrics } = await loadRunner();
   const errors = assessPageMetrics({

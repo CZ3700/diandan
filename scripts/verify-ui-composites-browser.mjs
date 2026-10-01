@@ -2182,6 +2182,7 @@ async function collectMetrics(page) {
         document: {
           bodyScrollWidth: document.body.scrollWidth,
           clientWidth: document.documentElement.clientWidth,
+          layoutWidth: document.documentElement.getBoundingClientRect().width,
           scrollWidth: document.documentElement.scrollWidth,
           // Diagnostics only: the deepest elements whose right edge passes the viewport,
           // including sub-pixel edges that round scrollWidth up by one.
