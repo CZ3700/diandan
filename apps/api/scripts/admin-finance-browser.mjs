@@ -126,6 +126,13 @@ export async function verifyAdminFinanceBrowser({
     async function unfoldFinance() {
       const toggle = page.locator("[data-finance-toggle]");
       await toggle.waitFor({ timeout: 60000 });
+      // The panel opens by itself once loaded when something needs a person; deciding
+      // before it loads can fold it straight back.
+      await expect(page.locator("[data-finance-panel]")).toHaveAttribute(
+        "aria-busy",
+        "false",
+        { timeout: 60000 },
+      );
       if ((await toggle.getAttribute("aria-expanded")) === "false")
         await toggle.click();
     }
