@@ -18,10 +18,12 @@ const check = (condition, label) => {
 };
 try {
   await withEphemeralPostgres(async (clientConfig) => {
+    // The runner only rolls back the applied head, so the 0050 round trip runs
+    // while 0050 is the head; the current head is applied on top at the end.
     await runMigrations({
       clientConfig,
       workspaceRoot,
-      command: { direction: "up" },
+      command: { direction: "up", targetVersion: "0050" },
     });
     const client = new Client(clientConfig);
     await client.connect();
@@ -50,7 +52,7 @@ try {
       await runMigrations({
         clientConfig,
         workspaceRoot,
-        command: { direction: "up" },
+        command: { direction: "up", targetVersion: "0050" },
       });
       check(
         (
@@ -59,6 +61,21 @@ try {
           )
         ).rows[0].version === "0050",
         "0050 re-applies after rollback",
+      );
+      const current = await runMigrations({
+        clientConfig,
+        workspaceRoot,
+        command: { direction: "up" },
+      });
+      const head = (
+        await client.query(
+          "SELECT to_regclass('public.notification_submissions')::text AS name, max(version) AS version FROM schema_migrations",
+        )
+      ).rows[0];
+      check(
+        head.name === "notification_submissions" &&
+          head.version === current.currentVersion,
+        "later migrations apply on top of the restored journal",
       );
     } finally {
       await client.end();
