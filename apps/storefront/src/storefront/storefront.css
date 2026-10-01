@@ -271,6 +271,42 @@ html[data-storefront-scheme="LIGHT"][data-storefront-hero-layout="IMMERSIVE"]
   color: var(--color-text);
   max-inline-size: calc(var(--layout-reading-max) / 1.5);
 }
+.artist-description {
+  inline-size: 100%;
+  max-inline-size: calc(var(--layout-reading-max) / 1.5);
+  min-inline-size: 0;
+}
+.artist-description-text {
+  white-space: pre-line;
+  line-height: var(--type-body-leading);
+}
+.artist-description[data-expanded="false"] .artist-description-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+}
+.artist-description-toggle {
+  display: block;
+  min-block-size: var(--space-12);
+  min-inline-size: var(--space-12);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-control);
+  color: var(--color-accent);
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+}
+.artist-description-toggle:hover {
+  text-decoration: underline;
+  text-underline-offset: var(--space-1);
+}
+.artist-description-toggle:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-accent);
+  outline-offset: var(--focus-ring-offset);
+}
 .storefront-primary {
   display: inline-flex;
   align-items: center;
@@ -531,17 +567,6 @@ html[data-storefront-scheme="LIGHT"][data-storefront-hero-layout="IMMERSIVE"]
 .storefront-artist-hero .storefront-eyebrow {
   margin-block-start: var(--space-12);
 }
-.storefront-story {
-  display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: var(--space-16);
-}
-.storefront-story p {
-  white-space: pre-line;
-  color: var(--color-text-muted);
-  margin-block-end: var(--space-6);
-  max-inline-size: var(--layout-reading-max);
-}
 .storefront-gallery {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -617,7 +642,8 @@ html[data-storefront-scheme="LIGHT"][data-storefront-hero-layout="IMMERSIVE"]
   .storefront-hero h1 {
     margin-block: var(--space-3);
   }
-  .storefront-hero-body {
+  .storefront-hero-body,
+  .artist-description {
     max-inline-size: none;
   }
   .storefront-primary {
@@ -661,8 +687,7 @@ html[data-storefront-scheme="LIGHT"][data-storefront-hero-layout="IMMERSIVE"]
   .storefront-how p {
     grid-column: 2;
   }
-  .storefront-trust,
-  .storefront-story {
+  .storefront-trust {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-6);
   }

@@ -9,7 +9,8 @@ export function performanceRequiredContent(kind) {
       "[data-artist-card]",
       "[data-gift-browse] [data-gift-card]",
     ];
-  if (kind === "artist") return ["#artist-title", ".storefront-story [lang]"];
+  if (kind === "artist")
+    return ["#artist-title", "p[data-artist-description][lang]"];
   if (kind === "gift") return ["[data-gift-detail] h1"];
   if (kind === "gifts" || kind === "gift-browse")
     return ["main h1", "[data-gift-card]"];

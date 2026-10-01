@@ -1050,8 +1050,50 @@ export async function verifyManagementCenterBrowser({
             ).toHaveCount(0);
           } else {
             publicCheck.stage = "CONTENT";
-            await expect(publicPage.locator(".storefront-story")).toContainText(
+            const artistDescription = publicPage.locator(
+              ".storefront-artist-hero p[data-artist-description]",
+            );
+            await expect(artistDescription).toHaveCount(1);
+            await expect(artistDescription).toHaveAttribute("lang", "zh-CN");
+            const toggle = publicPage.locator(
+              "[data-artist-description-toggle]",
+            );
+            await publicPage.evaluate(async () => {
+              await globalThis.document.fonts.ready;
+              await new Promise((resolve) =>
+                globalThis.requestAnimationFrame(() =>
+                  globalThis.requestAnimationFrame(resolve),
+                ),
+              );
+            });
+            const overflows = await artistDescription.evaluate((element) => {
+              const lineHeight = Number.parseFloat(
+                globalThis.getComputedStyle(element).lineHeight,
+              );
+              if (!Number.isFinite(lineHeight) || lineHeight <= 0)
+                throw new Error(
+                  "Artist description has no measurable line height",
+                );
+              return element.scrollHeight > lineHeight + 1;
+            });
+            if (overflows) {
+              await expect(toggle).toBeVisible();
+              await expect(toggle).toHaveAttribute("aria-expanded", "false");
+              await toggle.click();
+              await expect(toggle).toHaveAttribute("aria-expanded", "true");
+            } else await expect(toggle).toHaveCount(0);
+            await expect
+              .poll(() =>
+                artistDescription.evaluate(
+                  (element) => element.clientHeight + 1 >= element.scrollHeight,
+                ),
+              )
+              .toBe(true);
+            await expect(artistDescription).toHaveText(
               `${description} 已更新。`,
+            );
+            await expect(publicPage.locator(".storefront-story")).toHaveCount(
+              0,
             );
           }
           publicCheck.stage = "ROBOTS";

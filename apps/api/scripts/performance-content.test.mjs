@@ -63,3 +63,22 @@ test("missing or contradictory current content cannot pass the added audit", () 
       0,
     );
 });
+
+test("artist content guards require the single localized top description after story removal", async () => {
+  const selectors = ["#artist-title", "p[data-artist-description][lang]"];
+  assert.deepEqual(performanceRequiredContent("artist"), selectors);
+  const target = {
+    kind: "artist",
+    selector: "p[data-artist-description][lang]",
+    locale: "ja",
+  };
+  const config = createAcceptanceLighthouseConfig(
+    target,
+    "https://test.invalid/ja/idols/artist",
+  );
+  const args = await config.artifacts[0].gatherer.getArtifact({
+    driver: { executionContext: { evaluate: (_fn, options) => options.args } },
+  });
+  assert.equal(args[0], target.selector);
+  assert.deepEqual(args[3], selectors);
+});

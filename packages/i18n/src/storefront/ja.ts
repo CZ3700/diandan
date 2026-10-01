@@ -191,6 +191,8 @@ const copy = {
     "ギフトと非公開メッセージを保存できます。決済はまだ利用できません。",
 
   artistSearchLabel: "アーティストを検索",
+  artistDescriptionExpand: "もっと見る",
+  artistDescriptionCollapse: "閉じる",
   artistSearchPlaceholder: "名前・アーティスト名",
   artistSearchHint: "対応するどの言語でも検索できます。",
   artistSearchResults: "検索結果",

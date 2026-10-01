@@ -73,7 +73,7 @@ export class AcceptanceContentAudit extends Audit {
 export function createAcceptanceLighthouseConfig(target, expectedUrl) {
   const requiredSelectors = {
     home: ["#hero-title", "[data-artist-directory] [data-artist-card]"],
-    artist: ["#artist-title", ".storefront-story [lang]"],
+    artist: ["#artist-title", "p[data-artist-description][lang]"],
     gift: ["[data-gift-detail] h1"],
   }[target.kind] ?? ["main h1"];
   class AcceptanceContentGatherer extends BaseGatherer {

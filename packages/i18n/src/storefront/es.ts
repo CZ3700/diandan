@@ -192,6 +192,8 @@ const copy = {
     "Puedes guardar regalos y mensajes privados aquí. El pago aún no está disponible.",
 
   artistSearchLabel: "Buscar artista",
+  artistDescriptionExpand: "Ver más",
+  artistDescriptionCollapse: "Ver menos",
   artistSearchPlaceholder: "Nombre o nombre artístico",
   artistSearchHint: "Busca en cualquiera de los idiomas disponibles.",
   artistSearchResults: "Artistas encontrados",

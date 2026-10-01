@@ -188,6 +188,8 @@ const copy = {
     "Bạn có thể lưu quà và lời nhắn riêng tư tại đây. Thanh toán chưa mở.",
 
   artistSearchLabel: "Tìm nghệ sĩ",
+  artistDescriptionExpand: "Xem thêm",
+  artistDescriptionCollapse: "Thu gọn",
   artistSearchPlaceholder: "Tên hoặc nghệ danh",
   artistSearchHint: "Tìm bằng bất kỳ ngôn ngữ được hỗ trợ nào.",
   artistSearchResults: "Nghệ sĩ phù hợp",

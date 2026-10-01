@@ -9,6 +9,7 @@ import {
   storefrontContextResponseSchema,
   storefrontHomepageResponseSchema,
   giftDirectoryResponseSchema,
+  publishedIdolViewSchema,
   type StorefrontHomepageResponse,
   type IdolDirectoryResponse,
   type StorefrontContextResponse,
@@ -272,22 +273,47 @@ test.each(SUPPORTED_LOCALES)(
   },
 );
 
-test("the artist detail still presents the actual artist name as its large heading", async () => {
-  const published = publishedArtist("en");
-  const artist = published.content.view;
-  const html = renderToStaticMarkup(
-    <ArtistContent
-      artist={artist}
-      locale="en"
-      copy={await loadStorefrontCopy("en")}
-      contextQuery=""
-    />,
-  );
-  expect(html).toContain(
-    `<h1 id="artist-title" lang="en">${artist.displayName}</h1>`,
-  );
-  expect(html).not.toContain("storefront-home-hero-heading");
-});
+test.each([false, true])(
+  "artist detail preserves one description and its heading with daily=%s",
+  async (daily) => {
+    const published = publishedArtist("en");
+    const description = `${"A complete artist description. ".repeat(8)}<b>Plain operator text</b>`;
+    const artist = daily
+      ? publishedIdolViewSchema.parse({
+          ...published.content.view,
+          shortBio: description.slice(0, 160),
+          fullBio: description,
+          localeContext: {
+            ...published.content.view.localeContext,
+            schemaVersion: 2,
+            publicationMode: "DIRECT_OPERATOR_V1",
+            sourceLocale: "en",
+            translationRevision: "cc000000-0000-4000-8000-000000000001",
+          },
+        })
+      : published.content.view;
+    const html = renderToStaticMarkup(
+      <ArtistContent
+        artist={artist}
+        locale="en"
+        copy={await loadStorefrontCopy("en")}
+        contextQuery=""
+      />,
+    );
+    expect(html).toContain(
+      `<h1 id="artist-title" lang="en">${artist.displayName}</h1>`,
+    );
+    expect(html).not.toContain("storefront-home-hero-heading");
+    expect(html).not.toContain("storefront-story");
+    expect(html).not.toContain("Their story");
+    if (daily) {
+      expect(
+        html.match(/&lt;b&gt;Plain operator text&lt;\/b&gt;/gu),
+      ).toHaveLength(1);
+      expect(html).not.toContain("<b>Plain operator text</b>");
+    } else expect(html).toContain(artist.shortBio);
+  },
+);
 
 function publishedArtist(locale: (typeof SUPPORTED_LOCALES)[number]) {
   const home = publishedHome(locale);

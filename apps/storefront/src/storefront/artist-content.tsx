@@ -1,4 +1,3 @@
-import { ControlledBiography } from "./content-safety";
 import type { ReactNode } from "react";
 import type {
   PublishedIdolView,
@@ -9,6 +8,7 @@ import { PublishedHeroImage, PublishedImage } from "./published-image";
 import { storefrontHref } from "./navigation";
 import type { StorefrontCopy } from "./copy";
 import { StudioPromise } from "./page-parts";
+import { ArtistDescription } from "./artist-description";
 export function ArtistContent({
   artist,
   locale,
@@ -46,12 +46,16 @@ export function ArtistContent({
           <h1 id="artist-title" lang={artist.localeContext.resolvedLocale}>
             {artist.displayName}
           </h1>
-          <p
-            className="storefront-hero-body"
+          <ArtistDescription
+            text={
+              artist.localeContext.schemaVersion === 2
+                ? artist.fullBio
+                : artist.shortBio
+            }
             lang={artist.localeContext.resolvedLocale}
-          >
-            {artist.shortBio}
-          </p>
+            expandLabel={copy.artistDescriptionExpand}
+            collapseLabel={copy.artistDescriptionCollapse}
+          />
           {artist.acceptingGifts && (
             <a
               className="storefront-primary"
@@ -73,15 +77,6 @@ export function ArtistContent({
           <p className="storefront-announcement">{copy.fallbackNotice}</p>
         )}
       {wishes}
-      <section className="storefront-section storefront-story">
-        <h2>{copy.aboutArtist}</h2>
-        <div lang={artist.localeContext.resolvedLocale}>
-          <ControlledBiography
-            text={artist.fullBio}
-            plain={artist.localeContext.schemaVersion === 2}
-          />
-        </div>
-      </section>
       {artist.gallery.length > 0 && (
         <section className="storefront-section" aria-labelledby="gallery-title">
           <div className="storefront-section-heading">

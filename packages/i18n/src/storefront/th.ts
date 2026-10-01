@@ -182,6 +182,8 @@ const copy = {
     "บันทึกของขวัญและข้อความส่วนตัวได้ที่นี่ ยังไม่เปิดให้ชำระเงิน",
 
   artistSearchLabel: "ค้นหาศิลปิน",
+  artistDescriptionExpand: "ดูเพิ่มเติม",
+  artistDescriptionCollapse: "ย่อข้อความ",
   artistSearchPlaceholder: "ชื่อหรือชื่อในวงการ",
   artistSearchHint: "ค้นหาได้ในทุกภาษาที่รองรับ",
   artistSearchResults: "ศิลปินที่ตรงกัน",

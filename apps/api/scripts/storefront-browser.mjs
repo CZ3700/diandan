@@ -9,6 +9,7 @@ import {
   SUPPORTED_LOCALES,
   LOCALE_NATIVE_NAMES,
   storefrontHomepageResponseSchema,
+  publishedContentResponseSchema,
 } from "@fan-support/contracts";
 
 /** No HAR, traces, cookies, signed URLs or request bodies are persisted. */
@@ -347,14 +348,36 @@ export async function createStorefrontBrowserVerifier({
               `${label} ${kind} Content-Language matches globalThis.URL`,
             );
             await images(`${label}-${kind}`);
-            if (kind === "detail")
-              check(
-                (await page.locator(".storefront-story p").count()) > 0 &&
-                  !(
-                    await page.locator(".storefront-story").innerText()
-                  ).includes("<p>"),
-                "published biography renders controlled paragraphs rather than literal tags",
+            if (kind === "detail") {
+              const detailResponse = await globalThis.fetch(
+                `${base}/api/v1/idols/${fixtures.artists[0].handle}?locale=${locale}`,
+                { signal: globalThis.AbortSignal.timeout(30_000) },
               );
+              const detail = publishedContentResponseSchema.parse(
+                await detailResponse.json(),
+              );
+              check(
+                detailResponse.status === 200 &&
+                  detail.outcome === "SUCCESS" &&
+                  detail.content.kind === "IDOL",
+                "artist description uses actual published public content",
+              );
+              const description = page.locator(
+                ".storefront-artist-hero p[data-artist-description][lang]",
+              );
+              check(
+                (await page.locator("[data-artist-description]").count()) ===
+                  1 &&
+                  (await description.count()) === 1 &&
+                  (await description.textContent()).trim() ===
+                    detail.content.view.shortBio.trim() &&
+                  (await description.getAttribute("lang")) ===
+                    detail.content.view.localeContext.resolvedLocale &&
+                  !(await description.textContent()).includes("<p>") &&
+                  (await page.locator(".storefront-story").count()) === 0,
+                "the unique top description renders the actual localized short biography without duplicating rich story paragraphs",
+              );
+            }
             if (kind === "home")
               check(
                 (await page

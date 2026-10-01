@@ -188,6 +188,8 @@ const copy = {
     "Your gifts and private messages can be saved here. Checkout is not open yet.",
 
   artistSearchLabel: "Find an artist",
+  artistDescriptionExpand: "Show more",
+  artistDescriptionCollapse: "Show less",
   artistSearchPlaceholder: "Name or stage name",
   artistSearchHint: "Search in any supported language.",
   artistSearchResults: "Matching artists",

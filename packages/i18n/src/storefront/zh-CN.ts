@@ -170,6 +170,8 @@ const copy = {
   cartCheckoutBody: "礼物和私密留言可以保存在这里。结账尚未开放。",
 
   artistSearchLabel: "搜索艺人",
+  artistDescriptionExpand: "展开",
+  artistDescriptionCollapse: "收起",
   artistSearchPlaceholder: "姓名或艺名",
   artistSearchHint: "可用任一支持的语言搜索。",
   artistSearchResults: "匹配的艺人",

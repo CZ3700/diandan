@@ -1,5 +1,15 @@
 # 当前上线进度
 
+## C-20261001 艺人描述去重与展开
+
+- LOCAL_ACCEPTED（本项本地验收；公开 TEST 待部署）；Codex root / hero_swatch_review / wish_picker_data / wish_picker_ui；2026-10-01。基线 fcd6d8ed，SPEC 6.4.2 §5.4；底部Their story及重复简介删除，照片/心愿/礼物继续展示。
+- 顶部日常完整原文只保留一次，不再丢失160字符后的内容；默认一行，实际溢出才显示七语“展开／收起”，保留换行；旧严格内容安全使用shortBio。字体/尺寸/内容变化后重新判断，48触点、原生键盘与可见焦点，无新增动画或业务变更。
+- 受影响渲染回归59通过，长文折叠真实浏览器先红后绿；七语×390/1440×空/短/长/换行/长无空格共70组合、1246项通过，含实际字体、展开全文可视高度、键盘/减少动态、唯一描述及插槽；中英320↔1440溢出边界2组通过。为真实组件隔离夹具，非服务器发布验证。
+- 既有性能/验收锚点同步到顶部唯一带lang段落；脚本相关46测试、真实Chrome collector 13个DOM与2个Lighthouse导航正反例通过。管理中心验收再修正hydration前跳过展开的假通过，增加实际高度检查，其8测试及格式/lint复验通过。
+- i18n 44、字体20、设计基础57及全局扫描通过；review仅更新DRAFT摘要，字体固定源离线两次10文件逐字节一致，既有字形/CSS未变，仅manifest词库摘要更新。
+- 隔离check:dev全部通过（format/lint、typecheck69/test69/build38）；随后仅验收脚本的等待修补按上述8测试及格式/lint增量复验。独立审查与S.U.P.E.R十项复核完成，交付源与隔离副本逐文件一致；本轮未重跑完整pnpm check，其既有check-ci缺口见上次记录。
+- 证据 `output/artist-story-dedup-20261001/FINAL.md`、`output/playwright/artist-description-toggle-20261001/REVIEW.md`；未操作业务数据或体验实例，未部署服务器。
+
 ## C-20261001 艺人心愿展示精简
 
 - LOCAL_ACCEPTED（本项本地验收；公开 TEST 待部署）；Codex root / hero_swatch_review / wish_picker_data；2026-10-01。已同步远端 576bd7fa 的人员管理计划，保护其 L3-13/14 并行范围；本项行为见 SPEC 6.4.1 §0.8。
