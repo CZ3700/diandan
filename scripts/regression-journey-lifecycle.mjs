@@ -13,6 +13,12 @@ export async function runJourneyLifecycle(actions) {
     return result;
   } catch (error) {
     if (needsStop) {
+      // Read-only evidence while services still run; it never replaces the failure.
+      try {
+        await actions.diagnose?.();
+      } catch {
+        /* Diagnosis is best effort. */
+      }
       try {
         await actions.stop();
       } catch (cleanup) {

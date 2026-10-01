@@ -56,3 +56,36 @@ test("generated journey selectors obey the existing 32-character instance limit"
   );
   assert.ok(module.regressionInstanceName().length <= 32);
 });
+
+test("a failed journey is diagnosed before its services stop, and diagnosis never hides the failure", async () => {
+  assert.equal(typeof module.runJourneyLifecycle, "function");
+  for (const diagnosisFails of [false, true]) {
+    const calls = [];
+    await assert.rejects(
+      module.runJourneyLifecycle({
+        start: async () => calls.push("start"),
+        browser: async () => {
+          calls.push("browser");
+          throw new Error("fixture failure");
+        },
+        diagnose: async () => {
+          calls.push("diagnose");
+          if (diagnosisFails) throw new Error("diagnosis failure");
+        },
+        stop: async () => calls.push("stop"),
+        reset: async () => calls.push("reset"),
+      }),
+      /fixture failure/u,
+    );
+    assert.deepEqual(calls, ["start", "browser", "diagnose", "stop"]);
+  }
+  const calls = [];
+  await module.runJourneyLifecycle({
+    start: async () => calls.push("start"),
+    browser: async () => ({ status: "PASS" }),
+    diagnose: async () => calls.push("diagnose"),
+    stop: async () => calls.push("stop"),
+    reset: async () => calls.push("reset"),
+  });
+  assert.deepEqual(calls, ["start", "stop", "reset"]);
+});
