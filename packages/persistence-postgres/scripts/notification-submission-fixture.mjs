@@ -4,7 +4,10 @@ import {
   createAdminOrderResendUseCases,
 } from "@fan-support/application";
 import { createOrderNotificationTemplates } from "../../i18n/dist/notifications/index.js";
-import { createPostgresPersistence, runMigrations } from "../dist/index.js";
+import {
+  createPostgresPersistence,
+  loadMigrationManifest,
+} from "../dist/index.js";
 import { readAdminOrderNotification } from "../dist/admin-notification-resend-read.js";
 import { hasPendingAdminNotificationResend } from "../dist/notification-data.js";
 import {
@@ -659,20 +662,35 @@ export async function verifyNotificationSubmissions(context, workspaceRoot) {
     await databaseRejects("TRUNCATE notification_submissions", []),
     "journal cannot be truncated to erase permanent admission",
   );
-  let rollbackRefused = false;
+  // The runner only rolls back the applied head, so once later migrations exist
+  // 0050's own down SQL is probed for its admission-history guard.
+  const head = (
+    await scalar("SELECT max(version) version FROM schema_migrations")
+  ).version;
+  const downSql = (await loadMigrationManifest({ workspaceRoot })).find(
+    (row) => row.version === "0050",
+  ).down.sql;
+  let refusal;
+  await client.query("BEGIN");
   try {
-    await runMigrations({
-      clientConfig: context.database,
-      workspaceRoot,
-      command: { direction: "down", confirmVersion: "0050" },
-    });
-  } catch {
-    rollbackRefused = true;
+    await client.query(downSql);
+  } catch (error) {
+    refusal = { code: error.code, message: error.message };
+  } finally {
+    await client.query("ROLLBACK");
   }
   check(
-    rollbackRefused &&
+    refusal?.code === "55000" &&
+      refusal.message.startsWith(
+        "cannot discard native mail admission history",
+      ) &&
       (await scalar("SELECT max(version) version FROM schema_migrations"))
-        .version === "0050",
+        .version === head &&
+      (
+        await scalar(
+          "SELECT count(*)::integer AS count FROM notification_submissions",
+        )
+      ).count > 0,
     "populated migration rollback refuses to discard submission evidence atomically",
   );
 
