@@ -101,7 +101,7 @@ async function behavior() {
   await withEphemeralPostgres(async (configuration) => {
     const migrate = (command) =>
       runMigrations({ clientConfig: configuration, workspaceRoot, command });
-    await migrate({ direction: "up" });
+    const migrated = await migrate({ direction: "up" });
     const client = new Client(configuration);
     await client.connect();
     const q = async (text, values = []) =>
@@ -791,19 +791,14 @@ async function behavior() {
         "55000: artist private note history cannot be downgraded",
         "0062's down refuses while notes or reads exist",
       );
-      await client.end();
-      const refused = await migrate({
-        direction: "down",
-        confirmVersion: "0062",
-      }).then(
-        () => "MIGRATED",
-        (error) => String(error?.message ?? error),
-      );
+      // The runner only rolls back the applied head, so once later migrations exist the
+      // direct probe above is what proves 0062's own guard.
       equal(
-        refused,
-        "migration 0062 down failed",
-        "and the runner leaves 0062 in place",
+        (await q("SELECT max(version) v FROM schema_migrations"))[0].v,
+        migrated.currentVersion,
+        "the historical rollback probe leaves the registered head in place",
       );
+      await client.end();
     } catch (error) {
       console.error(
         JSON.stringify({

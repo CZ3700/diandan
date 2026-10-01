@@ -84,7 +84,7 @@ async function behavior() {
   await withEphemeralPostgres(async (configuration) => {
     const migrate = (command) =>
       runMigrations({ clientConfig: configuration, workspaceRoot, command });
-    await migrate({ direction: "up" });
+    const migrated = await migrate({ direction: "up" });
     const client = new Client(configuration);
     await client.connect();
     const persistence = createPostgresPersistence(configuration);
@@ -568,20 +568,15 @@ async function behavior() {
         "55000: deleted staff accounts cannot be downgraded",
         "0063's down refuses while deleted accounts exist",
       );
+      // The runner only rolls back the applied head, so once later migrations exist the
+      // direct probe above is what proves 0063's own guard.
+      equal(
+        (await q("SELECT max(version) v FROM schema_migrations"))[0].v,
+        migrated.currentVersion,
+        "the historical rollback probe leaves the registered head in place",
+      );
       await client.end();
       await persistence.close();
-      const refused = await migrate({
-        direction: "down",
-        confirmVersion: "0063",
-      }).then(
-        () => "MIGRATED",
-        (error) => String(error?.message ?? error),
-      );
-      equal(
-        refused,
-        "migration 0063 down failed",
-        "and the runner leaves 0063 in place",
-      );
     } catch (error) {
       console.error(
         JSON.stringify({
