@@ -375,3 +375,4 @@ export * from "./storefront-navigation.js";
 
 export * from "./information-pages.js";
 export * from "./wish-gallery.js";
+export * from "./storefront-brand.js";

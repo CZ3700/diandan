@@ -7,6 +7,7 @@ import {
   createStorefrontSeoUseCases,
   createPublicHomeLayoutUseCases,
   createPublicStorefrontThemeUseCases,
+  createPublicStorefrontBrandUseCases,
   createPublicStorefrontNavigationUseCases,
   createPublicInformationPageUseCases,
 } from "@fan-support/application";
@@ -28,6 +29,7 @@ import type { PublishedGiftCommerceRouteDependencies } from "./published-gift-co
 import type { StorefrontHomepageRouteDependencies } from "./storefront-homepage-route.js";
 import type { PublicHomeLayoutRouteDependencies } from "./home-layout-route.js";
 import type { PublicStorefrontThemeRouteDependencies } from "./storefront-theme-route.js";
+import type { PublicStorefrontBrandRouteDependencies } from "./storefront-brand-route.js";
 import type { PublicStorefrontNavigationRouteDependencies } from "./storefront-navigation-route.js";
 import type { PublicInformationPagesRouteDependencies } from "./information-pages-route.js";
 
@@ -40,6 +42,7 @@ type PublishedPersistence = Pick<
   | "storefrontSeoTransactionManager"
   | "homeLayoutTransactionManager"
   | "storefrontThemeTransactionManager"
+  | "storefrontBrandTransactionManager"
   | "storefrontNavigationTransactionManager"
   | "informationPageTransactionManager"
   | "close"
@@ -61,6 +64,7 @@ export type PublishedContentComposition = Readonly<{
   storefrontSeoRoute: StorefrontSeoRouteDependencies;
   publicHomeLayoutRoute: PublicHomeLayoutRouteDependencies;
   publicStorefrontThemeRoute: PublicStorefrontThemeRouteDependencies;
+  publicStorefrontBrandRoute: PublicStorefrontBrandRouteDependencies;
   publicStorefrontNavigationRoute: PublicStorefrontNavigationRouteDependencies;
   publicInformationPagesRoute: PublicInformationPagesRouteDependencies;
   publishedContentRuntime: ApiLifecycleResource;
@@ -107,6 +111,11 @@ export function createPublishedContentComposition(
     publicStorefrontThemeRoute: {
       useCases: createPublicStorefrontThemeUseCases({
         transactions: persistence.storefrontThemeTransactionManager,
+      }),
+    },
+    publicStorefrontBrandRoute: {
+      useCases: createPublicStorefrontBrandUseCases({
+        transactions: persistence.storefrontBrandTransactionManager,
       }),
     },
     publicStorefrontNavigationRoute: {

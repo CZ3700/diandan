@@ -1,3 +1,5 @@
+import * as storefrontBrand from "./storefront-brand.js";
+import * as storefrontLogo from "./storefront-logo.js";
 import * as wishBinding from "./wish-binding.js";
 import * as wishGallery from "./wish-gallery.js";
 import * as informationPages from "./information-pages.js";
@@ -684,6 +686,9 @@ export type ContractRegistration = Readonly<{
 // Scalars and embedded snapshot value objects follow their versioned parent;
 // they must never be used as standalone API, event, or queue roots.
 const unversionedValueObjectNames = new Set([
+  "StorefrontBrandRevision",
+  "StorefrontBrandPublication",
+  "StorefrontLogoView",
   "AdminArtistNoteContent",
   "AdminArtistNoteGate",
   "AdminArtistNoteVersion",
@@ -951,6 +956,82 @@ const registrations = [
     name: "StorefrontThemePreviewReady",
     audience: "admin-http",
     schema: storefrontTheme.storefrontThemePreviewReadySchema,
+  },
+
+  {
+    name: "StorefrontBrandAuthorizationCommand",
+    audience: "internal",
+    schema: storefrontBrand.storefrontBrandAuthorizationCommandSchema,
+  },
+  {
+    name: "StorefrontBrand",
+    audience: "public-http",
+    schema: storefrontBrand.storefrontBrandSchema,
+  },
+  {
+    name: "StorefrontBrandState",
+    audience: "admin-http",
+    schema: storefrontBrand.storefrontBrandStateSchema,
+  },
+  {
+    name: "StorefrontBrandCommand",
+    audience: "internal",
+    schema: storefrontBrand.storefrontBrandCommandSchema,
+  },
+  {
+    name: "StorefrontBrandRequest",
+    audience: "internal",
+    schema: storefrontBrand.storefrontBrandRequestSchema,
+  },
+  {
+    name: "StorefrontBrandResponse",
+    audience: "admin-http",
+    schema: storefrontBrand.storefrontBrandResponseSchema,
+  },
+  {
+    name: "PublicStorefrontBrandResponse",
+    audience: "public-http",
+    schema: storefrontBrand.publicStorefrontBrandResponseSchema,
+  },
+  {
+    name: "StorefrontBrandPreviewMessage",
+    audience: "admin-http",
+    schema: storefrontBrand.storefrontBrandPreviewMessageSchema,
+  },
+  {
+    name: "StorefrontBrandPreviewReady",
+    audience: "admin-http",
+    schema: storefrontBrand.storefrontBrandPreviewReadySchema,
+  },
+  {
+    name: "StorefrontBrandView",
+    audience: "public-http",
+    schema: storefrontBrand.storefrontBrandViewSchema,
+  },
+  {
+    name: "StorefrontBrandRevision",
+    audience: "internal",
+    schema: storefrontBrand.storefrontBrandRevisionSchema,
+  },
+  {
+    name: "StorefrontBrandPublication",
+    audience: "admin-http",
+    schema: storefrontBrand.storefrontBrandPublicationSchema,
+  },
+  {
+    name: "StorefrontLogoView",
+    audience: "public-http",
+    schema: storefrontLogo.storefrontLogoViewSchema,
+  },
+  {
+    name: "StorefrontLogoProcessingCommand",
+    audience: "internal",
+    schema: storefrontLogo.storefrontLogoProcessingCommandSchema,
+  },
+  {
+    name: "StorefrontLogoProcessingResult",
+    audience: "internal",
+    schema: storefrontLogo.storefrontLogoProcessingResultSchema,
   },
 
   {

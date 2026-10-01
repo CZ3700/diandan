@@ -37,6 +37,7 @@ const supportedHeads = [
   "0061",
   "0062",
   "0063",
+  "0064",
 ];
 
 /** Legacy probes may rewind only explicitly known, empty migration prefixes. */
@@ -134,6 +135,14 @@ export async function rollbackEmptyNotifications({
           artist_notes: "public.artist_private_notes",
           artist_note_accesses: "public.artist_private_note_accesses",
           artist_note_confirmations: "public.artist_private_note_confirmations",
+        }
+      : {}),
+    ...(version >= "0064"
+      ? {
+          brand_revisions: "public.storefront_brand_revisions",
+          brand_publications: "public.storefront_brand_publications",
+          brand_receipts: "public.storefront_brand_receipts",
+          brand_assets: "public.storefront_brand_logo_assets",
         }
       : {}),
     ...(version >= "0063"

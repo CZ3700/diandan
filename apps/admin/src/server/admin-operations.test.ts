@@ -1,6 +1,26 @@
 import { expect, test } from "vitest";
 import { getAdminOperation } from "./admin-operations";
 const id = "10000000-0000-4000-8000-000000000001";
+test.each([
+  ["read", "READ", false],
+  ["draft", "SAVE_DRAFT", true],
+  ["publish", "PUBLISH", true],
+  ["restore", "RESTORE", true],
+  ["history", "HISTORY", false],
+  ["prepare", "PREPARE_LOGO", true],
+] as const)(
+  "brand %s uses its own session-scoped fixed route",
+  (path, _action, mutation) => {
+    const operation = getAdminOperation(`storefront-brand-${path}`);
+    expect(operation).toBeDefined();
+    expect(operation!.path).toBe(`/api/v1/admin/storefront-brand/${path}`);
+    expect(operation!.credentials).toBe("SESSION");
+    expect(operation!.readOnly).toBe(!mutation);
+    expect(() =>
+      operation!.parseCommand({ schemaVersion: 1, actorId: id }, id),
+    ).toThrow();
+  },
+);
 test("fixed operations parse actionless bodies and bind idempotency separately", () => {
   const operation = getAdminOperation("idol-create")!;
   expect(operation.path).toBe("/api/v1/admin/catalog/idols/create");

@@ -30,4 +30,5 @@ export * from "./home-layout-route.js";
 export * from "./catalog-display-order-route.js";
 
 export * from "./storefront-theme-route.js";
+export * from "./storefront-brand-route.js";
 export * from "./storefront-navigation-route.js";

@@ -53,6 +53,12 @@ import {
   type PublicStorefrontThemeRouteDependencies,
 } from "./storefront-theme-route.js";
 import {
+  registerStorefrontBrandRoute,
+  registerPublicStorefrontBrandRoute,
+  type StorefrontBrandRouteDependencies,
+  type PublicStorefrontBrandRouteDependencies,
+} from "./storefront-brand-route.js";
+import {
   registerStorefrontNavigationRoute,
   registerPublicStorefrontNavigationRoute,
   type StorefrontNavigationRouteDependencies,
@@ -193,6 +199,8 @@ export type CreateApiApplicationOptions = Readonly<{
   publicHomeLayoutRoute?: PublicHomeLayoutRouteDependencies;
   storefrontThemeRoute?: StorefrontThemeRouteDependencies;
   publicStorefrontThemeRoute?: PublicStorefrontThemeRouteDependencies;
+  storefrontBrandRoute?: StorefrontBrandRouteDependencies;
+  publicStorefrontBrandRoute?: PublicStorefrontBrandRouteDependencies;
   storefrontNavigationRoute?: StorefrontNavigationRouteDependencies;
   publicStorefrontNavigationRoute?: PublicStorefrontNavigationRouteDependencies;
   informationPagesRoute?: InformationPagesRouteDependencies;
@@ -604,6 +612,16 @@ export async function createApiApplication(
     registerPublicStorefrontThemeRoute(
       adapter.getInstance(),
       options.publicStorefrontThemeRoute,
+    );
+  if (options.storefrontBrandRoute !== undefined)
+    registerStorefrontBrandRoute(
+      adapter.getInstance(),
+      options.storefrontBrandRoute,
+    );
+  if (options.publicStorefrontBrandRoute !== undefined)
+    registerPublicStorefrontBrandRoute(
+      adapter.getInstance(),
+      options.publicStorefrontBrandRoute,
     );
   if (options.storefrontNavigationRoute !== undefined)
     registerStorefrontNavigationRoute(

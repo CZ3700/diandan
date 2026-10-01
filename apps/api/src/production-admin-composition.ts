@@ -1,3 +1,4 @@
+import { createStorefrontLogoProcessor } from "@fan-support/media-image";
 import {
   createAdminAccessUseCases,
   createAdminCatalogUseCases,
@@ -18,6 +19,7 @@ import {
   createHomeLayoutUseCases,
   createCatalogDisplayOrderUseCases,
   createStorefrontThemeUseCases,
+  createStorefrontBrandUseCases,
   createStorefrontNavigationUseCases,
   createInformationPageUseCases,
   createPublicationPreflightUseCases,
@@ -60,6 +62,7 @@ import type { ManagementCenterRouteDependencies } from "./management-center-rout
 import type { HomeLayoutRouteDependencies } from "./home-layout-route.js";
 import type { CatalogDisplayOrderRouteDependencies } from "./catalog-display-order-route.js";
 import type { StorefrontThemeRouteDependencies } from "./storefront-theme-route.js";
+import type { StorefrontBrandRouteDependencies } from "./storefront-brand-route.js";
 import type { StorefrontNavigationRouteDependencies } from "./storefront-navigation-route.js";
 import type { InformationPagesRouteDependencies } from "./information-pages-route.js";
 import { createPaymentRecoveryLifecycle } from "./payment-runtime-lifecycle.js";
@@ -101,6 +104,7 @@ export type ProductionAdminComposition = Readonly<{
   homeLayoutRoute: HomeLayoutRouteDependencies;
   catalogDisplayOrderRoute: CatalogDisplayOrderRouteDependencies;
   storefrontThemeRoute: StorefrontThemeRouteDependencies;
+  storefrontBrandRoute: StorefrontBrandRouteDependencies;
   storefrontNavigationRoute: StorefrontNavigationRouteDependencies;
   informationPagesRoute: InformationPagesRouteDependencies;
   publicationPreflightRoute: PublicationPreflightRouteDependencies;
@@ -291,6 +295,17 @@ export function createProductionAdminComposition(
         useCases: createStorefrontThemeUseCases({
           transactions: persistence.storefrontThemeTransactionManager,
           tokenPepper,
+        }),
+      },
+      storefrontBrandRoute: {
+        allowedOrigin,
+        useCases: createStorefrontBrandUseCases({
+          transactions: persistence.storefrontBrandTransactionManager,
+          tokenPepper,
+          processor: createStorefrontLogoProcessor({
+            storage: media.storage,
+            now: () => new Date(),
+          }),
         }),
       },
       informationPagesRoute: {

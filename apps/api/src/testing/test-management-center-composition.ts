@@ -1,9 +1,11 @@
+import { createStorefrontLogoProcessor } from "@fan-support/media-image";
 import { randomBytes, randomUUID } from "node:crypto";
 import {
   createManagementCenterUseCases,
   createHomeLayoutUseCases,
   createCatalogDisplayOrderUseCases,
   createStorefrontThemeUseCases,
+  createStorefrontBrandUseCases,
   createStorefrontNavigationUseCases,
   createInformationPageUseCases,
   createManagementCenterWorker,
@@ -26,6 +28,7 @@ import type { ManagementCenterRouteDependencies } from "../management-center-rou
 import type { HomeLayoutRouteDependencies } from "../home-layout-route.js";
 import type { CatalogDisplayOrderRouteDependencies } from "../catalog-display-order-route.js";
 import type { StorefrontThemeRouteDependencies } from "../storefront-theme-route.js";
+import type { StorefrontBrandRouteDependencies } from "../storefront-brand-route.js";
 import type { StorefrontNavigationRouteDependencies } from "../storefront-navigation-route.js";
 import type { InformationPagesRouteDependencies } from "../information-pages-route.js";
 import type { ApiLifecycleResource } from "../bootstrap.js";
@@ -37,6 +40,7 @@ type ManagementPersistence = Pick<
   | "homeLayoutTransactionManager"
   | "catalogDisplayOrderTransactionManager"
   | "storefrontThemeTransactionManager"
+  | "storefrontBrandTransactionManager"
   | "storefrontNavigationTransactionManager"
   | "informationPageTransactionManager"
   | "managementMediaTransactionManager"
@@ -84,6 +88,7 @@ export function createTestManagementCenterComposition(
   homeLayoutRoute: HomeLayoutRouteDependencies;
   catalogDisplayOrderRoute: CatalogDisplayOrderRouteDependencies;
   storefrontThemeRoute: StorefrontThemeRouteDependencies;
+  storefrontBrandRoute: StorefrontBrandRouteDependencies;
   storefrontNavigationRoute: StorefrontNavigationRouteDependencies;
   informationPagesRoute: InformationPagesRouteDependencies;
   managementCenterRuntime: ApiLifecycleResource;
@@ -162,6 +167,17 @@ export function createTestManagementCenterComposition(
         useCases: createStorefrontThemeUseCases({
           transactions: persistence.storefrontThemeTransactionManager,
           tokenPepper: options.tokenPepper,
+        }),
+      },
+      storefrontBrandRoute: {
+        allowedOrigin: options.allowedOrigin,
+        useCases: createStorefrontBrandUseCases({
+          transactions: persistence.storefrontBrandTransactionManager,
+          tokenPepper: options.tokenPepper,
+          processor: createStorefrontLogoProcessor({
+            storage: options.storage,
+            now: () => new Date(),
+          }),
         }),
       },
       informationPagesRoute: {

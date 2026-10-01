@@ -12,11 +12,16 @@ import { decorationCopy } from "./copy";
 import { DisplayOrderWorkspace } from "./display-order-workspace";
 import type { DisplayOrderApi } from "./display-order-api";
 import { displayOrderCopy } from "./display-order-copy";
+import { BrandWorkspace } from "./brand-workspace";
+import type { StorefrontBrandApi } from "./brand-api";
+import { brandCopy } from "./brand-copy";
 
-type DecorationView = "layout" | "theme" | "navigation" | "order";
+type DecorationView = "layout" | "theme" | "navigation" | "order" | "brand";
 
 export function DecorationCenter({
   themeApi,
+  brandApi,
+  canUploadBrand = false,
   navigationApi,
   displayOrderApi,
   onDirtyChange,
@@ -24,6 +29,8 @@ export function DecorationCenter({
   ...props
 }: ComponentProps<typeof DecorationWorkspace> & {
   themeApi?: StorefrontThemeApi | undefined;
+  brandApi?: StorefrontBrandApi | undefined;
+  canUploadBrand?: boolean;
   navigationApi?: StorefrontNavigationApi | undefined;
   displayOrderApi?: DisplayOrderApi | undefined;
 }) {
@@ -34,9 +41,11 @@ export function DecorationCenter({
     ...decorationNavigationCopy(props.locale),
     navigation: navigationCopy(props.locale).title,
     order: displayOrderCopy(props.locale).tab,
+    brand: brandCopy(props.locale).title,
   };
   const tabs: DecorationView[] = ["layout"];
   if (themeApi) tabs.push("theme");
+  if (brandApi) tabs.push("brand");
   if (navigationApi) tabs.push("navigation");
   if (displayOrderApi) tabs.push("order");
   const changeDirty = useCallback(
@@ -66,7 +75,15 @@ export function DecorationCenter({
     onBusy: changeBusy,
   };
   let workspace = <DecorationWorkspace {...sharedProps} />;
-  if (view === "order" && displayOrderApi)
+  if (view === "brand" && brandApi)
+    workspace = (
+      <BrandWorkspace
+        {...sharedProps}
+        api={brandApi}
+        canUpload={canUploadBrand}
+      />
+    );
+  else if (view === "order" && displayOrderApi)
     workspace = (
       <DisplayOrderWorkspace
         api={displayOrderApi}

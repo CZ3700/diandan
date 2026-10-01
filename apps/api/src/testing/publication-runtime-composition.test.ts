@@ -132,6 +132,7 @@ test("serves the public presentation reads every storefront page makes from the 
     publicationId: null,
   }));
   const theme = vi.fn(async () => ({}));
+  const brand = vi.fn(async () => ({}));
   const navigation = vi.fn(async () => ({}));
   const informationPage = vi.fn(async () => ({}));
   const createPersistence = vi.fn(() => ({
@@ -144,6 +145,11 @@ test("serves the public presentation reads every storefront page makes from the 
       runInStorefrontThemeTransaction: async (
         work: (repositories: unknown) => unknown,
       ) => work({ storefrontTheme: { readPublished: theme } }),
+    },
+    storefrontBrandTransactionManager: {
+      runInStorefrontBrandTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ storefrontBrand: { readPublished: brand } }),
     },
     storefrontNavigationTransactionManager: {
       runInStorefrontNavigationTransaction: async (
@@ -165,6 +171,8 @@ test("serves the public presentation reads every storefront page makes from the 
     composition.publicHomeLayoutRoute.useCases.execute(),
   ).resolves.toMatchObject({ outcome: "SUCCESS", source: "DEFAULT" });
   await composition.publicStorefrontThemeRoute.useCases.execute();
+  await composition.publicStorefrontBrandRoute.useCases.execute();
+  expect(brand).toHaveBeenCalledOnce();
   await composition.publicStorefrontNavigationRoute.useCases.execute();
   await composition.publicInformationPagesRoute.useCases.read({
     schemaVersion: 1,

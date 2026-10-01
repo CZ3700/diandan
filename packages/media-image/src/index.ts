@@ -122,3 +122,7 @@ export {
   createDeliveryProofReader,
   type DeliveryProofMediaOptions,
 } from "./delivery-proof.js";
+export {
+  createStorefrontLogoProcessor,
+  type StorefrontLogoMediaOptions,
+} from "./storefront-logo.js";

@@ -14,6 +14,11 @@ const runtime = vi.hoisted(() => ({
     outcome: "FAILURE",
     code: "CONTENT_UNAVAILABLE",
   })),
+  brand: vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "CONTENT_UNAVAILABLE",
+  })),
   collector: vi.fn(async () => null),
 }));
 
@@ -30,6 +35,9 @@ vi.mock("../server/rum-bootstrap", () => ({
 }));
 vi.mock("../server/public-storefront-theme", () => ({
   readPublicStorefrontTheme: runtime.theme,
+}));
+vi.mock("../server/public-storefront-brand", () => ({
+  readPublicStorefrontBrand: runtime.brand,
 }));
 
 type ElementProps = Readonly<{
@@ -100,12 +108,22 @@ test("a theme outage retains the page and marks its safe fallback without claimi
 test("internal pages never load or apply published storefront themes", async () => {
   runtime.locale = null;
   runtime.theme.mockClear();
+  runtime.brand.mockClear();
   try {
     const { default: RootLayout } = await import("./layout");
     const html = await RootLayout({ children: null });
     expect(runtime.theme).not.toHaveBeenCalled();
+    expect(runtime.brand).not.toHaveBeenCalled();
     expect(html.props["data-storefront-palette"]).toBeUndefined();
   } finally {
     runtime.locale = "zh-CN";
   }
+});
+
+test("public pages resolve branding once without blocking content when it is unavailable", async () => {
+  runtime.brand.mockClear();
+  const { default: RootLayout } = await import("./layout");
+  const html = await RootLayout({ children: "order-content" });
+  expect(runtime.brand).toHaveBeenCalledOnce();
+  expect(JSON.stringify(html)).toContain("order-content");
 });

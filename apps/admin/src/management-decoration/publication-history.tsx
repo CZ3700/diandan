@@ -2,7 +2,7 @@ import { Button } from "@fan-support/ui";
 import type { SupportedLocale } from "@fan-support/contracts";
 import type { DecorationCopy } from "./copy";
 type PublicationHistoryProps = {
-  kind: "theme" | "navigation";
+  kind: "theme" | "navigation" | "brand";
   locale: SupportedLocale;
   copy: Omit<DecorationCopy, "sections">;
   history: {

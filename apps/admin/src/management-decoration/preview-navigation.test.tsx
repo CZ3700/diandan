@@ -42,6 +42,7 @@ const navigationLabels = await import("./navigation-copy").catch(
   () => undefined,
 );
 import { themeCopy } from "./theme-copy";
+import { brandCopy } from "./brand-copy";
 
 function find(
   node: unknown,
@@ -93,6 +94,90 @@ beforeEach(() => {
   hooks.refIndex = 0;
   hooks.index = 0;
   hooks.effects = [];
+});
+test("brand preview waits for both exact handshakes and theme switching never changes the logo draft", () => {
+  expect(previews.BrandPreviewFrame).toBeTypeOf("function");
+  vi.useFakeTimers();
+  const receive: ((event: unknown) => void)[] = [];
+  vi.stubGlobal("window", {
+    addEventListener: (_key: string, listener: (event: unknown) => void) =>
+      receive.push(listener),
+    removeEventListener: () => {},
+  });
+  const contentWindow = { postMessage: vi.fn() };
+  const brand = { schemaVersion: 1 as const, lightLogo: null, darkLogo: null };
+  function renderBrand() {
+    hooks.index = 0;
+    hooks.refIndex = 0;
+    hooks.effects = [];
+    const wrapper = previews.BrandPreviewFrame({
+      brand,
+      locale: "en",
+      origin: "https://storefront.example.invalid",
+      copy: brandCopy("en"),
+    });
+    const tree = (
+      wrapper.type as (props: typeof wrapper.props) => ReactElement
+    )(wrapper.props);
+    const frame = find(tree, "data-brand-preview-frame");
+    if (frame)
+      (frame.props["ref"] as { current: unknown }).current = { contentWindow };
+    return tree;
+  }
+  renderBrand();
+  hooks.effects[0]!();
+  let tree = renderBrand();
+  const frame = find(tree, "data-brand-preview-frame")!;
+  const url = new URL(String(frame.props["src"]));
+  expect(url.searchParams.get("mode")).toBe("brand");
+  hooks.effects[2]!();
+  const ready = (
+    type: string,
+    origin = url.origin,
+    source: unknown = contentWindow,
+  ) => ({
+    origin,
+    source,
+    data: { schemaVersion: 1, type, channel: url.searchParams.get("channel") },
+  });
+  receive[0]!(ready("STOREFRONT_BRAND_PREVIEW_READY"));
+  renderBrand();
+  hooks.effects[3]!();
+  expect(contentWindow.postMessage).not.toHaveBeenCalled();
+  receive[0]!(
+    ready("STOREFRONT_THEME_PREVIEW_READY", "https://foreign.example"),
+  );
+  receive[0]!(ready("STOREFRONT_THEME_PREVIEW_READY", url.origin, {}));
+  renderBrand();
+  hooks.effects[3]!();
+  expect(contentWindow.postMessage).not.toHaveBeenCalled();
+  receive[0]!(ready("STOREFRONT_THEME_PREVIEW_READY"));
+  tree = renderBrand();
+  hooks.effects[3]!();
+  expect(contentWindow.postMessage).toHaveBeenCalledWith(
+    {
+      schemaVersion: 1,
+      type: "STOREFRONT_BRAND_PREVIEW",
+      channel: url.searchParams.get("channel"),
+      brand,
+    },
+    url.origin,
+  );
+  (
+    find(tree, "data-brand-preview-scheme")!.props["onChange"] as (
+      event: unknown,
+    ) => void
+  )({ currentTarget: { value: "light" } });
+  renderBrand();
+  hooks.effects[3]!();
+  expect(contentWindow.postMessage).toHaveBeenLastCalledWith(
+    expect.objectContaining({
+      type: "STOREFRONT_THEME_PREVIEW",
+      theme: { ...createDefaultStorefrontTheme(), palette: "IVORY_GOLD" },
+    }),
+    url.origin,
+  );
+  expect(brand).toEqual({ schemaVersion: 1, lightLogo: null, darkLogo: null });
 });
 test("switching preview pages creates a new channel without changing the supplied draft or viewport", () => {
   const theme = {

@@ -28,6 +28,7 @@ import type { HomeLayoutApi } from "../management-decoration/api";
 import { DecorationCenter } from "../management-decoration/center";
 import type { StorefrontNavigationApi } from "../management-decoration/navigation-api";
 import type { DisplayOrderApi } from "../management-decoration/display-order-api";
+import type { StorefrontBrandApi } from "../management-decoration/brand-api";
 import type { StorefrontThemeApi } from "../management-decoration/theme-api";
 import { canLeaveDecoration } from "../management-decoration/navigation";
 import { decorationNavigationCopy } from "../management-decoration/theme-copy";
@@ -44,6 +45,8 @@ export function ManagementHub({
   exceptionsApi,
   layoutApi,
   themeApi,
+  brandApi,
+  canUploadBrand = false,
   navigationApi,
   displayOrderApi,
   layoutPermissions,
@@ -64,6 +67,8 @@ export function ManagementHub({
   exceptionsApi?: ExceptionsApi | undefined;
   layoutApi?: HomeLayoutApi | undefined;
   themeApi?: StorefrontThemeApi | undefined;
+  brandApi?: StorefrontBrandApi | undefined;
+  canUploadBrand?: boolean;
   navigationApi?: StorefrontNavigationApi | undefined;
   displayOrderApi?: DisplayOrderApi | undefined;
   infoPagesApi?: InformationPagesApi | undefined;
@@ -341,6 +346,8 @@ export function ManagementHub({
         <DecorationCenter
           api={layoutApi}
           themeApi={themeApi}
+          brandApi={brandApi}
+          canUploadBrand={canUploadBrand}
           navigationApi={navigationApi}
           displayOrderApi={displayOrderApi}
           locale={locale}

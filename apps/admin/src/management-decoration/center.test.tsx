@@ -98,3 +98,14 @@ test("busy navigation cannot leave even after confirmation", () => {
   expect(confirm).not.toHaveBeenCalled();
   expect(hooks.values[0]).toBe("navigation");
 });
+test("brand identity is an independent decoration tab with the same departure guard", () => {
+  const tree = DecorationCenter({
+    ...props,
+    brandApi: { ...api, upload: vi.fn() },
+    canUploadBrand: false,
+  });
+  const tab = find(tree, "data-decoration-tab", "brand");
+  expect(tab).toBeDefined();
+  (tab!.props["onClick"] as () => void)();
+  expect(hooks.values[0]).toBe("brand");
+});

@@ -7,6 +7,7 @@ import {
   createStorefrontSeoUseCases,
   createPublicHomeLayoutUseCases,
   createPublicStorefrontThemeUseCases,
+  createPublicStorefrontBrandUseCases,
   createPublicStorefrontNavigationUseCases,
   createPublicInformationPageUseCases,
 } from "@fan-support/application";
@@ -22,6 +23,7 @@ import type { ApiLifecycleResource } from "../bootstrap.js";
 import type { PublicationRuntimeRouteDependencies } from "../publication-runtime-route.js";
 import type { PublicHomeLayoutRouteDependencies } from "../home-layout-route.js";
 import type { PublicStorefrontThemeRouteDependencies } from "../storefront-theme-route.js";
+import type { PublicStorefrontBrandRouteDependencies } from "../storefront-brand-route.js";
 import type { PublicStorefrontNavigationRouteDependencies } from "../storefront-navigation-route.js";
 import type { PublicInformationPagesRouteDependencies } from "../information-pages-route.js";
 
@@ -34,6 +36,7 @@ type BasePersistence = Pick<
   | "storefrontSeoTransactionManager"
   | "homeLayoutTransactionManager"
   | "storefrontThemeTransactionManager"
+  | "storefrontBrandTransactionManager"
   | "storefrontNavigationTransactionManager"
   | "informationPageTransactionManager"
   | "close"
@@ -63,6 +66,7 @@ export function createTestPublicationRuntimeComposition(
   storefrontSeoRoute: StorefrontSeoRouteDependencies;
   publicHomeLayoutRoute: PublicHomeLayoutRouteDependencies;
   publicStorefrontThemeRoute: PublicStorefrontThemeRouteDependencies;
+  publicStorefrontBrandRoute: PublicStorefrontBrandRouteDependencies;
   publicStorefrontNavigationRoute: PublicStorefrontNavigationRouteDependencies;
   publicInformationPagesRoute: PublicInformationPagesRouteDependencies;
 }> {
@@ -120,6 +124,11 @@ export function createTestPublicationRuntimeComposition(
     publicStorefrontThemeRoute: {
       useCases: createPublicStorefrontThemeUseCases({
         transactions: persistence.storefrontThemeTransactionManager,
+      }),
+    },
+    publicStorefrontBrandRoute: {
+      useCases: createPublicStorefrontBrandUseCases({
+        transactions: persistence.storefrontBrandTransactionManager,
       }),
     },
     publicStorefrontNavigationRoute: {

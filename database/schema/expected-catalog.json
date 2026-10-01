@@ -1055,6 +1055,26 @@
       "kind": "TABLE"
     },
     {
+      "name": "storefront_brand_heads",
+      "kind": "TABLE"
+    },
+    {
+      "name": "storefront_brand_logo_assets",
+      "kind": "TABLE"
+    },
+    {
+      "name": "storefront_brand_publications",
+      "kind": "TABLE"
+    },
+    {
+      "name": "storefront_brand_receipts",
+      "kind": "TABLE"
+    },
+    {
+      "name": "storefront_brand_revisions",
+      "kind": "TABLE"
+    },
+    {
       "name": "storefront_navigation_heads",
       "kind": "TABLE"
     },
@@ -26337,6 +26357,506 @@
       "dataType": "timestamp with time zone",
       "notNull": true,
       "defaultExpression": "transaction_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_heads",
+      "position": 1,
+      "name": "singleton",
+      "dataType": "boolean",
+      "notNull": true,
+      "defaultExpression": "true",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_heads",
+      "position": 2,
+      "name": "version",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_heads",
+      "position": 3,
+      "name": "draft_revision_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_heads",
+      "position": 4,
+      "name": "published_publication_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_heads",
+      "position": 5,
+      "name": "updated_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 2,
+      "name": "upload_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 3,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 4,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 5,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 6,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 7,
+      "name": "source_checksum_sha256",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 8,
+      "name": "checksum_sha256",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 9,
+      "name": "object_key",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 10,
+      "name": "mime_type",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 11,
+      "name": "width",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 12,
+      "name": "height",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 13,
+      "name": "byte_size",
+      "dataType": "bigint",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 14,
+      "name": "rights_reference",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "position": 15,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_publications",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_publications",
+      "position": 2,
+      "name": "revision_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_publications",
+      "position": 3,
+      "name": "version",
+      "dataType": "positive_version",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_publications",
+      "position": 4,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_publications",
+      "position": 5,
+      "name": "restored_from_publication_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_publications",
+      "position": 6,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_publications",
+      "position": 7,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_publications",
+      "position": 8,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_publications",
+      "position": 9,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_publications",
+      "position": 10,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "position": 2,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "position": 3,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "position": 4,
+      "name": "action",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "position": 5,
+      "name": "idempotency_key",
+      "dataType": "idempotency_key_value",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "position": 6,
+      "name": "request_hash",
+      "dataType": "text",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "position": 7,
+      "name": "response",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "position": 8,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "position": 9,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "position": 10,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "position": 1,
+      "name": "id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "position": 2,
+      "name": "schema_version",
+      "dataType": "smallint",
+      "notNull": true,
+      "defaultExpression": "1",
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "position": 3,
+      "name": "brand",
+      "dataType": "jsonb",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "position": 4,
+      "name": "light_logo_asset_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": "((brand ->> 'lightLogoAssetId'::text))::uuid",
+      "identity": "",
+      "generation": "s"
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "position": 5,
+      "name": "dark_logo_asset_id",
+      "dataType": "uuid",
+      "notNull": false,
+      "defaultExpression": "((brand ->> 'darkLogoAssetId'::text))::uuid",
+      "identity": "",
+      "generation": "s"
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "position": 6,
+      "name": "actor_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "position": 7,
+      "name": "session_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "position": 8,
+      "name": "request_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "position": 9,
+      "name": "audit_log_id",
+      "dataType": "uuid",
+      "notNull": true,
+      "defaultExpression": null,
+      "identity": "",
+      "generation": ""
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "position": 10,
+      "name": "created_at",
+      "dataType": "finite_timestamptz",
+      "notNull": true,
+      "defaultExpression": "clock_timestamp()",
       "identity": "",
       "generation": ""
     },
@@ -63703,6 +64223,782 @@
       "initiallyDeferred": false
     },
     {
+      "table": "storefront_brand_heads",
+      "name": "storefront_brand_heads_draft_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (draft_revision_id) REFERENCES storefront_brand_revisions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_heads",
+      "name": "storefront_brand_heads_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (singleton)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_heads",
+      "name": "storefront_brand_heads_published_publication_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (published_publication_id) REFERENCES storefront_brand_publications(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_heads",
+      "name": "storefront_brand_heads_singleton_check",
+      "kind": "CHECK",
+      "definition": "CHECK (singleton)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_heads",
+      "name": "storefront_brand_heads_singleton_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL singleton",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_heads",
+      "name": "storefront_brand_heads_updated_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL updated_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_heads",
+      "name": "storefront_brand_heads_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (version >= 0 AND version <= '9007199254740991'::bigint)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_heads",
+      "name": "storefront_brand_heads_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_byte_size_check",
+      "kind": "CHECK",
+      "definition": "CHECK (byte_size >= 1 AND byte_size <= 4194304)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_byte_size_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL byte_size",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_check",
+      "kind": "CHECK",
+      "definition": "CHECK (object_key = (((('processed/v1/'::text || upload_id::text) || '/'::text) || checksum_sha256) || '.webp'::text))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_checksum_sha256_check",
+      "kind": "CHECK",
+      "definition": "CHECK (checksum_sha256 ~ '^[a-f0-9]{64}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_checksum_sha256_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL checksum_sha256",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_height_check",
+      "kind": "CHECK",
+      "definition": "CHECK (height >= 1 AND height <= 1024)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_height_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL height",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_mime_type_check",
+      "kind": "CHECK",
+      "definition": "CHECK (mime_type = 'image/webp'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_mime_type_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL mime_type",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_object_key_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (object_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_object_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL object_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_rights_reference_check",
+      "kind": "CHECK",
+      "definition": "CHECK (length(rights_reference) >= 1 AND length(rights_reference) <= 256)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_rights_reference_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL rights_reference",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_source_checksum_sha256_check",
+      "kind": "CHECK",
+      "definition": "CHECK (source_checksum_sha256 ~ '^[a-f0-9]{64}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_source_checksum_sha256_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL source_checksum_sha256",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_upload_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (upload_id) REFERENCES media_upload_reservations(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_upload_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (upload_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_upload_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL upload_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_width_check",
+      "kind": "CHECK",
+      "definition": "CHECK (width >= 1 AND width <= 1024)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_width_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL width",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_authority",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publication_authority",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['PUBLISH'::text, 'RESTORE'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_check",
+      "kind": "CHECK",
+      "definition": "CHECK ((action = 'RESTORE'::text) = (restored_from_publication_id IS NOT NULL))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_restored_from_publication_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (restored_from_publication_id) REFERENCES storefront_brand_publications(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_revision_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (revision_id) REFERENCES storefront_brand_revisions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_revision_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL revision_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_version_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (version)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipt_authority",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_action_check",
+      "kind": "CHECK",
+      "definition": "CHECK (action = ANY (ARRAY['SAVE_DRAFT'::text, 'PUBLISH'::text, 'RESTORE'::text, 'PREPARE_LOGO'::text]))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_action_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL action",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_actor_id_action_idempotency_key_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (actor_id, action, idempotency_key)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_audit_log_id_key",
+      "kind": "UNIQUE",
+      "definition": "UNIQUE (audit_log_id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_check",
+      "kind": "CHECK",
+      "definition": "CHECK (jsonb_typeof(response) = 'object'::text AND (response ->> 'outcome'::text) = 'SUCCESS'::text AND (response ->> 'kind'::text) =\nCASE\n    WHEN action = 'PREPARE_LOGO'::text THEN 'LOGO'::text\n    ELSE 'STATE'::text\nEND)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_idempotency_key_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL idempotency_key",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_request_hash_check",
+      "kind": "CHECK",
+      "definition": "CHECK (request_hash ~ '^[a-f0-9]{64}$'::text)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_request_hash_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_hash",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_response_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL response",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revision_authority",
+      "kind": "CONSTRAINT_TRIGGER",
+      "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED",
+      "deferrable": true,
+      "initiallyDeferred": true
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_actor_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (actor_id) REFERENCES admin_identities(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_actor_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL actor_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_audit_log_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (audit_log_id) REFERENCES audit_logs(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_audit_log_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL audit_log_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_brand_check",
+      "kind": "CHECK",
+      "definition": "CHECK (valid_storefront_brand(brand))",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_brand_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL brand",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_created_at_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_dark_logo_asset_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (dark_logo_asset_id) REFERENCES storefront_brand_logo_assets(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_light_logo_asset_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (light_logo_asset_id) REFERENCES storefront_brand_logo_assets(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_pkey",
+      "kind": "PRIMARY_KEY",
+      "definition": "PRIMARY KEY (id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_request_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL request_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_schema_version_check",
+      "kind": "CHECK",
+      "definition": "CHECK (schema_version = 1)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_schema_version_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL schema_version",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_session_id_fkey",
+      "kind": "FOREIGN_KEY",
+      "definition": "FOREIGN KEY (session_id) REFERENCES admin_sessions(id)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_session_id_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL session_id",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
       "table": "storefront_navigation_heads",
       "name": "storefront_navigation_heads_draft_revision_id_fkey",
       "kind": "FOREIGN_KEY",
@@ -72047,6 +73343,114 @@
       "valid": true
     },
     {
+      "table": "storefront_brand_heads",
+      "name": "storefront_brand_heads_pkey",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_heads_pkey ON public.storefront_brand_heads USING btree (singleton)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_logo_assets_audit_log_id_key ON public.storefront_brand_logo_assets USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_object_key_key",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_logo_assets_object_key_key ON public.storefront_brand_logo_assets USING btree (object_key)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_pkey",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_logo_assets_pkey ON public.storefront_brand_logo_assets USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_upload_id_key",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_logo_assets_upload_id_key ON public.storefront_brand_logo_assets USING btree (upload_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_publications_audit_log_id_key ON public.storefront_brand_publications USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_pkey",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_publications_pkey ON public.storefront_brand_publications USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_version_key",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_publications_version_key ON public.storefront_brand_publications USING btree (version)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_actor_id_action_idempotency_key_key",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_receipts_actor_id_action_idempotency_key_key ON public.storefront_brand_receipts USING btree (actor_id, action, idempotency_key)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_audit_log_id_key",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_receipts_audit_log_id_key ON public.storefront_brand_receipts USING btree (audit_log_id)",
+      "unique": true,
+      "primary": false,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_pkey",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_receipts_pkey ON public.storefront_brand_receipts USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_pkey",
+      "definition": "CREATE UNIQUE INDEX storefront_brand_revisions_pkey ON public.storefront_brand_revisions USING btree (id)",
+      "unique": true,
+      "primary": true,
+      "exclusion": false,
+      "valid": true
+    },
+    {
       "table": "storefront_navigation_heads",
       "name": "storefront_navigation_heads_pkey",
       "definition": "CREATE UNIQUE INDEX storefront_navigation_heads_pkey ON public.storefront_navigation_heads USING btree (singleton)",
@@ -77200,6 +78604,90 @@
       "enabled": "O"
     },
     {
+      "table": "storefront_brand_heads",
+      "name": "storefront_brand_heads_guard",
+      "definition": "CREATE TRIGGER storefront_brand_heads_guard BEFORE DELETE OR UPDATE ON storefront_brand_heads FOR EACH ROW EXECUTE FUNCTION guard_storefront_brand_head()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_heads",
+      "name": "storefront_brand_heads_no_truncate",
+      "definition": "CREATE TRIGGER storefront_brand_heads_no_truncate BEFORE TRUNCATE ON storefront_brand_heads FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_immutable",
+      "definition": "CREATE TRIGGER storefront_brand_logo_assets_immutable BEFORE DELETE OR UPDATE ON storefront_brand_logo_assets FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_assets_no_truncate",
+      "definition": "CREATE TRIGGER storefront_brand_logo_assets_no_truncate BEFORE TRUNCATE ON storefront_brand_logo_assets FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_logo_assets",
+      "name": "storefront_brand_logo_authority",
+      "definition": "CREATE CONSTRAINT TRIGGER storefront_brand_logo_authority AFTER INSERT ON storefront_brand_logo_assets DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_storefront_brand_authority()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publication_authority",
+      "definition": "CREATE CONSTRAINT TRIGGER storefront_brand_publication_authority AFTER INSERT ON storefront_brand_publications DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_storefront_brand_authority()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_immutable",
+      "definition": "CREATE TRIGGER storefront_brand_publications_immutable BEFORE DELETE OR UPDATE ON storefront_brand_publications FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_publications",
+      "name": "storefront_brand_publications_no_truncate",
+      "definition": "CREATE TRIGGER storefront_brand_publications_no_truncate BEFORE TRUNCATE ON storefront_brand_publications FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipt_authority",
+      "definition": "CREATE CONSTRAINT TRIGGER storefront_brand_receipt_authority AFTER INSERT ON storefront_brand_receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_storefront_brand_authority()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_immutable",
+      "definition": "CREATE TRIGGER storefront_brand_receipts_immutable BEFORE DELETE OR UPDATE ON storefront_brand_receipts FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_receipts",
+      "name": "storefront_brand_receipts_no_truncate",
+      "definition": "CREATE TRIGGER storefront_brand_receipts_no_truncate BEFORE TRUNCATE ON storefront_brand_receipts FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revision_authority",
+      "definition": "CREATE CONSTRAINT TRIGGER storefront_brand_revision_authority AFTER INSERT ON storefront_brand_revisions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION assert_storefront_brand_authority()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_immutable",
+      "definition": "CREATE TRIGGER storefront_brand_revisions_immutable BEFORE DELETE OR UPDATE ON storefront_brand_revisions FOR EACH ROW EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
+      "table": "storefront_brand_revisions",
+      "name": "storefront_brand_revisions_no_truncate",
+      "definition": "CREATE TRIGGER storefront_brand_revisions_no_truncate BEFORE TRUNCATE ON storefront_brand_revisions FOR EACH STATEMENT EXECUTE FUNCTION guard_append_only()",
+      "enabled": "O"
+    },
+    {
       "table": "storefront_navigation_heads",
       "name": "storefront_navigation_heads_guard",
       "definition": "CREATE TRIGGER storefront_navigation_heads_guard BEFORE DELETE OR UPDATE ON storefront_navigation_heads FOR EACH ROW EXECUTE FUNCTION guard_storefront_navigation_head()",
@@ -79008,6 +80496,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.assert_resource_management_audit(audit_id uuid, actor uuid, session_id uuid, expected_action text, expected_subject text, subject uuid, event_time timestamp with time zone, causal_lower_bound timestamp with time zone DEFAULT NULL::timestamp with time zone)\n RETURNS void\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE evidence public.audit_logs%ROWTYPE; session public.admin_sessions%ROWTYPE; identity_status text; required_permission text;\nBEGIN\n  SELECT * INTO evidence FROM public.audit_logs WHERE id=audit_id;\n  SELECT * INTO session FROM public.admin_sessions WHERE id=session_id FOR SHARE;\n  SELECT status INTO identity_status FROM public.admin_identities WHERE id=actor FOR SHARE;\n  IF evidence.id IS NULL OR evidence.actor_type<>'ADMIN' OR evidence.actor_id IS DISTINCT FROM actor OR evidence.action<>expected_action\n    OR evidence.subject_type<>expected_subject OR evidence.subject_id<>subject OR evidence.outcome<>'SUCCEEDED'\n    OR evidence.created_at<>event_time OR evidence.reason_code IS NULL OR evidence.request_id IS NULL OR evidence.correlation_id IS NULL\n    OR evidence.field_category IS DISTINCT FROM 'RESOURCE_MANAGEMENT' THEN\n    RAISE EXCEPTION 'resource operation requires its exact audit' USING ERRCODE='23514';\n  END IF;\n  IF session.id IS NULL OR session.admin_identity_id<>actor OR identity_status IS DISTINCT FROM 'ACTIVE'\n    OR NOT session.authenticated_with_mfa OR session.revoked_at IS NOT NULL OR session.expires_at<=clock_timestamp()\n    OR session.created_at>clock_timestamp() OR event_time<session.created_at\n    OR event_time>GREATEST(clock_timestamp(),transaction_timestamp(),session.created_at,causal_lower_bound) THEN\n    RAISE EXCEPTION 'resource operation requires its active MFA actor session' USING ERRCODE='23514';\n  END IF;\n  required_permission:=CASE expected_action WHEN 'POLICY_REGISTER' THEN 'content.policy.manage'\n    WHEN 'MEDIA_UPLOAD_BEGIN' THEN 'content.media.upload' WHEN 'MEDIA_UPLOAD_REGISTER' THEN 'content.media.upload'\n    WHEN 'MEDIA_RIGHTS_SET' THEN 'content.media.rights' WHEN 'MEDIA_PROCESSING_ENQUEUE' THEN 'content.media.process'\n    WHEN 'MEDIA_PROCESSING_RETRY' THEN 'content.media.process' END;\n  PERFORM ar.role_id FROM public.admin_identity_roles ar JOIN public.roles r ON r.id=ar.role_id\n    JOIN public.role_permissions rp ON rp.role_id=r.id JOIN public.permissions p ON p.id=rp.permission_id\n    WHERE ar.admin_identity_id=actor AND p.permission_key=required_permission\n      AND ar.granted_at<=clock_timestamp() AND rp.granted_at<=clock_timestamp()\n      AND ar.granted_at<=event_time AND rp.granted_at<=event_time FOR SHARE OF ar,r,rp,p;\n  IF NOT FOUND THEN RAISE EXCEPTION 'resource operation requires its current specific permission' USING ERRCODE='23514'; END IF;\nEND; $function$"
     },
     {
+      "name": "assert_storefront_brand_authority",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.assert_storefront_brand_authority()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE permission text; expected_action text; expected_subject uuid;\nBEGIN\n IF TG_TABLE_NAME='storefront_brand_logo_assets' THEN\n  permission:='content.edit'; expected_action:='STOREFRONT_BRAND_PREPARE_LOGO'; expected_subject:=NEW.id;\n ELSIF TG_TABLE_NAME='storefront_brand_revisions' THEN\n  SELECT p.id INTO expected_subject FROM storefront_brand_publications p WHERE p.revision_id=NEW.id AND p.action='RESTORE';\n  IF expected_subject IS NOT NULL THEN permission:='content.publish'; expected_action:='STOREFRONT_BRAND_RESTORE';\n  ELSE permission:='content.edit'; expected_action:='STOREFRONT_BRAND_SAVE_DRAFT'; expected_subject:=NEW.id; END IF;\n ELSIF TG_TABLE_NAME='storefront_brand_publications' THEN\n  permission:='content.publish'; expected_action:='STOREFRONT_BRAND_'||NEW.action; expected_subject:=NEW.id;\n ELSE\n  permission:=CASE WHEN NEW.action IN ('SAVE_DRAFT','PREPARE_LOGO') THEN 'content.edit' ELSE 'content.publish' END;\n  expected_action:='STOREFRONT_BRAND_'||NEW.action;\n  IF NEW.action='PREPARE_LOGO' THEN expected_subject:=(NEW.response->'logo'->>'assetId')::uuid;\n   IF NOT EXISTS(SELECT 1 FROM storefront_brand_logo_assets a WHERE a.id=expected_subject AND a.actor_id=NEW.actor_id AND a.session_id=NEW.session_id) THEN RAISE EXCEPTION 'logo receipt requires its owned ready asset' USING ERRCODE='23514'; END IF;\n  ELSIF NEW.action='SAVE_DRAFT' THEN expected_subject:=(NEW.response->'state'->'draft'->>'revisionId')::uuid;\n  ELSE expected_subject:=(NEW.response->'state'->'published'->>'publicationId')::uuid; END IF;\n END IF;\n IF NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,permission,NEW.created_at) THEN RAISE EXCEPTION 'brand write requires current canonical permission' USING ERRCODE='23514'; END IF;\n IF NOT EXISTS(SELECT 1 FROM audit_logs a WHERE a.id=NEW.audit_log_id AND a.actor_type='ADMIN' AND a.actor_id=NEW.actor_id AND a.request_id=NEW.request_id AND a.created_at=NEW.created_at AND a.outcome='SUCCEEDED' AND a.subject_type='STOREFRONT_BRAND' AND a.action=expected_action AND a.subject_id=expected_subject) THEN RAISE EXCEPTION 'brand write requires exact audit' USING ERRCODE='23514'; END IF;\n IF TG_TABLE_NAME='storefront_brand_logo_assets' THEN\n  IF NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,'content.media.upload',NEW.created_at) OR NOT public.admin_order_authorized(NEW.session_id,NEW.actor_id,'content.media.rights',NEW.created_at) OR NOT EXISTS(SELECT 1 FROM media_upload_reservations u WHERE u.id=NEW.upload_id AND u.actor_id=NEW.actor_id AND u.session_id=NEW.session_id AND u.status='PENDING' AND u.created_at<=NEW.created_at AND u.expires_at>NEW.created_at AND u.checksum_sha256=NEW.source_checksum_sha256 AND u.rights_reference=NEW.rights_reference AND u.object_key='uploads/v1/'||NEW.upload_id::text) THEN RAISE EXCEPTION 'logo requires its authorized current upload and rights' USING ERRCODE='23514'; END IF;\n END IF;\n RETURN NULL;\nEND $function$"
+    },
+    {
       "name": "assert_translation_export_receipt",
       "identityArguments": "",
       "resultType": "trigger",
@@ -80118,6 +81616,16 @@
       "definition": "CREATE OR REPLACE FUNCTION public.guard_site_locale_config_publication()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE\n  locale_count integer;\n  enabled_count integer;\nBEGIN\n  IF NEW.lifecycle = 'PUBLISHED'\n     AND (TG_OP = 'INSERT' OR OLD.lifecycle IS DISTINCT FROM NEW.lifecycle) THEN\n    SELECT count(*), count(*) FILTER (WHERE enabled)\n      INTO locale_count, enabled_count\n      FROM site_locale_config_entries\n      WHERE site_locale_config_revision_id = NEW.id;\n    IF locale_count <> 7 OR enabled_count <> 7 THEN\n      RAISE EXCEPTION 'published locale config must enable all seven supported locales'\n        USING ERRCODE = '23514';\n    END IF;\n  END IF;\n  RETURN NEW;\nEND;\n$function$"
     },
     {
+      "name": "guard_storefront_brand_head",
+      "identityArguments": "",
+      "resultType": "trigger",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "VOLATILE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.guard_storefront_brand_head()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF TG_OP<>'UPDATE' THEN RAISE EXCEPTION 'brand head cannot be removed' USING ERRCODE='55000'; END IF;\n IF NEW.singleton<>OLD.singleton OR NEW.version<>OLD.version+1 OR NEW.updated_at<OLD.updated_at OR\n    (NEW.draft_revision_id IS NOT DISTINCT FROM OLD.draft_revision_id AND NEW.published_publication_id IS NOT DISTINCT FROM OLD.published_publication_id) THEN\n  RAISE EXCEPTION 'brand head requires a new fenced revision' USING ERRCODE='23514'; END IF;\n IF NEW.published_publication_id IS DISTINCT FROM OLD.published_publication_id AND NOT EXISTS(SELECT 1 FROM storefront_brand_publications p WHERE p.id=NEW.published_publication_id AND p.version=NEW.version) THEN\n  RAISE EXCEPTION 'brand head publication version mismatch' USING ERRCODE='23514'; END IF;\n RETURN NEW;\nEND $function$"
+    },
+    {
       "name": "guard_storefront_navigation_head",
       "identityArguments": "",
       "resultType": "trigger",
@@ -80556,6 +82064,16 @@
       "volatility": "IMMUTABLE",
       "securityDefiner": false,
       "definition": "CREATE OR REPLACE FUNCTION public.valid_notification_submission_result(value jsonb)\n RETURNS boolean\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nDECLARE body jsonb; keys text[]; accepted finite_timestamptz;\nBEGIN\n IF jsonb_typeof(value) IS DISTINCT FROM 'object' OR value->'schemaVersion' IS DISTINCT FROM '1'::jsonb OR value->>'operation' IS DISTINCT FROM 'SEND_NOTIFICATION' THEN RETURN false; END IF;\n SELECT array_agg(k ORDER BY k) INTO keys FROM jsonb_object_keys(value) k;\n IF value->>'outcome'='SUCCESS' THEN\n  IF keys IS DISTINCT FROM ARRAY['operation','outcome','schemaVersion','value'] OR jsonb_typeof(value->'value') IS DISTINCT FROM 'object' THEN RETURN false; END IF;\n  body:=value->'value';SELECT array_agg(k ORDER BY k) INTO keys FROM jsonb_object_keys(body) k;\n  IF body->>'status'='REJECTED' THEN RETURN keys=ARRAY['status']; END IF;\n  IF body->>'status' IS DISTINCT FROM 'ACCEPTED' OR keys IS DISTINCT FROM ARRAY['acceptedAt','providerReference','status'] OR jsonb_typeof(body->'providerReference') IS DISTINCT FROM 'string' OR length(body->>'providerReference') NOT BETWEEN 1 AND 1024 OR body->>'providerReference' !~ '^[A-Za-z0-9][A-Za-z0-9._:/+=-]*$' OR jsonb_typeof(body->'acceptedAt') IS DISTINCT FROM 'string' THEN RETURN false; END IF;\n  IF body->>'acceptedAt' !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]+)?(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])$' THEN RETURN false; END IF;\n  accepted:=(body->>'acceptedAt')::finite_timestamptz;RETURN true;\n END IF;\n IF value->>'outcome' IS DISTINCT FROM 'FAILURE' OR keys IS DISTINCT FROM ARRAY['error','operation','outcome','schemaVersion'] OR jsonb_typeof(value->'error') IS DISTINCT FROM 'object' THEN RETURN false; END IF;\n body:=value->'error';SELECT array_agg(k ORDER BY k) INTO keys FROM jsonb_object_keys(body) k;\n IF body->'schemaVersion' IS DISTINCT FROM '1'::jsonb OR jsonb_typeof(body->'code') IS DISTINCT FROM 'string' OR jsonb_typeof(body->'recovery') IS DISTINCT FROM 'string' OR body->>'code' NOT IN('INVALID_COMMAND','RECIPIENT_REJECTED','TEMPLATE_CONTENT_INVALID','IDEMPOTENCY_CONFLICT','AUTHENTICATION_FAILED','RATE_LIMITED','TEMPORARY_UNAVAILABLE','CONFIGURATION_ERROR') THEN RETURN false; END IF;\n IF body->>'recovery'='NONE' THEN RETURN body->>'code' NOT IN('RATE_LIMITED','TEMPORARY_UNAVAILABLE') AND keys=ARRAY['code','recovery','schemaVersion']; END IF;\n RETURN body->>'recovery'='RETRY_SAME_COMMAND' AND body->>'code' IN('RATE_LIMITED','TEMPORARY_UNAVAILABLE') AND keys=ARRAY['code','recovery','retryAfterMs','schemaVersion'] AND jsonb_typeof(body->'retryAfterMs')='number' AND body->>'retryAfterMs' ~ '^[0-9]+$' AND (body->>'retryAfterMs')::numeric BETWEEN 100 AND 86400000;\nEXCEPTION WHEN OTHERS THEN RETURN false; END $function$"
+    },
+    {
+      "name": "valid_storefront_brand",
+      "identityArguments": "value jsonb",
+      "resultType": "boolean",
+      "language": "plpgsql",
+      "kind": "FUNCTION",
+      "volatility": "IMMUTABLE",
+      "securityDefiner": false,
+      "definition": "CREATE OR REPLACE FUNCTION public.valid_storefront_brand(value jsonb)\n RETURNS boolean\n LANGUAGE plpgsql\n IMMUTABLE\n SET search_path TO 'pg_catalog', 'public', 'pg_temp'\nAS $function$\nBEGIN\n IF jsonb_typeof(value) IS DISTINCT FROM 'object' OR value->'schemaVersion' IS DISTINCT FROM '1'::jsonb OR (SELECT count(*) FROM jsonb_object_keys(value))<>3 OR NOT(value ? 'lightLogoAssetId' AND value ? 'darkLogoAssetId') THEN RETURN false; END IF;\n RETURN (value->'lightLogoAssetId'='null'::jsonb OR (jsonb_typeof(value->'lightLogoAssetId')='string' AND (value->>'lightLogoAssetId')::uuid IS NOT NULL)) AND (value->'darkLogoAssetId'='null'::jsonb OR (jsonb_typeof(value->'darkLogoAssetId')='string' AND (value->>'darkLogoAssetId')::uuid IS NOT NULL));\nEXCEPTION WHEN OTHERS THEN RETURN false;\nEND $function$"
     },
     {
       "name": "valid_storefront_navigation",

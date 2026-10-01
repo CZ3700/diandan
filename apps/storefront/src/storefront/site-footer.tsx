@@ -4,6 +4,7 @@ import { Fragment, type ReactNode } from "react";
 import type { StorefrontCopy } from "./copy";
 import { navigationTargetHref } from "./navigation-target";
 import { useStorefrontNavigation } from "./navigation-provider";
+import { SiteBrand } from "./site-brand";
 
 export function SiteFooter({
   copy,
@@ -57,8 +58,7 @@ export function SiteFooter({
       data-navigation-version={version}
     >
       <span className="storefront-wordmark">
-        {name}
-        <span aria-hidden="true">.</span>
+        <SiteBrand name={name} />
       </span>
       <div className="storefront-footer-links">
         {navigation.footer

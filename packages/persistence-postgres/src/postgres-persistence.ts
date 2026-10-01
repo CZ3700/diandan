@@ -1,3 +1,9 @@
+import { createStorefrontBrandRepository } from "./storefront-brand-repository.js";
+import { createStorefrontBrandAuthorizationRepository } from "./admin-authorization-repository.js";
+import type {
+  StorefrontBrandRepositories,
+  StorefrontBrandTransactionManager,
+} from "@fan-support/persistence-port";
 import { createInformationPageRepository } from "./information-pages-repository.js";
 import { createWishGalleryRepository } from "./wish-gallery-repository.js";
 import type {
@@ -253,6 +259,7 @@ export interface PostgresPersistence {
   readonly catalogDisplayOrderTransactionManager: CatalogDisplayOrderTransactionManager;
   readonly informationPageTransactionManager: InformationPageTransactionManager;
   readonly storefrontNavigationTransactionManager: StorefrontNavigationTransactionManager;
+  readonly storefrontBrandTransactionManager: StorefrontBrandTransactionManager;
   readonly storefrontThemeTransactionManager: StorefrontThemeTransactionManager;
   readonly wishGalleryTransactionManager: WishGalleryTransactionManager;
   readonly adminPaymentConfigurationTransactionManager: AdminPaymentConfigurationTransactionManager;
@@ -709,6 +716,22 @@ export function createPostgresPersistenceWithPoolFactory(
         options?.catalogPublicMediaBaseUrl ?? "",
       ),
   });
+  const storefrontBrandRunner =
+    createTransactionRunner<StorefrontBrandRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createStorefrontBrandAuthorizationRepository(
+          client,
+          scope,
+        ),
+        storefrontBrand: createStorefrontBrandRepository(
+          client,
+          scope,
+          options?.catalogPublicMediaBaseUrl,
+        ),
+        resources: createResourceManagementRepository(client, scope),
+      }),
+    });
   const storefrontThemeRunner =
     createTransactionRunner<StorefrontThemeRepositories>({
       acquireClient: async () => pool.connect(),
@@ -1707,6 +1730,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return wishGalleryRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    storefrontBrandTransactionManager: {
+      async runInStorefrontBrandTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return storefrontBrandRunner.run(
           { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );

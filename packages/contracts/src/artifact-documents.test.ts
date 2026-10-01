@@ -411,6 +411,12 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/resources/uploads/complete",
     "/api/v1/admin/resources/uploads/read",
     "/api/v1/admin/session/read",
+    "/api/v1/admin/storefront-brand/draft",
+    "/api/v1/admin/storefront-brand/history",
+    "/api/v1/admin/storefront-brand/prepare",
+    "/api/v1/admin/storefront-brand/publish",
+    "/api/v1/admin/storefront-brand/read",
+    "/api/v1/admin/storefront-brand/restore",
     "/api/v1/admin/storefront-navigation/draft",
     "/api/v1/admin/storefront-navigation/history",
     "/api/v1/admin/storefront-navigation/publish",
@@ -463,6 +469,7 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/storefront/home-layout",
     "/api/v1/storefront/information-pages",
     "/api/v1/storefront/information-pages/{pageKey}",
+    "/api/v1/storefront/storefront-brand",
     "/api/v1/storefront/storefront-navigation",
     "/api/v1/storefront/storefront-theme",
     "/api/v1/storefront/wish-gallery",
@@ -621,6 +628,9 @@ test("marks every registered top-level contract with an explicit version policy"
     "$defs"
   ] as JsonObject;
   const unversionedValueObjects = new Set([
+    "StorefrontBrandRevision",
+    "StorefrontBrandPublication",
+    "StorefrontLogoView",
     "AdminArtistNoteContent",
     "AdminArtistNoteGate",
     "AdminArtistNoteVersion",

@@ -630,6 +630,16 @@
         "up": "215d048273ca3da27547abe1c597b034e6574eb8977b2f3dbb3f1c55fb774226",
         "down": "ef22c69742f2e64b8a45b754eb2c99389b751883b0123a9872fcb836928906cd"
       }
+    },
+    {
+      "version": "0064",
+      "name": "storefront-brand",
+      "up": "database/migrations/0064_storefront-brand.up.sql",
+      "down": "database/migrations/0064_storefront-brand.down.sql",
+      "sha256": {
+        "up": "ee45bad15772c8822b9e1aa89efddce37a244db437cefd0c45f86393bd0cfa05",
+        "down": "85f888eafadfb6fd48a1f32d9a22f111ab6e6639bc3c58d463c26a6274c2ba4c"
+      }
     }
   ]
 }

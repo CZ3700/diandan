@@ -1,5 +1,15 @@
 # 当前上线进度
 
+## C-20261001 店铺品牌标识
+
+- LOCAL_ACCEPTED（源码与本地验收，公开TEST待部署）；Codex root / catalog_integration_audit / research_gifts_a / brand_direction_review；2026-10-01，基线10c1529b，期间快进同步独立验收修复6e5b4227。SPEC6.4.6 §9.4 / ADR-020：店铺装修增加品牌标识，浅/深 Logo 分别上传、替换、移除，页头页脚统一读取。
+- 独立草稿、双端真实预览、发布与历史恢复；专用处理保留透明度/比例，最大25MiB原图、1024px WebP，复用受权签名上传，双阶段重新鉴权、CAS与幂等。0064独立五表及审计/FK/留存保护；不改变主题/导航/交易，不自动选用品牌提案。
+- RED→GREEN覆盖透明度、错误/动画图、授权失效、JSONB键序、UUID大小写、失败保稿与取消选择、预览信任边界。媒体89测试、admin640、storefront998及API专项通过；新旧OpenAPI语义对比仅增7路径/9schema。
+- 实际HTTP＋PostgreSQL＋S3链44项通过；64迁移空库往返/244表、降级保护119项通过。后台与商城真实组件浏览器分别14/68组，含七语390×844/1440×900、七套主题、透明/长宽比、缺图/失败、键盘及后台reduced-motion；浏览器API/图片为受控夹具。
+- 隔离Node24.20.0 `pnpm check:dev`通过；发现父仓库忽略目录影响Turbo输入后，对最终源强制零缓存复跑typecheck69、test69、build38全部通过。设计基础57通过，变更源secretlint通过，独立审阅、代码收敛与S.U.P.E.R十项通过；未在主目录构建Next。
+- `check:contracts`本项新增问题已修；现余6项旧locale所有权扫描问题（account/artist-notes/local-sign-in/display-order/staff copy与certificate测试），这些文件及检查器与HEAD相同，未弱化门禁；未跑完整正式`pnpm check`。
+- 证据：`output/storefront-brand-2026-10-01/FINAL.md`、`output/storefront-brand-20261001/backend/README.md`；操作/部署/回退说明：`docs/operations/storefront-brand.md`。临时浏览器/服务已关闭，现有实例与公开内容未改变；需0064及API/两端共同部署后验证公开TEST。
+
 ## C-20261001 结账流程精简
 
 - LOCAL_ACCEPTED；Codex root / wish_picker_data / wish_picker_ui / hero_swatch_review；2026-10-01。基线943a0a7f，期间快进同步至64ae4cc3的独立后台/验收修复；SPEC6.4.5 §5.7记录用户简化要求。

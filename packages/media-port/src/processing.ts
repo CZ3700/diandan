@@ -1,4 +1,6 @@
 import type {
+  StorefrontLogoProcessingCommand,
+  StorefrontLogoProcessingResult,
   DeliveryProofProcessingCommand,
   DeliveryProofProcessingResult,
   DeliveryProofReadCommand,
@@ -37,4 +39,11 @@ export type DeliveryProofReadResult =
 /** Returns checksum-verified bytes of one rendition; callers authorize the exact proof first. */
 export interface DeliveryProofReadPort {
   read(command: DeliveryProofReadCommand): Promise<DeliveryProofReadResult>;
+}
+
+/** Sanitizes a brand image, preserving alpha and aspect ratio outside database transactions. */
+export interface StorefrontLogoProcessingPort {
+  process(
+    command: StorefrontLogoProcessingCommand,
+  ): Promise<StorefrontLogoProcessingResult>;
 }

@@ -69,7 +69,8 @@
     "test:browser:admin-exceptions": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/admin^... --output-logs=errors-only && node ./scripts/admin-exceptions-http.mjs --ui",
     "test:postgres:production-admin-oidc": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/admin^... --output-logs=errors-only --concurrency=2 && node --test ./scripts/production-admin-oidc-*.test.mjs && node ./scripts/production-admin-oidc-http.mjs",
     "test:browser:production-admin-oidc": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/admin... --output-logs=errors-only --concurrency=2 && node --test ./scripts/production-admin-oidc-*.test.mjs && node ./scripts/production-admin-oidc-http.mjs --ui",
-    "test:browser:payment-action-recovery": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/storefront^... --output-logs=errors-only --concurrency=2 && node --test ./scripts/payment-action-recovery-*.test.mjs && node ./scripts/payment-action-recovery-http.mjs --ui"
+    "test:browser:payment-action-recovery": "pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/worker... --filter=@fan-support/storefront^... --output-logs=errors-only --concurrency=2 && node --test ./scripts/payment-action-recovery-*.test.mjs && node ./scripts/payment-action-recovery-http.mjs --ui",
+    "test:postgres:storefront-brand": "pnpm exec turbo run build --filter=@fan-support/api... --output-logs=errors-only && node ./scripts/storefront-brand-integration.mjs"
   },
   "dependencies": {
     "@fan-support/application": "workspace:*",

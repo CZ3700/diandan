@@ -1,3 +1,4 @@
+import { storefrontBrandPaths } from "./storefront-brand-openapi.js";
 import { informationPagePaths } from "./information-pages-openapi.js";
 import { storefrontNavigationPaths } from "./storefront-navigation-openapi.js";
 import { storefrontThemePaths } from "./storefront-theme-openapi.js";
@@ -236,6 +237,7 @@ export function createContractArtifactDocuments(): Readonly<{
         ...homeLayoutPaths(),
         ...catalogDisplayOrderPaths(),
         ...storefrontThemePaths(),
+        ...storefrontBrandPaths(),
         ...storefrontNavigationPaths(),
         ...informationPagePaths(),
         ...storefrontHomepagePaths(),

@@ -2,6 +2,7 @@ import { timingSafeEqual } from "node:crypto";
 import {
   adminAuthorizationCommandSchema,
   homeLayoutAuthorizationCommandSchema,
+  storefrontBrandAuthorizationCommandSchema,
   informationPageAuthorizationCommandSchema,
   adminAuthorizationResponseSchema,
   contentTimestampSchema,
@@ -10,6 +11,7 @@ import {
 import type {
   AdminAuthorizationRepository,
   HomeLayoutAuthorizationRepository,
+  StorefrontBrandAuthorizationRepository,
   InformationPageAuthorizationRepository,
 } from "@fan-support/persistence-port";
 import { draftRows } from "./content-draft-data.js";
@@ -42,6 +44,14 @@ export function createHomeLayoutAuthorizationRepository(
     homeLayoutAuthorizationCommandSchema.safeParse(input),
   );
 }
+export function createStorefrontBrandAuthorizationRepository(
+  client: TransactionClient,
+  scope: TransactionScopeControl,
+): StorefrontBrandAuthorizationRepository {
+  return createAuthorizationRepository(client, scope, (input) =>
+    storefrontBrandAuthorizationCommandSchema.safeParse(input),
+  );
+}
 export function createInformationPageAuthorizationRepository(
   client: TransactionClient,
   scope: TransactionScopeControl,
@@ -58,6 +68,7 @@ function createAuthorizationRepository(
   ) =>
     | ReturnType<typeof adminAuthorizationCommandSchema.safeParse>
     | ReturnType<typeof homeLayoutAuthorizationCommandSchema.safeParse>
+    | ReturnType<typeof storefrontBrandAuthorizationCommandSchema.safeParse>
     | ReturnType<typeof informationPageAuthorizationCommandSchema.safeParse>,
 ) {
   return {

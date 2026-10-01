@@ -18,6 +18,7 @@ import {
 import { prepareDirectoryQuery } from "./directory-query";
 import { HomeLayoutPreview } from "./home-layout-preview";
 import { ThemePreview } from "./theme-preview";
+import { BrandPreview } from "./brand-preview";
 import { HomepageDirectory } from "./homepage-directory";
 import { GiftBrowseSection } from "./gift-browse-section";
 import {
@@ -46,6 +47,7 @@ export function createHomeLayoutPreviewPage(locale: SupportedLocale) {
       ) ||
       (values["mode"] !== undefined &&
         values["mode"] !== "theme" &&
+        values["mode"] !== "brand" &&
         values["mode"] !== "navigation") ||
       (values["view"] !== undefined &&
         (values["mode"] !== "navigation" ||
@@ -112,8 +114,14 @@ export function createHomeLayoutPreviewPage(locale: SupportedLocale) {
         }
         contextQuery=""
       >
-        {values["mode"] === "theme" && (
+        {(values["mode"] === "theme" || values["mode"] === "brand") && (
           <ThemePreview
+            adminOrigin={adminOrigin}
+            channel={query.data.channel}
+          />
+        )}
+        {values["mode"] === "brand" && (
+          <BrandPreview
             adminOrigin={adminOrigin}
             channel={query.data.channel}
           />

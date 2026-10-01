@@ -24,6 +24,7 @@ import { createDisplayOrderApi } from "../management-decoration/display-order-ap
 import { createInformationPagesApi } from "../management-info-pages/api";
 import { createAccountApi } from "../management-account/api";
 import { createStaffApi } from "../management-staff/api";
+import { createStorefrontBrandApi } from "../management-decoration/brand-api";
 import { createStorefrontThemeApi } from "../management-decoration/theme-api";
 
 export function ManagementCenter({
@@ -62,6 +63,7 @@ export function ManagementCenter({
     () => createInformationPagesApi(client),
     [client],
   );
+  const brandApi = useMemo(() => createStorefrontBrandApi(client), [client]);
   const themeApi = useMemo(() => createStorefrontThemeApi(client), [client]);
   const accountApi = useMemo(() => createAccountApi(client), [client]);
   const staffApi = useMemo(() => createStaffApi(client), [client]);
@@ -129,6 +131,14 @@ export function ManagementCenter({
       exceptionsApi={exceptionsApi}
       layoutApi={layoutApi}
       themeApi={themeApi}
+      brandApi={brandApi}
+      canUploadBrand={(
+        [
+          "content.edit",
+          "content.media.upload",
+          "content.media.rights",
+        ] as const
+      ).every((permission) => session.permissions.includes(permission))}
       navigationApi={navigationApi}
       displayOrderApi={displayOrderApi}
       infoPagesApi={infoPagesApi}

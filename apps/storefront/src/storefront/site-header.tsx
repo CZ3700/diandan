@@ -17,6 +17,7 @@ import { SiteNavigation } from "./site-navigation";
 import { SiteMenuPreview } from "./site-menu-preview";
 import { useStorefrontNavigation } from "./navigation-provider";
 import type { StorefrontCopy } from "./copy";
+import { SiteBrand } from "./site-brand";
 
 export function SiteHeader({
   locale,
@@ -102,8 +103,7 @@ export function SiteHeader({
           className="storefront-wordmark"
           href={navigationTargetHref(locale, "HOME", contextQuery)}
         >
-          {name}
-          <span aria-hidden="true">.</span>
+          <SiteBrand name={name} />
         </a>
         <div className="storefront-desktop-nav">{navigation()}</div>
         <div className="storefront-header-utilities">

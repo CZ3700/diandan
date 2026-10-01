@@ -64,4 +64,5 @@ export type {
   DeliveryProofReadResult,
   MediaImageProcessingPort,
   MediaSourceInspectionPort,
+  StorefrontLogoProcessingPort,
 } from "./processing.js";

@@ -145665,6 +145665,192 @@
         ],
         "x-fan-support-audience": "public-http"
       },
+      "PublicStorefrontBrandResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "brand": {
+                "additionalProperties": false,
+                "properties": {
+                  "darkLogo": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "assetId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "height": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 1024,
+                            "type": "integer"
+                          },
+                          "url": {
+                            "format": "uri",
+                            "maxLength": 8192,
+                            "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                            "type": "string",
+                            "x-runtime-invariants": [
+                              "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                              "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                              "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                              "storage and CDN signing credentials are rejected"
+                            ]
+                          },
+                          "width": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 1024,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "assetId",
+                          "url",
+                          "width",
+                          "height"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "lightLogo": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "assetId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "height": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 1024,
+                            "type": "integer"
+                          },
+                          "url": {
+                            "format": "uri",
+                            "maxLength": 8192,
+                            "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                            "type": "string",
+                            "x-runtime-invariants": [
+                              "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                              "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                              "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                              "storage and CDN signing credentials are rejected"
+                            ]
+                          },
+                          "width": {
+                            "exclusiveMinimum": 0,
+                            "maximum": 1024,
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "assetId",
+                          "url",
+                          "width",
+                          "height"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "lightLogo",
+                  "darkLogo"
+                ],
+                "type": "object"
+              },
+              "kind": {
+                "const": "STOREFRONT_BRAND",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "publicationId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "source": {
+                "enum": [
+                  "DEFAULT",
+                  "PUBLISHED"
+                ],
+                "type": "string"
+              },
+              "version": {
+                "maximum": 9007199254740991,
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "source",
+              "brand",
+              "version",
+              "publicationId"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "const": "CONTENT_UNAVAILABLE",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "public-http"
+      },
       "PublicStorefrontNavigationResponse": {
         "anyOf": [
           {
@@ -158956,6 +159142,1708 @@
         "type": "object",
         "x-fan-support-audience": "public-http"
       },
+      "StorefrontBrand": {
+        "additionalProperties": false,
+        "properties": {
+          "darkLogoAssetId": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lightLogoAssetId": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "lightLogoAssetId",
+          "darkLogoAssetId"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
+      "StorefrontBrandPreviewMessage": {
+        "additionalProperties": false,
+        "properties": {
+          "brand": {
+            "additionalProperties": false,
+            "properties": {
+              "darkLogo": {
+                "anyOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "assetId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "height": {
+                        "exclusiveMinimum": 0,
+                        "maximum": 1024,
+                        "type": "integer"
+                      },
+                      "url": {
+                        "format": "uri",
+                        "maxLength": 8192,
+                        "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                        "type": "string",
+                        "x-runtime-invariants": [
+                          "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                          "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                          "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                          "storage and CDN signing credentials are rejected"
+                        ]
+                      },
+                      "width": {
+                        "exclusiveMinimum": 0,
+                        "maximum": 1024,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "assetId",
+                      "url",
+                      "width",
+                      "height"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "lightLogo": {
+                "anyOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "assetId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "height": {
+                        "exclusiveMinimum": 0,
+                        "maximum": 1024,
+                        "type": "integer"
+                      },
+                      "url": {
+                        "format": "uri",
+                        "maxLength": 8192,
+                        "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                        "type": "string",
+                        "x-runtime-invariants": [
+                          "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                          "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                          "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                          "storage and CDN signing credentials are rejected"
+                        ]
+                      },
+                      "width": {
+                        "exclusiveMinimum": 0,
+                        "maximum": 1024,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "assetId",
+                      "url",
+                      "width",
+                      "height"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "lightLogo",
+              "darkLogo"
+            ],
+            "type": "object"
+          },
+          "channel": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "type": {
+            "const": "STOREFRONT_BRAND_PREVIEW",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "type",
+          "channel",
+          "brand"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "StorefrontBrandPreviewReady": {
+        "additionalProperties": false,
+        "properties": {
+          "channel": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "type": {
+            "const": "STOREFRONT_BRAND_PREVIEW_READY",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "type",
+          "channel"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "StorefrontBrandPublication": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "PUBLISH",
+              "RESTORE"
+            ],
+            "type": "string"
+          },
+          "brand": {
+            "additionalProperties": false,
+            "properties": {
+              "darkLogoAssetId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "lightLogoAssetId": {
+                "anyOf": [
+                  {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "lightLogoAssetId",
+              "darkLogoAssetId"
+            ],
+            "type": "object"
+          },
+          "publicationId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "publishedAt": {
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+            "type": "string"
+          },
+          "restoredFromPublicationId": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "revisionId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "version": {
+            "maximum": 9007199254740991,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "view": {
+            "additionalProperties": false,
+            "properties": {
+              "darkLogo": {
+                "anyOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "assetId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "height": {
+                        "exclusiveMinimum": 0,
+                        "maximum": 1024,
+                        "type": "integer"
+                      },
+                      "url": {
+                        "format": "uri",
+                        "maxLength": 8192,
+                        "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                        "type": "string",
+                        "x-runtime-invariants": [
+                          "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                          "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                          "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                          "storage and CDN signing credentials are rejected"
+                        ]
+                      },
+                      "width": {
+                        "exclusiveMinimum": 0,
+                        "maximum": 1024,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "assetId",
+                      "url",
+                      "width",
+                      "height"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "lightLogo": {
+                "anyOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "assetId": {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      "height": {
+                        "exclusiveMinimum": 0,
+                        "maximum": 1024,
+                        "type": "integer"
+                      },
+                      "url": {
+                        "format": "uri",
+                        "maxLength": 8192,
+                        "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                        "type": "string",
+                        "x-runtime-invariants": [
+                          "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                          "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                          "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                          "storage and CDN signing credentials are rejected"
+                        ]
+                      },
+                      "width": {
+                        "exclusiveMinimum": 0,
+                        "maximum": 1024,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "assetId",
+                      "url",
+                      "width",
+                      "height"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "lightLogo",
+              "darkLogo"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "publicationId",
+          "revisionId",
+          "version",
+          "brand",
+          "view",
+          "publishedAt",
+          "action",
+          "restoredFromPublicationId"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "StorefrontBrandResponse": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "LOGO",
+                "type": "string"
+              },
+              "logo": {
+                "additionalProperties": false,
+                "properties": {
+                  "assetId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "height": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 1024,
+                    "type": "integer"
+                  },
+                  "url": {
+                    "format": "uri",
+                    "maxLength": 8192,
+                    "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                    "type": "string",
+                    "x-runtime-invariants": [
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                      "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                      "storage and CDN signing credentials are rejected"
+                    ]
+                  },
+                  "width": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 1024,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "assetId",
+                  "url",
+                  "width",
+                  "height"
+                ],
+                "type": "object"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "replayed": {
+                "type": "boolean"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "logo",
+              "replayed"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "const": "STATE",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "replayed": {
+                "type": "boolean"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              },
+              "state": {
+                "additionalProperties": false,
+                "properties": {
+                  "draft": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "brand": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "darkLogoAssetId": {
+                                "anyOf": [
+                                  {
+                                    "format": "uuid",
+                                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "lightLogoAssetId": {
+                                "anyOf": [
+                                  {
+                                    "format": "uuid",
+                                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "lightLogoAssetId",
+                              "darkLogoAssetId"
+                            ],
+                            "type": "object"
+                          },
+                          "createdAt": {
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                            "type": "string"
+                          },
+                          "revisionId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "view": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "darkLogo": {
+                                "anyOf": [
+                                  {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "assetId": {
+                                        "format": "uuid",
+                                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                        "type": "string"
+                                      },
+                                      "height": {
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 1024,
+                                        "type": "integer"
+                                      },
+                                      "url": {
+                                        "format": "uri",
+                                        "maxLength": 8192,
+                                        "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                        "type": "string",
+                                        "x-runtime-invariants": [
+                                          "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                          "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                          "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                          "storage and CDN signing credentials are rejected"
+                                        ]
+                                      },
+                                      "width": {
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 1024,
+                                        "type": "integer"
+                                      }
+                                    },
+                                    "required": [
+                                      "assetId",
+                                      "url",
+                                      "width",
+                                      "height"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "lightLogo": {
+                                "anyOf": [
+                                  {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "assetId": {
+                                        "format": "uuid",
+                                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                        "type": "string"
+                                      },
+                                      "height": {
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 1024,
+                                        "type": "integer"
+                                      },
+                                      "url": {
+                                        "format": "uri",
+                                        "maxLength": 8192,
+                                        "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                        "type": "string",
+                                        "x-runtime-invariants": [
+                                          "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                          "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                          "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                          "storage and CDN signing credentials are rejected"
+                                        ]
+                                      },
+                                      "width": {
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 1024,
+                                        "type": "integer"
+                                      }
+                                    },
+                                    "required": [
+                                      "assetId",
+                                      "url",
+                                      "width",
+                                      "height"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "lightLogo",
+                              "darkLogo"
+                            ],
+                            "type": "object"
+                          }
+                        },
+                        "required": [
+                          "revisionId",
+                          "brand",
+                          "view",
+                          "createdAt"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "published": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "action": {
+                            "enum": [
+                              "PUBLISH",
+                              "RESTORE"
+                            ],
+                            "type": "string"
+                          },
+                          "brand": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "darkLogoAssetId": {
+                                "anyOf": [
+                                  {
+                                    "format": "uuid",
+                                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "lightLogoAssetId": {
+                                "anyOf": [
+                                  {
+                                    "format": "uuid",
+                                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "lightLogoAssetId",
+                              "darkLogoAssetId"
+                            ],
+                            "type": "object"
+                          },
+                          "publicationId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "publishedAt": {
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                            "type": "string"
+                          },
+                          "restoredFromPublicationId": {
+                            "anyOf": [
+                              {
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                "type": "string"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "revisionId": {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          "version": {
+                            "maximum": 9007199254740991,
+                            "minimum": 1,
+                            "type": "integer"
+                          },
+                          "view": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "darkLogo": {
+                                "anyOf": [
+                                  {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "assetId": {
+                                        "format": "uuid",
+                                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                        "type": "string"
+                                      },
+                                      "height": {
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 1024,
+                                        "type": "integer"
+                                      },
+                                      "url": {
+                                        "format": "uri",
+                                        "maxLength": 8192,
+                                        "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                        "type": "string",
+                                        "x-runtime-invariants": [
+                                          "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                          "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                          "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                          "storage and CDN signing credentials are rejected"
+                                        ]
+                                      },
+                                      "width": {
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 1024,
+                                        "type": "integer"
+                                      }
+                                    },
+                                    "required": [
+                                      "assetId",
+                                      "url",
+                                      "width",
+                                      "height"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "lightLogo": {
+                                "anyOf": [
+                                  {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "assetId": {
+                                        "format": "uuid",
+                                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                        "type": "string"
+                                      },
+                                      "height": {
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 1024,
+                                        "type": "integer"
+                                      },
+                                      "url": {
+                                        "format": "uri",
+                                        "maxLength": 8192,
+                                        "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                        "type": "string",
+                                        "x-runtime-invariants": [
+                                          "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                          "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                          "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                          "storage and CDN signing credentials are rejected"
+                                        ]
+                                      },
+                                      "width": {
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 1024,
+                                        "type": "integer"
+                                      }
+                                    },
+                                    "required": [
+                                      "assetId",
+                                      "url",
+                                      "width",
+                                      "height"
+                                    ],
+                                    "type": "object"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "schemaVersion": {
+                                "const": 1,
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "lightLogo",
+                              "darkLogo"
+                            ],
+                            "type": "object"
+                          }
+                        },
+                        "required": [
+                          "publicationId",
+                          "revisionId",
+                          "version",
+                          "brand",
+                          "view",
+                          "publishedAt",
+                          "action",
+                          "restoredFromPublicationId"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "version": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "version",
+                  "draft",
+                  "published"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "state",
+              "replayed"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "entries": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "action": {
+                      "enum": [
+                        "PUBLISH",
+                        "RESTORE"
+                      ],
+                      "type": "string"
+                    },
+                    "brand": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "darkLogoAssetId": {
+                          "anyOf": [
+                            {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "lightLogoAssetId": {
+                          "anyOf": [
+                            {
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "schemaVersion": {
+                          "const": 1,
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "schemaVersion",
+                        "lightLogoAssetId",
+                        "darkLogoAssetId"
+                      ],
+                      "type": "object"
+                    },
+                    "publicationId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "publishedAt": {
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                      "type": "string"
+                    },
+                    "restoredFromPublicationId": {
+                      "anyOf": [
+                        {
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "revisionId": {
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                      "type": "string"
+                    },
+                    "version": {
+                      "maximum": 9007199254740991,
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "view": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "darkLogo": {
+                          "anyOf": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "assetId": {
+                                  "format": "uuid",
+                                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                  "type": "string"
+                                },
+                                "height": {
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 1024,
+                                  "type": "integer"
+                                },
+                                "url": {
+                                  "format": "uri",
+                                  "maxLength": 8192,
+                                  "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                  "type": "string",
+                                  "x-runtime-invariants": [
+                                    "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                    "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                    "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                    "storage and CDN signing credentials are rejected"
+                                  ]
+                                },
+                                "width": {
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 1024,
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "assetId",
+                                "url",
+                                "width",
+                                "height"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "lightLogo": {
+                          "anyOf": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "assetId": {
+                                  "format": "uuid",
+                                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                  "type": "string"
+                                },
+                                "height": {
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 1024,
+                                  "type": "integer"
+                                },
+                                "url": {
+                                  "format": "uri",
+                                  "maxLength": 8192,
+                                  "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                  "type": "string",
+                                  "x-runtime-invariants": [
+                                    "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                    "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                    "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                    "storage and CDN signing credentials are rejected"
+                                  ]
+                                },
+                                "width": {
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 1024,
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "assetId",
+                                "url",
+                                "width",
+                                "height"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "schemaVersion": {
+                          "const": 1,
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "schemaVersion",
+                        "lightLogo",
+                        "darkLogo"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "publicationId",
+                    "revisionId",
+                    "version",
+                    "brand",
+                    "view",
+                    "publishedAt",
+                    "action",
+                    "restoredFromPublicationId"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 20,
+                "type": "array"
+              },
+              "hasMore": {
+                "type": "boolean"
+              },
+              "kind": {
+                "const": "HISTORY",
+                "type": "string"
+              },
+              "outcome": {
+                "const": "SUCCESS",
+                "type": "string"
+              },
+              "page": {
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991,
+                "type": "integer"
+              },
+              "pageSize": {
+                "maximum": 20,
+                "minimum": 1,
+                "type": "integer"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "kind",
+              "entries",
+              "page",
+              "pageSize",
+              "hasMore"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "enum": [
+                  "INVALID_COMMAND",
+                  "UNAUTHENTICATED",
+                  "FORBIDDEN",
+                  "CSRF_INVALID",
+                  "NOT_FOUND",
+                  "REVISION_NOT_DRAFT",
+                  "ALREADY_EXISTS",
+                  "INVALID_CONTENT",
+                  "CONTENT_UNAVAILABLE",
+                  "STALE_CONTENT",
+                  "STALE_VERSION",
+                  "SELF_REVIEW",
+                  "INVALID_REVIEW_STATE",
+                  "IDEMPOTENCY_CONFLICT",
+                  "CONFLICT",
+                  "PREVIEW_UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "outcome": {
+                "const": "FAILURE",
+                "type": "string"
+              },
+              "schemaVersion": {
+                "const": 1,
+                "type": "number"
+              }
+            },
+            "required": [
+              "schemaVersion",
+              "outcome",
+              "code"
+            ],
+            "type": "object"
+          }
+        ],
+        "x-fan-support-audience": "admin-http"
+      },
+      "StorefrontBrandState": {
+        "additionalProperties": false,
+        "properties": {
+          "draft": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "brand": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "darkLogoAssetId": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "lightLogoAssetId": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "lightLogoAssetId",
+                      "darkLogoAssetId"
+                    ],
+                    "type": "object"
+                  },
+                  "createdAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "view": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "darkLogo": {
+                        "anyOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "assetId": {
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                "type": "string"
+                              },
+                              "height": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 1024,
+                                "type": "integer"
+                              },
+                              "url": {
+                                "format": "uri",
+                                "maxLength": 8192,
+                                "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                "type": "string",
+                                "x-runtime-invariants": [
+                                  "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                  "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                  "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                  "storage and CDN signing credentials are rejected"
+                                ]
+                              },
+                              "width": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 1024,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "assetId",
+                              "url",
+                              "width",
+                              "height"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "lightLogo": {
+                        "anyOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "assetId": {
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                "type": "string"
+                              },
+                              "height": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 1024,
+                                "type": "integer"
+                              },
+                              "url": {
+                                "format": "uri",
+                                "maxLength": 8192,
+                                "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                "type": "string",
+                                "x-runtime-invariants": [
+                                  "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                  "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                  "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                  "storage and CDN signing credentials are rejected"
+                                ]
+                              },
+                              "width": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 1024,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "assetId",
+                              "url",
+                              "width",
+                              "height"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "lightLogo",
+                      "darkLogo"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "revisionId",
+                  "brand",
+                  "view",
+                  "createdAt"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "published": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action": {
+                    "enum": [
+                      "PUBLISH",
+                      "RESTORE"
+                    ],
+                    "type": "string"
+                  },
+                  "brand": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "darkLogoAssetId": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "lightLogoAssetId": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "lightLogoAssetId",
+                      "darkLogoAssetId"
+                    ],
+                    "type": "object"
+                  },
+                  "publicationId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "publishedAt": {
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+                    "type": "string"
+                  },
+                  "restoredFromPublicationId": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "revisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "version": {
+                    "maximum": 9007199254740991,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "view": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "darkLogo": {
+                        "anyOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "assetId": {
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                "type": "string"
+                              },
+                              "height": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 1024,
+                                "type": "integer"
+                              },
+                              "url": {
+                                "format": "uri",
+                                "maxLength": 8192,
+                                "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                "type": "string",
+                                "x-runtime-invariants": [
+                                  "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                  "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                  "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                  "storage and CDN signing credentials are rejected"
+                                ]
+                              },
+                              "width": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 1024,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "assetId",
+                              "url",
+                              "width",
+                              "height"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "lightLogo": {
+                        "anyOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "assetId": {
+                                "format": "uuid",
+                                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                                "type": "string"
+                              },
+                              "height": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 1024,
+                                "type": "integer"
+                              },
+                              "url": {
+                                "format": "uri",
+                                "maxLength": 8192,
+                                "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                                "type": "string",
+                                "x-runtime-invariants": [
+                                  "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                                  "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                                  "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                                  "storage and CDN signing credentials are rejected"
+                                ]
+                              },
+                              "width": {
+                                "exclusiveMinimum": 0,
+                                "maximum": 1024,
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "assetId",
+                              "url",
+                              "width",
+                              "height"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "lightLogo",
+                      "darkLogo"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "publicationId",
+                  "revisionId",
+                  "version",
+                  "brand",
+                  "view",
+                  "publishedAt",
+                  "action",
+                  "restoredFromPublicationId"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          },
+          "version": {
+            "maximum": 9007199254740991,
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "version",
+          "draft",
+          "published"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "admin-http"
+      },
+      "StorefrontBrandView": {
+        "additionalProperties": false,
+        "properties": {
+          "darkLogo": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "assetId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "height": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 1024,
+                    "type": "integer"
+                  },
+                  "url": {
+                    "format": "uri",
+                    "maxLength": 8192,
+                    "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                    "type": "string",
+                    "x-runtime-invariants": [
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                      "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                      "storage and CDN signing credentials are rejected"
+                    ]
+                  },
+                  "width": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 1024,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "assetId",
+                  "url",
+                  "width",
+                  "height"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lightLogo": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "assetId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "height": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 1024,
+                    "type": "integer"
+                  },
+                  "url": {
+                    "format": "uri",
+                    "maxLength": 8192,
+                    "pattern": "^https:\\/\\/(?![^/?#]*@)",
+                    "type": "string",
+                    "x-runtime-invariants": [
+                      "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+                      "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+                      "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+                      "storage and CDN signing credentials are rejected"
+                    ]
+                  },
+                  "width": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 1024,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "assetId",
+                  "url",
+                  "width",
+                  "height"
+                ],
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "schemaVersion": {
+            "const": 1,
+            "type": "number"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "lightLogo",
+          "darkLogo"
+        ],
+        "type": "object",
+        "x-fan-support-audience": "public-http"
+      },
       "StorefrontContextReadCommand": {
         "additionalProperties": false,
         "properties": {
@@ -165378,6 +167266,46 @@
             "type": "object"
           }
         ],
+        "x-fan-support-audience": "public-http"
+      },
+      "StorefrontLogoView": {
+        "additionalProperties": false,
+        "properties": {
+          "assetId": {
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "type": "string"
+          },
+          "height": {
+            "exclusiveMinimum": 0,
+            "maximum": 1024,
+            "type": "integer"
+          },
+          "url": {
+            "format": "uri",
+            "maxLength": 8192,
+            "pattern": "^https:\\/\\/(?![^/?#]*@)",
+            "type": "string",
+            "x-runtime-invariants": [
+              "userinfo, fragments, private, loopback, and link-local IP literals are rejected",
+              "localhost is rejected except for the fixed https://localhost:7444 Docker preview origin",
+              "query parameters are limited to unique width (1..4096) and format (avif, webp, or jpeg) values",
+              "storage and CDN signing credentials are rejected"
+            ]
+          },
+          "width": {
+            "exclusiveMinimum": 0,
+            "maximum": 1024,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "assetId",
+          "url",
+          "width",
+          "height"
+        ],
+        "type": "object",
         "x-fan-support-audience": "public-http"
       },
       "StorefrontNavigation": {
@@ -227970,6 +229898,1290 @@
         "x-fan-support-rbac": "authenticated-session"
       }
     },
+    "/api/v1/admin/storefront-brand/draft": {
+      "post": {
+        "description": "Exact Origin, CSRF and current MFA session required. Brand is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
+        "operationId": "storefrontBrandDraft",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "brand": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "darkLogoAssetId": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "lightLogoAssetId": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "schemaVersion": {
+                        "const": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "lightLogoAssetId",
+                      "darkLogoAssetId"
+                    ],
+                    "type": "object"
+                  },
+                  "expectedVersion": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "brand"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 8192
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "save draft storefront brand",
+        "x-fan-support-rbac": "content.edit"
+      }
+    },
+    "/api/v1/admin/storefront-brand/history": {
+      "post": {
+        "description": "Exact Origin, CSRF and current MFA session required. Brand is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
+        "operationId": "storefrontBrandHistory",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "page": {
+                    "maximum": 100000,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "pageSize": {
+                    "maximum": 20,
+                    "minimum": 1,
+                    "type": "integer"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "page",
+                  "pageSize"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 8192
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "history storefront brand",
+        "x-fan-support-rbac": "content.read"
+      }
+    },
+    "/api/v1/admin/storefront-brand/prepare": {
+      "post": {
+        "description": "Exact Origin, CSRF and current MFA session required. Brand is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
+        "operationId": "storefrontBrandPrepare",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  },
+                  "uploadId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "uploadId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 8192
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "prepare logo storefront brand",
+        "x-fan-support-rbac": "content.edit,content.media.upload,content.media.rights"
+      }
+    },
+    "/api/v1/admin/storefront-brand/publish": {
+      "post": {
+        "description": "Exact Origin, CSRF and current MFA session required. Brand is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
+        "operationId": "storefrontBrandPublish",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "draftRevisionId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "expectedVersion": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "draftRevisionId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 8192
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "publish storefront brand",
+        "x-fan-support-rbac": "content.publish"
+      }
+    },
+    "/api/v1/admin/storefront-brand/read": {
+      "post": {
+        "description": "Exact Origin, CSRF and current MFA session required. Brand is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
+        "operationId": "storefrontBrandRead",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 8192
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "read storefront brand",
+        "x-fan-support-rbac": "content.read"
+      }
+    },
+    "/api/v1/admin/storefront-brand/restore": {
+      "post": {
+        "description": "Exact Origin, CSRF and current MFA session required. Brand is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
+        "operationId": "storefrontBrandRestore",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Origin",
+            "required": true,
+            "schema": {
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "maxLength": 256,
+              "minLength": 16,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": false,
+                "properties": {
+                  "expectedVersion": {
+                    "maximum": 9007199254740991,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "publicationId": {
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+                    "type": "string"
+                  },
+                  "schemaVersion": {
+                    "const": 1,
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "expectedVersion",
+                  "publicationId"
+                ],
+                "type": "object"
+              }
+            }
+          },
+          "required": true,
+          "x-fan-support-max-body-bytes": 8192
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "private, no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AdminCsrf": [],
+            "AdminSession": []
+          }
+        ],
+        "summary": "restore storefront brand",
+        "x-fan-support-rbac": "content.publish"
+      }
+    },
     "/api/v1/admin/storefront-navigation/draft": {
       "post": {
         "description": "Exact Origin, CSRF and current MFA session required. Navigation is non-linguistic metadata and requires the action permission without translation grants. Replays return the original committed state; read again for the latest state. Publications and restores are immutable audited events in the same PostgreSQL transaction. Content, media and commerce revisions are unaffected.",
@@ -243734,6 +246946,69 @@
         },
         "security": [],
         "summary": "Read one published information page"
+      }
+    },
+    "/api/v1/storefront/storefront-brand": {
+      "get": {
+        "operationId": "readPublicStorefrontBrand",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicStorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicStorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicStorefrontBrandResponse"
+                }
+              }
+            },
+            "description": "Versioned brand result. No unpublished content or commerce state is included.",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "const": "no-store",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [],
+        "summary": "Read the current published storefront brand"
       }
     },
     "/api/v1/storefront/storefront-navigation": {

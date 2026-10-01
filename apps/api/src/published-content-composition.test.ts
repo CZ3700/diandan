@@ -3,6 +3,7 @@ import { createPublishedContentComposition } from "./published-content-compositi
 import {
   createDefaultHomeLayout,
   createDefaultStorefrontTheme,
+  createDefaultStorefrontBrandView,
   createDefaultStorefrontNavigation,
 } from "@fan-support/contracts";
 const environment = Object.freeze({
@@ -50,6 +51,15 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     version: 0,
     publicationId: null,
   }));
+  const readBrand = vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "STOREFRONT_BRAND",
+    source: "DEFAULT",
+    brand: createDefaultStorefrontBrandView(),
+    version: 0,
+    publicationId: null,
+  }));
   const readNavigation = vi.fn(async () => ({
     schemaVersion: 1,
     outcome: "SUCCESS",
@@ -86,6 +96,11 @@ test("binds production public reads to configured PostgreSQL and trusted media o
       runInHomeLayoutTransaction: async (
         work: (repositories: unknown) => unknown,
       ) => work({ homeLayout: { readPublished: readLayout } }),
+    },
+    storefrontBrandTransactionManager: {
+      runInStorefrontBrandTransaction: async (
+        work: (repositories: unknown) => unknown,
+      ) => work({ storefrontBrand: { readPublished: readBrand } }),
     },
     storefrontThemeTransactionManager: {
       runInStorefrontThemeTransaction: async (
@@ -138,6 +153,7 @@ test("binds production public reads to configured PostgreSQL and trusted media o
   expect(Object.keys(composition).sort()).toEqual([
     "publicHomeLayoutRoute",
     "publicInformationPagesRoute",
+    "publicStorefrontBrandRoute",
     "publicStorefrontNavigationRoute",
     "publicStorefrontThemeRoute",
     "publishedContentRoute",
@@ -183,6 +199,14 @@ test("binds production public reads to configured PostgreSQL and trusted media o
     publicationId: null,
   });
   expect(readTheme).toHaveBeenCalledOnce();
+  await expect(
+    composition.publicStorefrontBrandRoute.useCases.execute(),
+  ).resolves.toMatchObject({
+    kind: "STOREFRONT_BRAND",
+    source: "DEFAULT",
+    brand: createDefaultStorefrontBrandView(),
+  });
+  expect(readBrand).toHaveBeenCalledOnce();
   await expect(
     composition.publicStorefrontNavigationRoute.useCases.execute(),
   ).resolves.toMatchObject({
