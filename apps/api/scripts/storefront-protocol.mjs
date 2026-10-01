@@ -348,12 +348,26 @@ export async function verifyStorefrontProtocol({
       (await home()).outcome === "SUCCESS",
       "normally republishing the featured selection restores a healthy homepage before the independent hero-archive check",
     );
+    // ADR-012 addendum (be411377): deleting the hero artist archives it, and the
+    // homepage keeps its poster without the artist; any other hero failure still
+    // fails the homepage closed.
     await status(fixtures.artists[0], "archived");
-    const missingHero = await home("en", 503);
+    const missingHero = await home();
     check(
-      missingHero.outcome === "FAILURE" &&
-        missingHero.code === "CONTENT_UNAVAILABLE",
-      "archived required hero fails the full homepage closed",
+      missingHero.outcome === "SUCCESS" &&
+        missingHero.slots.find((slot) => slot.kind === "HERO_IDOL")?.status ===
+          "UNAVAILABLE" &&
+        missingHero.slots
+          .filter(
+            (slot) =>
+              slot.kind !== "HERO_IDOL" &&
+              !(
+                slot.kind === "FEATURED_IDOL" &&
+                slot.idolId === fixtures.artists[0].id
+              ),
+          )
+          .every((slot) => slot.status === "AVAILABLE"),
+      "a deleted (archived) hero artist keeps the homepage poster without its artist",
     );
     cases.push({
       name: "actual-current-head-handle-paused-featured-archive-hero-archive",
