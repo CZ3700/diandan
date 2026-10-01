@@ -32,6 +32,9 @@ type DetailProps = {
   onReload: () => void;
   financeApi?: FinanceApi | undefined;
   onFinanceBusy?: ((busy: boolean) => void) | undefined;
+  /** The person just acted in payments and refunds; keep that section open. */
+  financeOpen?: boolean | undefined;
+  onFinanceUpdated?: (() => void) | undefined;
 };
 function usePrivatePanel() {
   const [opened, setOpened] = useState(false);
@@ -456,12 +459,13 @@ export function OrdersDetailView(props: DetailProps) {
       {props.financeApi && props.onFinanceBusy ? (
         <FinancePanel
           collapsible
+          initiallyOpen={props.financeOpen === true}
           api={props.financeApi}
           orderId={detail.orderId}
           actorId={context.actorId}
           locale={locale}
           onBusy={props.onFinanceBusy}
-          onUpdated={props.onReload}
+          onUpdated={props.onFinanceUpdated ?? props.onReload}
           itemTitles={Object.fromEntries(
             detail.items.map((line) => {
               const snapshot = detail.order.items.find(

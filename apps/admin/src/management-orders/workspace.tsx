@@ -62,6 +62,8 @@ export function OrdersWorkspace({
   const [loading, setLoading] = useState(true),
     [busy, setBusy] = useState(false),
     [refresh, setRefresh] = useState(0);
+  // The order whose payments section the person just used; it reopens after the reload.
+  const [financeActed, setFinanceActed] = useState<string | null>(null);
   const [error, setError] = useState<unknown>(null),
     [success, setSuccess] = useState<"SAVED" | "QUEUED" | null>(null);
   const active = useRef(false),
@@ -261,6 +263,11 @@ export function OrdersWorkspace({
             onReload={() => setRefresh((value) => value + 1)}
             financeApi={financeApi}
             onFinanceBusy={financeBusy}
+            financeOpen={financeActed === detail.orderId}
+            onFinanceUpdated={() => {
+              setFinanceActed(detail.orderId);
+              setRefresh((value) => value + 1);
+            }}
           />
         ) : null
       ) : financeView && financeApi ? (

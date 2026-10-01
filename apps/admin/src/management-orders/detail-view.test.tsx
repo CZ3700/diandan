@@ -181,3 +181,26 @@ test("delivery comes first and payments and refunds wait behind one control at t
     /class="mo-line-status mo-status" data-tone="[a-z]+" data-status-kind="fulfillment"/u,
   );
 });
+
+// A refund or provider check reloads the whole order; the section the person just used
+// must not fold away behind them.
+test("payments and refunds stay open after the person acted there", async () => {
+  const { financeFixture } =
+    await import("../management-finance/fixtures.test-support");
+  const html = renderToStaticMarkup(
+    <views.OrdersDetailView
+      locale="en"
+      detail={detailFixture()}
+      context={context}
+      api={{} as OrdersApi}
+      financeApi={{ detail: async () => financeFixture() } as never}
+      onFinanceBusy={() => {}}
+      financeOpen
+      busy={false}
+      onMutation={async () => true}
+      onReload={() => {}}
+    />,
+  );
+  expect(html).toMatch(/data-finance-toggle[^>]*aria-expanded="true"/u);
+  expect(html).toContain("data-finance-refresh");
+});

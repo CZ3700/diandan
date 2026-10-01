@@ -21,9 +21,12 @@ export function FinancePanel({
   onUpdated,
   itemTitles,
   collapsible = false,
+  initiallyOpen = false,
 }: {
   /** Folded behind its title until opened, or until something here needs a person. */
   collapsible?: boolean;
+  /** Starts open, e.g. when the order reloads right after an action taken here. */
+  initiallyOpen?: boolean;
   api: FinanceApi;
   orderId: string;
   actorId: string;
@@ -41,7 +44,7 @@ export function FinancePanel({
     [recorded, setRecorded] = useState(false);
   const [pending, setPending] = useState<PendingFinanceRequest | null>(null);
   const [storageReady, setStorageReady] = useState(false);
-  const [open, setOpen] = useState(!collapsible),
+  const [open, setOpen] = useState(!collapsible || initiallyOpen),
     [attended, setAttended] = useState(false);
   // Opens by itself once when attention is needed; the person may fold it again.
   if (
