@@ -142,6 +142,7 @@ export function OrderSupportCertificate({
   return (
     <section
       ref={root}
+      role="group"
       className="order-certificate"
       aria-labelledby={titleId}
       data-support-certificate

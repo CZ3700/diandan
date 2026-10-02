@@ -87,6 +87,13 @@ async function run(database, s3, ui, postgresEnvironment) {
           manager: undefined,
           assertions: assertions - setupAssertions,
         });
+        const { verifySupportCertificateFinance } =
+          await import("./support-certificate-finance-fixture.mjs");
+        const certificates = await verifySupportCertificateFinance(context, {
+          payment,
+          runtime,
+        });
+        await save("certificate-finance.json", certificates);
         let browser;
         if (ui) {
           progress("seven-language management browser");

@@ -249,15 +249,134 @@ async function verify(context, s3) {
       accessSession: grant.session,
     };
   }
-  async function freshWish(name, preference) {
+  async function freshWish(name, preference, { keepBuyer = false } = {}) {
     const gift = await publishWishFixture(context, { s3, workspaceRoot, name });
     const session = await payment.checkout.initialize();
     await add(session, gift, preference);
+    let competingBuyer;
+    if (keepBuyer) {
+      const waiting = await payment.checkout.initialize();
+      await payment.checkout.add(waiting, { gift });
+      competingBuyer = {
+        session: waiting,
+        preflight: (await payment.checkout.validate(waiting)).data.preflight,
+      };
+    }
     const preflight = (await payment.checkout.validate(session)).data.preflight;
     const checkout = (
       await payment.checkout.create(session, preflight, payment.canaries[2])
     ).data.checkout;
-    return { gift, ...(await paid(await attempt(session, checkout))) };
+    return {
+      gift,
+      competingBuyer,
+      ...(await paid(await attempt(session, checkout))),
+    };
+  }
+  async function wishPurchaseSnapshot(gift) {
+    return (
+      await client.query(
+        `WITH stock AS (SELECT id FROM inventory_items WHERE gift_variant_id=$2),
+          supports AS (SELECT * FROM wish_supports WHERE wish_id=$1),
+          balances AS (SELECT b.* FROM inventory_balances b JOIN stock s ON s.id=b.inventory_item_id),
+          reservations AS (SELECT * FROM inventory_reservations WHERE gift_variant_id=$2),
+          ledger AS (SELECT l.* FROM inventory_ledger l JOIN stock s ON s.id=l.inventory_item_id)
+         SELECT
+          (SELECT count(*)::int FROM supports) supports,
+          (SELECT count(*)::int FROM balances) balances,
+          (SELECT coalesce(sum(on_hand),0)::int FROM balances) on_hand,
+          (SELECT coalesce(sum(reserved),0)::int FROM balances) reserved,
+          (SELECT count(*)::int FROM reservations WHERE status='COMMITTED') committed,
+          (SELECT count(*)::int FROM ledger) ledger_entries,
+          (SELECT md5(coalesce(jsonb_agg(to_jsonb(s) ORDER BY s.wish_id)::text,'[]')) FROM supports s) support_hash,
+          (SELECT md5(coalesce(jsonb_agg(to_jsonb(b) ORDER BY b.inventory_item_id,b.location_id)::text,'[]')) FROM balances b) balance_hash,
+          (SELECT md5(coalesce(jsonb_agg(to_jsonb(r) ORDER BY r.id)::text,'[]')) FROM reservations r) reservation_hash,
+          (SELECT md5(coalesce(jsonb_agg(to_jsonb(l) ORDER BY l.id)::text,'[]')) FROM ledger l) ledger_hash,
+          (SELECT md5(coalesce(jsonb_agg(to_jsonb(p) ORDER BY p.order_item_id)::text,'[]')) FROM wish_purchase_links p WHERE p.wish_id=$1) purchase_hash,
+          (SELECT md5(coalesce(jsonb_agg(to_jsonb(i) ORDER BY i.id)::text,'[]')) FROM order_items i WHERE i.gift_variant_id=$2) order_item_hash`,
+        [gift.wish_id, gift.gift_variant_id],
+      )
+    ).rows[0];
+  }
+  async function verifyConsumedWish(value, buyer, baseline, reason) {
+    progress(`${reason} wish stays supported and cannot be purchased again`);
+    check(
+      baseline.supports === 1 &&
+        baseline.balances === 1 &&
+        baseline.on_hand === 0 &&
+        baseline.reserved === 0 &&
+        baseline.committed === 1 &&
+        baseline.ledger_entries > 0,
+      `${reason} baseline contains actual consumed stock and support history`,
+    );
+    check(
+      JSON.stringify(await wishPurchaseSnapshot(value.gift)) ===
+        JSON.stringify(baseline),
+      `${reason} keeps support, inventory, ledger and original order lines unchanged`,
+    );
+    const query = new globalThis.URLSearchParams({
+      locale: "en",
+      ...context.fixtures.markets[0],
+      idol: value.gift.idol_id,
+    });
+    const response = await globalThis.fetch(
+      `${context.base}/api/v1/storefront-gifts/${value.gift.handle}?${query}`,
+      { signal: globalThis.AbortSignal.timeout(30_000) },
+    );
+    const detail = storefrontGiftResponseSchema.parse(await response.json());
+    check(
+      response.status === 200 &&
+        detail.outcome === "SUCCESS" &&
+        detail.content.view.wish?.status === "SUPPORTED" &&
+        detail.offers.length === 1 &&
+        detail.offers[0].availability === "UNAVAILABLE",
+      `${reason} public gift still shows SUPPORTED and no purchasable offer`,
+    );
+    const fresh = await payment.checkout.initialize();
+    await payment.checkout.request(`${reason}_ADD`, "/api/v1/cart/items", {
+      target: context.base,
+      cart: true,
+      session: fresh,
+      key: randomUUID(),
+      expected: 409,
+      code: "RECIPIENT_INELIGIBLE",
+      body: {
+        schemaVersion: 1,
+        presentationLocale: fresh.cart.presentationLocale,
+        market: fresh.cart.market,
+        currency: fresh.cart.currency,
+        idolId: value.gift.idol_id,
+        giftId: value.gift.id,
+        giftVariantId: value.gift.gift_variant_id,
+        observedPriceId: buyer.session.cart.items[0].price.observedPriceId,
+        quantity: 1,
+        displayMode: "anonymous",
+        fanMessageLocale: "en",
+      },
+    });
+    const reread = await payment.checkout.request(
+      `${reason}_EMPTY_CART`,
+      "/api/v1/cart?presentationLocale=en",
+      { target: context.base, method: "GET", session: fresh, cart: true },
+    );
+    check(
+      reread.data.cart.items.length === 0,
+      `${reason} rejected add leaves the new buyer's cart empty`,
+    );
+    await payment.checkout.validate(buyer.session, {
+      expected: 409,
+      code: "RECIPIENT_INELIGIBLE",
+    });
+    await payment.checkout.create(
+      buyer.session,
+      buyer.preflight,
+      payment.canaries[2],
+      { expected: 409, code: "RECIPIENT_INELIGIBLE" },
+    );
+    check(
+      JSON.stringify(await wishPurchaseSnapshot(value.gift)) ===
+        JSON.stringify(baseline),
+      `${reason} rejected cart and checkout attempts create no support, reservation, ledger or order line`,
+    );
   }
   progress("normal management publication and concurrent checkout");
   const gift = await publishWishFixture(context, {
@@ -511,6 +630,7 @@ async function verify(context, s3) {
       check,
     );
   }
+  const namedConsumption = await wishPurchaseSnapshot(named.gift);
   await refund(named, 600);
   check(
     (await gallery()).entries.some((entry) => entry.entryId === named.entryId),
@@ -521,9 +641,21 @@ async function verify(context, s3) {
     !(await gallery()).entries.some((entry) => entry.entryId === named.entryId),
     "cumulative full line refund hides public support without deleting history",
   );
-  const disputed = await freshWish("A wish in morning light", {
-      visibility: "PUBLIC_ANONYMOUS",
-    }),
+  await verifyConsumedWish(
+    named,
+    {
+      session: sessions[1 - winner],
+      preflight: quotes[1 - winner].data.preflight,
+    },
+    namedConsumption,
+    "FULL_REFUND",
+  );
+  const disputed = await freshWish(
+      "A wish in morning light",
+      { visibility: "PUBLIC_ANONYMOUS" },
+      { keepBuyer: true },
+    ),
+    disputedConsumption = await wishPurchaseSnapshot(disputed.gift),
     disputeId = randomUUID();
   for (const status of ["OPEN", "LOST"]) {
     await context.psp.settleDispute({
@@ -564,6 +696,12 @@ async function verify(context, s3) {
     (await client.query("SELECT count(*)::int count FROM wish_supports"))
       .rows[0].count === 4,
     "refund and lost dispute preserve every consumed wish",
+  );
+  await verifyConsumedWish(
+    disputed,
+    disputed.competingBuyer,
+    disputedConsumption,
+    "LOST_DISPUTE",
   );
   progress(
     "actual reservation expiry and late capture after a second buyer succeeds",
