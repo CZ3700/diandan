@@ -68,6 +68,7 @@ export function ManagementWorkspace({
   onExceptions,
   onDecoration,
   onInfoPages,
+  onPolicies,
   onStaff,
   onAccount,
   onLedger,
@@ -85,6 +86,7 @@ export function ManagementWorkspace({
   onPayments?: (() => void) | undefined;
   onExceptions?: (() => void) | undefined;
   onInfoPages?: (() => void) | undefined;
+  onPolicies?: (() => void) | undefined;
   onDecoration?: (() => void) | undefined;
   onStaff?: (() => void) | undefined;
   onAccount?: (() => void) | undefined;
@@ -369,6 +371,7 @@ export function ManagementWorkspace({
             "DECORATION",
             "EXCEPTIONS",
             "INFO_PAGES",
+            "POLICIES",
             "STAFF",
             "ACCOUNT",
             "LEDGER",
@@ -379,6 +382,7 @@ export function ManagementWorkspace({
         if (next === "ORDERS") onOrders?.();
         else if (next === "PAYMENTS") onPayments?.();
         else if (next === "INFO_PAGES") onInfoPages?.();
+        else if (next === "POLICIES") onPolicies?.();
         else if (next === "DECORATION") onDecoration?.();
         else if (next === "EXCEPTIONS") onExceptions?.();
         else if (next === "STAFF") onStaff?.();
@@ -391,6 +395,7 @@ export function ManagementWorkspace({
       paymentsAvailable={Boolean(onPayments)}
       exceptionsAvailable={Boolean(onExceptions)}
       infoPagesAvailable={Boolean(onInfoPages)}
+      policiesAvailable={Boolean(onPolicies)}
       decorationAvailable={Boolean(onDecoration)}
       staffAvailable={Boolean(onStaff)}
       accountAvailable={Boolean(onAccount)}

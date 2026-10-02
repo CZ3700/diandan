@@ -1,9 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import type { SupportedLocale } from "@fan-support/contracts";
+import type {
+  AdminSessionPermission,
+  SupportedLocale,
+} from "@fan-support/contracts";
 import { Button } from "@fan-support/ui";
 import { InformationPagesWorkspace } from "../management-info-pages/workspace";
 import type { InformationPagesApi } from "../management-info-pages/api";
+import type { PoliciesApi } from "../management-policies/api";
+import { PoliciesWorkspace } from "../management-policies/workspace";
 import type { AccountApi, AccountView } from "../management-account/api";
 import { AccountSettings } from "../management-account/account-settings";
 import { accountCopy } from "../management-account/copy";
@@ -52,6 +57,8 @@ export function ManagementHub({
   layoutPermissions,
   infoPagesApi,
   infoPagesAccess,
+  policiesApi,
+  policiesAccess,
   accountApi,
   staffApi,
   locale,
@@ -72,6 +79,15 @@ export function ManagementHub({
   navigationApi?: StorefrontNavigationApi | undefined;
   displayOrderApi?: DisplayOrderApi | undefined;
   infoPagesApi?: InformationPagesApi | undefined;
+  policiesApi?: PoliciesApi | undefined;
+  policiesAccess?:
+    | {
+        allowed: boolean;
+        localeScopes: readonly SupportedLocale[];
+        permissions: readonly AdminSessionPermission[];
+        actorId: string;
+      }
+    | undefined;
   accountApi?: AccountApi | undefined;
   staffApi?: StaffApi | undefined;
   infoPagesAccess?:
@@ -94,6 +110,7 @@ export function ManagementHub({
       | "EXCEPTIONS"
       | "DECORATION"
       | "INFO_PAGES"
+      | "POLICIES"
       | "STAFF"
       | "ACCOUNT"
       | "LEDGER"
@@ -180,19 +197,16 @@ export function ManagementHub({
       canceled = true;
     };
   }, [api, ordersApi, paymentsApi, exceptionsApi, ledgerApi, attempt]);
-  const active =
-    section ??
-    (access?.contentAllowed
-      ? "ARTISTS"
-      : infoPagesAccess?.allowed && infoPagesApi
-        ? "INFO_PAGES"
-        : access?.payments
-          ? "PAYMENTS"
-          : access?.orders
-            ? "ORDERS"
-            : access?.ledger
-              ? "LEDGER"
-              : "EXCEPTIONS");
+  function defaultSection(): NonNullable<typeof section> {
+    if (access?.contentAllowed) return "ARTISTS";
+    if (infoPagesAccess?.allowed && infoPagesApi) return "INFO_PAGES";
+    if (policiesAccess?.allowed && policiesApi) return "POLICIES";
+    if (access?.payments) return "PAYMENTS";
+    if (access?.orders) return "ORDERS";
+    if (access?.ledger) return "LEDGER";
+    return "EXCEPTIONS";
+  }
+  const active = section ?? defaultSection();
   function canLeaveWorkspace() {
     return canLeaveDecoration(
       { busy, dirty: layoutDirty || paymentDirty || infoDirty },
@@ -217,6 +231,7 @@ export function ManagementHub({
       | "EXCEPTIONS"
       | "DECORATION"
       | "INFO_PAGES"
+      | "POLICIES"
       | "STAFF"
       | "ACCOUNT"
       | "LEDGER",
@@ -240,6 +255,7 @@ export function ManagementHub({
   const notice =
     active !== "DECORATION" &&
     active !== "INFO_PAGES" &&
+    active !== "POLICIES" &&
     active !== "STAFF" &&
     active !== "ACCOUNT" &&
     managementSectionUnavailable(access, active) ? (
@@ -254,6 +270,7 @@ export function ManagementHub({
     active !== "PAYMENTS" &&
     active !== "DECORATION" &&
     active !== "INFO_PAGES" &&
+    active !== "POLICIES" &&
     active !== "EXCEPTIONS" &&
     active !== "STAFF" &&
     active !== "ACCOUNT" &&
@@ -276,6 +293,11 @@ export function ManagementHub({
         onInfoPages={
           infoPagesAccess?.allowed && infoPagesApi
             ? () => chooseSection("INFO_PAGES")
+            : undefined
+        }
+        onPolicies={
+          policiesAccess?.allowed && policiesApi
+            ? () => chooseSection("POLICIES")
             : undefined
         }
         onDecoration={
@@ -307,11 +329,12 @@ export function ManagementHub({
       paymentsAvailable={Boolean(access?.payments)}
       exceptionsAvailable={Boolean(access?.exceptions)}
       infoPagesAvailable={Boolean(infoPagesAccess?.allowed && infoPagesApi)}
+      policiesAvailable={Boolean(policiesAccess?.allowed && policiesApi)}
       decorationAvailable={Boolean(layoutPermissions?.read && layoutApi)}
       staffAvailable={staffAvailable}
       accountAvailable={Boolean(account)}
       accountWarning={accountWarning}
-      beforeLeave={() => !busy}
+      beforeLeave={canLeaveWorkspace}
       disabled={busy || !access}
       onSection={chooseSection}
       accountAction={
@@ -339,6 +362,16 @@ export function ManagementHub({
           locale={locale}
           localeScopes={infoPagesAccess.localeScopes}
           storefrontOrigin={storefrontOrigin}
+          onBusy={setBusy}
+          onDirtyChange={setInfoDirty}
+        />
+      ) : active === "POLICIES" && policiesAccess?.allowed && policiesApi ? (
+        <PoliciesWorkspace
+          api={policiesApi}
+          locale={locale}
+          localeScopes={policiesAccess.localeScopes}
+          permissions={policiesAccess.permissions}
+          actorId={policiesAccess.actorId}
           onBusy={setBusy}
           onDirtyChange={setInfoDirty}
         />

@@ -14,6 +14,7 @@ import { decorationCopy } from "../management-decoration/copy";
 import { accountCopy } from "../management-account/copy";
 import { staffCopy } from "../management-staff/copy";
 import { ledgerCopy } from "../management-ledger/copy";
+import { policiesCopy } from "../management-policies/copy";
 
 export function ManagementShell({
   locale,
@@ -30,6 +31,7 @@ export function ManagementShell({
   exceptionsAvailable = false,
   decorationAvailable = false,
   infoPagesAvailable = false,
+  policiesAvailable = false,
   staffAvailable = false,
   accountAvailable = false,
   accountWarning,
@@ -44,6 +46,7 @@ export function ManagementShell({
     | "EXCEPTIONS"
     | "DECORATION"
     | "INFO_PAGES"
+    | "POLICIES"
     | "STAFF"
     | "ACCOUNT"
     | "LEDGER";
@@ -55,6 +58,7 @@ export function ManagementShell({
       | "EXCEPTIONS"
       | "DECORATION"
       | "INFO_PAGES"
+      | "POLICIES"
       | "STAFF"
       | "ACCOUNT"
       | "LEDGER",
@@ -72,6 +76,7 @@ export function ManagementShell({
   exceptionsAvailable?: boolean;
   decorationAvailable?: boolean;
   infoPagesAvailable?: boolean;
+  policiesAvailable?: boolean;
   /** ADR-021: staff accounts, for holders of staff.manage. */
   staffAvailable?: boolean;
   /** ADR-021: the signed-in built-in account's own settings. */
@@ -131,6 +136,17 @@ export function ManagementShell({
               onClick={() => onSection("INFO_PAGES")}
             >
               {informationCopy(locale).title}
+            </button>
+          )}
+          {policiesAvailable && (
+            <button
+              type="button"
+              data-management-section="POLICIES"
+              aria-current={section === "POLICIES" ? "page" : undefined}
+              disabled={disabled}
+              onClick={() => onSection("POLICIES")}
+            >
+              {policiesCopy(locale).title}
             </button>
           )}
           {decorationAvailable && (

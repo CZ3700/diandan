@@ -1,5 +1,16 @@
 # 当前上线进度
 
+## P-20261003 后台政策入口与七语言同步
+
+- BLOCKED_EXTERNAL（剩余浏览器验收/公开 TEST 部署）；源码及内容包完成。Codex root 导航集成/验证，catalog_integration_audit 工作区，research_gifts_a 翻译/门禁，research_gifts_b 翻译/独立复核；2026-10-03，最终基线 `63c959f0`。
+- 管理中心增加政策入口、登记/编辑/安全预览、七语包导入、逐语审核、整组预检发布与历史恢复；复用现有严格政策 API，保留独立审核、source hash 与订单快照，不改支付或业务数据库结构。
+- 先 RED 后 GREEN，最终定向 11 文件 44 测试通过；读取失败/语言切换/并发修订保稿、受限缺译文编辑、幂等重试、发布后读最新版本均覆盖。独立复核及代码收敛通过，S.U.P.E.R 1–9无违反。
+- 隔离 Node24.20.0 完整 `check:dev` 通过（类型69、测试69、构建38任务，零缓存）；设计基础57项、变更25份源码秘密扫描及主仓库/隔离SHA一致性通过。实际PG HTTP两组3,847/2,595断言通过。
+- 独立真实PG/API＋React后台浏览器已完成1440×900多语保稿、七语包保存、两身份审核、原子发布、历史读取及读失败保稿；已发布合成修订v4、最新草稿v5。非完整Next登录/BFF验收，缓存任务完成未验；Mac锁屏阻断剩余390×844/七语矩阵、恢复确认与回滚浏览器验证。
+- 四类政策共28份正式正文已通过合同/长度/HTML结构校验，包在 `output/policy-admin-20261003/kikikong-policy-drafts-seven-locales.json`；来源均MACHINE，未冒充人工批准，未写入公开TEST。
+- 文档记载的远程别名 `xiadan-app` 在本机不存在，直连服务器缺可信主机记录；未绕过SSH验证、部署或修改线上内容。等待Mac解锁及可用部署连接，未记DONE或完整LOCAL_ACCEPTED；保护同期已提交筛选/搜索和未提交审计记录。
+- 证据/续验：`output/policy-admin-20261003/FINAL.md`；操作手册：[政策内容管理](../runbooks/policy-content-management.md)。两端Next构建仅在独立副本完成，既有体验实例未变。
+
 ## 管理中心礼物筛选与艺人搜索（2026-10-02）
 
 - LOCAL_ACCEPTED（功能及本地验收）；2026-10-03。Codex/Mario root统筹/集成，handoff_core_review合同/查询，cart_rollback_review前端/七语，handoff_gate_plan独立复核；基线`0271a183`。保留同期政策/审计修改，只交付本项。
@@ -8,6 +19,15 @@
 - 原PG/TLS-S3/真实上传发布浏览器整链8,239检查通过（含共享准备及2,375浏览器断言）；七语390×844/1440×900、98截图、键盘/减少动态/失败恢复/编辑返回通过。后台86次axe零违规及未决，商城附带检查仍有9条对比度需人工判断记录；未扩大为商城无障碍修复。
 - 最终`check:dev`通过（类型69、测试69、构建38任务），合同产物新鲜度、设计57项、变更秘密扫描、独立复核/收敛与本项S.U.P.E.R通过。3,551份执行源与基线加本项快照一致，排除并行政策接线；浏览器后仅修测试类型，不改业务源。
 - 证据及复验入口：`output/admin-catalog-filters-20261002/FINAL.md`。前一基线CI `37003561136`七组已全绿；本项提交后的CI单独判断，PR #16仍草稿不合并。API与后台需共同更新；未部署stg/生产，未触碰原体验实例、资金或真实邮件。
+
+## P-20261002 政策英文文案与 TEST 发布核验
+
+- BLOCKED_EXTERNAL（发布）；英文正文完成。Codex root 统筹，catalog_integration_audit 核发布路径及独立复核，research_gifts_a 核业务/隐私，research_gifts_b 核官方法律资料；2026-10-02。
+- 用户确认先用 KIKIKONG/kikikong.com 与 support@kikikong.com，邮箱以后配置，资料后续人工补改；正文已移除草稿、占位和解释性备注，待补事实仅留独立交接清单。
+- 已核实际 TEST 四个页面仍为 2026-09-27 同段占位文；已登录后台仅有 About/FAQ/Support 编辑，尚无政策栏目。未保存远程草稿、未批准、未发布，不改源码、订单或勾选行为。
+- 四份正文准确区分支付/心愿名额/实物交付、逐行退款与展馆撤回；保留强制权利，无概括性免责或独占最终解释权。主体/经营地、可用联系、隐私操作事实与七语人工审批仍待补齐。
+- Node 24 实际 policyTranslationFieldsSchema 4/4 PASS；HTML/长度、无行内占位、统一邮箱及 git diff --check PASS。S.U.P.E.R 代码项不适用（无源码变更）；未以文案校验替代法律、翻译或上线验收。
+- 产物：`output/policies-20261002/all-policies.md`、四份 JSON/Markdown、`review.html`、`validation.json`、`README.md` 和官方依据 `legal-sources.md`。保留原审计记录；尚未更新线上政策。
 
 ## 完整 CI 收口与正式后台配置接线（2026-10-02）
 

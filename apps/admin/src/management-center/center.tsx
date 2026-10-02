@@ -22,6 +22,7 @@ import { createHomeLayoutApi } from "../management-decoration/api";
 import { createStorefrontNavigationApi } from "../management-decoration/navigation-api";
 import { createDisplayOrderApi } from "../management-decoration/display-order-api";
 import { createInformationPagesApi } from "../management-info-pages/api";
+import { createPoliciesApi } from "../management-policies/api";
 import { createAccountApi } from "../management-account/api";
 import { createStaffApi } from "../management-staff/api";
 import { createStorefrontBrandApi } from "../management-decoration/brand-api";
@@ -64,6 +65,7 @@ export function ManagementCenter({
     [client],
   );
   const brandApi = useMemo(() => createStorefrontBrandApi(client), [client]);
+  const policiesApi = useMemo(() => createPoliciesApi(client), [client]);
   const themeApi = useMemo(() => createStorefrontThemeApi(client), [client]);
   const accountApi = useMemo(() => createAccountApi(client), [client]);
   const staffApi = useMemo(() => createStaffApi(client), [client]);
@@ -142,6 +144,13 @@ export function ManagementCenter({
       navigationApi={navigationApi}
       displayOrderApi={displayOrderApi}
       infoPagesApi={infoPagesApi}
+      policiesApi={policiesApi}
+      policiesAccess={{
+        allowed: session.permissions.includes("content.read"),
+        localeScopes: session.localeScopes,
+        permissions: session.permissions,
+        actorId: session.actorId,
+      }}
       accountApi={localAccounts ? accountApi : undefined}
       staffApi={localAccounts ? staffApi : undefined}
       infoPagesAccess={{
