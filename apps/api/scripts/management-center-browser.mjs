@@ -61,6 +61,7 @@ const MANAGEMENT_SECTION_ORDER = [
   "GIFTS",
   "POSTERS",
   "INFO_PAGES",
+  "POLICIES",
   "DECORATION",
   "ORDERS",
   "LEDGER",
@@ -123,6 +124,7 @@ export function expectedManagementSections({ content, artistsOnly, granted }) {
   }
   if (has("content-read")) {
     visible.add("INFO_PAGES");
+    visible.add("POLICIES");
     visible.add("DECORATION");
   }
   if (has("orders-context")) visible.add("ORDERS");

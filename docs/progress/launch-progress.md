@@ -2,14 +2,15 @@
 
 ## P-20261003 后台政策入口与七语言同步
 
-- BLOCKED_EXTERNAL（剩余浏览器验收/公开 TEST 部署）；源码及内容包完成。Codex root 导航集成/验证，catalog_integration_audit 工作区，research_gifts_a 翻译/门禁，research_gifts_b 翻译/独立复核；2026-10-03，最终基线 `63c959f0`。
+- BLOCKED_EXTERNAL（减少动效浏览器仿真/公开 TEST 部署）；源码与28份内容包完成，2026-10-03。root导航/浏览器，catalog_integration_audit工作区/CI，research_gifts_a翻译/PG，research_gifts_b独立复核；实现 `e876c25c`。
 - 管理中心增加政策入口、登记/编辑/安全预览、七语包导入、逐语审核、整组预检发布与历史恢复；复用现有严格政策 API，保留独立审核、source hash 与订单快照，不改支付或业务数据库结构。
 - 先 RED 后 GREEN，最终定向 11 文件 44 测试通过；读取失败/语言切换/并发修订保稿、受限缺译文编辑、幂等重试、发布后读最新版本均覆盖。独立复核及代码收敛通过，S.U.P.E.R 1–9无违反。
 - 隔离 Node24.20.0 完整 `check:dev` 通过（类型69、测试69、构建38任务，零缓存）；设计基础57项、变更25份源码秘密扫描及主仓库/隔离SHA一致性通过。实际PG HTTP两组3,847/2,595断言通过。
-- 独立真实PG/API＋React后台浏览器已完成1440×900多语保稿、七语包保存、两身份审核、原子发布、历史读取及读失败保稿；已发布合成修订v4、最新草稿v5。非完整Next登录/BFF验收，缓存任务完成未验；Mac锁屏阻断剩余390×844/七语矩阵、恢复确认与回滚浏览器验证。
+- 独立真实PG/API＋React后台完成七语390×844/1440×900共14组、42张原尺寸截图且无横溢；键盘/焦点/正文换行、非法HTML拒绝、取消丢稿、发布后刷新与历史回滚通过。新夹具最终3修订/4发布，V3当前；非完整Next登录/BFF，7项缓存任务仍PENDING，真实减少动效仿真未设成，不能记通过。
 - 四类政策共28份正式正文已通过合同/长度/HTML结构校验，包在 `output/policy-admin-20261003/kikikong-policy-drafts-seven-locales.json`；来源均MACHINE，未冒充人工批准，未写入公开TEST。
-- 文档记载的远程别名 `xiadan-app` 在本机不存在，直连服务器缺可信主机记录；未绕过SSH验证、部署或修改线上内容。等待Mac解锁及可用部署连接，未记DONE或完整LOCAL_ACCEPTED；保护同期已提交筛选/搜索和未提交审计记录。
-- 证据/续验：`output/policy-admin-20261003/FINAL.md`；操作手册：[政策内容管理](../runbooks/policy-content-management.md)。两端Next构建仅在独立副本完成，既有体验实例未变。
+- 云CI `37045406906`失败：本项相关catalog旧菜单模型遗漏POLICIES已按content.read补齐，RED2→GREEN10/10，独立复核及ESLint/Prettier通过，精确比较未放宽；quality预加载告警和journey上传409来自本提交未修改路径，未扩改或宣称修复。
+- 远程别名 `xiadan-app` 本机不可用，直连缺可信主机记录；未绕过SSH、部署或修改线上内容。临时验收页已关闭、尺寸恢复，夹具停止；保留同期审计改动，不记DONE或完整LOCAL_ACCEPTED。
+- 证据：`output/policy-admin-20261003/FINAL.md`、`browser-acceptance/REPORT.md`、`ci-37045406906/analysis.md`；手册：[政策内容管理](../runbooks/policy-content-management.md)。完整门禁后的改动仅CI测试辅助/记录，未重复Next构建，既有体验实例未变。
 
 ## 管理中心礼物筛选与艺人搜索（2026-10-02）
 
