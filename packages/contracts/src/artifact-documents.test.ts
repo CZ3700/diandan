@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 
-import { expect, test } from "vitest";
+import { beforeAll, expect, test } from "vitest";
 import { z } from "zod";
 
 import { paymentWebhookEndpointIdSchema } from "./identifiers.js";
@@ -8,6 +8,14 @@ import * as artifacts from "./artifact-documents.js";
 import * as registry from "./artifact-registry.js";
 
 type JsonObject = Record<string, unknown>;
+
+let documents: ReturnType<typeof artifacts.createContractArtifactDocuments>;
+let firstRender: ReturnType<typeof artifacts.renderContractArtifactDocuments>;
+
+beforeAll(() => {
+  documents = artifacts.createContractArtifactDocuments();
+  firstRender = artifacts.renderContractArtifactDocuments();
+});
 
 /** Payment operations expose account identities only to authorized configuration staff. */
 function withoutPaymentConfiguration(document: JsonObject): JsonObject {
@@ -61,15 +69,11 @@ function isStrictVersionedRoot(schema: JsonObject): boolean {
   );
 }
 
-test("renders deterministic JSON Schema and OpenAPI documents from one registry", async () => {
+test("describes JSON Schema and OpenAPI documents from one registry", () => {
   expect(artifacts, "artifact renderer module must exist").toBeDefined();
   expect(artifacts?.createContractArtifactDocuments).toBeTypeOf("function");
   expect(artifacts?.renderContractArtifactDocuments).toBeTypeOf("function");
 
-  const documents = artifacts?.createContractArtifactDocuments() as Readonly<{
-    jsonSchema: JsonObject;
-    openapi: JsonObject;
-  }>;
   const jsonDefinitions = documents.jsonSchema["$defs"] as JsonObject;
   const openapiComponents = (documents.openapi["components"] as JsonObject)[
     "schemas"
@@ -274,18 +278,17 @@ test("renders deterministic JSON Schema and OpenAPI documents from one registry"
     expect(urlSchema["format"]).toBe("uri");
     expect(urlSchema["pattern"]).toBe("^https:\\/\\/(?![^/?#]*@)");
   }
+});
 
-  const firstRender = artifacts?.renderContractArtifactDocuments();
-  const secondRender = artifacts?.renderContractArtifactDocuments();
+test("renders deterministic JSON Schema and OpenAPI documents", () => {
+  const secondRender = artifacts.renderContractArtifactDocuments();
   expect(firstRender).toEqual(secondRender);
   expect(firstRender?.jsonSchema.endsWith("\n")).toBe(true);
   expect(firstRender?.openapi.endsWith("\n")).toBe(true);
 });
 
-test("documents the exact raw payment webhook HTTP boundary", async () => {
-  const { createContractArtifactDocuments } =
-    await import("./artifact-documents.js");
-  const { openapi } = createContractArtifactDocuments();
+test("documents the exact raw payment webhook HTTP boundary", () => {
+  const { openapi } = documents;
   const components = openapi["components"] as JsonObject;
   const schemas = components["schemas"] as JsonObject;
   const securitySchemes = components["securitySchemes"] as JsonObject;
@@ -618,15 +621,9 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
   }
 });
 
-test("marks every registered top-level contract with an explicit version policy", async () => {
-  const [{ createContractArtifactDocuments }, { contractArtifactRegistry }] =
-    await Promise.all([
-      import("./artifact-documents.js"),
-      import("./artifact-registry.js"),
-    ]);
-  const definitions = createContractArtifactDocuments().jsonSchema[
-    "$defs"
-  ] as JsonObject;
+test("marks every registered top-level contract with an explicit version policy", () => {
+  const { contractArtifactRegistry } = registry;
+  const definitions = documents.jsonSchema["$defs"] as JsonObject;
   const unversionedValueObjects = new Set([
     "StorefrontBrandRevision",
     "StorefrontBrandPublication",
@@ -690,8 +687,7 @@ test("marks every registered top-level contract with an explicit version policy"
 });
 
 test("keeps committed contract artifacts byte-for-byte fresh", async () => {
-  const artifacts = await import("./artifact-documents.js");
-  const rendered = artifacts.renderContractArtifactDocuments();
+  const rendered = firstRender;
   const [jsonSchema, openapi] = await Promise.all([
     readFile(
       new URL("../generated/contracts.schema.json", import.meta.url),
@@ -709,12 +705,8 @@ test("keeps committed contract artifacts byte-for-byte fresh", async () => {
   expect(openapi).toBe(rendered.openapi);
 });
 
-test("describes real public directory operations with explicit language and commerce context", async () => {
-  const { createContractArtifactDocuments } =
-    await import("./artifact-documents.js");
-  const paths = createContractArtifactDocuments().openapi[
-    "paths"
-  ] as JsonObject;
+test("describes real public directory operations with explicit language and commerce context", () => {
+  const paths = documents.openapi["paths"] as JsonObject;
   for (const [path, responseName] of [
     ["/api/v1/idols", "IdolDirectoryResponse"],
     ["/api/v1/gifts", "GiftDirectoryResponse"],
@@ -737,12 +729,8 @@ test("describes real public directory operations with explicit language and comm
   }
 });
 
-test("maps the public idol query parameter to the internal gift recipient field", async () => {
-  const { createContractArtifactDocuments } =
-    await import("./artifact-documents.js");
-  const paths = createContractArtifactDocuments().openapi[
-    "paths"
-  ] as JsonObject;
+test("maps the public idol query parameter to the internal gift recipient field", () => {
+  const paths = documents.openapi["paths"] as JsonObject;
   const get = (paths["/api/v1/gifts"] as JsonObject)["get"] as JsonObject;
   const names = (get["parameters"] as JsonObject[]).map((p) => p["name"]);
   expect(names).toContain("idol");
