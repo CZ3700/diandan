@@ -36,12 +36,17 @@ export async function reserveOwnedOrigin(service) {
   );
 }
 export function productionAdminEnvironment(input, inherited = process.env) {
+  const mode = input.mode === undefined ? "OIDC" : input.mode;
+  if (!["OIDC", "LOCAL_ACCOUNT"].includes(mode))
+    throw new Error("Unsupported formal fixture authentication mode");
   for (const [key, service] of [
     ["adminOrigin", "admin"],
     ["apiOrigin", "api"],
-    ["issuer", "oidc"],
   ])
     assertOwnedOrigin(input[key], service);
+  if (mode === "OIDC") assertOwnedOrigin(input.issuer, "oidc");
+  else if (input.issuer !== undefined)
+    throw new Error("Built-in account fixture must not configure OIDC");
   if (
     !/^[a-f0-9]{64}$/u.test(input.accessKey) ||
     !input.caPath?.startsWith("/")
@@ -65,9 +70,9 @@ export function productionAdminEnvironment(input, inherited = process.env) {
     FAN_SUPPORT_DEPLOYMENT_ENV: "staging",
     FAN_SUPPORT_SITE_ORIGIN: input.adminOrigin,
     FAN_SUPPORT_INTERNAL_API_ORIGIN: input.apiOrigin,
-    FAN_SUPPORT_ADMIN_MODE: "OIDC",
+    FAN_SUPPORT_ADMIN_MODE: mode,
     FAN_SUPPORT_ADMIN_ACCESS_KEY: input.accessKey,
-    FAN_SUPPORT_ADMIN_OIDC_ISSUER: input.issuer,
+    ...(mode === "OIDC" ? { FAN_SUPPORT_ADMIN_OIDC_ISSUER: input.issuer } : {}),
     NODE_EXTRA_CA_CERTS: input.caPath,
     NEXT_TELEMETRY_DISABLED: "1",
   };

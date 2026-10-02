@@ -1,5 +1,6 @@
 // L3-10 browser acceptance: real PostgreSQL, the production API composition with built-in accounts,
-// Admin Next in LOCAL_ACCOUNT development mode over local HTTPS, and Chrome.
+// Admin Next in LOCAL_ACCOUNT mode over local HTTPS, and Chrome. Formal mode validates
+// production Next configuration; the API admin composition still uses owned TEST resources.
 import assert from "node:assert/strict";
 import { randomBytes, randomUUID } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
@@ -29,6 +30,14 @@ import {
   reserveAdminAccessOrigin,
   startAdminAccessNext,
 } from "./admin-access-next.mjs";
+import {
+  reserveOwnedOrigin,
+  startOwnedTlsProxy,
+} from "./production-admin-oidc-fixture.mjs";
+import {
+  startProductionAdminNext,
+  verifyInvalidProductionAdminStart,
+} from "./production-admin-oidc-next.mjs";
 
 const requireFromRoot = createRequire(
   new URL("../../../package.json", import.meta.url),
@@ -63,11 +72,26 @@ export async function runLocalAccountBrowserAcceptance(
 ) {
   // --compiled: the already built admin with next start in the test tier (stg PREBUILT).
   const compiled = process.argv.includes("--compiled");
+  // --formal: production next start, staging config, and strictly trusted HTTPS to the API.
+  const formal = process.argv.includes("--formal");
+  if (formal && compiled)
+    throw new Error("Choose either the formal or compiled TEST profile");
+  let profileSuffix = "";
+  if (formal) profileSuffix = "-formal";
+  else if (compiled) profileSuffix = "-compiled";
+  const profile = formal
+    ? {
+        admin: "PRODUCTION_NEXT_STAGING_LOCAL_ACCOUNT",
+        api: "PRODUCTION_ADMIN_COMPOSITION_WITH_TEST_KMS",
+        database: "EPHEMERAL_POSTGRESQL",
+        transport: "OWNED_HTTPS_CA_AND_BROWSER_SPKI",
+      }
+    : undefined;
   const output = path.join(
     workspaceRoot,
     "output/checks",
     item,
-    `${name}${compiled ? "-compiled" : ""}-${new Date().toISOString().replaceAll(":", "-")}`,
+    `${name}${profileSuffix}-${new Date().toISOString().replaceAll(":", "-")}`,
   );
   await mkdir(output, { recursive: true });
   const checks = [];
@@ -76,13 +100,15 @@ export async function runLocalAccountBrowserAcceptance(
   const apiLogs = [];
   const nextLogs = [];
   const state = { stage: "initialization" };
+  let cleanupCompleted = false;
+  let startupChecks;
   let innerError;
   const check = (value, label) => {
     checks.push({ stage: state.stage, label, passed: Boolean(value) });
     assert.ok(value, `${state.stage}: ${label}`);
   };
   const secret = (value) => {
-    secrets.add(value);
+    if (typeof value === "string" && value.length) secrets.add(value);
     return value;
   };
   try {
@@ -116,7 +142,9 @@ export async function runLocalAccountBrowserAcceptance(
           macKey: randomBytes(32).toString("base64url"),
         });
         own(() => kms.close());
-        const adminOrigin = await reserveAdminAccessOrigin();
+        const adminOrigin = formal
+          ? await reserveOwnedOrigin("admin")
+          : await reserveAdminAccessOrigin();
         const { composition } = localAccountComposition({
           createProductionAdminComposition,
           resolveAdminApiRuntimeConfig,
@@ -138,8 +166,15 @@ export async function runLocalAccountBrowserAcceptance(
         });
         own(() => app.close());
         await app.listen(0, "127.0.0.1");
-        const apiOrigin = new URL(await app.getUrl()).origin;
-        const next = await startAdminAccessNext({
+        let apiOrigin = new URL(await app.getUrl()).origin;
+        let apiProxy;
+        if (formal) {
+          const origin = await reserveOwnedOrigin("api");
+          apiProxy = await startOwnedTlsProxy({ origin, target: apiOrigin });
+          own(() => apiProxy.stop());
+          apiOrigin = origin;
+        }
+        const nextInput = {
           workspaceRoot,
           adminOrigin,
           apiOrigin,
@@ -147,10 +182,22 @@ export async function runLocalAccountBrowserAcceptance(
           logs: nextLogs,
           mode: "LOCAL_ACCOUNT",
           compiled,
-        });
+          ...(formal ? { caPath: apiProxy.caPath } : {}),
+        };
+        if (formal) {
+          state.stage = "formal configuration failures";
+          startupChecks = await verifyInvalidProductionAdminStart(
+            nextInput,
+            check,
+          );
+        }
+        state.stage = "services";
+        const next = await (formal
+          ? startProductionAdminNext(nextInput)
+          : startAdminAccessNext(nextInput));
         own(() => next.stop());
         async function api(route, body, headers = {}) {
-          const response = await globalThis.fetch(
+          const response = await (apiProxy?.fetch ?? globalThis.fetch)(
             `${apiOrigin}/api/v1/admin/${route}`,
             {
               method: "POST",
@@ -162,7 +209,11 @@ export async function runLocalAccountBrowserAcceptance(
               body: JSON.stringify(body),
             },
           );
-          return { status: response.status, data: await response.json() };
+          const data = await response.json();
+          if (formal)
+            for (const key of ["sessionToken", "csrfToken", "challengeToken"])
+              secret(data[key]);
+          return { status: response.status, data };
         }
         const access = async (action, body) =>
           (
@@ -196,9 +247,13 @@ export async function runLocalAccountBrowserAcceptance(
           args: [
             `--host-resolver-rules=MAP ${new URL(adminOrigin).hostname} 127.0.0.1`,
             "--no-proxy-server",
+            ...(formal
+              ? [`--ignore-certificate-errors-spki-list=${next.pin}`]
+              : []),
           ],
         });
         const unexpected = [];
+        const captures = [];
         async function open(
           locale,
           viewport,
@@ -207,9 +262,32 @@ export async function runLocalAccountBrowserAcceptance(
           const context = await browser.newContext({
             viewport: VIEWPORTS[viewport],
             reducedMotion,
-            ignoreHTTPSErrors: true,
+            ignoreHTTPSErrors: !formal,
             acceptDownloads: true,
           });
+          if (formal)
+            context.on("response", (response) => {
+              const url = new URL(response.url());
+              if (
+                url.origin !== adminOrigin ||
+                ![
+                  "/api/admin/local-auth/login",
+                  "/api/admin/local-auth/step",
+                ].includes(url.pathname)
+              )
+                return;
+              captures.push(
+                response
+                  .allHeaders()
+                  .then((headers) => {
+                    for (const match of (headers["set-cookie"] ?? "").matchAll(
+                      /__Host-fan-admin-(?:local-login|session|csrf)=([^;\s,]+)/gu,
+                    ))
+                      secret(match[1]);
+                  })
+                  .catch(() => unexpected.push("COOKIE_OBSERVATION_FAILED")),
+              );
+            });
           if (session)
             await context.addCookies(
               [
@@ -227,7 +305,7 @@ export async function runLocalAccountBrowserAcceptance(
           await context.route("**/*", async (route) => {
             const target = new URL(route.request().url());
             if (target.origin !== adminOrigin) {
-              unexpected.push(target.origin);
+              unexpected.push(formal ? "NON_FIXTURE_ORIGIN" : target.origin);
               await route.abort("blockedbyclient");
             } else if (target.pathname.startsWith("/api/admin/auth/begin")) {
               unexpected.push("OIDC_BEGIN");
@@ -237,7 +315,9 @@ export async function runLocalAccountBrowserAcceptance(
           const page = await context.newPage();
           const errors = [];
           page.on("pageerror", (error) =>
-            errors.push(String(error.message).slice(0, 200)),
+            errors.push(
+              formal ? "PAGE_ERROR" : String(error.message).slice(0, 200),
+            ),
           );
           await page.goto(`${adminOrigin}/${locale}`, {
             waitUntil: "domcontentloaded",
@@ -272,6 +352,15 @@ export async function runLocalAccountBrowserAcceptance(
           page.screenshot({
             path: path.join(output, `${fileName}.png`),
             fullPage: true,
+            ...(formal
+              ? {
+                  mask: [
+                    page.locator(
+                      "input, .account-qr, [data-totp-key], .account-code-list, [data-temporary-password]",
+                    ),
+                  ],
+                }
+              : {}),
           });
         await scenario({
           check,
@@ -295,6 +384,7 @@ export async function runLocalAccountBrowserAcceptance(
           output,
         });
         state.stage = "evidence";
+        await Promise.all(captures);
         check(
           unexpected.length === 0,
           "no request left the fixture origin or reached OIDC",
@@ -306,15 +396,36 @@ export async function runLocalAccountBrowserAcceptance(
         innerError = error;
         throw error;
       } finally {
-        if (browser) await browser.close().catch(() => undefined);
+        let cleanupFailed = false;
+        if (browser)
+          await browser.close().catch(() => {
+            cleanupFailed = true;
+          });
         for (const stop of close)
           await Promise.resolve()
             .then(stop)
-            .catch(() => undefined);
+            .catch(() => {
+              cleanupFailed = true;
+            });
+        cleanupCompleted = !cleanupFailed;
       }
+      if (formal && !cleanupCompleted)
+        throw new Error("FORMAL_FIXTURE_CLEANUP_FAILED");
     });
+    if (formal) {
+      state.stage = "privacy after cleanup";
+      const logText = `${apiLogs.join("\n")}\n${nextLogs.join("\n")}`;
+      for (const value of secrets)
+        check(!logText.includes(value), "no secret in logs after cleanup");
+    }
     const report = JSON.stringify(
-      { result: "PASS", checks: checks.length, axe, detail: checks },
+      {
+        result: "PASS",
+        ...(formal ? { profile, cleanupCompleted, startupChecks } : {}),
+        checks: checks.length,
+        axe,
+        detail: checks,
+      },
       null,
       2,
     );
@@ -330,12 +441,45 @@ export async function runLocalAccountBrowserAcceptance(
     );
   } catch (error) {
     let message = String((innerError ?? error)?.message);
+    let diagnostic;
+    if (formal) {
+      message = "FORMAL_LOCAL_ACCOUNT_ACCEPTANCE_FAILED";
+      if (error?.message === "FORMAL_FIXTURE_CLEANUP_FAILED")
+        message = "FORMAL_FIXTURE_CLEANUP_FAILED";
+      const failure = innerError ?? error;
+      const frame = /apps\/api\/scripts\/([a-z0-9-]+\.mjs):(\d+):\d+/u.exec(
+        String(failure?.stack ?? ""),
+      );
+      diagnostic = {
+        errorName: [
+          "Error",
+          "AssertionError",
+          "TypeError",
+          "RangeError",
+          "TimeoutError",
+        ].includes(failure?.name)
+          ? failure.name
+          : "Error",
+        stackFrame: frame
+          ? { script: frame[1], line: Number(frame[2]) }
+          : undefined,
+      };
+    }
     for (const value of secrets)
       message = message.replaceAll(value, "<secret>");
     await writeFile(
       path.join(output, "report.json"),
       JSON.stringify(
-        { result: "FAIL", stage: state.stage, message, axe, detail: checks },
+        {
+          result: "FAIL",
+          ...(formal
+            ? { profile, cleanupCompleted, startupChecks, diagnostic }
+            : {}),
+          stage: state.stage,
+          message,
+          axe,
+          detail: checks,
+        },
         null,
         2,
       ),

@@ -91,7 +91,7 @@ Admin 不接收客户端密钥、会话 pepper、主体 pepper、数据库或支
 
 配置可用不表示人员已经获权。内置账号首次初始化及紧急恢复沿用 `apps/api/scripts/admin-account.mjs`，日常人员管理沿用后台“员工账号”；命令不带 `--instance` 时从 API 同一数据库与主体 pepper 配置读取，密码只通过交互或 stdin 输入，不进参数或日志。正式开通前仍须核验获准操作者、恢复负责人及流程、角色隔离和暂停/撤销会话后的实际拒绝；本文不预建账号或批准任何实际恢复操作。
 
-若选择 OIDC，再核验 IdP 客户端、精确回调、真实 MFA 声明及 issuer/subject 预授权。平台以独立 HMAC 摘要关联 subject，不按邮箱自动开户、不接受 IdP 角色覆盖业务权限；其隔离验证见 [管理登录验证](admin-access-local.md#正式构建的隔离验证)。LOCAL_ACCOUNT 已有正式编译产物与公开 TEST 证据，仍须在正式 staging/production 配置路径验收；自有 IdP、临时 PostgreSQL或公开 TEST 均不替代该验收、经营方授权或生产发布。
+若选择 OIDC，再核验 IdP 客户端、精确回调、真实 MFA 声明及 issuer/subject 预授权。平台以独立 HMAC 摘要关联 subject，不按邮箱自动开户、不接受 IdP 角色覆盖业务权限；其隔离验证见 [管理登录验证](admin-access-local.md#正式构建的隔离验证)。LOCAL_ACCOUNT 已补真实 production Next、staging 配置与 HTTPS API 接线的隔离验收（[复验入口](admin-access-local.md#内置账号的正式配置验证)）；API 仍注入 TEST KMS，正式 API/Worker 资源、真实人员及恢复操作仍须在目标环境验收。自有 IdP、临时 PostgreSQL或公开 TEST 均不替代经营方授权或生产发布。
 
 ## 支付：代码与激活分离
 
@@ -145,3 +145,16 @@ Admin 不接收客户端密钥、会话 pepper、主体 pepper、数据库或支
 
 - 单元测试与真实 Fastify 路由测试：`apps/api/src/production-*.test.ts`、`apps/worker/src/management-center-composition.test.ts`。
 - 本机没有 PostgreSQL 时，无法验证真实数据库行为，这部分由 CI 的 `test:postgres` 系列承担。
+
+## 下一步：正式部署与恢复的最小准备
+
+2026-10-02：应用源 `a03ee294` 已通过完整 CI（run `36988895653`）。现有公开 TEST 站暂不部署；本节是待执行清单，不表示正式环境或恢复已验收。正式部署位置、域名与资源引用尚需确认，不默认把 `stg` 原地转正。
+
+1. **固定发布版本**：记录候选 commit、锁文件、迁移 manifest、四个应用产物与旧版身份。复用 `infra/docker/Dockerfile` 的 Storefront/Admin/API/Worker 目标；正式 API/Worker 运行 `node dist/main.js`。现有 `local:start`、PREBUILT 和 remote-test systemd 仍是 TEST 组合，preview compose 的临时存储也不能作为正式持久存储。
+2. **补齐实际配置**：按本文逐进程填写精确 HTTPS origin、持久 PostgreSQL、私有原图/衍生图存储、KMS 密钥版本及权限、LOCAL_ACCOUNT 三个独立秘密引用、单一首发 PSP、事务邮件与告警负责人。值通过秘密管理提供，不贴聊天、不入 Git；未知值保持待填，不用 TEST 值代替。
+3. **单独升级数据库**：正式 main 不自动迁移。发布前须以持久层 `runMigrations` 在受控的一次性任务中执行最新 `up`，记录源版本、manifest 与结果，再启动应用。不能用 TEST bootstrap 初始化正式内容，也不能手工运行散落 SQL 绕过迁移锁及历史校验。
+4. **验明就绪后放行**：获准执行后先在独立目标核对配置、备份、数据库及媒体，再启动四个产物。以带超时的 HTTP 健康检查、正式登录/撤权、媒体与一次完整下单查单验收为准；失败停在本步骤，不降级成 TEST。切换期间明确新单入口、存量 webhook/查询、队列的处理负责人，避免遗失未决付款。
+5. **从备份真实恢复**：保留源实例，在隔离目标还原同一恢复点的完整 PG/迁移历史、对象版本、可用的解密密钥版本与配置/发布版本；备份加密并校验。还原时隔离对外邮件与 PSP，业务 Worker 验明前不启动，防止旧队列重复执行。核对订单金额/入账/退款计数、库存、私文解密、媒体、登录及安全查单，记录实际恢复点和耗时。单纯重启原实例、迁移往返或 `diagnostics/copy-database.sh` 的临时库复制均不算完成此项。
+6. **明确回退选择**：0065 在已有人工重发或相关审计时会以 `55000` 拒绝 down，包括旧实体订单历史；不得清记录绕过。优先前向修复；只回应用须先证实旧构建兼容当前 schema。必要的数据恢复在新库进行，原库保留，备份后已发生的真实支付/退款依 PSP 认证证据补对账，不能靠恢复数据库撤销资金事实。可接受的数据损失窗口与正式切换由经营方批准。
+
+下一轮只针对上述尚缺接线或恢复演练推进，不重复已通过的完整业务矩阵。正式资源、实际发信及活动 v2 的 21 份人工审校、获准商户实付退款、正式内容、备份恢复、基本告警和发布批准仍按[首发验收清单](../plan/2026-09-28-flexible-storefront-launch.md)分别收口。

@@ -39,6 +39,52 @@ test("formal Next fixture requires production code with explicit staging OIDC an
   assert.equal(env.STRIPE_TEST_SECRET_KEY, undefined);
   assert.equal(env.STRIPE_SECRET_KEY, undefined);
 });
+test("formal LOCAL_ACCOUNT needs no OIDC and inherits no runtime credentials or TLS bypass", () => {
+  const env = productionAdminEnvironment(
+    { ...input, mode: "LOCAL_ACCOUNT", issuer: undefined },
+    {
+      PATH: "/bin",
+      FAN_SUPPORT_ADMIN_MODE: "OIDC",
+      FAN_SUPPORT_ADMIN_OIDC_ISSUER: input.issuer,
+      FAN_SUPPORT_ADMIN_OIDC_CLIENT_SECRET: "private-oidc-canary",
+      FAN_SUPPORT_DATABASE_URL: "private-database-canary",
+      FAN_SUPPORT_ADMIN_TOKEN_PEPPER: "private-api-canary",
+      PAYMENT_SECRET_STRIPE: "private-payment-canary",
+      STRIPE_TEST_SECRET_KEY: "private-stripe-canary",
+      NODE_TLS_REJECT_UNAUTHORIZED: "0",
+      NODE_OPTIONS: "--inspect",
+      NODE_EXTRA_CA_CERTS: "/inherited/untrusted.pem",
+    },
+  );
+  assert.deepEqual(env, {
+    PATH: "/bin",
+    NODE_ENV: "production",
+    FAN_SUPPORT_DEPLOYMENT_ENV: "staging",
+    FAN_SUPPORT_SITE_ORIGIN: input.adminOrigin,
+    FAN_SUPPORT_INTERNAL_API_ORIGIN: input.apiOrigin,
+    FAN_SUPPORT_ADMIN_MODE: "LOCAL_ACCOUNT",
+    FAN_SUPPORT_ADMIN_ACCESS_KEY: input.accessKey,
+    NODE_EXTRA_CA_CERTS: input.caPath,
+    NEXT_TELEMETRY_DISABLED: "1",
+  });
+});
+test("formal fixture rejects unsupported modes and preserves OIDC issuer validation", () => {
+  for (const mode of ["TEST", "local_account", "", null])
+    assert.throws(() => productionAdminEnvironment({ ...input, mode }));
+  for (const issuer of [undefined, "http://oidc.example.invalid:45103"])
+    assert.throws(() => productionAdminEnvironment({ ...input, issuer }));
+  assert.throws(() =>
+    productionAdminEnvironment({ ...input, mode: "LOCAL_ACCOUNT" }),
+  );
+  assert.throws(() =>
+    productionAdminEnvironment({
+      ...input,
+      mode: "LOCAL_ACCOUNT",
+      issuer: undefined,
+      apiOrigin: "http://127.0.0.1:45102",
+    }),
+  );
+});
 test("owned TLS proxy trusts only its certificate and exact origin", async () => {
   const upstream = createServer((_request, response) => response.end("owned"));
   await new Promise((resolve) => upstream.listen(0, "127.0.0.1", resolve));
