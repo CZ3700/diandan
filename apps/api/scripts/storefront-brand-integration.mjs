@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { Buffer } from "node:buffer";
 import { randomUUID, randomBytes, createHash } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath, URL } from "node:url";
@@ -89,10 +90,10 @@ if (!process.argv.includes("--child")) {
     await client.connect();
     let persistence, server;
     try {
-      stage = "registered migration 0064";
+      stage = "registered migration 0064 prefix";
       const migrate = (command) =>
         runMigrations({ clientConfig, workspaceRoot, command });
-      await migrate({ direction: "up" });
+      await migrate({ direction: "up", targetVersion: "0064" });
       check(
         (await client.query("SELECT max(version) AS v FROM schema_migrations"))
           .rows[0].v === "0064",
@@ -107,7 +108,23 @@ if (!process.argv.includes("--child")) {
         ).rows[0].t === null,
         "empty brand rollback",
       );
-      await migrate({ direction: "up" });
+      const manifest = JSON.parse(
+        await readFile(
+          path.join(workspaceRoot, "database/migrations/manifest.json"),
+          "utf8",
+        ),
+      );
+      const migrationHead = manifest.migrations.at(-1).version;
+      const upgraded = await migrate({ direction: "up" });
+      check(
+        upgraded.currentVersion === migrationHead &&
+          (
+            await client.query(
+              "SELECT max(version) AS v FROM schema_migrations",
+            )
+          ).rows[0].v === migrationHead,
+        "brand HTTP uses the complete registered migration chain",
+      );
       const actorId = randomUUID(),
         roleId = randomUUID(),
         sessionId = randomUUID(),
@@ -490,14 +507,60 @@ if (!process.argv.includes("--child")) {
         await assert.rejects(client.query(`DELETE FROM ${table}`));
         checks++;
       }
-      await assert.rejects(
-        migrate({ direction: "down", confirmVersion: "0064" }),
-        /migration 0064 down failed/u,
+      const snapshotBrandHistory = async () => {
+        const result = {};
+        for (const table of [
+          "schema_migrations",
+          "storefront_brand_heads",
+          "storefront_brand_logo_assets",
+          "storefront_brand_revisions",
+          "storefront_brand_publications",
+          "storefront_brand_receipts",
+        ]) {
+          const { rows } = await client.query(
+            `SELECT to_jsonb(record) value FROM public.${table} record ORDER BY to_jsonb(record)::text COLLATE "C"`,
+          );
+          result[table] = {
+            count: rows.length,
+            sha256: createHash("sha256")
+              .update(JSON.stringify(rows))
+              .digest("hex"),
+          };
+        }
+        return result;
+      };
+      const historyBefore = await snapshotBrandHistory();
+      const down = await readFile(
+        path.join(
+          workspaceRoot,
+          "database/migrations/0064_storefront-brand.down.sql",
+        ),
+        "utf8",
       );
-      checks++;
+      // Probe the historical guard at the current schema; the empty prefix
+      // above separately proves a real latest-head migration-runner rollback.
+      await client.query("BEGIN");
+      try {
+        await assert.rejects(
+          client.query(down),
+          (error) =>
+            error.code === "55000" &&
+            error.message ===
+              "brand publication and uploaded logo history cannot be downgraded",
+          "exact historical brand guard rejects retained history",
+        );
+        checks++;
+      } finally {
+        await client.query("ROLLBACK");
+      }
+      const historyAfter = await snapshotBrandHistory();
+      check(
+        JSON.stringify(historyAfter) === JSON.stringify(historyBefore),
+        "historical guard preserves complete migration and brand history",
+      );
       check(
         (await client.query("SELECT max(version) AS v FROM schema_migrations"))
-          .rows[0].v === "0064",
+          .rows[0].v === migrationHead,
         "history blocks downgrade without losing head",
       );
       check(
@@ -520,7 +583,14 @@ if (!process.argv.includes("--child")) {
         JSON.stringify({
           outcome: "PASS",
           checks,
-          migrationHead: "0064",
+          migrationHead,
+          emptyRollbackPrefix: "0064",
+          historyGuard: {
+            strategy: "CURRENT_SCHEMA_DIRECT_SQL",
+            guard: "0064",
+            before: historyBefore,
+            after: historyAfter,
+          },
           storage: "actual S3 signed PUT and GET",
           transport: "HTTP",
           unusedDraftVersion: current.version,
