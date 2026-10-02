@@ -9,7 +9,7 @@ P4-06 为已付款订单提供付款确认、开始准备和确认送达三类�
 - subject、preheader、HTML、text 和变量都有合同验证。最多展示前十个订单项，超出部分显示本地化余项数量；总额始终是完整订单总额。
 - 准备和送达邮件描述已经发生的事实，当前状态由查单页显示，不推测时间或服务承诺。
 - `incidentFallbackLocales` 只影响新创建的通知：指定语言发生事故时整封采用英语，原请求语言仍保留；数据库保存原因，Worker 发出 `NOTIFICATION_LOCALE_FALLBACK`。重试沿用原版本和语言。
-- `packages/i18n/src/notifications/` 中全部 review manifest 当前为 DRAFT。生产装配要求全部 APPROVED，匹配内容/变量摘要、译审人及批准 commit；TEST 模式不能绕过生产装配。
+- `packages/i18n/src/notifications/v2/reviews.json` 是当前活动版本的审校清单，七语言×三事件共21项仍为 DRAFT。生产装配要求这21项全部 APPROVED，匹配当前内容/变量摘要、真实译审人及批准 commit；历史v1保留用于旧邮件重放，不要求为首发重新批准。TEST 模式不能绕过生产装配。
 
 ## 查单与隐私
 
