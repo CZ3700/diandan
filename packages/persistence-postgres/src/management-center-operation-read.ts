@@ -2,6 +2,7 @@ import { readWishGiftSummary } from "./wish-binding.js";
 import {
   giftCategorySchema,
   giftKindSchema,
+  managementCenterPriceSchema,
   managementCenterResponseSchema,
   publicMediaViewSchema,
   type AdminPrincipal,
@@ -19,6 +20,10 @@ import {
 } from "./management-center-assignment.js";
 import type { ManagementGrants } from "./management-center-scope.js";
 import type { TransactionClient } from "./transaction-runner.js";
+
+const priceScopeSchema = managementCenterPriceSchema.omit({
+  amountMinor: true,
+});
 
 /** Which artists a listing covers: every artist with its broker, or one broker's own. */
 export type ArtistVisibility =
@@ -206,6 +211,24 @@ export async function readManagementCenterList(
   const artist = command.section === "ARTISTS",
     table = artist ? "idols" : "gifts",
     revision = artist ? "idol" : "gift";
+  let priceScope;
+  if (command.sort === "PRICE_ASC" || command.sort === "PRICE_DESC") {
+    const [defaults] = await draftRows(
+      client,
+      `SELECT d.market,d.currency FROM public.management_defaults d
+      JOIN public.config_versions c ON c.id=d.config_version_id AND c.config_kind='MANAGEMENT_DEFAULTS' AND c.lifecycle='PUBLISHED'
+      JOIN public.markets m ON m.market=d.market AND m.status='ACTIVE'
+      WHERE m.default_currency=d.currency OR EXISTS(SELECT 1 FROM public.price_books b WHERE b.market_id=m.id AND b.currency=d.currency)`,
+    );
+    const parsed = priceScopeSchema.safeParse(defaults);
+    if (!parsed.success)
+      return managementCenterResponseSchema.parse({
+        schemaVersion: 1,
+        outcome: "FAILURE",
+        code: "DEFAULTS_NOT_CONFIGURED",
+      });
+    priceScope = parsed.data;
+  }
   // ADR-022: a broker's list is its own artists; everyone else may narrow by assignment.
   const owner = !artist
     ? undefined
@@ -222,27 +245,62 @@ export async function readManagementCenterList(
       : owner === null
         ? " AND public.idol_current_broker(o.id) IS NULL"
         : " AND public.idol_current_broker(o.id)=$1";
-  const scoped = typeof owner === "string" ? [owner] : [];
+  const scoped: unknown[] = typeof owner === "string" ? [owner] : [];
+  const name = `coalesce(d.document->'source'->'fields'->>'${artist ? "displayName" : "title"}',t.${artist ? "display_name" : "title"},o.handle)`;
+  const giftKind =
+    "coalesce(d.document->>'giftKind',profile.gift_kind,'OTHER')";
+  let filtered = `WHERE o.status<>'archived'${assigned}`;
+  if (command.search !== undefined) {
+    scoped.push(command.search);
+    filtered += ` AND strpos(lower(${name}),lower($${scoped.length}))>0`;
+  }
+  if (command.giftKind !== undefined) {
+    scoped.push(command.giftKind);
+    filtered += ` AND ${giftKind}=$${scoped.length}`;
+  }
+  // Count and page share the displayed revision and every scope/search/kind predicate.
+  const source = `FROM public.${table} o LEFT JOIN public.${revision}_revisions r ON r.id=coalesce(o.published_revision_id,o.draft_revision_id)
+    LEFT JOIN public.daily_publication_revisions d ON d.revision_id=r.id
+    LEFT JOIN public.${revision}_revision_translations t ON t.${revision}_revision_id=r.id AND t.locale='en'
+    ${artist ? "" : "LEFT JOIN public.gift_revision_profiles profile ON profile.gift_revision_id=r.id"}`;
   const [count] = await draftRows(
     client,
     // Deleted (archived) artists and gifts leave the daily list; orders keep their own snapshots.
-    `SELECT count(*)::text total FROM public.${table} o WHERE o.status<>'archived'${assigned}`,
+    `SELECT count(*)::text total ${source} ${filtered}`,
     scoped,
   );
+  const values = [...scoped];
+  let comparison = "",
+    order = "o.created_at DESC,o.id DESC";
+  if (priceScope) {
+    values.push(priceScope.market, priceScope.currency);
+    // Use the same representative non-archived variant as giftDetails. Stock, sale status
+    // and a missing price do not remove a gift from daily administration.
+    comparison = `LEFT JOIN LATERAL(
+      SELECT p.amount_minor FROM public.price_book_publication_heads h
+      JOIN public.price_book_publications publication ON publication.id=h.publication_id
+      JOIN public.price_books b ON b.id=h.price_book_id AND b.revision=h.price_book_revision
+      JOIN public.prices p ON p.price_book_id=b.id AND p.price_book_revision=b.revision AND p.market=h.market AND p.currency=h.currency
+      WHERE h.market=$${values.length - 1} AND h.currency=$${values.length}
+      AND p.gift_variant_id=(SELECT v.id FROM public.gift_variants v WHERE v.gift_id=o.id AND v.status<>'archived' ORDER BY v.created_at,v.id LIMIT 1)
+      AND b.valid_from<=transaction_timestamp() AND (b.valid_until IS NULL OR b.valid_until>transaction_timestamp())
+      AND p.valid_from<=transaction_timestamp() AND (p.valid_to IS NULL OR p.valid_to>transaction_timestamp())
+      AND ((publication.action='PUBLISH' AND p.status='PUBLISHED') OR (publication.action='ROLLBACK' AND p.status IN('PUBLISHED','SUPERSEDED')))
+      LIMIT 1) sort_price ON true`;
+    order = `sort_price.amount_minor ${command.sort === "PRICE_ASC" ? "ASC" : "DESC"} NULLS LAST,o.created_at DESC,o.id DESC`;
+  }
   const rows = await draftRows(
     client,
     `SELECT o.id,o.handle,o.version,o.status,r.id revision_id,coalesce(d.source_locale::text,t.locale::text,'en') source_locale,
-    coalesce(d.document->'source'->'fields'->>'${artist ? "displayName" : "title"}',t.${artist ? "display_name" : "title"},o.handle) name,
+    ${name} name,
     coalesce(d.document->'source'->'fields'->>'${artist ? "fullBio" : "description"}',t.${artist ? "full_bio" : "description"},'') description,
-    media.media_asset_id ${artist ? ",public.idol_current_broker(o.id) broker_id" : ",r.category,coalesce(d.document->>'giftKind',profile.gift_kind) gift_kind"}
-    FROM public.${table} o LEFT JOIN public.${revision}_revisions r ON r.id=coalesce(o.published_revision_id,o.draft_revision_id)
-    LEFT JOIN public.daily_publication_revisions d ON d.revision_id=r.id
-    LEFT JOIN public.${revision}_revision_translations t ON t.${revision}_revision_id=r.id AND t.locale='en'
+    media.media_asset_id ${artist ? ",public.idol_current_broker(o.id) broker_id" : `,r.category,${giftKind} gift_kind`}
+    ${priceScope ? ",sort_price.amount_minor sort_amount_minor" : ""}
+    ${source}
     LEFT JOIN LATERAL(SELECT media_asset_id FROM public.${revision}_revision_media m WHERE m.${revision}_revision_id=r.id AND m.role='${artist ? "PORTRAIT" : "PRIMARY"}' ORDER BY m.sort_order LIMIT 1) media ON true
-    ${artist ? "" : "LEFT JOIN public.gift_revision_profiles profile ON profile.gift_revision_id=r.id"}
-    WHERE o.status<>'archived'${assigned}
-    ORDER BY o.created_at DESC,o.id DESC LIMIT $${scoped.length + 1} OFFSET $${scoped.length + 2}`,
-    [...scoped, command.pageSize, (command.page - 1) * command.pageSize],
+    ${comparison} ${filtered}
+    ORDER BY ${order} LIMIT $${values.length + 1} OFFSET $${values.length + 2}`,
+    [...values, command.pageSize, (command.page - 1) * command.pageSize],
   );
   const brokers = artist
     ? await readBrokers(client, [
@@ -271,6 +329,17 @@ export async function readManagementCenterList(
       status: row["status"],
       handle: row["handle"],
       ...(!artist ? await giftDetails(client, row) : {}),
+      ...(priceScope
+        ? {
+            sortPrice:
+              row["sort_amount_minor"] === null
+                ? null
+                : {
+                    ...priceScope,
+                    amountMinor: Number(row["sort_amount_minor"]),
+                  },
+          }
+        : {}),
       ...(brokers
         ? {
             assignment:
@@ -289,6 +358,7 @@ export async function readManagementCenterList(
     pageSize: command.pageSize,
     totalItems: Number(count?.["total"]),
     items,
+    ...(priceScope ? { priceScope } : {}),
   });
 }
 async function readPosters(

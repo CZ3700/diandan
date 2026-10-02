@@ -20,7 +20,7 @@ export type ListViewProps = {
   onDeletePoster?: (item: PosterItem) => void;
   /** ADR-022: accounts that manage every artist see whom each one belongs to. */
   showAssignment?: boolean;
-  /** An assignment filter is on, so an empty list is "no match", not "add the first". */
+  /** A name, type or assignment filter is on, so an empty list means no match. */
   filtered?: boolean;
 };
 export function ManagementListView({
@@ -38,11 +38,11 @@ export function ManagementListView({
   const poster = list.section === "POSTERS";
   const empty = poster
     ? copy.emptyPosters
-    : list.section !== "ARTISTS"
-      ? copy.emptyGifts
-      : filtered
-        ? copy.noResults
-        : copy.emptyArtists;
+    : filtered
+      ? copy.noResults
+      : list.section === "ARTISTS"
+        ? copy.emptyArtists
+        : copy.emptyGifts;
   const pages = Math.max(1, Math.ceil(list.totalItems / list.pageSize));
   return (
     <div data-management-list={list.section}>
@@ -56,6 +56,13 @@ export function ManagementListView({
             const isPoster = item.kind === "POSTER";
             const unavailable = isPoster && !item.canRestore && !item.current;
             const readOnly = item.kind === "GIFT" && !item.canEdit;
+            // Sorting is a view in the default currency; the editor still receives item.price.
+            const displayedPrice =
+              item.kind === "GIFT"
+                ? item.sortPrice === undefined
+                  ? item.price
+                  : item.sortPrice
+                : null;
             const name = isPoster
               ? new Intl.DateTimeFormat(locale, {
                   dateStyle: "medium",
@@ -130,14 +137,18 @@ export function ManagementListView({
                           {wishStatusLabel(item.wish.status, copy)}
                         </span>
                       ) : null}
-                      {item.price ? (
+                      {displayedPrice ? (
                         <Price
                           locale={locale}
-                          currency={item.price.currency}
-                          amountMinor={item.price.amountMinor}
+                          currency={displayedPrice.currency}
+                          amountMinor={displayedPrice.amountMinor}
                         />
                       ) : (
-                        <span>—</span>
+                        <span>
+                          {item.sortPrice === null
+                            ? copy.priceUnavailable
+                            : "—"}
+                        </span>
                       )}
                     </span>
                   ) : null}

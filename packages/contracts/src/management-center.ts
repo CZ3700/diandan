@@ -12,6 +12,7 @@ import {
 } from "./admin-content.js";
 import { currencySchema, marketSchema, minorAmountSchema } from "./commerce.js";
 import { giftCategorySchema } from "./catalog-content.js";
+import { artistSearchTermSchema } from "./catalog-discovery.js";
 import { giftKindSchema } from "./gift-commerce-profile.js";
 import { wishGiftSummarySchema } from "./wish-binding.js";
 import { publicMediaViewSchema, slugSchema } from "./presentation.js";
@@ -241,10 +242,25 @@ export const managementCenterCommandSchema = z.discriminatedUnion("action", [
       ...pagination,
       /** Omitted lists every artist the account may manage. */
       assignment: assignmentFilter.optional(),
+      /** Literal, case-insensitive matching against the displayed artist name. */
+      search: artistSearchTermSchema.optional(),
+      giftKind: giftKindSchema.optional(),
+      /** Omitted keeps newest first; price sorts use the published management defaults. */
+      sort: z.enum(["NEWEST", "PRICE_ASC", "PRICE_DESC"]).optional(),
     })
     .refine(
       (value) => value.assignment === undefined || value.section === "ARTISTS",
       { path: ["assignment"], message: "Only artists are assigned" },
+    )
+    .refine(
+      (value) => value.search === undefined || value.section === "ARTISTS",
+      { path: ["search"], message: "Only artists support name search" },
+    )
+    .refine(
+      (value) =>
+        (value.giftKind === undefined && value.sort === undefined) ||
+        value.section === "GIFTS",
+      { message: "Only gifts support kind filters and price ordering" },
     ),
   z.strictObject({
     schemaVersion: version,
@@ -341,6 +357,8 @@ const managementCenterGiftListItemSchema = z.strictObject({
   giftKind: giftKindSchema,
   category: giftCategorySchema,
   price: managementCenterPriceSchema.nullable(),
+  /** Display-only comparison price; never an edit baseline. Present only with LIST.priceScope. */
+  sortPrice: managementCenterPriceSchema.nullable().exactOptional(),
   inventory: managementCenterInventorySchema.nullable(),
   eligibility: z.strictObject({
     rule: z.enum(["ALL_ACTIVE_ARTISTS", "EXPLICIT_ARTISTS"]),
@@ -402,6 +420,7 @@ export const managementCenterResponseSchema = z.union([
       ...pagination,
       totalItems: sequence,
       items: z.array(managementCenterListItemSchema).max(50),
+      priceScope: z.strictObject(scope).exactOptional(),
     })
     .superRefine((value, context) => {
       const expected = Math.max(
@@ -424,6 +443,24 @@ export const managementCenterResponseSchema = z.union([
         context.addIssue({
           code: "custom",
           message: "Listing scope and cardinality must match",
+        });
+      const validPrices = value.priceScope
+        ? value.section === "GIFTS" &&
+          value.items.every(
+            (item) =>
+              item.kind === "GIFT" &&
+              item.sortPrice !== undefined &&
+              (item.sortPrice === null ||
+                (item.sortPrice.market === value.priceScope?.market &&
+                  item.sortPrice.currency === value.priceScope.currency)),
+          )
+        : value.items.every(
+            (item) => item.kind !== "GIFT" || item.sortPrice === undefined,
+          );
+      if (!validPrices)
+        context.addIssue({
+          code: "custom",
+          message: "Sort prices must match the gift list price scope",
         });
     }),
   z.strictObject({

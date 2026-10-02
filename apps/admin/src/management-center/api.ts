@@ -32,6 +32,10 @@ export type ManagementBroker = ManagementContext["artists"]["brokers"][number];
 export type AssignmentFilter = NonNullable<
   Extract<ManagementCenterCommand, { action: "LIST" }>["assignment"]
 >;
+export type ManagementListOptions = Pick<
+  Extract<ManagementCenterCommand, { action: "LIST" }>,
+  "search" | "giftKind" | "sort"
+>;
 export type PreparedUpload = Extract<
   ManagementCenterResponse,
   { kind: "UPLOAD_GRANT" }
@@ -110,18 +114,25 @@ export function createManagementApi(client: AdminClient) {
       section: ManagementSection,
       page: number,
       assignment?: AssignmentFilter | null,
+      options: ManagementListOptions = {},
     ): Promise<ManagementList> {
+      const priceOrder =
+        options.sort === "PRICE_ASC" || options.sort === "PRICE_DESC";
       const result = await call("list", {
         section,
         page,
         pageSize: 12,
         ...(assignment ? { assignment } : {}),
+        ...(options.search?.trim() ? { search: options.search.trim() } : {}),
+        ...(options.giftKind ? { giftKind: options.giftKind } : {}),
+        ...(priceOrder ? { sort: options.sort } : {}),
       });
       if (
         result.kind !== "LIST" ||
         result.section !== section ||
         result.page !== page ||
-        result.pageSize !== 12
+        result.pageSize !== 12 ||
+        priceOrder !== (result.priceScope !== undefined)
       )
         throw invalid();
       return result;

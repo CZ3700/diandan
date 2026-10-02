@@ -18,6 +18,7 @@ import type {
   ManagementApi,
   ManagementContext,
   ManagementList,
+  ManagementListOptions,
   ManagementSection,
   PosterItem,
 } from "./api";
@@ -26,6 +27,7 @@ import { ManagementSelect } from "./form-fields";
 import { managementCopy } from "./copy";
 import { ManagementShell } from "./shell";
 import { ManagementListView } from "./list-view";
+import { ManagementArtistSearch, ManagementGiftFilters } from "./list-filters";
 import { ManagementEditor, type EditorSelection } from "./editor";
 import { OperationProgress } from "./operation-progress";
 import { managementError } from "./errors";
@@ -99,6 +101,13 @@ export function ManagementWorkspace({
   const [section, setSection] = useState<ManagementSection>(initialSection);
   const [page, setPage] = useState(1);
   const [assignment, setAssignment] = useState<AssignmentFilter | null>(null);
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
+  const [giftKind, setGiftKind] = useState<NonNullable<
+    ManagementListOptions["giftKind"]
+  > | null>(null);
+  const [sort, setSort] =
+    useState<NonNullable<ManagementListOptions["sort"]>>("NEWEST");
   const [refresh, setRefresh] = useState(0);
   const [context, setContext] = useState<ManagementContext | null>(null);
   const [list, setList] = useState<ManagementList | null>(null);
@@ -131,6 +140,8 @@ export function ManagementWorkspace({
   const [canDeleteGifts, setCanDeleteGifts] = useState(false);
   const restoreActive = useRef(false);
   const writeBlocked = !canStartManagementWrite(busy, operations);
+  const visibleList = list?.section === section ? list : null;
+  const listPending = loading || visibleList?.page !== page;
   const title = useRef<HTMLHeadingElement>(null);
   const cancelFocus = useRef<(() => void) | null>(null);
   const focusTarget = useCallback((target: () => HTMLElement | null) => {
@@ -143,21 +154,37 @@ export function ManagementWorkspace({
     let canceled = false;
     setLoading(true);
     setError(null);
-    setList(null);
     void Promise.all([
       api.context(),
-      api.list(section, page, section === "ARTISTS" ? assignment : null),
+      api.list(
+        section,
+        page,
+        section === "ARTISTS" ? assignment : null,
+        section === "ARTISTS"
+          ? { search }
+          : section === "GIFTS"
+            ? {
+                ...(giftKind ? { giftKind } : {}),
+                sort,
+              }
+            : {},
+      ),
     ])
       .then(([nextContext, nextList]) => {
         if (canceled) return;
         setContext(nextContext);
-        setList(nextList);
         setOperations(
           visibleManagementOperations(
             nextContext.operations,
             readDismissedOperations(browserStorage()),
           ),
         );
+        const lastPage = Math.max(
+          1,
+          Math.ceil(nextList.totalItems / nextList.pageSize),
+        );
+        if (page > lastPage) setPage(lastPage);
+        else setList(nextList);
       })
       .catch((failure: unknown) => {
         if (!canceled) setError(failure);
@@ -168,7 +195,7 @@ export function ManagementWorkspace({
     return () => {
       canceled = true;
     };
-  }, [api, section, page, assignment, refresh]);
+  }, [api, section, page, assignment, search, giftKind, sort, refresh]);
   useEffect(() => {
     let canceled = false;
     void api.canDeleteGifts().then((allowed) => {
@@ -184,7 +211,7 @@ export function ManagementWorkspace({
       setSuccess(null);
       setDeleted(message);
       setSelection(null);
-      setPage(1);
+      setLoading(true);
       setRefresh((value) => value + 1);
       setBusy(false);
       focusTarget(() =>
@@ -214,14 +241,15 @@ export function ManagementWorkspace({
       setAssignmentMissed(missed ? operation.operationId : null);
       setSuccess(operation);
       setSelection(null);
-      setPage(1);
+      if (selection && selection.item === null) setPage(1);
+      setLoading(true);
       setRefresh((value) => value + 1);
       setBusy(false);
       focusTarget(() =>
         document.querySelector<HTMLElement>("[data-management-success]"),
       );
     },
-    [focusTarget],
+    [focusTarget, selection],
   );
   const dismissOperation = useCallback((operationId: string) => {
     rememberDismissedOperation(browserStorage(), operationId);
@@ -246,10 +274,21 @@ export function ManagementWorkspace({
     setSelection(null);
     setSection(next);
     setAssignment(null);
+    setSearchInput("");
+    setSearch("");
+    setGiftKind(null);
+    setSort("NEWEST");
     setPage(1);
+    setLoading(true);
+    setRefresh((value) => value + 1);
     setSuccess(null);
     setDeleted(null);
     focusTitle();
+  }
+  function resetListPage() {
+    setPage(1);
+    setLoading(true);
+    setRefresh((value) => value + 1);
   }
   async function restore(
     item: Extract<ManagementCenterListItem, { kind: "POSTER" }>,
@@ -381,6 +420,7 @@ export function ManagementWorkspace({
                 if (!canLeave()) return;
                 setDirty(false);
                 setSelection(null);
+                setLoading(true);
                 setRefresh((value) => value + 1);
                 focusTitle();
               }}
@@ -504,38 +544,75 @@ export function ManagementWorkspace({
             />
           ))}
           {/* Stays mounted while the list reloads, so keyboard focus is not lost. */}
-          {section === "ARTISTS" && context?.artists.scope === "ALL" ? (
-            <div className="mc-list-filter">
-              <ManagementSelect
-                name="assignment-filter"
-                label={copy.assignmentFilter}
-                value={
-                  assignment === null
-                    ? ""
-                    : assignment.kind === "BROKER"
-                      ? assignment.brokerId
-                      : "UNASSIGNED"
-                }
-                onChange={(value) => {
-                  setAssignment(
-                    value === ""
-                      ? null
-                      : value === "UNASSIGNED"
-                        ? { kind: "UNASSIGNED" }
-                        : { kind: "BROKER", brokerId: value },
-                  );
-                  setPage(1);
+          {section === "ARTISTS" ? (
+            <div className="mc-artist-filters">
+              <ManagementArtistSearch
+                copy={copy}
+                value={searchInput}
+                disabled={busy}
+                onChange={setSearchInput}
+                onSearch={(value) => {
+                  setSearchInput(value);
+                  setSearch(value);
+                  resetListPage();
                 }}
-              >
-                <option value="">{copy.assignmentAll}</option>
-                <option value="UNASSIGNED">{copy.assignmentNone}</option>
-                {context.artists.brokers.map((broker) => (
-                  <option key={broker.brokerId} value={broker.brokerId}>
-                    {brokerName(broker, copy)}
-                  </option>
-                ))}
-              </ManagementSelect>
+              />
+              {context?.artists.scope === "ALL" ? (
+                <div className="mc-list-filter">
+                  <ManagementSelect
+                    name="assignment-filter"
+                    label={copy.assignmentFilter}
+                    disabled={busy}
+                    value={
+                      assignment === null
+                        ? ""
+                        : assignment.kind === "BROKER"
+                          ? assignment.brokerId
+                          : "UNASSIGNED"
+                    }
+                    onChange={(value) => {
+                      setAssignment(
+                        value === ""
+                          ? null
+                          : value === "UNASSIGNED"
+                            ? { kind: "UNASSIGNED" }
+                            : { kind: "BROKER", brokerId: value },
+                      );
+                      resetListPage();
+                    }}
+                  >
+                    <option value="">{copy.assignmentAll}</option>
+                    <option value="UNASSIGNED">{copy.assignmentNone}</option>
+                    {context.artists.brokers.map((broker) => (
+                      <option key={broker.brokerId} value={broker.brokerId}>
+                        {brokerName(broker, copy)}
+                      </option>
+                    ))}
+                  </ManagementSelect>
+                </div>
+              ) : null}
             </div>
+          ) : null}
+          {section === "GIFTS" ? (
+            <ManagementGiftFilters
+              copy={copy}
+              kind={giftKind}
+              sort={sort}
+              priceScope={
+                context?.defaults?.priceScope
+                  ? (visibleList?.priceScope ?? context.defaults.priceScope)
+                  : null
+              }
+              disabled={busy}
+              onKind={(value) => {
+                setGiftKind(value);
+                resetListPage();
+              }}
+              onSort={(value) => {
+                setSort(value);
+                resetListPage();
+              }}
+            />
           ) : null}
           {error ? (
             <div className="mc-error-state" role="alert">
@@ -543,33 +620,46 @@ export function ManagementWorkspace({
               <Button
                 variant="secondary"
                 type="button"
-                onClick={() => setRefresh((value) => value + 1)}
+                onClick={() => {
+                  setLoading(true);
+                  setRefresh((value) => value + 1);
+                }}
               >
                 {copy.reloadList}
               </Button>
             </div>
-          ) : loading ? (
+          ) : !visibleList && loading ? (
             <p className="mc-empty" role="status">
               {copy.checkingSession}
             </p>
-          ) : list ? (
+          ) : visibleList ? (
             <>
               {section === "POSTERS" && !context?.poster.available ? (
                 <p className="mc-hint">{copy.posterUnavailable}</p>
               ) : null}
-              <ManagementListView
-                locale={locale}
-                list={list}
-                showAssignment={context?.artists.scope === "ALL"}
-                filtered={assignment !== null}
-                busy={writeBlocked}
-                onSelect={select}
-                onDeletePoster={(item) => void archivePoster(item)}
-                onPage={(next) => {
-                  setPage(next);
-                  focusTitle();
-                }}
-              />
+              <div
+                aria-busy={listPending || undefined}
+                data-management-list-pending={listPending || undefined}
+              >
+                <ManagementListView
+                  locale={locale}
+                  list={visibleList}
+                  showAssignment={context?.artists.scope === "ALL"}
+                  filtered={
+                    section === "ARTISTS"
+                      ? assignment !== null || search !== ""
+                      : giftKind !== null
+                  }
+                  busy={writeBlocked || listPending}
+                  onSelect={select}
+                  onDeletePoster={(item) => void archivePoster(item)}
+                  onPage={(next) => {
+                    setPage(next);
+                    setLoading(true);
+                    focusTitle();
+                  }}
+                />
+              </div>
             </>
           ) : null}
         </>

@@ -96,6 +96,84 @@ it("rejects a structurally valid list for another section or page", async () => 
   await expect(api.list("ARTISTS", 1)).rejects.toThrow("INVALID_RESPONSE");
   await expect(api.list("GIFTS", 2)).rejects.toThrow("INVALID_RESPONSE");
 });
+it("combines a trimmed artist name with the existing assignment filter before pagination", async () => {
+  const { api, calls } = setup({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "LIST",
+    section: "ARTISTS",
+    page: 2,
+    pageSize: 12,
+    totalItems: 0,
+    items: [],
+  });
+  const assignment = { kind: "UNASSIGNED" as const };
+  await api.list("ARTISTS", 2, assignment, { search: "  Mira  " });
+  expect(JSON.parse(String(calls[0]?.init.body))).toEqual({
+    schemaVersion: 1,
+    section: "ARTISTS",
+    page: 2,
+    pageSize: 12,
+    assignment,
+    search: "Mira",
+  });
+});
+it("sends the gift kind to the bounded management list without changing the legacy default request", async () => {
+  const { api, calls } = setup({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "LIST",
+    section: "GIFTS",
+    page: 1,
+    pageSize: 12,
+    totalItems: 0,
+    items: [],
+  });
+  await api.list("GIFTS", 1, null, { giftKind: "WISH" });
+  expect(JSON.parse(String(calls[0]?.init.body))).toEqual({
+    schemaVersion: 1,
+    section: "GIFTS",
+    page: 1,
+    pageSize: 12,
+    giftKind: "WISH",
+  });
+  await api.list("GIFTS", 1);
+  expect(JSON.parse(String(calls[1]?.init.body))).toEqual({
+    schemaVersion: 1,
+    section: "GIFTS",
+    page: 1,
+    pageSize: 12,
+  });
+});
+it("requires the server's comparison scope for a price order and passes no caller price scope", async () => {
+  const response = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "LIST",
+    section: "GIFTS",
+    page: 1,
+    pageSize: 12,
+    totalItems: 0,
+    items: [],
+  };
+  const priceScope = { market: "US", currency: "USD" };
+  const { api, calls } = setup({ ...response, priceScope });
+  for (const sort of ["PRICE_ASC", "PRICE_DESC"] as const) {
+    const result = await api.list("GIFTS", 1, null, { sort });
+    expect(result.priceScope).toEqual(priceScope);
+    expect(JSON.parse(String(calls.at(-1)?.init.body))).toEqual({
+      schemaVersion: 1,
+      section: "GIFTS",
+      page: 1,
+      pageSize: 12,
+      sort,
+    });
+  }
+  await expect(
+    setup(response).api.list("GIFTS", 1, null, { sort: "PRICE_ASC" }),
+  ).rejects.toThrow("INVALID_RESPONSE");
+  await expect(api.list("GIFTS", 1)).rejects.toThrow("INVALID_RESPONSE");
+});
 it("rejects a valid operation belonging to another requested update", async () => {
   const { api } = setup({
     schemaVersion: 1,

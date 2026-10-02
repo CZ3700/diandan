@@ -202,7 +202,81 @@
 }
 .mc-list-filter {
   max-inline-size: calc(var(--space-16) * 5);
-  margin-block-end: var(--space-6);
+}
+.mc-artist-filters,
+.mc-gift-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--space-4) var(--space-6);
+  margin-block-end: var(--space-8);
+}
+.mc-artist-search {
+  display: flex;
+  flex: 1 1 calc(var(--space-16) * 5);
+  align-items: end;
+  gap: var(--space-3);
+  min-inline-size: 0;
+}
+.mc-artist-search .fs-field {
+  flex: 1;
+  min-inline-size: 0;
+}
+.mc-artist-filters .mc-list-filter {
+  flex: 1 1 calc(var(--space-16) * 4);
+}
+.mc-gift-filters {
+  align-items: center;
+}
+.mc-gift-kinds,
+.mc-gift-sort {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.mc-gift-kinds {
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  min-inline-size: 0;
+}
+.mc-gift-kinds button,
+.mc-gift-sort button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--space-12);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font: inherit;
+  cursor: pointer;
+}
+.mc-gift-kinds button {
+  padding: var(--space-2) var(--space-4);
+  white-space: nowrap;
+}
+.mc-gift-sort button {
+  inline-size: var(--space-12);
+  flex-shrink: 0;
+}
+.mc-gift-sort > span {
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  margin-inline-end: var(--space-1);
+}
+.mc-gift-kinds button[aria-pressed="true"],
+.mc-gift-sort button[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  color: var(--color-bg);
+  background: var(--color-accent);
+}
+.mc-gift-kinds button:disabled,
+.mc-gift-sort button:disabled {
+  cursor: not-allowed;
+}
+[data-management-list-pending] {
+  opacity: 0.6;
 }
 .mc-assignment [role="status"]:not(:empty) {
   margin-block-start: var(--space-2);
@@ -414,6 +488,15 @@
   }
 }
 @media (max-width: 48rem) {
+  .mc-gift-kinds {
+    flex-basis: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-block: var(--space-2);
+  }
+  .mc-artist-filters .mc-list-filter {
+    max-inline-size: none;
+  }
   .mc-shell {
     display: block;
   }

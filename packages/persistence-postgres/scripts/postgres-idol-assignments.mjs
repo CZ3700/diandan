@@ -525,6 +525,66 @@ async function behavior() {
         },
         "each artist is listed with its broker, or as unassigned",
       );
+      // Search is evaluated by PostgreSQL before pagination, inside the same authority scope.
+      // These synthetic artists have no revision, so their displayed name is the handle.
+      const searched = async (who, filters) => {
+        const p = await principal(who);
+        return tx((r) =>
+          r.list({ principal: p, command: { ...list("ARTISTS"), ...filters } }),
+        );
+      };
+      const searchedIds = [];
+      for (let page = 1; page <= 5; page++) {
+        const result = await searched(owner, {
+          search: "ASSIGNMENT-A",
+          page,
+          pageSize: 1,
+        });
+        equal(
+          [result.kind, result.totalItems, result.items.length],
+          ["LIST", 4, page <= 4 ? 1 : 0],
+          `case-insensitive name search keeps its full count on page ${page}`,
+        );
+        searchedIds.push(...result.items.map((item) => item.id));
+      }
+      equal(
+        searchedIds,
+        ownerView.items.map((item) => item.id),
+        "search pages retain the stable newest order without repeating or losing artists",
+      );
+      for (const search of ["%", "_", "' OR true --", "No such artist"]) {
+        const result = await searched(owner, { search });
+        equal(
+          [result.totalItems, result.items],
+          [0, []],
+          "search metacharacters remain literal and an unmatched name stays empty",
+        );
+      }
+      for (const [who, filters, expected] of [
+        [
+          owner,
+          { search: "a3", assignment: { kind: "UNASSIGNED" } },
+          [artists.a3],
+        ],
+        [owner, { search: "a1", assignment: { kind: "UNASSIGNED" } }, []],
+        [
+          owner,
+          {
+            search: "a2",
+            assignment: { kind: "BROKER", brokerId: brokerA.actorId },
+          },
+          [],
+        ],
+        [brokerA, { search: "a1" }, [artists.a1]],
+        [brokerA, { search: "a2" }, []],
+      ]) {
+        const result = await searched(who, filters);
+        equal(
+          [result.totalItems, result.items.map((item) => item.id)],
+          [expected.length, expected],
+          "name search intersects assignment and never widens a broker's authority",
+        );
+      }
       for (const section of ["GIFTS", "POSTERS"])
         equal(
           await visible(brokerA, section),

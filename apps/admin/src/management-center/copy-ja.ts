@@ -1,5 +1,10 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  allGifts: "すべて",
+  priceOrder: "価格で並べ替え",
+  priceAscending: "価格の安い順",
+  priceDescending: "価格の高い順",
+  priceUnavailable: "価格未設定",
   wishArtist: "受け取るアーティスト",
   wishArtistRequired: "このウィッシュを受け取るアーティストを選んでください。",
   wishArtistChoose: "このアーティストを選ぶ",

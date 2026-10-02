@@ -1,5 +1,10 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  allGifts: "Tất cả",
+  priceOrder: "Sắp xếp theo giá",
+  priceAscending: "Giá từ thấp đến cao",
+  priceDescending: "Giá từ cao đến thấp",
+  priceUnavailable: "Chưa có giá",
   wishArtist: "Nghệ sĩ nhận quà",
   wishArtistRequired: "Chọn nghệ sĩ nhận món quà theo nguyện vọng này.",
   wishArtistChoose: "Chọn nghệ sĩ này",

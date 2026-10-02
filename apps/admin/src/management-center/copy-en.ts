@@ -1,4 +1,9 @@
 export const copy = {
+  allGifts: "All",
+  priceOrder: "Sort by price",
+  priceAscending: "Price: low to high",
+  priceDescending: "Price: high to low",
+  priceUnavailable: "No price available",
   wishArtist: "Recipient artist",
   wishArtistRequired: "Choose the artist for this wish.",
   wishArtistChoose: "Choose this artist",

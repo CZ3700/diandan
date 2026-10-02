@@ -9,6 +9,7 @@ import {
   managementCenterResponseSchema,
 } from "@fan-support/contracts";
 import { createManagementResponseObserver } from "./management-center-response-observer.mjs";
+import { createManagementListBrowser } from "./management-center-list-browser.mjs";
 
 const requireFromRoot = createRequire(
   new globalThis.URL("../../../package.json", import.meta.url),
@@ -605,6 +606,16 @@ export async function verifyManagementCenterBrowser({
     publicCheck = null;
     return images;
   }
+  const listBrowser = createManagementListBrowser({
+    page,
+    client,
+    observed,
+    assert,
+    settledResponses,
+    section,
+    back,
+    tabTo,
+  });
   try {
     await context.addCookies(
       ["session", "csrf"].map((name) => ({
@@ -924,6 +935,10 @@ export async function verifyManagementCenterBrowser({
     gifts[0] = { operation: editedGift, item: currentGift };
     report.cases.push({ name: step, status: "PASS" });
 
+    step = "real-catalog-filters-and-price-order";
+    await listBrowser.verifyGiftFilters(scope);
+    report.cases.push({ name: step, status: "PASS" });
+
     step = "poster-replacement-and-history-restore";
     const initialPublicImages = await homeImages();
     const posters = [];
@@ -999,6 +1014,12 @@ export async function verifyManagementCenterBrowser({
         await navigate(locale);
         for (const sectionName of ["ARTISTS", "GIFTS", "POSTERS"]) {
           await section(sectionName);
+          await listBrowser.verifyMatrix({
+            locale,
+            sectionName,
+            artistId: artist.result.targetId,
+            artistName,
+          });
           await pictures(page, "[data-management-list] .mc-item-photo img");
           await page.evaluate(() => globalThis.scrollTo(0, 0));
           await panel(
@@ -1043,6 +1064,8 @@ export async function verifyManagementCenterBrowser({
     await tabTo('[data-management-section="GIFTS"]');
     await page.keyboard.press("Enter");
     await page.locator('[data-management-list="GIFTS"]').waitFor();
+    await settledResponses();
+    await listBrowser.verifyKeyboard();
     await tabTo("[data-management-new]");
     await page.keyboard.press("Enter");
     await page.locator("[data-management-form]").waitFor();

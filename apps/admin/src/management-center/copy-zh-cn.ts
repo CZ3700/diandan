@@ -1,5 +1,10 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  allGifts: "全部",
+  priceOrder: "按价格排序",
+  priceAscending: "价格从低到高",
+  priceDescending: "价格从高到低",
+  priceUnavailable: "暂无价格",
   wishArtist: "所属艺人",
   wishArtistRequired: "请选择这份心愿的收礼艺人。",
   wishArtistChoose: "选择这位艺人",

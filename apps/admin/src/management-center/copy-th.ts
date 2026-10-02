@@ -1,5 +1,10 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  allGifts: "ทั้งหมด",
+  priceOrder: "เรียงตามราคา",
+  priceAscending: "ราคาต่ำไปสูง",
+  priceDescending: "ราคาสูงไปต่ำ",
+  priceUnavailable: "ยังไม่มีราคา",
   wishArtist: "ศิลปินผู้รับ",
   wishArtistRequired: "กรุณาเลือกศิลปินผู้รับของขวัญนี้",
   wishArtistChoose: "เลือกศิลปินคนนี้",

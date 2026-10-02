@@ -109,7 +109,7 @@ test("gift listing reads the current daily gift kind before the legacy profile",
     items: [{ giftKind: "WISH", canEdit: true }],
   });
   expect(vi.mocked(db.query).mock.calls[1]![0]).toContain(
-    "coalesce(d.document->>'giftKind',profile.gift_kind) gift_kind",
+    "coalesce(d.document->>'giftKind',profile.gift_kind,'OTHER') gift_kind",
   );
   expect(vi.mocked(db.query).mock.calls[3]![1]).toEqual([id, null, null]);
 });
@@ -245,6 +245,163 @@ const artists = {
   page: 1,
   pageSize: 10,
 } as const;
+test("artist name search binds literal text in both the scoped count and page before pagination", async () => {
+  const db = client([
+    [{ total: "2" }],
+    [{ ...artistRow, broker_id: broker }],
+    [{ broker_id: broker, display_name: "Mina Park", active: true }],
+  ]);
+  const response = await readManagementCenterList(
+    db,
+    { ...artists, search: "艺人%_'", page: 2, pageSize: 1 },
+    "https://media.example.test/",
+    { scope: "ASSIGNED", brokerId: broker },
+  );
+  expect(response).toMatchObject({
+    totalItems: 2,
+    page: 2,
+    items: [{ id, assignment: { brokerId: broker } }],
+  });
+  const [count, page] = vi.mocked(db.query).mock.calls;
+  for (const [sql, values] of [count!, page!]) {
+    expect(sql).toContain("public.idol_current_broker(o.id)=$1");
+    expect(sql).toContain(
+      "strpos(lower(coalesce(d.document->'source'->'fields'->>'displayName',t.display_name,o.handle)),lower($2))>0",
+    );
+    expect(sql).not.toContain("艺人");
+    expect(sql).not.toMatch(/\bILIKE\b/u);
+    expect((values as unknown[]).slice(0, 2)).toEqual([broker, "艺人%_'"]);
+  }
+  expect(page![1]).toEqual([broker, "艺人%_'", 1, 1]);
+});
+test("gift kind uses the same current revision classification in count and page", async () => {
+  const db = client([[{ total: "0" }], []]);
+  await readManagementCenterList(
+    db,
+    { ...artists, section: "GIFTS", giftKind: "WISH", page: 3, pageSize: 12 },
+    "https://media.example.test/",
+    { scope: "ALL" },
+  );
+  const [count, page] = vi.mocked(db.query).mock.calls;
+  for (const [sql] of [count!, page!])
+    expect(sql).toContain(
+      "coalesce(d.document->>'giftKind',profile.gift_kind,'OTHER')=$1",
+    );
+  expect(count![1]).toEqual(["WISH"]);
+  expect(page![1]).toEqual(["WISH", 12, 24]);
+});
+test.each(["PRICE_ASC", "PRICE_DESC"] as const)(
+  "%s uses published default scope without changing the gift edit price or dropping unpriced entries",
+  async (sort) => {
+    const giftRow = {
+      ...artistRow,
+      revision_id: id,
+      gift_kind: "OTHER",
+      category: "OTHER",
+      status: "paused",
+    };
+    const variant = {
+      id,
+      inventory_policy: "PROCURE_ON_DEMAND",
+      variant_count: "1",
+      inventory_item_id: null,
+      location_id: null,
+      configured_location_id: null,
+      configured_market: "TEST_B",
+      configured_currency: "EUR",
+      all_artists: true,
+    };
+    const db = client([
+      [{ market: "TEST_A", currency: "USD" }],
+      [{ total: "2" }],
+      [
+        { ...giftRow, sort_amount_minor: "1500" },
+        { ...giftRow, id: broker, sort_amount_minor: null },
+      ],
+      [variant],
+      [{ market: "TEST_B", currency: "EUR", amount_minor: "2200" }],
+      [variant],
+      [{ market: "TEST_B", currency: "EUR", amount_minor: "2200" }],
+    ]);
+    const result = await readManagementCenterList(
+      db,
+      { ...artists, section: "GIFTS", sort },
+      "https://media.example.test/",
+      { scope: "ALL" },
+    );
+    expect(result).toMatchObject({
+      priceScope: { market: "TEST_A", currency: "USD" },
+      totalItems: 2,
+      items: [
+        {
+          status: "paused",
+          giftKind: "OTHER",
+          price: { market: "TEST_B", currency: "EUR", amountMinor: 2200 },
+          sortPrice: { market: "TEST_A", currency: "USD", amountMinor: 1500 },
+        },
+        {
+          sortPrice: null,
+          price: { market: "TEST_B", currency: "EUR", amountMinor: 2200 },
+        },
+      ],
+    });
+    const [defaults, count, page] = vi.mocked(db.query).mock.calls;
+    expect(defaults![0]).toContain("c.lifecycle='PUBLISHED'");
+    expect(defaults![0]).toContain("m.status='ACTIVE'");
+    expect(defaults![0]).toContain("m.default_currency=d.currency");
+    expect(count![1]).toEqual([]);
+    expect(page![1]).toEqual(["TEST_A", "USD", 10, 0]);
+    expect(page![0]).toContain(
+      `sort_price.amount_minor ${sort === "PRICE_ASC" ? "ASC" : "DESC"} NULLS LAST,o.created_at DESC,o.id DESC`,
+    );
+    expect(page![0]).toContain("h.market=$1 AND h.currency=$2");
+    expect(page![0]).toContain(
+      "publication.action='ROLLBACK' AND p.status IN('PUBLISHED','SUPERSEDED')",
+    );
+    expect(page![0]).toContain("b.valid_from<=transaction_timestamp()");
+    expect(page![0]).toContain("p.valid_to>transaction_timestamp()");
+    expect(page![0]).not.toContain("amount_minor IS NOT NULL");
+    expect(vi.mocked(db.query).mock.calls[4]![1]).toEqual([
+      id,
+      "TEST_B",
+      "EUR",
+    ]);
+  },
+);
+test("missing or invalid default price scope returns the existing typed failure before listing", async () => {
+  for (const rows of [
+    [],
+    [{ market: "TEST", currency: null }],
+    [{ market: "TEST", currency: "INVALID" }],
+  ]) {
+    const db = client([rows]);
+    expect(
+      await readManagementCenterList(
+        db,
+        { ...artists, section: "GIFTS", sort: "PRICE_ASC" },
+        "https://media.example.test/",
+        { scope: "ALL" },
+      ),
+    ).toEqual({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "DEFAULTS_NOT_CONFIGURED",
+    });
+    expect(db.query).toHaveBeenCalledTimes(1);
+  }
+});
+test("NEWEST remains usable without a price scope and omits comparison metadata", async () => {
+  const db = client([[{ total: "0" }], []]);
+  const result = await readManagementCenterList(
+    db,
+    { ...artists, section: "GIFTS", sort: "NEWEST" },
+    "https://media.example.test/",
+    { scope: "ALL" },
+  );
+  expect(result).toMatchObject({ outcome: "SUCCESS", items: [] });
+  expect(result).not.toHaveProperty("priceScope");
+  expect(db.query).toHaveBeenCalledTimes(2);
+});
 test("a broker's artist list counts and reads only the artists assigned to it", async () => {
   const db = client([
     [{ total: "1" }],

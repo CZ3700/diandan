@@ -212,6 +212,63 @@ it("says nothing matched, not 'add the first artist', when a filter is on", () =
   expect(empty(true)).not.toContain("添加第一位艺人");
   expect(empty(false)).toContain("添加第一位艺人");
 });
+it("shows no matching gifts for an empty type filter", () => {
+  const html = renderToStaticMarkup(
+    <ManagementListView
+      locale="zh-CN"
+      list={listing({ section: "GIFTS" })}
+      busy={false}
+      filtered
+      onSelect={() => {}}
+      onPage={() => {}}
+    />,
+  );
+  expect(html).toContain("没有找到匹配内容");
+  expect(html).not.toContain("添加第一件礼物");
+});
+it("uses comparison prices only for display and never falls back to another currency when missing", () => {
+  const gift = {
+    kind: "GIFT",
+    id,
+    version: 1,
+    sourceLocale: "en",
+    name: "Test gift",
+    description: "Description",
+    image: null,
+    status: "active",
+    handle: "test-gift",
+    giftKind: "PHYSICAL",
+    category: "OTHER",
+    price: { market: "TH", currency: "THB", amountMinor: 99900 },
+    inventory: { policy: "PROCURE_ON_DEMAND" },
+    eligibility: { rule: "ALL_ACTIVE_ARTISTS" },
+    canEdit: true,
+    inventoryPolicyLocked: false,
+  };
+  for (const sortPrice of [
+    { market: "US", currency: "USD", amountMinor: 2300 },
+    null,
+  ]) {
+    const list = listing({
+      section: "GIFTS",
+      totalItems: 1,
+      priceScope: { market: "US", currency: "USD" },
+      items: [{ ...gift, sortPrice }],
+    });
+    const html = renderToStaticMarkup(
+      <ManagementListView
+        locale="zh-CN"
+        list={list}
+        busy={false}
+        onSelect={() => {}}
+        onPage={() => {}}
+      />,
+    );
+    expect(html).not.toContain("999.00");
+    expect(html).toContain(sortPrice ? "23.00" : "暂无价格");
+    expect(list.items[0]).toMatchObject({ price: gift.price });
+  }
+});
 it("puts a wish's artist and status on their own row beside an unsplit price", () => {
   const html = renderToStaticMarkup(
     <ManagementListView

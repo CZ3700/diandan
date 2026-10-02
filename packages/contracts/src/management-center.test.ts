@@ -26,6 +26,130 @@ const gift = {
   inventory: { policy: "PROCURE_ON_DEMAND" },
   eligibility: { rule: "ALL_ACTIVE_ARTISTS" },
 };
+describe("management list filters and sort prices", () => {
+  const list = {
+    schemaVersion: 1,
+    action: "LIST",
+    section: "ARTISTS",
+    page: 1,
+    pageSize: 12,
+  };
+  const accepts = (value: unknown) =>
+    managementCenterCommandSchema.safeParse(value).success;
+  it("combines bounded literal artist search with assignment only for artists", () => {
+    expect(
+      accepts({
+        ...list,
+        search: "艺人%_",
+        assignment: { kind: "UNASSIGNED" },
+      }),
+    ).toBe(true);
+    for (const search of ["", " ", " name", "name\n", "a".repeat(81)])
+      expect(accepts({ ...list, search })).toBe(false);
+    for (const section of ["GIFTS", "POSTERS"])
+      expect(accepts({ ...list, section, search: "Artist" })).toBe(false);
+  });
+  it("accepts gift kinds and a closed sort vocabulary without altering old requests", () => {
+    expect(managementCenterCommandSchema.parse(list)).toEqual(list);
+    for (const giftKind of [
+      "VIRTUAL",
+      "PHYSICAL",
+      "WISH",
+      "MERCHANDISE",
+      "OTHER",
+    ])
+      for (const sort of [undefined, "NEWEST", "PRICE_ASC", "PRICE_DESC"])
+        expect(
+          accepts({
+            ...list,
+            section: "GIFTS",
+            giftKind,
+            ...(sort ? { sort } : {}),
+          }),
+        ).toBe(true);
+    for (const extra of [
+      { giftKind: "FLOWERS" },
+      { sort: "RANDOM()" },
+      { market: "US" },
+      { currency: "USD" },
+    ])
+      expect(accepts({ ...list, section: "GIFTS", ...extra })).toBe(false);
+    for (const section of ["ARTISTS", "POSTERS"])
+      for (const extra of [{ giftKind: "VIRTUAL" }, { sort: "NEWEST" }])
+        expect(accepts({ ...list, section, ...extra })).toBe(false);
+  });
+  it("binds optional sort prices to the list scope while retaining the original edit price", () => {
+    const item = {
+      kind: "GIFT",
+      id,
+      version: 1,
+      sourceLocale: "en",
+      name: "Gift",
+      description: "",
+      image: null,
+      status: "paused",
+      handle: "gift",
+      giftKind: "OTHER",
+      category: "OTHER",
+      price: { market: "TEST_B", currency: "EUR", amountMinor: 2200 },
+      inventory: null,
+      eligibility: { rule: "EXPLICIT_ARTISTS" },
+      canEdit: false,
+      inventoryPolicyLocked: false,
+    };
+    const response = {
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      kind: "LIST",
+      section: "GIFTS",
+      page: 1,
+      pageSize: 12,
+      totalItems: 1,
+      items: [item],
+    };
+    const priceScope = { market: "TEST_A", currency: "USD" };
+    const sortPrice = { ...priceScope, amountMinor: 1500 };
+    const acceptsResponse = (value: unknown) =>
+      managementCenterResponseSchema.safeParse(value).success;
+    expect(acceptsResponse(response)).toBe(true);
+    // Omitted JSON properties are valid; an explicit undefined is not a DTO value.
+    expect(acceptsResponse({ ...response, priceScope: undefined })).toBe(false);
+    expect(
+      acceptsResponse({
+        ...response,
+        items: [{ ...item, sortPrice: undefined }],
+      }),
+    ).toBe(false);
+    for (const price of [sortPrice, null])
+      expect(
+        acceptsResponse({
+          ...response,
+          priceScope,
+          items: [{ ...item, sortPrice: price }],
+        }),
+      ).toBe(true);
+    expect(acceptsResponse({ ...response, priceScope })).toBe(false);
+    expect(
+      acceptsResponse({ ...response, items: [{ ...item, sortPrice }] }),
+    ).toBe(false);
+    expect(
+      acceptsResponse({
+        ...response,
+        priceScope,
+        items: [{ ...item, sortPrice: item.price }],
+      }),
+    ).toBe(false);
+    expect(
+      acceptsResponse({
+        ...response,
+        section: "ARTISTS",
+        totalItems: 0,
+        items: [],
+        priceScope,
+      }),
+    ).toBe(false);
+  });
+});
 describe("management center boundary", () => {
   it("requires a single artist and one tracked unit for new wish submissions without rewriting legacy intents", () => {
     const legacy = { ...gift, giftKind: "WISH" };

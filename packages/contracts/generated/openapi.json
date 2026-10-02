@@ -127221,6 +127221,16 @@
                   }
                 ]
               },
+              "giftKind": {
+                "enum": [
+                  "VIRTUAL",
+                  "PHYSICAL",
+                  "WISH",
+                  "MERCHANDISE",
+                  "OTHER"
+                ],
+                "type": "string"
+              },
               "page": {
                 "exclusiveMinimum": 0,
                 "maximum": 1000000,
@@ -127235,11 +127245,24 @@
                 "const": 1,
                 "type": "number"
               },
+              "search": {
+                "maxLength": 160,
+                "minLength": 1,
+                "type": "string"
+              },
               "section": {
                 "enum": [
                   "ARTISTS",
                   "GIFTS",
                   "POSTERS"
+                ],
+                "type": "string"
+              },
+              "sort": {
+                "enum": [
+                  "NEWEST",
+                  "PRICE_ASC",
+                  "PRICE_DESC"
                 ],
                 "type": "string"
               }
@@ -130185,6 +130208,37 @@
                   }
                 ]
               },
+              "sortPrice": {
+                "anyOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "amountMinor": {
+                        "maximum": 9007199254740991,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "currency": {
+                        "pattern": "^[A-Z]{3}$",
+                        "type": "string"
+                      },
+                      "market": {
+                        "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "market",
+                      "currency",
+                      "amountMinor"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
               "sourceLocale": {
                 "enum": [
                   "en",
@@ -130398,6 +130452,37 @@
                 "type": "string"
               },
               "price": {
+                "anyOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "amountMinor": {
+                        "maximum": 9007199254740991,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "currency": {
+                        "pattern": "^[A-Z]{3}$",
+                        "type": "string"
+                      },
+                      "market": {
+                        "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "market",
+                      "currency",
+                      "amountMinor"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "sortPrice": {
                 "anyOf": [
                   {
                     "additionalProperties": false,
@@ -130950,6 +131035,16 @@
                       }
                     ]
                   },
+                  "giftKind": {
+                    "enum": [
+                      "VIRTUAL",
+                      "PHYSICAL",
+                      "WISH",
+                      "MERCHANDISE",
+                      "OTHER"
+                    ],
+                    "type": "string"
+                  },
                   "page": {
                     "exclusiveMinimum": 0,
                     "maximum": 1000000,
@@ -130964,11 +131059,24 @@
                     "const": 1,
                     "type": "number"
                   },
+                  "search": {
+                    "maxLength": 160,
+                    "minLength": 1,
+                    "type": "string"
+                  },
                   "section": {
                     "enum": [
                       "ARTISTS",
                       "GIFTS",
                       "POSTERS"
+                    ],
+                    "type": "string"
+                  },
+                  "sort": {
+                    "enum": [
+                      "NEWEST",
+                      "PRICE_ASC",
+                      "PRICE_DESC"
                     ],
                     "type": "string"
                   }
@@ -133289,6 +133397,37 @@
                             }
                           ]
                         },
+                        "sortPrice": {
+                          "anyOf": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "amountMinor": {
+                                  "maximum": 9007199254740991,
+                                  "minimum": 0,
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "pattern": "^[A-Z]{3}$",
+                                  "type": "string"
+                                },
+                                "market": {
+                                  "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "market",
+                                "currency",
+                                "amountMinor"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
                         "sourceLocale": {
                           "enum": [
                             "en",
@@ -133502,6 +133641,37 @@
                           "type": "string"
                         },
                         "price": {
+                          "anyOf": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "amountMinor": {
+                                  "maximum": 9007199254740991,
+                                  "minimum": 0,
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "pattern": "^[A-Z]{3}$",
+                                  "type": "string"
+                                },
+                                "market": {
+                                  "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "market",
+                                "currency",
+                                "amountMinor"
+                              ],
+                              "type": "object"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "sortPrice": {
                           "anyOf": [
                             {
                               "additionalProperties": false,
@@ -133747,6 +133917,24 @@
                 "maximum": 50,
                 "minimum": 1,
                 "type": "integer"
+              },
+              "priceScope": {
+                "additionalProperties": false,
+                "properties": {
+                  "currency": {
+                    "pattern": "^[A-Z]{3}$",
+                    "type": "string"
+                  },
+                  "market": {
+                    "pattern": "^[A-Z][A-Z0-9_-]{1,15}$",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "market",
+                  "currency"
+                ],
+                "type": "object"
               },
               "schemaVersion": {
                 "const": 1,
@@ -214797,6 +214985,16 @@
                       }
                     ]
                   },
+                  "giftKind": {
+                    "enum": [
+                      "VIRTUAL",
+                      "PHYSICAL",
+                      "WISH",
+                      "MERCHANDISE",
+                      "OTHER"
+                    ],
+                    "type": "string"
+                  },
                   "page": {
                     "exclusiveMinimum": 0,
                     "maximum": 1000000,
@@ -214811,11 +215009,24 @@
                     "const": 1,
                     "type": "number"
                   },
+                  "search": {
+                    "maxLength": 160,
+                    "minLength": 1,
+                    "type": "string"
+                  },
                   "section": {
                     "enum": [
                       "ARTISTS",
                       "GIFTS",
                       "POSTERS"
+                    ],
+                    "type": "string"
+                  },
+                  "sort": {
+                    "enum": [
+                      "NEWEST",
+                      "PRICE_ASC",
+                      "PRICE_DESC"
                     ],
                     "type": "string"
                   }
