@@ -15,6 +15,10 @@ import { createPaymentRuntimeNext } from "./payment-runtime-next.mjs";
 import { createOrderStorefrontGateway } from "./order-storefront-gateway.mjs";
 import { createOrderStorefrontOrders } from "./order-storefront-fixture.mjs";
 import { verifyOrderStorefrontBrowser } from "./order-storefront-browser.mjs";
+import { createAdminOrdersRuntime } from "./admin-orders-runtime.mjs";
+import { createOrderLifecycleBrowser } from "./order-lifecycle-browser.mjs";
+import { verifyMixedFulfillmentLifecycle } from "./order-lifecycle-mixed-fixture.mjs";
+import { verifyLatePaymentLifecycle } from "./order-lifecycle-late-fixture.mjs";
 
 const workspaceRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -98,6 +102,28 @@ export async function runOrderStorefront(database, s3) {
         await next.start();
         const setupAssertions = assertions;
         browserStarted = true;
+        const lifecycleContext = { ...context, workspaceRoot, s3 };
+        const lifecycleBrowser =
+          await createOrderLifecycleBrowser(lifecycleContext);
+        context.own("order lifecycle browser", () => lifecycleBrowser.close());
+        const lifecycleOptions = {
+          runtime: await createAdminOrdersRuntime(lifecycleContext),
+          payment: orders.payment,
+          onStage: lifecycleBrowser.observe,
+        };
+        const lifecycle = {
+          mixed: await verifyMixedFulfillmentLifecycle(
+            lifecycleContext,
+            lifecycleOptions,
+          ),
+          late: await verifyLatePaymentLifecycle(
+            lifecycleContext,
+            lifecycleOptions,
+          ),
+        };
+        await lifecycleBrowser.finish();
+        await lifecycleOptions.runtime.assertPrivacy();
+        await save("lifecycle.json", lifecycle);
         const report = await verifyOrderStorefrontBrowser({
           ...context,
           ...orders,

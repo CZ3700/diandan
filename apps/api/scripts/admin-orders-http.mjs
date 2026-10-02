@@ -73,6 +73,21 @@ async function run(database, s3, ui) {
           runtime,
           payment,
         );
+        const { verifyMixedFulfillmentLifecycle } =
+          await import("./order-lifecycle-mixed-fixture.mjs");
+        const { verifyLatePaymentLifecycle } =
+          await import("./order-lifecycle-late-fixture.mjs");
+        const lifecycle = {
+          mixed: await verifyMixedFulfillmentLifecycle(context, {
+            runtime,
+            payment,
+          }),
+          late: await verifyLatePaymentLifecycle(context, { runtime, payment }),
+        };
+        await writeFile(
+          path.join(output, "lifecycle.json"),
+          JSON.stringify(lifecycle, null, 2) + "\n",
+        );
         progress("durable original notification preparation");
         const transport = createNotificationFixtureTransport(),
           configuration = {
