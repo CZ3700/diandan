@@ -1,0 +1,41 @@
+.page-management {
+  display: grid;
+  gap: var(--space-6);
+  min-width: 0;
+}
+.page-management-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  border-block-end: var(--border-width) solid var(--color-border);
+}
+.page-management-tabs button {
+  min-height: var(--space-12);
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-block-end: var(--border-width) solid transparent;
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.page-management-tabs button[aria-selected="true"] {
+  border-block-end-color: var(--color-accent);
+  color: var(--color-text);
+}
+.page-management-tabs button:disabled {
+  color: var(--color-text-muted);
+  cursor: default;
+}
+.page-management-tabs button:focus-visible,
+.page-management-panel:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-accent);
+  outline-offset: var(--focus-ring-offset);
+}
+.page-management-panel {
+  min-width: 0;
+}
+.page-management-panel[hidden] {
+  display: none;
+}

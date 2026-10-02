@@ -20,7 +20,7 @@ test("the entry follows the admin shell for the operator's actual access", () =>
       artistsOnly: false,
       granted: new Set(["content-read"]),
     }),
-    "ARTISTS,GIFTS,POSTERS,INFO_PAGES,POLICIES,DECORATION",
+    "ARTISTS,GIFTS,POSTERS,PAGES,DECORATION",
   );
   // A super administrator signed in with a built-in account on the full API;
   // the ledger is reached inside orders.
@@ -38,7 +38,7 @@ test("the entry follows the admin shell for the operator's actual access", () =>
         "account-context",
       ]),
     }),
-    "ARTISTS,GIFTS,POSTERS,INFO_PAGES,POLICIES,DECORATION,ORDERS,PAYMENTS,EXCEPTIONS,STAFF,ACCOUNT",
+    "ARTISTS,GIFTS,POSTERS,PAGES,DECORATION,ORDERS,PAYMENTS,EXCEPTIONS,STAFF,ACCOUNT",
   );
   // A broker: own artists, its ledger and its account only.
   assert.equal(
@@ -55,21 +55,21 @@ test("the entry follows the admin shell for the operator's actual access", () =>
   );
 });
 
-test("policy entry follows content read access even without daily publication access", () => {
+test("pages entry follows content read access even without daily publication access", () => {
   assert.equal(
     expected({
       content: false,
       artistsOnly: false,
       granted: new Set(["content-read"]),
     }),
-    "INFO_PAGES,POLICIES,DECORATION",
+    "PAGES,DECORATION",
   );
   assert.equal(
     expected({
       content: true,
       artistsOnly: true,
       granted: new Set(["orders-context"]),
-    }).includes("POLICIES"),
+    }).includes("PAGES"),
     false,
   );
 });

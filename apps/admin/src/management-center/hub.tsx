@@ -27,6 +27,7 @@ import type { LedgerApi } from "../management-ledger/api";
 import { LedgerWorkspace } from "../management-ledger/workspace";
 import { ManagementWorkspace } from "./workspace";
 import { ManagementShell } from "./shell";
+import { PageManagement } from "./page-management";
 import { ManagementLogout } from "./logout";
 import { managementCopy } from "./copy";
 import type { HomeLayoutApi } from "../management-decoration/api";
@@ -354,27 +355,42 @@ export function ManagementHub({
           onAccount={setAccount}
           onReload={() => setAccountRead((value) => value + 1)}
         />
-      ) : active === "INFO_PAGES" &&
-        infoPagesAccess?.allowed &&
-        infoPagesApi ? (
-        <InformationPagesWorkspace
-          api={infoPagesApi}
+      ) : (active === "INFO_PAGES" || active === "POLICIES") &&
+        ((active === "INFO_PAGES" &&
+          infoPagesAccess?.allowed &&
+          infoPagesApi) ||
+          (active === "POLICIES" && policiesAccess?.allowed && policiesApi)) ? (
+        <PageManagement
           locale={locale}
-          localeScopes={infoPagesAccess.localeScopes}
-          storefrontOrigin={storefrontOrigin}
-          onBusy={setBusy}
-          onDirtyChange={setInfoDirty}
-        />
-      ) : active === "POLICIES" && policiesAccess?.allowed && policiesApi ? (
-        <PoliciesWorkspace
-          api={policiesApi}
-          locale={locale}
-          localeScopes={policiesAccess.localeScopes}
-          permissions={policiesAccess.permissions}
-          actorId={policiesAccess.actorId}
-          onBusy={setBusy}
-          onDirtyChange={setInfoDirty}
-        />
+          active={active}
+          infoPagesAvailable={Boolean(infoPagesAccess?.allowed && infoPagesApi)}
+          policiesAvailable={Boolean(policiesAccess?.allowed && policiesApi)}
+          busy={busy}
+          onSection={chooseSection}
+        >
+          {active === "INFO_PAGES" && infoPagesAccess && infoPagesApi ? (
+            <InformationPagesWorkspace
+              api={infoPagesApi}
+              locale={locale}
+              localeScopes={infoPagesAccess.localeScopes}
+              storefrontOrigin={storefrontOrigin}
+              onBusy={setBusy}
+              onDirtyChange={setInfoDirty}
+              embedded
+            />
+          ) : policiesAccess && policiesApi ? (
+            <PoliciesWorkspace
+              api={policiesApi}
+              locale={locale}
+              localeScopes={policiesAccess.localeScopes}
+              permissions={policiesAccess.permissions}
+              actorId={policiesAccess.actorId}
+              onBusy={setBusy}
+              onDirtyChange={setInfoDirty}
+              embedded
+            />
+          ) : null}
+        </PageManagement>
       ) : active === "DECORATION" && layoutPermissions?.read && layoutApi ? (
         <DecorationCenter
           api={layoutApi}

@@ -31,6 +31,7 @@ export function InformationPagesWorkspace({
   onDirtyChange,
   onBusy,
   storefrontOrigin,
+  embedded = false,
 }: {
   api: InformationPagesApi;
   locale: SupportedLocale;
@@ -38,9 +39,11 @@ export function InformationPagesWorkspace({
   onDirtyChange: (dirty: boolean) => void;
   onBusy: (busy: boolean) => void;
   storefrontOrigin?: string | undefined;
+  embedded?: boolean;
 }) {
   const copy = informationCopy(locale),
     t = translator(locale);
+  const Heading = embedded ? "h2" : "h1";
   const [pageKey, setPageKey] = useState<InformationPageKey>("ABOUT");
   const [contentLocale, setContentLocale] = useState<SupportedLocale>(
     localeScopes.includes("en") ? "en" : (localeScopes[0] ?? "en"),
@@ -237,7 +240,7 @@ export function InformationPagesWorkspace({
     <div data-info-workspace>
       <header className="mc-workspace-header">
         <div>
-          <h1>{copy.title}</h1>
+          <Heading>{copy.title}</Heading>
           <p className="mc-hint">{copy.intro}</p>
         </div>
       </header>

@@ -18,6 +18,15 @@ vi.mock("react", async (original) => ({
 }));
 import { ManagementHub } from "../management-center/hub";
 import { InformationPagesWorkspace } from "./workspace";
+function findWorkspace(
+  node: unknown,
+): ReactElement<ComponentProps<typeof InformationPagesWorkspace>> | undefined {
+  if (Array.isArray(node)) return node.map(findWorkspace).find(Boolean);
+  if (!isValidElement<Record<string, unknown>>(node)) return;
+  if (node.type === InformationPagesWorkspace)
+    return node as ReturnType<typeof findWorkspace>;
+  return findWorkspace(node.props["children"]);
+}
 const infoApi = {
   read: vi.fn(),
   save: vi.fn(),
@@ -60,11 +69,8 @@ test("reviewers reach information pages without daily content access and dirty d
   const tree = ManagementHub(props);
   expect(tree.props.section).toBe("INFO_PAGES");
   expect(tree.props.infoPagesAvailable).toBe(true);
-  const children = tree.props.children as unknown[];
-  const workspace = children.find(
-    (child) =>
-      isValidElement(child) && child.type === InformationPagesWorkspace,
-  ) as ReactElement<ComponentProps<typeof InformationPagesWorkspace>>;
+  const workspace = findWorkspace(tree)!;
+  expect(workspace.props.embedded).toBe(true);
   expect(workspace.props.localeScopes).toEqual(["ja"]);
   workspace.props.onDirtyChange(true);
   hooks.index = 0;

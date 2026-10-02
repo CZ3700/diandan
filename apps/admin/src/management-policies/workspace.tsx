@@ -46,6 +46,7 @@ export type PoliciesWorkspaceProps = {
   actorId: string;
   onDirtyChange: (dirty: boolean) => void;
   onBusy: (busy: boolean) => void;
+  embedded?: boolean;
 };
 export function PoliciesWorkspace({
   api,
@@ -55,7 +56,9 @@ export function PoliciesWorkspace({
   actorId,
   onDirtyChange,
   onBusy,
+  embedded = false,
 }: PoliciesWorkspaceProps) {
+  const Heading = embedded ? "h2" : "h1";
   const copy = policiesCopy(locale),
     t = translator(locale),
     prefix = useId();
@@ -377,7 +380,7 @@ export function PoliciesWorkspace({
     >
       <header className="mc-workspace-header">
         <div>
-          <h1>{copy.title}</h1>
+          <Heading>{copy.title}</Heading>
           <p className="mc-hint">{copy.intro}</p>
         </div>
       </header>

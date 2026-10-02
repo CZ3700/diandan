@@ -13,7 +13,7 @@ test("information pages remain available to scoped reviewers without daily uploa
       <p>Review</p>
     </ManagementShell>,
   );
-  expect(html).toContain('data-management-section="INFO_PAGES"');
-  expect(html).toContain("信息页面");
+  expect(html).toContain('data-management-section="PAGES"');
+  expect(html).toContain("页面管理");
   expect(html).not.toContain('data-management-section="ARTISTS"');
 });

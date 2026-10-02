@@ -16,6 +16,15 @@ vi.mock("react", async (original) => ({
   },
 }));
 import { ManagementHub } from "./hub";
+function find(
+  node: unknown,
+  predicate: (props: Record<string, unknown>) => boolean,
+): ReactElement<Record<string, unknown>> | undefined {
+  if (Array.isArray(node))
+    return node.map((child) => find(child, predicate)).find(Boolean);
+  if (!isValidElement<Record<string, unknown>>(node)) return;
+  return predicate(node.props) ? node : find(node.props["children"], predicate);
+}
 
 const props = {
   api: { context: vi.fn() },
@@ -62,10 +71,9 @@ test("a policy draft protects navigation, language changes and logout", async ()
   const confirm = vi.fn(() => false);
   vi.stubGlobal("window", { confirm });
   const tree = ManagementHub(props);
-  const workspace = (tree.props.children as unknown[]).find(
-    (child) =>
-      isValidElement<{ onDirtyChange?: unknown }>(child) &&
-      typeof child.props.onDirtyChange === "function",
+  const workspace = find(
+    tree,
+    (props) => typeof props["onDirtyChange"] === "function",
   ) as ReactElement<{
     onDirtyChange: (value: boolean) => void;
     onBusy: (value: boolean) => void;
@@ -86,3 +94,47 @@ test("a policy draft protects navigation, language changes and logout", async ()
   expect(props.onLogout).not.toHaveBeenCalled();
   expect(confirm).toHaveBeenCalledTimes(3);
 });
+
+test.each(["INFO_PAGES", "POLICIES"] as const)(
+  "page tabs retain a cancelled %s draft and busy state blocks switching",
+  (initial) => {
+    const confirm = vi.fn(() => false);
+    vi.stubGlobal("window", { confirm });
+    hooks.values[2] = initial;
+    const next = initial === "POLICIES" ? "INFO_PAGES" : "POLICIES";
+    const both = {
+      ...props,
+      infoPagesApi: {},
+      infoPagesAccess: { allowed: true, localeScopes: ["ja"] },
+    } as unknown as ComponentProps<typeof ManagementHub>;
+    let tree = ManagementHub(both);
+    const workspace = find(
+      tree,
+      (p) => typeof p["onDirtyChange"] === "function",
+    )!;
+    (workspace.props["onDirtyChange"] as (value: boolean) => void)(true);
+    hooks.index = 0;
+    tree = ManagementHub(both);
+    let pages = find(tree, (p) => p["active"] === initial);
+    expect(pages).toBeDefined();
+    (pages!.props["onSection"] as (section: string) => void)(next);
+    expect(hooks.values[2]).toBe(initial);
+    expect(confirm).toHaveBeenCalledOnce();
+    confirm.mockReturnValue(true);
+    (workspace.props["onBusy"] as (value: boolean) => void)(true);
+    hooks.index = 0;
+    tree = ManagementHub(both);
+    pages = find(tree, (p) => p["active"] === initial);
+    expect(pages!.props["busy"]).toBe(true);
+    (pages!.props["onSection"] as (section: string) => void)(next);
+    expect(hooks.values[2]).toBe(initial);
+    expect(confirm).toHaveBeenCalledOnce();
+    (workspace.props["onBusy"] as (value: boolean) => void)(false);
+    hooks.index = 0;
+    tree = ManagementHub(both);
+    pages = find(tree, (p) => p["active"] === initial);
+    (pages!.props["onSection"] as (section: string) => void)(next);
+    expect(hooks.values[2]).toBe(next);
+    expect(confirm).toHaveBeenCalledTimes(2);
+  },
+);

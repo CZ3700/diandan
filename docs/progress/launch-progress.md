@@ -1,5 +1,13 @@
 # 当前上线进度
 
+## P-20261003 页面管理入口合并
+
+- BLOCKED_EXTERNAL（剩余浏览器矩阵/公开 TEST 部署）；代码完成，2026-10-03。root统筹/浏览器，catalog_integration_audit实现，research_gifts_a独立PG夹具，research_gifts_b同步CI模型和复核；基线`3790ac30`。
+- 侧栏统一“页面管理”，内部按权限显示“信息页面/政策条款”；保留现有接口、数据、七语审核、发布与历史订单政策快照。重复点击侧栏保留当前标签；切换沿用未保存确认/处理中保护；键盘方向键、Home/End移动焦点，Enter/Space激活。
+- TDD RED→GREEN；最终受影响20文件80测试、CI模型10/10、设计基础57/57通过。隔离副本强制执行完整`check:dev`计划：typecheck69/69、test69/69、build38/38任务均0缓存通过；14/14应用变更与主目录逐字节一致，格式/lint/Secretlint/diff检查通过。
+- 新界面实测：Chrome英语390×844信息页、政策页、重复入口保稿、取消离开保稿；内置浏览器英语1440×900新入口/双标签与方向键/Home/End/Enter/Space通过并截图。内置浏览器原生确认框使控制阻塞，尚未闭合七语双端、错误恢复及reduced-motion浏览器验证；自动测试不替代这些缺口。
+- S.U.P.E.R1–9独立复核通过，10自动测试通过但浏览器验收保留上述缺口。未变更依赖/迁移；真实临时PG支持内容读取，未重跑全量PG/S3/PSP，未部署或正式发布。证据`output/page-management-20261003/README.md`，操作入口`docs/runbooks/policy-content-management.md`。
+
 ## P-20261003 后台政策入口与七语言同步
 
 - BLOCKED_EXTERNAL（减少动效浏览器仿真/公开 TEST 部署）；源码与28份内容包完成，2026-10-03。root导航/浏览器，catalog_integration_audit工作区/CI，research_gifts_a翻译/PG，research_gifts_b独立复核；实现 `e876c25c`。

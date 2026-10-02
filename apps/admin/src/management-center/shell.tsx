@@ -9,12 +9,11 @@ import type { ManagementSection } from "./api";
 import { managementCopy } from "./copy";
 import { paymentCopy } from "../management-payments/copy";
 import { ordersCopy } from "../management-orders/copy";
-import { informationCopy } from "../management-info-pages/copy";
 import { decorationCopy } from "../management-decoration/copy";
 import { accountCopy } from "../management-account/copy";
 import { staffCopy } from "../management-staff/copy";
 import { ledgerCopy } from "../management-ledger/copy";
-import { policiesCopy } from "../management-policies/copy";
+import { pageManagementCopy } from "./page-management-copy";
 
 export function ManagementShell({
   locale,
@@ -127,26 +126,27 @@ export function ManagementShell({
               )}
             </>
           ) : null}
-          {infoPagesAvailable && (
+          {(infoPagesAvailable || policiesAvailable) && (
             <button
               type="button"
-              data-management-section="INFO_PAGES"
-              aria-current={section === "INFO_PAGES" ? "page" : undefined}
+              data-management-section="PAGES"
+              aria-current={
+                section === "INFO_PAGES" || section === "POLICIES"
+                  ? "page"
+                  : undefined
+              }
               disabled={disabled}
-              onClick={() => onSection("INFO_PAGES")}
+              onClick={() => {
+                if (
+                  disabled ||
+                  section === "INFO_PAGES" ||
+                  section === "POLICIES"
+                )
+                  return;
+                onSection(infoPagesAvailable ? "INFO_PAGES" : "POLICIES");
+              }}
             >
-              {informationCopy(locale).title}
-            </button>
-          )}
-          {policiesAvailable && (
-            <button
-              type="button"
-              data-management-section="POLICIES"
-              aria-current={section === "POLICIES" ? "page" : undefined}
-              disabled={disabled}
-              onClick={() => onSection("POLICIES")}
-            >
-              {policiesCopy(locale).title}
+              {pageManagementCopy(locale).title}
             </button>
           )}
           {decorationAvailable && (
