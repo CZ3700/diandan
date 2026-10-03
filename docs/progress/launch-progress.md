@@ -2,11 +2,15 @@
 
 ## P-20261003 审计整改 1C：交易正确性
 
-- **状态**：IN_PROGRESS，2026-10-03 起，Claude（Cz 会话），用户批准 1C。**占用迁移号 0066**（支付恢复连续失败计数，加法迁移）。
-- **范围**（按顺序，每项单独提交）：① TXN-03 第一步：部分退款后其余已付行可继续履约，整行退款的行不再推进（业务决定 1：不新增取消单行动作）；② TXN-01：库存加锁拆为“主数据共享锁 + 余额排他锁”，预检先锁款式，结账重试加退避；③ PAY-04 非破坏部分：退款恢复退避、拒绝错误码、UNKNOWN 退款告警；④ PAY-01 非破坏部分：支付恢复按连续失败退避、限流与未发出请求留在创建阶段重发、告警。
-- **不在本批**：确定性失败证据类型与触发器（PAY-01/PAY-04 破坏部分）、迟到付款暂缓的恢复、`PAYMENT_NOT_CONFIRMED` 改名、异常中心退款入口——须先写 ADR 另批。
-- **验证计划**：各项先写失败用例；新增本机 PG 并发结账脚本（死锁增量为 0）；fake 适配器失败注入；每次提交前 `check:dev`；收尾跑 `test:postgres` 全量与完整 `pnpm check`。
-- **并行说明**：1B 尚待用户推送；用户同意在其 CI 出结果前本地开工 1C，1B 的 CI 红则先修 1B。a3132d2f 的 CI 37116219145 只有 quality-ui-composites 失败，原因是已登记的预加载告警偶发（CI-2），其余六组通过。
+- **状态**：LOCAL_ACCEPTED，2026-10-03，Claude（Cz 会话），用户批准 1C。迁移头 **0066**。4 个实现提交已随 1B 一起推送（c34d013f），字体子集修复（66596491）待推送后复跑 CI。
+- **TXN-03 第一步**（1cdce520）：可履约条件放宽为 PAID 或 PARTIALLY_REFUNDED（退款处理中、拒付 OPEN/LOST 仍整单暂停）；逐行读取增加“整行已退款”，这类行不再给出任何动作，仓储写路径同样拒绝（业务决定 1：取消一行即整行退款）。财务 PG 夹具新增两行订单场景：先退 A 一半，再退完 A，B 仍可准备并送达（该夹具依赖 S3，由 CI 执行）。
+- **TXN-01**（1ca8cd5c）：库存加锁拆成“礼物与地点共享锁 + 余额排他锁”，预检先按 id 对款式加 KEY SHARE；结账事务重试改为指数退避加抖动。新增 `postgres-inventory-lock-order.mjs`（已挂入 test:postgres）：同一地点 12 个并发结账、结账对后台调整、库存迁移对后台调整，死锁增量 0。变异验证：退回旧锁子句时 12 个结账全部失败；去掉款式锁时后台调整被判死锁 40P01。
+- **PAY-04 非破坏部分**（99826446）：财务恢复失败按 generation 指数退避，上限 1 小时，成功路径时序不变；PSP 明确拒绝改记 PSP 自己的错误码，“未派发”的重派判断不受影响；退款仍未确认时 API 记录 `admin_finance.refund_unresolved`。worker 原有的 `admin_finance.review_required`、`order_payment.review_required` 不在日志白名单中，过去会被改写成 invalid_event，本次一并登记。
+- **PAY-01 非破坏部分**（c34d013f）：迁移 0066 新增 `payment_runtime_operations.defer_count`，连续 defer 按 2^n 退避，上限 1 小时，拿到结果后清零；创建时 PSP 未接受的失败（429、409 进行中、请求未发出，即 RATE_LIMITED/TEMPORARY_UNAVAILABLE 且 RETRY_SAME_COMMAND）保持 CREATED，下次认领用同一幂等键重发；超时、5xx、认证失败、幂等冲突仍记 UNKNOWN。UNKNOWN 尝试对账失败时 API 记录 `payment_runtime.recovery_unresolved`。新增 `postgres-payment-recovery-backoff.mjs`（已挂入 test:postgres）。0066 已登记到回滚前缀头清单两处，0065 迁移用例改为显式指定目标版本，清单与期望目录已重新生成。
+- **CI 37127587516（c34d013f）**：Security、catalog、commerce、operations、journey 通过；quality 在完整 `pnpm check` 的第一步 `check:design-foundations` 失败。原因是上一轮文案审校（8049ebb3）改了日文和中文文案，提交的界面字体子集没有重新生成：日文默认文案要触发 22 个字体请求，中文要 11 个，目标是不超过 2 个。已按 `scripts/fonts/README.md` 重新生成（fonttools 4.64.0 / brotli 1.2.0，原始字体 SHA256 校验通过；日文 456 字、135 KB，中文 493 字、127 KB），本机设计门禁 57/57 通过。Windows 上运行生成器需要设 `PYTHONUTF8=1`，否则子进程输出的中文路径会按 GBK 解码导致找不到文件。完整门禁在 CI 上停在这一步，之后的合同检查、test:postgres、test:s3、lint、类型检查和构建都还没在 CI 上跑过，需要再跑一轮。
+- **验证**：每项先写失败用例再实现；每次提交前 `check:dev` 通过；本机 PG：改动相关的 22 个脚本，以及 test:postgres 全量 65 步逐脚本运行，全部通过。完整 `pnpm check` 以 CI quality 为准（本机有两步在 Windows 上必失败）。
+- **未做（须先写 ADR 另批）**：PSP 明确拒绝转为 FAILED 的新证据类型与触发器（PAY-01/PAY-04 的破坏部分）；迟到付款暂缓的恢复（要改 0031 并重新提交库存）；整行退款后订单汇总仍显示“准备中”（汇总规则与 DB 触发器）；异常中心的退款入口；`PAYMENT_NOT_CONFIRMED` 改名。通知重发仍只认 PAID，经核实是有意设定的财务限制，未改。告警事件尚未接 CloudWatch 指标与告警（运维阶段）。
+- **已知残余**：心愿绑定的补货触发器与结账之间仍可能存在锁环（结账先锁 wish_bindings 再锁款式，补货先锁款式），这是既有问题，本批没有引入。建议修法是让结账先锁款式、再锁心愿绑定，与补货和款式触发器的顺序一致；涉及 Mario 的心愿代码，留待后续一并评估。
 
 ## P-20261003 上线文案审校（商城 / 邮件 v3 / 后台 i18n）
 
