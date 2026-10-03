@@ -137,3 +137,44 @@ test("only an explicitly aborted transaction gets bounded automatic retries", as
   });
   expect(h.run).toHaveBeenCalledTimes(3);
 });
+test("aborted checkout retries back off exponentially with equal jitter", async () => {
+  const { checkoutRetryDelayMs } = await import("./checkout-transaction.js");
+  expect(checkoutRetryDelayMs(0, 250, () => 0)).toBe(125);
+  expect(checkoutRetryDelayMs(0, 250, () => 1)).toBe(250);
+  expect(checkoutRetryDelayMs(1, 250, () => 0)).toBe(250);
+  expect(checkoutRetryDelayMs(1, 250, () => 1)).toBe(500);
+  for (let sample = 0; sample < 50; sample++) {
+    const delay = checkoutRetryDelayMs(1, 100);
+    expect(delay).toBeGreaterThanOrEqual(100);
+    expect(delay).toBeLessThanOrEqual(200);
+  }
+  vi.useFakeTimers();
+  try {
+    const h = harness();
+    h.run.mockRejectedValue(
+      new PersistenceTransactionFailureError({
+        schemaVersion: 1,
+        operation: "RUN_TRANSACTION",
+        outcome: "FAILURE",
+        error: {
+          schemaVersion: 1,
+          code: "TRANSACTION_ABORTED",
+          recovery: "RETRY_SAME_COMMAND",
+          retryAfterMs: 1000,
+        },
+      }),
+    );
+    const pending = h.app.validate(h.validate, h.context);
+    await vi.advanceTimersByTimeAsync(0);
+    expect(h.run).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(499);
+    expect(h.run).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(501);
+    expect(h.run).toHaveBeenCalledTimes(2);
+    await vi.advanceTimersByTimeAsync(2000);
+    expect(await pending).toMatchObject({ code: "TEMPORARY_UNAVAILABLE" });
+    expect(h.run).toHaveBeenCalledTimes(3);
+  } finally {
+    vi.useRealTimers();
+  }
+});

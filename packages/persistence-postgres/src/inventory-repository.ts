@@ -112,10 +112,37 @@ function mapLockedTarget(
   };
 }
 
+/**
+ * Items and locations are only share-locked, in id order; the exclusive lock covers the
+ * balance rows alone (audit TXN-01). Checkout already holds both shares from preflight,
+ * so upgrading them deadlocked every concurrent checkout at the same location and
+ * inverted the studio adjustment's variant → location → item → balance order.
+ * Drizzle allows one locking clause per query, hence the separate statements.
+ */
 async function lockTargets(
   database: PostgresQueryLayer,
   targets: readonly LockTarget[],
 ): Promise<readonly LockedTarget[]> {
+  const itemIds = [
+    ...new Set(targets.map((target) => target.inventoryItemId.toLowerCase())),
+  ];
+  const locationIds = [
+    ...new Set(
+      targets.map((target) => target.inventoryLocationId.toLowerCase()),
+    ),
+  ];
+  await database
+    .select({ id: inventoryItems.id })
+    .from(inventoryItems)
+    .where(inArray(inventoryItems.id, itemIds))
+    .orderBy(asc(inventoryItems.id))
+    .for("share");
+  await database
+    .select({ id: inventoryLocations.id })
+    .from(inventoryLocations)
+    .where(inArray(inventoryLocations.id, locationIds))
+    .orderBy(asc(inventoryLocations.id))
+    .for("share");
   const predicates = targets.map((target) =>
     and(
       eq(inventoryBalances.inventoryItemId, target.inventoryItemId),
@@ -158,9 +185,7 @@ async function lockTargets(
       asc(inventoryBalances.inventoryItemId),
       asc(inventoryBalances.locationId),
     )
-    .for("update", {
-      of: [inventoryBalances, inventoryItems, inventoryLocations],
-    });
+    .for("update", { of: [inventoryBalances] });
 }
 
 async function lockReservations(

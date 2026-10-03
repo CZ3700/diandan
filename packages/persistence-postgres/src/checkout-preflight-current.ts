@@ -29,6 +29,43 @@ import type {
   TransactionScopeControl,
 } from "./transaction-runner.js";
 
+/**
+ * Share-locks every cart variant key first, in id order (audit TXN-01). The order and
+ * reservation foreign keys take this lock later anyway, and the studio's inventory
+ * adjustment locks the variant before the inventory rows; taking it last closed a cycle.
+ */
+export async function lockCheckoutVariantKeys(
+  client: TransactionClient,
+  variantIds: readonly string[],
+): Promise<void> {
+  await draftRows(
+    client,
+    `SELECT id FROM public.gift_variants WHERE id=ANY($1::uuid[]) ORDER BY id FOR KEY SHARE`,
+    [[...new Set(variantIds)]],
+  );
+}
+/** Inventory master rows stay share-locked; only balances are ever locked for update. */
+export function readCheckoutInventoryItems(
+  client: TransactionClient,
+  variantId: string,
+) {
+  return draftRows(
+    client,
+    `SELECT id,gift_variant_id,sku,policy,status FROM public.inventory_items WHERE gift_variant_id=$1::uuid FOR SHARE`,
+    [variantId],
+  );
+}
+export function readCheckoutInventoryLocations(
+  client: TransactionClient,
+  inventoryItemId: string,
+) {
+  return draftRows(
+    client,
+    `SELECT l.id,l.location_key,l.status,b.on_hand::text,b.reserved::text,b.version::text FROM public.inventory_balances b JOIN public.inventory_locations l ON l.id=b.location_id WHERE b.inventory_item_id=$1::uuid AND l.status='ACTIVE' ORDER BY l.id FOR SHARE OF l`,
+    [inventoryItemId],
+  );
+}
+
 async function currentLine(
   client: TransactionClient,
   scope: TransactionScopeControl,
@@ -117,11 +154,7 @@ async function currentLine(
     [row["idol_id"]],
   );
   if (profiles.length !== 1) return rejectCheckout("FULFILLMENT_UNAVAILABLE");
-  const items = await draftRows(
-    client,
-    `SELECT id,gift_variant_id,sku,policy,status FROM public.inventory_items WHERE gift_variant_id=$1::uuid FOR SHARE`,
-    [variant.id],
-  );
+  const items = await readCheckoutInventoryItems(client, variant.id);
   if (items.length > 1) return rejectCheckout("INSUFFICIENT_STOCK");
   const item = items[0];
   if (
@@ -170,10 +203,9 @@ async function currentLine(
   });
   let inventory: CheckoutPreflightInventoryFacts | undefined;
   if (line.inventoryPolicy === "TRACKED" && item) {
-    const locations = await draftRows(
+    const locations = await readCheckoutInventoryLocations(
       client,
-      `SELECT l.id,l.location_key,l.status,b.on_hand::text,b.reserved::text,b.version::text FROM public.inventory_balances b JOIN public.inventory_locations l ON l.id=b.location_id WHERE b.inventory_item_id=$1::uuid AND l.status='ACTIVE' ORDER BY l.id FOR SHARE OF l`,
-      [item["id"]],
+      String(item["id"]),
     );
     if (locations.length === 0) return rejectCheckout("INSUFFICIENT_STOCK");
     inventory = checkoutPreflightInventoryFactsSchema.parse({
@@ -229,6 +261,10 @@ export async function loadCheckoutCurrent(
   await lockCartWishBindings(client, cart.id);
   if (items.length === 0) return rejectCheckout("EMPTY_CART");
   if (items.length > 500) return rejectCheckout("CONTENT_UNAVAILABLE");
+  await lockCheckoutVariantKeys(
+    client,
+    items.map((item) => String(item["gift_variant_id"])),
+  );
   const lines: CheckoutPreflightLineFacts[] = [],
     inventory: CheckoutPreflightInventoryFacts[] = [];
   for (const item of items) {

@@ -59,6 +59,15 @@ export function checkoutPersistenceSuccess(value: unknown) {
     return rejectCheckout(result.error.code);
   return rejectCheckout("TEMPORARY_UNAVAILABLE");
 }
+/** Equal jitter: checkouts that aborted together do not retry in lockstep (audit TXN-01). */
+export function checkoutRetryDelayMs(
+  attempt: number,
+  retryAfterMs: number,
+  random: () => number = Math.random,
+): number {
+  const ceiling = retryAfterMs * 2 ** attempt;
+  return Math.round(ceiling / 2 + (random() * ceiling) / 2);
+}
 export function checkoutTransactions(
   transactions: CheckoutPreflightTransactionManager,
 ) {
@@ -70,12 +79,16 @@ export function checkoutTransactions(
         return await transactions.runInCheckoutPreflightTransaction(work);
       } catch (error) {
         if (
-          error instanceof PersistenceTransactionFailureError &&
-          error.failure.error.code === "TRANSACTION_ABORTED" &&
-          attempt < 2
+          !(error instanceof PersistenceTransactionFailureError) ||
+          error.failure.error.code !== "TRANSACTION_ABORTED" ||
+          attempt >= 2
         )
-          continue;
-        throw error;
+          throw error;
+        const delay = checkoutRetryDelayMs(
+          attempt,
+          error.failure.error.retryAfterMs ?? 250,
+        );
+        await new Promise<void>((resolve) => setTimeout(resolve, delay));
       }
     }
   };
