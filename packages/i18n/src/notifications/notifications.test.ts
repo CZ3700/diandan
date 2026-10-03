@@ -88,7 +88,7 @@ it("renders all three events completely in all seven locales with original snaps
   for (const locale of SUPPORTED_LOCALES)
     for (const event of events) {
       const selection = templates.select(event, locale);
-      expect(selection.templateVersion).toMatch(/^v2\.[a-f0-9]{64}$/u);
+      expect(selection.templateVersion).toMatch(/^v3\.[a-f0-9]{64}$/u);
       expect(selection).toMatchObject({
         requestedLocale: locale,
         resolvedLocale: locale,
@@ -295,8 +295,8 @@ it("uses the real order date in UTC, deterministic bytes, and a one-time latest-
   const content = templates.render(frozen);
   expect(content.text).toContain("Sep 16, 2026");
   expect(content.text).toContain("UTC");
-  expect(content.text).toContain("one-time");
-  expect(content.text).toContain("latest notification");
+  expect(content.text).toContain("works once");
+  expect(content.text).toContain("use the link in the most recent one");
   expect(content.text).not.toMatch(
     /settled|estimated|arrive|delivered at|prepared at/iu,
   );
@@ -366,8 +366,8 @@ it("omits a remainder notice for ten or fewer items and handles the singular ele
   const eleven = templates.render(
     command(selection, { items: [...items, variables.items[0]] }),
   );
-  expect(eleven.text).toContain("1 more item");
-  expect(eleven.text).toContain("complete order");
+  expect(eleven.text).toContain("1 more gift");
+  expect(eleven.text).toContain("full order");
 });
 
 it("describes historical events without promising the order's current readiness", async () => {
@@ -381,7 +381,9 @@ it("describes historical events without promising the order's current readiness"
   const preparing = templates.render(
     command(templates.select("PREPARING", "en")),
   );
-  expect(preparing.subject).toContain("preparation started");
-  expect(preparing.preheader).toContain("has started");
-  expect(preparing.text).not.toContain("is preparing");
+  expect(preparing.subject).toContain("has started preparing");
+  expect(preparing.text).toContain("has started preparing");
+  expect(
+    preparing.subject + preparing.preheader + preparing.text,
+  ).not.toContain("is preparing");
 });

@@ -9,7 +9,7 @@ import { createOrderNotificationTemplates } from "./index.js";
 import { hashMaterial } from "./v1/identity.js";
 
 /** Deliberately loads stored input and output digests; it never derives its expected result from current copy. */
-it.each(["v1", "v2"])(
+it.each(["v1", "v2", "v3"])(
   "reproduces archived %s outputs by pinned identity across 21 messages and worker time zones",
   (version) => {
     const fixturePath = new URL(

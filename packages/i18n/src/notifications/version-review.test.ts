@@ -21,10 +21,17 @@ import { copyV2 } from "./v2/copy.js";
 import {
   localeMaterialV2,
   templateVersionV2,
-  variableSchemaV2,
   variablesHashV2,
 } from "./v2/identity.js";
 import reviewsV2 from "./v2/reviews.json" with { type: "json" };
+import { copyV3 } from "./v3/copy.js";
+import {
+  localeMaterialV3,
+  templateVersionV3,
+  variableSchemaV3,
+  variablesHashV3,
+} from "./v3/identity.js";
+import reviewsV3 from "./v3/reviews.json" with { type: "json" };
 
 const versions = [
   {
@@ -42,6 +49,14 @@ const versions = [
     templateVersion: templateVersionV2,
     localeMaterial: localeMaterialV2,
     variablesHash: variablesHashV2,
+  },
+  {
+    name: "v3",
+    reviews: reviewsV3,
+    copy: copyV3,
+    templateVersion: templateVersionV3,
+    localeMaterial: localeMaterialV3,
+    variablesHash: variablesHashV3,
   },
 ] as const;
 
@@ -176,10 +191,10 @@ it.each(versions)(
   },
 );
 
-it("pins the current variable schema to v2 and retains every archived template identity", () => {
+it("pins the current variable schema to v3 and retains every archived template identity", () => {
   expect(
     orderNotificationVariablesSchema.toJSONSchema({ unrepresentable: "any" }),
-  ).toEqual(variableSchemaV2);
+  ).toEqual(variableSchemaV3);
   for (const version of versions) {
     const file = new URL(
       `./${version.name}/identity.fixture.json`,

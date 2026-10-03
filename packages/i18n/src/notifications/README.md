@@ -18,14 +18,18 @@ machine-assisted drafts with no human reviewer or approval commit.
 
 ## Version and review evidence
 
-`v2/` is the current version (2026-09-26, ADR-019): every item carries its
-purchase-time `giftKind`, a VIRTUAL line is marked as digital support and one
-support-record note is added when the order contains such a line. New selections
-use v2 identities only; `render` still replays a message by its pinned v1 identity.
-The order section shows the fan-facing `publicOrderNo` (F1-2); `publicOrderId` only
-binds the link fragment. v2 was amended once for that before its first release,
-while no environment had requested a v2 message; from its first release on it is
-frozen like v1.
+`v3/` is the current version (2026-10-03 copy review): the v2 variables, layout
+and renderer with revised copy in all seven locales — gifts are for the artist and
+nothing is shipped to the fan, the single-use link expires and the newest email's
+link should be used, support is reachable through the website, and the PREPARING
+mail reports that preparation has started rather than claiming current progress.
+New selections use v3 identities only; `render` still replays messages by their
+pinned v1 or v2 identity.
+
+`v2/` (2026-09-26, ADR-019) is an archive: every item carries its purchase-time
+`giftKind`, a VIRTUAL line is marked as digital support and one support-record note
+is added when the order contains such a line. The order section shows the
+fan-facing `publicOrderNo` (F1-2); `publicOrderId` only binds the link fragment.
 
 `v1/` is an archive, not an editable “latest” catalog. Each event's `v1.<sha256>`
 identity covers all seven locales' subject, preheader, body copy, HTML and text

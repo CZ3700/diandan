@@ -1,0 +1,233 @@
+{
+  "en": {
+    "events": {
+      "PAYMENT_CONFIRMED": {
+        "subject": "{siteName}: payment confirmed for your gift order",
+        "preheader": "Thank you for your support. Your gifts are for the artist, and your secure order link is inside.",
+        "heading": "Payment confirmed",
+        "body": "Thank you for your support. Your payment has been confirmed. The gifts in this order are for the artist, so nothing will be shipped to you. View your order for its current status."
+      },
+      "PREPARING": {
+        "subject": "{siteName}: the studio has started preparing your gifts",
+        "preheader": "We'll email you again when delivery to the artist is confirmed.",
+        "heading": "Gift preparation started",
+        "body": "The studio has started preparing the gifts in your order for the artist. We'll email you again when delivery is confirmed."
+      },
+      "DELIVERED": {
+        "subject": "{siteName}: your gifts have been delivered to the artist",
+        "preheader": "Thank you for your support. View your order for details and any delivery photos.",
+        "heading": "Delivered to the artist",
+        "body": "The studio has confirmed that the gifts in your order have been delivered to the artist. View your order for details and any delivery photos. Thank you for your support."
+      }
+    },
+    "moreItems": "{count, plural, one {# more gift. View the full order.} other {# more gifts. View the full order.}}",
+    "orderLabel": "Order number",
+    "orderedAt": "Order placed",
+    "items": "Your gifts",
+    "total": "Order total",
+    "quantity": "Quantity: {quantity, number}",
+    "viewOrder": "View order securely",
+    "security": "This private link works once and opens your order on the device where you use it. It expires after a limited time; if you have several order emails, use the link in the most recent one. Please don't share or forward it. If it no longer works, or you have a question about this order, contact our support team on our website with your order number.",
+    "sourceNote": "Artist, gift and option names are shown in the language used when the order was placed.",
+    "digitalSupport": "Virtual gifts in this order have been added to the artist's support record, so no studio handover is needed. You can save a digital support certificate from your order page.",
+    "digitalItem": "Virtual gift · added to the artist's support record"
+  },
+  "zh-CN": {
+    "events": {
+      "PAYMENT_CONFIRMED": {
+        "subject": "{siteName}：礼物订单付款已确认",
+        "preheader": "感谢你的应援。礼物是送给艺人的，安全查单链接就在邮件里。",
+        "heading": "付款已确认",
+        "body": "感谢你的应援，你的付款已确认。本订单中的礼物都是送给艺人的，不会向你寄送任何物品。请查看订单了解当前状态。"
+      },
+      "PREPARING": {
+        "subject": "{siteName}：我们已开始准备你送给艺人的礼物",
+        "preheader": "礼物确认送达艺人后，我们会再发邮件通知你。",
+        "heading": "已开始准备礼物",
+        "body": "我们的工作室已开始为艺人准备你订单中的礼物。确认送达后，我们会再发邮件通知你。"
+      },
+      "DELIVERED": {
+        "subject": "{siteName}：你的礼物已送达艺人",
+        "preheader": "感谢你的应援。查看订单，了解详情和送达照片（如有）。",
+        "heading": "已送达艺人",
+        "body": "我们的工作室已确认，你订单中的礼物已送达艺人。查看订单可了解详情和送达照片（如有）。感谢你的应援。"
+      }
+    },
+    "moreItems": "{count, plural, one {另有 # 件礼物，请查看完整订单。} other {另有 # 件礼物，请查看完整订单。}}",
+    "orderLabel": "订单号",
+    "orderedAt": "下单时间",
+    "items": "你的礼物",
+    "total": "订单总额",
+    "quantity": "数量：{quantity, number}",
+    "viewOrder": "安全查看订单",
+    "security": "此私密链接仅可使用一次，会在你打开它的设备上显示订单。链接会在一定时间后失效；如果你收到多封订单邮件，请使用最新一封中的链接。请勿分享或转发此链接。如果链接已失效，或对本订单有任何疑问，请通过我们的网站联系客服，并提供订单号。",
+    "sourceNote": "艺人、礼物和规格名称以下单时使用的语言显示。",
+    "digitalSupport": "本订单中的虚拟礼物已计入艺人的应援记录，无需工作室转交。你可以在订单页面保存数字应援凭证。",
+    "digitalItem": "虚拟礼物 · 已计入艺人的应援记录"
+  },
+  "th": {
+    "events": {
+      "PAYMENT_CONFIRMED": {
+        "subject": "{siteName}: ยืนยันการชำระเงินคำสั่งซื้อของขวัญแล้ว",
+        "preheader": "ขอบคุณสำหรับการสนับสนุน ของขวัญของคุณจะมอบให้ศิลปิน และลิงก์คำสั่งซื้อแบบปลอดภัยอยู่ในอีเมลนี้",
+        "heading": "ยืนยันการชำระเงินแล้ว",
+        "body": "ขอบคุณสำหรับการสนับสนุน การชำระเงินของคุณได้รับการยืนยันแล้ว ของขวัญในคำสั่งซื้อนี้มอบให้ศิลปิน จึงไม่มีการจัดส่งพัสดุถึงคุณ ดูสถานะปัจจุบันได้ในคำสั่งซื้อของคุณ"
+      },
+      "PREPARING": {
+        "subject": "{siteName}: สตูดิโอเริ่มเตรียมของขวัญของคุณแล้ว",
+        "preheader": "เราจะส่งอีเมลแจ้งคุณอีกครั้งเมื่อยืนยันการส่งมอบให้ศิลปินแล้ว",
+        "heading": "เริ่มเตรียมของขวัญแล้ว",
+        "body": "สตูดิโอได้เริ่มเตรียมของขวัญในคำสั่งซื้อของคุณให้ศิลปินแล้ว เราจะส่งอีเมลแจ้งคุณอีกครั้งเมื่อยืนยันการส่งมอบแล้ว"
+      },
+      "DELIVERED": {
+        "subject": "{siteName}: ส่งมอบของขวัญของคุณให้ศิลปินแล้ว",
+        "preheader": "ขอบคุณสำหรับการสนับสนุน ดูรายละเอียดและรูปการส่งมอบ (ถ้ามี) ได้ในคำสั่งซื้อของคุณ",
+        "heading": "ส่งมอบให้ศิลปินแล้ว",
+        "body": "สตูดิโอยืนยันว่าได้ส่งมอบของขวัญในคำสั่งซื้อของคุณให้ศิลปินเรียบร้อยแล้ว ดูรายละเอียดและรูปการส่งมอบ (ถ้ามี) ได้ในคำสั่งซื้อของคุณ ขอบคุณสำหรับการสนับสนุน"
+      }
+    },
+    "moreItems": "{count, plural, one {ยังมีของขวัญอีก # รายการ โปรดดูรายละเอียดคำสั่งซื้อทั้งหมด} other {ยังมีของขวัญอีก # รายการ โปรดดูรายละเอียดคำสั่งซื้อทั้งหมด}}",
+    "orderLabel": "หมายเลขคำสั่งซื้อ",
+    "orderedAt": "วันที่สั่งซื้อ",
+    "items": "ของขวัญของคุณ",
+    "total": "ยอดรวมคำสั่งซื้อ",
+    "quantity": "จำนวน: {quantity, number}",
+    "viewOrder": "ดูคำสั่งซื้ออย่างปลอดภัย",
+    "security": "ลิงก์ส่วนตัวนี้ใช้ได้เพียงครั้งเดียว และจะเปิดคำสั่งซื้อของคุณบนอุปกรณ์ที่คุณใช้เปิดลิงก์ ลิงก์มีอายุการใช้งานจำกัด หากคุณมีอีเมลคำสั่งซื้อหลายฉบับ โปรดใช้ลิงก์ในฉบับล่าสุด โปรดอย่าแชร์หรือส่งต่อลิงก์นี้ หากลิงก์ใช้ไม่ได้แล้ว หรือมีคำถามเกี่ยวกับคำสั่งซื้อนี้ โปรดติดต่อทีมดูแลลูกค้าของเราผ่านเว็บไซต์พร้อมแจ้งหมายเลขคำสั่งซื้อ",
+    "sourceNote": "ชื่อศิลปิน ของขวัญ และตัวเลือกจะแสดงในภาษาที่ใช้ตอนสั่งซื้อ",
+    "digitalSupport": "ของขวัญเสมือนในคำสั่งซื้อนี้เพิ่มลงในบันทึกการสนับสนุนของศิลปินแล้ว จึงไม่ต้องส่งมอบผ่านสตูดิโอ คุณบันทึกใบรับรองการสนับสนุนดิจิทัลได้จากหน้าคำสั่งซื้อ",
+    "digitalItem": "ของขวัญเสมือน · เพิ่มลงในบันทึกการสนับสนุนของศิลปินแล้ว"
+  },
+  "vi": {
+    "events": {
+      "PAYMENT_CONFIRMED": {
+        "subject": "{siteName}: đã xác nhận thanh toán cho đơn quà tặng của bạn",
+        "preheader": "Cảm ơn bạn đã ủng hộ. Quà của bạn dành cho nghệ sĩ, và liên kết đơn hàng bảo mật có trong email này.",
+        "heading": "Đã xác nhận thanh toán",
+        "body": "Cảm ơn bạn đã ủng hộ. Thanh toán của bạn đã được xác nhận. Các món quà trong đơn hàng này dành cho nghệ sĩ, vì vậy không có món hàng nào được giao đến bạn. Hãy xem đơn hàng để biết trạng thái hiện tại."
+      },
+      "PREPARING": {
+        "subject": "{siteName}: studio đã bắt đầu chuẩn bị quà của bạn",
+        "preheader": "Chúng tôi sẽ gửi email tiếp cho bạn khi việc giao quà đến nghệ sĩ được xác nhận.",
+        "heading": "Đã bắt đầu chuẩn bị quà",
+        "body": "Studio đã bắt đầu chuẩn bị các món quà trong đơn hàng của bạn cho nghệ sĩ. Chúng tôi sẽ gửi email tiếp cho bạn khi việc giao quà được xác nhận."
+      },
+      "DELIVERED": {
+        "subject": "{siteName}: quà của bạn đã được giao đến nghệ sĩ",
+        "preheader": "Cảm ơn bạn đã ủng hộ. Xem đơn hàng để biết chi tiết và ảnh giao quà (nếu có).",
+        "heading": "Đã giao cho nghệ sĩ",
+        "body": "Studio đã xác nhận các món quà trong đơn hàng của bạn đã được giao đến nghệ sĩ. Hãy xem đơn hàng để biết chi tiết và ảnh giao quà (nếu có). Cảm ơn bạn đã ủng hộ."
+      }
+    },
+    "moreItems": "{count, plural, one {Còn # món quà khác. Xem toàn bộ đơn hàng.} other {Còn # món quà khác. Xem toàn bộ đơn hàng.}}",
+    "orderLabel": "Mã đơn hàng",
+    "orderedAt": "Thời gian đặt hàng",
+    "items": "Quà tặng của bạn",
+    "total": "Tổng đơn hàng",
+    "quantity": "Số lượng: {quantity, number}",
+    "viewOrder": "Xem đơn hàng an toàn",
+    "security": "Liên kết riêng tư này chỉ dùng được một lần, và đơn hàng sẽ được mở trên thiết bị mà bạn nhấn vào liên kết. Liên kết sẽ hết hạn sau một thời gian nhất định; nếu bạn có nhiều email đơn hàng, hãy dùng liên kết trong email mới nhất. Vui lòng không chia sẻ hoặc chuyển tiếp liên kết này. Nếu liên kết không còn dùng được, hoặc bạn có câu hỏi về đơn hàng này, hãy liên hệ bộ phận hỗ trợ qua trang web của chúng tôi kèm mã đơn hàng.",
+    "sourceNote": "Tên nghệ sĩ, quà tặng và lựa chọn được hiển thị bằng ngôn ngữ đã dùng khi đặt hàng.",
+    "digitalSupport": "Quà ảo trong đơn hàng này đã được ghi vào hồ sơ ủng hộ của nghệ sĩ nên studio không cần bàn giao. Bạn có thể lưu chứng nhận ủng hộ kỹ thuật số từ trang đơn hàng của mình.",
+    "digitalItem": "Quà ảo · đã ghi vào hồ sơ ủng hộ của nghệ sĩ"
+  },
+  "ja": {
+    "events": {
+      "PAYMENT_CONFIRMED": {
+        "subject": "{siteName}：ギフトご注文のお支払いを確認しました",
+        "preheader": "応援ありがとうございます。ご注文のギフトはアーティストへの贈り物です。注文確認用の専用リンクはこのメールに記載しています。",
+        "heading": "お支払いを確認しました",
+        "body": "応援ありがとうございます。お支払いを確認しました。このご注文のギフトはアーティストへの贈り物のため、お客さまへの発送はありません。現在の状況は注文詳細でご確認ください。"
+      },
+      "PREPARING": {
+        "subject": "{siteName}：スタジオがギフトの準備を開始しました",
+        "preheader": "アーティストへのお届けが確認できましたら、あらためてメールでお知らせします。",
+        "heading": "ギフトの準備を開始しました",
+        "body": "スタジオが、ご注文のギフトをアーティストにお届けする準備を開始しました。お届けが確認できましたら、あらためてメールでお知らせします。"
+      },
+      "DELIVERED": {
+        "subject": "{siteName}：ギフトをアーティストにお届けしました",
+        "preheader": "応援ありがとうございます。詳細やお届け写真（ある場合）は注文詳細でご確認いただけます。",
+        "heading": "アーティストにお届けしました",
+        "body": "ご注文のギフトがアーティストに届いたことをスタジオが確認しました。詳細やお届け写真（ある場合）は注文詳細でご確認ください。応援ありがとうございます。"
+      }
+    },
+    "moreItems": "{count, plural, one {ほかに # 点のギフトがあります。すべての内容は注文詳細でご確認ください。} other {ほかに # 点のギフトがあります。すべての内容は注文詳細でご確認ください。}}",
+    "orderLabel": "注文番号",
+    "orderedAt": "注文日時",
+    "items": "ご注文のギフト",
+    "total": "注文合計",
+    "quantity": "数量：{quantity, number}",
+    "viewOrder": "注文を安全に確認",
+    "security": "この専用リンクは1回のみ有効で、リンクを開いた端末でご注文を表示します。一定期間が過ぎると無効になります。注文メールが複数ある場合は、最新のメールのリンクをご利用ください。リンクの共有や転送はお控えください。リンクが使えなくなった場合や、このご注文についてご質問がある場合は、注文番号を添えて当サイトのお問い合わせ窓口までご連絡ください。",
+    "sourceNote": "アーティスト名、ギフト名、オプション名は、ご注文時の言語で表示しています。",
+    "digitalSupport": "このご注文のバーチャルギフトはアーティストの応援記録に追加されたため、スタジオによるお渡しは不要です。デジタル応援証明は注文確認ページから保存できます。",
+    "digitalItem": "バーチャルギフト · アーティストの応援記録に追加済み"
+  },
+  "es": {
+    "events": {
+      "PAYMENT_CONFIRMED": {
+        "subject": "{siteName}: pago confirmado de tu pedido de regalos",
+        "preheader": "Gracias por tu apoyo. Tus regalos son para el artista y aquí encontrarás el enlace seguro de tu pedido.",
+        "heading": "Pago confirmado",
+        "body": "Gracias por tu apoyo. Tu pago se ha confirmado. Los regalos de este pedido son para el artista, por lo que no recibirás ningún envío. Consulta tu pedido para ver su estado actual."
+      },
+      "PREPARING": {
+        "subject": "{siteName}: el estudio comenzó a preparar tus regalos",
+        "preheader": "Te escribiremos de nuevo cuando se confirme la entrega al artista.",
+        "heading": "Preparación de regalos iniciada",
+        "body": "El estudio ha comenzado a preparar los regalos de tu pedido para el artista. Te escribiremos de nuevo cuando se confirme la entrega."
+      },
+      "DELIVERED": {
+        "subject": "{siteName}: tus regalos se han entregado al artista",
+        "preheader": "Gracias por tu apoyo. Consulta tu pedido para ver los detalles y las fotos de la entrega, si las hay.",
+        "heading": "Entregado al artista",
+        "body": "El estudio ha confirmado que los regalos de tu pedido se han entregado al artista. Consulta tu pedido para ver los detalles y las fotos de la entrega, si las hay. Gracias por tu apoyo."
+      }
+    },
+    "moreItems": "{count, plural, one {Hay # regalo más. Consulta el pedido completo.} other {Hay # regalos más. Consulta el pedido completo.}}",
+    "orderLabel": "Número de pedido",
+    "orderedAt": "Fecha del pedido",
+    "items": "Tus regalos",
+    "total": "Total del pedido",
+    "quantity": "Cantidad: {quantity, number}",
+    "viewOrder": "Ver pedido de forma segura",
+    "security": "Este enlace privado funciona una sola vez y abre tu pedido en el dispositivo donde lo uses. Caduca después de un tiempo limitado; si tienes varios correos de tu pedido, usa el enlace del más reciente. Por favor, no lo compartas ni lo reenvíes. Si ya no funciona o tienes alguna pregunta sobre este pedido, ponte en contacto con nuestro equipo de asistencia a través de nuestro sitio web e indica tu número de pedido.",
+    "sourceNote": "Los nombres del artista, de los regalos y de las opciones se muestran en el idioma en que se hizo el pedido.",
+    "digitalSupport": "Los regalos virtuales de este pedido se han añadido al registro de apoyo del artista, así que no necesitan entrega por parte del estudio. Puedes guardar un certificado digital de apoyo desde la página de tu pedido.",
+    "digitalItem": "Regalo virtual · añadido al registro de apoyo del artista"
+  },
+  "pt": {
+    "events": {
+      "PAYMENT_CONFIRMED": {
+        "subject": "{siteName}: confirmamos o pagamento do seu pedido de presentes",
+        "preheader": "Agradecemos o seu apoio. Os seus presentes são para o artista, e o link seguro do pedido está neste e-mail.",
+        "heading": "Pagamento confirmado",
+        "body": "Agradecemos o seu apoio. O seu pagamento foi confirmado. Os presentes deste pedido são para o artista, por isso nada será enviado a você. Consulte o pedido para ver o status atual."
+      },
+      "PREPARING": {
+        "subject": "{siteName}: o estúdio começou a preparar os seus presentes",
+        "preheader": "Enviaremos outro e-mail quando a entrega ao artista for confirmada.",
+        "heading": "Preparação dos presentes iniciada",
+        "body": "O estúdio iniciou a preparação dos presentes do seu pedido para o artista. Enviaremos outro e-mail quando a entrega for confirmada."
+      },
+      "DELIVERED": {
+        "subject": "{siteName}: os seus presentes foram entregues ao artista",
+        "preheader": "Agradecemos o seu apoio. Consulte o pedido para ver os detalhes e eventuais fotos da entrega.",
+        "heading": "Entregue ao artista",
+        "body": "O estúdio confirmou que os presentes do seu pedido foram entregues ao artista. Consulte o pedido para ver os detalhes e eventuais fotos da entrega. Agradecemos o seu apoio."
+      }
+    },
+    "moreItems": "{count, plural, one {Mais # presente. Consulte o pedido completo.} other {Mais # presentes. Consulte o pedido completo.}}",
+    "orderLabel": "Número do pedido",
+    "orderedAt": "Data do pedido",
+    "items": "Os seus presentes",
+    "total": "Total do pedido",
+    "quantity": "Quantidade: {quantity, number}",
+    "viewOrder": "Ver pedido com segurança",
+    "security": "Este link privado funciona uma única vez e abre o seu pedido no dispositivo em que for usado. Expira após um tempo limitado; se você tiver vários e-mails do pedido, use o link do mais recente. Por favor, não o envie nem o encaminhe a ninguém. Se o link deixar de funcionar, ou se tiver alguma dúvida sobre este pedido, fale com o nosso suporte pelo nosso site e informe o número do pedido.",
+    "sourceNote": "Os nomes do artista, dos presentes e das opções aparecem no idioma usado quando o pedido foi feito.",
+    "digitalSupport": "Os presentes virtuais deste pedido foram adicionados ao registro de apoio do artista, por isso dispensam a entrega pelo estúdio. Você pode salvar um certificado digital de apoio na página do seu pedido.",
+    "digitalItem": "Presente virtual · adicionado ao registro de apoio do artista"
+  }
+}

@@ -12,29 +12,33 @@ import {
 import { assertApprovedReviews } from "./review.js";
 import { templateVersionV1 } from "./v1/identity.js";
 import { renderV1 } from "./v1/render.js";
-import reviews from "./v2/reviews.json" with { type: "json" };
+import { templateVersionV2 } from "./v2/identity.js";
+import { renderV2 } from "./v2/render.js";
+import reviews from "./v3/reviews.json" with { type: "json" };
 import {
   eventTemplateKeys,
-  localeMaterialV2,
-  templateVersionV2,
-  variablesHashV2,
-} from "./v2/identity.js";
-import { renderV2 } from "./v2/render.js";
+  localeMaterialV3,
+  templateVersionV3,
+  variablesHashV3,
+} from "./v3/identity.js";
+import { renderV3 } from "./v3/render.js";
 
 /**
- * v2 (ADR-019 digital support copy) is the only version new selections use. v1 stays
- * renderable for outbox retries and audit replay of messages that were selected under it.
+ * v3 (2026-10-03 copy review) is the only version new selections use. v1 and v2 stay
+ * renderable for outbox retries and audit replay of messages that were selected under them.
  */
 const currentIdentity = {
-  templateVersion: templateVersionV2,
-  localeMaterial: localeMaterialV2,
-  variablesHash: variablesHashV2,
+  templateVersion: templateVersionV3,
+  localeMaterial: localeMaterialV3,
+  variablesHash: variablesHashV3,
 };
 function rendererFor(eventType: OrderNotificationEventType, version: string) {
   if (version.startsWith("v1.") && version === templateVersionV1(eventType))
     return renderV1;
   if (version.startsWith("v2.") && version === templateVersionV2(eventType))
     return renderV2;
+  if (version.startsWith("v3.") && version === templateVersionV3(eventType))
+    return renderV3;
   throw new Error("NOTIFICATION_TEMPLATE_VERSION_UNAVAILABLE");
 }
 
@@ -71,7 +75,7 @@ export function createOrderNotificationTemplates(
         resolvedLocale: fallbackUsed ? "en" : locale,
         fallbackUsed,
         templateKey: eventTemplateKeys[event],
-        templateVersion: templateVersionV2(event),
+        templateVersion: templateVersionV3(event),
         ...(fallbackUsed
           ? { fallbackReasonCode: "LOCALE_TEMPLATE_INCIDENT" }
           : {}),
