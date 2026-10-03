@@ -896,6 +896,106 @@ export async function verifyAdminFinance({ context }) {
       await orderRun(fulfillmentCommand(fulfillment, "DELIVER")),
       "authorized delivery resumes after WON when no active refund remains",
     );
+    progress("finance partial refund keeps the other paid lines moving");
+    const twoLines = await createPaidAdminOrder(context, payment, {
+      noMessage: true,
+      lines: [{}, { artist: context.fixtures.artists[1] }],
+    });
+    const settleLineRefund = async (orderItemId, amountMinor) => {
+      const view = await detail(twoLines.orderId);
+      const requested = await run({
+        action: "REFUND",
+        orderId: twoLines.orderId,
+        expectedOrderVersion: view.order.version,
+        idempotencyKey: randomUUID(),
+        reasonCode: "LOCAL_ACCEPTANCE",
+        confirmed: true,
+        currency: view.order.currency,
+        amountMinor,
+        allocations: [{ orderItemId, amountMinor }],
+      });
+      success(requested, "line refund request retained");
+      const dispatched = await claim(requested.operationId);
+      await tx((r) =>
+        r.settle({
+          schemaVersion: 1,
+          claim: dispatched,
+          retryAfterMs: 1000,
+          result: {
+            kind: "UNCERTAIN",
+            reasonCode: "PROVIDER_NETWORK_UNCERTAINTY",
+          },
+        }),
+      );
+      await reconcile(requested, "SUCCEEDED");
+    };
+    const lineCommand = (view, item, action) => ({
+      action,
+      orderId: view.orderId,
+      expectedOrderVersion: view.version,
+      fulfillmentId: item.fulfillmentId,
+      expectedFulfillmentVersion: item.fulfillmentVersion,
+      reasonCode: "LOCAL_ACCEPTANCE",
+      idempotencyKey: randomUUID(),
+    });
+    const split = await detail(twoLines.orderId);
+    const [lineA, lineB] = split.items;
+    check(
+      split.items.length === 2 && lineA.availableAmountMinor >= 2,
+      "two refundable lines for the partial refund scenario",
+    );
+    const half = Math.floor(lineA.availableAmountMinor / 2);
+    await settleLineRefund(lineA.orderItemId, half);
+    let lines = await orderDetail(twoLines.orderId);
+    check(
+      (await detail(twoLines.orderId)).order.paymentStatus ===
+        "PARTIALLY_REFUNDED" &&
+        lines.items.every((item) => item.allowedActions.includes("PREPARE")),
+      "a partial line refund leaves every line of the order preparable",
+    );
+    await settleLineRefund(
+      lineA.orderItemId,
+      (await detail(twoLines.orderId)).items.find(
+        (item) => item.orderItemId === lineA.orderItemId,
+      ).availableAmountMinor,
+    );
+    lines = await orderDetail(twoLines.orderId);
+    const refundedA = lines.items.find(
+        (item) => item.itemId === lineA.orderItemId,
+      ),
+      remainingB = lines.items.find(
+        (item) => item.itemId === lineB.orderItemId,
+      );
+    check(
+      refundedA.allowedActions.length === 0 &&
+        remainingB.allowedActions.includes("PREPARE"),
+      "a line refunded in full stops while the other paid line stays preparable",
+    );
+    fail(
+      await orderRun(lineCommand(lines, refundedA, "PREPARE")),
+      "TRANSITION_NOT_ALLOWED",
+      "a line refunded in full cannot be prepared through the repository",
+    );
+    success(
+      await orderRun(lineCommand(lines, remainingB, "PREPARE")),
+      "the remaining paid line is prepared after the other line's full refund",
+    );
+    lines = await orderDetail(twoLines.orderId);
+    success(
+      await orderRun(
+        lineCommand(
+          lines,
+          lines.items.find((item) => item.itemId === lineB.orderItemId),
+          "DELIVER",
+        ),
+      ),
+      "the remaining paid line is delivered after the other line's full refund",
+    );
+    check(
+      (await detail(twoLines.orderId)).order.paymentStatus ===
+        "PARTIALLY_REFUNDED",
+      "fulfillment never rewrites the partial refund projection",
+    );
     progress("finance immutable receipts and authority");
     for (const action of ["CANCEL", "RECONCILE"])
       await rejectsSql(

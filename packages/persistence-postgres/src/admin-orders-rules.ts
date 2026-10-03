@@ -9,7 +9,8 @@ import { isDigitalFulfillmentLine } from "./digital-fulfillment.js";
 export function orderIsFulfillable(order: DraftRow): boolean {
   return (
     order["order_status"] === "OPEN" &&
-    order["payment_status"] === "PAID" &&
+    // A partial refund settles only its allocated lines; the other paid lines keep moving (audit TXN-03).
+    ["PAID", "PARTIALLY_REFUNDED"].includes(String(order["payment_status"])) &&
     ["NONE", "WON"].includes(String(order["dispute_status"])) &&
     order["refund_pending"] !== true
   );
@@ -28,8 +29,10 @@ export function fulfillmentActions(
   line: DraftRow,
   permissions: AdminOrdersPermission[],
 ): AdminOrdersLine["allowedActions"] {
+  // A line refunded in full is how a single line is canceled; it never moves again.
   if (
     !orderIsFulfillable(order) ||
+    line["refunded_in_full"] === true ||
     ["DELIVERED", "CANCELED"].includes(String(line["status"]))
   )
     return [];
