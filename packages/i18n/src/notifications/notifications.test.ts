@@ -187,17 +187,18 @@ it("still renders archived v1 selections byte-for-byte without a gift kind", asy
   );
 });
 
-it("blocks all draft production templates including English incident fallback", async () => {
+it("allows real sends once the current templates carry exact approved evidence, including English incident fallback", async () => {
   const { createOrderNotificationTemplates } = await api();
-  expect(() => createOrderNotificationTemplates({ mode: "APPROVED" })).toThrow(
-    "NOTIFICATION_TEMPLATES_UNAPPROVED",
+  const approved = createOrderNotificationTemplates({ mode: "APPROVED" });
+  expect(approved.select("PAYMENT_CONFIRMED", "th").templateVersion).toMatch(
+    /^v3\./u,
   );
   expect(() =>
     createOrderNotificationTemplates({
       mode: "APPROVED",
       incidentFallbackLocales: ["ja"],
     }),
-  ).toThrow("NOTIFICATION_TEMPLATES_UNAPPROVED");
+  ).not.toThrow();
 });
 
 it("falls back as one whole English template and keeps replay independent of current incident configuration", async () => {

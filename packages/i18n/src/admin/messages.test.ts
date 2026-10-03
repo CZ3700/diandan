@@ -52,18 +52,19 @@ describe("admin message catalog", () => {
       }
     }
   });
-  it("does not invent human translation approval and prevents publication of draft messages", () => {
+  it("records the owner's approval at an exact commit and allows publication", () => {
     expect(Object.keys(adminMessageReviews)).toEqual([...SUPPORTED_LOCALES]);
     for (const locale of SUPPORTED_LOCALES) {
       expect(adminMessageReviews[locale]).toMatchObject({
         schemaVersion: 1,
         namespace: "admin",
-        status: "DRAFT",
-        reviewer: null,
+        status: "APPROVED",
+        reviewer: "Cz",
       });
-      expect(() => assertAdminMessagesPublishable(locale)).toThrow(
-        "ADMIN_MESSAGES_UNAPPROVED",
+      expect(adminMessageReviews[locale].approvedCommit).toMatch(
+        /^[a-f0-9]{40}$/u,
       );
+      expect(() => assertAdminMessagesPublishable(locale)).not.toThrow();
     }
   });
 });

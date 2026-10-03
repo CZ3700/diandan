@@ -14,7 +14,7 @@ afterEach(() => {
   vi.resetModules();
 });
 
-test("all current draft records bind the exact shipped source and translation bytes", async () => {
+test("all current approval records bind the exact shipped source and translation bytes", async () => {
   const { loadStorefrontCopy } = await import("./messages.js");
   const source = await loadStorefrontCopy("en");
   for (const locale of SUPPORTED_LOCALES) {
@@ -23,16 +23,18 @@ test("all current draft records bind the exact shipped source and translation by
       schemaVersion: 1,
       namespace: "storefront",
       locale,
-      status: "DRAFT",
+      status: "APPROVED",
       sourceHash: hash(source),
       translationHash: hash(copy),
-      reviewer: null,
-      approvedCommit: null,
+      reviewer: "Cz",
     });
+    expect(storefrontCopyReviews[locale].approvedCommit).toMatch(
+      /^[a-f0-9]{40}$/u,
+    );
   }
 });
 
-test("local drafts remain readable but required approval rejects every shipped locale", async () => {
+test("every shipped locale loads with or without required approval", async () => {
   const { loadStorefrontCopy } = await import("./messages.js");
   for (const locale of SUPPORTED_LOCALES) {
     await expect(
@@ -40,7 +42,7 @@ test("local drafts remain readable but required approval rejects every shipped l
     ).resolves.toHaveProperty("navHome");
     await expect(
       loadStorefrontCopy(locale, { requireApproved: true }),
-    ).rejects.toThrow("STOREFRONT_MESSAGES_UNAPPROVED");
+    ).resolves.toHaveProperty("navHome");
   }
 });
 

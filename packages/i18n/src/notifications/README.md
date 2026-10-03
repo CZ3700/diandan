@@ -13,8 +13,9 @@ The returned synchronous `select` and `render` methods implement the
 `OrderNotificationTemplates` port structurally. The factory has no provider,
 database, catalog, clock, network, or log dependencies. The worker composition
 must permit `TEST_DRAFT` only for its explicit local TEST transport. A real send
-requires `APPROVED`; this currently fails because all 21 review records are
-machine-assisted drafts with no human reviewer or approval commit.
+requires `APPROVED`: all 21 current v3 records carry an approver and the commit
+that introduced the reviewed copy. Any later copy change invalidates them until
+it is approved again.
 
 ## Version and review evidence
 

@@ -63,8 +63,10 @@ const versions = [
 const events = Object.keys(eventTemplateKeys) as OrderNotificationEventType[];
 
 it.each(versions)(
-  "has a complete, exact-hash DRAFT review manifest for 21 $name locale/event templates",
+  "has a complete, exact-hash review manifest for 21 $name locale/event templates",
   (version) => {
+    // Archived versions were never approved; only the current version carries approval evidence.
+    const approved = version.name === "v3";
     expect(version.reviews).toHaveLength(21);
     for (const event of events)
       for (const locale of SUPPORTED_LOCALES) {
@@ -80,13 +82,19 @@ it.each(versions)(
         expect(review).toMatchObject({
           locale,
           templateVersion,
-          status: "DRAFT",
-          reviewer: null,
-          approvedCommit: null,
           sourceHash: hashMaterial(version.localeMaterial(event, "en")),
           translationHash: hashMaterial(version.localeMaterial(event, locale)),
           variablesHash: version.variablesHash,
         });
+        if (approved) {
+          expect(review).toMatchObject({ status: "APPROVED", reviewer: "Cz" });
+          expect(review.approvedCommit).toMatch(/^[a-f0-9]{40}$/u);
+        } else
+          expect(review).toMatchObject({
+            status: "DRAFT",
+            reviewer: null,
+            approvedCommit: null,
+          });
       }
   },
 );
