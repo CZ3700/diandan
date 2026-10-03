@@ -21,7 +21,7 @@ it("shows only a concise artist-specific empty state when there are no wishes", 
       copy,
     }),
   );
-  expect(html).toContain("This artist has not added any wish gifts yet.");
+  expect(html).toContain(copy.artistWishesEmpty);
   expect(html).not.toContain(copy.wishOnlyOnce);
   expect(html).not.toContain("wish-gallery-heading");
   expect(html).not.toContain("gift-directory-grid");

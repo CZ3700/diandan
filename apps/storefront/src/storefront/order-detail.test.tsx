@@ -228,7 +228,7 @@ describe("protected historical order presentation", () => {
     expect(mixedHtml).toContain('data-order-step="PREPARING"');
     expect(mixedHtml).toContain(escaped(copy.orderDigitalDelivered));
     expect(mixedHtml).toContain(copy.orderPending);
-    expect(mixedHtml).toContain(copy.orderPreparationHelp);
+    expect(mixedHtml).toContain(escaped(copy.orderPreparationHelp));
     // Before payment settles, a digital line is a pending record, never "awaiting preparation".
     const awaiting = await render({
       ...order,

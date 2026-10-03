@@ -5,6 +5,14 @@ import type {
 } from "@fan-support/contracts";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
 import { canLaunchPaymentComponent } from "./payment-components";
+/** The provider's BCP 47 tag named in the fan's language; the raw tag only if the runtime cannot name it. */
+function languageName(locale: SupportedLocale, tag: string): string {
+  try {
+    return new Intl.DisplayNames([locale], { type: "language" }).of(tag) ?? tag;
+  } catch {
+    return tag;
+  }
+}
 function statusMessage(
   attempt: PaymentRuntimeAttemptView,
   copy: StorefrontCopy,
@@ -61,7 +69,7 @@ export function PaymentStatus({
       {attempt.providerLocaleFallbackUsed && (
         <p className="checkout-hint">
           {formatStorefrontMessage(copy, "checkoutLanguageFallback", locale, {
-            language: attempt.providerLocale,
+            language: languageName(locale, attempt.providerLocale),
           })}
         </p>
       )}

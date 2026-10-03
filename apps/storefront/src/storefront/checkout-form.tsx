@@ -54,6 +54,9 @@ export function CheckoutForm({
       <p id={`${id}-email-hint`} className="checkout-hint">
         {copy.checkoutEmailHint}
       </p>
+      <p className="checkout-hint" data-checkout-gift-notice>
+        {copy.checkoutGiftNotice}
+      </p>
       <CheckoutPolicyConsent
         policies={preflight.policies}
         locale={locale}

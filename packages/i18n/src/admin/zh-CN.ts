@@ -1,5 +1,5 @@
 export default {
-  insufficientInventory: "调整后库存不能少于已预占数量，请刷新余额后重试。",
+  insufficientInventory: "调整后库存不能少于已预占数量，请刷新库存后重试。",
   giftNotReady:
     "请补齐礼物详情、适用艺人、启用的规格及价格，并完成审核发布后再启用。旧版礼物可能需要重新审核发布。",
   priceNotReady: "此价格版本尚不能发布，请检查价格及有效期。",
@@ -167,7 +167,7 @@ export default {
   retry: "重试",
   handle: "网址标识",
   rename: "更新网址标识",
-  acceptingGifts: "允许应援",
+  acceptingGifts: "接收礼物",
   pause: "暂停艺人",
   activate: "启用艺人",
   archive: "归档艺人",
@@ -235,6 +235,5 @@ export default {
   changedFields: "变化字段",
   copyScope: "保存此版本还需要其他语言权限。",
   localPreview: "本地管理预览",
-  reviewPending: "界面翻译尚待人工审核。",
   openGenerated: "编辑生成图片",
 } as const;

@@ -4,24 +4,27 @@ const copy = {
   orderLoading: "Abrindo seu pedido…",
   orderLookupTitle: "Encontre seu pedido",
   orderLookupHelp:
-    "Abra a página de conclusão do pagamento ou use um link seguro de pedido válido.",
+    "Abra o link seguro do e-mail mais recente do seu pedido. Se você abriu o pedido neste dispositivo há pouco tempo, também pode inserir o número dele abaixo. Se nada disso funcionar, fale com o nosso suporte e informe o número do pedido.",
   orderIdLabel: "Número do pedido",
   orderOpen: "Abrir pedido",
-  orderAccessDenied: "Seu acesso atual não permite abrir este pedido.",
+  orderAccessDenied:
+    "Não é possível abrir este pedido neste dispositivo no momento.",
   orderUnavailable:
     "Seu pedido está temporariamente indisponível. Tente novamente em breve.",
   orderPaymentPending:
-    "O pagamento ainda está sendo confirmado. Confira novamente em breve.",
+    "O seu pagamento ainda aguarda confirmação. Por favor, não pague novamente. Você receberá um e-mail assim que ele for confirmado.",
   orderRateLimited:
     "Aguarde {seconds, number} segundos antes de tentar novamente.",
   orderRetry: "Tentar novamente",
-  orderRevoke: "Fechar acesso seguro",
-  orderRevoked: "O acesso seguro a este pedido foi fechado.",
-  orderBack: "Continuar explorando",
+  orderRevoke: "Sair neste dispositivo",
+  orderRevoked:
+    "O acesso a este pedido foi encerrado neste dispositivo. Para ver o pedido novamente, use o link de um e-mail mais recente sobre ele ou fale com o nosso suporte e informe o número do pedido.",
+  orderBack: "Explorar mais presentes",
   orderView: "Ver pedido",
-  orderLinkInvalid: "Este link de pedido é inválido, expirou ou já foi usado.",
+  orderLinkInvalid:
+    "Este link de pedido é inválido, expirou ou já foi usado. Cada link funciona uma única vez: use o link do e-mail mais recente do seu pedido ou fale com o nosso suporte e informe o número do pedido.",
   orderRecoveryHelp:
-    "Volte à página de conclusão do pagamento ou abra um novo link seguro de pedido válido.",
+    "Abra o link do e-mail mais recente do seu pedido ou volte à página de conclusão do pagamento no dispositivo em que você pagou. Se nada disso funcionar, fale com o nosso suporte e informe o número do pedido.",
   orderCreated: "Data do pedido",
   orderItems: "Seus presentes",
   orderSummary: "Resumo do pedido",
@@ -46,18 +49,18 @@ const copy = {
   orderStateOpen: "Aberto",
   orderDisputeNone: "Sem contestação",
   orderDisputeOpen: "Contestação em curso",
-  orderDisputeWon: "Contestação resolvida a favor do estúdio",
-  orderDisputeLost: "Contestação resolvida a favor do titular do cartão",
+  orderDisputeWon: "Contestação encerrada: pagamento mantido",
+  orderDisputeLost: "Contestação encerrada: pagamento devolvido",
   orderReviewHelp:
     "O estúdio precisa verificar este pedido antes de continuar a preparação.",
   orderPreparationHelp:
-    "O estúdio prepara seus presentes e os entrega ao artista. Acompanhe o progresso nesta página.",
+    "O estúdio prepara os seus presentes e faz a entrega ao artista. O tempo varia conforme cada presente, e você receberá um e-mail quando o pedido passar para a próxima etapa.",
   orderDeliveredHelp:
-    "O estúdio marcou estes presentes como entregues ao artista.",
+    "O estúdio confirmou que os seus presentes foram entregues ao artista. Obrigado pelo seu apoio.",
   orderDigitalDelivered: "Adicionado ao registro de apoio do artista",
   orderDigitalAwaiting: "Registro de apoio pendente",
   orderDigitalDeliveredHelp:
-    "Seu apoio digital foi adicionado ao registro de apoio do artista. Não é necessária entrega pelo estúdio.",
+    "Os presentes virtuais deste pedido foram adicionados ao registro de apoio do artista, por isso dispensam a entrega pelo estúdio. Nesta página, você pode salvar um certificado digital de apoio para cada um.",
   orderHistoryHelp:
     "Os detalhes e preços dos presentes são mantidos como estavam quando você fez o pedido.",
   orderOriginalLanguage: "Conteúdo original: {language}",
@@ -66,7 +69,7 @@ const copy = {
   orderItemTotal: "Total do presente",
   orderDeliveryPhotos: "Fotos da entrega",
   orderDeliveryPhotosHelp:
-    "Nosso estúdio tirou estas fotos ao entregar seu presente. Só você pode vê-las.",
+    "Fotos tiradas pelo estúdio na entrega do seu presente ao artista. Nunca são exibidas publicamente e são apenas para a sua visualização pessoal.",
   orderDeliveryPhotoOpen: "Ver foto da entrega {position} de {count}",
   orderDeliveryPhotoAlt: "Foto da entrega {position} de {count}",
   orderDeliveryPhotoClose: "Fechar foto",
@@ -99,16 +102,19 @@ const copy = {
   checkoutTitle: "Finalizar pedido",
   checkoutReview: "Confira seus presentes",
   checkoutEmail: "E-mail",
-  checkoutEmailHint: "Para receber atualizações sobre este pedido.",
+  checkoutEmailHint:
+    "Enviaremos o link seguro do pedido e as atualizações para este endereço, por isso confira com atenção se está correto. Não enviamos e-mails promocionais.",
   checkoutConfirm: "Confirmar e continuar",
   checkoutContinue: "Continuar para o pagamento",
   checkoutRefresh: "Atualizar status",
-  checkoutRecover: "Retomar esta solicitação",
+  checkoutRecover: "Retomar a finalização do pedido",
   checkoutResumePayment: "Retomar o pagamento",
   checkoutUnavailable:
     "O pagamento está indisponível. Tente novamente em breve.",
-  checkoutChanged: "Os detalhes mudaram. Confira e confirme novamente.",
-  checkoutExpired: "Este pagamento expirou. Volte à sua sacola.",
+  checkoutChanged:
+    "Alguns detalhes mudaram. Confira os seus presentes e depois continue.",
+  checkoutExpired:
+    "O tempo para finalizar este pedido expirou. Volte à sua sacola de presentes.",
   checkoutEmpty: "Sua sacola de presentes está vazia.",
   checkoutConsentAll: "Li e concordo com {policies}.",
   checkoutConsentTitle: "{title}",
@@ -116,17 +122,18 @@ const copy = {
   checkoutChooseCountry: "Escolha um país",
   checkoutMethod: "Forma de pagamento",
   checkoutNoMethods:
-    "Nenhuma forma de pagamento está disponível para esta seleção.",
+    "Nenhuma forma de pagamento está disponível para esta seleção. Tente novamente mais tarde.",
   checkoutPay: "Continuar com o pagamento",
   checkoutTest: "Pagamento de teste · Nenhum valor real será cobrado",
   checkoutReturnTitle: "Status do pagamento",
-  checkoutChecking: "Consultando o status do pagamento…",
+  checkoutChecking: "Verificando os dados mais recentes…",
   checkoutUnknown:
-    "O resultado ainda não foi confirmado. Estamos verificando o mesmo pagamento.",
-  checkoutProcessing: "Seu pagamento está sendo confirmado.",
+    "O resultado ainda não foi confirmado. Por favor, não pague novamente enquanto verificamos.",
+  checkoutProcessing:
+    "Aguardamos a confirmação do seu pagamento. Por favor, não pague novamente. Você receberá um e-mail assim que ele for confirmado.",
   checkoutFailed: "Este pagamento não foi concluído.",
   checkoutActionExpired:
-    "Este link de pagamento expirou. Verifique o estado deste pagamento antes de continuar.",
+    "Esta sessão de pagamento expirou. Selecione “Atualizar status” para verificar antes de pagar novamente.",
   checkoutRetryPayment: "Escolher uma forma de pagamento novamente",
   checkoutLanguageFallback:
     "Idioma da página de pagamento: {language}. Seu pedido permanece igual.",
@@ -153,13 +160,14 @@ const copy = {
   cartBuyNow: "Comprar agora",
   cartBuyingNow: "Indo para o pagamento…",
   cartMessage: "Mensagem privada",
-  cartMessageHint: "Somente o estúdio e o destinatário podem ler a mensagem.",
+  cartMessageHint:
+    "As mensagens nunca são exibidas publicamente. Cada uma é analisada pelo estúdio antes de ser encaminhada, e as que tiverem dados de contato ou conteúdo nocivo podem ser retidas.",
   cartAnonymous: "Anônimo",
-  cartNickname: "Usar um apelido",
-  cartDisplayName: "Apelido",
+  cartNickname: "Usar um pseudônimo",
+  cartDisplayName: "Pseudônimo",
   cartSavedMessage: "Mensagem salva",
   cartNoMessage: "Sem mensagem",
-  cartSavedName: "Apelido salvo",
+  cartSavedName: "Pseudônimo salvo",
   cartPrivateEdit: "Editar mensagem e nome",
   cartSave: "Salvar alterações",
   cartSaving: "Salvando…",
@@ -168,25 +176,26 @@ const copy = {
   cartRemoving: "Removendo…",
   cartPriceChanged: "O preço mudou. Confira o preço atual.",
   cartUnavailable: "Este presente não está disponível no momento.",
-  cartQuantityExceeded: "Confira a quantidade disponível no momento.",
+  cartQuantityExceeded:
+    "Essa quantidade não está disponível no momento. Escolha uma quantidade menor e tente novamente.",
   cartConflict:
-    "A sacola mudou em outro lugar. Seu rascunho foi mantido; confira os dados atuais antes de salvar novamente.",
+    "A sua sacola de presentes foi atualizada em outro lugar. As suas alterações continuam aqui; confira os dados mais recentes e salve novamente.",
   cartUnknown:
-    "O resultado ainda não foi confirmado. Repita a mesma solicitação para verificar com segurança.",
+    "Não foi possível confirmar esta alteração. Selecione “Tentar novamente” para verificar com segurança.",
   cartScopeMismatch:
-    "Esta sacola usa outro mercado ou moeda. Abra a sacola para conferir.",
-  cartRemoved:
-    "Este presente foi removido. Adicione novamente apenas se quiser um novo item.",
-  cartInvalid: "Confira a quantidade e os limites da mensagem e do apelido.",
+    "A sua sacola de presentes usa outra região ou moeda. Abra a sacola para conferir.",
+  cartRemoved: "Este presente foi removido da sua sacola.",
+  cartInvalid:
+    "Confira a quantidade, a mensagem (até 280 caracteres) e o pseudônimo (de 1 a 40 caracteres).",
   cartExpired: "A sacola expirou. Escolha um presente para começar de novo.",
   cartUpdated: "Alterações salvas",
   cartTotal: "Total",
-  cartPartialTotal: "Total dos itens com preço atual",
+  cartPartialTotal: "Total dos presentes disponíveis",
   cartConfirmQuantity: "Atualizar quantidade",
-  cartPrivateTitle: "Mensagem e nome privados",
-  cartPrivateLoading: "Abrindo editor privado…",
+  cartPrivateTitle: "Mensagem e nome (opcionais)",
+  cartPrivateLoading: "Abrindo a sua mensagem…",
   cartMessageLanguage: "Idioma da mensagem",
-  cartAnonymousSaved: "Nome anônimo salvo",
+  cartAnonymousSaved: "Anônimo",
   cartCharacters: "Caracteres",
   cartCheckoutBody:
     "Você pode salvar presentes e mensagens privadas aqui. O pagamento ainda não está disponível.",
@@ -207,7 +216,7 @@ const copy = {
   artistNext: "Próximos artistas",
   artistLoadMore: "Ver mais artistas",
   artistLoading: "Carregando artistas…",
-  artistEmptyTitle: "Novos artistas estão chegando.",
+  artistEmptyTitle: "Novos artistas estão a caminho.",
   artistEmptyDescription: "Volte em breve para descobrir suas histórias.",
   artistLoadError: "Não foi possível carregar os artistas.",
   artistReload: "Atualizar artistas",
@@ -215,7 +224,7 @@ const copy = {
   artistCatalogChanged: "A coleção mudou. Atualize para continuar.",
   artistAnchorMissing: "Este artista não está mais disponível aqui.",
   artistEnd: "Você viu todos os artistas.",
-  artistAccepting: "Recebendo presentes",
+  artistAccepting: "Presentes disponíveis",
   artistPaused: "Presentes temporariamente pausados",
   artistSelected: "Localizado",
   artistStart: "Ver desde o início",
@@ -223,7 +232,7 @@ const copy = {
   navHome: "Início",
   navArtists: "Artistas",
   navGifts: "Presentes",
-  navOrders: "Consultar pedido",
+  navOrders: "Encontre seu pedido",
   navLabel: "Navegação principal",
   navMenu: "Menu",
   language: "Idioma",
@@ -241,19 +250,23 @@ const copy = {
   giftEyebrow: "Escolhidos com carinho",
   giftTitle: "Um presente com significado.",
   giftBody: "Descubra presentes para momentos que merecem ser lembrados.",
-  giftHandover: "O estúdio prepara cada presente e o entrega ao artista.",
-  giftEmpty: "Novos presentes estão sendo preparados.",
-  giftBrowse: "Explorar presentes",
+  giftHandover:
+    "O estúdio prepara cada presente e faz a entrega ao artista. Os presentes virtuais, em vez disso, são adicionados ao registro de apoio do artista.",
+  giftEmpty: "Novos presentes estão em preparação.",
+  giftBrowse: "Todos os presentes",
   giftChoose: "Escolher um presente",
   howTitle: "Do seu coração ao deles.",
   howSelect: "Escolha artista e presente",
   howSelectBody: "Encontre algo que combine com essa pessoa.",
   howPay: "Adicione sua mensagem",
-  howPayBody: "Seu nome e sua mensagem ficam em sigilo.",
-  howDeliver: "Nós cuidamos da entrega",
-  howDeliverBody: "O estúdio prepara e entrega seu presente ao artista.",
+  howPayBody:
+    "Use um pseudônimo ou fique no anonimato. A sua mensagem nunca é exibida publicamente.",
+  howDeliver: "Entregamos ao artista",
+  howDeliverBody:
+    "O estúdio prepara o seu presente para o artista. Nada é enviado a você, e as atualizações do pedido chegam por e-mail.",
   trustTitle: "Cada gesto, tratado com cuidado.",
-  trustBody: "Mensagens privadas. Entrega pelo estúdio. Informações claras.",
+  trustBody:
+    "Mensagens privadas, analisadas com cuidado. Entrega ao artista feita pelo nosso estúdio. Pagamento seguro, sem necessidade de conta.",
   finalTitle: "Deixe o dia deles mais iluminado.",
   aboutArtist: "Sua história",
   artistGallery: "Um olhar mais próximo",
@@ -263,7 +276,7 @@ const copy = {
   notFound: "Não encontramos esta página.",
   fallbackNotice: "Este conteúdo está disponível em inglês no momento.",
   loading: "Carregando…",
-  unavailableTitle: "Estamos preparando esta função.",
+  unavailableTitle: "Esta função está em preparação.",
   unavailableBody: "Enquanto isso, explore as histórias dos artistas.",
   giftFilters: "Filtrar e ordenar",
   giftSortLabel: "Ordenar por",
@@ -289,11 +302,11 @@ const copy = {
   giftPaginationPage: "Página {page} de {total}",
   giftPaginationGoToPage: "Ir para a página {page}",
   giftPaginationLimited:
-    "Pode ver as primeiras {limit} páginas. Refine os filtros para encontrar mais.",
+    "Só é possível ver as primeiras {limit} páginas. Refine os filtros para encontrar mais.",
   giftPageOutOfRangeTitle: "Esta página não tem presentes.",
   giftPageOutOfRangeBody: "A coleção pode ter mudado. Volte à primeira página.",
   giftFirstPage: "Primeira página",
-  giftNoResultsTitle: "Nenhum presente corresponde.",
+  giftNoResultsTitle: "Nenhum presente encontrado.",
   giftNoResultsBody: "Experimente outra categoria ou amplie a faixa de preço.",
   giftPriceStartingAt: "A partir de",
   giftNotAvailable: "Indisponível no momento",
@@ -301,9 +314,9 @@ const copy = {
   giftRecipientChoose: "Escolha um artista",
   giftRecipientChange: "Mudar artista",
   giftRecipientMissing:
-    "Selecione um artista para ver as opções que pode receber.",
+    "Para continuar, escolha o artista para quem é este presente.",
   giftRecipientIneligible:
-    "Esta opção não pode ser enviada ao artista selecionado.",
+    "Esta opção não está disponível para o artista selecionado. Escolha outra opção ou outro artista.",
   giftRecipientUnavailable: "Este artista não está disponível. Escolha outro.",
   giftVariant: "Opções",
   giftQuantity: "Quantidade",
@@ -312,13 +325,13 @@ const copy = {
   giftStockRemaining:
     "{count, plural, one {# disponível} other {# disponíveis}}",
   giftSoldOut: "Esgotado",
-  giftTracked: "Preparado a partir do estoque disponível",
+  giftTracked: "Preparado com itens já disponíveis",
   giftProcureOnDemand: "Preparado sob encomenda",
   giftProcureBody:
-    "O estúdio obtém ou prepara o presente após o pagamento. Não exige estoque prévio.",
+    "O estúdio providencia ou prepara este presente após a confirmação do pagamento e, em seguida, faz a entrega ao artista. O tempo varia conforme o presente.",
   giftPreorder: "Pré-venda",
   giftPreorderBody:
-    "O estúdio prepara esta pré-venda conforme as informações publicadas do presente.",
+    "O estúdio prepara este presente em pré-venda conforme descrito nos detalhes e, em seguida, faz a entrega ao artista.",
   giftCheckoutUnavailable: "Estamos preparando a finalização da compra",
   giftCheckoutBody:
     "Você pode salvar presentes e mensagens privadas aqui. O pagamento ainda não está disponível.",
@@ -331,11 +344,11 @@ const copy = {
   giftKindOther: "Presente",
   homeKindsTitle: "Quatro formas de mostrar seu apoio.",
   giftKindVirtualBody:
-    "Entra no registro de apoio do artista assim que seu pagamento é confirmado.",
+    "Entra no registro de apoio do artista quando o seu pagamento for confirmado, com um certificado digital para você guardar. Não inclui item físico nem menção ao vivo.",
   giftKindPhysicalBody:
     "Um presente real que o estúdio prepara e entrega ao artista.",
   giftKindWishBody:
-    "Escolhido da lista de desejos do artista e providenciado pelo estúdio.",
+    "Da lista de desejos na página do artista, providenciado pelo estúdio e entregue ao artista. Cada desejo pode ser apoiado apenas uma vez.",
   giftKindMerchandiseBody:
     "Produtos temáticos que o estúdio prepara e entrega ao artista.",
   giftKindLabel: "Tipo de presente",
@@ -346,51 +359,64 @@ const copy = {
   policyPrivacy: "Privacidade",
   policyRefund: "Reembolsos",
   policyDelivery: "Entrega",
-  marketChoose: "Escolha seu mercado e moeda",
+  marketChoose: "Escolha a sua região e moeda",
   marketChooseBody:
-    "Selecione um mercado disponível para ver os preços. O idioma não muda.",
-  marketUnavailable: "Não há mercados disponíveis no momento.",
+    "Escolha uma região e uma moeda para ver os preços dos presentes. Isso não altera o idioma.",
+  marketUnavailable:
+    "Não há regiões disponíveis no momento. Tente novamente mais tarde.",
   marketSelected: "Selecionado",
   marketInvalid:
-    "Este mercado ou moeda não está disponível. Escolha uma combinação disponível.",
+    "Esta região ou moeda não está disponível. Escolha outra opção.",
   wishTitle: "Desejos dos artistas",
   artistWishesEmpty:
-    "Este artista ainda não adicionou presentes à sua lista de desejos.",
+    "Ainda não há presentes desejados listados para este artista.",
   wishOnlyFor: "Um desejo para {artist}",
   wishOpen: "Disponível para apoiar",
-  wishPaymentPending: "Pagamento em andamento",
+  wishPaymentPending: "Reservado, aguarda pagamento",
   wishSupported: "Desejo apoiado",
   wishDelivered: "Entregue",
   wishUnavailable: "Este desejo está indisponível.",
   wishShowcaseTitle: "Galeria de desejos",
-  wishShowcaseIntro: "Uma coleção de desejos apoiados por fãs.",
-  wishShowcaseEmpty: "Ainda não há registros compartilhados.",
+  wishShowcaseIntro:
+    "Desejos que fãs apoiaram e escolheram compartilhar. Os nomes públicos são escolhidos pelos próprios apoiadores.",
+  wishShowcaseEmpty: "Ainda não há desejos compartilhados.",
   wishShowcaseMore: "Ver todos os desejos",
-  wishDisplayOptIn: "Mostrar este apoio na galeria de desejos",
+  wishDisplayOptIn: "Mostrar o meu apoio na galeria pública de desejos",
   wishDisplayAnonymous: "Apoiador anônimo",
   wishDisplayAlias: "Nome público",
   wishAliasLabel: "Seu nome público",
   wishAliasHint:
-    "Este nome será público. Seu nome privado e sua mensagem não serão compartilhados.",
+    "Se você escolher um nome público, ele ficará visível para qualquer pessoa. Não inclua dados de contato nem outras informações pessoais. O seu pseudônimo e a sua mensagem privada nunca aparecem na galeria.",
   wishAliasInvalid: "Digite um nome público de 1 a 40 caracteres.",
-  wishRecordPlanned: "Compartilhar após o pagamento",
+  wishRecordPlanned: "Será compartilhado após o pagamento",
   wishEdit: "Editar detalhes do desejo",
-  wishRecordTitle: "Registro da galeria",
+  wishRecordTitle: "Galeria de desejos",
   wishRecordPrivate: "Não compartilhado",
   wishRecordPublic: "Compartilhado na galeria",
   wishRecordSave: "Salvar ajustes da galeria",
   wishRecordSaving: "Salvando…",
   wishRecordSaved: "Ajustes da galeria salvos.",
   wishRecordSaveFailed:
-    "Não foi possível salvar. Suas alterações foram mantidas; tente novamente.",
+    "Não foi possível salvar esta alteração. Tente novamente.",
   wishRecordHidden: "Este registro está oculto na galeria.",
   wishRecordHide: "Ocultar na galeria",
-  wishSupportedBy: "{supporter} apoiou um desejo de {artist} em {date}.",
+  wishSupportedBy: "{supporter} apoiou um desejo para {artist} em {date}.",
   wishGalleryError: "A galeria está indisponível. Tente novamente.",
   wishOnlyOnce:
     "Cada desejo pode receber apoio apenas uma vez. A venda termina após a confirmação do pagamento.",
-  wishReversed: "Apoio retirado",
+  wishReversed: "Valor devolvido",
   wishPrivacyWithdrawHint:
-    "Você pode ocultar este registro na galeria a qualquer momento nos detalhes do pedido.",
+    "Você poderá ocultar este registro depois, pela página segura do seu pedido. Uma vez oculto, ele não poderá voltar a ser exibido.",
+  checkoutGiftNotice:
+    "Todos os presentes deste pedido são para o artista, por isso nada é enviado a você. Os presentes virtuais são entregues assim que o seu pagamento é confirmado. Os seus direitos legais como consumidor não são afetados.",
+  checkoutPaymentSecurity:
+    "O pagamento é concluído na página ou no formulário seguro da empresa de pagamentos que utilizamos. Nunca vemos nem armazenamos os dados do seu cartão.",
+  orderEmailSent:
+    "A confirmação e o link seguro do pedido estão a caminho do seu e-mail. Se não chegarem em breve, verifique a pasta de spam.",
+  cartCheckoutBlocked:
+    "Remova os presentes indisponíveis para continuar para o pagamento.",
+  orderSupportHelp:
+    "Dúvidas e solicitações de cancelamento ou reembolso: fale com o nosso suporte e informe o número do pedido. Os reembolsos aprovados são devolvidos à forma de pagamento original; é o seu banco que define quando eles aparecem.",
+  wishDisplayModeLabel: "Mostrar como",
 } as const;
 export default copy;

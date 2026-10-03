@@ -1,6 +1,6 @@
 export default {
   insufficientInventory:
-    "調整後の在庫は引当済み数量を下回れません。残高を更新して再度お試しください。",
+    "この変更により、在庫が確保済み数量を下回ります。在庫残高を再読み込みして、もう一度お試しください。",
   giftNotReady:
     "詳細、対象アーティスト、有効なバリエーションと価格を設定し、審査・公開後に有効にしてください。以前のギフトは再審査・再公開が必要な場合があります。",
   priceNotReady:
@@ -27,8 +27,8 @@ export default {
   onDemandHint:
     "在庫残高は不要です。支払い後にスタジオが注文ごとに準備します。",
   trackedHint: "未確保の在庫のみ販売できます。在庫調整には理由が必要です。",
-  preorderHint: "予約販売では準備方法とお届け予定を明記してください。",
-  studioDelivery: "スタジオが準備・調達し、アーティストに届けます。",
+  preorderHint: "予約販売では、準備とお届けの目安を明記してください。",
+  studioDelivery: "スタジオがこのギフトを準備し、アーティストに届けます。",
   variants: "バリエーション",
   variantLabel: "バリエーション名",
   sku: "SKU",
@@ -242,6 +242,5 @@ export default {
   changedFields: "変更された項目",
   copyScope: "保存には追加の言語権限が必要です。",
   localPreview: "ローカル管理プレビュー",
-  reviewPending: "画面の翻訳は人による承認待ちです。",
   openGenerated: "生成した画像を編集",
 } as const;

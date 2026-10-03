@@ -24,7 +24,7 @@ Cookie 为 `__Host-fan-order`，Secure、HttpOnly、SameSite=Strict、Path=/、�
 - 收到 Cookie 但丢失 JSON：需要已知的原 publicOrderId，才能用该 Cookie 调用受保护 GET；Cookie 本身没有订单发现接口。
 - Cookie 和正文都丢失：当前付款浏览器可凭原有效 checkout 重新 bootstrap；没有原 checkout 的浏览器需要未来重新签发的新邮件链接。不得重新激活已消费 token。
 - 邮件发送器接续时，应生成 `/:locale/order-access#token=<一次性凭证>&order=<publicOrderId>`。当前页面在首段同步脚本中立即清除 fragment/query，再从最多保留15秒的一次性内存闭包交换；交换后以服务端订单为准。丢失 JSON 时仅用已知订单号尝试受 Cookie 保护的 GET；不同订单的提示不能获得访问。不要把 token 放入 query 或日志。
-- 点击“关闭安全访问”后立即隐藏订单。若撤销响应未知，重试或恢复页面仍继续关闭；为恢复 CSRF 而读取的中间结果不重新显示。页面隐藏/离开时清除可见订单，重新可见时再次向服务端验证，过期或被另一浏览器轮换后展示恢复说明。
+- 点击“End access on this device”（结束本设备访问）后立即隐藏订单。若撤销响应未知，重试或恢复页面仍继续关闭；为恢复 CSRF 而读取的中间结果不重新显示。页面隐藏/离开时清除可见订单，重新可见时再次向服务端验证，过期或被另一浏览器轮换后展示恢复说明。
 - RATE_LIMITED 返回 429 与 Retry-After；KMS、数据库或结果合同异常返回通用 503，不放行也不暴露原始错误。
 - 查单读取不查询 PSP、不入账、不改购物车、不发邮件；不会把浏览器回跳当成付款证据。
 

@@ -166,7 +166,7 @@ export function HomeContent({
           className="storefront-primary"
           href={storefrontHref(locale, "/idols", contextQuery)}
         >
-          {copy.navArtists}
+          {copy.heroAllArtists}
           <Icon name="arrow-right" decorative />
         </a>
       </section>

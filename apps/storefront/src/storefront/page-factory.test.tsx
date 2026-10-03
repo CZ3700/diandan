@@ -334,7 +334,7 @@ test.each(SUPPORTED_LOCALES)(
     const accepting = closing(true);
     expect(accepting).not.toContain(copy.giftTitle);
     expect(accepting).not.toContain("<h2");
-    expect(accepting).toContain(copy.giftHandover);
+    expect(accepting).toContain(copy.giftHandover.replaceAll("'", "&#x27;"));
     expect(accepting).toContain(copy.giftChoose);
     expect(closing(false)).toContain(`<h2>${copy.artistPaused}</h2>`);
   },

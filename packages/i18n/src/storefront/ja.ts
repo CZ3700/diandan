@@ -4,26 +4,27 @@ const copy = {
   orderLoading: "注文を開いています…",
   orderLookupTitle: "注文を確認",
   orderLookupHelp:
-    "お支払い完了ページ、または有効な安全な注文確認リンクを開いてください。",
+    "最新の注文メールに記載された専用リンクを開いてください。最近この端末でご注文を開いた場合は、下の欄に注文番号を入力することもできます。どちらの方法でも開けない場合は、注文番号を添えてお問い合わせ窓口までご連絡ください。",
   orderIdLabel: "注文番号",
   orderOpen: "注文を開く",
-  orderAccessDenied: "現在のアクセス権限では、この注文を開けません。",
+  orderAccessDenied: "現在、この端末ではこのご注文を開けません。",
   orderUnavailable:
     "一時的に注文を表示できません。しばらくしてから再度お試しください。",
   orderPaymentPending:
-    "お支払いを確認中です。しばらくしてから再度ご確認ください。",
+    "お支払いはまだ確認中です。再度のお支払いはお控えください。確認が完了しましたらメールでお知らせします。",
   orderRateLimited: "{seconds, number} 秒待ってから再度お試しください。",
   orderRetry: "再試行",
-  orderRevoke: "安全なアクセスを終了",
-  orderRevoked: "この注文への安全なアクセスを終了しました。",
-  orderBack: "閲覧を続ける",
+  orderRevoke: "この端末でのアクセスを終了",
+  orderRevoked:
+    "この端末でのご注文へのアクセスを終了しました。再度ご覧になるには、より新しい注文メールのリンクをご利用いただくか、注文番号を添えてお問い合わせ窓口までご連絡ください。",
+  orderBack: "ギフトを探す",
   orderView: "注文を見る",
   orderLinkInvalid:
-    "この注文確認リンクは無効、有効期限切れ、または使用済みです。",
+    "この注文確認リンクは無効、有効期限切れ、または使用済みです。リンクは1回のみ有効です。最新の注文メールのリンクをご利用いただくか、注文番号を添えてお問い合わせ窓口までご連絡ください。",
   orderRecoveryHelp:
-    "お支払い完了ページに戻るか、新しい有効な注文確認リンクを開いてください。",
+    "最新の注文メールのリンクを開くか、お支払いに使用した端末でお支払い完了ページに戻ってください。どちらの方法でも開けない場合は、注文番号を添えてお問い合わせ窓口までご連絡ください。",
   orderCreated: "注文日時",
-  orderItems: "あなたのギフト",
+  orderItems: "ご注文のギフト",
   orderSummary: "注文金額",
   orderProgress: "注文の進捗",
   orderPaymentLabel: "お支払い",
@@ -46,18 +47,18 @@ const copy = {
   orderStateOpen: "受付中",
   orderDisputeNone: "異議申立てなし",
   orderDisputeOpen: "異議申立てを審査中",
-  orderDisputeWon: "スタジオを支持する結果で解決",
-  orderDisputeLost: "カード所有者を支持する結果で解決",
+  orderDisputeWon: "異議申立て終了：支払いは有効のまま",
+  orderDisputeLost: "異議申立て終了：代金は返還済み",
   orderReviewHelp:
     "ギフトの準備を続ける前に、スタジオがこの注文を確認する必要があります。",
   orderPreparationHelp:
-    "スタジオがギフトを準備し、アーティストへお届けします。このページで進捗をご確認いただけます。",
+    "スタジオがギフトを準備し、アーティストへお渡しします。所要期間はギフトによって異なります。次の段階に進みましたら、メールでお知らせします。",
   orderDeliveredHelp:
-    "スタジオは、これらのギフトをアーティストにお届け済みとして記録しています。",
+    "ギフトがアーティストに届いたことをスタジオが確認しました。応援ありがとうございます。",
   orderDigitalDelivered: "アーティストの応援記録に追加されました",
   orderDigitalAwaiting: "応援記録の反映待ち",
   orderDigitalDeliveredHelp:
-    "デジタル応援はアーティストの応援記録に追加されました。スタジオからのお届けは不要です。",
+    "このご注文のバーチャルギフトはアーティストの応援記録に追加されたため、スタジオによるお渡しは不要です。各ギフトのデジタル応援証明は、このページから保存できます。",
   orderHistoryHelp: "ギフト情報と価格は、ご注文時の内容を保持しています。",
   orderOriginalLanguage: "原文：{language}",
   orderSnapshotLanguage: "注文時に保存された内容：{language}",
@@ -65,7 +66,7 @@ const copy = {
   orderItemTotal: "ギフト合計",
   orderDeliveryPhotos: "お届け写真",
   orderDeliveryPhotosHelp:
-    "ギフトをお渡しした際にスタジオが撮影した写真です。ご覧いただけるのはご本人だけです。",
+    "ギフトをお渡しした際にスタジオが撮影した写真です。一般に公開されることはなく、個人的な閲覧に限ってご利用いただけます。",
   orderDeliveryPhotoOpen: "お届け写真 {position}/{count} を表示",
   orderDeliveryPhotoAlt: "お届け写真 {position}/{count}",
   orderDeliveryPhotoClose: "写真を閉じる",
@@ -99,15 +100,17 @@ const copy = {
   checkoutTitle: "お会計",
   checkoutReview: "ギフトを確認",
   checkoutEmail: "メールアドレス",
-  checkoutEmailHint: "この注文の進捗をお知らせします。",
+  checkoutEmailHint:
+    "注文確認用の専用リンクとご注文に関するお知らせをこちらにお送りします。お間違いのないようご確認ください。宣伝目的のメールはお送りしません。",
   checkoutConfirm: "確認して続ける",
   checkoutContinue: "お会計に進む",
   checkoutRefresh: "状況を更新",
-  checkoutRecover: "このリクエストを再開",
+  checkoutRecover: "お会計を再開",
   checkoutResumePayment: "支払いを再開",
   checkoutUnavailable:
     "現在お会計を利用できません。しばらくして再試行してください。",
-  checkoutChanged: "内容が変更されました。もう一度確認してください。",
+  checkoutChanged:
+    "一部の内容が変更されました。ギフトをご確認のうえ、もう一度お進みください。",
   checkoutExpired:
     "お会計の有効期限が切れました。ギフトバッグに戻ってください。",
   checkoutEmpty: "ギフトバッグは空です。",
@@ -116,16 +119,19 @@ const copy = {
   checkoutCountry: "支払いを行う国・地域",
   checkoutChooseCountry: "国・地域を選択",
   checkoutMethod: "支払い方法",
-  checkoutNoMethods: "この選択で利用できる支払い方法はありません。",
+  checkoutNoMethods:
+    "この選択内容でご利用いただける支払い方法はありません。時間をおいて再度お試しください。",
   checkoutPay: "支払いに進む",
   checkoutTest: "テスト決済 · 実際の請求はありません",
   checkoutReturnTitle: "支払い状況",
-  checkoutChecking: "支払い状況を確認中…",
-  checkoutUnknown: "結果は未確定です。同じ支払いを確認しています。",
-  checkoutProcessing: "支払いを確認しています。",
+  checkoutChecking: "最新の情報を確認中…",
+  checkoutUnknown:
+    "処理結果はまだ確定していません。確認が終わるまで、再度のお支払いはお控えください。",
+  checkoutProcessing:
+    "お支払いを確認しています。再度のお支払いはお控えください。確認が完了しましたらメールでお知らせします。",
   checkoutFailed: "この支払いは完了していません。",
   checkoutActionExpired:
-    "支払いリンクの有効期限が切れました。再開する前に、現在の支払い状況を確認してください。",
+    "このお支払い手続きの有効期限が切れました。再度お支払いになる前に、「状況を更新」を押して現在の状態をご確認ください。",
   checkoutRetryPayment: "支払い方法を選び直す",
   checkoutLanguageFallback:
     "支払い画面の言語：{language}。注文内容は変わりません。",
@@ -152,7 +158,8 @@ const copy = {
   cartBuyNow: "今すぐ購入",
   cartBuyingNow: "購入手続きへ移動中…",
   cartMessage: "非公開メッセージ",
-  cartMessageHint: "メッセージはスタジオと受取人だけが閲覧できます。",
+  cartMessageHint:
+    "メッセージが一般に公開されることはありません。スタジオがすべてのメッセージを確認したうえでお渡ししますが、連絡先や不適切な内容を含むものはお渡しを控える場合があります。",
   cartAnonymous: "匿名",
   cartNickname: "ニックネームを使う",
   cartDisplayName: "ニックネーム",
@@ -167,25 +174,27 @@ const copy = {
   cartRemoving: "削除中…",
   cartPriceChanged: "価格が変更されました。現在の価格をご確認ください。",
   cartUnavailable: "このギフトは現在購入できません。",
-  cartQuantityExceeded: "現在購入できる数量をご確認ください。",
+  cartQuantityExceeded:
+    "現在、その数量はご用意できません。数量を減らして、もう一度お試しください。",
   cartConflict:
-    "バッグが別の場所で更新されました。入力内容を保持しています。最新情報を確認してから再度保存してください。",
+    "ギフトバッグが別の画面で更新されました。入力内容はそのまま残っています。最新の内容を確認してから、もう一度保存してください。",
   cartUnknown:
-    "結果を確認できません。同じリクエストを再試行して安全に確認できます。",
+    "この変更が反映されたか確認できませんでした。「再試行」を押すと、安全に確認できます。",
   cartScopeMismatch:
-    "このバッグは別の市場または通貨を使用しています。バッグをご確認ください。",
-  cartRemoved:
-    "このギフトは削除されています。必要な場合のみ新しく追加してください。",
-  cartInvalid: "数量とメッセージ・ニックネームの文字数をご確認ください。",
-  cartExpired: "バッグの有効期限が切れました。ギフトを選び直してください。",
+    "ギフトバッグの地域または通貨が、現在の選択と異なります。ギフトバッグを開いてご確認ください。",
+  cartRemoved: "このギフトはギフトバッグから削除されました。",
+  cartInvalid:
+    "数量、メッセージ（280文字まで）、ニックネーム（1〜40文字）をご確認ください。",
+  cartExpired:
+    "ギフトバッグの有効期限が切れました。もう一度ギフトをお選びください。",
   cartUpdated: "変更を保存しました",
   cartTotal: "合計",
-  cartPartialTotal: "価格を確認できたギフトの合計",
+  cartPartialTotal: "購入可能なギフトの合計",
   cartConfirmQuantity: "数量を更新",
-  cartPrivateTitle: "非公開メッセージと名前",
-  cartPrivateLoading: "非公開エディターを開いています…",
+  cartPrivateTitle: "メッセージとお名前（任意）",
+  cartPrivateLoading: "メッセージを開いています…",
   cartMessageLanguage: "メッセージの言語",
-  cartAnonymousSaved: "匿名で保存済み",
+  cartAnonymousSaved: "匿名",
   cartCharacters: "文字数",
   cartCheckoutBody:
     "ギフトと非公開メッセージを保存できます。決済はまだ利用できません。",
@@ -240,19 +249,23 @@ const copy = {
   giftEyebrow: "心を込めて選ぶ",
   giftTitle: "想いを届けるギフト",
   giftBody: "記憶に残る瞬間に、ふさわしいギフトを。",
-  giftHandover: "スタジオがギフトを準備し、アーティストへ届けます。",
+  giftHandover:
+    "スタジオが一つひとつのギフトを準備し、アーティストへお渡しします。バーチャルギフトは、お渡しの代わりにアーティストの応援記録へ追加されます。",
   giftEmpty: "新しいギフトを準備中です。",
-  giftBrowse: "ギフトを見る",
+  giftBrowse: "すべてのギフト",
   giftChoose: "ギフトを選ぶ",
   howTitle: "あなたの想いを、その手に",
   howSelect: "アーティストとギフトを選ぶ",
   howSelectBody: "あの人にぴったりの贈り物を。",
   howPay: "メッセージを添える",
-  howPayBody: "お名前とメッセージは非公開で保管されます。",
-  howDeliver: "お届けはスタジオにお任せ",
-  howDeliverBody: "スタジオが準備し、ギフトをアーティストへ届けます。",
+  howPayBody:
+    "ニックネームでも、匿名のままでも贈れます。メッセージが一般に公開されることはありません。",
+  howDeliver: "アーティストへお届け",
+  howDeliverBody:
+    "スタジオがアーティストのためにギフトを準備します。お客さまへの発送はありません。ご注文の状況はメールでお知らせします。",
   trustTitle: "一つひとつの想いを、大切に",
-  trustBody: "非公開のメッセージ。スタジオによるお届け。明確なギフト情報。",
+  trustBody:
+    "非公開メッセージは一つひとつ丁寧に確認。アーティストへはスタジオがお届け。アカウント登録不要の安全なお会計。",
   finalTitle: "あの人の一日を、少し明るく",
   aboutArtist: "アーティストの物語",
   artistGallery: "もっと身近に",
@@ -300,8 +313,10 @@ const copy = {
   giftRecipient: "贈るアーティスト",
   giftRecipientChoose: "アーティストを選ぶ",
   giftRecipientChange: "アーティストを変更",
-  giftRecipientMissing: "アーティストを選ぶと、贈れる種類を確認できます。",
-  giftRecipientIneligible: "この種類は選択したアーティストに贈れません。",
+  giftRecipientMissing:
+    "続けるには、このギフトを贈るアーティストをお選びください。",
+  giftRecipientIneligible:
+    "選択したアーティストには、この種類をお選びいただけません。別の種類またはアーティストをお選びください。",
   giftRecipientUnavailable:
     "このアーティストは選択できません。別の方をお選びください。",
   giftVariant: "種類",
@@ -313,9 +328,10 @@ const copy = {
   giftTracked: "在庫から手配",
   giftProcureOnDemand: "ご注文後に手配",
   giftProcureBody:
-    "お支払い後にスタジオが調達・準備します。事前の在庫は必要ありません。",
+    "お支払いの確認後に、スタジオがこのギフトを調達・準備し、アーティストへお渡しします。所要期間はギフトによって異なります。",
   giftPreorder: "予約商品",
-  giftPreorderBody: "掲載されているギフト情報に沿ってスタジオが準備します。",
+  giftPreorderBody:
+    "この予約商品は、ギフト詳細の記載に沿ってスタジオが準備し、アーティストへお渡しします。",
   giftCheckoutUnavailable: "注文機能を準備中",
   giftCheckoutBody:
     "ギフトと非公開メッセージを保存できます。決済はまだ利用できません。",
@@ -328,10 +344,10 @@ const copy = {
   giftKindOther: "ギフト",
   homeKindsTitle: "4つの応援のかたち",
   giftKindVirtualBody:
-    "お支払いの確認後すぐに、アーティストの応援記録に加わります。",
+    "お支払いの確認後にアーティストの応援記録へ追加され、記念のデジタル応援証明を保存できます。実物の品物や、ライブ配信でのお名前の読み上げは含まれません。",
   giftKindPhysicalBody: "スタジオが準備し、アーティストへ手渡す実物のギフト。",
   giftKindWishBody:
-    "アーティストのウィッシュリストから選び、スタジオが手配します。",
+    "アーティストページのウィッシュリストから選ぶギフトです。スタジオが手配し、アーティストへお渡しします。各ウィッシュは一度だけサポートできます。",
   giftKindMerchandiseBody:
     "スタジオが用意し、アーティストへ届けるテーマグッズ。",
   giftKindLabel: "ギフトの種類",
@@ -342,43 +358,44 @@ const copy = {
   policyPrivacy: "プライバシー",
   policyRefund: "返金について",
   policyDelivery: "お渡しについて",
-  marketChoose: "マーケットと通貨を選択",
+  marketChoose: "地域と通貨を選択",
   marketChooseBody:
-    "利用可能なマーケットを選ぶとギフト価格が表示されます。言語は変わりません。",
-  marketUnavailable: "現在利用可能なマーケットがありません。",
+    "地域と通貨を選ぶと、ギフトの価格が表示されます。表示言語は変わりません。",
+  marketUnavailable:
+    "現在ご利用いただける地域がありません。時間をおいて再度お試しください。",
   marketSelected: "選択中",
   marketInvalid:
-    "このマーケットと通貨の組み合わせは利用できません。選び直してください。",
+    "この地域または通貨はご利用いただけません。別の地域・通貨をお選びください。",
   wishTitle: "アーティストのウィッシュ",
-  artistWishesEmpty:
-    "このアーティストはまだウィッシュギフトを設定していません。",
+  artistWishesEmpty: "このアーティストのウィッシュギフトはまだありません。",
   wishOnlyFor: "{artist}へのウィッシュギフト",
   wishOpen: "サポート受付中",
-  wishPaymentPending: "お支払いを確認中",
+  wishPaymentPending: "取り置き中・決済待ち",
   wishSupported: "サポート済み",
   wishDelivered: "お届け済み",
   wishUnavailable: "このウィッシュは現在サポートできません。",
   wishShowcaseTitle: "ウィッシュギャラリー",
-  wishShowcaseIntro: "ファンがサポートしたウィッシュの記録。",
+  wishShowcaseIntro:
+    "ファンがサポートし、公開を選んだウィッシュの記録です。公開用の名前は、サポーターご本人が決めたものです。",
   wishShowcaseEmpty: "公開された記録はまだありません。",
   wishShowcaseMore: "すべてのウィッシュを見る",
-  wishDisplayOptIn: "このサポートをギャラリーで公開する",
+  wishDisplayOptIn: "このサポートをウィッシュギャラリーで公開する",
   wishDisplayAnonymous: "匿名のサポーター",
   wishDisplayAlias: "公開用の名前",
   wishAliasLabel: "あなたの公開用の名前",
   wishAliasHint:
-    "この名前は公開されます。非公開の署名やメッセージは公開されません。",
+    "公開用の名前を選んだ場合、その名前は誰でも見ることができます。連絡先やその他の個人情報は含めないでください。非公開のお名前やメッセージがギャラリーに表示されることはありません。",
   wishAliasInvalid: "公開用の名前を1〜40文字で入力してください。",
-  wishRecordPlanned: "支払い後に公開",
-  wishEdit: "心願の詳細を編集",
-  wishRecordTitle: "ギャラリーの記録",
+  wishRecordPlanned: "お支払い後に公開",
+  wishEdit: "ウィッシュ詳細を編集",
+  wishRecordTitle: "ウィッシュギャラリー",
   wishRecordPrivate: "非公開",
   wishRecordPublic: "ギャラリーで公開中",
   wishRecordSave: "公開設定を保存",
   wishRecordSaving: "保存中…",
   wishRecordSaved: "公開設定を保存しました。",
   wishRecordSaveFailed:
-    "保存できませんでした。変更は保持されています。もう一度お試しください。",
+    "この変更を保存できませんでした。もう一度お試しください。",
   wishRecordHidden: "この記録はギャラリーで非表示になっています。",
   wishRecordHide: "ギャラリーで非表示にする",
   wishSupportedBy:
@@ -386,8 +403,19 @@ const copy = {
   wishGalleryError: "ギャラリーを読み込めません。もう一度お試しください。",
   wishOnlyOnce:
     "各ウィッシュは一度だけサポートできます。お支払いの確認後は販売を終了します。",
-  wishReversed: "サポート取り消し済み",
+  wishReversed: "代金返還済み",
   wishPrivacyWithdrawHint:
-    "注文の詳細から、いつでもこの記録をギャラリーで非表示にできます。",
+    "この記録は、あとから注文確認ページで非表示にできます。一度非表示にすると、再び表示することはできません。",
+  checkoutGiftNotice:
+    "このご注文のギフトはすべてアーティストへ贈るもののため、お客さまへの発送はありません。バーチャルギフトは、お支払いが確認され次第、提供完了となります。なお、この記載は、消費者としてお客さまが法令上有する権利に影響するものではありません。",
+  checkoutPaymentSecurity:
+    "お支払いは、当サイトが利用する決済サービス事業者の安全なページまたはフォームで行われます。当サイトがカード情報を閲覧・保存することはありません。",
+  orderEmailSent:
+    "注文確認用の専用リンクを記載した確認メールをお送りします。しばらくしても届かない場合は、迷惑メールフォルダをご確認ください。",
+  cartCheckoutBlocked:
+    "お会計に進むには、購入できないギフトを削除してください。",
+  orderSupportHelp:
+    "ご質問、キャンセルや返金のご依頼は、注文番号を添えてお問い合わせ窓口までご連絡ください。承認された返金は、お支払い時と同じ方法で行われます。返金が反映される時期は、ご利用のカード会社などの金融機関によって決まります。",
+  wishDisplayModeLabel: "表示方法",
 } as const;
 export default copy;

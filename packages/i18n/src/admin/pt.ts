@@ -18,7 +18,7 @@ export default {
   kindVirtual: "Presente virtual",
   kindPhysical: "Presente físico",
   kindWish: "Presente desejado",
-  kindMerchandise: "Artigos colecionáveis",
+  kindMerchandise: "Produtos colecionáveis",
   kindOther: "Outro presente",
   inventoryPolicy: "Política de venda",
   policyTracked: "Estoque limitado",
@@ -86,7 +86,7 @@ export default {
   primaryImage: "Imagem principal",
   details: "Detalhes do presente",
   detailHint:
-    "Escreva primeiro o original em inglês. Alterações exigem novas traduções e revisão independente.",
+    "Escreva primeiro o original em inglês. Alterações no texto em inglês exigem novas traduções e revisão independente.",
   addBlock: "Adicionar bloco",
   heading: "Título",
   paragraph: "Parágrafo",
@@ -117,7 +117,7 @@ export default {
   search: "Buscar por nome ou identificador",
   searchAction: "Buscar",
   newArtist: "Novo artista",
-  newHomepage: "Criar rascunho inicial",
+  newHomepage: "Criar rascunho da página inicial",
   loading: "Carregando…",
   working: "Salvando…",
   empty: "Nenhum conteúdo encontrado.",
@@ -244,6 +244,5 @@ export default {
   changedFields: "Campos alterados",
   copyScope: "Salvar esta revisão exige acesso a outros idiomas.",
   localPreview: "Prévia local de administração",
-  reviewPending: "As traduções da interface aguardam aprovação humana.",
   openGenerated: "Editar imagem gerada",
 } as const;

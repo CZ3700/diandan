@@ -243,6 +243,5 @@ export default {
   changedFields: "Changed fields",
   copyScope: "Saving this revision requires additional locale access.",
   localPreview: "Local administration preview",
-  reviewPending: "Interface translations await human approval.",
   openGenerated: "Edit generated image",
 } as const;

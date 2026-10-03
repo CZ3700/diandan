@@ -3,9 +3,9 @@ export default {
   namespace: "admin",
   locale: "en",
   sourceHash:
-    "842b2d4b5da64f93612dc57951bad9b0b5644aad82cf8615beee1d1197cbc176",
+    "e2fece744ca724f7883054ae0c711846c3807660e21cb9e7fd912da53a7440c1",
   translationHash:
-    "842b2d4b5da64f93612dc57951bad9b0b5644aad82cf8615beee1d1197cbc176",
+    "e2fece744ca724f7883054ae0c711846c3807660e21cb9e7fd912da53a7440c1",
   translator: "Codex",
   reviewer: null,
   status: "DRAFT",

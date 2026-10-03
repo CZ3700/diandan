@@ -36,7 +36,7 @@ export function WishGalleryChoice({
       </label>
       {shared && (
         <>
-          <label htmlFor={`${id}-mode`}>{copy.wishDisplayAlias}</label>
+          <label htmlFor={`${id}-mode`}>{copy.wishDisplayModeLabel}</label>
           <select
             id={`${id}-mode`}
             value={value.visibility}

@@ -32,6 +32,7 @@ export function PaymentMethods({
   return (
     <div className="checkout-methods" data-payment-methods>
       <h2>{retrying ? copy.checkoutRetryPayment : copy.checkoutMethod}</h2>
+      <p className="checkout-hint">{copy.checkoutPaymentSecurity}</p>
       {caps ? (
         <>
           {/* The server asks only when the country changes which methods apply. */}

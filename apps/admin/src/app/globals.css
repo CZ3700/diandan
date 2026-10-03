@@ -383,13 +383,6 @@ a:focus-visible {
   text-align: center;
   color: var(--color-text-muted);
 }
-.admin-review-note {
-  margin-top: var(--space-16);
-  padding-top: var(--space-4);
-  border-top: var(--border-width) solid var(--color-border);
-  color: var(--color-text-muted);
-  font-size: var(--type-label-size);
-}
 .admin-auth {
   display: grid;
   place-items: center;

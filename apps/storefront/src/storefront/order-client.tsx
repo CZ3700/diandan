@@ -110,6 +110,9 @@ export function OrderClient({
             ? copy.orderThankYou
             : copy.orderTitle}
       </h1>
+      {mode === "thank-you" && state.order && (
+        <p data-order-email-sent>{copy.orderEmailSent}</p>
+      )}
       {mode === "lookup" && (
         <>
           <p>{copy.orderLookupHelp}</p>
@@ -218,6 +221,9 @@ export function OrderClient({
               {copy.orderRevoke}
             </button>
           </div>
+          <p className="order-support" data-order-support>
+            {copy.orderSupportHelp}
+          </p>
         </>
       )}
       <a

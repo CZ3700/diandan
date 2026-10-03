@@ -4,22 +4,25 @@ const copy = {
   orderLoading: "Opening your order…",
   orderLookupTitle: "Find your order",
   orderLookupHelp:
-    "Open your payment completion page or use a valid secure order link.",
+    "Open the secure link in your most recent order email. If you opened your order on this device recently, you can also enter its order number below. If neither works, contact our support team with your order number.",
   orderIdLabel: "Order number",
   orderOpen: "Open order",
-  orderAccessDenied: "This order cannot be opened with your current access.",
+  orderAccessDenied: "This order can't be opened on this device right now.",
   orderUnavailable: "Your order is temporarily unavailable. Try again shortly.",
-  orderPaymentPending: "Payment is still being confirmed. Check again shortly.",
+  orderPaymentPending:
+    "Your payment is still being confirmed. Please don't pay again. We'll email you once it's confirmed.",
   orderRateLimited:
     "Please wait {seconds, number} seconds before trying again.",
   orderRetry: "Try again",
-  orderRevoke: "Close secure access",
-  orderRevoked: "Secure access to this order has been closed.",
-  orderBack: "Back to browsing",
+  orderRevoke: "End access on this device",
+  orderRevoked:
+    "Access to this order has ended on this device. To view it again, use a newer order email link or contact our support team with your order number.",
+  orderBack: "Explore more gifts",
   orderView: "View order",
-  orderLinkInvalid: "This order link is invalid, expired or already used.",
+  orderLinkInvalid:
+    "This order link is invalid, expired or already used. Each link works once: use the link in your most recent order email, or contact our support team with your order number.",
   orderRecoveryHelp:
-    "Return to your payment completion page or open a new valid secure order link.",
+    "Open the link in your most recent order email, or return to the payment completion page on the device you paid with. If neither works, contact our support team with your order number.",
   orderCreated: "Placed on",
   orderItems: "Your gifts",
   orderSummary: "Order summary",
@@ -44,18 +47,18 @@ const copy = {
   orderStateOpen: "Open",
   orderDisputeNone: "No dispute",
   orderDisputeOpen: "Dispute in progress",
-  orderDisputeWon: "Dispute resolved in the studio’s favor",
-  orderDisputeLost: "Dispute resolved in the cardholder’s favor",
+  orderDisputeWon: "Dispute closed: payment upheld",
+  orderDisputeLost: "Dispute closed: payment returned",
   orderReviewHelp:
     "The studio needs to review this order before preparation can continue.",
   orderPreparationHelp:
-    "The studio prepares your gifts and hands them to the artist. Check this page for progress.",
+    "The studio prepares your gifts and hands them to the artist. Timing depends on each gift, and we'll email you when your order reaches the next step.",
   orderDeliveredHelp:
-    "The studio has marked these gifts as delivered to the artist.",
+    "The studio has confirmed that your gifts were delivered to the artist. Thank you for your support.",
   orderDigitalDelivered: "Added to the artist's support record",
   orderDigitalAwaiting: "Support record pending",
   orderDigitalDeliveredHelp:
-    "Your digital support has been added to the artist's support record. No studio handover is needed.",
+    "Virtual gifts in this order have been added to the artist's support record, so no studio handover is needed. You can save a digital support certificate for each one on this page.",
   orderHistoryHelp:
     "Gift details and prices are saved from when you placed the order.",
   orderOriginalLanguage: "Original content: {language}",
@@ -64,7 +67,7 @@ const copy = {
   orderItemTotal: "Gift total",
   orderDeliveryPhotos: "Delivery photos",
   orderDeliveryPhotosHelp:
-    "Our studio took these when your gift was handed over. Only you can see them.",
+    "Taken by the studio when your gift was handed over. They are never shown publicly and are for your personal viewing only.",
   orderDeliveryPhotoOpen: "View delivery photo {position} of {count}",
   orderDeliveryPhotoAlt: "Delivery photo {position} of {count}",
   orderDeliveryPhotoClose: "Close photo",
@@ -97,14 +100,16 @@ const copy = {
   checkoutTitle: "Checkout",
   checkoutReview: "Review your gifts",
   checkoutEmail: "Email address",
-  checkoutEmailHint: "For updates about this order.",
+  checkoutEmailHint:
+    "We'll send your secure order link and order updates here, so please check it carefully. No marketing emails.",
   checkoutConfirm: "Confirm and continue",
   checkoutContinue: "Continue to checkout",
   checkoutRefresh: "Refresh status",
-  checkoutRecover: "Resume this request",
+  checkoutRecover: "Resume checkout",
   checkoutResumePayment: "Resume payment",
   checkoutUnavailable: "Checkout is unavailable. Try again shortly.",
-  checkoutChanged: "Details changed. Review them and confirm again.",
+  checkoutChanged:
+    "Some details have changed. Review your gifts, then continue again.",
   checkoutExpired: "This checkout has expired. Return to your gift bag.",
   checkoutEmpty: "Your gift bag is empty.",
   checkoutConsentAll: "I have read and agree to {policies}.",
@@ -112,17 +117,19 @@ const copy = {
   checkoutCountry: "Payment country",
   checkoutChooseCountry: "Choose a country",
   checkoutMethod: "Payment method",
-  checkoutNoMethods: "No payment methods are available for this selection.",
+  checkoutNoMethods:
+    "No payment methods are available for this selection. Please try again later.",
   checkoutPay: "Continue to payment",
   checkoutTest: "Test payment · No real money is collected",
   checkoutReturnTitle: "Payment status",
-  checkoutChecking: "Checking payment status…",
+  checkoutChecking: "Checking the latest details…",
   checkoutUnknown:
-    "The result is not confirmed. We are checking the same payment.",
-  checkoutProcessing: "Your payment is being confirmed.",
+    "The result isn't confirmed yet. Please don't pay again while we check.",
+  checkoutProcessing:
+    "Your payment is being confirmed. Please don't pay again. We'll email you once it's confirmed.",
   checkoutFailed: "This payment did not complete.",
   checkoutActionExpired:
-    "This payment link has expired. Check the current payment before continuing.",
+    "This payment session has expired. Select “Refresh status” to check it before you pay again.",
   checkoutRetryPayment: "Choose a payment method again",
   checkoutLanguageFallback:
     "Payment page language: {language}. Your order stays unchanged.",
@@ -149,7 +156,8 @@ const copy = {
   cartBuyNow: "Buy now",
   cartBuyingNow: "Going to checkout…",
   cartMessage: "Private message",
-  cartMessageHint: "Only the studio and the recipient can read your message.",
+  cartMessageHint:
+    "Messages are never shown publicly. The studio reviews each one before passing it on and may withhold messages with contact details or harmful content.",
   cartAnonymous: "Anonymous",
   cartNickname: "Use a nickname",
   cartDisplayName: "Nickname",
@@ -163,26 +171,27 @@ const copy = {
   cartRemove: "Remove",
   cartRemoving: "Removing…",
   cartPriceChanged: "The price has changed. Review the current price.",
-  cartUnavailable: "This item is currently unavailable.",
-  cartQuantityExceeded: "Review the quantity against current availability.",
+  cartUnavailable: "This gift is currently unavailable.",
+  cartQuantityExceeded:
+    "That quantity isn't available right now. Choose a lower quantity and try again.",
   cartConflict:
-    "This bag changed elsewhere. Your draft is kept; review the latest details before saving again.",
+    "Your gift bag was updated elsewhere. Your edits are still here; check the latest details and save again.",
   cartUnknown:
-    "The result is not confirmed. Retry this same request to check safely.",
+    "We couldn't confirm this change. Select “Try again” to check it safely.",
   cartScopeMismatch:
-    "This bag uses another market or currency. Open the bag to review it.",
-  cartRemoved:
-    "This item was removed. Add it again only if you want a new item.",
-  cartInvalid: "Check the quantity, message and nickname limits.",
+    "Your gift bag uses a different region or currency. Open your gift bag to review it.",
+  cartRemoved: "This gift was removed from your gift bag.",
+  cartInvalid:
+    "Check the quantity, your message (up to 280 characters) and your nickname (1–40 characters).",
   cartExpired: "Your gift bag has expired. Choose a gift to start again.",
   cartUpdated: "Changes saved",
   cartTotal: "Total",
-  cartPartialTotal: "Total for currently priced items",
+  cartPartialTotal: "Total for available gifts",
   cartConfirmQuantity: "Update quantity",
-  cartPrivateTitle: "Private message and name",
-  cartPrivateLoading: "Opening private editor…",
+  cartPrivateTitle: "Message and name (optional)",
+  cartPrivateLoading: "Opening your message…",
   cartMessageLanguage: "Message language",
-  cartAnonymousSaved: "Anonymous name saved",
+  cartAnonymousSaved: "Anonymous",
   cartCharacters: "Characters",
   cartCheckoutBody:
     "Your gifts and private messages can be saved here. Checkout is not open yet.",
@@ -213,7 +222,7 @@ const copy = {
     "The artist collection has changed. Refresh to continue.",
   artistAnchorMissing: "This artist is no longer available here.",
   artistEnd: "You’ve seen all the artists.",
-  artistAccepting: "Gifts welcome",
+  artistAccepting: "Open for gifts",
   artistPaused: "Gifts temporarily paused",
   artistSelected: "Located",
   artistStart: "Browse from the beginning",
@@ -221,7 +230,7 @@ const copy = {
   navHome: "Home",
   navArtists: "Artists",
   navGifts: "Gifts",
-  navOrders: "Find an order",
+  navOrders: "Find your order",
   navLabel: "Main navigation",
   navMenu: "Menu",
   language: "Language",
@@ -239,19 +248,23 @@ const copy = {
   giftEyebrow: "Thoughtfully chosen",
   giftTitle: "A gift, with meaning.",
   giftBody: "Discover gifts chosen for moments worth remembering.",
-  giftHandover: "The studio prepares each gift and passes it on to the artist.",
+  giftHandover:
+    "The studio prepares each gift and hands it to the artist. Virtual gifts are added to the artist's support record instead.",
   giftEmpty: "New gifts are being prepared.",
-  giftBrowse: "Explore gifts",
+  giftBrowse: "All gifts",
   giftChoose: "Choose a gift",
   howTitle: "From your heart to theirs.",
   howSelect: "Choose your artist and gift",
   howSelectBody: "Find something that feels just right for them.",
   howPay: "Add your message",
-  howPayBody: "Your name and message stay private.",
-  howDeliver: "We take care of delivery",
-  howDeliverBody: "The studio prepares and hands over your gift.",
+  howPayBody:
+    "Use a nickname or stay anonymous. Your message is never shown publicly.",
+  howDeliver: "We deliver to the artist",
+  howDeliverBody:
+    "The studio prepares your gift for the artist. Nothing is shipped to you, and we email you with order updates.",
   trustTitle: "Every gesture, handled with care.",
-  trustBody: "Private messages. Studio delivery. Clear gift information.",
+  trustBody:
+    "Private messages, reviewed with care. Delivered to the artist by our studio. Secure checkout, no account needed.",
   finalTitle: "Make their day a little brighter.",
   aboutArtist: "Their story",
   artistGallery: "A closer look",
@@ -299,9 +312,9 @@ const copy = {
   giftRecipient: "For your artist",
   giftRecipientChoose: "Choose an artist",
   giftRecipientChange: "Change artist",
-  giftRecipientMissing:
-    "Select an artist to check which options they can receive.",
-  giftRecipientIneligible: "This option cannot be sent to the selected artist.",
+  giftRecipientMissing: "Choose the artist this gift is for to continue.",
+  giftRecipientIneligible:
+    "This option isn't available for the selected artist. Choose another option or artist.",
   giftRecipientUnavailable:
     "This artist is unavailable. Please choose another.",
   giftVariant: "Options",
@@ -313,10 +326,10 @@ const copy = {
   giftTracked: "Prepared from available stock",
   giftProcureOnDemand: "Prepared to order",
   giftProcureBody:
-    "The studio sources or prepares this gift after payment. Existing stock is not required.",
+    "The studio sources or prepares this gift after your payment is confirmed, then hands it to the artist. Timing depends on the gift.",
   giftPreorder: "Preorder",
   giftPreorderBody:
-    "The studio prepares this preorder according to the published gift information.",
+    "The studio prepares this preorder as described in the gift details, then hands it to the artist.",
   giftCheckoutUnavailable: "Checkout is being prepared",
   giftCheckoutBody:
     "Your gifts and private messages can be saved here. Checkout is not open yet.",
@@ -329,11 +342,11 @@ const copy = {
   giftKindOther: "Gift",
   homeKindsTitle: "Four ways to show your support.",
   giftKindVirtualBody:
-    "Added to the artist's support record as soon as your payment is confirmed.",
+    "Added to the artist's support record once your payment is confirmed, with a digital certificate for you to keep. No physical item or live shout-out is included.",
   giftKindPhysicalBody:
     "A real gift the studio prepares and hands over to the artist.",
   giftKindWishBody:
-    "Chosen from the artist's wish list and sourced by the studio.",
+    "From the wish list on the artist's page, sourced by the studio and handed to the artist. Each wish can be supported only once.",
   giftKindMerchandiseBody:
     "Themed goods the studio prepares and delivers to the artist.",
   giftKindLabel: "Gift type",
@@ -344,50 +357,61 @@ const copy = {
   policyPrivacy: "Privacy",
   policyRefund: "Refunds",
   policyDelivery: "Delivery",
-  marketChoose: "Choose your market and currency",
+  marketChoose: "Choose your region and currency",
   marketChooseBody:
-    "Select an available market to see its gift prices. This does not change your language.",
-  marketUnavailable: "No markets are available right now.",
+    "Choose a region and currency to see gift prices. This does not change your language.",
+  marketUnavailable:
+    "No regions are available right now. Please try again later.",
   marketSelected: "Selected",
   marketInvalid:
-    "This market or currency is unavailable. Please select an available combination.",
+    "This region or currency is unavailable. Please choose another one.",
   wishTitle: "Artist wishes",
-  artistWishesEmpty: "This artist has not added any wish gifts yet.",
+  artistWishesEmpty: "No wish gifts are listed for this artist yet.",
   wishOnlyFor: "A wish for {artist}",
   wishOpen: "Available to support",
-  wishPaymentPending: "Payment in progress",
+  wishPaymentPending: "Reserved, payment pending",
   wishSupported: "Wish supported",
   wishDelivered: "Delivered",
   wishUnavailable: "This wish is unavailable.",
   wishShowcaseTitle: "Wish gallery",
-  wishShowcaseIntro: "A collection of wishes supported by fans.",
+  wishShowcaseIntro:
+    "Wishes that fans supported and chose to share. Public names are chosen by the supporters.",
   wishShowcaseEmpty: "No shared wishes yet.",
   wishShowcaseMore: "View all wishes",
-  wishDisplayOptIn: "Show this support in the wish gallery",
+  wishDisplayOptIn: "Show my support in the public wish gallery",
   wishDisplayAnonymous: "Anonymous supporter",
   wishDisplayAlias: "Public name",
   wishAliasLabel: "Your public name",
   wishAliasHint:
-    "This name will be public. Your private name and message will not be shared.",
+    "If you choose a public name, anyone can see it. Don't include contact details or other personal information. Your private name and message are never shown in the gallery.",
   wishAliasInvalid: "Enter a public name of 1–40 characters.",
-  wishRecordPlanned: "Share after payment",
+  wishRecordPlanned: "Shared after payment",
   wishEdit: "Edit wish details",
-  wishRecordTitle: "Gallery record",
+  wishRecordTitle: "Wish gallery",
   wishRecordPrivate: "Not shared",
   wishRecordPublic: "Shared in the gallery",
   wishRecordSave: "Save gallery settings",
   wishRecordSaving: "Saving…",
   wishRecordSaved: "Gallery settings saved.",
-  wishRecordSaveFailed:
-    "The settings could not be saved. Your changes are still here; try again.",
+  wishRecordSaveFailed: "This change could not be saved. Please try again.",
   wishRecordHidden: "This record is hidden from the gallery.",
   wishRecordHide: "Hide from gallery",
   wishSupportedBy: "{supporter} supported a wish for {artist} on {date}.",
   wishGalleryError: "The wish gallery is unavailable. Please try again.",
   wishOnlyOnce:
     "Each wish can be supported once. It is no longer available after payment is confirmed.",
-  wishReversed: "Support withdrawn",
+  wishReversed: "Payment returned",
   wishPrivacyWithdrawHint:
-    "You can hide this record from the gallery at any time in your order details.",
+    "You can hide this record later from your secure order page. Once hidden, it can't be shown again.",
+  checkoutGiftNotice:
+    "Every gift in this order is for the artist, so nothing is shipped to you. Virtual gifts are fulfilled as soon as your payment is confirmed. This does not affect your legal rights as a consumer.",
+  checkoutPaymentSecurity:
+    "Payment is completed on our payment provider's secure page or form. We never see or store your card details.",
+  orderEmailSent:
+    "We're emailing your confirmation and secure order link. If it doesn't arrive soon, check your spam folder.",
+  cartCheckoutBlocked: "Remove unavailable gifts to continue to checkout.",
+  orderSupportHelp:
+    "Questions, cancellations or refund requests: contact our support team with your order number. Approved refunds go back to your original payment method; your bank decides when they appear.",
+  wishDisplayModeLabel: "Show me as",
 } as const;
 export default copy;

@@ -46,6 +46,30 @@ it("offers a clear resume-payment action for an expired authorization only when 
   expect(resumable).not.toContain("href=");
   expect(render("NONE")).not.toContain("data-payment-recover=");
 });
+it("names the fallback payment-page language instead of showing its raw code", async () => {
+  const { PaymentStatus } = await import("./payment-status");
+  const render = (providerLocale: string) =>
+    renderToStaticMarkup(
+      <PaymentStatus
+        attempt={{
+          ...attemptFixture,
+          providerLocale,
+          providerLocaleFallbackUsed: true,
+        }}
+        locale="en"
+        copy={copy}
+        busy={false}
+        onRecover={() => {}}
+        onRefresh={() => {}}
+        onContinue={() => {}}
+      />,
+    );
+  const named = new Intl.DisplayNames(["en"], { type: "language" }).of(
+    "pt-BR",
+  )!;
+  expect(render("pt-BR")).toContain(`Payment page language: ${named}.`);
+  expect(render("pt-BR")).not.toContain("language: pt-BR");
+});
 it("renders uncertain payment as pending confirmation and never a success or fresh-payment link", async () => {
   const loaded = await import("./payment-status").catch(() => null);
   expect(loaded?.PaymentStatus).toBeTypeOf("function");
@@ -98,6 +122,11 @@ it("asks for one consent with separate policy-reading buttons and an explicit pa
       />,
     );
   const html = render("en", copy);
+  // Before consent: every gift goes to the artist, so nothing is shipped to the fan.
+  expect(html).toContain(copy.checkoutGiftNotice);
+  expect(html.indexOf(copy.checkoutGiftNotice)).toBeLessThan(
+    html.indexOf('type="checkbox"'),
+  );
   expect(html.match(/type="checkbox"/gu)).toHaveLength(1);
   expect(html).toContain('data-checkout-policy="all"');
   expect(html).not.toContain('checked=""');
@@ -188,6 +217,9 @@ it("lists payment methods without a country question unless the country changes 
       />,
     );
   const direct = render(view);
+  expect(direct).toContain(
+    copy.checkoutPaymentSecurity.replaceAll("'", "&#x27;"),
+  );
   expect(direct).not.toContain("data-payment-country");
   expect(direct).not.toContain(copy.checkoutCountry);
   expect(direct).toContain(`data-payment-create="${method.id}"`);
