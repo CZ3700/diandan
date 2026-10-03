@@ -17,7 +17,7 @@ locals {
   "LOGIN": [
     {
       "method": "POST",
-      "path": "^/api/(admin/auth/(begin|logout)|v1/admin/access/(begin|callback|logout))/?$"
+      "path": "^/api/(admin/(auth/(begin|logout)|local-auth/(login|step))|v1/admin/(access/(begin|callback|logout)|local-access/(login|step|logout)))/?$"
     },
     {
       "method": "GET",
