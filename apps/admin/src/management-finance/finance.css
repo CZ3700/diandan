@@ -74,6 +74,28 @@
 .mf-panel .mo-section-heading {
   align-items: center;
 }
+/* The order page's folded payments and refunds: one plain line to open when needed. */
+.mf-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--space-12);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+.mf-toggle:hover {
+  color: var(--color-accent);
+}
+.mf-toggle .fs-icon {
+  transition: transform var(--motion-fast-effective) var(--ease-out);
+}
+.mf-toggle[aria-expanded="true"] .fs-icon {
+  transform: rotate(180deg);
+}
 @media (max-width: 48rem) {
   .mf-balances {
     grid-template-columns: repeat(2, minmax(0, 1fr));

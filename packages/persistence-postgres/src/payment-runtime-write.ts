@@ -300,7 +300,7 @@ export async function settlePaymentCreate(
     });
   }
   await client.query(
-    `UPDATE public.payment_runtime_operations SET phase='RECONCILE',lease_token_digest=NULL,lease_expires_at=NULL,next_attempt_at=clock_timestamp()+$2::bigint*interval '1 millisecond',version=version+1,updated_at=GREATEST(clock_timestamp(),updated_at),last_error_code=$3 WHERE id=$1::uuid`,
+    `UPDATE public.payment_runtime_operations SET phase='RECONCILE',lease_token_digest=NULL,lease_expires_at=NULL,next_attempt_at=clock_timestamp()+$2::bigint*interval '1 millisecond',defer_count=0,version=version+1,updated_at=GREATEST(clock_timestamp(),updated_at),last_error_code=$3 WHERE id=$1::uuid`,
     [
       claim.operationId,
       command.retryAfterMs,

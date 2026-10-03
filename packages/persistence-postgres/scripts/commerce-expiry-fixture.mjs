@@ -21,7 +21,7 @@ import {
   waitForOrderPayment,
 } from "../../../apps/api/scripts/order-payment-client.mjs";
 import { createCheckoutProtocolClient } from "../../../apps/api/scripts/checkout-preflight-client.mjs";
-import { createTestCartRuntimeComposition } from "../../../apps/api/dist/cart-composition.js";
+import { createTestCartRuntimeComposition } from "../../../apps/api/dist/testing/cart-composition.js";
 import { createApiApplication } from "../../../apps/api/dist/bootstrap.js";
 import { preflightEnvironment } from "../../../apps/api/scripts/publication-preflight-http-fixtures.mjs";
 import { publicationMediaEnvironment } from "../../../apps/api/scripts/publication-runtime-http-media.mjs";

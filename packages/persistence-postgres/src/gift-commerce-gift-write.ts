@@ -137,6 +137,10 @@ async function writeVariant(
   const command = input.command;
   if (command.action !== "SAVE_VARIANT")
     return giftCommerceFailure("INVALID_COMMAND");
+  await client.query(
+    "SELECT wish_id FROM public.wish_bindings WHERE gift_id=$1 FOR UPDATE",
+    [command.giftId],
+  );
   let prior: DraftRow | undefined;
   if (command.giftVariantId !== null) {
     const [row] = await draftRows(

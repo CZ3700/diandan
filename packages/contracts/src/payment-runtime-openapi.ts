@@ -101,7 +101,7 @@ export function paymentRuntimePaths() {
     "/api/v1/checkout/sessions/{checkoutSessionId}/capabilities": {
       get: read(
         "readCheckoutPaymentCapabilities",
-        "Use the persisted order amount and published payment rules. Select country explicitly; interface locale never selects country, market, currency or account. Missing country returns configured countries without methods. The provider capability call is read-only and outside SQL.",
+        "Use the persisted order amount and published payment rules. Interface locale never selects country, market, currency or account. When every selectable country sees the same payment methods, a missing country resolves to the first selectable country and countrySelectionRequired is false; otherwise a missing country returns the selectable countries without methods and countrySelectionRequired is true. The provider capability call is read-only and outside SQL.",
         [
           session,
           {

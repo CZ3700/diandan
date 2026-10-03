@@ -201,6 +201,7 @@ function validPerformance(width) {
     jsTransferBytes: 120_000,
     lcpMs: 1_800,
     longTasks: [],
+    navigation: { loadEventEnd: 400 },
     observers: {
       event: { installed: true, supported: true },
       layoutShift: { installed: true, supported: true },
@@ -765,7 +766,7 @@ test("blocks layout shift, overflow, clipping, long tasks and poor rAF pacing", 
   broken.rawLayoutShift = 2;
   broken.document.scrollWidth = 391;
   broken.clippedText.push("title");
-  broken.longTasks.push({ duration: 51, startTime: 1 });
+  broken.longTasks.push({ duration: 51, startTime: 900 });
   broken.raf.p95FrameDeltaMs = 35;
   broken.lcpMs = 2_500;
   broken.interactionLatency.maxMs = 200;
@@ -785,6 +786,38 @@ test("blocks layout shift, overflow, clipping, long tasks and poor rAF pacing", 
     "observer",
   ]) {
     assert.match(errors, new RegExp(expected, "iu"));
+  }
+});
+
+test("budgets long tasks only once the page has finished loading", async () => {
+  const { assessMotionPerformance } = await loadRunner();
+  const loading = validPerformance(360);
+  loading.navigation.loadEventEnd = 404.6;
+  loading.longTasks.push({ duration: 58, startTime: 336.8 });
+  assert.deepEqual(assessMotionPerformance(loading, 360), []);
+
+  const motion = validPerformance(360);
+  motion.navigation.loadEventEnd = 404.6;
+  motion.longTasks.push({ duration: 58, startTime: 404.6 });
+  assert.match(
+    assessMotionPerformance(motion, 360).join("\n"),
+    /long task budget exceeded after load: 1/u,
+  );
+
+  const unplaced = validPerformance(360);
+  unplaced.longTasks.push({ duration: 58, startTime: Number.NaN });
+  assert.match(
+    assessMotionPerformance(unplaced, 360).join("\n"),
+    /long task budget exceeded after load: 1/u,
+  );
+
+  for (const loadEventEnd of [undefined, 0, Number.NaN]) {
+    const unknown = validPerformance(360);
+    unknown.navigation.loadEventEnd = loadEventEnd;
+    assert.match(
+      assessMotionPerformance(unknown, 360).join("\n"),
+      /page load completion must be recorded/u,
+    );
   }
 });
 

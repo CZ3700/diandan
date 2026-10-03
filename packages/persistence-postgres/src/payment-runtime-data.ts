@@ -151,7 +151,7 @@ export function paymentAttemptRecord(row: DraftRow) {
         ? "EVIDENCE_PENDING"
         : status === "CREATED"
           ? "CREATE_PENDING"
-          : status === "UNKNOWN"
+          : status === "UNKNOWN" || row["can_refresh_action"] === true
             ? "RECONCILE_REQUIRED"
             : "NONE",
     canRetry: row["can_retry"],
@@ -172,6 +172,7 @@ export async function loadPaymentAttempt(
     EXISTS(SELECT 1 FROM public.order_payment_application_receipts receipt WHERE receipt.attempt_id=a.id AND receipt.decision='APPLIED' AND receipt.outcome IN('PAID','PAID_REVIEW') AND a.status='SUCCEEDED') payment_application_complete,
     ${cartTimestamp("a.created_at")} created_at,${cartTimestamp("a.updated_at")} updated_at,${cartTimestamp("a.action_expires_at")} action_expires_at,
     (a.action_expires_at IS NOT NULL AND a.action_expires_at<=clock_timestamp()) action_expired,
+    (a.status='REQUIRES_ACTION' AND a.action_expires_at<=clock_timestamp() AND o.current_payment_attempt_id=a.id AND o.order_status='PENDING_PAYMENT' AND o.payment_status='PENDING' AND o.quote_expires_at>clock_timestamp() AND ${validPaymentReservationsSql}) can_refresh_action,
     (a.status IN('FAILED','CANCELED','EXPIRED') AND o.order_status='PENDING_PAYMENT' AND o.payment_status IN('UNPAID','PENDING') AND o.quote_expires_at>clock_timestamp() AND ${validPaymentReservationsSql}) can_retry
     FROM public.payment_attempts a JOIN public.orders o ON o.id=a.order_id JOIN public.payment_provider_accounts p ON p.id=a.provider_account_id AND p.environment=a.environment LEFT JOIN public.payment_runtime_operations operation ON operation.attempt_id=a.id
     WHERE a.id=$1::uuid AND ($2::uuid IS NULL OR o.cart_id=$2::uuid) AND ($3::uuid IS NULL OR o.checkout_session_id=$3::uuid) FOR UPDATE OF a,o`,

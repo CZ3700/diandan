@@ -15,6 +15,11 @@ const paths = [
   ["note/add", "ADD_NOTE"],
   ["notes/read", "READ_NOTES"],
   ["notification/resend", "RESEND_NOTIFICATION"],
+  ["proof-uploads/begin", "BEGIN_PROOF_UPLOAD"],
+  ["proof-uploads/complete", "COMPLETE_PROOF_UPLOAD"],
+  ["proofs/attach", "ATTACH_PROOFS"],
+  ["proofs/withdraw", "WITHDRAW_PROOF"],
+  ["proofs/view", "VIEW_PROOF"],
 ] as const;
 export function adminOrdersPaths(): JsonObject {
   return Object.fromEntries(
@@ -45,7 +50,7 @@ export function adminOrdersPaths(): JsonObject {
               .join("")}`,
             summary: action.toLowerCase().replaceAll("_", " "),
             description:
-              "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Unknown fields, query parameters and caller-supplied authority are rejected.",
+              "Requires current MFA session, exact Origin, CSRF and action-specific orders permissions. Message access additionally requires a dedicated review-language grant; unknown or mismatched languages need triage permission. Mutations require Idempotency-Key, expected versions and reasonCode. HOLD/RESUME additionally require Manager permission and explicit confirmation; payment holds cannot be resumed here. Private reads commit an audit before decryption and recheck authority before returning plaintext. Resend creates an independent durable dispatch without rewriting prior delivery history. Delivery proofs reserve a server-assigned private source key for one physical line, are verified and re-encoded without metadata into private renditions before attachment, require explicit privacy confirmation to attach and Manager permission to withdraw, and are viewed only through short-lived private grants. Unknown fields, query parameters and caller-supplied authority are rejected.",
             security: [{ AdminSession: [], AdminCsrf: [] }],
             parameters: [
               {

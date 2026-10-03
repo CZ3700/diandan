@@ -30,6 +30,34 @@ export async function verifyStorefrontProtocol({
       redirect: "manual",
     });
     const value = schema.parse(await response.json());
+    if (response.status !== status) {
+      console.error(
+        `Storefront protocol diagnostic ${JSON.stringify({ route: route.split("?")[0], expected: status, status: response.status, outcome: value.outcome ?? null, code: value.code ?? null })}`,
+      );
+      // The aggregate fails closed with one code; read each part it composes on its own.
+      if (route.startsWith("/api/v1/storefront-homepage"))
+        for (const [part, path] of [
+          ["homepage", "/api/v1/homepage"],
+          ...fixtures.artists
+            .slice(0, 3)
+            .map((artist, index) => [
+              `artist-${index + 1}`,
+              `/api/v1/idols/${artist.handle}`,
+            ]),
+          ...fixtures.gifts.map((gift, index) => [
+            `gift-${index + 1}`,
+            `/api/v1/gifts/${gift.handle}`,
+          ]),
+        ]) {
+          const probe = await globalThis.fetch(`${base}${path}?locale=en`, {
+            signal: globalThis.AbortSignal.timeout(30_000),
+          });
+          const body = await probe.json().catch(() => ({}));
+          console.error(
+            `Storefront homepage part ${JSON.stringify({ part, status: probe.status, outcome: body.outcome ?? null, code: body.code ?? null })}`,
+          );
+        }
+    }
     check(
       response.status === status,
       `public protocol ${route.split("?")[0]} matches its HTTP status`,
@@ -320,12 +348,26 @@ export async function verifyStorefrontProtocol({
       (await home()).outcome === "SUCCESS",
       "normally republishing the featured selection restores a healthy homepage before the independent hero-archive check",
     );
+    // ADR-012 addendum (be411377): deleting the hero artist archives it, and the
+    // homepage keeps its poster without the artist; any other hero failure still
+    // fails the homepage closed.
     await status(fixtures.artists[0], "archived");
-    const missingHero = await home("en", 503);
+    const missingHero = await home();
     check(
-      missingHero.outcome === "FAILURE" &&
-        missingHero.code === "CONTENT_UNAVAILABLE",
-      "archived required hero fails the full homepage closed",
+      missingHero.outcome === "SUCCESS" &&
+        missingHero.slots.find((slot) => slot.kind === "HERO_IDOL")?.status ===
+          "UNAVAILABLE" &&
+        missingHero.slots
+          .filter(
+            (slot) =>
+              slot.kind !== "HERO_IDOL" &&
+              !(
+                slot.kind === "FEATURED_IDOL" &&
+                slot.idolId === fixtures.artists[0].id
+              ),
+          )
+          .every((slot) => slot.status === "AVAILABLE"),
+      "a deleted (archived) hero artist keeps the homepage poster without its artist",
     );
     cases.push({
       name: "actual-current-head-handle-paused-featured-archive-hero-archive",

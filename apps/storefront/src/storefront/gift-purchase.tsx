@@ -161,7 +161,13 @@ function Offer({
       gift.recipient.kind === "PUBLISHED"
         ? copy.artistPaused
         : copy.giftRecipientUnavailable;
-  let availabilityMessage = <p>{copy.giftProcureBody}</p>;
+  // Virtual gifts are fulfilled at payment confirmation; studio sourcing and preorder copy would contradict that.
+  const virtual =
+    gift.classification.kind === "CLASSIFIED" &&
+    gift.classification.giftKind === "VIRTUAL";
+  let availabilityMessage: ReactNode = virtual ? null : (
+    <p>{copy.giftProcureBody}</p>
+  );
   if (offer.availability === "UNAVAILABLE")
     availabilityMessage = (
       <p className="gift-offer-notice" role="status">
@@ -176,7 +182,7 @@ function Offer({
         })}
       </p>
     );
-  else if (offer.stock.kind === "PREORDER")
+  else if (offer.stock.kind === "PREORDER" && !virtual)
     availabilityMessage = <p>{copy.giftPreorderBody}</p>;
   return (
     <div
@@ -195,7 +201,11 @@ function Offer({
         </div>
       ) : null}
       {children}
-      <p className="gift-stock-label">{label}</p>
+      {virtual ? (
+        <p>{copy.giftKindVirtualBody}</p>
+      ) : (
+        <p className="gift-stock-label">{label}</p>
+      )}
       {availabilityMessage}
       {offer.requiresRecipient && (
         <p className="gift-offer-notice">{copy.giftRecipientMissing}</p>
@@ -205,6 +215,9 @@ function Offer({
         offer.price &&
         gift.recipient.kind === "PUBLISHED" && (
           <GiftAdd
+            {...("wish" in gift.content.view && gift.content.view.wish
+              ? { wish: true }
+              : {})}
             key={`${offer.giftVariantId}:${offer.maxQuantity}:${gift.recipient.idol.id}`}
             locale={locale}
             copy={copy}

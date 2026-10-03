@@ -370,6 +370,296 @@
         "up": "3872323f8b641e4c0f4683e38dee54a18f8694e948714ce24aaaad88530e9970",
         "down": "d511312cfe601d6cf7fb460b16f666e0b7822bf0653f78b376e1f65b04e29bd6"
       }
+    },
+    {
+      "version": "0038",
+      "name": "virtual-gift-fulfillment",
+      "up": "database/migrations/0038_virtual-gift-fulfillment.up.sql",
+      "down": "database/migrations/0038_virtual-gift-fulfillment.down.sql",
+      "sha256": {
+        "up": "567582cd3e7beabb647ff42f71240f7bbb14ca10db44a9c55c05834d6256e422",
+        "down": "f665eae614bc322de99036e1f17e2faacb8ca8725ff2f2cf6c448660326a7c9b"
+      }
+    },
+    {
+      "version": "0039",
+      "name": "public-order-number",
+      "up": "database/migrations/0039_public-order-number.up.sql",
+      "down": "database/migrations/0039_public-order-number.down.sql",
+      "sha256": {
+        "up": "e9b1d5005b8945bd44e8c977cc89bee9a26789c3456c0922817c9d03380ca2e4",
+        "down": "cefaec5c026f8c9516ed079e91e6e1e71d8312384d64bd6a6b76843232a42d15"
+      }
+    },
+    {
+      "version": "0040",
+      "name": "delivery-proofs",
+      "up": "database/migrations/0040_delivery-proofs.up.sql",
+      "down": "database/migrations/0040_delivery-proofs.down.sql",
+      "sha256": {
+        "up": "5476c0b4f45f1fcdb45f686ac2d3b7ac2aed19dd9c5cd86cce2e3e49ca41363d",
+        "down": "3899ad9fd5aac68640277a322c9a9621a762d2513d1f0537bb713ec9dc08a67c"
+      }
+    },
+    {
+      "version": "0041",
+      "name": "daily-image-fill",
+      "up": "database/migrations/0041_daily-image-fill.up.sql",
+      "down": "database/migrations/0041_daily-image-fill.down.sql",
+      "sha256": {
+        "up": "696b5bc58c15b12318c64c4e1a9ea330a7cb3dc900f9013a287d8eec8228f1d2",
+        "down": "a9a056ef6334cb2f001b471215883735a98c2d07042a570ae67555bca3785845"
+      }
+    },
+    {
+      "version": "0042",
+      "name": "virtual-payment-application",
+      "up": "database/migrations/0042_virtual-payment-application.up.sql",
+      "down": "database/migrations/0042_virtual-payment-application.down.sql",
+      "sha256": {
+        "up": "6e9349d81e3b140d8f71a315a962cd18d8a78cd90d7a264882f0fc638af966fb",
+        "down": "6fda4c09f451d4024284c19a7aee91aa6bad36196f439bb584fa8209a095f6a0"
+      }
+    },
+    {
+      "version": "0043",
+      "name": "virtual-payment-success-plan",
+      "up": "database/migrations/0043_virtual-payment-success-plan.up.sql",
+      "down": "database/migrations/0043_virtual-payment-success-plan.down.sql",
+      "sha256": {
+        "up": "a898608973dd8f5e514f1e0ac944c6be03b2dc5276b424e30b32f1c3dd8f4cea",
+        "down": "adfe63b23e19d077d065985253f5cc9c93259f2a040343259028d8aee8888e35"
+      }
+    },
+    {
+      "version": "0044",
+      "name": "home-layout",
+      "up": "database/migrations/0044_home-layout.up.sql",
+      "down": "database/migrations/0044_home-layout.down.sql",
+      "sha256": {
+        "up": "17fda365695ac84bd828630b65d099d71d295150760aa1ed820f59b6591e438c",
+        "down": "cbac0ace139cbba527e58b311fbe36b9ce8ff98132b3abc473add1282d7da1a9"
+      }
+    },
+    {
+      "version": "0045",
+      "name": "storefront-theme",
+      "up": "database/migrations/0045_storefront-theme.up.sql",
+      "down": "database/migrations/0045_storefront-theme.down.sql",
+      "sha256": {
+        "up": "e99db539b0a863a3860993f14e004a8914a46e7a7f8d486e5212f3229da59673",
+        "down": "0af0804f4445151e590983551f9b1626c4d5f8e81d682a7a7ad13fb4da9b3f92"
+      }
+    },
+    {
+      "version": "0046",
+      "name": "storefront-presentation",
+      "up": "database/migrations/0046_storefront-presentation.up.sql",
+      "down": "database/migrations/0046_storefront-presentation.down.sql",
+      "sha256": {
+        "up": "cd017b18d5b4851d36a7391d445543eeac3a96417b87d91b07aa43642f20529a",
+        "down": "8cf64043b1d5bf1f514c62c80d0d41767015a2f37eae1401e849ccc1407efbcf"
+      }
+    },
+    {
+      "version": "0047",
+      "name": "storefront-detail-templates",
+      "up": "database/migrations/0047_storefront-detail-templates.up.sql",
+      "down": "database/migrations/0047_storefront-detail-templates.down.sql",
+      "sha256": {
+        "up": "be17c1d1053d897a67f8fd424dc175062b0cc4f5318f9d6adc6a43b03ec9c0d2",
+        "down": "b3406a5fe6ff61a96ac5e8a65309b389294ba334bb130998eaefbdb756e1e179"
+      }
+    },
+    {
+      "version": "0048",
+      "name": "storefront-navigation",
+      "up": "database/migrations/0048_storefront-navigation.up.sql",
+      "down": "database/migrations/0048_storefront-navigation.down.sql",
+      "sha256": {
+        "up": "b7ccd41a76ff65bd622b58c829073283646f2835c5751dea9a01ffb41d6241de",
+        "down": "ad436ae78bcf4458bfebc9f6720e17c79003f72fd8f28b0a6684059be7df207c"
+      }
+    },
+    {
+      "version": "0049",
+      "name": "information-pages",
+      "up": "database/migrations/0049_information-pages.up.sql",
+      "down": "database/migrations/0049_information-pages.down.sql",
+      "sha256": {
+        "up": "1018b019199080b3d901fc6b667c40d0403c3bf4e7eb5be5b54e68857119c5a5",
+        "down": "c35de330ef2cf272fe9efe10e2c6060723462d301aecb9fba223d024bc539ee9"
+      }
+    },
+    {
+      "version": "0050",
+      "name": "notification-submissions",
+      "up": "database/migrations/0050_notification-submissions.up.sql",
+      "down": "database/migrations/0050_notification-submissions.down.sql",
+      "sha256": {
+        "up": "00b150b52608017996fea2fed5aca99f2c513c1abc41c3165dd9ba32d385e1ae",
+        "down": "c5715877501acfd4bc01022ffc0ff46b1d5c5bd67cf02230f39ef5bf6da0ad1f"
+      }
+    },
+    {
+      "version": "0051",
+      "name": "payment-action-refresh",
+      "up": "database/migrations/0051_payment-action-refresh.up.sql",
+      "down": "database/migrations/0051_payment-action-refresh.down.sql",
+      "sha256": {
+        "up": "151b199c2e1d336d25c46c0fe612e54264770d0edd7c39e736f8eaa4a0c9e074",
+        "down": "a51a9d64af28e560565b5bf67f7b1ac5e4f86b7532974cab47f3cb048bbb125a"
+      }
+    },
+    {
+      "version": "0052",
+      "name": "admin-local-accounts",
+      "up": "database/migrations/0052_admin-local-accounts.up.sql",
+      "down": "database/migrations/0052_admin-local-accounts.down.sql",
+      "sha256": {
+        "up": "27f89b64070c84800fc77d48f49d8579445c9344106e9f13e78717d33d4d0034",
+        "down": "b4f888264ed737a8fd6e0941bc905a7e0520bebdcaf6a24242f923fb4c92ccc1"
+      }
+    },
+    {
+      "version": "0053",
+      "name": "catalog-display-order",
+      "up": "database/migrations/0053_catalog-display-order.up.sql",
+      "down": "database/migrations/0053_catalog-display-order.down.sql",
+      "sha256": {
+        "up": "d0ea5d698e861dc3eb497fd5200cdd39a2269b9ecfb3c2245900a68e34577599",
+        "down": "5726780aafba199f2a92abafec8a1b13d8218191db613879ea896a046c46b456"
+      }
+    },
+    {
+      "version": "0054",
+      "name": "admin-permission-catalog-ownership",
+      "up": "database/migrations/0054_admin-permission-catalog-ownership.up.sql",
+      "down": "database/migrations/0054_admin-permission-catalog-ownership.down.sql",
+      "sha256": {
+        "up": "c897ec4d623106b9fd8ab761124b6e436b85295d0e40fd070ce902f4316355dc",
+        "down": "e7dbce9c16e4a4bb4e075793ad61c0cc9aa716827858ff0253ac03d5b027d1ae"
+      }
+    },
+    {
+      "version": "0055",
+      "name": "admin-local-secret-format",
+      "up": "database/migrations/0055_admin-local-secret-format.up.sql",
+      "down": "database/migrations/0055_admin-local-secret-format.down.sql",
+      "sha256": {
+        "up": "9fc9b60c8b2cd1ef1237680cc6dc36a634dffaa7e5c3195870df53cab8074c0c",
+        "down": "4f428fe9e2c489f172297188ac665918f204526c4ad603bf0e4a56ba5afeaf88"
+      }
+    },
+    {
+      "version": "0056",
+      "name": "storefront-light-palettes",
+      "up": "database/migrations/0056_storefront-light-palettes.up.sql",
+      "down": "database/migrations/0056_storefront-light-palettes.down.sql",
+      "sha256": {
+        "up": "7d6630ba6e3a145716fe539a3bafcdc4d00ea408e67db06dead67952c0af6059",
+        "down": "9bd8d5fe84a53783cbee6879506f6b99cdbe0bf9e330ffec76b6eeae23d187da"
+      }
+    },
+    {
+      "version": "0057",
+      "name": "idol-assignments",
+      "up": "database/migrations/0057_idol-assignments.up.sql",
+      "down": "database/migrations/0057_idol-assignments.down.sql",
+      "sha256": {
+        "up": "a69d69b476d7e28aff0eaee412b1dafc696c17fbc1f9099eabe211b9cb2dc1b8",
+        "down": "587b964b4e52389ea3eb46f8dd90f502c0eda7709188e3aeb839969f1d776fef"
+      }
+    },
+    {
+      "version": "0058",
+      "name": "storefront-hero-effects",
+      "up": "database/migrations/0058_storefront-hero-effects.up.sql",
+      "down": "database/migrations/0058_storefront-hero-effects.down.sql",
+      "sha256": {
+        "up": "c25b7d58c514ee39b7f0d7e0ed822b102c835016255c7171aead8dae7b67d6ea",
+        "down": "0db82a079c73ee194b0802180b9db70b53b4aa79c21744ffaa6f5149438b0dad"
+      }
+    },
+    {
+      "version": "0059",
+      "name": "artist-ledger",
+      "up": "database/migrations/0059_artist-ledger.up.sql",
+      "down": "database/migrations/0059_artist-ledger.down.sql",
+      "sha256": {
+        "up": "1c5d55e0cf1bb178b0951eb48451605573e8cf70931ecd8dd5d91021ff9ca632",
+        "down": "39f7664b165ce8541c1337acea0153c385e973684fae08222597a2171f8c7aca"
+      }
+    },
+    {
+      "version": "0060",
+      "name": "wish-bindings",
+      "up": "database/migrations/0060_wish-bindings.up.sql",
+      "down": "database/migrations/0060_wish-bindings.down.sql",
+      "sha256": {
+        "up": "2eaef8d20d07f1b4a8a32716032fd242444201d5b65325c9a323b3ea43f4102a",
+        "down": "f15ebdb1d039361f492b681fb3a62a312512912464813d5407541c59b9a6a89e"
+      }
+    },
+    {
+      "version": "0061",
+      "name": "wish-gallery",
+      "up": "database/migrations/0061_wish-gallery.up.sql",
+      "down": "database/migrations/0061_wish-gallery.down.sql",
+      "sha256": {
+        "up": "d04c1ae331a823b6194602f133f03b4f034fa0a0e60d8ee59382a1a6791e0cec",
+        "down": "d1417f9170adb07b579359d5b288f1cb6d2b6b0bdf61199bbca19991feaec72e"
+      }
+    },
+    {
+      "version": "0062",
+      "name": "artist-private-notes",
+      "up": "database/migrations/0062_artist-private-notes.up.sql",
+      "down": "database/migrations/0062_artist-private-notes.down.sql",
+      "sha256": {
+        "up": "4e4a73e815bd35af412cb4038c4317b052181fd4957bb0fa7f2944aca3f4d151",
+        "down": "721221a7e02eed75a97b92a5e8e64892ad59b887c4d162acf239241e735d5250"
+      }
+    },
+    {
+      "version": "0063",
+      "name": "staff-account-deletion",
+      "up": "database/migrations/0063_staff-account-deletion.up.sql",
+      "down": "database/migrations/0063_staff-account-deletion.down.sql",
+      "sha256": {
+        "up": "215d048273ca3da27547abe1c597b034e6574eb8977b2f3dbb3f1c55fb774226",
+        "down": "ef22c69742f2e64b8a45b754eb2c99389b751883b0123a9872fcb836928906cd"
+      }
+    },
+    {
+      "version": "0064",
+      "name": "storefront-brand",
+      "up": "database/migrations/0064_storefront-brand.up.sql",
+      "down": "database/migrations/0064_storefront-brand.down.sql",
+      "sha256": {
+        "up": "ee45bad15772c8822b9e1aa89efddce37a244db437cefd0c45f86393bd0cfa05",
+        "down": "85f888eafadfb6fd48a1f32d9a22f111ab6e6639bc3c58d463c26a6274c2ba4c"
+      }
+    },
+    {
+      "version": "0065",
+      "name": "notification-current-event",
+      "up": "database/migrations/0065_notification-current-event.up.sql",
+      "down": "database/migrations/0065_notification-current-event.down.sql",
+      "sha256": {
+        "up": "7e8a828e37fd8f04d6489a8ef8565b839207ea36bb00912c56d75e02d6a7b2af",
+        "down": "71f13dca547c035f8df718668892ec7d21343b0ea2a456d3130caf3a732a5dc8"
+      }
+    },
+    {
+      "version": "0066",
+      "name": "payment-recovery-backoff",
+      "up": "database/migrations/0066_payment-recovery-backoff.up.sql",
+      "down": "database/migrations/0066_payment-recovery-backoff.down.sql",
+      "sha256": {
+        "up": "e716c210d39178afc326621f49601f484c1bdf3d816c817eee5c4a299034872d",
+        "down": "b08c2ff89daf9d47e90cadf7a876634c41e53e52527e5cea3ce39dee7e565e88"
+      }
     }
   ]
 }

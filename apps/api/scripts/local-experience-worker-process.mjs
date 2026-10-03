@@ -1,6 +1,7 @@
 import { fork } from "node:child_process";
 import { setTimeout, clearTimeout } from "node:timers";
 import { fileURLToPath } from "node:url";
+import { withoutLocalPaymentCredentials } from "./local-experience-payment-profile.mjs";
 
 /** Configuration travels only through local IPC; the worker owns a distinct process and database pools. */
 export async function startLocalExperienceWorkerProcess(
@@ -14,7 +15,7 @@ export async function startLocalExperienceWorkerProcess(
       execArgv: [],
       env: {
         ...Object.fromEntries(
-          Object.entries(process.env).filter(
+          Object.entries(withoutLocalPaymentCredentials(process.env)).filter(
             ([key]) => !key.startsWith("FAN_SUPPORT_"),
           ),
         ),
@@ -94,6 +95,11 @@ if (process.argv[2] === "--local-experience-worker" && process.send) {
     if (message?.kind !== "START" || startup || closing) return;
     startup = (async () => {
       try {
+        // The worker owns its own pools; its rolled-back writes reach the supervisor log too.
+        const { Client } = await import("pg");
+        const { reportPostgresFailures } =
+          await import("./local-experience-postgres-failures.mjs");
+        reportPostgresFailures(Client, (line) => process.stdout.write(line));
         const { createLocalExperienceMailTransport } =
           await import("./local-experience-services-mail.mjs");
         const { startLocalExperienceWorker } =

@@ -1,6 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import type { SupportedLocale } from "@fan-support/contracts";
+import {
+  wishGalleryPreferenceSchema,
+  type SupportedLocale,
+  type WishGalleryPreference,
+} from "@fan-support/contracts";
+import { WishGalleryChoice } from "./wish-gallery-choice";
 import type { StorefrontCopy } from "./copy";
 import {
   CartPersonalization,
@@ -34,6 +39,9 @@ export function CartEditor({
   onClose: () => void;
 }>) {
   const [draft, setDraft] = useState<CartDraft | null>(null);
+  const [galleryPreference, setGalleryPreference] = useState<
+    WishGalleryPreference | undefined
+  >(undefined);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [load, setLoad] = useState(0);
@@ -64,6 +72,11 @@ export function CartEditor({
             itemVersion: result.itemVersion,
           };
           confirmConflict.current = false;
+          setGalleryPreference(
+            "galleryPreference" in content
+              ? content.galleryPreference
+              : undefined,
+          );
           setDraft({
             displayMode: content.displayMode,
             displayName:
@@ -93,6 +106,13 @@ export function CartEditor({
       setError(copy.cartInvalid);
       return;
     }
+    if (
+      galleryPreference &&
+      !wishGalleryPreferenceSchema.safeParse(galleryPreference).success
+    ) {
+      setError(copy.wishAliasInvalid);
+      return;
+    }
     running.current = true;
     setBusy(true);
     setError(null);
@@ -109,7 +129,11 @@ export function CartEditor({
         presentationLocale: locale,
         expectedCartVersion: baseline.current.cartVersion,
         expectedItemVersion: baseline.current.itemVersion,
-        change: { kind: "PERSONALIZATION", ...cartPersonalization(draft) },
+        change: {
+          kind: "PERSONALIZATION",
+          ...cartPersonalization(draft),
+          ...(galleryPreference ? { galleryPreference } : {}),
+        },
       },
     );
     try {
@@ -149,6 +173,18 @@ export function CartEditor({
             onChange={setDraft}
             disabled={busy || request.current !== null}
           />
+          {galleryPreference && (
+            <WishGalleryChoice
+              value={galleryPreference}
+              onChange={(value) => {
+                setGalleryPreference(value);
+                setError(null);
+              }}
+              copy={copy}
+              invalid={error === copy.wishAliasInvalid}
+              disabled={busy || request.current !== null}
+            />
+          )}
           <div className="cart-actions">
             <button
               data-cart-editor-save

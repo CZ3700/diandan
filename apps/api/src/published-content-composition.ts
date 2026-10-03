@@ -5,6 +5,11 @@ import {
   createStorefrontHomepageUseCases,
   createStorefrontCommerceUseCases,
   createStorefrontSeoUseCases,
+  createPublicHomeLayoutUseCases,
+  createPublicStorefrontThemeUseCases,
+  createPublicStorefrontBrandUseCases,
+  createPublicStorefrontNavigationUseCases,
+  createPublicInformationPageUseCases,
 } from "@fan-support/application";
 import {
   resolveDatabaseRuntimeConfig,
@@ -22,6 +27,11 @@ import type { ApiLifecycleResource } from "./bootstrap.js";
 import type { PublishedContentRouteDependencies } from "./published-content-route.js";
 import type { PublishedGiftCommerceRouteDependencies } from "./published-gift-commerce-route.js";
 import type { StorefrontHomepageRouteDependencies } from "./storefront-homepage-route.js";
+import type { PublicHomeLayoutRouteDependencies } from "./home-layout-route.js";
+import type { PublicStorefrontThemeRouteDependencies } from "./storefront-theme-route.js";
+import type { PublicStorefrontBrandRouteDependencies } from "./storefront-brand-route.js";
+import type { PublicStorefrontNavigationRouteDependencies } from "./storefront-navigation-route.js";
+import type { PublicInformationPagesRouteDependencies } from "./information-pages-route.js";
 
 type PublishedPersistence = Pick<
   PostgresPersistence,
@@ -30,6 +40,11 @@ type PublishedPersistence = Pick<
   | "storefrontHomepageTransactionManager"
   | "storefrontCommerceTransactionManager"
   | "storefrontSeoTransactionManager"
+  | "homeLayoutTransactionManager"
+  | "storefrontThemeTransactionManager"
+  | "storefrontBrandTransactionManager"
+  | "storefrontNavigationTransactionManager"
+  | "informationPageTransactionManager"
   | "close"
 >;
 type PersistenceFactory = (
@@ -47,6 +62,11 @@ export type PublishedContentComposition = Readonly<{
   storefrontHomepageRoute: StorefrontHomepageRouteDependencies;
   storefrontCommerceRoute: StorefrontCommerceRouteDependencies;
   storefrontSeoRoute: StorefrontSeoRouteDependencies;
+  publicHomeLayoutRoute: PublicHomeLayoutRouteDependencies;
+  publicStorefrontThemeRoute: PublicStorefrontThemeRouteDependencies;
+  publicStorefrontBrandRoute: PublicStorefrontBrandRouteDependencies;
+  publicStorefrontNavigationRoute: PublicStorefrontNavigationRouteDependencies;
+  publicInformationPagesRoute: PublicInformationPagesRouteDependencies;
   publishedContentRuntime: ApiLifecycleResource;
 }>;
 
@@ -72,8 +92,37 @@ export function createPublishedContentComposition(
         }),
     },
   );
+  const informationPages = createPublicInformationPageUseCases({
+    transactions: persistence.informationPageTransactionManager,
+  });
   let closePromise: Promise<void> | undefined;
   return Object.freeze({
+    publicInformationPagesRoute: {
+      useCases: {
+        read: informationPages.execute,
+        index: informationPages.index,
+      },
+    },
+    publicHomeLayoutRoute: {
+      useCases: createPublicHomeLayoutUseCases({
+        transactions: persistence.homeLayoutTransactionManager,
+      }),
+    },
+    publicStorefrontThemeRoute: {
+      useCases: createPublicStorefrontThemeUseCases({
+        transactions: persistence.storefrontThemeTransactionManager,
+      }),
+    },
+    publicStorefrontBrandRoute: {
+      useCases: createPublicStorefrontBrandUseCases({
+        transactions: persistence.storefrontBrandTransactionManager,
+      }),
+    },
+    publicStorefrontNavigationRoute: {
+      useCases: createPublicStorefrontNavigationUseCases({
+        transactions: persistence.storefrontNavigationTransactionManager,
+      }),
+    },
     storefrontSeoRoute: {
       useCases: createStorefrontSeoUseCases({
         transactions: persistence.storefrontSeoTransactionManager,

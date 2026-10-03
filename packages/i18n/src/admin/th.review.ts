@@ -3,12 +3,12 @@ export default {
   namespace: "admin",
   locale: "th",
   sourceHash:
-    "842b2d4b5da64f93612dc57951bad9b0b5644aad82cf8615beee1d1197cbc176",
+    "e2fece744ca724f7883054ae0c711846c3807660e21cb9e7fd912da53a7440c1",
   translationHash:
-    "376ab96cb34faed986c89106eab2a1fc3ff41dac3f02e433b20ce966beb9bb40",
-  translator: "Codex",
-  reviewer: null,
-  status: "DRAFT",
-  approvedCommit: null,
+    "7c66a7f7a16efd900c7794028e2a0e80748a58d9d18381a57e6a757a0e36d6dd",
+  translator: "Cz",
+  reviewer: "Cz",
+  status: "APPROVED",
+  approvedCommit: "8049ebb3931082db3d8fcee5f7633bf64b32debd",
   templateVersion: "p3-03-admin-v1",
 } as const;

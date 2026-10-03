@@ -1,4 +1,6 @@
 import type {
+  AdminArtistNoteEncryptCommand,
+  AdminArtistNoteDecryptCommand,
   AdminOrderNoteEncryptCommand,
   AdminOrderNoteDecryptCommand,
   ComputeBlindIndexCommand,
@@ -14,6 +16,8 @@ import type {
 } from "@fan-support/contracts";
 
 export {
+  adminArtistNoteEncryptCommandSchema,
+  adminArtistNoteDecryptCommandSchema,
   adminOrderNoteEncryptCommandSchema,
   adminOrderNoteDecryptCommandSchema,
   generateSupportIntentKeyCommandSchema,
@@ -47,13 +51,19 @@ export type {
 
 export interface KeyManagementPort {
   encryptEnvelope(
-    command: EncryptEnvelopeCommand | AdminOrderNoteEncryptCommand,
+    command:
+      | EncryptEnvelopeCommand
+      | AdminOrderNoteEncryptCommand
+      | AdminArtistNoteEncryptCommand,
   ): Promise<EncryptEnvelopeResponse>;
   encryptEnvelopeFields(
     command: EncryptEnvelopeFieldsCommand,
   ): Promise<EncryptEnvelopeFieldsResponse>;
   decryptEnvelope(
-    command: DecryptEnvelopeCommand | AdminOrderNoteDecryptCommand,
+    command:
+      | DecryptEnvelopeCommand
+      | AdminOrderNoteDecryptCommand
+      | AdminArtistNoteDecryptCommand,
   ): Promise<DecryptEnvelopeResponse>;
   computeBlindIndex(
     command: ComputeBlindIndexCommand,

@@ -2,7 +2,10 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { SupportedLocale } from "@fan-support/contracts";
 import type { StorefrontCopy } from "./copy";
-import { createCheckoutController } from "./checkout-controller";
+import {
+  createCheckoutController,
+  type PaymentContinuation,
+} from "./checkout-controller";
 import { CheckoutReview } from "./checkout-review";
 import { CheckoutForm } from "./checkout-form";
 import {
@@ -10,6 +13,11 @@ import {
   canOpenOrderResult,
 } from "./checkout-order-result";
 import { PaymentStatus } from "./payment-status";
+import { PaymentMethods } from "./payment-methods";
+import {
+  browserPaymentComponentHost,
+  launchPaymentComponent,
+} from "./payment-components";
 import { shouldPollPayment, startPaymentPolling } from "./payment-polling";
 import { storefrontHref } from "./navigation";
 import { prepareCheckoutStepFocus } from "./checkout-focus";
@@ -56,6 +64,9 @@ export function CheckoutClient({
     controller.snapshot,
   );
   const [email, setEmail] = useState("");
+  const [launchFailedFor, setLaunchFailedFor] = useState<string | null>(null);
+  const [paying, setPaying] = useState(false);
+  const paymentRun = useRef<object | null>(null);
   const mounted = useRef(false);
   const root = useRef<HTMLDivElement>(null);
   const focusFrame = useRef<number | null>(null);
@@ -76,6 +87,8 @@ export function CheckoutClient({
       if (focusFrame.current !== null)
         window.cancelAnimationFrame(focusFrame.current);
       setEmail("");
+      paymentRun.current = null;
+      setPaying(false);
       controller.dispose();
     };
     const show = (event: PageTransitionEvent) => {
@@ -103,7 +116,7 @@ export function CheckoutClient({
     !invalid && !!sessionId && !!attemptId,
   );
   useEffect(() => {
-    if (!shouldPoll) return;
+    if (!shouldPoll || paying) return;
     return startPaymentPolling(
       controller.refresh,
       attempt?.action?.type === "WAIT" ? attempt.action.pollAfterMs : undefined,
@@ -111,14 +124,48 @@ export function CheckoutClient({
   }, [
     controller,
     shouldPoll,
+    paying,
     attempt?.id,
     attempt?.action?.type === "WAIT" ? attempt.action.pollAfterMs : undefined,
   ]);
   const review = state.checkout ?? state.preflight;
   const caps = state.capabilities;
-  async function continuePayment() {
-    const url = await controller.continuePayment();
-    if (mounted.current && url) window.location.assign(url);
+  const busy = state.busy || paying;
+  const progress = (!state.initialized || busy) && !invalid && (
+    <p className="checkout-progress" role="status" aria-busy="true">
+      {copy.checkoutChecking}
+    </p>
+  );
+  async function pay(operation: () => Promise<PaymentContinuation | null>) {
+    if (paymentRun.current) return;
+    const run = {};
+    paymentRun.current = run;
+    setPaying(true);
+    setLaunchFailedFor(null);
+    try {
+      await submit(async () => {
+        const next = await operation();
+        if (!mounted.current || paymentRun.current !== run || !next) return;
+        if (next.type === "REDIRECT") {
+          window.location.assign(next.url);
+          return;
+        }
+        // Keep controls locked while the provider SDK loads; retry the same attempt if it fails.
+        const launched = await launchPaymentComponent(
+          next.action,
+          browserPaymentComponentHost(
+            () => mounted.current && paymentRun.current === run,
+          ),
+        );
+        if (!launched && mounted.current && paymentRun.current === run)
+          setLaunchFailedFor(controller.snapshot().attempt?.id ?? null);
+      });
+    } finally {
+      if (paymentRun.current === run) {
+        paymentRun.current = null;
+        if (mounted.current) setPaying(false);
+      }
+    }
   }
   async function submit(operation: () => Promise<void>) {
     const restore = root.current
@@ -149,11 +196,7 @@ export function CheckoutClient({
       data-checkout-root
       data-checkout-session={state.checkout?.id}
     >
-      {(!state.initialized || state.busy) && !invalid && (
-        <p className="checkout-progress" role="status" aria-busy="true">
-          {copy.checkoutChecking}
-        </p>
-      )}
+      {!review && progress}
       {(invalid || state.error) && (
         <div className="checkout-error" role="alert" data-checkout-error>
           <p>
@@ -164,9 +207,9 @@ export function CheckoutClient({
               type="button"
               className="storefront-secondary"
               data-checkout-retry
-              disabled={state.busy}
+              disabled={busy}
               onClick={() => {
-                void controller.retry();
+                void submit(() => controller.retry());
               }}
             >
               {state.uncertain ? copy.checkoutRecover : copy.cartRetry}
@@ -178,6 +221,7 @@ export function CheckoutClient({
         <div className="checkout-layout">
           <CheckoutReview review={review} locale={locale} copy={copy} />
           <div className="checkout-workspace">
+            {state.checkout && progress}
             {state.preflight && !state.checkout && (
               <CheckoutForm
                 key={state.preflight.id}
@@ -186,26 +230,35 @@ export function CheckoutClient({
                 copy={copy}
                 email={email}
                 onEmail={setEmail}
-                busy={state.busy || state.uncertain}
+                busy={busy || state.uncertain}
                 onConfirm={() => {
-                  void submit(() => controller.confirm(email));
+                  void pay(() => controller.confirmAndPay(email));
                 }}
               />
             )}
             {state.checkout?.expired && (
               <p role="status">{copy.checkoutExpired}</p>
             )}
-            {attempt && (
+            {attempt && launchFailedFor === attempt.id && (
+              <p
+                className="checkout-error"
+                role="alert"
+                data-payment-launch-failed
+              >
+                {copy.checkoutUnavailable}
+              </p>
+            )}
+            {attempt && !paying && (
               <PaymentStatus
                 attempt={attempt}
                 locale={locale}
                 copy={copy}
-                busy={state.busy || state.uncertain}
+                busy={busy || state.uncertain}
                 onContinue={() => {
-                  void continuePayment();
+                  void pay(() => controller.continuePayment());
                 }}
                 onRecover={() => {
-                  void controller.retry();
+                  void submit(() => controller.retry());
                 }}
                 onRefresh={() => {
                   void controller.refresh();
@@ -215,89 +268,29 @@ export function CheckoutClient({
             {state.checkout &&
               !state.checkout.expired &&
               (!attempt || attempt.canRetry) &&
-              !state.uncertain && (
-                <div className="checkout-methods" data-payment-methods>
-                  <h2>
-                    {attempt ? copy.checkoutRetryPayment : copy.checkoutMethod}
-                  </h2>
-                  {caps ? (
-                    <>
-                      <label className="checkout-field">
-                        {copy.checkoutCountry}
-                        <select
-                          data-payment-country
-                          value={caps.country ?? ""}
-                          disabled={state.busy}
-                          onChange={(event) => {
-                            if (event.currentTarget.value)
-                              void controller.capabilities(
-                                event.currentTarget.value,
-                              );
-                          }}
-                        >
-                          <option value="">{copy.checkoutChooseCountry}</option>
-                          {caps.countries.map((country) => (
-                            <option key={country} value={country}>
-                              {new Intl.DisplayNames([locale], {
-                                type: "region",
-                              }).of(country) ?? country}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                      {((caps.country &&
-                        caps.capabilities.filter((capability) =>
-                          capability.supportedActionTypes.includes("REDIRECT"),
-                        ).length === 0) ||
-                        caps.countries.length === 0) && (
-                        <p>{copy.checkoutNoMethods}</p>
-                      )}
-                      {caps.capabilities
-                        .filter((capability) =>
-                          capability.supportedActionTypes.includes("REDIRECT"),
-                        )
-                        .map((capability) => (
-                          <div className="checkout-method" key={capability.id}>
-                            {capability.environment === "TEST" && (
-                              <p className="checkout-test">
-                                {copy.checkoutTest}
-                              </p>
-                            )}
-                            <p>{capability.customerHint}</p>
-                            <button
-                              className="storefront-primary"
-                              type="button"
-                              data-payment-create={capability.id}
-                              disabled={state.busy}
-                              onClick={() => {
-                                void submit(() => controller.start(capability));
-                              }}
-                            >
-                              {capability.displayName}
-                            </button>
-                          </div>
-                        ))}
-                    </>
-                  ) : (
-                    !state.busy && (
-                      <button
-                        type="button"
-                        className="storefront-secondary"
-                        data-payment-method-refresh
-                        onClick={() => {
-                          void controller.capabilities();
-                        }}
-                      >
-                        {copy.checkoutRefresh}
-                      </button>
-                    )
-                  )}
-                </div>
+              !state.uncertain &&
+              !paying && (
+                <PaymentMethods
+                  capabilities={caps}
+                  locale={locale}
+                  copy={copy}
+                  busy={busy}
+                  retrying={!!attempt}
+                  onCountry={(country) => {
+                    void controller.capabilities(country);
+                  }}
+                  onStart={(capability) => {
+                    void pay(() => controller.startAndPay(capability));
+                  }}
+                  onRefresh={() => {
+                    void controller.capabilities();
+                  }}
+                />
               )}
           </div>
         </div>
       )}
-      {state.initialized && !state.busy && !state.error && !review && (
+      {state.initialized && !busy && !state.error && !review && (
         <p>{copy.checkoutEmpty}</p>
       )}
       <a

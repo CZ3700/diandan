@@ -1,9 +1,18 @@
+import { storefrontBrandPaths } from "./storefront-brand-openapi.js";
+import { informationPagePaths } from "./information-pages-openapi.js";
+import { storefrontNavigationPaths } from "./storefront-navigation-openapi.js";
+import { storefrontThemePaths } from "./storefront-theme-openapi.js";
+import { homeLayoutPaths } from "./home-layout-openapi.js";
+import { catalogDisplayOrderPaths } from "./catalog-display-order-openapi.js";
 import { rumPaths } from "./rum-openapi.js";
 import { adminPaymentConfigurationPaths } from "./admin-payment-configuration-openapi.js";
 import { adminExceptionsPaths } from "./admin-exceptions-openapi.js";
 import { adminFinancePaths } from "./admin-finance-openapi.js";
 import { adminOrdersPaths } from "./admin-orders-openapi.js";
+import { adminLedgerPaths } from "./admin-ledger-openapi.js";
+import { adminArtistNotesPaths } from "./admin-artist-notes-openapi.js";
 import { orderAccessPaths } from "./order-access-openapi.js";
+import { wishGalleryPaths } from "./wish-gallery-openapi.js";
 import { checkoutPreflightPaths } from "./checkout-preflight-openapi.js";
 import { paymentRuntimePaths } from "./payment-runtime-openapi.js";
 import { cartEditPaths } from "./cart-edit-openapi.js";
@@ -217,11 +226,20 @@ export function createContractArtifactDocuments(): Readonly<{
         ...checkoutPreflightPaths(),
         ...paymentRuntimePaths(),
         ...adminOrdersPaths(),
+        ...adminLedgerPaths(),
+        ...adminArtistNotesPaths(),
         ...adminFinancePaths(),
         ...adminPaymentConfigurationPaths(),
         ...adminExceptionsPaths(),
         ...orderAccessPaths(),
+        ...wishGalleryPaths(),
         ...managementCenterPaths(),
+        ...homeLayoutPaths(),
+        ...catalogDisplayOrderPaths(),
+        ...storefrontThemePaths(),
+        ...storefrontBrandPaths(),
+        ...storefrontNavigationPaths(),
+        ...informationPagePaths(),
         ...storefrontHomepagePaths(),
         ...storefrontCommercePaths(),
         ...storefrontSeoPaths(),

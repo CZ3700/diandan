@@ -5,7 +5,11 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@fan-support/contracts": "workspace:*"
+    "@fan-support/contracts": "workspace:*",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.3"
   },
   "exports": {
     ".": {

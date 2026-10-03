@@ -24,6 +24,11 @@ function failure(error) {
   return {
     name: error?.name,
     assertion: error?.name === "AssertionError" ? error.message : null,
+    // First line only (e.g. "locator.textContent: Timeout 30000ms exceeded."): names the wait.
+    timeout:
+      error?.name === "TimeoutError"
+        ? String(error.message).split("\n")[0].slice(0, 200)
+        : null,
     issues:
       error?.name === "ZodError"
         ? error.issues.map(({ code, path }) => ({ code, path }))

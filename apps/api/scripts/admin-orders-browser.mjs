@@ -58,6 +58,9 @@ export function createAdminOrdersBrowserTasks(onFailure) {
 }
 
 /** Search completion is a rendered result, including a reused identical query. */
+// V2 §4-4: rows show the FS- short number; the searched UUID never becomes display text.
+const PUBLIC_ORDER_NO = /^FS-[0-9A-HJKMNP-TV-Z]{6}$/u;
+
 export function adminOrdersSearchReady(snapshot, target) {
   return (
     snapshot.busy === false &&
@@ -65,7 +68,7 @@ export function adminOrdersSearchReady(snapshot, target) {
     snapshot.query === target.publicId &&
     snapshot.rows.length === 1 &&
     snapshot.rows[0].orderId === target.orderId &&
-    snapshot.rows[0].publicId === target.publicId
+    PUBLIC_ORDER_NO.test(snapshot.rows[0].publicOrderNo ?? "")
   );
 }
 
@@ -253,7 +256,7 @@ export async function verifyAdminOrdersBrowser({
               ),
             ].map((row) => ({
               orderId: row.getAttribute("data-order-id"),
-              publicId: row.querySelector("strong")?.textContent?.trim(),
+              publicOrderNo: row.querySelector("strong")?.textContent?.trim(),
             })),
           })),
           { publicId, orderId },
@@ -550,7 +553,11 @@ export async function verifyAdminOrdersBrowser({
       prepareKeys.length === 2 && prepareKeys[0] === prepareKeys[1],
       "lost preparation response retries with the same idempotency key",
     );
+    // Delivery opens the photo panel; confirming without photos delivers directly (V2 §4-6).
     await page.locator("[data-order-deliver]").first().click();
+    await page.locator('[data-proof-panel="DELIVER"]').waitFor();
+    await page.locator('[data-proof-submit="DELIVER"]').click();
+    await expect(page.locator("[data-proof-panel]")).toHaveCount(0);
     await expect(page.locator("[data-order-deliver]")).toHaveCount(0);
     report.operationSeconds = (performance.now() - started) / 1000;
     assert(

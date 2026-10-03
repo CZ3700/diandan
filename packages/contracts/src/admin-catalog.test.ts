@@ -96,6 +96,45 @@ describe("admin catalog boundaries", () => {
       adminCatalogOwnerSchema.shape.label.safeParse("a".repeat(301)).success,
     ).toBe(false);
   });
+  test("artist discovery accepts a safe optional public thumbnail without storage metadata", () => {
+    const owner = {
+      schemaVersion: 1,
+      target: { kind: "IDOL", idolId: id },
+      label: "原语言艺人",
+      locale: "ja",
+      status: "active",
+      baseVersion: 1,
+      authoringVersion: 1,
+      publicationHeadVersion: 1,
+      latestRevisionId: id,
+      draftRevisionId: null,
+      publishedRevisionId: id,
+      handle: "sample",
+      acceptingGifts: true,
+      createdAt: "2026-09-07T00:00:00.000001Z",
+    };
+    const image = {
+      url: "https://media.example.test/public/portrait.webp",
+      alt: "原语言艺人",
+    };
+    expect(adminCatalogOwnerSchema.safeParse({ ...owner, image }).success).toBe(
+      true,
+    );
+    expect(
+      adminCatalogOwnerSchema.safeParse({ ...owner, image: null }).success,
+    ).toBe(true);
+    expect(adminCatalogOwnerSchema.parse(owner)).toEqual(owner);
+    for (const addition of [
+      { url: "http://localhost/private.png" },
+      { objectKey: "private/source.png" },
+    ])
+      expect(
+        adminCatalogOwnerSchema.safeParse({
+          ...owner,
+          image: { ...image, ...addition },
+        }).success,
+      ).toBe(false);
+  });
   test("redirect is stable identity resolution with fixed 301 and no arbitrary URL", () => {
     const result = {
       schemaVersion: 1,

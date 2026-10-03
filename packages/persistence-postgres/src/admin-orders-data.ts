@@ -154,12 +154,13 @@ export async function readAdminOrderLines(
 ): Promise<DraftRow[]> {
   return draftRows(
     client,
-    `SELECT i.id item_id,i.support_intent_id,i.cart_item_id,i.gift_id,i.gift_translation_revision_id,i.gift_daily_translation_id,i.checkout_preflight_id,
+    `SELECT i.id item_id,i.support_intent_id,i.cart_item_id,i.gift_id,i.gift_kind,i.gift_translation_revision_id,i.gift_daily_translation_id,i.checkout_preflight_id,
  f.id fulfillment_id,f.version fulfillment_version,f.status,f.hold_reason_code,f.prepared_at,f.updated_at fulfillment_updated_at,
  s.version intent_version,s.moderation_status,s.privacy_state,s.fan_message_locale,s.display_mode,s.fan_message_ciphertext,s.display_name_ciphertext,s.encrypted_data_key,s.encryption_key_version,
  (c.has_fan_message OR s.fan_message_ciphertext IS NOT NULL) has_message,(s.display_mode='nickname') has_display_name,
  (SELECT e.from_status FROM public.fulfillment_events e JOIN public.admin_order_fulfillment_receipts r ON r.fulfillment_event_id=e.id WHERE e.fulfillment_id=f.id AND e.sequence=f.version AND e.to_status='ON_HOLD' AND e.authority_kind='ADMIN' AND r.action='HOLD') resume_status,
- (SELECT r.review_locale FROM public.admin_order_message_reviews r WHERE r.support_intent_id=s.id AND r.result_intent_version=s.version ORDER BY r.created_at DESC LIMIT 1) reviewed_locale
+ (SELECT r.review_locale FROM public.admin_order_message_reviews r WHERE r.support_intent_id=s.id AND r.result_intent_version=s.version ORDER BY r.created_at DESC LIMIT 1) reviewed_locale,
+ (i.line_total_minor>0 AND coalesce((SELECT sum(ri.amount_minor) FROM public.refund_items ri JOIN public.refunds refund ON refund.id=ri.refund_id AND refund.order_id=i.order_id WHERE ri.order_item_id=i.id AND refund.status='SUCCEEDED'),0)>=i.line_total_minor) refunded_in_full
  FROM public.order_items i JOIN public.fulfillments f ON f.order_item_id=i.id AND f.order_id=i.order_id
  JOIN public.support_intents s ON s.id=i.support_intent_id JOIN public.cart_items c ON c.id=i.cart_item_id
  WHERE i.order_id=$1 ORDER BY i.created_at,i.id ${lock ? "FOR UPDATE OF f,s" : ""}`,

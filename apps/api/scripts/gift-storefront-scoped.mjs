@@ -297,7 +297,8 @@ export async function verifyGiftStorefrontScoped({
       unknownMarket.code === "MARKET_UNAVAILABLE",
     "unconfigured market never invents a price or default scope",
   );
-  await read(25, "en", fixtures.markets[0], undefined, 503);
+  // Deleted (archived) and never-published gifts both have no public page (1717eda0).
+  await read(25, "en", fixtures.markets[0], undefined, 404);
   await read(26, "en", fixtures.markets[0], undefined, 404);
   for (const query of [
     "locale=en&locale=ja&market=GLOBAL&currency=USD",

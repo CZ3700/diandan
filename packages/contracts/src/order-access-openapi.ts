@@ -105,6 +105,67 @@ export function orderAccessPaths() {
         responses,
       },
     },
+    "/api/v1/orders/{publicOrderId}/delivery-proofs/{proofId}/{rendition}": {
+      get: {
+        operationId: "readDeliveryProof",
+        description:
+          "Stream one private studio delivery photo of this order after authorizing the exact order session. Only proofs attached to delivered physical lines and not withdrawn are readable; unknown and foreign proofs are indistinguishable. Shares the READ rate-limit bucket. Bytes come from private storage, never from a public or signed URL.",
+        security: [{ OrderSession: [] }],
+        parameters: [
+          { ...origin, required: false },
+          {
+            name: "publicOrderId",
+            in: "path",
+            required: true,
+            schema: { type: "string", format: "uuid" },
+          },
+          {
+            name: "proofId",
+            in: "path",
+            required: true,
+            schema: { type: "string", format: "uuid" },
+          },
+          {
+            name: "rendition",
+            in: "path",
+            required: true,
+            schema: { type: "string", enum: ["thumbnail", "display"] },
+          },
+        ],
+        responses: {
+          ...responses,
+          200: {
+            description:
+              "Metadata-free WebP rendition. Never cached, sniffed, framed or referred.",
+            headers: {
+              "Cache-Control": {
+                schema: { type: "string", const: "private, no-store" },
+              },
+              "X-Content-Type-Options": {
+                schema: { type: "string", const: "nosniff" },
+              },
+              "Cross-Origin-Resource-Policy": {
+                schema: { type: "string", const: "same-origin" },
+              },
+              "Referrer-Policy": {
+                schema: { type: "string", const: "no-referrer" },
+              },
+            },
+            content: {
+              "image/webp": { schema: { type: "string", format: "binary" } },
+            },
+          },
+        },
+      },
+    },
+    "/api/v1/order-access/locate": {
+      post: mutation(
+        "locateOrderAccess",
+        "OrderAccessLocateRequest",
+        "Resolve a typed public order number to its publicOrderId only when this browser's active order session belongs to that order. Read-only: no lock, credential, rotation or audit; shares the READ rate-limit bucket. A number alone never reveals or authorizes an order.",
+        [{ OrderSession: [] }],
+      ),
+    },
     "/api/v1/order-access/revoke": {
       post: mutation(
         "revokeOrderAccess",

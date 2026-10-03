@@ -42,9 +42,8 @@ export function UiCompositesHeroFailureDemo({
         onClick={() => setFailureRequested(true)}
         variant="secondary"
       >
-        {failureRequested
-          ? "Runtime image failure requested"
-          : "Trigger runtime image failure"}
+        {/* One label: a longer "requested" text wrapped at narrow widths and moved the page below the Hero. */}
+        Trigger runtime image failure
       </Button>
     </div>
   );

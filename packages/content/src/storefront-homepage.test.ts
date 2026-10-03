@@ -171,3 +171,24 @@ test("missing or rights-revoked optional gift remains an explicit unavailable sl
     });
   }
 });
+test("a hero artist deleted by operators leaves the poster without an artist instead of failing the page", async () => {
+  const project = await projector();
+  const input = fixture();
+  const hero = input.slots[0]!;
+  const result = project({
+    ...input,
+    slots: [
+      {
+        slotKey: hero.slotKey,
+        kind: hero.kind,
+        idolId: hero.idolId,
+        status: "UNAVAILABLE",
+      },
+    ],
+  });
+  expect(result).toMatchObject({
+    outcome: "SUCCESS",
+    kind: "STOREFRONT_HOMEPAGE",
+    slots: [{ kind: "HERO_IDOL", status: "UNAVAILABLE" }],
+  });
+});

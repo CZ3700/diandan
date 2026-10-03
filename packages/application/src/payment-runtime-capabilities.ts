@@ -178,28 +178,33 @@ export async function listPaymentCapabilities(
   const current = await loadPaymentContext(runtime, command, context);
   if (current.readiness !== "READY") return rejectPayment(current.readiness);
   const routes = current.routing?.routes ?? [];
-  const countries = [
-    ...new Set(
-      routes
-        .flatMap((route) => route.rule.countries)
-        .filter((country) =>
-          routes.some((route) =>
-            eligiblePaymentRoute(
-              runtime,
-              current,
-              route,
-              country,
-              command.supportedActionTypes,
-            ),
-          ),
+  // The fan is asked for a country only when the answer changes which routes apply.
+  const routesByCountry = new Map<string, string>();
+  for (const country of new Set(
+    routes.flatMap((route) => route.rule.countries),
+  )) {
+    const eligible = routes
+      .filter((route) =>
+        eligiblePaymentRoute(
+          runtime,
+          current,
+          route,
+          country,
+          command.supportedActionTypes,
         ),
-    ),
-  ].sort();
+      )
+      .map((route) => route.rule.id.toLowerCase());
+    if (eligible.length > 0) routesByCountry.set(country, eligible.join(","));
+  }
+  const countries = [...routesByCountry.keys()].sort();
+  const countrySelectionRequired = new Set(routesByCountry.values()).size > 1;
   if (command.country !== undefined && !countries.includes(command.country))
     return rejectPayment("CAPABILITY_UNAVAILABLE");
+  const country =
+    command.country ?? (countrySelectionRequired ? undefined : countries[0]);
   const capabilities: PaymentRuntimeCapabilityView[] = [];
   if (
-    command.country !== undefined &&
+    country !== undefined &&
     (!current.currentAttempt || current.currentAttempt.canRetry)
   ) {
     const ordered = routes
@@ -208,7 +213,7 @@ export async function listPaymentCapabilities(
           runtime,
           current,
           route,
-          command.country!,
+          country,
           command.supportedActionTypes,
         ),
       )
@@ -223,7 +228,7 @@ export async function listPaymentCapabilities(
         runtime,
         current,
         route,
-        command.country,
+        country,
         command.supportedActionTypes,
       );
       if (
@@ -252,7 +257,8 @@ export async function listPaymentCapabilities(
     currency: current.cart.currency,
     amountMinor: current.checkout.observation.quote.amount.totalAmountMinor,
     countries,
-    country: command.country ?? null,
+    country: country ?? null,
+    countrySelectionRequired,
     capabilities,
   });
 }

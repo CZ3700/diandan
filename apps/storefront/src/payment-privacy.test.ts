@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { afterEach, expect, test, vi } from "vitest";
 import { proxy } from "./proxy";
 afterEach(() => vi.unstubAllEnvs());
-test("checkout and return HTML, locale redirects and BFF failures are always private and non-referring", () => {
+test("checkout and return HTML, locale redirects and BFF failures are always private and non-referring", async () => {
   for (const path of [
     "/ja/checkout",
     "/ja/checkout/return?session=test&attempt=test",
@@ -16,7 +16,7 @@ test("checkout and return HTML, locale redirects and BFF failures are always pri
     "/api/storefront/order-access/exchange",
     "/api/storefront/orders/10000000-0000-4000-8000-000000000001",
   ]) {
-    const response = proxy(
+    const response = await proxy(
       new NextRequest("https://shop.example.invalid" + path),
     );
     expect(response.headers.get("cache-control")).toBe("private, no-store");
@@ -27,18 +27,18 @@ test("checkout and return HTML, locale redirects and BFF failures are always pri
     );
   }
   expect(
-    proxy(new NextRequest("https://shop.example.invalid/ja/gifts")).headers.get(
-      "cache-control",
-    ),
+    (
+      await proxy(new NextRequest("https://shop.example.invalid/ja/gifts"))
+    ).headers.get("cache-control"),
   ).toBeNull();
 });
-test("payment frame CSP permits only exact configured HTTPS origins; malformed configuration allows none", () => {
+test("payment frame CSP permits only exact configured HTTPS origins; malformed configuration allows none", async () => {
   vi.stubEnv(
     "FAN_SUPPORT_PAYMENT_ACTION_ORIGINS_JSON",
     JSON.stringify(["https://payments.example.invalid:9443"]),
   );
   const request = new NextRequest("https://shop.example.invalid/en/checkout");
-  const policy = proxy(request).headers.get("content-security-policy");
+  const policy = (await proxy(request)).headers.get("content-security-policy");
   expect(policy).toContain("frame-src https://payments.example.invalid:9443;");
   expect(policy).toContain("form-action 'self'");
   expect(policy).not.toContain("*");
@@ -49,18 +49,21 @@ test("payment frame CSP permits only exact configured HTTPS origins; malformed c
     "{}",
   ]) {
     vi.stubEnv("FAN_SUPPORT_PAYMENT_ACTION_ORIGINS_JSON", value);
-    expect(proxy(request).headers.get("content-security-policy")).toContain(
-      "frame-src 'none';",
-    );
+    expect(
+      (await proxy(request)).headers.get("content-security-policy"),
+    ).toContain("frame-src 'none';");
   }
 });
 
-test("order pages allow no third-party scripts or frames, and strip forged early-entry request headers", () => {
-  const entry = proxy(
+test("order pages allow no third-party scripts or frames, and strip forged early-entry request headers", async () => {
+  const entry = await proxy(
     new NextRequest("https://shop.example.invalid/en/order-access"),
   );
   expect(entry.headers.get("content-security-policy")).toContain(
-    "script-src 'self' 'unsafe-inline'",
+    "script-src 'self' 'unsafe-inline';",
+  );
+  expect(entry.headers.get("content-security-policy")).not.toContain(
+    "unsafe-eval",
   );
   expect(entry.headers.get("content-security-policy")).toContain(
     "frame-src 'none'",
@@ -68,7 +71,7 @@ test("order pages allow no third-party scripts or frames, and strip forged early
   expect(
     entry.headers.get("x-middleware-request-x-storefront-order-access"),
   ).toBe("1");
-  const other = proxy(
+  const other = await proxy(
     new NextRequest("https://shop.example.invalid/en/gifts", {
       headers: { "x-storefront-order-access": "1" },
     }),
@@ -76,4 +79,24 @@ test("order pages allow no third-party scripts or frames, and strip forged early
   expect(
     other.headers.get("x-middleware-request-x-storefront-order-access"),
   ).toBeNull();
+});
+
+test("only a development server lets React's debugging eval() run on order pages", async () => {
+  vi.stubEnv("NODE_ENV", "development");
+  try {
+    const policy = (
+      await proxy(new NextRequest("https://shop.example.invalid/en/orders/abc"))
+    ).headers.get("content-security-policy");
+    expect(policy).toContain(
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
+    );
+    expect(policy).toContain("frame-src 'none'");
+  } finally {
+    vi.unstubAllEnvs();
+  }
+  expect(
+    (
+      await proxy(new NextRequest("https://shop.example.invalid/en/orders/abc"))
+    ).headers.get("content-security-policy"),
+  ).not.toContain("unsafe-eval");
 });

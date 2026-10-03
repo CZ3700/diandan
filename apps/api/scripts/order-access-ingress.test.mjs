@@ -12,9 +12,10 @@ import { createApiApplication } from "../dist/bootstrap.js";
 import { createCartHttpTestKms } from "./cart-http-kms.mjs";
 import { preflightEnvironment } from "./publication-preflight-http-fixtures.mjs";
 import { requestRawOrderAccess } from "./order-access-observers.mjs";
-const runtime = await import("../dist/order-access-composition.js").catch(
-  () => undefined,
-);
+const runtime =
+  await import("../dist/testing/order-access-composition.js").catch(
+    () => undefined,
+  );
 const workspaceRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "../../..",

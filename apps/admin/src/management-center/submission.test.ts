@@ -100,3 +100,17 @@ it("does not submit after a rejected PUT, but permits canonical inspection of a 
   await h.attempt.submit(intent, file, () => {});
   expect(h.submit).toHaveBeenCalledTimes(1);
 });
+it("keeps the chosen focal point when replacing the local upload with its server reference", async () => {
+  const h = harness();
+  const file = new File(["bytes"], "artist.png", { type: "image/png" });
+  const focused = { ...intent, image: { focalPoint: { x: 0.12345, y: 0.9 } } };
+  await h.attempt.submit(
+    focused as unknown as ManagementCenterIntent,
+    file,
+    () => {},
+  );
+  expect(h.submit).toHaveBeenCalledWith({
+    ...intent,
+    image: { uploadId: id, focalPoint: { x: 0.12345, y: 0.9 } },
+  });
+});

@@ -289,9 +289,15 @@ async function seedGifts({
     const image = media[index % media.length];
     const name = `${image.name} ${String(index + 1).padStart(2, "0")}`;
     const category = ["FLOWERS", "ACCESSORY", "OTHER"][index % 3];
-    const giftKind = ["VIRTUAL", "PHYSICAL", "WISH", "MERCHANDISE", "OTHER"][
+    // ADR-019 delivers VIRTUAL lines at payment; the default checkout gift (index 0) stays a
+    // studio-fulfilled kind so payment, notification and admin flows keep their PENDING baseline.
+    // SPEC 6.3.0: a WISH without its artist binding lists without an offer, so gifts that carry
+    // their own stock, price or recipient scenario (0-7, 24) are never an unbound WISH.
+    const rotated = ["PHYSICAL", "WISH", "MERCHANDISE", "OTHER", "VIRTUAL"][
       index % 5
     ];
+    const giftKind =
+      rotated === "WISH" && (index < 8 || index === 24) ? "PHYSICAL" : rotated;
     const value = contentAuthoringContentSchema.parse({
       kind: "GIFT",
       structure: {

@@ -23,7 +23,7 @@ export function acceptancePages(fixtures) {
       locale,
       kind: "artist",
       path: `/${locale}/idols/${fixtures.artists[0].handle}?${scope}`,
-      selector: ".storefront-story",
+      selector: "p[data-artist-description][lang]",
     },
     {
       locale,

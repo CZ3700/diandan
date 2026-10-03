@@ -89,8 +89,51 @@
   object-fit: contain;
 }
 .mo-line-status {
-  font-weight: 500;
-  overflow-wrap: anywhere;
+  justify-self: start;
+  align-self: start;
+}
+.mo-order-states {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+/* Colour-toned states (user request 2026-09-29): awaiting payment or preparation reads
+   amber, paid or delivered green, in progress gold, refunds and holds red, cancelled grey. */
+.mo-status {
+  --mo-tone: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: var(--border-width) solid
+    color-mix(in srgb, var(--mo-tone) 45%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--mo-tone) 14%, transparent);
+  color: var(--mo-tone);
+  font-size: var(--type-label-size);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.mo-status::before {
+  content: "";
+  flex: none;
+  inline-size: var(--space-2);
+  block-size: var(--space-2);
+  border-radius: var(--radius-pill);
+  background: currentcolor;
+}
+.mo-status[data-tone="attention"] {
+  --mo-tone: var(--color-warning);
+}
+.mo-status[data-tone="progress"] {
+  --mo-tone: var(--color-accent);
+}
+.mo-status[data-tone="success"] {
+  --mo-tone: var(--color-success);
+}
+.mo-status[data-tone="danger"] {
+  --mo-tone: var(--color-danger);
 }
 .mo-line-review {
   display: flex;
@@ -159,6 +202,57 @@
 .mo-private form {
   margin-block-start: var(--space-6);
 }
+.mo-proof-panel {
+  margin-block: var(--space-6);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border-inline-start: var(--border-width) solid var(--color-accent);
+}
+.mo-proof-panel h3,
+.mo-proofs h3 {
+  margin: 0 0 var(--space-3);
+  font-size: var(--type-body-size);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.mo-proof-panel p {
+  overflow-wrap: anywhere;
+}
+.mo-proof-privacy {
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width) solid var(--color-warning);
+  border-radius: var(--radius-control);
+  background: var(--color-surface-raised);
+}
+.mo-proofs {
+  margin-block: var(--space-6);
+}
+.mo-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--space-32), 1fr));
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0;
+}
+.mo-proof-grid li {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+}
+/* Whole photo visible: operators check faces and addresses before and after attaching. */
+.mo-proof-grid img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  background: var(--color-bg);
+  border-radius: var(--radius-control);
+}
+.mo-proof-withdraw {
+  display: grid;
+  gap: var(--space-3);
+}
 @media (max-width: 64rem) {
   .mo-filters {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -191,7 +285,8 @@
   .mo-line-status {
     grid-column: 2;
   }
-  .mo-private {
+  .mo-private,
+  .mo-proof-panel {
     padding: var(--space-4);
   }
   .mo-section-heading > .fs-button {

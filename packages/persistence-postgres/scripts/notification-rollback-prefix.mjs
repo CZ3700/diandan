@@ -11,6 +11,35 @@ const supportedHeads = [
   "0035",
   "0036",
   "0037",
+  "0038",
+  "0039",
+  "0040",
+  "0041",
+  "0042",
+  "0043",
+  "0044",
+  "0045",
+  "0046",
+  "0047",
+  "0048",
+  "0049",
+  "0050",
+  "0051",
+  "0052",
+  "0053",
+  "0054",
+  "0055",
+  "0056",
+  "0057",
+  "0058",
+  "0059",
+  "0060",
+  "0061",
+  "0062",
+  "0063",
+  "0064",
+  "0065",
+  "0066",
 ];
 
 /** Legacy probes may rewind only explicitly known, empty migration prefixes. */
@@ -36,6 +65,93 @@ export async function rollbackEmptyNotifications({
     bootstraps: "public.order_access_tokens WHERE purpose='CHECKOUT_BOOTSTRAP'",
     expiries:
       "public.order_events WHERE authority_kind='SYSTEM' AND reason_code='CHECKOUT_QUOTE_EXPIRED'",
+    ...(version >= "0044"
+      ? {
+          layout_revisions: "public.homepage_layout_revisions",
+          layout_publications: "public.homepage_layout_publications",
+          layout_receipts: "public.homepage_layout_receipts",
+          layout_audits: "public.audit_logs WHERE action LIKE 'HOME_LAYOUT_%'",
+        }
+      : {}),
+    ...(version >= "0045"
+      ? {
+          theme_revisions: "public.storefront_theme_revisions",
+          theme_publications: "public.storefront_theme_publications",
+          theme_receipts: "public.storefront_theme_receipts",
+          theme_audits:
+            "public.audit_logs WHERE action LIKE 'STOREFRONT_THEME_%'",
+        }
+      : {}),
+    ...(version >= "0048"
+      ? {
+          navigation_revisions: "public.storefront_navigation_revisions",
+          navigation_publications: "public.storefront_navigation_publications",
+          navigation_receipts: "public.storefront_navigation_receipts",
+          navigation_audits:
+            "public.audit_logs WHERE action LIKE 'STOREFRONT_NAVIGATION_%'",
+        }
+      : {}),
+    ...(version >= "0049"
+      ? {
+          information_revisions: "public.information_page_revisions",
+          information_publications: "public.information_page_publications",
+          information_receipts: "public.information_page_receipts",
+          information_outbox:
+            "public.outbox_events WHERE event_type='INFORMATION_PAGE_PUBLICATION_CHANGED'",
+          information_audits:
+            "public.audit_logs WHERE action LIKE 'INFORMATION_PAGE_%'",
+        }
+      : {}),
+    ...(version >= "0050"
+      ? {
+          native_submissions: "public.notification_submissions",
+        }
+      : {}),
+    ...(version >= "0057"
+      ? {
+          artist_assignments: "public.idol_assignments",
+        }
+      : {}),
+    ...(version >= "0059"
+      ? {
+          ledger_exports: "public.artist_ledger_exports",
+        }
+      : {}),
+    ...(version >= "0060"
+      ? {
+          wish_bindings: "public.wish_bindings",
+          wish_purchase_links: "public.wish_purchase_links",
+          wish_supports: "public.wish_supports",
+        }
+      : {}),
+    ...(version >= "0061"
+      ? {
+          wish_preferences: "public.cart_wish_gallery_preferences",
+          wish_consents: "public.wish_gallery_consents",
+          wish_entries: "public.wish_gallery_entries",
+          wish_withdrawals: "public.wish_gallery_withdrawals",
+        }
+      : {}),
+    ...(version >= "0062"
+      ? {
+          artist_notes: "public.artist_private_notes",
+          artist_note_accesses: "public.artist_private_note_accesses",
+          artist_note_confirmations: "public.artist_private_note_confirmations",
+        }
+      : {}),
+    ...(version >= "0064"
+      ? {
+          brand_revisions: "public.storefront_brand_revisions",
+          brand_publications: "public.storefront_brand_publications",
+          brand_receipts: "public.storefront_brand_receipts",
+          brand_assets: "public.storefront_brand_logo_assets",
+        }
+      : {}),
+    ...(version >= "0063"
+      ? {
+          deleted_accounts: "public.admin_identities WHERE status='ARCHIVED'",
+        }
+      : {}),
     ...(version >= "0030"
       ? {
           login_challenges: "public.admin_login_challenges",
@@ -82,6 +198,27 @@ export async function rollbackEmptyNotifications({
             "public.admin_payment_configuration_translation_copies",
           configuration_audits:
             "public.audit_logs WHERE action LIKE 'PAYMENT_CONFIGURATION_%'",
+        }
+      : {}),
+    ...(version >= "0041"
+      ? {
+          filled_media_jobs:
+            "public.media_processing_jobs WHERE fit='COVER_ALLOW_ENLARGE'",
+        }
+      : {}),
+    ...(version >= "0040"
+      ? {
+          proof_uploads: "public.fulfillment_proof_uploads",
+          proofs: "public.fulfillment_proofs",
+          proof_withdrawals: "public.fulfillment_proof_withdrawals",
+          proof_audits:
+            "public.audit_logs WHERE action LIKE 'DELIVERY_PROOF_%'",
+        }
+      : {}),
+    ...(version >= "0038"
+      ? {
+          digital_deliveries:
+            "public.fulfillment_events WHERE authority_kind='SYSTEM' AND reason_code='VIRTUAL_GIFT_AUTO_DELIVERED'",
         }
       : {}),
     ...(version >= "0037"

@@ -155,7 +155,11 @@ export function createOrderPaymentProtocolClient(context) {
       )
     ).rows[0];
   }
-  async function assertPaid(value, expectedReservations = 0) {
+  async function assertPaid(
+    value,
+    expectedReservations = 0,
+    expectedFulfillmentStatus = "PENDING",
+  ) {
     const row = await state(value);
     check(
       row?.payment_status === "PAID" &&
@@ -167,8 +171,8 @@ export function createOrderPaymentProtocolClient(context) {
     check(
       row.converted_intents === row.items &&
         row.fulfillments === row.items &&
-        row.fulfillment_status === "PENDING",
-      "Every historical order line has a converted intent and its original pending fulfillment",
+        row.fulfillment_status === expectedFulfillmentStatus,
+      "Every historical order line has a converted intent and its expected fulfillment aggregate",
     );
     check(
       row.captures === 1 &&

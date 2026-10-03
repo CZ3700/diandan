@@ -89,8 +89,9 @@ export async function checkLocaleCycle({
     } else {
       await page.locator('[data-order-payment-status="PAID"]').waitFor();
       assert(
-        (await page.locator("[data-order-public-id]").innerText()).trim() ===
-          purchase.publicOrderId,
+        (await page
+          .locator("[data-order-root]")
+          .getAttribute("data-order-id")) === purchase.publicOrderId,
         "Header switch keeps the same order entity",
       );
     }
@@ -211,14 +212,17 @@ export async function beginJourney({
     "Checkout freezes chosen locale and commerce context",
   );
   mark("checkout");
-  await page.locator("[data-payment-country]").waitFor();
-  const country = await page
-    .locator("[data-payment-country] option")
-    .evaluateAll((options) => options.find((option) => option.value)?.value);
-  assert(country, "Configured payment country exists");
-  await page.locator("[data-payment-country]").selectOption(country);
-  await page.locator("[data-payment-create]").first().click();
+  await page.waitForURL((url) => url.origin === config.origins.psp);
+  await expect(page.locator("[data-test-psp-capture]")).toBeVisible();
+  // Confirm now goes straight to the sole method. Revisit to also verify safe resume/locale changes.
+  await page.goto(`${config.origins.storefront}/${locale}/checkout`, {
+    waitUntil: "networkidle",
+  });
   await page.locator("[data-payment-continue]").waitFor();
+  assert(
+    (await page.locator("[data-payment-country]").count()) === 0,
+    "Single-method confirmation hands off without an extra country or method action",
+  );
   return { checkout: result.checkout };
 }
 
@@ -310,9 +314,10 @@ export async function verifyMailAccess({
       `${config.origins.mail}/#token=${config.services.mail.viewerToken}`,
     );
     await page.locator('a[href="/"]').waitFor();
-    const article = page
-      .locator("article")
-      .filter({ hasText: purchase.publicOrderId });
+    // Mail shows the public number; the order UUID is only inside the link fragment.
+    const article = page.locator("article").filter({
+      has: page.locator(`a[href*="order=${purchase.publicOrderId}"]`),
+    });
     await expect
       .poll(
         async () => {

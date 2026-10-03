@@ -1,5 +1,42 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  allGifts: "Tất cả",
+  priceOrder: "Sắp xếp theo giá",
+  priceAscending: "Giá từ thấp đến cao",
+  priceDescending: "Giá từ cao đến thấp",
+  priceUnavailable: "Chưa có giá",
+  wishArtist: "Nghệ sĩ nhận quà",
+  wishArtistRequired: "Chọn nghệ sĩ nhận món quà theo nguyện vọng này.",
+  wishArtistChoose: "Chọn nghệ sĩ này",
+  wishArtistChange: "Chọn nghệ sĩ khác",
+  wishArtistLocked:
+    "Nguyện vọng này đã gắn với nghệ sĩ và không thể đổi người nhận.",
+  wishOnlyOnce:
+    "Mỗi nguyện vọng chỉ nhận một lượt ủng hộ. Ngừng bán sau khi xác nhận thanh toán.",
+  wishArtistUnavailable:
+    "Nghệ sĩ này hiện không thể nhận quà theo nguyện vọng.",
+  wishAvailable: "Đang chờ ủng hộ",
+  wishReserved: "Đang xử lý thanh toán",
+  wishSupported: "Đã ủng hộ nguyện vọng",
+  wishUnavailable: "Không khả dụng",
+  interfaceLanguage: "Ngôn ngữ giao diện",
+  discardEdits: "Bỏ các thay đổi chưa lưu và rời trang này?",
+  adjustFocus: "Điều chỉnh tiêu điểm ảnh",
+  focusHint:
+    "Chọn chủ thể cần giữ trên ảnh gốc. Dùng phím mũi tên để dịch chuyển nhỏ hoặc Shift + mũi tên để dịch chuyển lớn.",
+  focusHorizontal: "Tiêu điểm ngang",
+  focusVertical: "Tiêu điểm dọc",
+  resetFocus: "Đặt lại tiêu điểm",
+  previewPortrait: "Chân dung",
+  previewDesktop: "Ảnh bìa máy tính",
+  previewMobile: "Ảnh bìa điện thoại",
+  previewGift: "Ảnh quà tặng",
+  originalLoading: "Đang tải ảnh gốc…",
+  originalUnavailable:
+    "Không thể tải ảnh gốc. Hãy thử lại; các thay đổi vẫn được giữ.",
+  reuploadRequired: "Hãy tải lại ảnh gốc để điều chỉnh ảnh này.",
+  imageUnchanged: "Chọn ảnh mới hoặc điều chỉnh tiêu điểm trước khi đăng.",
+
   login: "Đăng nhập",
   loginHint: "Đăng nhập để quản lý nghệ sĩ, quà tặng và áp phích.",
   loginFailed: "Không thể đăng nhập. Vui lòng thử lại.",
@@ -21,7 +58,14 @@ export const copy = {
   addAndPublish: "Thêm và hiển thị",
   upload: "Chọn ảnh",
   changeImage: "Đổi ảnh",
-  imageHint: "JPEG, PNG hoặc WebP. Giữ nguyên tỷ lệ ảnh.",
+  imageHint:
+    "Hỗ trợ JPEG, PNG hoặc WebP. Ảnh sẽ được cắt để lấp đầy từng vị trí hiển thị.",
+  imageBestSize: "Nên tối thiểu {width} × {height} px.",
+  imageTipArtist: "Đặt khuôn mặt ở phần trên của ảnh.",
+  imageTipGift: "Đặt món quà ở giữa ảnh.",
+  imageTipPoster: "Đặt chủ thể ở giữa; điện thoại chỉ hiển thị phần giữa.",
+  imageTooSmall:
+    "Ảnh này {width} × {height} px, nhỏ hơn kích thước khuyến nghị nên có thể bị mờ trên màn hình lớn.",
   name: "Tên",
   description: "Mô tả",
   price: "Giá bán",
@@ -35,6 +79,7 @@ export const copy = {
   processing: "Đang xử lý và đăng…",
   published: "Đã hiển thị",
   retry: "Thử lại",
+  dismiss: "Đóng",
   loadFailed: "Chưa tải được danh sách. Vui lòng thử lại.",
   emptyArtists: "Thêm nghệ sĩ đầu tiên.",
   emptyGifts: "Thêm quà tặng đầu tiên.",
@@ -93,4 +138,30 @@ export const copy = {
   archived: "Đã lưu trữ",
   imageUnavailable: "Ảnh không khả dụng",
   readOnly: "Chỉ xem",
+  deleteTitle: "Xóa vĩnh viễn",
+  deleteWarning:
+    "Mục này sẽ bị gỡ khỏi trang web và khỏi danh sách này, không thể hoàn tác. Các đơn hàng hiện có vẫn giữ nguyên hồ sơ.",
+  deleteTypeName: "Nhập chính xác tên để xác nhận",
+  deleteConfirm: "Xóa vĩnh viễn",
+  deleted: "Đã xóa. Mục này không còn hiển thị trên trang web.",
+  posterDelete: "Xóa",
+  posterDeleteWarning:
+    "Xóa ảnh này khỏi lịch sử? Không thể hoàn tác. Ảnh trang chủ hiện tại không bị ảnh hưởng.",
+  posterDeleteConfirm: "Xác nhận xóa",
+  posterDeleteCancel: "Giữ lại",
+  posterDeleted: "Đã xóa ảnh. Trang chủ không thay đổi.",
+  assignment: "Quản lý nghệ sĩ",
+  assignmentNone: "Chưa phân công",
+  assignmentStudio: "Chưa phân công (studio trực tiếp quản lý)",
+  assignmentAll: "Tất cả nghệ sĩ",
+  assignmentFilter: "Hiển thị nghệ sĩ của",
+  assignmentInactive: "{name} (đã ngừng hoạt động)",
+  assignmentImmediate: "Thay đổi ở đây có hiệu lực ngay, không cần bấm lưu.",
+  assignmentOnCreate: "Nghệ sĩ sẽ thuộc về quản lý này ngay khi được thêm.",
+  assignmentSaved: "Đã cập nhật quản lý.",
+  assignmentFailed: "Không lưu được quản lý. Vui lòng thử lại.",
+  assignmentStale:
+    "Người khác đã đổi quản lý. Hãy quay lại danh sách và mở lại nghệ sĩ.",
+  assignmentMissed:
+    "Đã thêm nghệ sĩ nhưng chưa lưu được quản lý. Hãy mở nghệ sĩ và chọn lại quản lý.",
 } satisfies ManagementCopy;

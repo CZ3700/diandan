@@ -1,12 +1,15 @@
+import type * as NextNavigation from "next/navigation";
 import { PassThrough } from "node:stream";
 import { isValidElement, type ReactElement } from "react";
 import { renderToPipeableStream, renderToStaticMarkup } from "react-dom/server";
 import { beforeAll, beforeEach, expect, test, vi } from "vitest";
 import {
   SUPPORTED_LOCALES,
+  createDefaultHomeLayout,
   storefrontContextResponseSchema,
   storefrontHomepageResponseSchema,
   giftDirectoryResponseSchema,
+  publishedIdolViewSchema,
   type StorefrontHomepageResponse,
   type IdolDirectoryResponse,
   type StorefrontContextResponse,
@@ -15,6 +18,7 @@ import {
 } from "@fan-support/contracts";
 import { directoryFixturePage } from "./directory-fixture";
 import { HomeContent } from "./home-content";
+import { ArtistContent } from "./artist-content";
 import { loadStorefrontCopy } from "@fan-support/i18n/storefront";
 
 const reads = vi.hoisted(() => ({
@@ -23,8 +27,17 @@ const reads = vi.hoisted(() => ({
   seo: vi.fn(),
   gifts: vi.fn(),
   browse: vi.fn(),
+  layout: vi.fn(),
+}));
+vi.mock("../server/public-home-layout", () => ({
+  readPublicHomeLayout: reads.layout,
 }));
 vi.mock("server-only", () => ({}));
+// The gift section follows its own links in place; outside Next there is no router.
+vi.mock("next/navigation", async (original) => ({
+  ...(await original<typeof NextNavigation>()),
+  useRouter: () => ({ push: vi.fn() }),
+}));
 vi.mock("next/headers", () => ({
   cookies: async () => ({ has: () => false }),
 }));
@@ -173,6 +186,160 @@ test("homepage offers one artist browsing path and retains featured links when t
   expect(fallback).toContain(`href="${encodedHref}"`);
 });
 
+// User requests 2026-09-29: L2-11 merged the artist guides; L2-13 gives the hero back its
+// gold button to all artists and puts the search right under the artist section title.
+test("homepage hero has one gold button to all artists and the search sits under the artist title", async () => {
+  const copy = await loadStorefrontCopy("en");
+  const html = renderToStaticMarkup(
+    <HomeContent
+      data={publishedHome("en")}
+      locale="en"
+      copy={copy}
+      contextQuery="currency=USD"
+      directory={<nav aria-label="Artist directory" />}
+    />,
+  );
+  const hero =
+    html.split('data-home-hero="true"')[1]?.split("</section>")[0] ?? "";
+  expect(hero.split("storefront-primary")).toHaveLength(2);
+  expect(hero).toContain('href="/en/idols?currency=USD"');
+  expect(hero).toContain(copy.heroAllArtists);
+  // The published content label (fixture "Explore") no longer shows in the hero.
+  expect(hero).not.toContain("Explore");
+  expect(hero).not.toContain("data-artist-search");
+  expect(hero).not.toContain("storefront-text-link");
+  expect(hero).not.toContain("storefront-hero-caption");
+  const artists = html.split('id="artists"')[1]?.split("</section>")[0] ?? "";
+  const [heading, below = ""] = artists.split("</h2>");
+  expect(heading).toContain(copy.artistTitle);
+  expect(below.split("data-artist-search")).toHaveLength(2);
+  expect(below.indexOf("data-artist-search")).toBeLessThan(
+    below.indexOf('aria-label="Artist directory"'),
+  );
+  expect(below).toContain(`placeholder="${copy.artistSearchLabel}"`);
+  expect(artists).not.toContain(copy.artistEyebrow);
+  expect(artists).not.toContain(copy.backArtists);
+});
+
+test.each(SUPPORTED_LOCALES)(
+  "homepage %s provides a localized pause control for decorative hero motion",
+  async (locale) => {
+    const copy = await loadStorefrontCopy(locale);
+    const html = renderToStaticMarkup(
+      <HomeContent
+        data={publishedHome(locale)}
+        locale={locale}
+        copy={copy}
+        contextQuery=""
+      />,
+    );
+    const hero =
+      html.split('data-home-hero="true"')[1]?.split("</section>")[0] ?? "";
+    expect(hero).toContain('data-hero-motion="idle"');
+    expect(hero).toContain('class="storefront-hero-motion" aria-hidden="true"');
+    expect(hero).toContain(copy.heroPauseMotion);
+    expect(copy.heroPauseMotion).not.toBe(copy.heroPlayMotion);
+    expect(hero).toContain(`aria-label="${copy.heroPauseMotion}"`);
+    expect(hero).not.toContain(`>${copy.heroPauseMotion}<`);
+    const actions =
+      hero.split('class="storefront-hero-actions"')[1]?.split("</div>")[0] ??
+      "";
+    expect(actions.indexOf('data-home-hero-link="artists"')).toBeLessThan(
+      actions.indexOf("storefront-hero-motion-control"),
+    );
+    for (const effect of ["STARLIGHT", "AURORA", "SPOTLIGHT", "PETALS"])
+      expect(hero).toContain(`data-hero-layer="${effect}"`);
+  },
+);
+
+test.each(SUPPORTED_LOCALES)(
+  "homepage %s uses a compact localized heading instead of the published large title",
+  async (locale) => {
+    const home = publishedHome(locale);
+    const copy = await loadStorefrontCopy(locale);
+    const html = renderToStaticMarkup(
+      <HomeContent data={home} locale={locale} copy={copy} contextQuery="" />,
+    );
+    const hero =
+      html.split('data-home-hero="true"')[1]?.split("</section>")[0] ?? "";
+    expect(hero).not.toContain("Verified hero before directory");
+    expect(hero).toContain("Published introduction");
+    expect(hero).toContain('aria-labelledby="hero-title"');
+    expect(hero.match(/<h1\b/gu)).toHaveLength(1);
+    expect(hero).toContain(
+      `class="storefront-eyebrow storefront-home-hero-heading" lang="${locale}">${copy.artistEyebrow}</h1>`,
+    );
+    expect(hero).toContain(copy.heroAllArtists);
+  },
+);
+
+test.each([false, true])(
+  "artist detail preserves one description and its heading with daily=%s",
+  async (daily) => {
+    const published = publishedArtist("en");
+    const description = `${"A complete artist description. ".repeat(8)}<b>Plain operator text</b>`;
+    const artist = daily
+      ? publishedIdolViewSchema.parse({
+          ...published.content.view,
+          shortBio: description.slice(0, 160),
+          fullBio: description,
+          localeContext: {
+            ...published.content.view.localeContext,
+            schemaVersion: 2,
+            publicationMode: "DIRECT_OPERATOR_V1",
+            sourceLocale: "en",
+            translationRevision: "cc000000-0000-4000-8000-000000000001",
+          },
+        })
+      : published.content.view;
+    const html = renderToStaticMarkup(
+      <ArtistContent
+        artist={artist}
+        locale="en"
+        copy={await loadStorefrontCopy("en")}
+        contextQuery=""
+      />,
+    );
+    expect(html).toContain(
+      `<h1 id="artist-title" lang="en">${artist.displayName}</h1>`,
+    );
+    expect(html).not.toContain("storefront-home-hero-heading");
+    expect(html).not.toContain("storefront-story");
+    expect(html).not.toContain("Their story");
+    if (daily) {
+      expect(
+        html.match(/&lt;b&gt;Plain operator text&lt;\/b&gt;/gu),
+      ).toHaveLength(1);
+      expect(html).not.toContain("<b>Plain operator text</b>");
+    } else expect(html).toContain(artist.shortBio);
+  },
+);
+
+test.each(SUPPORTED_LOCALES)(
+  "the %s artist page closes without the gift slogan the gift lists dropped",
+  async (locale) => {
+    const copy = await loadStorefrontCopy(locale);
+    const artist = publishedArtist(locale).content.view;
+    const closing = (acceptingGifts: boolean) => {
+      const html = renderToStaticMarkup(
+        <ArtistContent
+          artist={{ ...artist, acceptingGifts }}
+          locale={locale}
+          copy={copy}
+          contextQuery=""
+        />,
+      );
+      return html.slice(html.indexOf("storefront-final"));
+    };
+    const accepting = closing(true);
+    expect(accepting).not.toContain(copy.giftTitle);
+    expect(accepting).not.toContain("<h2");
+    expect(accepting).toContain(copy.giftHandover.replaceAll("'", "&#x27;"));
+    expect(accepting).toContain(copy.giftChoose);
+    expect(closing(false)).toContain(`<h2>${copy.artistPaused}</h2>`);
+  },
+);
+
 function publishedArtist(locale: (typeof SUPPORTED_LOCALES)[number]) {
   const home = publishedHome(locale);
   if (home.outcome !== "SUCCESS") throw new Error("Missing test homepage");
@@ -181,6 +348,38 @@ function publishedArtist(locale: (typeof SUPPORTED_LOCALES)[number]) {
     throw new Error("Missing test artist publication");
   return { ...slot.content, content: slot.content.content };
 }
+
+test("homepage renders configured section order and visibility without losing required entry anchors", async () => {
+  const ids = [
+    "HERO",
+    "GIFTS",
+    "ARTISTS",
+    "KINDS",
+    "POLICIES",
+    "HOW_IT_WORKS",
+    "STUDIO_PROMISE",
+    "FINAL_CTA",
+  ] as const;
+  const html = renderToStaticMarkup(
+    <HomeContent
+      locale="en"
+      copy={await loadStorefrontCopy("en")}
+      contextQuery="currency=USD"
+      data={publishedHome("en")}
+      layout={{
+        schemaVersion: 1,
+        sections: ids.map((id) => ({ id, visible: id !== "HOW_IT_WORKS" })),
+      }}
+      giftDirectory={<section id="gifts">Published gifts</section>}
+    />,
+  );
+  expect(html.indexOf('id="gifts"')).toBeLessThan(html.indexOf('id="artists"'));
+  expect(html).not.toContain('id="how-title"');
+  expect(html).toContain('id="hero-title"');
+  expect(html).toContain(
+    'data-home-hero-link="artists" href="/en/idols?currency=USD"',
+  );
+});
 
 function giftPage(locale: (typeof SUPPORTED_LOCALES)[number]) {
   const artist = publishedArtist(locale).content.view;
@@ -280,6 +479,15 @@ function stream(element: ReactElement) {
 }
 
 beforeEach(() => {
+  reads.layout.mockReset().mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "HOME_LAYOUT",
+    source: "DEFAULT",
+    layout: createDefaultHomeLayout(),
+    version: 0,
+    publicationId: null,
+  });
   reads.catalog
     .mockReset()
     .mockImplementation(async (_path, _query, kind) =>
@@ -516,7 +724,7 @@ test("streams the shell before footer policy data and then includes its real pub
   }
   expect(errors).toEqual([]);
   expect(html).toContain(
-    "/en/policies/test-studio-terms?currency=JPY&amp;market=TEST_MARKET",
+    "/en/policies/test-studio-terms?market=TEST_MARKET&amp;currency=JPY",
   );
 });
 
@@ -715,4 +923,38 @@ test("published gifts remain browsable when the homepage poster is unavailable",
   expect(streamed.errors).toEqual([]);
   expect(streamed.html()).toContain("Gift from the server directory");
   expect(streamed.html()).not.toContain("data-market-choices");
+});
+
+test("public homepage reads the published layout and never substitutes defaults after layout failure", async () => {
+  reads.catalog.mockImplementation(async (_path, _query, kind) =>
+    kind === "homepage" ? publishedHome("en") : directoryFixturePage([]),
+  );
+  reads.layout.mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "CONTENT_UNAVAILABLE",
+  });
+  const unavailablePage = await streamHome("en");
+  await unavailablePage.ended;
+  expect(unavailablePage.html()).not.toContain('id="hero-title"');
+  expect(unavailablePage.html()).not.toContain('id="how-title"');
+  expect(unavailablePage.html()).toContain("temporarily unavailable");
+  unavailablePage.abort();
+  const layout = createDefaultHomeLayout();
+  layout.sections.reverse();
+  reads.layout.mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "HOME_LAYOUT",
+    source: "PUBLISHED",
+    layout,
+    version: 2,
+    publicationId: "b0000000-0000-4000-8000-000000000001",
+  });
+  const published = await streamHome("en");
+  await published.ended;
+  expect(published.html().indexOf('id="gifts"')).toBeLessThan(
+    published.html().indexOf('id="artists"'),
+  );
+  published.abort();
 });

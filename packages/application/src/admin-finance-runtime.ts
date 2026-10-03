@@ -25,6 +25,8 @@ type Runtime = {
   providers: () => readonly PaymentRuntimeProviderRegistration[];
   leaseMs: number;
   retryAfterMs: number;
+  /** Raised each time provider work leaves a refund unconfirmed (audit PAY-04). */
+  onRefundUnresolved?: () => void;
 };
 async function claim(runtime: Runtime, operationId: string | null) {
   const result = await runtime.transactions.runInAdminFinanceTransaction(
@@ -110,6 +112,12 @@ export function createAdminFinanceRecovery(runtime: Runtime) {
     );
     if (settled.operationId !== work.operationId)
       throw new TypeError("Mismatched finance settlement");
+    if (work.refundId !== null && settled.decision === "DEFERRED")
+      try {
+        runtime.onRefundUnresolved?.();
+      } catch {
+        /* An unavailable alert sink never blocks the durable recovery it reports. */
+      }
     if (settled.providerEventId)
       await events.apply(
         adminFinanceApplyCommandSchema.parse({

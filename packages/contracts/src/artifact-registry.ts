@@ -1,3 +1,12 @@
+import * as storefrontBrand from "./storefront-brand.js";
+import * as storefrontLogo from "./storefront-logo.js";
+import * as wishBinding from "./wish-binding.js";
+import * as wishGallery from "./wish-gallery.js";
+import * as informationPages from "./information-pages.js";
+import * as storefrontNavigation from "./storefront-navigation.js";
+import * as storefrontTheme from "./storefront-theme.js";
+import * as homeLayout from "./home-layout.js";
+import * as catalogDisplayOrder from "./catalog-display-order.js";
 import {
   rumIntakeSchema,
   rumObservationSchema,
@@ -25,9 +34,18 @@ import * as paymentHealth from "./payment-health.js";
 import * as adminOrderNoteKey from "./admin-order-note-key.js";
 import * as adminOrdersPersistence from "./admin-orders-persistence.js";
 import * as adminOrders from "./admin-orders.js";
+import * as adminLedger from "./admin-ledger.js";
+import * as adminLedgerPersistence from "./admin-ledger-persistence.js";
+import * as adminArtistNotes from "./admin-artist-notes.js";
+import * as adminArtistNotesPersistence from "./admin-artist-notes-persistence.js";
+import * as adminArtistNoteKey from "./admin-artist-note-key.js";
 import * as adminAccess from "./admin-access.js";
+import * as adminLocalAccess from "./admin-local-access.js";
+import * as adminLocalAccessPersistence from "./admin-local-access-persistence.js";
 import * as orderNotification from "./order-notification.js";
+import * as notificationSubmission from "./notification-submission.js";
 import * as orderAccess from "./order-access.js";
+import * as deliveryProof from "./delivery-proof.js";
 import * as orderPaymentApplication from "./order-payment-application.js";
 import * as paymentRuntimeInternal from "./payment-runtime-internal.js";
 import * as paymentRuntime from "./payment-runtime.js";
@@ -144,6 +162,7 @@ import {
   managementCenterCommandSchema,
   managementCenterRequestSchema,
   managementCenterListItemSchema,
+  managementCenterBrokerSchema,
   managementCenterResponseSchema,
 } from "./management-center.js";
 import {
@@ -667,6 +686,26 @@ export type ContractRegistration = Readonly<{
 // Scalars and embedded snapshot value objects follow their versioned parent;
 // they must never be used as standalone API, event, or queue roots.
 const unversionedValueObjectNames = new Set([
+  "StorefrontBrandRevision",
+  "StorefrontBrandPublication",
+  "StorefrontLogoView",
+  "AdminArtistNoteContent",
+  "AdminArtistNoteGate",
+  "AdminArtistNoteVersion",
+  "AdminArtistNoteEnvelope",
+  "AdminLedgerTimeZone",
+  "AdminLedgerPeriod",
+  "AdminLedgerResolvedPeriod",
+  "AdminLedgerBrokerFilter",
+  "AdminLedgerExportScope",
+  "AdminLedgerTotal",
+  "AdminLedgerArtist",
+  "AdminLedgerArtistRow",
+  "AdminLedgerLine",
+  "AdminLedgerExportLine",
+  "WishGalleryPreference",
+  "WishGalleryEntry",
+  "WishSupportRecord",
   "AdminOrdersPermission",
   "AdminOrdersListItem",
   "AdminOrdersLine",
@@ -674,6 +713,8 @@ const unversionedValueObjectNames = new Set([
   "AdminOrdersNotification",
   "AdminOrdersPrincipal",
   "AdminOrdersNoteEnvelope",
+  "AdminOrdersProof",
+  "OrderAccessDeliveryProof",
 
   "OrderNotificationUrl",
   "CheckoutPolicyAcceptance",
@@ -684,6 +725,7 @@ const unversionedValueObjectNames = new Set([
   "ManagementCenterIntent",
   "ManagementCenterOperation",
   "ManagementCenterListItem",
+  "ManagementCenterBroker",
   "ManagementCenterCheckpoint",
   "ManagementCenterPreparedMedia",
   "DailyPublicationCurrentMedia",
@@ -694,6 +736,349 @@ const unversionedValueObjectNames = new Set([
 ]);
 
 const registrations = [
+  {
+    name: "WishBinding",
+    audience: "internal",
+    schema: wishBinding.wishBindingSchema,
+  },
+  {
+    name: "WishGiftSummary",
+    audience: "public-http",
+    schema: wishBinding.wishGiftSummarySchema,
+  },
+  {
+    name: "WishGalleryPreference",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryPreferenceSchema,
+  },
+  {
+    name: "WishGalleryEntry",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryEntrySchema,
+  },
+  {
+    name: "WishGalleryPage",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryPageSchema,
+  },
+  {
+    name: "WishGalleryReadCommand",
+    audience: "internal",
+    schema: wishGallery.wishGalleryReadCommandSchema,
+  },
+  {
+    name: "WishGalleryReadResponse",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryReadResponseSchema,
+  },
+  {
+    name: "WishGalleryWithdrawCommand",
+    audience: "internal",
+    schema: wishGallery.wishGalleryWithdrawCommandSchema,
+  },
+  {
+    name: "WishGalleryWithdrawn",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryWithdrawnSchema,
+  },
+  {
+    name: "WishGalleryWithdrawResponse",
+    audience: "public-http",
+    schema: wishGallery.wishGalleryWithdrawResponseSchema,
+  },
+  {
+    name: "WishSupportRecord",
+    audience: "public-http",
+    schema: wishGallery.wishSupportRecordSchema,
+  },
+
+  {
+    name: "InformationPageAuthorizationCommand",
+    audience: "internal",
+    schema: informationPages.informationPageAuthorizationCommandSchema,
+  },
+  {
+    name: "InformationPageCommand",
+    audience: "internal",
+    schema: informationPages.informationPageCommandSchema,
+  },
+  {
+    name: "InformationPageRequest",
+    audience: "internal",
+    schema: informationPages.informationPageRequestSchema,
+  },
+  {
+    name: "InformationPageWorkspace",
+    audience: "admin-http",
+    schema: informationPages.informationPageWorkspaceSchema,
+  },
+  {
+    name: "InformationPageResponse",
+    audience: "admin-http",
+    schema: informationPages.informationPageResponseSchema,
+  },
+  {
+    name: "InformationPagePreviewDocument",
+    audience: "admin-http",
+    schema: informationPages.informationPagePreviewDocumentSchema,
+  },
+  {
+    name: "InformationPagePreviewMessage",
+    audience: "admin-http",
+    schema: informationPages.informationPagePreviewMessageSchema,
+  },
+  {
+    name: "InformationPagePreviewReady",
+    audience: "admin-http",
+    schema: informationPages.informationPagePreviewReadySchema,
+  },
+  {
+    name: "PublicInformationPageRequest",
+    audience: "internal",
+    schema: informationPages.publicInformationPageRequestSchema,
+  },
+  {
+    name: "PublicInformationPageIndexRequest",
+    audience: "internal",
+    schema: informationPages.publicInformationPageIndexRequestSchema,
+  },
+  {
+    name: "PublicInformationPageResponse",
+    audience: "public-http",
+    schema: informationPages.publicInformationPageResponseSchema,
+  },
+  {
+    name: "PublicInformationPageIndexResponse",
+    audience: "public-http",
+    schema: informationPages.publicInformationPageIndexResponseSchema,
+  },
+  {
+    name: "HomeLayoutAuthorizationCommand",
+    audience: "internal",
+    schema: homeLayout.homeLayoutAuthorizationCommandSchema,
+  },
+  {
+    name: "HomeLayout",
+    audience: "public-http",
+    schema: homeLayout.homeLayoutSchema,
+  },
+  {
+    name: "HomeLayoutState",
+    audience: "admin-http",
+    schema: homeLayout.homeLayoutStateSchema,
+  },
+  {
+    name: "HomeLayoutCommand",
+    audience: "internal",
+    schema: homeLayout.homeLayoutCommandSchema,
+  },
+  {
+    name: "HomeLayoutRequest",
+    audience: "internal",
+    schema: homeLayout.homeLayoutRequestSchema,
+  },
+  {
+    name: "HomeLayoutResponse",
+    audience: "admin-http",
+    schema: homeLayout.homeLayoutResponseSchema,
+  },
+  {
+    name: "PublicHomeLayoutResponse",
+    audience: "public-http",
+    schema: homeLayout.publicHomeLayoutResponseSchema,
+  },
+  {
+    name: "CatalogDisplayOrderCommand",
+    audience: "internal",
+    schema: catalogDisplayOrder.catalogDisplayOrderCommandSchema,
+  },
+  {
+    name: "CatalogDisplayOrderRequest",
+    audience: "internal",
+    schema: catalogDisplayOrder.catalogDisplayOrderRequestSchema,
+  },
+  {
+    name: "CatalogDisplayOrderResponse",
+    audience: "admin-http",
+    schema: catalogDisplayOrder.catalogDisplayOrderResponseSchema,
+  },
+  {
+    name: "HomeLayoutPreviewMessage",
+    audience: "admin-http",
+    schema: homeLayout.homeLayoutPreviewMessageSchema,
+  },
+  {
+    name: "HomeLayoutPreviewReady",
+    audience: "admin-http",
+    schema: homeLayout.homeLayoutPreviewReadySchema,
+  },
+  {
+    name: "StorefrontThemeAuthorizationCommand",
+    audience: "internal",
+    schema: storefrontTheme.storefrontThemeAuthorizationCommandSchema,
+  },
+  {
+    name: "StorefrontTheme",
+    audience: "public-http",
+    schema: storefrontTheme.storefrontThemeSchema,
+  },
+  {
+    name: "StorefrontThemeState",
+    audience: "admin-http",
+    schema: storefrontTheme.storefrontThemeStateSchema,
+  },
+  {
+    name: "StorefrontThemeCommand",
+    audience: "internal",
+    schema: storefrontTheme.storefrontThemeCommandSchema,
+  },
+  {
+    name: "StorefrontThemeRequest",
+    audience: "internal",
+    schema: storefrontTheme.storefrontThemeRequestSchema,
+  },
+  {
+    name: "StorefrontThemeResponse",
+    audience: "admin-http",
+    schema: storefrontTheme.storefrontThemeResponseSchema,
+  },
+  {
+    name: "PublicStorefrontThemeResponse",
+    audience: "public-http",
+    schema: storefrontTheme.publicStorefrontThemeResponseSchema,
+  },
+  {
+    name: "StorefrontThemePreviewMessage",
+    audience: "admin-http",
+    schema: storefrontTheme.storefrontThemePreviewMessageSchema,
+  },
+  {
+    name: "StorefrontThemePreviewReady",
+    audience: "admin-http",
+    schema: storefrontTheme.storefrontThemePreviewReadySchema,
+  },
+
+  {
+    name: "StorefrontBrandAuthorizationCommand",
+    audience: "internal",
+    schema: storefrontBrand.storefrontBrandAuthorizationCommandSchema,
+  },
+  {
+    name: "StorefrontBrand",
+    audience: "public-http",
+    schema: storefrontBrand.storefrontBrandSchema,
+  },
+  {
+    name: "StorefrontBrandState",
+    audience: "admin-http",
+    schema: storefrontBrand.storefrontBrandStateSchema,
+  },
+  {
+    name: "StorefrontBrandCommand",
+    audience: "internal",
+    schema: storefrontBrand.storefrontBrandCommandSchema,
+  },
+  {
+    name: "StorefrontBrandRequest",
+    audience: "internal",
+    schema: storefrontBrand.storefrontBrandRequestSchema,
+  },
+  {
+    name: "StorefrontBrandResponse",
+    audience: "admin-http",
+    schema: storefrontBrand.storefrontBrandResponseSchema,
+  },
+  {
+    name: "PublicStorefrontBrandResponse",
+    audience: "public-http",
+    schema: storefrontBrand.publicStorefrontBrandResponseSchema,
+  },
+  {
+    name: "StorefrontBrandPreviewMessage",
+    audience: "admin-http",
+    schema: storefrontBrand.storefrontBrandPreviewMessageSchema,
+  },
+  {
+    name: "StorefrontBrandPreviewReady",
+    audience: "admin-http",
+    schema: storefrontBrand.storefrontBrandPreviewReadySchema,
+  },
+  {
+    name: "StorefrontBrandView",
+    audience: "public-http",
+    schema: storefrontBrand.storefrontBrandViewSchema,
+  },
+  {
+    name: "StorefrontBrandRevision",
+    audience: "internal",
+    schema: storefrontBrand.storefrontBrandRevisionSchema,
+  },
+  {
+    name: "StorefrontBrandPublication",
+    audience: "admin-http",
+    schema: storefrontBrand.storefrontBrandPublicationSchema,
+  },
+  {
+    name: "StorefrontLogoView",
+    audience: "public-http",
+    schema: storefrontLogo.storefrontLogoViewSchema,
+  },
+  {
+    name: "StorefrontLogoProcessingCommand",
+    audience: "internal",
+    schema: storefrontLogo.storefrontLogoProcessingCommandSchema,
+  },
+  {
+    name: "StorefrontLogoProcessingResult",
+    audience: "internal",
+    schema: storefrontLogo.storefrontLogoProcessingResultSchema,
+  },
+
+  {
+    name: "StorefrontNavigationAuthorizationCommand",
+    audience: "internal",
+    schema: storefrontNavigation.storefrontNavigationAuthorizationCommandSchema,
+  },
+  {
+    name: "StorefrontNavigation",
+    audience: "public-http",
+    schema: storefrontNavigation.storefrontNavigationSchema,
+  },
+  {
+    name: "StorefrontNavigationState",
+    audience: "admin-http",
+    schema: storefrontNavigation.storefrontNavigationStateSchema,
+  },
+  {
+    name: "StorefrontNavigationCommand",
+    audience: "internal",
+    schema: storefrontNavigation.storefrontNavigationCommandSchema,
+  },
+  {
+    name: "StorefrontNavigationRequest",
+    audience: "internal",
+    schema: storefrontNavigation.storefrontNavigationRequestSchema,
+  },
+  {
+    name: "StorefrontNavigationResponse",
+    audience: "admin-http",
+    schema: storefrontNavigation.storefrontNavigationResponseSchema,
+  },
+  {
+    name: "PublicStorefrontNavigationResponse",
+    audience: "public-http",
+    schema: storefrontNavigation.publicStorefrontNavigationResponseSchema,
+  },
+  {
+    name: "StorefrontNavigationPreviewMessage",
+    audience: "admin-http",
+    schema: storefrontNavigation.storefrontNavigationPreviewMessageSchema,
+  },
+  {
+    name: "StorefrontNavigationPreviewReady",
+    audience: "admin-http",
+    schema: storefrontNavigation.storefrontNavigationPreviewReadySchema,
+  },
   { name: "RumIntake", audience: "public-http", schema: rumIntakeSchema },
   {
     name: "RumObservation",
@@ -962,6 +1347,11 @@ const registrations = [
     schema: adminOrders.adminOrdersLineSchema,
   },
   {
+    name: "AdminOrdersProof",
+    audience: "admin-http",
+    schema: adminOrders.adminOrdersProofSchema,
+  },
+  {
     name: "AdminOrdersNoteMetadata",
     audience: "admin-http",
     schema: adminOrders.adminOrdersNoteMetadataSchema,
@@ -1027,6 +1417,171 @@ const registrations = [
     schema: adminOrdersPersistence.adminOrdersPrivateConfirmationSchema,
   },
   {
+    name: "AdminOrdersProofReservation",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersProofReservationSchema,
+  },
+  {
+    name: "AdminOrdersProofUploadState",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersProofUploadStateSchema,
+  },
+  {
+    name: "AdminOrdersProofCompletion",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersProofCompletionSchema,
+  },
+  {
+    name: "AdminOrdersProofRenditionLocation",
+    audience: "internal",
+    schema: adminOrdersPersistence.adminOrdersProofRenditionLocationSchema,
+  },
+  {
+    name: "AdminLedgerFailure",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerFailureSchema,
+  },
+  {
+    name: "AdminLedgerTimeZone",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerTimeZoneSchema,
+  },
+  {
+    name: "AdminLedgerPeriod",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerPeriodSchema,
+  },
+  {
+    name: "AdminLedgerResolvedPeriod",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerResolvedPeriodSchema,
+  },
+  {
+    name: "AdminLedgerBrokerFilter",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerBrokerFilterSchema,
+  },
+  {
+    name: "AdminLedgerExportScope",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerExportScopeSchema,
+  },
+  {
+    name: "AdminLedgerCommand",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerCommandSchema,
+  },
+  {
+    name: "AdminLedgerRequest",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerRequestSchema,
+  },
+  {
+    name: "AdminLedgerTotal",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerTotalSchema,
+  },
+  {
+    name: "AdminLedgerArtist",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerArtistSchema,
+  },
+  {
+    name: "AdminLedgerArtistRow",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerArtistRowSchema,
+  },
+  {
+    name: "AdminLedgerLine",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerLineSchema,
+  },
+  {
+    name: "AdminLedgerExportLine",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerExportLineSchema,
+  },
+  {
+    name: "AdminLedgerResponse",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerResponseSchema,
+  },
+  {
+    name: "AdminLedgerMessageResponse",
+    audience: "admin-http",
+    schema: adminLedger.adminLedgerMessageResponseSchema,
+  },
+  {
+    name: "AdminLedgerStoreRequest",
+    audience: "internal",
+    schema: adminLedgerPersistence.adminLedgerStoreRequestSchema,
+  },
+  {
+    name: "AdminArtistNoteFailure",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteFailureSchema,
+  },
+  {
+    name: "AdminArtistNoteContent",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteContentSchema,
+  },
+  {
+    name: "AdminArtistNotePlaintext",
+    audience: "internal",
+    schema: adminArtistNotes.adminArtistNotePlaintextSchema,
+  },
+  {
+    name: "AdminArtistNoteGate",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteGateSchema,
+  },
+  {
+    name: "AdminArtistNoteVersion",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteVersionSchema,
+  },
+  {
+    name: "AdminArtistNoteCommand",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteCommandSchema,
+  },
+  {
+    name: "AdminArtistNoteRequest",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteRequestSchema,
+  },
+  {
+    name: "AdminArtistNoteResponse",
+    audience: "admin-http",
+    schema: adminArtistNotes.adminArtistNoteResponseSchema,
+  },
+  {
+    name: "AdminArtistNoteEnvelope",
+    audience: "internal",
+    schema: adminArtistNotesPersistence.adminArtistNoteEnvelopeSchema,
+  },
+  {
+    name: "AdminArtistNoteStoreRequest",
+    audience: "internal",
+    schema: adminArtistNotesPersistence.adminArtistNoteStoreRequestSchema,
+  },
+  {
+    name: "AdminArtistNoteSnapshot",
+    audience: "internal",
+    schema: adminArtistNotesPersistence.adminArtistNoteSnapshotSchema,
+  },
+  {
+    name: "AdminArtistNoteEncryptCommand",
+    audience: "internal",
+    schema: adminArtistNoteKey.adminArtistNoteEncryptCommandSchema,
+  },
+  {
+    name: "AdminArtistNoteDecryptCommand",
+    audience: "internal",
+    schema: adminArtistNoteKey.adminArtistNoteDecryptCommandSchema,
+  },
+  {
     name: "AdminOrderNoteEncryptCommand",
     audience: "internal",
     schema: adminOrderNoteKey.adminOrderNoteEncryptCommandSchema,
@@ -1075,6 +1630,31 @@ const registrations = [
     name: "NotificationGatewayProfile",
     audience: "internal",
     schema: orderNotification.notificationGatewayProfileSchema,
+  },
+  {
+    name: "NotificationZeptoMailProfile",
+    audience: "internal",
+    schema: notificationSubmission.notificationZeptoMailProfileSchema,
+  },
+  {
+    name: "NotificationSubmissionClaimCommand",
+    audience: "internal",
+    schema: notificationSubmission.notificationSubmissionClaimCommandSchema,
+  },
+  {
+    name: "NotificationSubmissionClaimResult",
+    audience: "internal",
+    schema: notificationSubmission.notificationSubmissionClaimResultSchema,
+  },
+  {
+    name: "NotificationSubmissionFinishCommand",
+    audience: "internal",
+    schema: notificationSubmission.notificationSubmissionFinishCommandSchema,
+  },
+  {
+    name: "NotificationSubmissionFinishResult",
+    audience: "internal",
+    schema: notificationSubmission.notificationSubmissionFinishResultSchema,
   },
   {
     name: "NotificationGatewayReceipt",
@@ -1227,9 +1807,34 @@ const registrations = [
     schema: orderAccess.orderAccessReadCommandSchema,
   },
   {
+    name: "OrderAccessLocateCommand",
+    audience: "internal",
+    schema: orderAccess.orderAccessLocateCommandSchema,
+  },
+  {
+    name: "OrderAccessLocated",
+    audience: "internal",
+    schema: orderAccess.orderAccessLocatedSchema,
+  },
+  {
     name: "OrderAccessRevokeCommand",
     audience: "internal",
     schema: orderAccess.orderAccessRevokeCommandSchema,
+  },
+  {
+    name: "OrderAccessProofCommand",
+    audience: "internal",
+    schema: orderAccess.orderAccessProofCommandSchema,
+  },
+  {
+    name: "OrderAccessProofLocation",
+    audience: "internal",
+    schema: orderAccess.orderAccessProofLocationSchema,
+  },
+  {
+    name: "OrderAccessDeliveryProof",
+    audience: "public-http",
+    schema: orderAccess.orderAccessDeliveryProofSchema,
   },
   {
     name: "OrderAccessGrant",
@@ -1290,6 +1895,11 @@ const registrations = [
     name: "OrderAccessRevokeRequest",
     audience: "public-http",
     schema: orderAccess.orderAccessRevokeRequestSchema,
+  },
+  {
+    name: "OrderAccessLocateRequest",
+    audience: "public-http",
+    schema: orderAccess.orderAccessLocateRequestSchema,
   },
 
   {
@@ -2835,6 +3445,21 @@ const registrations = [
     schema: mediaImageProcessingResultSchema,
   },
   {
+    name: "DeliveryProofProcessingCommand",
+    audience: "internal",
+    schema: deliveryProof.deliveryProofProcessingCommandSchema,
+  },
+  {
+    name: "DeliveryProofProcessingResult",
+    audience: "internal",
+    schema: deliveryProof.deliveryProofProcessingResultSchema,
+  },
+  {
+    name: "DeliveryProofReadCommand",
+    audience: "internal",
+    schema: deliveryProof.deliveryProofReadCommandSchema,
+  },
+  {
     name: "MediaProcessingEnqueueCommand",
     audience: "internal",
     schema: mediaProcessingEnqueueCommandSchema,
@@ -3476,6 +4101,141 @@ const registrations = [
     schema: adminAccess.adminAccessLogoutRequestSchema,
   },
   {
+    name: "AdminLocalLoginRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalLoginRequestSchema,
+  },
+  {
+    name: "AdminLocalStepRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalStepRequestSchema,
+  },
+  {
+    name: "AdminLocalAccessResponse",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalAccessResponseSchema,
+  },
+  {
+    name: "AdminLocalLoginBrowserRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalLoginBrowserRequestSchema,
+  },
+  {
+    name: "AdminLocalStepBrowserRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalStepBrowserRequestSchema,
+  },
+  {
+    name: "AdminLocalAccessBrowserResponse",
+    audience: "internal",
+    schema: adminLocalAccess.adminLocalAccessBrowserResponseSchema,
+  },
+  {
+    name: "AdminAccountRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminAccountRequestSchema,
+  },
+  {
+    name: "AdminAccountResponse",
+    audience: "internal",
+    schema: adminLocalAccess.adminAccountResponseSchema,
+  },
+  {
+    name: "AdminStaffRequest",
+    audience: "internal",
+    schema: adminLocalAccess.adminStaffRequestSchema,
+  },
+  {
+    name: "AdminStaffResponse",
+    audience: "internal",
+    schema: adminLocalAccess.adminStaffResponseSchema,
+  },
+  {
+    name: "AdminLocalLoginReadCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginReadCommandSchema,
+  },
+  {
+    name: "AdminLocalLoginReadResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginReadResponseSchema,
+  },
+  {
+    name: "AdminLocalLoginFailureCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginFailureCommandSchema,
+  },
+  {
+    name: "AdminLocalLoginFailureResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginFailureResponseSchema,
+  },
+  {
+    name: "AdminLocalLoginStartCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginStartCommandSchema,
+  },
+  {
+    name: "AdminLocalLoginProgress",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalLoginProgressSchema,
+  },
+  {
+    name: "AdminLocalStepReadCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalStepReadCommandSchema,
+  },
+  {
+    name: "AdminLocalStepReadResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalStepReadResponseSchema,
+  },
+  {
+    name: "AdminLocalStepCompleteCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalStepCompleteCommandSchema,
+  },
+  {
+    name: "AdminLocalAccountReadCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountReadCommandSchema,
+  },
+  {
+    name: "AdminLocalAccountReadResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountReadResponseSchema,
+  },
+  {
+    name: "AdminLocalAccountFailureCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountFailureCommandSchema,
+  },
+  {
+    name: "AdminLocalAccountFailureResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountFailureResponseSchema,
+  },
+  {
+    name: "AdminLocalAccountUpdateCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountUpdateCommandSchema,
+  },
+  {
+    name: "AdminLocalAccountUpdateResponse",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalAccountUpdateResponseSchema,
+  },
+  {
+    name: "AdminLocalStaffCommand",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalStaffCommandSchema,
+  },
+  {
+    name: "AdminLocalStaffResult",
+    audience: "internal",
+    schema: adminLocalAccessPersistence.adminLocalStaffResultSchema,
+  },
+  {
     name: "AdminAccessBeginBrowserResponse",
     audience: "internal",
     schema: adminAccess.adminAccessBeginBrowserResponseSchema,
@@ -4029,6 +4789,11 @@ const registrations = [
     name: "ManagementCenterListItem",
     audience: "admin-http",
     schema: managementCenterListItemSchema,
+  },
+  {
+    name: "ManagementCenterBroker",
+    audience: "admin-http",
+    schema: managementCenterBrokerSchema,
   },
   {
     name: "ManagementCenterResponse",

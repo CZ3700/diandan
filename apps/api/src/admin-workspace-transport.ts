@@ -43,6 +43,7 @@ export function adminFailureStatus(code: string): number {
     case "CSRF_INVALID":
     case "SELF_REVIEW":
     case "NEEDS_AUTHORIZATION":
+    case "SECOND_FACTOR_REQUIRED":
       return 403;
     case "NOT_FOUND":
     case "PREVIEW_UNAVAILABLE":
@@ -53,6 +54,7 @@ export function adminFailureStatus(code: string): number {
     case "RATE_LIMITED":
       return 429;
     case "TEMPORARY_UNAVAILABLE":
+    case "ACCESS_UNAVAILABLE":
     case "CONTENT_UNAVAILABLE":
     case "COMMERCE_UNAVAILABLE":
     case "MANAGEMENT_UNAVAILABLE":

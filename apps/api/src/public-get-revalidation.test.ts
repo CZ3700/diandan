@@ -7,7 +7,7 @@ import {
   storefrontContextResponseSchema,
   storefrontGiftResponseSchema,
 } from "@fan-support/contracts";
-import { storefrontHomepageFixture } from "./storefront-homepage-fixtures.js";
+import { storefrontHomepageFixture } from "./test-support/storefront-homepage-fixtures.js";
 import { registerStorefrontHomepageRoute } from "./storefront-homepage-route.js";
 import { registerPublishedGiftCommerceRoute } from "./published-gift-commerce-route.js";
 import { registerStorefrontCommerceRoute } from "./storefront-commerce-route.js";

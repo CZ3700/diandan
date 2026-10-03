@@ -9,6 +9,8 @@ import type {
   ManagementCenterPreparedMedia,
   ManagementCenterResponse,
   AdminPrincipal,
+  ManagementImageSource,
+  ManagementImageTarget,
 } from "@fan-support/contracts";
 import type { JsonValue } from "./index.js";
 
@@ -24,6 +26,12 @@ export interface ManagementCenterOperationRepository {
       sourceLocale?: string;
     }>,
   ): Promise<ManagementCenterAuthorization>;
+  readImageSource(
+    input: Readonly<{
+      principal: AdminPrincipal;
+      target: ManagementImageTarget;
+    }>,
+  ): Promise<ManagementImageSource | ManagementCenterFailure>;
   context(principal: AdminPrincipal): Promise<ManagementCenterResponse>;
   list(
     input: Readonly<{
@@ -42,6 +50,25 @@ export interface ManagementCenterOperationRepository {
   ): Promise<ManagementCenterResponse>;
   read(
     input: Readonly<{ actorId: string; operationId: string }>,
+  ): Promise<ManagementCenterResponse>;
+  /** L2-09: archive an old poster; the homepage's current poster is never archived. */
+  archivePoster(
+    input: Readonly<{
+      principal: AdminPrincipal;
+      requestId: string;
+      revisionId: string;
+      expectedVersion: number;
+    }>,
+  ): Promise<ManagementCenterResponse>;
+  /** L3-11: set or change the broker an artist belongs to; `idols.assign` only. */
+  assignArtist(
+    input: Readonly<{
+      principal: AdminPrincipal;
+      requestId: string;
+      artistId: string;
+      brokerId: string | null;
+      expectedBrokerId: string | null;
+    }>,
   ): Promise<ManagementCenterResponse>;
   retry(
     input: Readonly<{
@@ -74,12 +101,17 @@ export interface ManagementCenterOperationRepository {
 }
 /** Implemented by the publication adapter using the very same transaction client. */
 export interface ManagementCenterPublicationRepository {
+  resolveImageSource(
+    input: ManagementCenterFence,
+  ): Promise<ManagementImageSource | ManagementCenterFailure>;
   prepareMediaMetadata(
     input: ManagementCenterFence &
       Readonly<{
         schemaVersion: 1;
         assetId: string;
         processingJobId: string | null;
+        /** Structural focus every derivative of this revision is framed around. */
+        focalPoint: Readonly<{ x: number; y: number }>;
       }>,
   ): Promise<
     | ManagementCenterFailure

@@ -139,7 +139,7 @@ test("wires PostgreSQL, pg-boss VERIFY mode, application handlers, and maintenan
   expect(harness.runtimeOptions[0]).toMatchObject({
     schemaVersion: 1,
     queue: harness.queue,
-    consumerKeys: [],
+    consumerKeys: ["information-page-publication"],
     intervalMs: 5_000,
     batchSize: 100,
     onNotice: expect.any(Function),

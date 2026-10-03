@@ -61,6 +61,7 @@ test("empty and out-of-range pages retain their real total without hydration", a
     catalogVersion: version,
     totalItems: 0,
     items: [],
+    giftKinds: [],
   });
   const later = harness([
     { catalog_version: version, total_items: "13", ids: [] },
@@ -69,12 +70,43 @@ test("empty and out-of-range pages retain their real total without hydration", a
     await later.repository.browseGifts(command({ page: 3 })),
   ).toMatchObject({ outcome: "SUCCESS", totalItems: 13, items: [] });
   expect(loadGiftDirectoryRecords).not.toHaveBeenCalled();
-  expect(later.query.mock.calls[0]?.[1]).toEqual(["en", null, null, 12, 24]);
+  expect(later.query.mock.calls[0]?.[1]).toEqual([
+    "en",
+    null,
+    null,
+    12,
+    24,
+    null,
+  ]);
+  const filtered = harness([
+    { catalog_version: version, total_items: "0", ids: [] },
+  ]);
+  await filtered.repository.browseGifts(command({ kind: "WISH" }));
+  expect(filtered.query.mock.calls[0]?.[1]).toEqual([
+    "en",
+    null,
+    null,
+    12,
+    0,
+    "WISH",
+  ]);
 });
 test.each(
   [
     [{ catalog_version: version, total_items: "1", ids: [] }],
-    [{ catalog_version: version, total_items: "2", ids: [gift, gift] }],
+    [
+      {
+        catalog_version: version,
+        total_items: "2",
+        ids: [
+          [gift, null],
+          [gift, null],
+        ],
+      },
+    ],
+    [{ catalog_version: version, total_items: "1", ids: [gift] }],
+    [{ catalog_version: version, total_items: "1", ids: [[gift, "TIP"]] }],
+    [{ catalog_version: version, total_items: "1", ids: [[gift]] }],
     [{ catalog_version: version, total_items: "9007199254740992", ids: [] }],
     [{ catalog_version: version, total_items: "01", ids: [] }],
     [{ catalog_version: "invalid", total_items: "0", ids: [] }],
@@ -90,7 +122,7 @@ test.each(
 );
 test("only the selected window is hydrated, with complete publication proof required", async () => {
   const { repository } = harness([
-    { catalog_version: version, total_items: "1", ids: [gift] },
+    { catalog_version: version, total_items: "1", ids: [[gift, "VIRTUAL"]] },
   ]);
   await expect(repository.browseGifts(command())).rejects.toThrow();
   expect(loadGiftDirectoryRecords).toHaveBeenCalledExactlyOnceWith(

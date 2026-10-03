@@ -27,11 +27,19 @@ import {
   decryptAdminOrdersPrivate,
   encryptAdminOrderNote,
 } from "./admin-orders-private.js";
+import {
+  beginProofUpload,
+  completeProofUpload,
+  viewProof,
+  type AdminOrderProofDependencies,
+} from "./admin-order-proofs.js";
 
 export type AdminOrdersDependencies = Readonly<{
   transactions: AdminOrdersTransactionManager;
   keys: KeyManagementPort;
   tokenPepper: string;
+  /** Private delivery-proof storage; absent deployments reject proof steps as unavailable. */
+  proofs?: AdminOrderProofDependencies | undefined;
 }>;
 export type AdminOrdersUseCases = Readonly<{
   execute(
@@ -151,7 +159,11 @@ export function createAdminOrdersUseCases(
     typeof dependencies?.transactions?.runInAdminOrdersTransaction !==
       "function" ||
     typeof dependencies.keys?.decryptEnvelope !== "function" ||
-    typeof dependencies.keys?.encryptEnvelope !== "function"
+    typeof dependencies.keys?.encryptEnvelope !== "function" ||
+    (dependencies.proofs !== undefined &&
+      (typeof dependencies.proofs.storage?.createUploadGrant !== "function" ||
+        typeof dependencies.proofs.storage.createDownloadGrant !== "function" ||
+        typeof dependencies.proofs.processor?.process !== "function"))
   )
     throw new TypeError("Invalid admin orders configuration");
   validateAdminContentTokenPepper(dependencies.tokenPepper);
@@ -197,6 +209,22 @@ export function createAdminOrdersUseCases(
           stored.command.action === "READ_NOTES"
         )
           return await readPrivate(dependencies, stored);
+        const proofStep =
+          stored.command.action === "BEGIN_PROOF_UPLOAD"
+            ? beginProofUpload
+            : stored.command.action === "COMPLETE_PROOF_UPLOAD"
+              ? completeProofUpload
+              : stored.command.action === "VIEW_PROOF"
+                ? viewProof
+                : undefined;
+        if (proofStep)
+          return dependencies.proofs
+            ? await proofStep(
+                dependencies.transactions,
+                dependencies.proofs,
+                stored,
+              )
+            : failure("TEMPORARY_UNAVAILABLE");
         const response = adminOrdersResponseSchema.parse(
           await dependencies.transactions.runInAdminOrdersTransaction(
             async ({ adminOrders, adminOrderResends }) =>

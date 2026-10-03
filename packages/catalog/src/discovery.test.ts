@@ -29,10 +29,12 @@ test("server query plans bound work and use a unique stable key after the price"
   expect(
     createGiftDiscoveryPlan({ ...context, sort: "PRICE_ASC" }).orderBy[0],
   ).toEqual({ field: "PRICE_MINOR", direction: "ASC", nulls: "LAST" });
-  expect(createGiftDiscoveryPlan(context).orderBy[0]).toEqual({
-    field: "PUBLISHED_AT",
-    direction: "DESC",
-  });
+  // L2-10: recommended follows the operator's manual order, then newest publication.
+  expect(createGiftDiscoveryPlan(context).orderBy).toEqual([
+    { field: "MANUAL_POSITION", direction: "ASC", nulls: "LAST" },
+    { field: "PUBLISHED_AT", direction: "DESC" },
+    { field: "ID", direction: "ASC" },
+  ]);
   expect(() => createGiftDiscoveryPlan({ ...context, page: 1001 })).toThrow();
   expect(JSON.parse(JSON.stringify(descending))).toEqual(descending);
 });
@@ -103,6 +105,7 @@ test("artist search normalizes a projection, preserves accents and directly carr
   expect(plan.take).toBe(13);
   expect(plan.orderBy).toEqual([
     { field: "MATCH_RANK", direction: "ASC" },
+    { field: "MANUAL_POSITION", direction: "ASC", nulls: "LAST" },
     { field: "DISPLAY_ORDER", direction: "ASC" },
     { field: "ID", direction: "ASC" },
   ]);
@@ -182,4 +185,32 @@ test("page limits never offer an invalid next page and expose a filter refinemen
     paginationLimited: true,
     totalPages: 1001,
   });
+});
+
+test("a gift kind travels in the plan and changing it returns to the first page", () => {
+  expect(
+    createGiftDiscoveryPlan({ ...context, kind: "VIRTUAL", page: 2 }).query,
+  ).toMatchObject({ kind: "VIRTUAL", page: 2 });
+  const query = { ...context, page: 4, kind: "PHYSICAL" };
+  expect(
+    changeGiftDiscoveryQuery({
+      schemaVersion: 1,
+      query,
+      changes: { kind: "WISH" },
+    }),
+  ).toMatchObject({ page: 1, kind: "WISH" });
+  const cleared = changeGiftDiscoveryQuery({
+    schemaVersion: 1,
+    query,
+    changes: { kind: null },
+  });
+  expect(cleared).toMatchObject({ page: 1 });
+  expect(cleared).not.toHaveProperty("kind");
+  expect(
+    changeGiftDiscoveryQuery({
+      schemaVersion: 1,
+      query,
+      changes: { kind: "PHYSICAL" },
+    }).page,
+  ).toBe(4);
 });

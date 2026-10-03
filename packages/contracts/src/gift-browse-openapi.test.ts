@@ -16,6 +16,7 @@ test("documents a separate public read with no commerce selection and explicit p
     "page",
     "pageSize",
     "category",
+    "kind",
     "idol",
     "If-None-Match",
   ]);

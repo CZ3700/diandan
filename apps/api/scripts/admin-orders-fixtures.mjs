@@ -127,7 +127,13 @@ export async function seedAdminOrdersRoles(client, options) {
 export async function createPaidAdminOrder(
   context,
   payment,
-  { locale = "en", messageLocale = "ja", lines = [{}], noMessage = false } = {},
+  {
+    locale = "en",
+    messageLocale = "ja",
+    lines = [{}],
+    noMessage = false,
+    fulfillmentStatus = "PENDING",
+  } = {},
 ) {
   const originalAdd = payment.checkout.add;
   payment.checkout.add = async (session, line) => {
@@ -183,6 +189,6 @@ export async function createPaidAdminOrder(
     )
   ).rows[0];
   await payment.apply(event.id);
-  const state = await payment.assertPaid(value);
+  const state = await payment.assertPaid(value, 0, fulfillmentStatus);
   return { ...value, state, orderId: state.order_id };
 }

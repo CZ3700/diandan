@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
+  normalizePublicOrderNo,
   publicOrderIdSchema,
   type SupportedLocale,
 } from "@fan-support/contracts";
@@ -109,6 +110,9 @@ export function OrderClient({
             ? copy.orderThankYou
             : copy.orderTitle}
       </h1>
+      {mode === "thank-you" && state.order && (
+        <p data-order-email-sent>{copy.orderEmailSent}</p>
+      )}
       {mode === "lookup" && (
         <>
           <p>{copy.orderLookupHelp}</p>
@@ -117,14 +121,26 @@ export function OrderClient({
             data-order-lookup
             onSubmit={(event) => {
               event.preventDefault();
-              const id = publicOrderIdSchema.safeParse(lookupId.trim());
-              if (!id.success) {
+              const typed = lookupId.trim();
+              const id = publicOrderIdSchema.safeParse(typed);
+              if (id.success) {
+                window.location.assign(
+                  storefrontHref(locale, `/orders/${id.data}`),
+                );
+                return;
+              }
+              // A public number is resolved through this browser's order session only.
+              const number = normalizePublicOrderNo(typed);
+              if (!number) {
                 setInvalidId(true);
                 return;
               }
-              window.location.assign(
-                storefrontHref(locale, `/orders/${id.data}`),
-              );
+              void controller.locate(number).then((located) => {
+                if (located)
+                  window.location.assign(
+                    storefrontHref(locale, `/orders/${located}`),
+                  );
+              });
             }}
           >
             <label htmlFor="order-id">{copy.orderIdLabel}</label>
@@ -152,6 +168,7 @@ export function OrderClient({
               type="submit"
               className="storefront-primary"
               data-order-open
+              disabled={state.busy}
             >
               {copy.orderOpen}
             </button>
@@ -174,7 +191,12 @@ export function OrderClient({
       />
       {state.order && (
         <>
-          <OrderDetail order={state.order} locale={locale} copy={copy} />
+          <OrderDetail
+            order={state.order}
+            locale={locale}
+            copy={copy}
+            onWithdrawWish={(id) => controller.withdrawWish(id)}
+          />
           <div className="order-actions">
             <button
               type="button"
@@ -199,6 +221,9 @@ export function OrderClient({
               {copy.orderRevoke}
             </button>
           </div>
+          <p className="order-support" data-order-support>
+            {copy.orderSupportHelp}
+          </p>
         </>
       )}
       <a

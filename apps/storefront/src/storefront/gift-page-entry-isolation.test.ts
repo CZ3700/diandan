@@ -88,7 +88,10 @@ function initialRouteDependencies(locale: SupportedLocale, route: string) {
   return visited;
 }
 
-const filters = path.join(sourceRoot, "storefront/gift-filters-client.tsx");
+// The directory's client code: in-place navigation and the toolbar that reflects it.
+const directoryClients = ["gift-navigation-frame.tsx", "gift-toolbar.tsx"].map(
+  (file) => path.join(sourceRoot, "storefront", file),
+);
 test.each(
   SUPPORTED_LOCALES.flatMap((locale) =>
     ["gifts/[handle]", "policies/[handle]", "region"].map((route) => ({
@@ -97,15 +100,19 @@ test.each(
     })),
   ),
 )(
-  "$locale/$route has no initial gift-directory filter dependency",
+  "$locale/$route has no initial gift-directory client dependency",
   ({ locale, route }) => {
-    expect(initialRouteDependencies(locale, route)).not.toContain(filters);
+    const dependencies = initialRouteDependencies(locale, route);
+    for (const client of directoryClients)
+      expect(dependencies).not.toContain(client);
   },
 );
 
 test.each(SUPPORTED_LOCALES)(
-  "%s/gifts retains its server-rendered filter dependency",
+  "%s/gifts retains its server-rendered toolbar and in-place navigation",
   (locale) => {
-    expect(initialRouteDependencies(locale, "gifts")).toContain(filters);
+    const dependencies = initialRouteDependencies(locale, "gifts");
+    for (const client of directoryClients)
+      expect(dependencies).toContain(client);
   },
 );

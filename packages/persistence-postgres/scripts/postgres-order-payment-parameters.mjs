@@ -8,6 +8,7 @@ import { cartTimestamp } from "../dist/cart-runtime-data.js";
 const workspaceRoot = fileURLToPath(new URL("../../../", import.meta.url));
 const queries = [];
 for (const name of [
+  "digital-fulfillment",
   "order-payment-application",
   "order-payment-data",
   "order-payment-write",

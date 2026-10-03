@@ -1,5 +1,6 @@
 import { Buffer } from "node:buffer";
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
+import sharp from "sharp";
 import { SUPPORTED_LOCALES } from "@fan-support/contracts";
 import { createPaidAdminOrder } from "./admin-orders-fixtures.mjs";
 
@@ -170,6 +171,18 @@ export async function verifyAdminOrdersProtocol(context, runtime, payment) {
     });
     current = await detail(manager, value.orderId);
     line = current.items[0];
+    if (value === values[0] && context.s3) {
+      await verifyDeliveryProofUpload({
+        context,
+        runtime,
+        manager,
+        mutate,
+        detail,
+        orderId: value.orderId,
+      });
+      current = await detail(manager, value.orderId);
+      line = current.items[0];
+    }
     await mutate(manager, "deliver", {
       orderId: value.orderId,
       expectedOrderVersion: current.version,
@@ -181,6 +194,13 @@ export async function verifyAdminOrdersProtocol(context, runtime, payment) {
       current.order.fulfillmentStatus === "DELIVERED",
       "authorized per-item delivery advances aggregate",
     );
+    if (value === values[0] && context.s3)
+      check(
+        current.order.items[0].deliveryProofs.length === 1 &&
+          current.order.items[0].deliveryProofs[0].proofId ===
+            current.items[0].proofs[0].proofId,
+        "the attached photo becomes visible to the fan once delivered",
+      );
     check(
       (await payment.immutableSnapshot(value)) === before,
       "fulfillment preserves purchased price and content snapshots",
@@ -287,6 +307,20 @@ export async function verifyAdminOrdersProtocol(context, runtime, payment) {
     search.items.length === 1 && search.items[0].orderId === value.orderId,
     "operator can find exact public order number",
   );
+  // Support hears "7 k 3 m 9 c" without the prefix; the list shows the same FS- number.
+  const spoken = await command(operator, "list", {
+    ...listBody,
+    query: search.items[0].publicOrderNo
+      .slice(3)
+      .toLowerCase()
+      .split("")
+      .join(" "),
+  });
+  check(
+    /^FS-[0-9A-HJKMNP-TV-Z]{6}$/u.test(search.items[0].publicOrderNo) &&
+      spoken.items.some((item) => item.orderId === value.orderId),
+    "operator can find an order by its spoken public number",
+  );
   return {
     values,
     manager,
@@ -295,4 +329,105 @@ export async function verifyAdminOrdersProtocol(context, runtime, payment) {
     mutate,
     holdOrderId: hold.orderId,
   };
+}
+
+/** Private photo upload through the real API, S3 and image processor (V2 §4-6). */
+async function verifyDeliveryProofUpload({
+  context,
+  runtime,
+  manager,
+  mutate,
+  detail,
+  orderId,
+}) {
+  const { check } = context;
+  let current = await detail(manager, orderId),
+    line = current.items[0];
+  check(
+    line.proofActions.includes("ATTACH") && line.proofs.length === 0,
+    "a preparing physical line accepts delivery photos",
+  );
+  const bytes = await sharp({
+    create: {
+      width: 800,
+      height: 600,
+      channels: 3,
+      background: { r: 96, g: 120, b: 160 },
+    },
+  })
+    .withExif({ IFD0: { Make: "ProofFixtureCam" } })
+    .jpeg()
+    .toBuffer();
+  const target = {
+    orderId,
+    expectedOrderVersion: current.version,
+    fulfillmentId: line.fulfillmentId,
+    expectedFulfillmentVersion: line.fulfillmentVersion,
+  };
+  const begun = await mutate(manager, "proof-uploads/begin", {
+    ...target,
+    checksumSha256: createHash("sha256").update(bytes).digest("hex"),
+    byteSize: bytes.length,
+    mimeType: "image/jpeg",
+  });
+  check(
+    begun.kind === "PROOF_UPLOAD_GRANT" && begun.grant.method === "PUT",
+    "a proof upload reserves a private signed PUT",
+  );
+  runtime.registerSecret(begun.grant.url);
+  const put = await globalThis.fetch(begun.grant.url, {
+    method: "PUT",
+    headers: begun.grant.headers,
+    body: bytes,
+    redirect: "error",
+  });
+  check(put.ok, "the photo uploads to private storage");
+  const completed = await runtime.command(manager, "proof-uploads/complete", {
+    schemaVersion: 1,
+    orderId,
+    uploadId: begun.uploadId,
+  });
+  check(
+    completed.kind === "PROOF_UPLOAD" &&
+      completed.width === 800 &&
+      completed.height === 600,
+    "the photo is verified and re-encoded without enlargement",
+  );
+  const attached = await mutate(manager, "proofs/attach", {
+    ...target,
+    uploadIds: [begun.uploadId],
+    privacyConfirmed: true,
+  });
+  check(attached.kind === "MUTATION", "the verified photo attaches");
+  current = await detail(manager, orderId);
+  line = current.items[0];
+  check(
+    line.proofs.length === 1 &&
+      current.order.items[0].deliveryProofs.length === 0,
+    "an attached photo stays hidden from the fan until delivery",
+  );
+  const view = await runtime.command(manager, "proofs/view", {
+    schemaVersion: 1,
+    orderId,
+    proofId: line.proofs[0].proofId,
+    rendition: "thumbnail",
+  });
+  check(
+    view.kind === "PROOF_DOWNLOAD" && view.download.method === "GET",
+    "staff receive a short-lived private GET",
+  );
+  runtime.registerSecret(view.download.url);
+  const thumbnail = await globalThis.fetch(view.download.url, {
+    headers: view.download.headers,
+    redirect: "error",
+  });
+  const thumbnailBytes = Buffer.from(await thumbnail.arrayBuffer());
+  const metadata = await sharp(thumbnailBytes).metadata();
+  check(
+    thumbnail.ok &&
+      metadata.format === "webp" &&
+      metadata.exif === undefined &&
+      !thumbnailBytes.includes(Buffer.from("ProofFixtureCam")),
+    "the stored thumbnail is metadata-free WebP",
+  );
 }

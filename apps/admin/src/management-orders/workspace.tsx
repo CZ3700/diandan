@@ -18,6 +18,9 @@ import { OrdersDetailView, type MutationRunner } from "./detail-view";
 import type { FinanceApi } from "../management-finance/api";
 import { FinanceListView } from "../management-finance/list-view";
 import { financeCopy } from "../management-finance/copy";
+import type { LedgerApi, LedgerContext } from "../management-ledger/api";
+import { LedgerWorkspace } from "../management-ledger/workspace";
+import { ledgerCopy } from "../management-ledger/copy";
 import "./orders.css";
 const initialFilters: OrdersFilters = {
   page: 1,
@@ -29,12 +32,17 @@ const initialFilters: OrdersFilters = {
 export function OrdersWorkspace({
   api,
   financeApi,
+  ledgerApi,
+  ledgerContext,
   context,
   locale,
   onBusy,
 }: {
   api: OrdersApi;
   financeApi?: FinanceApi | undefined;
+  /** ADR-022 / L3-12: the artist ledger is a third view beside orders and reconciliation. */
+  ledgerApi?: LedgerApi | undefined;
+  ledgerContext?: LedgerContext | undefined;
   context: OrdersContext;
   locale: SupportedLocale;
   onBusy: (busy: boolean) => void;
@@ -43,12 +51,19 @@ export function OrdersWorkspace({
     common = managementCopy(locale);
   const [filters, setFilters] = useState(initialFilters),
     [selected, setSelected] = useState<string | null>(null);
-  const [financeView, setFinanceView] = useState(false);
+  const [view, setView] = useState<"ORDERS" | "FINANCE" | "LEDGER">("ORDERS");
+  const financeView = view === "FINANCE";
+  const ledger =
+    ledgerApi && ledgerContext
+      ? { api: ledgerApi, context: ledgerContext }
+      : null;
   const [list, setList] = useState<OrdersList | null>(null),
     [detail, setDetail] = useState<OrdersDetail | null>(null);
   const [loading, setLoading] = useState(true),
     [busy, setBusy] = useState(false),
     [refresh, setRefresh] = useState(0);
+  // The order whose payments section the person just used; it reopens after the reload.
+  const [financeActed, setFinanceActed] = useState<string | null>(null);
   const [error, setError] = useState<unknown>(null),
     [success, setSuccess] = useState<"SAVED" | "QUEUED" | null>(null);
   const active = useRef(false),
@@ -153,48 +168,65 @@ export function OrdersWorkspace({
             </button>
           ) : null}
           <h1 ref={title} tabIndex={-1}>
-            {detail?.order.publicOrderId ?? copy.orders}
+            {detail?.order.publicOrderNo ?? copy.orders}
           </h1>
         </div>
-        <Button
-          type="button"
-          variant="secondary"
-          data-orders-reload
-          disabled={busy || loading}
-          onClick={() => setRefresh((value) => value + 1)}
-        >
-          {common.reloadList}
-        </Button>
+        {view === "LEDGER" ? null : (
+          <Button
+            type="button"
+            variant="secondary"
+            data-orders-reload
+            disabled={busy || loading}
+            onClick={() => setRefresh((value) => value + 1)}
+          >
+            {common.reloadList}
+          </Button>
+        )}
       </header>
-      {!selected && financeApi ? (
+      {!selected && (financeApi || ledger) ? (
         <div className="mo-actions" role="group" aria-label={copy.orders}>
           <Button
             type="button"
             variant="secondary"
             disabled={busy}
-            aria-pressed={!financeView}
-            onClick={() => setFinanceView(false)}
+            data-orders-navigation
+            aria-pressed={view === "ORDERS"}
+            onClick={() => setView("ORDERS")}
           >
             {copy.orders}
           </Button>
-          <Button
-            type="button"
-            variant="secondary"
-            disabled={busy}
-            data-finance-navigation
-            aria-pressed={financeView}
-            onClick={() => setFinanceView(true)}
-          >
-            {financeCopy(locale).reconciliation}
-          </Button>
+          {financeApi ? (
+            <Button
+              type="button"
+              variant="secondary"
+              disabled={busy}
+              data-finance-navigation
+              aria-pressed={financeView}
+              onClick={() => setView("FINANCE")}
+            >
+              {financeCopy(locale).reconciliation}
+            </Button>
+          ) : null}
+          {ledger ? (
+            <Button
+              type="button"
+              variant="secondary"
+              disabled={busy}
+              data-ledger-navigation
+              aria-pressed={view === "LEDGER"}
+              onClick={() => setView("LEDGER")}
+            >
+              {ledgerCopy(locale).title}
+            </Button>
+          ) : null}
         </div>
       ) : null}
-      {success ? (
+      {success && view !== "LEDGER" ? (
         <p className="mc-success" role="status" data-orders-success>
           {success === "QUEUED" ? copy.queued : copy.saved}
         </p>
       ) : null}
-      {error ? (
+      {error && view !== "LEDGER" ? (
         <div className="mc-error-state" role="alert">
           <p>{ordersError(error, copy)}</p>
           <Button
@@ -207,7 +239,14 @@ export function OrdersWorkspace({
           </Button>
         </div>
       ) : null}
-      {loading ? (
+      {!selected && view === "LEDGER" && ledger ? (
+        <LedgerWorkspace
+          api={ledger.api}
+          context={ledger.context}
+          locale={locale}
+          onBusy={financeBusy}
+        />
+      ) : loading ? (
         <p className="mc-empty" role="status">
           {copy.loading}
         </p>
@@ -224,6 +263,11 @@ export function OrdersWorkspace({
             onReload={() => setRefresh((value) => value + 1)}
             financeApi={financeApi}
             onFinanceBusy={financeBusy}
+            financeOpen={financeActed === detail.orderId}
+            onFinanceUpdated={() => {
+              setFinanceActed(detail.orderId);
+              setRefresh((value) => value + 1);
+            }}
           />
         ) : null
       ) : financeView && financeApi ? (

@@ -5,6 +5,7 @@ import { managementCopy } from "../management-center/copy";
 import type { OrdersFilters, OrdersList } from "./api";
 import { ordersCopy } from "./copy";
 import { orderStatusLabel } from "./labels";
+import { OrderStatus } from "./order-status";
 export function OrdersListView({
   locale,
   list,
@@ -120,7 +121,7 @@ export function OrdersListView({
                 onClick={() => onSelect(order.orderId)}
               >
                 <span>
-                  <strong>{order.publicOrderId}</strong>
+                  <strong>{order.publicOrderNo}</strong>
                   <span className="mc-item-meta">
                     {new Intl.DateTimeFormat(locale, {
                       dateStyle: "medium",
@@ -128,13 +129,17 @@ export function OrdersListView({
                     }).format(new Date(order.createdAt))}
                   </span>
                 </span>
-                <span>
-                  {orderStatusLabel(order.fulfillmentStatus, copy)}
-                  <span className="mc-item-meta">
-                    {order.paymentStatus === "PENDING"
-                      ? copy.paymentPending
-                      : orderStatusLabel(order.paymentStatus, copy)}
-                  </span>
+                <span className="mo-order-states">
+                  <OrderStatus
+                    kind="fulfillment"
+                    status={order.fulfillmentStatus}
+                    copy={copy}
+                  />
+                  <OrderStatus
+                    kind="payment"
+                    status={order.paymentStatus}
+                    copy={copy}
+                  />
                 </span>
                 <span>
                   {order.pendingReviewCount > 0 ? (

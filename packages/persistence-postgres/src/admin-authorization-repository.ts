@@ -1,11 +1,19 @@
 import { timingSafeEqual } from "node:crypto";
 import {
   adminAuthorizationCommandSchema,
+  homeLayoutAuthorizationCommandSchema,
+  storefrontBrandAuthorizationCommandSchema,
+  informationPageAuthorizationCommandSchema,
   adminAuthorizationResponseSchema,
   contentTimestampSchema,
   type AdminContentFailure,
 } from "@fan-support/contracts";
-import type { AdminAuthorizationRepository } from "@fan-support/persistence-port";
+import type {
+  AdminAuthorizationRepository,
+  HomeLayoutAuthorizationRepository,
+  StorefrontBrandAuthorizationRepository,
+  InformationPageAuthorizationRepository,
+} from "@fan-support/persistence-port";
 import { draftRows } from "./content-draft-data.js";
 import {
   persistenceTransactionFailureFromPostgres,
@@ -23,10 +31,50 @@ export function createAdminAuthorizationRepository(
   client: TransactionClient,
   scope: TransactionScopeControl,
 ): AdminAuthorizationRepository {
+  return createAuthorizationRepository(client, scope, (input) =>
+    adminAuthorizationCommandSchema.safeParse(input),
+  );
+}
+/** Layout capabilities carry no linguistic scope and never widen the original content contract. */
+export function createHomeLayoutAuthorizationRepository(
+  client: TransactionClient,
+  scope: TransactionScopeControl,
+): HomeLayoutAuthorizationRepository {
+  return createAuthorizationRepository(client, scope, (input) =>
+    homeLayoutAuthorizationCommandSchema.safeParse(input),
+  );
+}
+export function createStorefrontBrandAuthorizationRepository(
+  client: TransactionClient,
+  scope: TransactionScopeControl,
+): StorefrontBrandAuthorizationRepository {
+  return createAuthorizationRepository(client, scope, (input) =>
+    storefrontBrandAuthorizationCommandSchema.safeParse(input),
+  );
+}
+export function createInformationPageAuthorizationRepository(
+  client: TransactionClient,
+  scope: TransactionScopeControl,
+): InformationPageAuthorizationRepository {
+  return createAuthorizationRepository(client, scope, (input) =>
+    informationPageAuthorizationCommandSchema.safeParse(input),
+  );
+}
+function createAuthorizationRepository(
+  client: TransactionClient,
+  scope: TransactionScopeControl,
+  parse: (
+    input: unknown,
+  ) =>
+    | ReturnType<typeof adminAuthorizationCommandSchema.safeParse>
+    | ReturnType<typeof homeLayoutAuthorizationCommandSchema.safeParse>
+    | ReturnType<typeof storefrontBrandAuthorizationCommandSchema.safeParse>
+    | ReturnType<typeof informationPageAuthorizationCommandSchema.safeParse>,
+) {
   return {
-    authorize: (input) =>
+    authorize: (input: unknown) =>
       scope.trackOperation(async () => {
-        const parsed = adminAuthorizationCommandSchema.safeParse(input);
+        const parsed = parse(input);
         if (!parsed.success) return failure("INVALID_COMMAND");
         const command = parsed.data;
         try {

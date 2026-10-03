@@ -7,6 +7,7 @@ import { createAccessibilityBrowserTools } from "./accessibility-browser-tools.m
 const origin = "https://admin.example.test";
 const publicOrderId = "01950000-0000-4000-8000-000000000001";
 const orderId = "01950000-0000-4000-8000-000000000002";
+const publicOrderNo = "FS-7K3M9C";
 let browser;
 before(async () => {
   browser = await chromium.launch({ channel: "chrome", headless: true });
@@ -28,6 +29,7 @@ async function fixture({ restoreFocus = true, wrongResponse = false } = {}) {
       {
         orderId,
         publicOrderId: wrongResponse ? orderId : publicOrderId,
+        publicOrderNo,
         version: 1,
         presentationLocale: "en",
         orderStatus: "OPEN",
@@ -50,7 +52,7 @@ async function fixture({ restoreFocus = true, wrongResponse = false } = {}) {
       '<form><input data-orders-search aria-label="Search"><button data-orders-apply>Apply</button></form><button data-order-id="' +
       orderId +
       '">' +
-      publicOrderId +
+      publicOrderNo +
       "</button>";
     return route.fulfill({
       contentType: "text/html",

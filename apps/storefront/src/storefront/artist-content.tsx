@@ -1,4 +1,3 @@
-import { ControlledBiography } from "./content-safety";
 import type { ReactNode } from "react";
 import type {
   PublishedIdolView,
@@ -9,23 +8,26 @@ import { PublishedHeroImage, PublishedImage } from "./published-image";
 import { storefrontHref } from "./navigation";
 import type { StorefrontCopy } from "./copy";
 import { StudioPromise } from "./page-parts";
+import { ArtistDescription } from "./artist-description";
 export function ArtistContent({
   artist,
   locale,
   copy,
   contextQuery,
   gifts,
+  wishes,
 }: Readonly<{
   artist: PublishedIdolView;
   locale: SupportedLocale;
   copy: StorefrontCopy;
   contextQuery: string;
   gifts?: ReactNode;
+  wishes?: ReactNode;
 }>) {
   const query = new URLSearchParams(contextQuery);
   query.set("idol", artist.id);
   return (
-    <>
+    <article data-artist-detail={artist.id}>
       <section
         className="storefront-hero storefront-artist-hero"
         aria-labelledby="artist-title"
@@ -44,12 +46,16 @@ export function ArtistContent({
           <h1 id="artist-title" lang={artist.localeContext.resolvedLocale}>
             {artist.displayName}
           </h1>
-          <p
-            className="storefront-hero-body"
+          <ArtistDescription
+            text={
+              artist.localeContext.schemaVersion === 2
+                ? artist.fullBio
+                : artist.shortBio
+            }
             lang={artist.localeContext.resolvedLocale}
-          >
-            {artist.shortBio}
-          </p>
+            expandLabel={copy.artistDescriptionExpand}
+            collapseLabel={copy.artistDescriptionCollapse}
+          />
           {artist.acceptingGifts && (
             <a
               className="storefront-primary"
@@ -70,15 +76,7 @@ export function ArtistContent({
         artist.localeContext.fallbackUsed && (
           <p className="storefront-announcement">{copy.fallbackNotice}</p>
         )}
-      <section className="storefront-section storefront-story">
-        <h2>{copy.aboutArtist}</h2>
-        <div lang={artist.localeContext.resolvedLocale}>
-          <ControlledBiography
-            text={artist.fullBio}
-            plain={artist.localeContext.schemaVersion === 2}
-          />
-        </div>
-      </section>
+      {wishes}
       {artist.gallery.length > 0 && (
         <section className="storefront-section" aria-labelledby="gallery-title">
           <div className="storefront-section-heading">
@@ -99,7 +97,8 @@ export function ArtistContent({
       {gifts}
       <StudioPromise copy={copy} />
       <section className="storefront-section storefront-final">
-        <h2>{artist.acceptingGifts ? copy.giftTitle : copy.artistPaused}</h2>
+        {/* 2026-10-01 user: the gift slogan left the gift lists (L2-17) and leaves here too. */}
+        {artist.acceptingGifts ? null : <h2>{copy.artistPaused}</h2>}
         <p>{copy.giftHandover}</p>
         <a
           className="storefront-primary"
@@ -113,6 +112,6 @@ export function ArtistContent({
           <Icon name="arrow-right" decorative />
         </a>
       </section>
-    </>
+    </article>
   );
 }

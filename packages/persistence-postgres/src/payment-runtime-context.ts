@@ -29,7 +29,7 @@ export async function paymentCheckoutReadiness(
   );
   const [row] = await draftRows(
     client,
-    `SELECT o.*,${cartTimestamp("clock_timestamp()")} evaluated_at,(o.quote_expires_at>clock_timestamp() AND ${validPaymentReservationsSql}) resources_valid FROM public.orders o WHERE o.id=$1::uuid FOR UPDATE OF o`,
+    `SELECT o.*,${cartTimestamp("clock_timestamp()")} evaluated_at,${cartTimestamp("LEAST(o.quote_expires_at,(SELECT min(intent.expires_at) FROM public.support_intents intent JOIN public.order_items item ON item.support_intent_id=intent.id WHERE item.order_id=o.id),(SELECT min(r.expires_at) FROM public.inventory_reservations r WHERE r.locked_order_id=o.id AND r.status='ACTIVE'))")} action_deadline,(o.quote_expires_at>clock_timestamp() AND ${validPaymentReservationsSql}) resources_valid FROM public.orders o WHERE o.id=$1::uuid FOR UPDATE OF o`,
     [orderId],
   );
   if (!row) return rejectPayment("CONTENT_UNAVAILABLE");

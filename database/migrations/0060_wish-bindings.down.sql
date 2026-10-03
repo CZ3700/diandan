@@ -1,0 +1,30 @@
+SET search_path = public;
+LOCK TABLE wish_bindings,wish_purchase_links,wish_supports IN ACCESS EXCLUSIVE MODE;
+DO $$ BEGIN
+ IF EXISTS(SELECT 1 FROM wish_bindings) OR EXISTS(SELECT 1 FROM wish_purchase_links) OR EXISTS(SELECT 1 FROM wish_supports) THEN
+  RAISE EXCEPTION 'wish purchase history cannot be downgraded' USING ERRCODE='55000';
+ END IF;
+END $$;
+DROP TRIGGER wish_support_validate ON wish_supports;
+DROP TRIGGER wish_order_line_validate ON order_items;
+DROP TRIGGER wish_purchase_link_validate ON wish_purchase_links;
+DROP TRIGGER wish_intent_validate ON support_intents;
+DROP TRIGGER wish_cart_validate ON cart_items;
+DROP TRIGGER wish_restock_guard ON inventory_ledger;
+DROP TRIGGER wish_reservation_guard ON inventory_reservations;
+DROP TRIGGER wish_variant_guard ON gift_variants;
+DROP TRIGGER wish_gift_kind_validate ON gifts;
+DROP TRIGGER wish_binding_validate ON wish_bindings;
+DROP FUNCTION assert_wish_support();
+DROP FUNCTION assert_wish_order_line();
+DROP FUNCTION assert_wish_purchase_link();
+DROP FUNCTION assert_wish_cart_recipient();
+DROP FUNCTION guard_wish_restock();
+DROP FUNCTION guard_wish_reservation();
+DROP FUNCTION guard_wish_variant();
+DROP FUNCTION assert_wish_gift_kind();
+DROP FUNCTION assert_wish_binding();
+DROP FUNCTION wish_recipient_allowed(uuid,uuid);
+DROP FUNCTION wish_recipient_matches(uuid,uuid);
+DROP FUNCTION current_gift_kind(uuid);
+DROP TABLE wish_supports,wish_purchase_links,wish_bindings;

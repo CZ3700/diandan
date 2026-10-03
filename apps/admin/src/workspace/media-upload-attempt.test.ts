@@ -3,6 +3,46 @@ import { createAdminClient } from "./client";
 import { createMediaUploadAttempt } from "./media-upload-attempt";
 import type { AdminClient } from "./client";
 const id = "10000000-0000-4000-8000-000000000001";
+it("transfers a logo ticket without completing the ordinary media publication workflow", async () => {
+  const operations: string[] = [];
+  let puts = 0;
+  const client = {
+    call: async (operation: string) => {
+      operations.push(operation);
+      return {
+        kind: "UPLOAD_GRANT",
+        uploadId: id,
+        grant: {
+          method: "PUT",
+          url: "https://storage.example.invalid/upload",
+          headers: {},
+          expiresAt: "2099-01-01T00:00:00Z",
+        },
+      };
+    },
+  } as unknown as AdminClient;
+  const attempt = createMediaUploadAttempt(async (_url, init) => {
+    puts++;
+    expect(init?.credentials).toBe("omit");
+    expect(init?.redirect).toBe("error");
+    return new Response(null, { status: 412 });
+  });
+  expect(attempt.transfer).toBeTypeOf("function");
+  const source = {
+    checksumSha256: "a".repeat(64),
+    byteSize: 1,
+    mimeType: "image/png",
+    rightsReference: "STOREFRONT_BRAND",
+  };
+  expect(await attempt.transfer(client, source, new ArrayBuffer(1))).toEqual({
+    uploadId: id,
+  });
+  expect(await attempt.transfer(client, source, new ArrayBuffer(1))).toEqual({
+    uploadId: id,
+  });
+  expect(operations).toEqual(["media-upload-begin"]);
+  expect(puts).toBe(1);
+});
 it("does not trust an existing conditional PUT object without canonical COMPLETE verification", async () => {
   const operations: string[] = [];
   const client = {

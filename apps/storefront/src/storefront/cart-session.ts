@@ -141,8 +141,8 @@ export function createCartSession(
     )
       return current;
     const requestSequence = ++sequence;
-    try {
-      const value = await send(
+    const create = () =>
+      send(
         "/api/storefront/cart",
         "POST",
         JSON.stringify({
@@ -152,6 +152,11 @@ export function createCartSession(
           currency,
         }),
       );
+    try {
+      let value = await create();
+      // Reads keep a finished cart's cookie for its paid checkout; creating clears it, so try once more.
+      if (value.outcome === "FAILURE" && value.code === "CART_EXPIRED")
+        value = await create();
       if (value.outcome === "SUCCESS" && value.action !== "INITIALIZED")
         throw new Error("CART_RESPONSE_UNAVAILABLE");
       commit(value as CartResult, requestSequence);

@@ -1,0 +1,417 @@
+/* The action and its dot share one line. The visible jewel is small; its
+   transparent hit area stays generous enough for touch and keyboard use. */
+.storefront-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  max-inline-size: 100%;
+  margin-block-start: var(--space-8);
+}
+.storefront-hero-actions > .storefront-primary {
+  margin-block-start: 0;
+  min-inline-size: 0;
+}
+.storefront-hero-motion-control {
+  display: none;
+  place-items: center;
+  flex: 0 0 auto;
+  inline-size: calc(var(--space-12) - var(--space-1));
+  block-size: calc(var(--space-12) - var(--space-1));
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-accent);
+  cursor: pointer;
+}
+.storefront-hero-motion-control:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-accent);
+  outline-offset: var(--focus-ring-offset);
+}
+.storefront-hero-motion-dot {
+  display: grid;
+  place-items: center;
+  position: relative;
+  inline-size: var(--space-4);
+  block-size: var(--space-4);
+  border: var(--border-width) solid currentColor;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+  box-shadow: 0 0 0 var(--space-1)
+    color-mix(in srgb, var(--color-accent) 12%, transparent);
+  transition:
+    transform var(--motion-control-effective) var(--ease-out),
+    box-shadow var(--motion-control-effective) var(--ease-out);
+}
+.storefront-hero-motion-dot::before {
+  content: "";
+  inline-size: var(--space-1);
+  block-size: var(--space-1);
+  border-radius: inherit;
+  background: currentColor;
+}
+.storefront-hero-motion-dot::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--space-1) * -1);
+  border: var(--border-width) solid transparent;
+  border-inline-start-color: currentColor;
+  border-radius: inherit;
+}
+[data-hero-motion="paused"] {
+  --hero-play-state: paused;
+}
+[data-hero-motion="paused"] .storefront-hero-motion-dot {
+  box-shadow: none;
+}
+[data-hero-motion="paused"] .storefront-hero-motion-dot::before {
+  background: transparent;
+  border: var(--border-width) solid currentColor;
+}
+.storefront-hero-motion-control:active .storefront-hero-motion-dot {
+  transform: scale(0.92);
+}
+/* Bounded photo-only layer: it never captures input or changes the image crop. */
+.storefront-hero-motion {
+  display: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  --hero-light: color-mix(
+    in srgb,
+    var(--color-accent) 58%,
+    var(--color-surface-raised)
+  );
+}
+[data-hero-layer] {
+  display: none;
+  position: absolute;
+  inset: 0;
+}
+[data-hero-layer] > span {
+  position: absolute;
+  animation-duration: calc(var(--motion-hero-effective) * 12);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: calc(var(--motion-hero-effective) * var(--hero-phase, 0));
+  animation-play-state: var(--hero-play-state, running);
+}
+[data-hero-layer="STARLIGHT"] > span {
+  inline-size: var(--space-6);
+  block-size: var(--space-6);
+  background: radial-gradient(
+    circle,
+    var(--color-surface-raised),
+    var(--hero-light) 48%,
+    var(--color-accent)
+  );
+  clip-path: polygon(
+    50% 0%,
+    59% 39%,
+    100% 50%,
+    59% 61%,
+    50% 100%,
+    41% 61%,
+    0% 50%,
+    41% 39%
+  );
+}
+[data-hero-layer="STARLIGHT"] > span:nth-child(3n) {
+  inline-size: var(--space-3);
+  block-size: var(--space-3);
+}
+[data-hero-layer="AURORA"],
+[data-hero-layer="SPOTLIGHT"] {
+  mix-blend-mode: screen;
+}
+[data-hero-layer="AURORA"] > span {
+  inline-size: 65%;
+  block-size: 140%;
+  inset-block-start: -20%;
+  border-radius: 50%;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    color-mix(in srgb, var(--hero-light) 55%, transparent) 48%,
+    color-mix(in srgb, var(--color-accent) 35%, transparent) 54%,
+    transparent 72%
+  );
+}
+[data-hero-layer="AURORA"] > span:nth-child(1) {
+  inset-inline-start: -30%;
+  --hero-phase: -3;
+}
+[data-hero-layer="AURORA"] > span:nth-child(2) {
+  inset-inline-start: 20%;
+  --hero-phase: -8;
+}
+[data-hero-layer="AURORA"] > span:nth-child(3) {
+  inset-inline-start: 70%;
+  --hero-phase: -12;
+}
+[data-hero-layer="SPOTLIGHT"] > span {
+  inset-block-start: -20%;
+  inline-size: 60%;
+  block-size: 150%;
+  transform-origin: 50% 0%;
+  background: conic-gradient(
+    from 160deg at 50% 0%,
+    transparent,
+    color-mix(in srgb, var(--color-surface-raised) 65%, transparent) 12deg,
+    color-mix(in srgb, var(--hero-light) 48%, transparent) 20deg,
+    transparent 40deg
+  );
+}
+[data-hero-layer="SPOTLIGHT"] > span:nth-child(1) {
+  inset-inline-start: -28%;
+  --hero-phase: -2;
+}
+[data-hero-layer="SPOTLIGHT"] > span:nth-child(2) {
+  inset-inline-start: 22%;
+  --hero-phase: -6;
+}
+[data-hero-layer="SPOTLIGHT"] > span:nth-child(3) {
+  inset-inline-start: 72%;
+  --hero-phase: -10;
+}
+[data-hero-layer="PETALS"] > span {
+  inline-size: var(--space-4);
+  block-size: var(--space-6);
+  border-radius: 80% 15% 75% 25%;
+  background: linear-gradient(
+    135deg,
+    var(--color-surface-raised),
+    var(--hero-light) 50%,
+    color-mix(in srgb, var(--color-accent) 65%, transparent)
+  );
+  box-shadow: inset var(--border-width) var(--border-width) 0
+    color-mix(in srgb, var(--color-surface-raised) 65%, transparent);
+}
+[data-hero-layer="PETALS"] > span:nth-child(2n) {
+  inline-size: var(--space-3);
+  block-size: var(--space-4);
+}
+/* Deterministic positions keep SSR and hydration identical. */
+:is([data-hero-layer="STARLIGHT"], [data-hero-layer="PETALS"])
+  > span:nth-child(1) {
+  inset: 14% auto auto 8%;
+  --hero-phase: -1;
+}
+:is([data-hero-layer="STARLIGHT"], [data-hero-layer="PETALS"])
+  > span:nth-child(2) {
+  inset: 9% auto auto 27%;
+  --hero-phase: -5;
+}
+:is([data-hero-layer="STARLIGHT"], [data-hero-layer="PETALS"])
+  > span:nth-child(3) {
+  inset: 18% auto auto 48%;
+  --hero-phase: -9;
+}
+:is([data-hero-layer="STARLIGHT"], [data-hero-layer="PETALS"])
+  > span:nth-child(4) {
+  inset: 8% auto auto 69%;
+  --hero-phase: -3;
+}
+:is([data-hero-layer="STARLIGHT"], [data-hero-layer="PETALS"])
+  > span:nth-child(5) {
+  inset: 23% auto auto 91%;
+  --hero-phase: -7;
+}
+:is([data-hero-layer="STARLIGHT"], [data-hero-layer="PETALS"])
+  > span:nth-child(6) {
+  inset: 44% auto auto 95%;
+  --hero-phase: -11;
+}
+:is([data-hero-layer="STARLIGHT"], [data-hero-layer="PETALS"])
+  > span:nth-child(7) {
+  inset: 70% auto auto 84%;
+  --hero-phase: -4;
+}
+:is([data-hero-layer="STARLIGHT"], [data-hero-layer="PETALS"])
+  > span:nth-child(8) {
+  inset: 78% auto auto 63%;
+  --hero-phase: -8;
+}
+:is([data-hero-layer="STARLIGHT"], [data-hero-layer="PETALS"])
+  > span:nth-child(9) {
+  inset: 82% auto auto 42%;
+  --hero-phase: -2;
+}
+:is([data-hero-layer="STARLIGHT"], [data-hero-layer="PETALS"])
+  > span:nth-child(10) {
+  inset: 60% auto auto 9%;
+  --hero-phase: -6;
+}
+[data-hero-layer="STARLIGHT"] > span:nth-child(11) {
+  inset: 13% auto auto 48%;
+  --hero-phase: -10;
+}
+[data-hero-layer="STARLIGHT"] > span:nth-child(12) {
+  inset: 64% auto auto 68%;
+  --hero-phase: -12;
+}
+[data-hero-layer="STARLIGHT"] > span:nth-last-child(-n + 3) {
+  inline-size: var(--space-24);
+  block-size: calc(var(--border-width) * 2);
+  clip-path: none;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--hero-light) 72%,
+    var(--color-surface-raised)
+  );
+}
+[data-hero-layer="STARLIGHT"] > span:nth-child(10) {
+  inset: 20% auto auto 7%;
+}
+@media (width < 48rem) {
+  .storefront-hero-actions {
+    margin-block-start: var(--space-6);
+  }
+  [data-hero-layer="STARLIGHT"] > span {
+    inline-size: var(--space-4);
+    block-size: var(--space-4);
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .storefront-hero-motion-control:hover .storefront-hero-motion-dot {
+    transform: scale(1.12);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-storefront-motion="STANDARD"]
+    [data-hero-motion]:not([data-hero-motion="idle"])
+    .storefront-hero-motion {
+    display: block;
+  }
+  html[data-storefront-motion="STANDARD"]
+    [data-hero-motion]:not([data-hero-motion="idle"]):has(
+      .storefront-hero-motion
+    )
+    .storefront-hero-motion-control {
+    display: grid;
+  }
+  html[data-storefront-hero-effect="STARLIGHT"] [data-hero-layer="STARLIGHT"],
+  html[data-storefront-hero-effect="AURORA"] [data-hero-layer="AURORA"],
+  html[data-storefront-hero-effect="SPOTLIGHT"] [data-hero-layer="SPOTLIGHT"],
+  html[data-storefront-hero-effect="PETALS"] [data-hero-layer="PETALS"] {
+    display: block;
+  }
+  [data-hero-layer="STARLIGHT"] > span {
+    animation-name: storefront-starlight;
+  }
+  [data-hero-layer="AURORA"] > span {
+    animation-name: storefront-aurora;
+    animation-duration: calc(var(--motion-hero-effective) * 18);
+  }
+  [data-hero-layer="SPOTLIGHT"] > span {
+    animation-name: storefront-spotlight;
+    animation-duration: calc(var(--motion-hero-effective) * 14);
+  }
+  [data-hero-layer="PETALS"] > span {
+    animation-name: storefront-petals;
+    animation-duration: calc(var(--motion-hero-effective) * 16);
+    animation-timing-function: linear;
+  }
+  [data-hero-motion]:not([data-hero-motion="idle"])
+    .storefront-hero-motion-dot::after {
+    animation: storefront-orbit calc(var(--motion-hero-effective) * 8) linear
+      infinite;
+    animation-play-state: var(--hero-play-state, running);
+  }
+  [data-hero-layer="STARLIGHT"] > span:nth-last-child(-n + 3) {
+    animation-name: storefront-comet;
+  }
+  @keyframes storefront-comet {
+    0%,
+    15% {
+      opacity: 0;
+      transform: translate3d(
+          calc(var(--space-24) * -1),
+          calc(var(--space-12) * -1),
+          0
+        )
+        rotate(28deg) scaleX(0.6);
+    }
+    25% {
+      opacity: 0.95;
+    }
+    55%,
+    100% {
+      opacity: 0;
+      transform: translate3d(calc(var(--space-32) * 2), var(--space-32), 0)
+        rotate(28deg) scaleX(1);
+    }
+  }
+  @keyframes storefront-starlight {
+    0%,
+    100% {
+      opacity: 0.18;
+      transform: translate3d(0, var(--space-4), 0) rotate(-12deg) scale(0.65);
+    }
+    45% {
+      opacity: 1;
+      transform: translate3d(var(--space-3), calc(var(--space-6) * -1), 0)
+        rotate(12deg) scale(1.1);
+    }
+    75% {
+      opacity: 0.55;
+      transform: translate3d(
+          calc(var(--space-2) * -1),
+          calc(var(--space-4) * -1),
+          0
+        )
+        rotate(0deg) scale(0.9);
+    }
+  }
+  @keyframes storefront-aurora {
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: translate3d(-18%, -4%, 0) rotate(-18deg);
+    }
+    50% {
+      opacity: 0.85;
+      transform: translate3d(18%, 4%, 0) rotate(14deg);
+    }
+  }
+  @keyframes storefront-spotlight {
+    0%,
+    100% {
+      opacity: 0.28;
+      transform: rotate(-24deg);
+    }
+    50% {
+      opacity: 0.75;
+      transform: rotate(24deg);
+    }
+  }
+  @keyframes storefront-petals {
+    0% {
+      opacity: 0;
+      transform: translate3d(
+          calc(var(--space-16) * -1),
+          calc(var(--space-32) * -1),
+          0
+        )
+        rotate(-50deg);
+    }
+    15% {
+      opacity: 0.9;
+    }
+    80% {
+      opacity: 0.75;
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(var(--space-24), var(--space-32), 0) rotate(180deg);
+    }
+  }
+  @keyframes storefront-orbit {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

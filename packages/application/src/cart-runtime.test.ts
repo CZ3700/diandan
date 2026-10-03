@@ -314,6 +314,50 @@ test("auth, expiry and invalid command stop before KMS or idempotency writes", a
   expect(h.keyManagement.generateSupportIntentKey).not.toHaveBeenCalled();
   expect(h.repositories.idempotency.begin).not.toHaveBeenCalled();
 });
+test("a paid cart is finished for the fan: read, add and initialize treat it as expired", async () => {
+  // Checkout converts the cart into an order. Keeping it as the current cart showed the paid
+  // gifts again and refused every new gift, so its credential is cleared like an expired one.
+  const h = harness();
+  const converted = { ...h.f.cart, status: "CONVERTED" as const };
+  h.repositories.cartRuntime.findByCredentialForUpdate.mockResolvedValue(
+    converted,
+  );
+  expect(
+    await h.app.read(
+      {
+        schemaVersion: 1,
+        operation: "READ_CART",
+        presentationLocale: h.f.command.presentationLocale,
+      },
+      h.context,
+    ),
+  ).toMatchObject({ outcome: "FAILURE", code: "CART_EXPIRED" });
+  expect(await h.app.add(h.f.command, h.context)).toMatchObject({
+    code: "CART_EXPIRED",
+  });
+  expect(
+    await h.app.initialize(
+      {
+        schemaVersion: 1,
+        operation: "INITIALIZE_CART",
+        presentationLocale: h.f.command.presentationLocale,
+        market: h.f.cart.market,
+        currency: h.f.cart.currency,
+      },
+      h.context,
+    ),
+  ).toMatchObject({ outcome: "FAILURE", code: "CART_EXPIRED" });
+  expect(h.repositories.cartRuntime.initialize).not.toHaveBeenCalled();
+  // A cart still being paid for stays locked rather than silently replaced.
+  h.repositories.cartRuntime.findByCredentialForUpdate.mockResolvedValue({
+    ...h.f.cart,
+    status: "LOCKED",
+  });
+  expect(await h.app.add(h.f.command, h.context)).toMatchObject({
+    code: "CART_LOCKED",
+  });
+  expect(h.keyManagement.generateSupportIntentKey).not.toHaveBeenCalled();
+});
 test("outbox failure rolls back item, intent and claim; the exact request can then succeed", async () => {
   const h = harness();
   h.repositories.outbox.append.mockRejectedValueOnce(

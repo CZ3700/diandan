@@ -190,13 +190,21 @@ export const paymentRuntimeCapabilitiesViewSchema = z
       .max(300)
       .refine((values) => new Set(values).size === values.length),
     country: countrySchema.nullable(),
+    /**
+     * True only when choosing a different country shows different payment methods.
+     * Otherwise the server resolves `country` from the published rules alone
+     * (never from locale or IP) and the fan is not asked.
+     */
+    countrySelectionRequired: z.boolean(),
     capabilities: z.array(paymentRuntimeCapabilityViewSchema).max(200),
   })
   .refine(
     (value) =>
       (value.country === null
-        ? value.capabilities.length === 0
+        ? value.capabilities.length === 0 &&
+          (value.countrySelectionRequired || value.countries.length === 0)
         : value.countries.includes(value.country)) &&
+      (!value.countrySelectionRequired || value.countries.length > 1) &&
       new Set(value.capabilities.map((entry) => entry.id.toLowerCase()))
         .size === value.capabilities.length,
   );

@@ -145,6 +145,40 @@ describe("real decoded framing", () => {
     expect(await pixel(master.bytes, 750, 500)).toEqual([18, 18, 22]);
   });
 
+  it("fills the whole canvas from a small original under the daily fill policy", async () => {
+    const bytes = await sharp({
+      create: { width: 300, height: 200, channels: 3, background: "red" },
+    })
+      .png()
+      .toBuffer();
+    const command = commandFor(bytes, { width: 300, height: 200 });
+    command.fit = "COVER_ALLOW_ENLARGE";
+    const master = await createImageMaster(bytes, command, budget());
+    expect(master.plan.sourceCrop).toEqual({
+      x: 50,
+      y: 0,
+      width: 200,
+      height: 200,
+    });
+    expect(master.plan.destination).toEqual({
+      x: 0,
+      y: 0,
+      width: 1200,
+      height: 1200,
+    });
+    expect(master.descriptor.width).toBe(1200);
+    expect(master.descriptor.height).toBe(1200);
+    // No neutral letterbox anywhere: the enlarged crop reaches every edge.
+    for (const [left, top] of [
+      [0, 0],
+      [1199, 0],
+      [0, 1199],
+      [1199, 1199],
+      [600, 600],
+    ] as const)
+      expect(await pixel(master.bytes, left, top)).toEqual(colors.R);
+  });
+
   it("flattens fully transparent pixels consistently before all output encoders", async () => {
     const bytes = await sharp({
       create: {

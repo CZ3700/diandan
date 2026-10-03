@@ -33,7 +33,13 @@ function focalOffset(
   );
 }
 
-function coveringCrop(request: MediaFramingRequest, target: Size): Rectangle {
+function coveringCrop(
+  request: Pick<
+    MediaFramingRequest,
+    "sourceWidth" | "sourceHeight" | "focalPoint"
+  >,
+  target: Size,
+): Rectangle {
   const divisor = greatestCommonDivisor(target.width, target.height);
   const aspectWidth = target.width / divisor;
   const aspectHeight = target.height / divisor;
@@ -107,23 +113,27 @@ export function planMediaFraming(input: unknown): MediaFramingResult {
   }
   const request = parsed.data;
   const target = MEDIA_FRAMING_MASTER_SIZES[request.role];
-  const sourceCrop =
-    request.fit === "COVER"
-      ? coveringCrop(request, target)
-      : {
-          x: 0,
-          y: 0,
-          width: request.sourceWidth,
-          height: request.sourceHeight,
-        };
-  const destination =
-    request.fit === "COVER"
-      ? { x: 0, y: 0, ...target }
-      : containedPlacement(request, target);
+  const covers = request.fit !== "CONTAIN";
+  const sourceCrop = covers
+    ? coveringCrop(request, target)
+    : {
+        x: 0,
+        y: 0,
+        width: request.sourceWidth,
+        height: request.sourceHeight,
+      };
+  const destination = covers
+    ? { x: 0, y: 0, ...target }
+    : containedPlacement(request, target);
+  // Only the daily fill policy may enlarge a crop that is smaller than the canvas.
+  const enlargementAllowed = request.fit === "COVER_ALLOW_ENLARGE";
 
   if (
-    sourceCrop.width < destination.width ||
-    sourceCrop.height < destination.height ||
+    (!enlargementAllowed &&
+      (sourceCrop.width < destination.width ||
+        sourceCrop.height < destination.height)) ||
+    sourceCrop.width < 1 ||
+    sourceCrop.height < 1 ||
     destination.width < 1 ||
     destination.height < 1
   ) {
@@ -146,7 +156,28 @@ export function planMediaFraming(input: unknown): MediaFramingResult {
       target,
       sourceCrop,
       destination,
-      background: request.fit === "CONTAIN" ? "NEUTRAL" : "NONE",
+      background: covers ? "NONE" : "NEUTRAL",
     },
   });
 }
+
+/** Geometry-only browser entry; shares the worker's exact crop math. */
+export function planMediaCrop(
+  input: unknown,
+): Readonly<{ sourceCrop: Rectangle; target: Size }> | null {
+  const parsed = mediaFramingRequestSchema
+    .pick({
+      sourceWidth: true,
+      sourceHeight: true,
+      role: true,
+      focalPoint: true,
+    })
+    .safeParse(input);
+  if (!parsed.success) return null;
+  const target = MEDIA_FRAMING_MASTER_SIZES[parsed.data.role];
+  const sourceCrop = coveringCrop(parsed.data, target);
+  return sourceCrop.width > 0 && sourceCrop.height > 0
+    ? { sourceCrop, target: { ...target } }
+    : null;
+}
+export { dailyManagementFraming } from "./daily-media-framing.js";

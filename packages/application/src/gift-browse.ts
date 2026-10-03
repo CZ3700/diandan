@@ -58,8 +58,15 @@ export function createGiftBrowseUseCase({
             )
           )
             return unavailable;
+          const { giftKinds } = snapshot;
+          if (
+            query.kind !== undefined &&
+            (giftKinds === undefined ||
+              giftKinds.some((giftKind) => giftKind !== query.kind))
+          )
+            return unavailable;
           const items = [];
-          for (const record of snapshot.items) {
+          for (const [index, record] of snapshot.items.entries()) {
             const projected = projectGift(record);
             if (!projected.success) return unavailable;
             const gift = projected.value;
@@ -81,7 +88,11 @@ export function createGiftBrowseUseCase({
               (query.category !== undefined && gift.category !== query.category)
             )
               return unavailable;
-            items.push(gift);
+            items.push(
+              giftKinds === undefined
+                ? gift
+                : { ...gift, giftKind: giftKinds[index] ?? null },
+            );
           }
           return JSON.parse(
             JSON.stringify(

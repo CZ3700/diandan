@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import sharp from "sharp";
 import { createHash, randomUUID, X509Certificate } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
@@ -9,6 +10,7 @@ import {
   managementCenterResponseSchema,
   checkoutPreflightResponseSchema,
   publicOrderIdSchema,
+  publicOrderNoSchema,
   policyKindSchema,
   adminOrdersResponseSchema,
   marketSchema,
@@ -29,6 +31,7 @@ import {
 import { waitForLocalGiftForm } from "./local-experience-browser-checkout.mjs";
 import { readLocalRefundResult } from "./local-experience-browser-refund.mjs";
 import { observeLocalBrowserPayment } from "./local-experience-browser-payment-observer.mjs";
+import { readCurrentPurchase } from "./regression-journey-browser.mjs";
 
 const require = createRequire(
   new URL("../../../package.json", import.meta.url),
@@ -257,6 +260,9 @@ export async function verifyLocalExperienceBrowser({
     page: customer,
     config,
     report,
+    // Cross-document navigation can evict CDP bodies; the explicit read below
+    // verifies departure, while every HTTP failure and all return bodies remain checked.
+    readBodyForStage: (value) => value === "PAYMENT_RETURN",
   });
   for (const [surface, page] of [
     ["admin", admin],
@@ -384,12 +390,12 @@ export async function verifyLocalExperienceBrowser({
         /\S/u,
       );
       await expect(page.locator(".storefront-hero-image img")).toBeVisible();
-      const heroLink = page.locator(".storefront-hero-caption a");
+      const heroLink = page.locator('[data-home-hero-link="artists"]');
       await expect(heroLink).toBeVisible();
       check(
         new URL(await heroLink.getAttribute("href"), location.origin)
-          .pathname === `/${route[0]}/idols/${artistHandle}`,
-        "Homepage hero links to the published artist identity",
+          .pathname === `/${route[0]}/idols`,
+        "Homepage hero button opens all the artists",
       );
       await expect(
         page.locator(`[data-artist-card="${artistId}"] img`),
@@ -432,36 +438,32 @@ export async function verifyLocalExperienceBrowser({
           .locator("[data-market-choices] [data-market][data-currency]")
           .first(),
       ).toBeVisible();
-      let detailPolicyPaths;
-      for (const scope of ["[data-gift-detail]", "footer"]) {
-        const group = page.locator(
-          `${scope} .gift-deferred-policies .gift-policy-links`,
+      // L2-17 (user request 2026-09-30): the gift page has no details or delivery section;
+      // its complete policy set is the footer's.
+      await expect(
+        page.locator(
+          "[data-gift-detail] .gift-policy-links, [data-gift-detail] .gift-detail-information",
+        ),
+      ).toHaveCount(0);
+      const group = page.locator(
+        "footer .gift-deferred-policies .gift-policy-links",
+      );
+      await expect(group).toHaveCount(1);
+      await expect(group.locator("a")).toHaveCount(
+        policyKindSchema.options.length,
+      );
+      const paths = await group
+        .locator("a")
+        .evaluateAll((links) =>
+          links.map((link) => new URL(link.href).pathname),
         );
-        await expect(group).toHaveCount(1);
-        await expect(group.locator("a")).toHaveCount(
-          policyKindSchema.options.length,
-        );
-        const paths = (
-          await group
-            .locator("a")
-            .evaluateAll((links) =>
-              links.map((link) => new URL(link.href).pathname),
-            )
-        ).sort();
-        check(
-          new Set(paths).size === policyKindSchema.options.length &&
-            paths.every((pathname) =>
-              pathname.startsWith(`/${route[0]}/policies/`),
-            ),
-          "Each actual policy group has complete distinct localized policy identities",
-        );
-        if (detailPolicyPaths)
-          check(
-            JSON.stringify(paths) === JSON.stringify(detailPolicyPaths),
-            "Gift detail and footer expose the same complete policy set",
-          );
-        else detailPolicyPaths = paths;
-      }
+      check(
+        new Set(paths).size === policyKindSchema.options.length &&
+          paths.every((pathname) =>
+            pathname.startsWith(`/${route[0]}/policies/`),
+          ),
+        "The footer has complete distinct localized policy identities",
+      );
       await expect(
         page.locator(
           ".storefront-state, [data-gift-context-pending], [data-gift-recipient-pending], main [aria-busy=true]",
@@ -476,18 +478,31 @@ export async function verifyLocalExperienceBrowser({
       x: globalThis.scrollX,
       y: globalThis.scrollY,
     }));
-    for (const picture of await page.locator("img").all()) {
-      if (!(await picture.isVisible())) continue;
-      await picture.scrollIntoViewIfNeeded();
-      await expect
-        .poll(() =>
-          picture.evaluate((element) =>
-            Boolean(element.complete && element.naturalWidth > 0),
-          ),
-        )
-        .toBe(true);
-      check(true, "Rendered screenshot image loaded successfully");
-    }
+    // Judged inside the page on every poll: a list that re-renders replaces its images, so
+    // element handles collected up front can go stale (CI 2026-09-30, ja management).
+    await expect
+      .poll(
+        () =>
+          page.evaluate(() => {
+            // Same rule as Playwright's isVisible: a non-empty box and not visibility:hidden.
+            const visible = [...globalThis.document.images].filter((image) => {
+              const box = image.getBoundingClientRect();
+              return (
+                box.width > 0 &&
+                box.height > 0 &&
+                globalThis.getComputedStyle(image).visibility !== "hidden"
+              );
+            });
+            const pending = visible.find(
+              (image) => !(image.complete && image.naturalWidth > 0),
+            );
+            pending?.scrollIntoView({ block: "center" });
+            return pending ? -1 : visible.length;
+          }),
+        { timeout: 30_000 },
+      )
+      .toBeGreaterThanOrEqual(0);
+    check(true, "Every rendered screenshot image loaded successfully");
     for (const selector of requiredImages)
       check(
         await page
@@ -624,13 +639,16 @@ export async function verifyLocalExperienceBrowser({
       () => admin.locator("[data-orders-apply]").click(),
       publicId,
     );
+    const match = result.items.find((item) => item.publicOrderId === publicId);
     check(
-      result.items.some((item) => item.publicOrderId === publicId),
+      match !== undefined,
       "Canonical order list contains the requested order",
     );
-    const row = admin.locator("[data-order-id]").filter({ hasText: publicId });
+    // Rows show the public number support reads out; the UUID stays internal.
+    const row = admin.locator(`[data-order-id="${match.orderId}"]`);
     await expect(row).toHaveCount(1, { timeout: 30000 });
-    const orderId = await row.getAttribute("data-order-id");
+    await expect(row).toContainText(match.publicOrderNo);
+    const orderId = match.orderId;
     await row.click();
     await admin.locator(`[data-orders-detail="${orderId}"]`).waitFor();
     await expect(admin.locator("[data-finance-panel]")).toHaveAttribute(
@@ -638,6 +656,10 @@ export async function verifyLocalExperienceBrowser({
       "false",
       { timeout: 30000 },
     );
+    // Payments and refunds sit folded at the bottom of the order page (L2-12).
+    const toggle = admin.locator("[data-finance-toggle]");
+    if ((await toggle.getAttribute("aria-expanded")) === "false")
+      await toggle.click();
     return orderId;
   }
   async function managementItem(section, id) {
@@ -1032,30 +1054,58 @@ export async function verifyLocalExperienceBrowser({
           report.facts.publicOrderId = checkout.checkout.publicOrderId;
           report.facts.checkoutSessionId = checkout.checkout.id;
           stage("TEST_PAYMENT");
-          await customer
-            .locator("[data-payment-country]")
-            .waitFor({ timeout: 30000 });
-          await customer.locator("[data-payment-country]").selectOption("US");
-          await customer.locator("[data-payment-create]").click();
+          await customer.waitForURL((url) => url.origin === config.origins.psp);
+          await customer.locator("[data-test-psp-capture]").waitFor();
+          // The initial confirmation now hands off directly; revisit to verify explicit resume.
+          await customer.goto(`${config.origins.storefront}/en/checkout`, {
+            waitUntil: "networkidle",
+          });
+          check(
+            (await customer.locator("[data-payment-country]").count()) === 0,
+            "Single-method confirmation needs no separate country or method action",
+          );
           await customer
             .locator("[data-payment-continue]")
             .waitFor({ timeout: 30000 });
+          const departure = await readCurrentPurchase(customer);
+          check(
+            departure.checkout.id === checkout.checkout.id &&
+              departure.checkout.publicOrderId ===
+                checkout.checkout.publicOrderId &&
+              departure.attempt.checkoutSessionId === checkout.checkout.id &&
+              departure.attempt.status === "REQUIRES_ACTION" &&
+              departure.checkout.currency === checkout.checkout.currency &&
+              departure.checkout.market === checkout.checkout.market &&
+              departure.checkout.amount.totalAmountMinor ===
+                checkout.checkout.amount.totalAmountMinor,
+            "Before departure the authorized attempt preserves checkout, order and price",
+          );
           await capture(customer, "en-390-test-payment-ready");
           await customer.locator("[data-payment-continue]").click();
           await customer
             .locator("[data-test-psp-capture]")
             .waitFor({ timeout: 30000 });
-          await customer.locator("[data-test-psp-capture]").click();
           stage("PAYMENT_RETURN");
+          await customer.locator("[data-test-psp-capture]").click();
           await customer
-            .locator("[data-order-public-id]")
+            .locator("[data-order-number]")
             .waitFor({ timeout: 90000 });
           report.cases.push(
             "payment-return-automatically-reads-trusted-server-state",
           );
-          publicOrderId = (
-            await customer.locator("[data-order-public-id]").innerText()
-          ).trim();
+          publicOrderId = await customer
+            .locator("[data-order-root]")
+            .getAttribute("data-order-id");
+          check(
+            publicOrderIdSchema.safeParse(publicOrderId).success &&
+              publicOrderId === departure.checkout.publicOrderId &&
+              publicOrderNoSchema.safeParse(
+                (
+                  await customer.locator("[data-order-number]").innerText()
+                ).trim(),
+              ).success,
+            "Paid order shows its public number while the UUID stays internal",
+          );
           report.facts.publicOrderId = publicOrderId;
           await expect(
             customer.locator('[data-order-payment-status="PAID"]'),
@@ -1068,7 +1118,7 @@ export async function verifyLocalExperienceBrowser({
             returnReads.length > 0 &&
               returnReads.every(
                 (entry) =>
-                  entry.attemptId === returnReads[0].attemptId &&
+                  entry.attemptId === departure.attempt.id &&
                   entry.checkoutSessionId === report.facts.checkoutSessionId,
               ),
             "Automatic return polling reads only the original checkout and attempt",
@@ -1108,10 +1158,10 @@ export async function verifyLocalExperienceBrowser({
           "Mailbox exchanges the fragment for an HTTP-only cookie",
         );
         await mailbox.locator('a[href="/"]').waitFor({ timeout: 30000 });
-        const orderMail = mailbox
-          .locator("article")
-          .filter({ hasText: publicOrderId })
-          .locator('a[href*="/order-access#"]');
+        // Mail shows the public number; the order UUID is only inside the link fragment.
+        const orderMail = mailbox.locator(
+          `article a[href*="/order-access#"][href*="order=${publicOrderId}"]`,
+        );
         await expect
           .poll(
             async () => {
@@ -1123,16 +1173,16 @@ export async function verifyLocalExperienceBrowser({
           .toBeGreaterThan(0);
         await orderMail.first().click();
         await mailbox
-          .locator("[data-order-public-id]")
+          .locator("[data-order-number]")
           .waitFor({ timeout: 30000 });
         check(
           new URL(mailbox.url()).hash === "",
           "Mail order token is cleared from browser address",
         );
         check(
-          (
-            await mailbox.locator("[data-order-public-id]").innerText()
-          ).trim() === publicOrderId,
+          (await mailbox
+            .locator("[data-order-root]")
+            .getAttribute("data-order-id")) === publicOrderId,
           "Mail link opens the same paid order",
         );
         await mailbox.close();
@@ -1148,8 +1198,65 @@ export async function verifyLocalExperienceBrowser({
         await admin.locator("[data-order-prepare]").first().click();
         await admin.locator("[data-order-deliver]").first().waitFor();
         await admin.locator("[data-order-deliver]").first().click();
+        await admin.locator('[data-proof-panel="DELIVER"]').waitFor();
+        // V2 §4-6: one private studio photo uploads, attaches, then the line is delivered.
+        await admin.locator("[data-proof-files]").setInputFiles({
+          name: "delivery.jpg",
+          mimeType: "image/jpeg",
+          buffer: await sharp({
+            create: {
+              width: 1200,
+              height: 900,
+              channels: 3,
+              background: { r: 120, g: 96, b: 150 },
+            },
+          })
+            .jpeg()
+            .toBuffer(),
+        });
+        await admin.locator("[data-proof-privacy-confirm]").check();
+        await admin.locator('[data-proof-submit="DELIVER"]').click();
+        await expect(admin.locator("[data-proof-panel]")).toHaveCount(0, {
+          timeout: 60000,
+        });
         await expect(admin.locator("[data-order-deliver]")).toHaveCount(0);
+        await expect(admin.locator("[data-order-proofs]")).toContainText("1/3");
         await capture(admin, "en-1440-delivered-order");
+        stage("FAN_DELIVERY_PHOTO");
+        const photoPage = await customerContext.newPage();
+        await navigate(
+          photoPage,
+          `${config.origins.storefront}/en/orders/${publicOrderId}`,
+        );
+        const thumbnail = photoPage.locator("[data-order-proofs] img").first();
+        await thumbnail.waitFor({ timeout: 30000 });
+        await expect
+          .poll(() =>
+            thumbnail.evaluate(
+              (image) => image.complete && image.naturalWidth > 0,
+            ),
+          )
+          .toBe(true);
+        check(
+          new URL(
+            await thumbnail.getAttribute("src"),
+            config.origins.storefront,
+          ).origin === config.origins.storefront,
+          "Delivery photos load only from the same-origin order session proxy",
+        );
+        await photoPage.locator("[data-order-proofs] button").first().click();
+        const fullPhoto = photoPage.getByRole("dialog").locator("img");
+        await expect
+          .poll(() =>
+            fullPhoto.evaluate(
+              (image) => image.complete && image.naturalWidth > 0,
+            ),
+          )
+          .toBe(true);
+        await capture(photoPage, "en-390-delivery-photo");
+        await photoPage.keyboard.press("Escape");
+        await expect(photoPage.getByRole("dialog")).toHaveCount(0);
+        await photoPage.close();
         stage("REFUND");
         await admin.locator("[data-finance-refund]").click();
         await admin.locator("[data-finance-mode]").selectOption("FULL");

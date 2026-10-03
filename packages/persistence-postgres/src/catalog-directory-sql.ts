@@ -2,6 +2,10 @@ import type {
   GiftDiscoveryQuery,
   SupportedLocale,
 } from "@fan-support/contracts";
+import {
+  publishedGiftKindColumn,
+  publishedGiftKindJoins,
+} from "./published-gift-kind.js";
 
 type DirectoryQuery = Readonly<{ text: string; values: unknown[] }>;
 
@@ -57,6 +61,10 @@ function versionState(includeCommerce: boolean): string {
     aggregateState(
       `SELECT jsonb_build_array(id, lifecycle) value FROM public.media_metadata_revisions`,
     ),
+    // L2-10: a new manual order changes the version, so old cursors and ETags are retired.
+    aggregateState(
+      `SELECT jsonb_build_array(id, kind, version) value FROM public.catalog_display_orders`,
+    ),
   ];
   if (includeCommerce)
     states.push(
@@ -77,6 +85,12 @@ function versionState(includeCommerce: boolean): string {
       ),
       aggregateState(
         `SELECT jsonb_build_array(gift_variant_id,rule,operation_id) value FROM public.gift_variant_recipient_rules`,
+      ),
+      aggregateState(
+        `SELECT jsonb_build_array(wish_id,gift_id,gift_variant_id,idol_id) value FROM public.wish_bindings`,
+      ),
+      aggregateState(
+        `SELECT jsonb_build_array(wish_id,order_item_id) value FROM public.wish_supports`,
       ),
       aggregateState(
         `SELECT jsonb_build_array(id, market, status, version) value FROM public.markets WHERE market = $2`,
@@ -177,7 +191,7 @@ export function buildIdolDirectoryQuery(
       WHERE $2::text IS NULL OR strpos(normalized_name, $2) > 0 OR strpos(handle, $2) > 0
       GROUP BY id, display_order
     ), ordered AS (
-      SELECT id, row_number() OVER (ORDER BY match_rank, display_order, id) ordinal FROM ranked
+      SELECT id, row_number() OVER (ORDER BY match_rank, array_position((SELECT ordered_ids FROM public.catalog_display_orders WHERE kind='IDOL' ORDER BY version DESC LIMIT 1), id) NULLS LAST, display_order, id) ordinal FROM ranked
     ), window_rows AS (
       SELECT id, ordinal FROM ordered
       WHERE ($3::uuid IS NULL OR ordinal >= (SELECT ordinal FROM ordered WHERE id = $3))
@@ -220,6 +234,7 @@ const giftOffer = `LEFT JOIN LATERAL (
         AND recipient_head.idol_revision_id = recipient.published_revision_id
       WHERE recipient.status = 'active' AND recipient.accepting_gifts
         AND ($4::uuid IS NULL OR recipient.id = $4)
+        AND public.wish_recipient_allowed(variant.id,recipient.id)
         AND (EXISTS (SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=recipient.id)
           OR EXISTS (SELECT 1 FROM public.gift_variant_recipient_rules eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.rule='ALL_ACTIVE_ARTISTS'))
     )
@@ -238,6 +253,7 @@ export function buildGiftDirectoryQuery(
     currency: string;
     idolId: string | null;
     category: string | null;
+    kind: string | null;
     priceMinMinor: number | null;
     priceMaxMinor: number | null;
     availability: GiftDiscoveryQuery["availability"];
@@ -249,7 +265,8 @@ export function buildGiftDirectoryQuery(
   let order: string;
   switch (input.sort) {
     case "RECOMMENDED":
-      order = "published_at DESC, id ASC";
+      // L2-10: the operator's manual order first, then newest publication.
+      order = "manual_position ASC NULLS LAST, published_at DESC, id ASC";
       break;
     case "PRICE_ASC":
       order = "price_minor ASC NULLS LAST, id ASC";
@@ -270,9 +287,11 @@ export function buildGiftDirectoryQuery(
       input.availability,
       input.take,
       input.offset,
+      input.kind,
     ],
     text: `WITH ${versionState(true)}, candidates AS (
-      SELECT gift.id, publication.published_at, revision.category, offer.price_minor
+      SELECT gift.id, publication.published_at, revision.category, ${publishedGiftKindColumn}, offer.price_minor,
+        array_position((SELECT ordered_ids FROM public.catalog_display_orders WHERE kind='GIFT' ORDER BY version DESC LIMIT 1), gift.id) AS manual_position
       FROM public.gifts gift
       JOIN public.gift_publication_heads head ON head.gift_id = gift.id AND head.gift_revision_id = gift.published_revision_id
       JOIN public.content_publications publication ON publication.id = head.publication_id
@@ -280,6 +299,7 @@ export function buildGiftDirectoryQuery(
       JOIN public.gift_revisions revision ON revision.id = head.gift_revision_id AND revision.gift_id = gift.id
         AND revision.lifecycle = CASE publication.action WHEN 'PUBLISH' THEN 'PUBLISHED' ELSE 'SUPERSEDED' END
       LEFT JOIN public.gift_revision_translations translation ON publication.proof_version IN(1,2) AND translation.gift_revision_id = revision.id AND translation.locale = $1
+      ${publishedGiftKindJoins}
       ${giftOffer}
       WHERE gift.status IN ('active', 'paused')
         AND (publication.proof_version=3 OR translation.id IS NOT NULL)
@@ -287,6 +307,7 @@ export function buildGiftDirectoryQuery(
         AND ($4::uuid IS NULL OR EXISTS (
           SELECT 1 FROM public.gift_variants variant
           WHERE variant.gift_id = gift.id AND variant.status IN ('active', 'paused')
+            AND public.wish_recipient_matches(variant.id,$4)
             AND (EXISTS (SELECT 1 FROM public.gift_variant_idol_eligibility eligibility WHERE eligibility.gift_variant_id=variant.id AND eligibility.idol_id=$4)
               OR EXISTS (SELECT 1 FROM public.gift_variant_recipient_rules eligibility
                 JOIN public.idols recipient ON recipient.id=$4 AND recipient.status = 'active' AND recipient.accepting_gifts
@@ -296,14 +317,15 @@ export function buildGiftDirectoryQuery(
     ), filtered AS (
       SELECT * FROM candidates
       WHERE ($5::text IS NULL OR category = $5)
+        AND ($11::text IS NULL OR gift_kind = $11)
         AND ($6::bigint IS NULL OR price_minor >= $6) AND ($7::bigint IS NULL OR price_minor <= $7)
         AND ($8 = 'ALL' OR ($8 = 'PURCHASABLE' AND price_minor IS NOT NULL) OR ($8 = 'UNAVAILABLE' AND price_minor IS NULL))
     ), window_rows AS (
-      SELECT id, price_minor, row_number() OVER (ORDER BY ${order}) AS ordinal
+      SELECT id, price_minor, gift_kind, row_number() OVER (ORDER BY ${order}) AS ordinal
       FROM filtered ORDER BY ${order} LIMIT $9 OFFSET $10
     )
     SELECT version_state.catalog_version, (SELECT count(*)::text FROM filtered) AS total_items,
-      coalesce((SELECT jsonb_agg(jsonb_build_object('id', id::text, 'priceMinor', price_minor::text) ORDER BY ordinal) FROM window_rows), '[]'::jsonb) AS items
+      coalesce((SELECT jsonb_agg(jsonb_build_object('id', id::text, 'priceMinor', price_minor::text, 'giftKind', gift_kind) ORDER BY ordinal) FROM window_rows), '[]'::jsonb) AS items
     FROM version_state`,
   };
 }

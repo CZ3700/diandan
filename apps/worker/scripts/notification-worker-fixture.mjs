@@ -13,9 +13,15 @@ import {
 } from "../../api/scripts/order-payment-client.mjs";
 
 /** Explicit TEST-only composition: normal pg-boss consumers and repositories, with local TLS mail. */
-export async function verifyNotificationWorker(context) {
+export async function verifyNotificationWorker(
+  context,
+  {
+    createHarness = createPersistentNotificationGatewayHarness,
+    prepareNotifications,
+  } = {},
+) {
   const { client, check } = context;
-  const gateway = await createPersistentNotificationGatewayHarness({ context });
+  const gateway = await createHarness({ context });
   const payment = createOrderPaymentProtocolClient(context);
   const value = await payment.fresh({ locale: "vi" });
   await payment.settle(value);
@@ -49,6 +55,14 @@ export async function verifyNotificationWorker(context) {
           });
         },
         prepareNotifications() {
+          if (prepareNotifications)
+            return prepareNotifications({
+              context,
+              gateway,
+              captureEmail: (command) => {
+                emailCommand = command;
+              },
+            });
           return ({ notificationTransactionManager }) =>
             createOrderNotificationUseCases({
               transactions: notificationTransactionManager,
@@ -183,7 +197,7 @@ export async function verifyNotificationWorker(context) {
       consumerEffects: 2,
       mailAccepted: 1,
       scope:
-        "Local TEST gateway acceptance; no real email or production approval",
+        "Local TEST receiver acceptance; no real email or production approval",
     };
   } finally {
     await composition.stop();

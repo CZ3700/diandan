@@ -1,6 +1,9 @@
+import type { MediaStoragePort } from "@fan-support/media-port";
 import { createHash } from "node:crypto";
 import {
   managementCenterAuthorizationSchema,
+  managementImageSourceSchema,
+  mediaPortResponseSchema,
   managementCenterClaimSchema,
   managementCenterFailureSchema,
   managementCenterOperationSchema,
@@ -57,6 +60,7 @@ export function createManagementCenterUseCases(
     transactions: ManagementCenterTransactionManager;
     tokenPepper: string;
     resourceManagement: Readonly<{ execute(input: unknown): Promise<unknown> }>;
+    storage?: Pick<MediaStoragePort, "createDownloadGrant">;
   }>,
 ): ManagementCenterUseCases {
   validateAdminContentTokenPepper(dependencies.tokenPepper);
@@ -84,12 +88,47 @@ export function createManagementCenterUseCases(
                   }),
                   ...(command.action === "SUBMIT"
                     ? { sourceLocale: command.intent.sourceLocale }
-                    : {}),
+                    : command.action === "ARCHIVE_POSTER"
+                      ? { sourceLocale: command.sourceLocale }
+                      : {}),
                 }),
               );
               if (authorized.outcome === "FAILURE") return authorized;
               const principal = authorized.principal;
               switch (command.action) {
+                case "READ_IMAGE_SOURCE": {
+                  const resolved = await operations.readImageSource({
+                    principal,
+                    target: command.target,
+                  });
+                  if (resolved.outcome === "FAILURE") return resolved;
+                  const source = managementImageSourceSchema.parse(resolved);
+                  if (
+                    source.target.kind !== command.target.kind ||
+                    source.target.id.toLowerCase() !==
+                      command.target.id.toLowerCase() ||
+                    source.target.expectedVersion !==
+                      command.target.expectedVersion
+                  )
+                    return failure("TARGET_CONFLICT");
+                  const expiresAt = new Date(
+                    Math.min(
+                      Date.parse(principal.authorizedAt) + 120_000,
+                      Date.parse(principal.expiresAt),
+                    ),
+                  ).toISOString();
+                  if (
+                    Date.parse(expiresAt) - Date.parse(principal.authorizedAt) <
+                    60_000
+                  )
+                    return failure("NEEDS_AUTHORIZATION");
+                  return {
+                    outcome: "IMAGE_SOURCE_AUTHORIZED" as const,
+                    source,
+                    expiresAt,
+                    principal,
+                  };
+                }
                 case "CONTEXT":
                   return managementCenterResponseSchema.parse(
                     await operations.context(principal),
@@ -125,6 +164,25 @@ export function createManagementCenterUseCases(
                       idempotencyKey: command.idempotencyKey,
                     }),
                   );
+                case "ARCHIVE_POSTER":
+                  return managementCenterResponseSchema.parse(
+                    await operations.archivePoster({
+                      principal,
+                      requestId: request.requestId,
+                      revisionId: command.revisionId,
+                      expectedVersion: command.expectedVersion,
+                    }),
+                  );
+                case "ASSIGN_ARTIST":
+                  return managementCenterResponseSchema.parse(
+                    await operations.assignArtist({
+                      principal,
+                      requestId: request.requestId,
+                      artistId: command.artistId,
+                      brokerId: command.brokerId,
+                      expectedBrokerId: command.expectedBrokerId,
+                    }),
+                  );
                 case "PREPARE_UPLOAD":
                   return {
                     schemaVersion: 1 as const,
@@ -133,6 +191,90 @@ export function createManagementCenterUseCases(
               }
             },
           );
+        if (response.outcome === "IMAGE_SOURCE_AUTHORIZED") {
+          if (!dependencies.storage) return failure("MANAGEMENT_UNAVAILABLE");
+          const { source: resolved, expiresAt } = response;
+          const grant = mediaPortResponseSchema.parse(
+            await dependencies.storage.createDownloadGrant({
+              schemaVersion: 1,
+              operation: "CREATE_DOWNLOAD_GRANT",
+              storageClass: "SOURCE",
+              objectKey: resolved.source.objectKey,
+              expiresAt,
+            }),
+          );
+          if (
+            grant.outcome !== "SUCCESS" ||
+            grant.operation !== "CREATE_DOWNLOAD_GRANT" ||
+            grant.value.storageClass !== "SOURCE" ||
+            grant.value.objectKey !== resolved.source.objectKey ||
+            grant.value.expiresAt !== expiresAt
+          )
+            return failure("MANAGEMENT_UNAVAILABLE");
+          const checked =
+            await dependencies.transactions.runInManagementCenterTransaction(
+              async ({ operations }) => {
+                const authorized = managementCenterAuthorizationSchema.parse(
+                  await operations.authorize({
+                    sessionTokenDigest: digestAdminContentToken({
+                      tokenPepper: dependencies.tokenPepper,
+                      purpose: "admin-session",
+                      token: request.sessionToken,
+                    }),
+                    csrfTokenDigest: digestAdminContentToken({
+                      tokenPepper: dependencies.tokenPepper,
+                      purpose: "admin-csrf",
+                      token: request.csrfToken,
+                    }),
+                  }),
+                );
+                if (authorized.outcome === "FAILURE") return authorized;
+                const principal = authorized.principal;
+                if (
+                  principal.actorId !== response.principal.actorId ||
+                  principal.sessionId !== response.principal.sessionId ||
+                  Date.parse(principal.authorizedAt) >= Date.parse(expiresAt) ||
+                  Date.parse(principal.expiresAt) < Date.parse(expiresAt)
+                )
+                  return failure("NEEDS_AUTHORIZATION");
+                const latest = await operations.readImageSource({
+                  principal,
+                  target: resolved.target,
+                });
+                if (latest.outcome === "FAILURE") return latest;
+                if (
+                  JSON.stringify(
+                    canonical(managementImageSourceSchema.parse(latest)),
+                  ) !== JSON.stringify(canonical(resolved))
+                )
+                  return failure("TARGET_CONFLICT");
+                return { outcome: "SUCCESS" as const };
+              },
+            );
+          if (checked.outcome === "FAILURE") return checked;
+          return managementCenterResponseSchema.parse({
+            schemaVersion: 1,
+            outcome: "SUCCESS",
+            kind: "ORIGINAL_IMAGE",
+            target: resolved.target,
+            currentImage: resolved.currentImage,
+            focalPoint: resolved.focalPoint,
+            sourceWidth:
+              resolved.orientation >= 5
+                ? resolved.source.height
+                : resolved.source.width,
+            sourceHeight:
+              resolved.orientation >= 5
+                ? resolved.source.width
+                : resolved.source.height,
+            download: {
+              method: grant.value.method,
+              url: grant.value.url,
+              headers: grant.value.headers,
+              expiresAt: grant.value.expiresAt,
+            },
+          });
+        }
         if (response.outcome !== "UPLOAD_AUTHORIZED")
           return managementCenterResponseSchema.parse(response);
         if (command.action !== "PREPARE_UPLOAD")
@@ -198,6 +340,35 @@ async function recordRolledBackPublicationFailure(
       response.operation.failure?.code === "PUBLICATION_FAILED" &&
       response.operation.failure.retryable
       ? "FAILED"
+      : "UNAVAILABLE";
+  } catch {
+    return "UNAVAILABLE";
+  }
+}
+/** A confirmed rollback that the port says the same command may safely replay (40001/40P01). */
+function isTransientConflict(error: unknown) {
+  return (
+    error instanceof PersistenceTransactionFailureError &&
+    error.code === "TRANSACTION_ABORTED" &&
+    error.recovery === "RETRY_SAME_COMMAND"
+  );
+}
+/**
+ * Serialization conflicts that outlast the in-process retries are contention, not
+ * a broken publication: requeue the fenced operation for a later claim instead of
+ * a terminal failure that waits for an operator. Claiming re-checks the delegation,
+ * so a requeue never outlives the operator's authorization.
+ */
+async function requeueAfterTransientConflict(
+  transactions: ManagementCenterTransactionManager,
+  fence: ManagementCenterFence,
+): Promise<ManagementCenterWorkerResult> {
+  try {
+    const deferred = await transactions.runInManagementCenterTransaction(
+      ({ operations }) => operations.defer(fence),
+    );
+    return managementCenterResponseSchema.parse(deferred).outcome === "SUCCESS"
+      ? "PENDING"
       : "UNAVAILABLE";
   } catch {
     return "UNAVAILABLE";
@@ -346,11 +517,13 @@ export function createManagementCenterWorker(
             },
           ),
         ).catch((error: unknown) =>
-          recordRolledBackPublicationFailure(
-            error,
-            dependencies.transactions,
-            fence,
-          ),
+          isTransientConflict(error)
+            ? requeueAfterTransientConflict(dependencies.transactions, fence)
+            : recordRolledBackPublicationFailure(
+                error,
+                dependencies.transactions,
+                fence,
+              ),
         );
       } catch {
         // Do not mark a lease failed after an uncertain commit. The next claim reconciles its durable receipt.

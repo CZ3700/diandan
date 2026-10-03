@@ -1,7 +1,9 @@
 import { randomUUID } from "node:crypto";
 import {
+  DAILY_MANAGEMENT_IMAGE_ROLES,
   adminMutationResponseSchema,
   managementCenterClaimSchema,
+  managementImageSourceSchema,
   managementCenterPreparedMediaSchema,
   mediaUploadTicketResponseSchema,
   mediaSourceInspectionResponseSchema,
@@ -15,6 +17,7 @@ import {
   type ManagementCenterFailure,
   type MediaUploadTicket,
 } from "@fan-support/contracts";
+import { dailyManagementFraming } from "@fan-support/content";
 import type { MediaSourceInspectionPort } from "@fan-support/media-port";
 import type {
   ManagementCenterMediaPreparationPort,
@@ -61,11 +64,23 @@ function image(claim: ManagementCenterClaim) {
 function roles(
   claim: ManagementCenterClaim,
 ): readonly ("PORTRAIT" | "HERO_DESKTOP" | "HERO_MOBILE" | "GIFT_PRIMARY")[] {
-  return claim.intent.kind === "SAVE_ARTIST"
-    ? ["PORTRAIT", "HERO_DESKTOP", "HERO_MOBILE"]
-    : claim.intent.kind === "SAVE_GIFT"
-      ? ["GIFT_PRIMARY"]
-      : ["HERO_DESKTOP", "HERO_MOBILE"];
+  return DAILY_MANAGEMENT_IMAGE_ROLES[
+    claim.intent.kind === "RESTORE_POSTER"
+      ? "REPLACE_POSTER"
+      : claim.intent.kind
+  ];
+}
+function framing(claim: ManagementCenterClaim) {
+  if (claim.intent.kind === "RESTORE_POSTER")
+    throw new PreparationFailure("INVALID_CONTENT");
+  const defaults = dailyManagementFraming(claim.intent.kind);
+  return {
+    ...defaults,
+    focalPoint:
+      claim.intent.image && "focalPoint" in claim.intent.image
+        ? claim.intent.image.focalPoint
+        : defaults.focalPoint,
+  };
 }
 function audit(claim: ManagementCenterClaim) {
   return {
@@ -81,7 +96,8 @@ async function readUpload(
   claim: ManagementCenterClaim,
 ): Promise<MediaUploadTicket> {
   const uploaded = image(claim);
-  if (!uploaded) throw new PreparationFailure("INVALID_COMMAND");
+  if (!uploaded || !("uploadId" in uploaded))
+    throw new PreparationFailure("INVALID_COMMAND");
   return requireSuccess(
     mediaUploadTicketResponseSchema.parse(
       await repositories.resources.readUpload({
@@ -138,11 +154,24 @@ export function createManagementMediaPreparation(
             repositories,
             managementCenterClaimSchema.parse(input),
           );
+          const selected = image(claim);
+          const original =
+            selected && "currentImage" in selected
+              ? managementImageSourceSchema.parse(
+                  requireSuccess(
+                    await repositories.publication.resolveImageSource(
+                      fence(claim),
+                    ),
+                  ),
+                )
+              : null;
           const ticket =
-            image(claim) && claim.checkpoint.sourceAssetId === null
+            selected &&
+            "uploadId" in selected &&
+            claim.checkpoint.sourceAssetId === null
               ? await readUpload(repositories, claim)
               : null;
-          return { claim, ticket };
+          return { claim, ticket, original };
         });
         if (!image(before.claim))
           return { outcome: "READY", preparedMedia: null };
@@ -169,9 +198,22 @@ export function createManagementMediaPreparation(
           const claim = await reload(repositories, before.claim);
           if (claim.checkpoint.preparedMedia) return claim;
           if (claim.checkpoint.sourceAssetId === null) {
-            const ticket = await readUpload(repositories, claim);
-            let sourceAssetId = ticket.assetId;
-            if (ticket.status === "PENDING") {
+            const selected = image(claim);
+            const original =
+              selected && "currentImage" in selected
+                ? managementImageSourceSchema.parse(
+                    requireSuccess(
+                      await repositories.publication.resolveImageSource(
+                        fence(claim),
+                      ),
+                    ),
+                  )
+                : null;
+            const ticket = original
+              ? null
+              : await readUpload(repositories, claim);
+            let sourceAssetId = original?.source.assetId ?? ticket?.assetId;
+            if (ticket?.status === "PENDING") {
               if (
                 !inspection ||
                 !before.ticket ||
@@ -229,6 +271,7 @@ export function createManagementMediaPreparation(
                 ...fence(claim),
                 assetId: claim.checkpoint.sourceAssetId,
                 processingJobId: null,
+                focalPoint: framing(claim).focalPoint,
               }),
             );
             for (const role of roles(claim)) {
@@ -240,7 +283,7 @@ export function createManagementMediaPreparation(
                       sourceAssetId: claim.checkpoint.sourceAssetId,
                       metadataRevisionId: metadata.metadataRevisionId,
                       role,
-                      fit: "CONTAIN",
+                      fit: framing(claim).fit,
                       expectedVersion: 0,
                       jobId: randomUUID(),
                       receiptId: randomUUID(),
@@ -333,6 +376,8 @@ export function createManagementMediaPreparation(
                   ...fence(claim),
                   assetId,
                   processingJobId: job.jobId,
+                  // Each master is already cropped around the source focus.
+                  focalPoint: { x: 0.5, y: 0.5 },
                 }),
               );
               assets.push({

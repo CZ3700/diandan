@@ -68,6 +68,72 @@ function operation(
     },
   });
 }
+/** ADR-022 / L3-13: a save names its own new version, so it carries no idempotency key. */
+function artistNoteOperation(
+  path: string,
+  action: contract.AdminArtistNoteCommand["action"],
+  kind: string,
+): AdminOperation {
+  return Object.freeze({
+    ...operation(
+      `/api/v1/admin/artist-notes/${path}`,
+      contract.adminArtistNoteCommandSchema,
+      contract.adminArtistNoteResponseSchema,
+      action,
+      kind,
+    ),
+    readOnly: action !== "SAVE",
+  });
+}
+/** ADR-021 account settings: an OIDC session answers NOT_LOCAL instead of the action's kind. */
+function accountOperation(
+  path: string,
+  action: contract.AdminAccountCommand["action"],
+  kind: string,
+): AdminOperation {
+  const base = operation(
+    `/api/v1/admin/account/${path}`,
+    contract.adminAccountCommandSchema,
+    contract.adminAccountResponseSchema,
+    action,
+    kind,
+    false,
+    4096,
+  );
+  return Object.freeze({
+    ...base,
+    readOnly: action === "READ",
+    parseResponse(input: unknown) {
+      const parsed = contract.adminAccountResponseSchema.parse(input);
+      if (
+        parsed.outcome === "SUCCESS" &&
+        parsed.kind !== kind &&
+        parsed.kind !== "NOT_LOCAL"
+      )
+        throw new Error("Invalid administrative response");
+      return parsed;
+    },
+  });
+}
+/** ADR-021 staff accounts; every command re-authorizes staff.manage in the API. */
+function staffOperation(
+  path: string,
+  action: contract.AdminStaffCommand["action"],
+  kind: string,
+): AdminOperation {
+  return Object.freeze({
+    ...operation(
+      `/api/v1/admin/staff/${path}`,
+      contract.adminStaffCommandSchema,
+      contract.adminStaffResponseSchema,
+      action,
+      kind,
+      false,
+      4096,
+    ),
+    readOnly: action === "CONTEXT" || action === "LIST",
+  });
+}
 function commerceOperation(
   path: string,
   action: contract.GiftCommerceCommand["action"],
@@ -136,7 +202,299 @@ function exceptionOperation(
     },
   });
 }
+function informationOperation(
+  path: string,
+  command: Parser,
+  response: Parser,
+  action: string,
+  kind: string,
+  mutation: boolean,
+): AdminOperation {
+  const base = operation(
+    path,
+    command,
+    response,
+    action,
+    kind,
+    mutation,
+    action === "SAVE_DRAFT" ? 256 * 1024 : SMALL,
+  );
+  return {
+    ...base,
+    responseMatches(input, output) {
+      const request = contract.informationPageCommandSchema.parse(input);
+      const result = contract.informationPageResponseSchema.parse(output);
+      if (result.outcome === "FAILURE") return true;
+      if (request.action === "LIST") return result.kind === "LIST";
+      if (request.action === "HISTORY")
+        return (
+          result.kind === "HISTORY" &&
+          result.page === request.page &&
+          result.pageSize === request.pageSize &&
+          result.entries.every((entry) => entry.pageKey === request.pageKey)
+        );
+      if (
+        result.kind !== "STATE" ||
+        result.workspace.pageKey !== request.pageKey ||
+        result.workspace.locale !== request.locale
+      )
+        return false;
+      return (
+        request.action === "READ" ||
+        result.workspace.version === request.expectedVersion + 1
+      );
+    },
+  };
+}
 const entries = {
+  "information-pages-list": informationOperation(
+    "/api/v1/admin/information-pages/list",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "LIST",
+    "LIST",
+    false,
+  ),
+  "information-pages-read": informationOperation(
+    "/api/v1/admin/information-pages/read",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "READ",
+    "STATE",
+    false,
+  ),
+  "information-pages-save": informationOperation(
+    "/api/v1/admin/information-pages/save",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "SAVE_DRAFT",
+    "STATE",
+    true,
+  ),
+  "information-pages-submit": informationOperation(
+    "/api/v1/admin/information-pages/submit",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "SUBMIT_REVIEW",
+    "STATE",
+    true,
+  ),
+  "information-pages-approve": informationOperation(
+    "/api/v1/admin/information-pages/approve",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "APPROVE_REVIEW",
+    "STATE",
+    true,
+  ),
+  "information-pages-publish": informationOperation(
+    "/api/v1/admin/information-pages/publish",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "PUBLISH",
+    "STATE",
+    true,
+  ),
+  "information-pages-unpublish": informationOperation(
+    "/api/v1/admin/information-pages/unpublish",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "UNPUBLISH",
+    "STATE",
+    true,
+  ),
+  "information-pages-restore": informationOperation(
+    "/api/v1/admin/information-pages/restore",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "RESTORE",
+    "STATE",
+    true,
+  ),
+  "information-pages-history": informationOperation(
+    "/api/v1/admin/information-pages/history",
+    contract.informationPageCommandSchema,
+    contract.informationPageResponseSchema,
+    "HISTORY",
+    "HISTORY",
+    false,
+  ),
+
+  "home-layout-read": operation(
+    "/api/v1/admin/home-layout/read",
+    contract.homeLayoutCommandSchema,
+    contract.homeLayoutResponseSchema,
+    "READ",
+    "STATE",
+  ),
+  "home-layout-draft": operation(
+    "/api/v1/admin/home-layout/draft",
+    contract.homeLayoutCommandSchema,
+    contract.homeLayoutResponseSchema,
+    "SAVE_DRAFT",
+    "STATE",
+    true,
+  ),
+  "home-layout-publish": operation(
+    "/api/v1/admin/home-layout/publish",
+    contract.homeLayoutCommandSchema,
+    contract.homeLayoutResponseSchema,
+    "PUBLISH",
+    "STATE",
+    true,
+  ),
+  "home-layout-restore": operation(
+    "/api/v1/admin/home-layout/restore",
+    contract.homeLayoutCommandSchema,
+    contract.homeLayoutResponseSchema,
+    "RESTORE",
+    "STATE",
+    true,
+  ),
+  "home-layout-history": operation(
+    "/api/v1/admin/home-layout/history",
+    contract.homeLayoutCommandSchema,
+    contract.homeLayoutResponseSchema,
+    "HISTORY",
+    "HISTORY",
+  ),
+  "storefront-brand-read": operation(
+    "/api/v1/admin/storefront-brand/read",
+    contract.storefrontBrandCommandSchema,
+    contract.storefrontBrandResponseSchema,
+    "READ",
+    "STATE",
+  ),
+  "storefront-brand-draft": operation(
+    "/api/v1/admin/storefront-brand/draft",
+    contract.storefrontBrandCommandSchema,
+    contract.storefrontBrandResponseSchema,
+    "SAVE_DRAFT",
+    "STATE",
+    true,
+  ),
+  "storefront-brand-publish": operation(
+    "/api/v1/admin/storefront-brand/publish",
+    contract.storefrontBrandCommandSchema,
+    contract.storefrontBrandResponseSchema,
+    "PUBLISH",
+    "STATE",
+    true,
+  ),
+  "storefront-brand-restore": operation(
+    "/api/v1/admin/storefront-brand/restore",
+    contract.storefrontBrandCommandSchema,
+    contract.storefrontBrandResponseSchema,
+    "RESTORE",
+    "STATE",
+    true,
+  ),
+  "storefront-brand-history": operation(
+    "/api/v1/admin/storefront-brand/history",
+    contract.storefrontBrandCommandSchema,
+    contract.storefrontBrandResponseSchema,
+    "HISTORY",
+    "HISTORY",
+  ),
+  "storefront-brand-prepare": operation(
+    "/api/v1/admin/storefront-brand/prepare",
+    contract.storefrontBrandCommandSchema,
+    contract.storefrontBrandResponseSchema,
+    "PREPARE_LOGO",
+    "LOGO",
+    true,
+  ),
+  "storefront-theme-read": operation(
+    "/api/v1/admin/storefront-theme/read",
+    contract.storefrontThemeCommandSchema,
+    contract.storefrontThemeResponseSchema,
+    "READ",
+    "STATE",
+  ),
+  "storefront-theme-draft": operation(
+    "/api/v1/admin/storefront-theme/draft",
+    contract.storefrontThemeCommandSchema,
+    contract.storefrontThemeResponseSchema,
+    "SAVE_DRAFT",
+    "STATE",
+    true,
+  ),
+  "storefront-theme-publish": operation(
+    "/api/v1/admin/storefront-theme/publish",
+    contract.storefrontThemeCommandSchema,
+    contract.storefrontThemeResponseSchema,
+    "PUBLISH",
+    "STATE",
+    true,
+  ),
+  "storefront-theme-restore": operation(
+    "/api/v1/admin/storefront-theme/restore",
+    contract.storefrontThemeCommandSchema,
+    contract.storefrontThemeResponseSchema,
+    "RESTORE",
+    "STATE",
+    true,
+  ),
+  "storefront-theme-history": operation(
+    "/api/v1/admin/storefront-theme/history",
+    contract.storefrontThemeCommandSchema,
+    contract.storefrontThemeResponseSchema,
+    "HISTORY",
+    "HISTORY",
+  ),
+  "display-order-read": operation(
+    "/api/v1/admin/display-order/read",
+    contract.catalogDisplayOrderCommandSchema,
+    contract.catalogDisplayOrderResponseSchema,
+    "READ",
+    "DISPLAY_ORDER",
+  ),
+  "display-order-save": operation(
+    "/api/v1/admin/display-order/save",
+    contract.catalogDisplayOrderCommandSchema,
+    contract.catalogDisplayOrderResponseSchema,
+    "SAVE",
+    "DISPLAY_ORDER",
+    true,
+  ),
+  "storefront-navigation-read": operation(
+    "/api/v1/admin/storefront-navigation/read",
+    contract.storefrontNavigationCommandSchema,
+    contract.storefrontNavigationResponseSchema,
+    "READ",
+    "STATE",
+  ),
+  "storefront-navigation-draft": operation(
+    "/api/v1/admin/storefront-navigation/draft",
+    contract.storefrontNavigationCommandSchema,
+    contract.storefrontNavigationResponseSchema,
+    "SAVE_DRAFT",
+    "STATE",
+    true,
+  ),
+  "storefront-navigation-publish": operation(
+    "/api/v1/admin/storefront-navigation/publish",
+    contract.storefrontNavigationCommandSchema,
+    contract.storefrontNavigationResponseSchema,
+    "PUBLISH",
+    "STATE",
+    true,
+  ),
+  "storefront-navigation-restore": operation(
+    "/api/v1/admin/storefront-navigation/restore",
+    contract.storefrontNavigationCommandSchema,
+    contract.storefrontNavigationResponseSchema,
+    "RESTORE",
+    "STATE",
+    true,
+  ),
+  "storefront-navigation-history": operation(
+    "/api/v1/admin/storefront-navigation/history",
+    contract.storefrontNavigationCommandSchema,
+    contract.storefrontNavigationResponseSchema,
+    "HISTORY",
+    "HISTORY",
+  ),
   "exceptions-context": exceptionOperation("CONTEXT", "CONTEXT"),
   "exceptions-list": exceptionOperation("LIST", "LIST"),
   "exceptions-detail": exceptionOperation("DETAIL", "DETAIL"),
@@ -253,6 +611,46 @@ const entries = {
     "MUTATION",
     true,
   ),
+  // ADR-022 / L3-12: the artist ledger. Every read is audited or scoped by the API; an export writes a receipt.
+  "ledger-context": operation(
+    "/api/v1/admin/ledger/context",
+    contract.adminLedgerCommandSchema,
+    contract.adminLedgerResponseSchema,
+    "CONTEXT",
+    "CONTEXT",
+  ),
+  "ledger-overview": operation(
+    "/api/v1/admin/ledger/overview",
+    contract.adminLedgerCommandSchema,
+    contract.adminLedgerResponseSchema,
+    "OVERVIEW",
+    "OVERVIEW",
+  ),
+  "ledger-artist": operation(
+    "/api/v1/admin/ledger/artist",
+    contract.adminLedgerCommandSchema,
+    contract.adminLedgerResponseSchema,
+    "ARTIST",
+    "ARTIST",
+  ),
+  "ledger-export": operation(
+    "/api/v1/admin/ledger/export",
+    contract.adminLedgerCommandSchema,
+    contract.adminLedgerResponseSchema,
+    "EXPORT",
+    "EXPORT",
+  ),
+  "ledger-message-read": operation(
+    "/api/v1/admin/ledger/message/read",
+    contract.adminLedgerCommandSchema,
+    contract.adminLedgerMessageResponseSchema,
+    "READ_MESSAGE",
+    "MESSAGE",
+  ),
+  // ADR-022 / L3-13: private artist notes. Reads are audited by the API before anything is decrypted.
+  "artist-notes-context": artistNoteOperation("context", "CONTEXT", "CONTEXT"),
+  "artist-notes-read": artistNoteOperation("read", "READ", "NOTE"),
+  "artist-notes-save": artistNoteOperation("save", "SAVE", "SAVED"),
   "orders-context": operation(
     "/api/v1/admin/orders/context",
     contract.adminOrdersCommandSchema,
@@ -344,6 +742,44 @@ const entries = {
     "MUTATION",
     true,
   ),
+  "orders-proof-begin": operation(
+    "/api/v1/admin/orders/proof-uploads/begin",
+    contract.adminOrdersCommandSchema,
+    contract.adminOrdersResponseSchema,
+    "BEGIN_PROOF_UPLOAD",
+    "PROOF_UPLOAD_GRANT",
+    true,
+  ),
+  "orders-proof-complete": operation(
+    "/api/v1/admin/orders/proof-uploads/complete",
+    contract.adminOrdersCommandSchema,
+    contract.adminOrdersResponseSchema,
+    "COMPLETE_PROOF_UPLOAD",
+    "PROOF_UPLOAD",
+  ),
+  "orders-proofs-attach": operation(
+    "/api/v1/admin/orders/proofs/attach",
+    contract.adminOrdersCommandSchema,
+    contract.adminOrdersResponseSchema,
+    "ATTACH_PROOFS",
+    "MUTATION",
+    true,
+  ),
+  "orders-proofs-withdraw": operation(
+    "/api/v1/admin/orders/proofs/withdraw",
+    contract.adminOrdersCommandSchema,
+    contract.adminOrdersResponseSchema,
+    "WITHDRAW_PROOF",
+    "MUTATION",
+    true,
+  ),
+  "orders-proofs-view": operation(
+    "/api/v1/admin/orders/proofs/view",
+    contract.adminOrdersCommandSchema,
+    contract.adminOrdersResponseSchema,
+    "VIEW_PROOF",
+    "PROOF_DOWNLOAD",
+  ),
   "management-context": operation(
     "/api/v1/admin/management/context",
     contract.managementCenterCommandSchema,
@@ -366,6 +802,35 @@ const entries = {
     "UPLOAD_GRANT",
     true,
   ),
+  "management-read-image-source": Object.freeze({
+    ...operation(
+      "/api/v1/admin/management/images/read",
+      contract.managementCenterCommandSchema,
+      contract.managementCenterResponseSchema,
+      "READ_IMAGE_SOURCE",
+      "ORIGINAL_IMAGE",
+    ),
+    responseMatches(command: unknown, response: unknown) {
+      const request = contract.managementCenterCommandSchema.safeParse(command);
+      const result =
+        contract.managementCenterResponseSchema.safeParse(response);
+      if (
+        !request.success ||
+        request.data.action !== "READ_IMAGE_SOURCE" ||
+        !result.success
+      )
+        return false;
+      if (result.data.outcome === "FAILURE") return true;
+      if (result.data.kind !== "ORIGINAL_IMAGE") return false;
+      const actual = result.data.target,
+        expected = request.data.target;
+      return (
+        actual.kind === expected.kind &&
+        actual.id.toLowerCase() === expected.id.toLowerCase() &&
+        actual.expectedVersion === expected.expectedVersion
+      );
+    },
+  }),
   "management-submit": operation(
     "/api/v1/admin/management/submit",
     contract.managementCenterCommandSchema,
@@ -387,6 +852,22 @@ const entries = {
     contract.managementCenterResponseSchema,
     "RETRY_OPERATION",
     "OPERATION",
+    true,
+  ),
+  "management-archive-poster": operation(
+    "/api/v1/admin/management/posters/archive",
+    contract.managementCenterCommandSchema,
+    contract.managementCenterResponseSchema,
+    "ARCHIVE_POSTER",
+    "POSTER_ARCHIVED",
+    true,
+  ),
+  "management-assign-artist": operation(
+    "/api/v1/admin/management/artists/assign",
+    contract.managementCenterCommandSchema,
+    contract.managementCenterResponseSchema,
+    "ASSIGN_ARTIST",
+    "ARTIST_ASSIGNED",
     true,
   ),
   "commerce-context": commerceOperation("context/read", "CONTEXT"),
@@ -795,6 +1276,57 @@ const entries = {
     true,
     LARGE,
   ),
+  "account-context": accountOperation("context", "READ", "ACCOUNT"),
+  "account-change-password": accountOperation(
+    "change-password",
+    "CHANGE_PASSWORD",
+    "PASSWORD_CHANGED",
+  ),
+  "account-totp-begin": accountOperation(
+    "totp-begin",
+    "BEGIN_TOTP",
+    "TOTP_ENROLLMENT",
+  ),
+  "account-totp-confirm": accountOperation(
+    "totp-confirm",
+    "CONFIRM_TOTP",
+    "TOTP_ENABLED",
+  ),
+  "account-totp-disable": accountOperation(
+    "totp-disable",
+    "DISABLE_TOTP",
+    "TOTP_DISABLED",
+  ),
+  "account-recovery-codes": accountOperation(
+    "recovery-codes",
+    "REGENERATE_RECOVERY_CODES",
+    "RECOVERY_CODES",
+  ),
+  "staff-context": staffOperation("context", "CONTEXT", "STAFF_CONTEXT"),
+  "staff-list": staffOperation("list", "LIST", "STAFF"),
+  "staff-create": staffOperation("create", "CREATE", "STAFF_CREATED"),
+  "staff-update-roles": staffOperation(
+    "update-roles",
+    "UPDATE_ROLES",
+    "STAFF_UPDATED",
+  ),
+  "staff-reset-password": staffOperation(
+    "reset-password",
+    "RESET_PASSWORD",
+    "PASSWORD_RESET",
+  ),
+  "staff-clear-totp": staffOperation(
+    "clear-totp",
+    "CLEAR_TOTP",
+    "STAFF_UPDATED",
+  ),
+  "staff-set-status": staffOperation(
+    "set-status",
+    "SET_STATUS",
+    "STAFF_UPDATED",
+  ),
+  // L3-14: permanent; the API rechecks staff.manage and the typed login name.
+  "staff-delete": staffOperation("delete", "DELETE", "STAFF_DELETED"),
 } as const;
 export type AdminOperationKey = Exclude<keyof typeof entries, "session">;
 export const ADMIN_OPERATION_KEYS = Object.freeze(

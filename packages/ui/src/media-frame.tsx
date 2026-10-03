@@ -1,4 +1,4 @@
-import type { ReactElement, Ref } from "react";
+import type { CSSProperties, ReactElement, Ref } from "react";
 
 export type MediaFit = "contain" | "cover";
 
@@ -188,11 +188,21 @@ export function MediaFrame({
   }
 
   return (
+    // The focus sits on the frame, not <img style>: in-app browsers (WeChat) overwrite the
+    // image's inline style before hydration, which would drop the focus.
     <div
       className={classNames("fs-media", `fs-media--${fit}`, className)}
       data-media-error-source={failed ? failureOrigin : undefined}
+      data-media-focus={focalPoint === undefined ? undefined : "true"}
       data-media-state={failed ? "error" : "ready"}
-      style={{ aspectRatio: `${width} / ${height}` }}
+      style={
+        {
+          aspectRatio: `${width} / ${height}`,
+          ...(focalPoint === undefined
+            ? {}
+            : { "--fs-media-focus": mediaFocalPointPosition(focalPoint) }),
+        } as CSSProperties
+      }
     >
       {failed ? (
         <MediaFallback alternative={alternative} />
@@ -211,12 +221,8 @@ export function MediaFrame({
           sizes={sizes}
           src={src}
           srcSet={srcSet}
-          style={{
-            objectPosition:
-              focalPoint === undefined
-                ? undefined
-                : mediaFocalPointPosition(focalPoint),
-          }}
+          // Foreign attributes injected on <img> (WeChat's style) are ignored, only here.
+          suppressHydrationWarning
           width={width}
         />
       )}

@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import type {
   PaymentConfigurationAccount,
   PaymentConfigurationDocument,
@@ -12,6 +12,15 @@ import { paymentCopy } from "./copy";
 import { ChannelFields } from "./channel-fields";
 import { RuleFields } from "./rule-fields";
 import { readPaymentDocument } from "./editor-model";
+export function paymentEditorFingerprint(
+  data: FormData,
+  ruleKeys: readonly string[] = [],
+): string {
+  return JSON.stringify({
+    fields: Array.from(data.entries(), ([key, value]) => [key, String(value)]),
+    ruleKeys,
+  });
+}
 export function PaymentEditor({
   initial,
   accounts,
@@ -19,6 +28,7 @@ export function PaymentEditor({
   busy,
   save,
   back,
+  onDirtyChange,
 }: {
   initial: PaymentConfigurationDocument | null;
   accounts: PaymentConfigurationAccount[];
@@ -26,7 +36,10 @@ export function PaymentEditor({
   busy: boolean;
   save: (document: PaymentConfigurationDocument) => void;
   back: () => void;
+  onDirtyChange?: ((dirty: boolean) => void) | undefined;
 }) {
+  const form = useRef<HTMLFormElement>(null);
+  const baseline = useRef<string | null>(null);
   const c = paymentCopy(locale),
     error = useRef<HTMLParagraphElement>(null);
   const [channels, setChannels] = useState<
@@ -45,8 +58,23 @@ export function PaymentEditor({
         initial?.routes.map((value) => ({ key: value.ruleKey, value })) ?? [],
     ),
     [invalid, setInvalid] = useState(false);
+  function reportDirty() {
+    if (!form.current) return;
+    const current = paymentEditorFingerprint(
+      new FormData(form.current),
+      rules.map((rule) => rule.key),
+    );
+    baseline.current ??= current;
+    onDirtyChange?.(current !== baseline.current);
+  }
+  useLayoutEffect(() => {
+    reportDirty();
+  }, [channels, rules, onDirtyChange]);
+  useLayoutEffect(() => () => onDirtyChange?.(false), [onDirtyChange]);
   return (
     <form
+      ref={form}
+      onChange={() => queueMicrotask(reportDirty)}
       className="mp-editor"
       data-payment-editor
       onSubmit={(event) => {

@@ -1,6 +1,10 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { z } from "zod";
 import {
+  wishGalleryWithdrawCommandSchema,
+  wishGalleryWithdrawResponseSchema,
   checkoutSessionIdSchema,
+  deliveryProofRenditionNameSchema,
   publicOrderIdSchema,
   orderAccessBootstrapCommandSchema,
   orderAccessBootstrapRequestSchema,
@@ -8,6 +12,9 @@ import {
   orderAccessExchangeCommandSchema,
   orderAccessExchangeRequestSchema,
   orderAccessFailureSchema,
+  orderAccessLocateCommandSchema,
+  orderAccessLocateRequestSchema,
+  orderAccessProofCommandSchema,
   orderAccessRateResultSchema,
   orderAccessReadCommandSchema,
   orderAccessResponseSchema,
@@ -16,6 +23,7 @@ import {
   type OrderAccessConfiguration,
   type OrderAccessFailureCode,
 } from "@fan-support/contracts";
+import { registerWishGalleryRoute } from "./wish-gallery-route.js";
 import { resolveRequestId } from "@fan-support/observability";
 import { currentRequestContext } from "@fan-support/observability/node";
 import { cookieToken, privacy, singleHeader } from "./cart-route.js";
@@ -25,7 +33,7 @@ import {
   type createOrderAccessCredentials,
 } from "./order-access-credentials.js";
 
-type Action = "exchange" | "bootstrap" | "read" | "revoke";
+type Action = "exchange" | "bootstrap" | "read" | "revoke" | "locate";
 export type OrderAccessRouteDependencies = Readonly<{
   configuration: OrderAccessConfiguration;
   credentials: ReturnType<typeof createOrderAccessCredentials>;
@@ -34,7 +42,42 @@ export type OrderAccessRouteDependencies = Readonly<{
     Action | "consumeRateLimit",
     (command: unknown) => Promise<unknown>
   >;
+  wishGallery?:
+    | {
+        read(command: unknown): Promise<unknown>;
+        withdraw(command: unknown): Promise<unknown>;
+      }
+    | undefined;
+  /** Session-authorized private delivery photo bytes; absent deployments answer 503. */
+  readProof?: ((command: unknown) => Promise<unknown>) | undefined;
 }>;
+const proofResultSchema = z.union([
+  z.strictObject({
+    outcome: z.literal("FAILURE"),
+    code: orderAccessFailureSchema.shape.code,
+  }),
+  z.strictObject({
+    outcome: z.literal("SUCCESS"),
+    mimeType: z.literal("image/webp"),
+    bytes: z
+      .instanceof(Uint8Array)
+      .refine((bytes) => bytes.byteLength > 0 && bytes.byteLength <= 4194304),
+  }),
+]);
+const proofParamsSchema = z.strictObject({
+  publicOrderId: publicOrderIdSchema,
+  proofId: z.uuid(),
+  rendition: deliveryProofRenditionNameSchema,
+});
+// Direct navigation to a photo renders an inert image document: no scripts, framing or sniffing.
+const proofHeaders = {
+  "content-type": "image/webp",
+  "content-disposition": 'inline; filename="delivery-photo.webp"',
+  "content-security-policy":
+    "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; frame-ancestors 'none'; sandbox",
+  "cross-origin-resource-policy": "same-origin",
+  "x-content-type-options": "nosniff",
+} as const;
 const cookieName = "__Host-fan-order";
 const attributes = "Path=/; HttpOnly; Secure; SameSite=Strict";
 function status(code: OrderAccessFailureCode) {
@@ -92,7 +135,15 @@ export function registerOrderAccessRoute(
   const configuration = orderAccessConfigurationSchema.parse(
     options.configuration,
   );
+  if (options.wishGallery) registerWishGalleryRoute(app, options.wishGallery);
   for (const [method, url, action, scopeName, limit] of [
+    [
+      "POST",
+      "/api/v1/orders/:publicOrderId/wish-gallery/:entryId/withdraw",
+      "wish-withdraw",
+      "REVOKE",
+      configuration.rateLimit.revokeMax,
+    ],
     [
       "POST",
       "/api/v1/order-access/exchange",
@@ -121,6 +172,22 @@ export function registerOrderAccessRoute(
       "REVOKE",
       configuration.rateLimit.revokeMax,
     ],
+    // Locating is a read-class lookup and shares the READ bucket with protected reads.
+    [
+      "POST",
+      "/api/v1/order-access/locate",
+      "locate",
+      "READ",
+      configuration.rateLimit.readMax,
+    ],
+    // Each delivery photo read is a protected read of the same order.
+    [
+      "GET",
+      "/api/v1/orders/:publicOrderId/delivery-proofs/:proofId/:rendition",
+      "proof",
+      "READ",
+      configuration.rateLimit.readMax,
+    ],
   ] as const)
     void app.register(async (scope) => {
       scope.addHook("onRequest", async (request, reply) => {
@@ -148,8 +215,8 @@ export function registerOrderAccessRoute(
         )
           return fail(reply, "INVALID_REQUEST");
         try {
-          // No proxy-header trust: deployment proxies may enforce additional ingress limits.
-          const networkIdentity = request.raw.socket.remoteAddress;
+          // The TCP peer, or the nearest address forwarded through FAN_SUPPORT_TRUSTED_PROXY_CIDRS only.
+          const networkIdentity = request.ip;
           if (!networkIdentity) return fail(reply, "TEMPORARY_UNAVAILABLE");
           const rate = orderAccessRateResultSchema.parse(
             await options.useCases.consumeRateLimit({
@@ -191,7 +258,93 @@ export function registerOrderAccessRoute(
         bodyLimit: 1024,
         exposeHeadRoute: false,
         handler: async (request, reply) => {
-          let input: { token: string } | { publicOrderId: string } | undefined;
+          if (action === "proof") {
+            const params = proofParamsSchema.safeParse(request.params);
+            if (!params.success || request.body !== undefined)
+              return fail(reply, "INVALID_REQUEST");
+            try {
+              const token = orderCookie(request);
+              if (!token) return fail(reply, "ACCESS_DENIED");
+              if (!options.readProof)
+                return fail(reply, "TEMPORARY_UNAVAILABLE");
+              const proof = await options.credentials.resolveSession(
+                token,
+                undefined,
+              );
+              const result = proofResultSchema.parse(
+                await options.readProof(
+                  orderAccessProofCommandSchema.parse({
+                    schemaVersion: 1,
+                    ...params.data,
+                    sessionCandidates: proof.accesses,
+                  }),
+                ),
+              );
+              if (result.outcome === "FAILURE") return fail(reply, result.code);
+              const bytes = Buffer.from(
+                result.bytes.buffer,
+                result.bytes.byteOffset,
+                result.bytes.byteLength,
+              );
+              return reply
+                .code(200)
+                .headers({
+                  ...proofHeaders,
+                  "content-length": String(bytes.byteLength),
+                })
+                .send(bytes);
+            } catch {
+              return fail(reply, "TEMPORARY_UNAVAILABLE");
+            }
+          }
+          if (action === "wish-withdraw") {
+            const params = z
+              .strictObject({
+                publicOrderId: publicOrderIdSchema,
+                entryId: z.uuid(),
+              })
+              .safeParse(request.params);
+            if (
+              !params.success ||
+              !orderAccessBootstrapRequestSchema.safeParse(request.body).success
+            )
+              return fail(reply, "INVALID_REQUEST");
+            try {
+              const token = orderCookie(request);
+              if (!token) return fail(reply, "ACCESS_DENIED");
+              const proof = await options.credentials.resolveSession(
+                token,
+                singleHeader(request, "x-csrf-token"),
+              );
+              if (!proof.csrfValid) return fail(reply, "ACCESS_DENIED", 403);
+              if (!options.wishGallery)
+                return fail(reply, "TEMPORARY_UNAVAILABLE");
+              const result = wishGalleryWithdrawResponseSchema.parse(
+                await options.wishGallery.withdraw(
+                  wishGalleryWithdrawCommandSchema.parse({
+                    schemaVersion: 1,
+                    ...params.data,
+                    sessionCandidates: proof.accesses,
+                    ...trace(request),
+                  }),
+                ),
+              );
+              if (result.outcome === "FAILURE") return fail(reply, result.code);
+              if (
+                result.withdrawn.entryId.toLowerCase() !==
+                params.data.entryId.toLowerCase()
+              )
+                return fail(reply, "TEMPORARY_UNAVAILABLE");
+              return reply.code(200).send(result);
+            } catch {
+              return fail(reply, "TEMPORARY_UNAVAILABLE");
+            }
+          }
+          let input:
+            | { token: string }
+            | { publicOrderId: string }
+            | { publicOrderNo: string }
+            | undefined;
           try {
             if (action === "read")
               publicOrderIdSchema.parse(
@@ -208,6 +361,8 @@ export function registerOrderAccessRoute(
               orderAccessBootstrapRequestSchema.parse(request.body);
             else if (action === "revoke")
               input = orderAccessRevokeRequestSchema.parse(request.body);
+            else if (action === "locate")
+              input = orderAccessLocateRequestSchema.parse(request.body);
             else if (request.body !== undefined)
               return fail(reply, "INVALID_REQUEST");
           } catch {
@@ -263,21 +418,28 @@ export function registerOrderAccessRoute(
                 return fail(reply, "ACCESS_DENIED", 403);
               csrfToken = proof.csrfToken;
               command =
-                action === "read"
-                  ? orderAccessReadCommandSchema.parse({
+                action === "locate"
+                  ? orderAccessLocateCommandSchema.parse({
                       schemaVersion: 1,
-                      publicOrderId: (
-                        request.params as { publicOrderId: string }
-                      ).publicOrderId,
+                      publicOrderNo: (input as { publicOrderNo: string })
+                        .publicOrderNo,
                       sessionCandidates: proof.accesses,
                     })
-                  : orderAccessRevokeCommandSchema.parse({
-                      schemaVersion: 1,
-                      publicOrderId: (input as { publicOrderId: string })
-                        .publicOrderId,
-                      sessionCandidates: proof.accesses,
-                      ...trace(request),
-                    });
+                  : action === "read"
+                    ? orderAccessReadCommandSchema.parse({
+                        schemaVersion: 1,
+                        publicOrderId: (
+                          request.params as { publicOrderId: string }
+                        ).publicOrderId,
+                        sessionCandidates: proof.accesses,
+                      })
+                    : orderAccessRevokeCommandSchema.parse({
+                        schemaVersion: 1,
+                        publicOrderId: (input as { publicOrderId: string })
+                          .publicOrderId,
+                        sessionCandidates: proof.accesses,
+                        ...trace(request),
+                      });
             }
             const result = orderAccessResponseSchema.parse(
               await options.useCases[action](command),
@@ -303,6 +465,10 @@ export function registerOrderAccessRoute(
               )
                 throw new Error("Order access response mismatch");
               void reply.header("x-csrf-token", csrfToken!);
+            } else if (action === "locate") {
+              // Only an identifier leaves; no cookie or CSRF proof is issued or echoed.
+              if (result.action !== "LOCATED")
+                throw new Error("Order access response mismatch");
             } else {
               if (
                 result.action !== "REVOKED" ||

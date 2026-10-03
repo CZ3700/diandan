@@ -146,6 +146,8 @@ export function ResponsiveCompositeMediaClient({
             sizes={media.desktop.sizes}
             src={media.desktop.src}
             srcSet={media.desktop.srcSet}
+            // WeChat injects an inline style on <img> before hydration; focus is on the frame.
+            suppressHydrationWarning
             width={media.desktop.width}
           />
         </picture>

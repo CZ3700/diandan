@@ -46,6 +46,7 @@ const locale = {
 const order = {
   schemaVersion: 1,
   publicOrderId: publicId,
+  publicOrderNo: "FS-7K3M9C",
   presentationLocale: "en",
   orderStatus: "OPEN",
   paymentStatus: "PAID",
@@ -93,7 +94,10 @@ const order = {
       lineTotalMinor: 100,
       currency: "USD",
       displayMode: "anonymous",
+      giftKind: "PHYSICAL",
       fulfillmentStatus: "PENDING",
+      deliveryProofs: [],
+      supportCertificate: null,
     },
   ],
   createdAt: "2026-09-15T00:00:00Z",
@@ -104,10 +108,21 @@ const paths = {
   bootstrap: `/api/v1/checkout/sessions/${checkoutId}/order-access`,
   read: `/api/v1/orders/${publicId}`,
   revoke: "/api/v1/order-access/revoke",
+  locate: "/api/v1/order-access/locate",
 };
 type Action = keyof typeof paths;
-async function setup() {
-  const app = Fastify({ logger: false });
+async function setup(
+  readProof?: (command: unknown) => Promise<unknown>,
+  wishGallery?: {
+    read(command: unknown): Promise<unknown>;
+    withdraw(command: unknown): Promise<unknown>;
+  },
+  trustProxy?: string[],
+) {
+  const app = Fastify({
+    logger: false,
+    ...(trustProxy === undefined ? {} : { trustProxy }),
+  });
   const keyManagement = {
     async computeBlindIndex(command: ComputeBlindIndexCommand) {
       return {
@@ -154,6 +169,12 @@ async function setup() {
       action: "REVOKED",
       publicOrderId: publicId,
     })),
+    locate: vi.fn<(...args: unknown[]) => Promise<unknown>>(async () => ({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "LOCATED",
+      publicOrderId: publicId,
+    })),
     consumeRateLimit: vi.fn<(...args: unknown[]) => Promise<unknown>>(
       async () => ({ schemaVersion: 1, allowed: true, retryAfterSeconds: 0 }),
     ),
@@ -163,6 +184,8 @@ async function setup() {
     credentials,
     cartCredentials,
     useCases,
+    readProof,
+    wishGallery,
   });
   const send = (
     action: Action,
@@ -197,7 +220,9 @@ async function setup() {
                   ? { schemaVersion: 1, token: link.token }
                   : action === "revoke"
                     ? { schemaVersion: 1, publicOrderId: publicId }
-                    : { schemaVersion: 1 }),
+                    : action === "locate"
+                      ? { schemaVersion: 1, publicOrderNo: "FS-7K3M9C" }
+                      : { schemaVersion: 1 }),
             ),
           }),
     });
@@ -376,6 +401,34 @@ test("rate buckets derive from the actual peer, ignoring untrusted forwarded add
   }
 });
 
+test("behind configured proxies each fan gets a bucket and spoofed forwarded entries change nothing", async () => {
+  const { app, send, useCases } = await setup(undefined, undefined, [
+    "127.0.0.0/8",
+    "10.0.0.0/8",
+  ]);
+  const bucket = async (remoteAddress: string, forwarded?: string) => {
+    await send("read", {
+      remoteAddress,
+      ...(forwarded === undefined
+        ? {}
+        : { headers: { "x-forwarded-for": forwarded } }),
+    });
+    return useCases.consumeRateLimit.mock.lastCall![0];
+  };
+  try {
+    const fan = await bucket("127.0.0.1", "203.0.113.7");
+    expect(await bucket("127.0.0.1", "198.51.100.9")).not.toEqual(fan);
+    expect(await bucket("127.0.0.1", "192.0.2.1, 203.0.113.7")).toEqual(fan);
+    expect(await bucket("127.0.0.1", "203.0.113.7, 10.1.2.3")).toEqual(fan);
+    const outsider = await bucket("198.51.100.20");
+    expect(await bucket("198.51.100.20", "203.0.113.7")).toEqual(outsider);
+    expect(outsider).not.toEqual(fan);
+    expect(JSON.stringify(fan)).not.toContain("203.0.113.7");
+  } finally {
+    await app.close();
+  }
+});
+
 test("wrong response identity, private extra fields and unexpected failures remain private unavailable responses", async () => {
   const { app, send, useCases } = await setup();
   try {
@@ -431,6 +484,231 @@ test("malformed path identities are invalid requests after persisted rate counti
       expect(useCases[action]).not.toHaveBeenCalled();
     }
     expect(useCases.consumeRateLimit).toHaveBeenCalledTimes(2);
+  } finally {
+    await app.close();
+  }
+});
+
+test("locate resolves a public number through the order cookie and issues no credential", async () => {
+  const { app, send, useCases, session } = await setup();
+  try {
+    const located = await send("locate");
+    expect(located.statusCode).toBe(200);
+    expect(located.json()).toEqual({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "LOCATED",
+      publicOrderId: publicId,
+    });
+    expect(located.headers["set-cookie"]).toBeUndefined();
+    expect(located.headers["x-csrf-token"]).toBeUndefined();
+    expect(located.headers["cache-control"]).toBe("private, no-store");
+    expect(useCases.locate.mock.lastCall![0]).toEqual({
+      schemaVersion: 1,
+      publicOrderNo: "FS-7K3M9C",
+      sessionCandidates: [session.access],
+    });
+    expect(JSON.stringify(useCases.locate.mock.lastCall)).not.toContain(
+      session.token,
+    );
+    expect(useCases.consumeRateLimit.mock.lastCall![0]).toMatchObject({
+      scope: "READ",
+    });
+    for (const options of [
+      { body: { schemaVersion: 1, publicOrderNo: "fs-7k3m9c" } },
+      { body: { schemaVersion: 1, publicOrderNo: "7K3M9C" } },
+      {
+        body: {
+          schemaVersion: 1,
+          publicOrderNo: "FS-7K3M9C",
+          publicOrderId: publicId,
+        },
+      },
+      { headers: { cookie: "" } },
+      { headers: { origin: "https://foreign.invalid" } },
+    ])
+      expect((await send("locate", options)).statusCode).toBeGreaterThanOrEqual(
+        400,
+      );
+    expect(useCases.locate).toHaveBeenCalledTimes(1);
+    useCases.locate.mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "READ",
+      order,
+    });
+    const mismatched = await send("locate");
+    expect(mismatched.statusCode).toBe(503);
+    expect(mismatched.body).not.toContain(order.publicOrderNo);
+    useCases.locate.mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "ACCESS_DENIED",
+    });
+    expect((await send("locate")).statusCode).toBe(401);
+  } finally {
+    await app.close();
+  }
+});
+
+test("delivery photos stream only to this order's session with inert image headers", async () => {
+  const proofId = "10000000-0000-4000-8000-0000000000f1";
+  const url = `/api/v1/orders/${publicId}/delivery-proofs/${proofId}/thumbnail`;
+  const bytes = new Uint8Array([82, 73, 70, 70, 1, 2, 3, 4]);
+  const readProof = vi.fn<(command: unknown) => Promise<unknown>>(async () => ({
+    outcome: "SUCCESS",
+    mimeType: "image/webp",
+    bytes,
+  }));
+  const { app, useCases, session } = await setup(readProof);
+  const get = (target: string, headers: Record<string, string> = {}) =>
+    app.inject({
+      method: "GET",
+      url: target,
+      remoteAddress: "127.0.0.1",
+      headers: {
+        cookie: `__Host-fan-order=${session.token}`,
+        "sec-fetch-site": "same-origin",
+        ...headers,
+      },
+    });
+  try {
+    const response = await get(url);
+    expect(response.statusCode).toBe(200);
+    expect(Buffer.from(response.rawPayload).equals(Buffer.from(bytes))).toBe(
+      true,
+    );
+    expect(response.headers).toMatchObject({
+      "content-type": "image/webp",
+      "content-length": String(bytes.byteLength),
+      "cache-control": "private, no-store",
+      "referrer-policy": "no-referrer",
+      "x-content-type-options": "nosniff",
+      "cross-origin-resource-policy": "same-origin",
+    });
+    expect(response.headers["content-security-policy"]).toContain("sandbox");
+    expect(response.headers["set-cookie"]).toBeUndefined();
+    expect(readProof).toHaveBeenCalledWith({
+      schemaVersion: 1,
+      publicOrderId: publicId,
+      proofId,
+      rendition: "thumbnail",
+      sessionCandidates: expect.any(Array),
+    });
+    expect(JSON.stringify(readProof.mock.calls)).not.toContain(session.token);
+    expect(useCases.consumeRateLimit).toHaveBeenLastCalledWith(
+      expect.objectContaining({ scope: "READ" }),
+    );
+    readProof.mockClear();
+    for (const [target, headers, status] of [
+      [url, { cookie: "" }, 401],
+      [url.replace("thumbnail", "original"), {}, 400],
+      [`${url}?width=10`, {}, 400],
+      [url, { "sec-fetch-site": "cross-site" }, 403],
+    ] as const) {
+      const denied = await get(target, headers);
+      expect(denied.statusCode, target).toBe(status);
+      expect(denied.headers["content-type"]).toMatch(/^application\/json/u);
+    }
+    expect(readProof).not.toHaveBeenCalled();
+    readProof.mockResolvedValueOnce({
+      outcome: "FAILURE",
+      code: "ACCESS_DENIED",
+    });
+    expect((await get(url)).statusCode).toBe(401);
+    readProof.mockResolvedValueOnce({
+      outcome: "SUCCESS",
+      mimeType: "image/png",
+      bytes,
+    });
+    expect((await get(url)).statusCode).toBe(503);
+  } finally {
+    await app.close();
+  }
+  const unconfigured = await setup();
+  try {
+    const response = await unconfigured.app.inject({
+      method: "GET",
+      url,
+      remoteAddress: "127.0.0.1",
+      headers: { cookie: `__Host-fan-order=${unconfigured.session.token}` },
+    });
+    expect(response.statusCode).toBe(503);
+  } finally {
+    await unconfigured.app.close();
+  }
+});
+
+test("wish withdrawal uses the existing order session, CSRF, origin and REVOKE rate limit", async () => {
+  const entryId = otherId;
+  const withdrawn = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    withdrawn: { schemaVersion: 1, entryId, withdrawn: true },
+  };
+  const wishGallery = {
+    read: vi.fn(),
+    withdraw: vi.fn().mockResolvedValue(withdrawn),
+  };
+  const { app, send, session, useCases } = await setup(undefined, wishGallery);
+  const url = `/api/v1/orders/${publicId}/wish-gallery/${entryId}/withdraw`;
+  try {
+    for (const headers of [
+      { cookie: "" },
+      { "x-csrf-token": "" },
+      { origin: "https://foreign.invalid" },
+      { "sec-fetch-site": "same-site" },
+    ]) {
+      expect(
+        (await send("revoke", { url, body: { schemaVersion: 1 }, headers }))
+          .statusCode,
+      ).toBeGreaterThanOrEqual(400);
+    }
+    expect(wishGallery.withdraw).not.toHaveBeenCalled();
+    const response = await send("revoke", { url, body: { schemaVersion: 1 } });
+    expect(response.statusCode).toBe(200);
+    expect(response.json()).toEqual(withdrawn);
+    expect(response.headers["cache-control"]).toBe("private, no-store");
+    expect(response.headers["set-cookie"]).toBeUndefined();
+    expect(response.headers["x-csrf-token"]).toBeUndefined();
+    expect(wishGallery.withdraw).toHaveBeenCalledWith(
+      expect.objectContaining({
+        publicOrderId: publicId,
+        entryId,
+        sessionCandidates: [session.access],
+      }),
+    );
+    expect(JSON.stringify(wishGallery.withdraw.mock.calls)).not.toContain(
+      session.token,
+    );
+    expect(useCases.consumeRateLimit).toHaveBeenLastCalledWith(
+      expect.objectContaining({ scope: "REVOKE" }),
+    );
+    useCases.consumeRateLimit.mockResolvedValueOnce({
+      schemaVersion: 1,
+      allowed: false,
+      retryAfterSeconds: 20,
+    });
+    const limited = await send("revoke", { url, body: { schemaVersion: 1 } });
+    expect(limited.statusCode).toBe(429);
+    expect(limited.json().code).toBe("RATE_LIMITED");
+    expect(limited.headers["retry-after"]).toBe("20");
+    expect(wishGallery.withdraw).toHaveBeenCalledTimes(1);
+    expect(
+      (
+        await send("revoke", {
+          url,
+          body: { schemaVersion: 1, privateName: "secret" },
+        })
+      ).statusCode,
+    ).toBe(400);
+    wishGallery.withdraw.mockResolvedValueOnce({
+      ...withdrawn,
+      withdrawn: { ...withdrawn.withdrawn, entryId: publicId },
+    });
+    expect(
+      (await send("revoke", { url, body: { schemaVersion: 1 } })).statusCode,
+    ).toBe(503);
   } finally {
     await app.close();
   }

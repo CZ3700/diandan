@@ -25,8 +25,16 @@ test("local service transport refuses every destination outside its exact owned 
     "https://oidc.example.invalid:9443/path",
     "https://user@oidc.example.invalid:9443",
     "https://localhost:9443",
+    "https://oidc.example.com:8443",
+    "https://unknown.stg.example.com",
+    "http://oidc.stg.example.com",
   ])
     assert.throws(() => module.localServiceOrigin(value), /local service/iu);
+  // A publicly exposed instance serves each owned service label under its base domain on 443.
+  assert.equal(
+    module.localServiceOrigin("https://payments.stg.example.com"),
+    "https://payments.stg.example.com",
+  );
 });
 
 test("OIDC signing identity survives restart and existing invalid keys are never overwritten", async () => {
@@ -44,7 +52,9 @@ test("OIDC signing identity survives restart and existing invalid keys are never
     const first = await module.readLocalOidcKey(path);
     const second = await module.readLocalOidcKey(path);
     assert.deepEqual(first.jwk, second.jwk);
-    assert.equal((await stat(path)).mode & 0o777, 0o600);
+    // Windows has no POSIX permission bits: stat always reports 0o666 there.
+    if (process.platform !== "win32")
+      assert.equal((await stat(path)).mode & 0o777, 0o600);
     await writeFile(path, "invalid key", { mode: 0o600 });
     await assert.rejects(module.readLocalOidcKey(path));
   } finally {

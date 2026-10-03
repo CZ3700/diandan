@@ -56,6 +56,24 @@ export async function persistPaymentRuntimeEvidence(
   )
     return unavailable();
 
+  async function recordAudit() {
+    await insert(
+      client,
+      `INSERT INTO public.audit_logs
+    (id,schema_version,actor_type,task_name,action,subject_type,subject_id,request_id,correlation_id,outcome,created_at)
+    VALUES($1::uuid,1,'SYSTEM',$2,'PAYMENT_PROVIDER_RECONCILE','PAYMENT_PROVIDER_ACCOUNT',$3::uuid,$4::uuid,$5::uuid,'SUCCEEDED',$6::timestamptz)
+    RETURNING id`,
+      [
+        claim.auditLogId,
+        claim.taskName,
+        event.providerAccountId,
+        claim.requestId,
+        claim.correlationId,
+        recordedAt,
+      ],
+    );
+  }
+
   // Replay compares instants in PostgreSQL, retaining microseconds and the original audit identity.
   const existing = await rows(
     client,
@@ -115,6 +133,14 @@ export async function persistPaymentRuntimeEvidence(
     const auditId = auditLogIdSchema.safeParse(existing[0]["audit_log_id"]);
     if (existing[0]["matches"] !== true || !eventId.success || !auditId.success)
       return unavailable();
+    // A repeated provider event keeps its original immutable evidence identity,
+    // while each expired-action authorization must retain the current authenticated query.
+    if (
+      command.action &&
+      claim.attempt.status === "REQUIRES_ACTION" &&
+      claim.attempt.actionExpired
+    )
+      await recordAudit();
     return { providerEventId: eventId.data, auditLogId: auditId.data };
   }
 
@@ -129,21 +155,7 @@ export async function persistPaymentRuntimeEvidence(
     currency: event.currency,
     ...(event.transaction ? { transaction: event.transaction } : {}),
   });
-  await insert(
-    client,
-    `INSERT INTO public.audit_logs
-    (id,schema_version,actor_type,task_name,action,subject_type,subject_id,request_id,correlation_id,outcome,created_at)
-    VALUES($1::uuid,1,'SYSTEM',$2,'PAYMENT_PROVIDER_RECONCILE','PAYMENT_PROVIDER_ACCOUNT',$3::uuid,$4::uuid,$5::uuid,'SUCCEEDED',$6::timestamptz)
-    RETURNING id`,
-    [
-      claim.auditLogId,
-      claim.taskName,
-      event.providerAccountId,
-      claim.requestId,
-      claim.correlationId,
-      recordedAt,
-    ],
-  );
+  await recordAudit();
   await insert(
     client,
     `INSERT INTO public.provider_events

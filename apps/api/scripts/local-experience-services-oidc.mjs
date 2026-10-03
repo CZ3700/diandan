@@ -19,6 +19,7 @@ import {
   secretEquals,
   startLocalTlsServer,
 } from "./local-experience-services-common.mjs";
+import { localServiceTargets } from "./local-experience-config.mjs";
 
 export async function readLocalOidcKey(path) {
   let pem;
@@ -114,6 +115,7 @@ export async function startLocalExperienceOidc({ config }) {
       .end(JSON.stringify({ error: code }));
   const server = await startLocalTlsServer({
     origin: issuer,
+    port: config.ports.oidc,
     tls: config.tls,
     async handle(request, response) {
       const url = new URL(request.url, issuer);
@@ -261,6 +263,7 @@ export async function startLocalExperienceOidc({ config }) {
     fetch: await createLocalExperienceFetch({
       origins: [issuer],
       caCertificatePath: config.tls.caCertificatePath,
+      targets: localServiceTargets(config),
     }),
     close: async () => {
       tickets.clear();

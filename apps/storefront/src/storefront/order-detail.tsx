@@ -8,10 +8,13 @@ import {
 import { Price } from "@fan-support/ui";
 import { Media } from "@fan-support/ui/client";
 import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
+import { OrderDeliveryPhotos } from "./order-delivery-photos";
+import { OrderSupportCertificate } from "./order-support-certificate";
+import { OrderWishRecord } from "./order-wish-record";
 import {
+  fanOrderStatus,
   orderItemStatus,
   orderProgressHelp,
-  orderStatusRows,
 } from "./order-status";
 
 type Presentation = Readonly<{ locale: SupportedLocale; copy: StorefrontCopy }>;
@@ -52,9 +55,18 @@ function SnapshotLanguages({
 
 function OrderLine({
   item,
+  publicOrderId,
+  publicOrderNo,
   locale,
   copy,
-}: Presentation & Readonly<{ item: OrderAccessItem }>) {
+  onWithdrawWish,
+}: Presentation &
+  Readonly<{
+    item: OrderAccessItem;
+    publicOrderId: string;
+    publicOrderNo: string;
+    onWithdrawWish?: ((entryId: string) => Promise<boolean>) | undefined;
+  }>) {
   return (
     <li className="order-line" data-order-line={item.position}>
       <div className="order-gift-image">
@@ -125,9 +137,33 @@ function OrderLine({
         <p
           className="order-line-status"
           data-order-item-status={item.fulfillmentStatus}
+          data-order-item-kind={item.giftKind ?? undefined}
         >
-          {orderItemStatus(item.fulfillmentStatus, copy)}
+          {orderItemStatus(item, copy)}
         </p>
+        {"wishSupport" in item && (
+          <OrderWishRecord
+            record={item.wishSupport}
+            locale={locale}
+            copy={copy}
+            onWithdraw={onWithdrawWish}
+          />
+        )}
+        {item.supportCertificate && (
+          <OrderSupportCertificate
+            item={item}
+            certificate={item.supportCertificate}
+            publicOrderNo={publicOrderNo}
+            locale={locale}
+            copy={copy}
+          />
+        )}
+        <OrderDeliveryPhotos
+          item={item}
+          publicOrderId={publicOrderId}
+          locale={locale}
+          copy={copy}
+        />
         <div className="order-languages">
           <SnapshotLanguages
             sources={[
@@ -150,16 +186,22 @@ export function OrderDetail({
   order,
   locale,
   copy,
-}: Presentation & Readonly<{ order: OrderAccessDetail }>) {
+  onWithdrawWish,
+}: Presentation &
+  Readonly<{
+    order: OrderAccessDetail;
+    onWithdrawWish?: ((entryId: string) => Promise<boolean>) | undefined;
+  }>) {
   const amount = order.amount;
   const help = orderProgressHelp(order, copy);
+  const status = fanOrderStatus(order, copy);
   return (
     <div className="order-detail" data-order-detail>
       <dl className="order-metadata">
         <div>
           <dt>{copy.orderIdLabel}</dt>
-          <dd data-order-public-id>
-            <bdi>{order.publicOrderId}</bdi>
+          <dd data-order-number>
+            <bdi>{order.publicOrderNo}</bdi>
           </dd>
         </div>
         <div>
@@ -185,8 +227,11 @@ export function OrderDetail({
           <ol className="order-lines">
             {order.items.map((item) => (
               <OrderLine
+                onWithdrawWish={onWithdrawWish}
                 key={item.position}
                 item={item}
+                publicOrderId={order.publicOrderId}
+                publicOrderNo={order.publicOrderNo}
                 locale={locale}
                 copy={copy}
               />
@@ -195,19 +240,39 @@ export function OrderDetail({
           <p className="order-history-help">{copy.orderHistoryHelp}</p>
         </section>
         <div className="order-sidebar">
-          <section className="order-progress" data-order-timeline>
+          <section
+            className="order-progress"
+            data-order-timeline
+            data-order-stage={status.stage}
+            data-order-order-status={order.orderStatus}
+            data-order-payment-status={order.paymentStatus}
+            data-order-fulfillment-status={order.fulfillmentStatus}
+            data-order-dispute-status={order.disputeStatus}
+          >
             <h2>{copy.orderProgress}</h2>
-            <dl className="order-statuses">
-              {orderStatusRows(order, copy).map((row) => (
-                <div
-                  key={row.axis}
-                  {...{ [`data-order-${row.axis}-status`]: row.state }}
-                >
-                  <dt>{row.label}</dt>
-                  <dd>{row.value}</dd>
-                </div>
-              ))}
-            </dl>
+            {status.timeline.length > 0 ? (
+              <ol className="order-steps">
+                {status.timeline.map((step) => (
+                  <li
+                    key={step.step}
+                    data-order-step={step.step}
+                    data-step-state={step.state}
+                    aria-current={step.state === "CURRENT" ? "step" : undefined}
+                  >
+                    {step.label}
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p className="order-stage" data-order-stage-label>
+                {status.label}
+              </p>
+            )}
+            {status.note && (
+              <p className="order-progress-note" data-order-note>
+                {status.note}
+              </p>
+            )}
             {help && <p className="order-progress-help">{help}</p>}
           </section>
           <section className="order-summary">

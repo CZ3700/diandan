@@ -667,9 +667,8 @@ test("rejects duplicate, unsafe and incomplete scenarios", async () => {
   assert.ok(errors.some((error) => error.includes("reduced motion")));
 });
 
-test("blocks overflow, clipping, missing semantics and unstable media ratios", async () => {
-  const { assessCompositeMetrics } = await loadRunner();
-  const healthy = {
+function healthyCompositeMetrics() {
+  return {
     base: {
       clippedText: [],
       controls: [{ height: 48, label: "Choose gift", width: 120 }],
@@ -745,6 +744,11 @@ test("blocks overflow, clipping, missing semantics and unstable media ratios", a
     ],
     timeline: { currentCount: 1, itemCount: 3, ordered: true },
   };
+}
+
+test("blocks overflow, clipping, missing semantics and unstable media ratios", async () => {
+  const { assessCompositeMetrics } = await loadRunner();
+  const healthy = healthyCompositeMetrics();
   assert.deepEqual(assessCompositeMetrics(healthy), []);
 
   const errors = assessCompositeMetrics({
@@ -834,6 +838,69 @@ test("blocks overflow, clipping, missing semantics and unstable media ratios", a
       fragment,
     );
   }
+});
+
+test("stress cells let the ready Hero grow downward but never move or narrow", async () => {
+  const { assessCompositeMetrics } = await loadRunner();
+  // Measured on Linux CI: long Portuguese copy at 320px outgrows the 544px loading frame.
+  const grown = {
+    ...healthyCompositeMetrics(),
+    heroTransitionStability: {
+      afterAnchorTop: 12_501.97,
+      afterDocumentHeight: 13_733,
+      afterHeight: 563.97,
+      afterLeft: 16,
+      afterState: "ready",
+      afterTop: 11_926,
+      afterWidth: 288,
+      beforeAnchorTop: 12_482,
+      beforeDocumentHeight: 13_713,
+      beforeHeight: 544,
+      beforeLeft: 16,
+      beforeState: "loading",
+      beforeTop: 11_926,
+      beforeWidth: 288,
+    },
+  };
+  const shift = "Hero loading-to-ready layout shift";
+  assert.deepEqual(assessCompositeMetrics(grown, { stress: true }), []);
+  assert.ok(
+    assessCompositeMetrics(grown).some((error) => error.includes(shift)),
+    "ordinary cells keep the one-pixel frame",
+  );
+  for (const change of [
+    { afterLeft: 20 },
+    { afterTop: 11_900 },
+    { afterWidth: 280 },
+    { afterHeight: 520 },
+    { afterState: "loading" },
+  ])
+    assert.ok(
+      assessCompositeMetrics(
+        {
+          ...grown,
+          heroTransitionStability: {
+            ...grown.heroTransitionStability,
+            ...change,
+          },
+        },
+        { stress: true },
+      ).some((error) => error.includes(shift)),
+      JSON.stringify(change),
+    );
+  assert.ok(
+    assessCompositeMetrics(
+      {
+        ...grown,
+        heroFailureStability: {
+          ...grown.heroFailureStability,
+          afterHeight: 480,
+        },
+      },
+      { stress: true },
+    ).some((error) => error.includes("Hero failure layout shift")),
+    "the failure frame stays strict in stress cells",
+  );
 });
 
 test("requires zero-duration composite motion under reduced motion", async () => {

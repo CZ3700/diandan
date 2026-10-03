@@ -91,6 +91,7 @@ test("final publication rechecks an inventory item created after submission befo
       statements.push(text);
       if (/^(?:SAVEPOINT|ROLLBACK TO SAVEPOINT|RELEASE SAVEPOINT)/u.test(text))
         return { rows: [] };
+      if (text.includes("FROM public.wish_bindings")) return { rows: [] };
       if (text.startsWith("SELECT * FROM public.gifts"))
         return {
           rows: [

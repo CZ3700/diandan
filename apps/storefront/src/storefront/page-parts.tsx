@@ -1,6 +1,5 @@
 import type { SupportedLocale } from "@fan-support/contracts";
 import { Icon } from "@fan-support/ui";
-import type { ReactNode } from "react";
 import type { StorefrontCopy } from "./copy";
 import { storefrontHref } from "./navigation";
 
@@ -75,34 +74,4 @@ export function StudioPromise({ copy }: Readonly<{ copy: StorefrontCopy }>) {
     </section>
   );
 }
-export function SiteFooter({
-  copy,
-  locale,
-  name,
-  contextQuery,
-  policyLinks,
-}: Readonly<{
-  copy: StorefrontCopy;
-  locale: SupportedLocale;
-  name: string;
-  contextQuery: string;
-  policyLinks?: ReactNode;
-}>) {
-  return (
-    <footer className="storefront-footer">
-      <span className="storefront-wordmark">
-        {name}
-        <span aria-hidden="true">.</span>
-      </span>
-      <p>{copy.giftHandover}</p>
-      <a href={storefrontHref(locale, "/region", contextQuery)}>
-        {copy.region}
-      </a>
-      <a href={storefrontHref(locale, "/idols", contextQuery)}>
-        {copy.backArtists}
-        <Icon name="arrow-right" decorative />
-      </a>
-      {policyLinks}
-    </footer>
-  );
-}
+export { SiteFooter } from "./site-footer";

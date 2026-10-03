@@ -273,6 +273,20 @@ test("splits base operational state, immutable revision lifecycle, and public vi
     publicGift,
   );
   expect(parsedGift.success).toBe(true);
+  // Directory reads attach the published classification; null is an unclassified legacy gift.
+  for (const giftKind of ["VIRTUAL", "MERCHANDISE", null])
+    expect(
+      (content?.publishedGiftViewSchema as Schema).safeParse({
+        ...publicGift,
+        giftKind,
+      }).success,
+    ).toBe(true);
+  expect(
+    (content?.publishedGiftViewSchema as Schema).safeParse({
+      ...publicGift,
+      giftKind: "TIP",
+    }).success,
+  ).toBe(false);
   if (parsedGift.success) {
     const parsedVariants = (
       parsedGift.data as Readonly<{

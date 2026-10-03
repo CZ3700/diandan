@@ -13,6 +13,22 @@ const args = process.argv.slice(2),
   command = args[0] ?? "status";
 const index = args.indexOf("--instance"),
   instance = index < 0 ? "default" : args[index + 1];
+const option = (name) => {
+  const at = args.indexOf(name);
+  return at < 0 ? undefined : args[at + 1];
+};
+// Fixed when the instance is created: a public instance is served by an edge on its base domain.
+const publicBaseDomain = option("--public-base-domain");
+const paymentProvider = option("--payment-provider");
+const startupTimeoutSeconds = Number(
+  option("--startup-timeout-seconds") ?? 120,
+);
+if (
+  !Number.isInteger(startupTimeoutSeconds) ||
+  startupTimeoutSeconds < 30 ||
+  startupTimeoutSeconds > 3600
+)
+  throw new Error("Startup timeout must be 30-3600 seconds");
 if (command === "start" && !args.includes("--skip-build"))
   await promisify(execFile)(
     "corepack",
@@ -38,8 +54,14 @@ const { assertLocalStopSucceeded } =
   await import("./local-experience-stop-result.mjs");
 const { prepareLocalTls } =
   await import("../apps/api/scripts/local-experience-infrastructure.mjs");
-const state = await loadLocalState(workspaceRoot, instance),
+const state = await loadLocalState(workspaceRoot, instance, {
+    publicBaseDomain,
+    paymentProvider,
+  }),
   { config, stateDirectory } = state;
+const { localDnsHosts } =
+  await import("../apps/api/scripts/local-experience-config.mjs");
+const dnsHosts = localDnsHosts(config);
 async function status() {
   try {
     const r = await globalThis.fetch(
@@ -84,6 +106,48 @@ async function clearDeadLock() {
     "An existing supervisor is starting or unhealthy; its data and process were preserved",
   );
 }
+/** Only the supervisor's own structured stage, failure and PostgreSQL error lines, re-picked field by field. */
+async function supervisorOutcome() {
+  const text = await readFile(
+    path.join(stateDirectory, "supervisor.log"),
+    "utf8",
+  ).catch(() => "");
+  const lines = [];
+  for (const line of text.split("\n")) {
+    let value;
+    try {
+      value = JSON.parse(line);
+    } catch {
+      continue;
+    }
+    const failure = value?.postgresFailure;
+    if (failure && typeof failure === "object") {
+      const name = (item) =>
+        /^[a-z_][a-z_0-9]{0,127}$/u.test(item ?? "") ? item : null;
+      lines.push({
+        postgresFailure: {
+          code: /^[A-Z0-9]{5}$/u.test(failure.code ?? "") ? failure.code : null,
+          guard: name(failure.guard),
+          constraint: name(failure.constraint),
+        },
+      });
+      continue;
+    }
+    if (typeof value?.stage !== "string") continue;
+    lines.push(
+      value.outcome === "FAIL"
+        ? {
+            outcome: "FAIL",
+            stage: value.stage.slice(0, 80),
+            errorName: String(value.errorName).slice(0, 80),
+            code: value.code === null ? null : String(value.code).slice(0, 80),
+            message: String(value.message).slice(0, 240),
+          }
+        : { stage: value.stage.slice(0, 80) },
+    );
+  }
+  return lines;
+}
 async function openBrowser() {
   const active = await status();
   if (!active?.ready) throw new Error("Start the local experience first");
@@ -95,6 +159,14 @@ try {
     let active = await status();
     if (!active) {
       await clearDeadLock();
+      if (config.webMode === "PREBUILT") {
+        const { assertPrebuiltWebCurrent, workspaceRevision } =
+          await import("../apps/api/scripts/local-experience-web-build.mjs");
+        await assertPrebuiltWebCurrent(
+          workspaceRoot,
+          await workspaceRevision(workspaceRoot),
+        );
+      }
       await prepareLocalTls(state);
       const log = await open(
         path.join(stateDirectory, "supervisor.log"),
@@ -118,12 +190,19 @@ try {
             ...process.env,
             NODE_EXTRA_CA_CERTS: config.tls.caCertificatePath,
             NODE_TLS_REJECT_UNAUTHORIZED: "1",
+            // Public hostnames resolve to owned loopback addresses: web servers or the local edge.
+            ...(dnsHosts.length
+              ? {
+                  LOCAL_EXPERIENCE_DNS_HOSTS: dnsHosts.join(","),
+                  NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --import=${new globalThis.URL("../apps/api/scripts/local-experience-dns.mjs", import.meta.url).href}`,
+                }
+              : {}),
           },
         },
       );
       child.unref();
       await log.close();
-      for (let i = 0; i < 240; i++) {
+      for (let i = 0; i < startupTimeoutSeconds * 2; i++) {
         active = await status();
         if (
           active?.ready ||
@@ -136,7 +215,7 @@ try {
     }
     if (!active?.ready)
       throw new Error(
-        "Local startup did not finish; see the private supervisor log and preserved data",
+        `Local startup did not finish; see the private supervisor log and preserved data ${JSON.stringify((await supervisorOutcome()).slice(-6))}`,
       );
     console.log(
       JSON.stringify(
@@ -160,7 +239,22 @@ try {
       JSON.stringify((await status()) ?? { ready: false, instance }, null, 2),
     );
   else if (command === "open") await openBrowser();
-  else if (command === "stop") {
+  else if (command === "prepare") {
+    // Creates the instance and its CA without starting it, so an edge can be configured first.
+    await prepareLocalTls(state);
+    console.log(
+      JSON.stringify(
+        {
+          prepared: true,
+          instance,
+          exposure: config.exposure ?? null,
+          origins: config.origins,
+        },
+        null,
+        2,
+      ),
+    );
+  } else if (command === "stop") {
     const active = await status();
     let expectedRunId = active?.runId;
     if (!expectedRunId) {
@@ -192,6 +286,10 @@ try {
     }
     await assertLocalStopSucceeded(state, expectedRunId);
     await clearDeadLock();
+    const failures = (await supervisorOutcome())
+      .filter((line) => line.postgresFailure)
+      .slice(-8);
+    if (failures.length) console.log(JSON.stringify(failures));
     console.log("已停止；图片、商品、订单及配置已保留。");
   } else if (command === "reset") {
     if (await status()) throw new Error("Stop the instance before reset");
@@ -203,7 +301,7 @@ try {
       confirmation: args[args.indexOf("--confirm") + 1],
     });
     console.log("已清除该本地实例。");
-  } else throw new Error("Use start, status, open, stop or reset");
+  } else throw new Error("Use prepare, start, status, open, stop or reset");
 } catch (error) {
   console.error(error.message);
   process.exitCode = 1;

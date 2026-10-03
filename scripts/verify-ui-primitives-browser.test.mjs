@@ -299,6 +299,30 @@ test("blocks overflow, clipping, replacement glyphs, and sub-48px controls", asy
   assert.ok(errors.some((error) => error.includes("replacement glyph")));
 });
 
+test("a fractional layout viewport is not horizontal overflow, a real extra pixel still is", async () => {
+  const { assessPageMetrics } = await loadRunner();
+  // Native 200% zoom: 855 CSS px minus a 15 device-px classic scrollbar is 847.5;
+  // clientWidth rounds down and scrollWidth rounds up although nothing passes the edge.
+  const zoomed = (layoutWidth, scrollWidth = 848) => ({
+    clippedText: [],
+    controls: [],
+    document: {
+      bodyScrollWidth: scrollWidth,
+      clientWidth: 847,
+      scrollWidth,
+      ...(layoutWidth === undefined ? {} : { layoutWidth }),
+    },
+    replacementGlyphs: 0,
+  });
+  assert.deepEqual(assessPageMetrics(zoomed(847.5)), []);
+  for (const metrics of [zoomed(847), zoomed(undefined), zoomed(847.5, 849)])
+    assert.ok(
+      assessPageMetrics(metrics).some((error) =>
+        error.includes("horizontal overflow"),
+      ),
+    );
+});
+
 test("blocks primitive boundaries below 3:1 non-text contrast", async () => {
   const { assessPageMetrics } = await loadRunner();
   const errors = assessPageMetrics({
@@ -453,6 +477,39 @@ test("accepts only measurements proving native Chrome 200 percent page zoom", as
   assert.ok(errors.some((error) => error.includes("CSS viewport width")));
   assert.ok(errors.some((error) => error.includes("device pixel ratio")));
   assert.ok(errors.some((error) => error.includes("visual viewport scale")));
+
+  // Linux Chrome draws a classic 15 device-px scrollbar: the visual viewport
+  // excludes it, innerWidth does not. The layout viewport is the comparison.
+  const classic = (measurement, layoutViewportWidth, visualWidth) => ({
+    ...measurement,
+    layoutViewportWidth,
+    visualViewport: { ...measurement.visualViewport, width: visualWidth },
+  });
+  assert.deepEqual(
+    assessNativeZoomMeasurements({
+      baseline: classic(baseline, 1695, 1695),
+      expectedPercent: 200,
+      zoomed: classic(zoomed, 847, 847.5),
+    }),
+    [],
+  );
+  assert.ok(
+    assessNativeZoomMeasurements({
+      baseline: classic(baseline, 1695, 1695),
+      expectedPercent: 200,
+      zoomed: classic(zoomed, 847, 600),
+    }).some((error) => error.includes("zoomed visual viewport")),
+  );
+  assert.ok(
+    assessNativeZoomMeasurements({
+      baseline: {
+        ...baseline,
+        visualViewport: { ...baseline.visualViewport, width: 1695 },
+      },
+      expectedPercent: 200,
+      zoomed,
+    }).some((error) => error.includes("baseline visual viewport")),
+  );
 
   const completeScreenshot = {
     captureMethod: "CDP Page.captureScreenshot without emulation",

@@ -30,9 +30,10 @@ await withEphemeralPostgres(async (clientConfig) => {
       await client.query(`PREPARE admin_order_write_${index} AS ${match[1]}`);
       checks++;
     }
+    // The ninth is the FULFILLMENT_STATUS_CHANGED outbox write added for virtual delivery (c41ef5b2).
     assert.equal(
       checks,
-      8,
+      9,
       "all order write statements resolve their parameter domains",
     );
     console.log(JSON.stringify({ status: "PASS", checks }));

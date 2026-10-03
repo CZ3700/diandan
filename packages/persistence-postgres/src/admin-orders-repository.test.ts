@@ -153,7 +153,7 @@ describe("admin orders persistence boundary", () => {
       ]),
     ).toEqual(["PREPARE"]);
   });
-  test.each(["UNPAID", "PENDING", "PARTIALLY_REFUNDED", "REFUNDED", "FAILED"])(
+  test.each(["UNPAID", "PENDING", "REFUNDED", "FAILED"])(
     "payment %s cannot become admin fulfillment authority",
     (payment_status) => {
       expect(
@@ -163,6 +163,51 @@ describe("admin orders persistence boundary", () => {
           ["orders.manage", "orders.fulfillment"],
         ),
       ).toEqual([]);
+    },
+  );
+  test("a partial refund leaves the remaining paid lines fulfillable (audit TXN-03)", () => {
+    const partial = { ...order, payment_status: "PARTIALLY_REFUNDED" },
+      approved = { ...line, moderation_status: "APPROVED" };
+    expect(
+      fulfillmentActions(partial, approved, [
+        "orders.manage",
+        "orders.fulfillment",
+      ]),
+    ).toEqual(["PREPARE", "HOLD"]);
+    expect(
+      fulfillmentActions(partial, { ...approved, refunded_in_full: false }, [
+        "orders.fulfillment",
+      ]),
+    ).toEqual(["PREPARE"]);
+    expect(
+      fulfillmentActions(
+        partial,
+        { ...approved, status: "PREPARING", refunded_in_full: false },
+        ["orders.fulfillment"],
+      ),
+    ).toEqual(["DELIVER"]);
+  });
+  test.each([
+    ["PENDING", null],
+    ["PREPARING", null],
+    ["ON_HOLD", "PREPARING"],
+  ])(
+    "a line refunded in full no longer advances, holds or resumes from %s",
+    (status, resume_status) => {
+      const refunded = {
+        ...line,
+        status,
+        resume_status,
+        moderation_status: "APPROVED",
+        refunded_in_full: true,
+      };
+      for (const payment_status of ["PAID", "PARTIALLY_REFUNDED"])
+        expect(
+          fulfillmentActions({ ...order, payment_status }, refunded, [
+            "orders.manage",
+            "orders.fulfillment",
+          ]),
+        ).toEqual([]);
     },
   );
   test.each(["PENDING", "PREPARING", "ON_HOLD"])(
@@ -232,6 +277,43 @@ describe("admin orders persistence boundary", () => {
         "orders.fulfillment",
       ]),
     ).toEqual([]);
+  });
+  test("digital support lines are never prepared, delivered or held by the studio; a hold only resumes", () => {
+    const digital = {
+      ...line,
+      moderation_status: "APPROVED",
+      gift_kind: "VIRTUAL",
+    };
+    expect(
+      fulfillmentActions(order, digital, [
+        "orders.fulfillment",
+        "orders.manage",
+      ]),
+    ).toEqual([]);
+    expect(
+      fulfillmentActions(order, { ...digital, status: "PREPARING" }, [
+        "orders.fulfillment",
+        "orders.manage",
+      ]),
+    ).toEqual([]);
+    expect(
+      fulfillmentActions(
+        order,
+        { ...digital, status: "ON_HOLD", resume_status: "PENDING" },
+        ["orders.fulfillment", "orders.manage"],
+      ),
+    ).toEqual(["RESUME"]);
+    expect(
+      fulfillmentActions(order, { ...digital, gift_kind: "PHYSICAL" }, [
+        "orders.fulfillment",
+        "orders.manage",
+      ]),
+    ).toEqual(["PREPARE", "HOLD"]);
+    expect(
+      fulfillmentActions(order, { ...digital, gift_kind: null }, [
+        "orders.fulfillment",
+      ]),
+    ).toEqual(["PREPARE"]);
   });
   test.each([
     [["PENDING", "PENDING"], "PENDING"],

@@ -1,3 +1,5 @@
+import { writeWishPurchaseLink } from "./wish-binding.js";
+import { freezeWishGalleryPreference } from "./wish-gallery-preference.js";
 import { randomUUID } from "node:crypto";
 import { Buffer } from "node:buffer";
 import {
@@ -12,6 +14,7 @@ import {
   rejectCheckout,
 } from "./checkout-preflight-data.js";
 import { draftRows } from "./content-draft-data.js";
+import { resolveOrderLineGiftKind } from "./order-line-gift-kind.js";
 import type { TransactionClient } from "./transaction-runner.js";
 
 /** Table and columns come only from this module's fixed row builders. Values are always parameters. */
@@ -203,6 +206,18 @@ export async function writeCheckout(
       [line.supportIntentId, line.cartItemId, line.intentVersion, eventTime],
     );
     if (locked.length !== 1) return rejectCheckout("PREFLIGHT_CHANGED");
+    // ADR-019: freeze the purchase-time gift kind from the same revision the snapshot references.
+    const giftKind = await resolveOrderLineGiftKind(client, {
+      giftId: line.giftId,
+      giftTranslationRevisionId:
+        line.giftTranslation.mode === "APPROVED"
+          ? line.giftTranslation.translationRevisionId
+          : null,
+      giftDailyTranslationId:
+        line.giftTranslation.mode === "DAILY"
+          ? line.giftTranslation.translationRevisionId
+          : null,
+    });
     await insert(client, "order_items", {
       id: ids.orderItemId,
       schema_version: 2,
@@ -213,8 +228,25 @@ export async function writeCheckout(
       ...lineSnapshot(line),
       ...price,
       currency: consent.currency,
+      gift_kind: giftKind,
       created_at: eventTime,
     });
+    if (
+      await writeWishPurchaseLink(client, {
+        orderItemId: ids.orderItemId,
+        cartItemId: line.cartItemId,
+        giftId: line.giftId,
+        giftVariantId: line.giftVariantId,
+        idolId: line.idolId,
+        quantity: line.quantity,
+        giftKind,
+      })
+    ) {
+      await freezeWishGalleryPreference(client, {
+        cartItemId: line.cartItemId,
+        orderItemId: ids.orderItemId,
+      });
+    }
     await insert(client, "fulfillments", {
       id: ids.fulfillmentId,
       order_id: command.orderId,

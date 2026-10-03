@@ -1,0 +1,327 @@
+import type { SupportedLocale } from "@fan-support/contracts";
+
+// ADR-022 / L3-13: the private notes section of the artist editor.
+const keys = [
+  "title",
+  "summaryEmpty",
+  "summaryLast",
+  "gateTotp",
+  "gateSignIn",
+  "privacy",
+  "loading",
+  "realName",
+  "contact",
+  "contactHint",
+  "identity",
+  "identityHint",
+  "other",
+  "blank",
+  "start",
+  "edit",
+  "save",
+  "saving",
+  "cancel",
+  "saved",
+  "tooLong",
+  "history",
+  "versionLabel",
+  "versionBy",
+  "view",
+  "current",
+  "viewingOld",
+  "backToCurrent",
+  "stale",
+  "expired",
+  "failed",
+  "retry",
+] as const;
+export type ArtistNotesCopy = Record<(typeof keys)[number], string>;
+export const ARTIST_NOTES_COPY_KEYS = keys;
+
+const en: ArtistNotesCopy = {
+  title: "Private notes (studio administrators only)",
+  summaryEmpty: "Nothing written yet",
+  summaryLast: "Last changed by {name} · {time}",
+  gateTotp:
+    "Turn on two-step verification in Account settings, then sign in again with a code to see these notes.",
+  gateSignIn:
+    "This sign-in did not use a verification code. Sign out and sign in again with a code or a recovery code to see these notes.",
+  privacy:
+    "Only studio administrators can see this. Every time it is opened, who and when is recorded. Text only — do not paste ID photos.",
+  loading: "Loading…",
+  realName: "Real name",
+  contact: "Contact details",
+  contactHint: "Phone, email, social accounts",
+  identity: "Identity details",
+  identityHint: "Document type and number, and similar",
+  other: "Other notes",
+  blank: "Not filled in",
+  start: "Write notes",
+  edit: "Edit",
+  save: "Save notes",
+  saving: "Saving…",
+  cancel: "Cancel",
+  saved: "Notes saved.",
+  tooLong: "Too long: at most {limit} characters.",
+  history: "Version history",
+  versionLabel: "Version {n}",
+  versionBy: "{name} · {time}",
+  view: "View",
+  current: "Current",
+  viewingOld: "You are looking at version {n} ({name} · {time}).",
+  backToCurrent: "Back to the current version",
+  stale:
+    "Someone else changed these notes just now. The latest version is shown; please make your change again.",
+  expired: "Viewing time ran out. Open the notes again.",
+  failed: "The notes could not be loaded or saved. Try again shortly.",
+  retry: "Try again",
+};
+const zhCN: ArtistNotesCopy = {
+  title: "私密备注（仅超管可见）",
+  summaryEmpty: "尚未填写",
+  summaryLast: "最后修改：{name} · {time}",
+  gateTotp:
+    "请先在“账号设置”中开启两步验证，然后用验证码重新登录，才能查看私密备注。",
+  gateSignIn:
+    "本次登录没有输入验证码。请退出后重新登录，并输入验证码或恢复码，才能查看私密备注。",
+  privacy:
+    "只有超管能看到这里。每次打开都会记录查看人和时间。只填文字，不要粘贴证件照片。",
+  loading: "正在读取…",
+  realName: "真实姓名",
+  contact: "联系方式",
+  contactHint: "电话、邮箱、社交账号",
+  identity: "身份信息",
+  identityHint: "证件类型与号码等",
+  other: "其他备注",
+  blank: "未填写",
+  start: "填写备注",
+  edit: "编辑",
+  save: "保存备注",
+  saving: "正在保存…",
+  cancel: "取消",
+  saved: "备注已保存。",
+  tooLong: "内容过长：最多 {limit} 个字符。",
+  history: "版本记录",
+  versionLabel: "第 {n} 版",
+  versionBy: "{name} · {time}",
+  view: "查看",
+  current: "当前",
+  viewingOld: "正在查看第 {n} 版（{name} · {time}）。",
+  backToCurrent: "回到当前版本",
+  stale: "这份备注刚被其他人修改过，已显示最新版本，请重新修改。",
+  expired: "查看时间已过，请重新打开。",
+  failed: "暂时无法读取或保存备注，请稍后再试。",
+  retry: "重试",
+};
+const ja: ArtistNotesCopy = {
+  title: "非公開メモ（スタジオ管理者のみ）",
+  summaryEmpty: "まだ入力されていません",
+  summaryLast: "最終更新：{name} · {time}",
+  gateTotp:
+    "「アカウント設定」で2段階認証をオンにし、確認コードで再ログインすると表示できます。",
+  gateSignIn:
+    "今回のログインでは確認コードが使われていません。ログアウトし、確認コードまたはリカバリーコードで再ログインすると表示できます。",
+  privacy:
+    "スタジオ管理者だけが見られます。開くたびに閲覧者と日時が記録されます。文字のみ入力し、身分証の画像は貼らないでください。",
+  loading: "読み込み中…",
+  realName: "本名",
+  contact: "連絡先",
+  contactHint: "電話、メール、SNSアカウント",
+  identity: "身元情報",
+  identityHint: "書類の種類と番号など",
+  other: "その他のメモ",
+  blank: "未入力",
+  start: "メモを書く",
+  edit: "編集",
+  save: "メモを保存",
+  saving: "保存中…",
+  cancel: "キャンセル",
+  saved: "メモを保存しました。",
+  tooLong: "長すぎます：{limit}文字以内にしてください。",
+  history: "バージョン履歴",
+  versionLabel: "第{n}版",
+  versionBy: "{name} · {time}",
+  view: "表示",
+  current: "現在",
+  viewingOld: "第{n}版を表示しています（{name} · {time}）。",
+  backToCurrent: "現在のバージョンに戻る",
+  stale:
+    "このメモはたった今ほかの人に変更されました。最新の内容を表示しています。もう一度変更してください。",
+  expired: "閲覧時間が過ぎました。もう一度開いてください。",
+  failed:
+    "メモを読み込めないか保存できませんでした。しばらくしてからお試しください。",
+  retry: "再試行",
+};
+const th: ArtistNotesCopy = {
+  title: "บันทึกส่วนตัว (เฉพาะผู้ดูแลสตูดิโอ)",
+  summaryEmpty: "ยังไม่ได้กรอก",
+  summaryLast: "แก้ไขล่าสุดโดย {name} · {time}",
+  gateTotp:
+    "เปิดการยืนยันสองขั้นตอนใน “การตั้งค่าบัญชี” แล้วเข้าสู่ระบบใหม่ด้วยรหัส จึงจะดูบันทึกนี้ได้",
+  gateSignIn:
+    "การเข้าสู่ระบบครั้งนี้ไม่ได้ใช้รหัสยืนยัน ออกจากระบบแล้วเข้าใหม่ด้วยรหัสยืนยันหรือรหัสกู้คืน จึงจะดูบันทึกนี้ได้",
+  privacy:
+    "เฉพาะผู้ดูแลสตูดิโอเท่านั้นที่เห็นส่วนนี้ ทุกครั้งที่เปิดจะบันทึกผู้ดูและเวลา กรอกเป็นข้อความเท่านั้น อย่าวางรูปบัตรประจำตัว",
+  loading: "กำลังโหลด…",
+  realName: "ชื่อจริง",
+  contact: "ช่องทางติดต่อ",
+  contactHint: "โทรศัพท์ อีเมล บัญชีโซเชียล",
+  identity: "ข้อมูลยืนยันตัวตน",
+  identityHint: "ประเภทและหมายเลขเอกสาร เป็นต้น",
+  other: "บันทึกอื่น ๆ",
+  blank: "ยังไม่ได้กรอก",
+  start: "เขียนบันทึก",
+  edit: "แก้ไข",
+  save: "บันทึก",
+  saving: "กำลังบันทึก…",
+  cancel: "ยกเลิก",
+  saved: "บันทึกเรียบร้อยแล้ว",
+  tooLong: "ยาวเกินไป: ไม่เกิน {limit} ตัวอักษร",
+  history: "ประวัติเวอร์ชัน",
+  versionLabel: "เวอร์ชัน {n}",
+  versionBy: "{name} · {time}",
+  view: "ดู",
+  current: "ปัจจุบัน",
+  viewingOld: "กำลังดูเวอร์ชัน {n} ({name} · {time})",
+  backToCurrent: "กลับไปเวอร์ชันปัจจุบัน",
+  stale:
+    "มีผู้อื่นเพิ่งแก้ไขบันทึกนี้ ระบบแสดงเวอร์ชันล่าสุดแล้ว โปรดแก้ไขอีกครั้ง",
+  expired: "หมดเวลาการดู โปรดเปิดบันทึกอีกครั้ง",
+  failed: "ไม่สามารถโหลดหรือบันทึกได้ในขณะนี้ โปรดลองอีกครั้งภายหลัง",
+  retry: "ลองอีกครั้ง",
+};
+const vi: ArtistNotesCopy = {
+  title: "Ghi chú riêng (chỉ quản trị viên studio)",
+  summaryEmpty: "Chưa có nội dung",
+  summaryLast: "Sửa lần cuối bởi {name} · {time}",
+  gateTotp:
+    "Hãy bật xác minh hai bước trong “Cài đặt tài khoản”, rồi đăng nhập lại bằng mã để xem ghi chú này.",
+  gateSignIn:
+    "Lần đăng nhập này không dùng mã xác minh. Hãy đăng xuất rồi đăng nhập lại bằng mã xác minh hoặc mã khôi phục để xem ghi chú này.",
+  privacy:
+    "Chỉ quản trị viên studio thấy được phần này. Mỗi lần mở đều ghi lại người xem và thời gian. Chỉ nhập chữ, không dán ảnh giấy tờ tùy thân.",
+  loading: "Đang tải…",
+  realName: "Họ tên thật",
+  contact: "Thông tin liên hệ",
+  contactHint: "Điện thoại, email, tài khoản mạng xã hội",
+  identity: "Thông tin nhân thân",
+  identityHint: "Loại và số giấy tờ, v.v.",
+  other: "Ghi chú khác",
+  blank: "Chưa điền",
+  start: "Viết ghi chú",
+  edit: "Sửa",
+  save: "Lưu ghi chú",
+  saving: "Đang lưu…",
+  cancel: "Hủy",
+  saved: "Đã lưu ghi chú.",
+  tooLong: "Quá dài: tối đa {limit} ký tự.",
+  history: "Lịch sử phiên bản",
+  versionLabel: "Phiên bản {n}",
+  versionBy: "{name} · {time}",
+  view: "Xem",
+  current: "Hiện tại",
+  viewingOld: "Bạn đang xem phiên bản {n} ({name} · {time}).",
+  backToCurrent: "Quay lại phiên bản hiện tại",
+  stale:
+    "Người khác vừa sửa ghi chú này. Phiên bản mới nhất đang được hiển thị; vui lòng sửa lại.",
+  expired: "Đã hết thời gian xem. Hãy mở lại ghi chú.",
+  failed: "Không thể tải hoặc lưu ghi chú lúc này. Vui lòng thử lại sau.",
+  retry: "Thử lại",
+};
+const es: ArtistNotesCopy = {
+  title: "Notas privadas (solo administradores del estudio)",
+  summaryEmpty: "Todavía no hay nada escrito",
+  summaryLast: "Último cambio: {name} · {time}",
+  gateTotp:
+    "Activa la verificación en dos pasos en Configuración de la cuenta y vuelve a iniciar sesión con un código para ver estas notas.",
+  gateSignIn:
+    "En este inicio de sesión no se usó un código de verificación. Cierra sesión y vuelve a entrar con un código o un código de recuperación para ver estas notas.",
+  privacy:
+    "Solo los administradores del estudio pueden ver esto. Cada vez que se abre, se registra quién y cuándo. Solo texto: no pegues fotos de documentos.",
+  loading: "Cargando…",
+  realName: "Nombre real",
+  contact: "Datos de contacto",
+  contactHint: "Teléfono, correo, redes sociales",
+  identity: "Datos de identidad",
+  identityHint: "Tipo y número de documento, etc.",
+  other: "Otras notas",
+  blank: "Sin completar",
+  start: "Escribir notas",
+  edit: "Editar",
+  save: "Guardar notas",
+  saving: "Guardando…",
+  cancel: "Cancelar",
+  saved: "Notas guardadas.",
+  tooLong: "Demasiado largo: como máximo {limit} caracteres.",
+  history: "Historial de versiones",
+  versionLabel: "Versión {n}",
+  versionBy: "{name} · {time}",
+  view: "Ver",
+  current: "Actual",
+  viewingOld: "Estás viendo la versión {n} ({name} · {time}).",
+  backToCurrent: "Volver a la versión actual",
+  stale:
+    "Otra persona acaba de cambiar estas notas. Se muestra la versión más reciente; vuelve a hacer tu cambio.",
+  expired: "Se acabó el tiempo de consulta. Abre las notas de nuevo.",
+  failed:
+    "No se pudieron cargar ni guardar las notas. Inténtalo de nuevo en un momento.",
+  retry: "Reintentar",
+};
+const pt: ArtistNotesCopy = {
+  title: "Notas privadas (somente administradores do estúdio)",
+  summaryEmpty: "Nada escrito ainda",
+  summaryLast: "Última alteração: {name} · {time}",
+  gateTotp:
+    "Ative a verificação em duas etapas em Configurações da conta e entre novamente com um código para ver estas notas.",
+  gateSignIn:
+    "Este acesso não usou um código de verificação. Saia e entre novamente com um código ou um código de recuperação para ver estas notas.",
+  privacy:
+    "Somente administradores do estúdio veem isto. Cada abertura registra quem viu e quando. Apenas texto: não cole fotos de documentos.",
+  loading: "Carregando…",
+  realName: "Nome verdadeiro",
+  contact: "Contatos",
+  contactHint: "Telefone, e-mail, redes sociais",
+  identity: "Dados de identidade",
+  identityHint: "Tipo e número do documento etc.",
+  other: "Outras notas",
+  blank: "Não preenchido",
+  start: "Escrever notas",
+  edit: "Editar",
+  save: "Salvar notas",
+  saving: "Salvando…",
+  cancel: "Cancelar",
+  saved: "Notas salvas.",
+  tooLong: "Longo demais: no máximo {limit} caracteres.",
+  history: "Histórico de versões",
+  versionLabel: "Versão {n}",
+  versionBy: "{name} · {time}",
+  view: "Ver",
+  current: "Atual",
+  viewingOld: "Você está vendo a versão {n} ({name} · {time}).",
+  backToCurrent: "Voltar para a versão atual",
+  stale:
+    "Outra pessoa acabou de alterar estas notas. A versão mais recente está na tela; faça sua alteração de novo.",
+  expired: "O tempo de visualização acabou. Abra as notas novamente.",
+  failed:
+    "Não foi possível carregar ou salvar as notas. Tente de novo em instantes.",
+  retry: "Tentar de novo",
+};
+
+export function artistNotesCopy(locale: SupportedLocale): ArtistNotesCopy {
+  switch (locale) {
+    case "en":
+      return en;
+    case "zh-CN":
+      return zhCN;
+    case "ja":
+      return ja;
+    case "th":
+      return th;
+    case "vi":
+      return vi;
+    case "es":
+      return es;
+    case "pt":
+      return pt;
+  }
+}

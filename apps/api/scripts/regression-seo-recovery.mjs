@@ -189,7 +189,12 @@ export async function verifyRegressionSeoRecovery({
     const document = await page.evaluate(() => ({
       lang: globalThis.document.documentElement.lang,
       title: globalThis.document.title,
-      text: globalThis.document.querySelector("main")?.textContent,
+      // Rendered copy only: JSON-LD and streamed payload scripts repeat the SEO title.
+      text: (() => {
+        const main = globalThis.document.querySelector("main")?.cloneNode(true);
+        main?.querySelectorAll("script").forEach((node) => node.remove());
+        return main?.textContent;
+      })(),
       canonical: globalThis.document.querySelector('link[rel="canonical"]')
         ?.href,
       robots: [...globalThis.document.querySelectorAll('meta[name="robots"]')]
@@ -217,7 +222,25 @@ export async function verifyRegressionSeoRecovery({
       document.title.includes(view.seoTitle ?? view.title),
       "actual metadata uses the proven full English object during recovery",
     );
-    const headline = view.displayName ?? view.title ?? view.heroTitle;
+    // The homepage uses a localized interface heading; its published copy is
+    // the subtitle. Verify that source-language content still survives fallback.
+    const isHomepage = sample.locator.kind === "HOMEPAGE";
+    const headline = isHomepage
+      ? view.heroSubtitle
+      : (view.displayName ?? view.title);
+    if (isHomepage) {
+      check(
+        (await page.locator("[data-home-hero]").count()) === 1,
+        "homepage renders its published hero rather than the unavailable state",
+      );
+      const copy = await loadStorefrontCopy(locale);
+      const heading = page.locator("[data-home-hero] #hero-title");
+      check(
+        (await heading.textContent()) === copy.artistEyebrow &&
+          (await heading.getAttribute("lang")) === locale,
+        "homepage interface heading remains localized during content fallback",
+      );
+    }
     if (sample.locator.kind === "POLICY" && fallback) {
       const copy = await loadStorefrontCopy(locale);
       check(
@@ -232,11 +255,32 @@ export async function verifyRegressionSeoRecovery({
         !document.text.includes(view.body),
         "fallback policy terms are not silently displayed as accepted localized terms",
       );
-    } else
+    } else {
+      if (!document.text?.includes(headline)) {
+        // Diagnostics only: keep what the page actually rendered for the CI evidence.
+        const name = `headline-missing-${sample.locator.kind.toLowerCase()}-${locale}-${viewport.width}`;
+        await page.screenshot({
+          path: path.join(output, `${name}.png`),
+          fullPage: true,
+        });
+        await writeFile(
+          path.join(output, `${name}.json`),
+          JSON.stringify(
+            {
+              headline,
+              fallback,
+              main: document.text?.replace(/\s+/gu, " ").slice(0, 4000) ?? null,
+            },
+            null,
+            2,
+          ),
+        );
+      }
       check(
         document.text.includes(headline),
-        "rendered content includes the proven object headline",
+        "rendered content includes the proven published copy",
       );
+    }
     assert.deepEqual(
       document.alternates.sort(),
       fallback ? [] : expectedLinks(origin, sample.locator, available),
@@ -249,11 +293,12 @@ export async function verifyRegressionSeoRecovery({
           document.text.includes(copy.fallbackNotice),
           "actual incident fallback has its localized notice",
         );
+        const sourceCopy = isHomepage
+          ? page.locator("[data-home-hero] .storefront-hero-body")
+          : page.getByRole("heading", { name: headline, exact: true });
         check(
-          (await page
-            .getByRole("heading", { name: headline, exact: true })
-            .getAttribute("lang")) === "en",
-          "fallback object heading explicitly declares English while page retains requested locale",
+          (await sourceCopy.getAttribute("lang")) === "en",
+          "fallback object copy explicitly declares English while page retains requested locale",
         );
       }
       check(

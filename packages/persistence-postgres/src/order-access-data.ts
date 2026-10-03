@@ -22,7 +22,7 @@ export function oneAccessRow(rows: DraftRow[]) {
   if (rows.length !== 1) return rejectOrderAccess("ACCESS_DENIED");
   return rows[0]!;
 }
-export const orderAccessOrderColumns = `o.id,o.cart_id,o.public_order_id,o.presentation_locale,o.order_status,o.payment_status,o.dispute_status,o.fulfillment_status,o.currency,o.subtotal_minor::text,o.tax_amount_minor::text,o.shipping_amount_minor::text,o.fee_amount_minor::text,o.discount_amount_minor::text,o.total_amount_minor::text,${cartTimestamp("o.created_at")} created_at,${cartTimestamp("o.updated_at")} updated_at`;
+export const orderAccessOrderColumns = `o.id,o.cart_id,o.public_order_id,o.public_order_no,o.presentation_locale,o.order_status,o.payment_status,o.dispute_status,o.fulfillment_status,o.currency,o.subtotal_minor::text,o.tax_amount_minor::text,o.shipping_amount_minor::text,o.fee_amount_minor::text,o.discount_amount_minor::text,o.total_amount_minor::text,${cartTimestamp("o.created_at")} created_at,${cartTimestamp("o.updated_at")} updated_at`;
 
 export async function tokenOwner(
   client: TransactionClient,
@@ -46,6 +46,20 @@ export async function sessionOwner(
       client,
       `SELECT session.order_id,o.cart_id FROM public.order_access_sessions session JOIN public.orders o ON o.id=session.order_id WHERE session.public_order_id=$2::uuid AND EXISTS(SELECT 1 FROM jsonb_to_recordset($1::jsonb) AS candidate(digest text,version text) WHERE session.session_token_digest=decode(candidate.digest,'hex') AND session.token_pepper_version=candidate.version) LIMIT 2`,
       [candidateBindings(candidates), publicOrderId],
+    ),
+  );
+}
+/** Read-only: an active session of this browser whose order carries the typed public number. */
+export async function locatedSessionOrder(
+  client: TransactionClient,
+  candidates: OrderAccessCandidates,
+  publicOrderNo: string,
+) {
+  return oneAccessRow(
+    await draftRows(
+      client,
+      `SELECT session.public_order_id FROM public.order_access_sessions session JOIN public.orders o ON o.id=session.order_id AND o.public_order_id=session.public_order_id WHERE o.public_order_no=$2::text AND session.status='ACTIVE' AND session.created_at<=clock_timestamp() AND session.expires_at>clock_timestamp() AND EXISTS(SELECT 1 FROM jsonb_to_recordset($1::jsonb) AS candidate(digest text,version text) WHERE session.session_token_digest=decode(candidate.digest,'hex') AND session.token_pepper_version=candidate.version) LIMIT 2`,
+      [candidateBindings(candidates), publicOrderNo],
     ),
   );
 }

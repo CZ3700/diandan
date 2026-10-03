@@ -1,56 +1,12 @@
 import { createHash } from "node:crypto";
 import { expect, test } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
-import {
-  SUPPORTED_LOCALES,
-  adminFinanceResponseSchema,
-} from "@fan-support/contracts";
+import { SUPPORTED_LOCALES } from "@fan-support/contracts";
 const views = await import("./detail-view").catch(() => undefined);
 const messages = await import("./copy").catch(() => undefined);
 const reviews = await import("./review-manifest").catch(() => undefined);
-const id = "10000000-0000-4000-8000-000000000001";
-export const financeFixture = () => {
-  const value = adminFinanceResponseSchema.parse({
-    schemaVersion: 1,
-    outcome: "SUCCESS",
-    kind: "DETAIL",
-    canManage: true,
-    canCancel: false,
-    order: {
-      orderId: id,
-      publicOrderId: id,
-      version: 1,
-      presentationLocale: "en",
-      orderStatus: "OPEN",
-      paymentStatus: "PAID",
-      disputeStatus: "NONE",
-      currency: "USD",
-      totalAmountMinor: 1000,
-      capturedAmountMinor: 1000,
-      occupiedRefundAmountMinor: 0,
-      refundedAmountMinor: 0,
-      availableRefundAmountMinor: 1000,
-      needsReconciliation: false,
-      updatedAt: "2026-09-22T00:00:00Z",
-    },
-    items: [
-      {
-        orderItemId: id,
-        position: 1,
-        amountMinor: 1000,
-        occupiedAmountMinor: 0,
-        availableAmountMinor: 1000,
-      },
-    ],
-    attempts: [],
-    refunds: [],
-    disputes: [],
-    issues: [],
-  });
-  if (value.outcome !== "SUCCESS" || value.kind !== "DETAIL")
-    throw new Error("Invalid fixture");
-  return value;
-};
+import { financeFixture } from "./fixtures.test-support";
+export { financeFixture };
 test("finance panel uses server authority and withholds new refunds while reconciliation is outstanding", () => {
   expect(views?.FinanceDetailView).toBeTypeOf("function");
   const View = views!.FinanceDetailView;
@@ -129,4 +85,31 @@ test("processing balance excludes refunds already confirmed successful", () => {
   )?.[1];
   expect(processing).toContain('value="200"');
   expect(processing).not.toContain('value="600"');
+});
+
+// The order page keeps payments and refunds folded at the bottom (user request 2026-09-29)
+// unless something there still needs a person: it must never hide an unfinished refund.
+test("payments and refunds open by themselves only when something needs attention", async () => {
+  const { financeNeedsAttention } = await import("./model");
+  const quiet = financeFixture();
+  expect(financeNeedsAttention(quiet, false)).toBe(false);
+  expect(financeNeedsAttention(null, false)).toBe(false);
+  expect(financeNeedsAttention(quiet, true)).toBe(true);
+  for (const change of [
+    { occupiedRefundAmountMinor: 500 },
+    { needsReconciliation: true },
+    { disputeStatus: "OPEN" },
+    { disputeStatus: "LOST" },
+  ]) {
+    const detail = financeFixture();
+    Object.assign(detail.order, change);
+    expect(financeNeedsAttention(detail, false)).toBe(true);
+  }
+  const settled = financeFixture();
+  Object.assign(settled.order, {
+    occupiedRefundAmountMinor: 500,
+    refundedAmountMinor: 500,
+    paymentStatus: "PARTIALLY_REFUNDED",
+  });
+  expect(financeNeedsAttention(settled, false)).toBe(false);
 });

@@ -4,6 +4,8 @@ import {
   adminOrdersResponseSchema,
   checkoutPreflightObservationSchema,
   dailyPublicationDocumentSchema,
+  giftKindSchema,
+  normalizePublicOrderNo,
   type AdminOrdersPrincipal,
   type AdminOrdersStoreRequest,
 } from "@fan-support/contracts";
@@ -13,7 +15,8 @@ import {
   readAdminOrderLines,
   rejectAdminOrdersIntegrity,
 } from "./admin-orders-data.js";
-import { fulfillmentActions } from "./admin-orders-rules.js";
+import { fulfillmentActions, proofActions } from "./admin-orders-rules.js";
+import { readActiveLineProofs } from "./admin-order-proofs-read.js";
 import { readOrderAccessDetail } from "./order-access-read.js";
 import { readGiftRevisionProfile } from "./gift-commerce-gift-profile.js";
 import { readAdminOrderNotification } from "./admin-notification-resend-read.js";
@@ -24,10 +27,17 @@ export async function readAdminOrdersList(
   const c = request.command;
   if (c.action !== "LIST") return rejectAdminOrdersIntegrity();
   const pattern = `%${c.query.replace(/[\\%_]/gu, "\\$&")}%`;
-  const condition = `($1::text='' OR o.public_order_id::text ILIKE $2 OR EXISTS(SELECT 1 FROM public.order_items i WHERE i.order_id=o.id AND (i.idol_display_name ILIKE $2 OR i.gift_title ILIKE $2)))
+  // A spoken or retyped public number (any case, spacing, O/I/L) matches exactly; fragments match by substring.
+  const condition = `($1::text='' OR o.public_order_id::text ILIKE $2 OR o.public_order_no ILIKE $2 OR o.public_order_no=$5::text OR EXISTS(SELECT 1 FROM public.order_items i WHERE i.order_id=o.id AND (i.idol_display_name ILIKE $2 OR i.gift_title ILIKE $2)))
  AND ($3::text='ALL' OR o.fulfillment_status=$3)
  AND ($4::text='ALL' OR EXISTS(SELECT 1 FROM public.order_items i JOIN public.support_intents s ON s.id=i.support_intent_id JOIN public.cart_items c ON c.id=i.cart_item_id WHERE i.order_id=o.id AND CASE WHEN $4::text='REJECTED' THEN s.moderation_status IN('REJECTED','REDACTED') ELSE (c.has_fan_message OR s.fan_message_ciphertext IS NOT NULL OR s.display_mode='nickname') AND (s.moderation_status<>'APPROVED' OR s.privacy_state<>'ACTIVE') END))`;
-  const args = [c.query, pattern, c.fulfillment, c.moderation];
+  const args = [
+    c.query,
+    pattern,
+    c.fulfillment,
+    c.moderation,
+    normalizePublicOrderNo(c.query),
+  ];
   const [total] = await draftRows(
     client,
     `SELECT count(*)::text total FROM public.orders o WHERE ${condition}`,
@@ -38,7 +48,7 @@ export async function readAdminOrdersList(
     `SELECT o.*,${adminOrdersTimestamp("o.created_at")} created_at,${adminOrdersTimestamp("o.updated_at")} updated_at,
  (SELECT count(*)::int FROM public.order_items i WHERE i.order_id=o.id) item_count,
  (SELECT count(*)::int FROM public.order_items i JOIN public.support_intents s ON s.id=i.support_intent_id JOIN public.cart_items c ON c.id=i.cart_item_id WHERE i.order_id=o.id AND (c.has_fan_message OR s.fan_message_ciphertext IS NOT NULL OR s.display_mode='nickname') AND (s.moderation_status<>'APPROVED' OR s.privacy_state<>'ACTIVE')) pending_review_count
- FROM public.orders o WHERE ${condition} ORDER BY o.created_at DESC,o.id DESC LIMIT $5 OFFSET $6`,
+ FROM public.orders o WHERE ${condition} ORDER BY o.created_at DESC,o.id DESC LIMIT $6 OFFSET $7`,
     [...args, c.pageSize, (c.page - 1) * c.pageSize],
   );
   return adminOrdersResponseSchema.parse({
@@ -52,6 +62,7 @@ export async function readAdminOrdersList(
       adminOrdersListItemSchema.parse({
         orderId: o["id"],
         publicOrderId: o["public_order_id"],
+        publicOrderNo: o["public_order_no"],
         version: Number(o["version"]),
         presentationLocale: o["presentation_locale"],
         orderStatus: o["order_status"],
@@ -72,6 +83,9 @@ async function historicalGiftKind(
   client: Parameters<typeof draftRows>[0],
   line: DraftRow,
 ) {
+  // The purchase-time snapshot (migration 0038) is authoritative; derive only for legacy lines.
+  if (typeof line["gift_kind"] === "string")
+    return giftKindSchema.parse(line["gift_kind"]);
   const [row] = await draftRows(
     client,
     `SELECT r.id,r.gift_id,r.profile_version,d.document FROM public.gift_revisions r LEFT JOIN public.gift_revision_translations t ON t.gift_revision_id=r.id LEFT JOIN public.daily_publication_revisions d ON d.gift_revision_id=r.id WHERE r.gift_id=$1 AND (t.id=$2::uuid OR d.source_translation_id=$3::uuid) LIMIT 2`,
@@ -125,9 +139,11 @@ export async function readAdminOrdersDetail(
   base: string,
 ) {
   const orderId = String(order["id"]),
-    lines = await readAdminOrderLines(client, orderId);
+    lines = await readAdminOrderLines(client, orderId),
+    proofs = await readActiveLineProofs(client, orderId);
   const items = [];
-  for (const [index, line] of lines.entries())
+  for (const [index, line] of lines.entries()) {
+    const lineProofs = proofs.get(String(line["fulfillment_id"])) ?? [];
     items.push(
       adminOrdersLineSchema.parse({
         itemId: line["item_id"],
@@ -149,8 +165,15 @@ export async function readAdminOrdersDetail(
         giftKind: await historicalGiftKind(client, line),
         inventoryPolicy: await historicalInventory(client, line),
         allowedActions: fulfillmentActions(order, line, principal.permissions),
+        proofs: lineProofs,
+        proofActions: proofActions(
+          line,
+          lineProofs.length,
+          principal.permissions,
+        ),
       }),
     );
+  }
   const notes = await draftRows(
     client,
     `SELECT id,actor_id,${adminOrdersTimestamp("created_at")} created_at FROM public.admin_order_notes WHERE order_id=$1 ORDER BY created_at DESC,id DESC LIMIT 50`,

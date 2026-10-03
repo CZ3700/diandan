@@ -9,8 +9,8 @@ import {
 } from "@fan-support/application";
 import { createPgBossReliableEventQueue } from "@fan-support/persistence-postgres";
 import { createOrderNotificationTemplates } from "@fan-support/i18n/notifications";
-import { createLocalAdminExceptionsComposition } from "../dist/admin-exceptions-composition.js";
-import { createLocalAdminFinanceComposition } from "../dist/admin-finance-composition.js";
+import { createLocalAdminExceptionsComposition } from "../dist/testing/admin-exceptions-composition.js";
+import { createLocalAdminFinanceComposition } from "../dist/testing/admin-finance-composition.js";
 import { createAdminOrdersRuntime } from "./admin-orders-runtime.mjs";
 import { createPaidAdminOrder } from "./admin-orders-fixtures.mjs";
 import {

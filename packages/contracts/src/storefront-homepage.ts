@@ -107,8 +107,7 @@ export const storefrontHomepageResponseSchema = z.union([
           row.slotKey !== slot.slotKey ||
           row.kind !== slot.kind ||
           expectedId?.toLowerCase() !== id.toLowerCase() ||
-          keys.has(slot.slotKey) ||
-          (slot.kind === "HERO_IDOL" && slot.status !== "AVAILABLE")
+          keys.has(slot.slotKey)
         )
           context.addIssue({
             code: "custom",

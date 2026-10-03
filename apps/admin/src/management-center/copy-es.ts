@@ -1,5 +1,42 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  allGifts: "Todos",
+  priceOrder: "Ordenar por precio",
+  priceAscending: "Precio: de menor a mayor",
+  priceDescending: "Precio: de mayor a menor",
+  priceUnavailable: "Precio no disponible",
+  wishArtist: "Artista destinatario",
+  wishArtistRequired: "Elige al artista que recibirá este regalo de deseo.",
+  wishArtistChoose: "Elegir este artista",
+  wishArtistChange: "Elegir otro artista",
+  wishArtistLocked:
+    "Este deseo está vinculado a este artista y no se puede reasignar.",
+  wishOnlyOnce:
+    "Cada deseo recibe apoyo una sola vez. La venta termina al confirmarse el pago.",
+  wishArtistUnavailable:
+    "Este artista no puede recibir regalos de deseo ahora.",
+  wishAvailable: "Disponible para apoyar",
+  wishReserved: "Pago en curso",
+  wishSupported: "Deseo apoyado",
+  wishUnavailable: "No disponible",
+  interfaceLanguage: "Idioma de la interfaz",
+  discardEdits: "¿Descartar los cambios sin guardar y salir de esta página?",
+  adjustFocus: "Ajustar el enfoque del recorte",
+  focusHint:
+    "Elige el sujeto en la foto original. Usa las flechas para moverlo poco o Mayús + flecha para moverlo más.",
+  focusHorizontal: "Enfoque horizontal",
+  focusVertical: "Enfoque vertical",
+  resetFocus: "Restablecer enfoque",
+  previewPortrait: "Retrato",
+  previewDesktop: "Banner de escritorio",
+  previewMobile: "Banner móvil",
+  previewGift: "Foto del regalo",
+  originalLoading: "Cargando la foto original…",
+  originalUnavailable:
+    "No se pudo cargar la foto original. Inténtalo de nuevo; tus cambios se conservan.",
+  reuploadRequired: "Vuelve a subir la foto original para ajustar esta imagen.",
+  imageUnchanged: "Elige una nueva foto o ajusta el enfoque antes de publicar.",
+
   login: "Iniciar sesión",
   loginHint: "Inicia sesión para gestionar artistas, regalos y carteles.",
   loginFailed: "No se pudo iniciar sesión. Inténtalo de nuevo.",
@@ -21,7 +58,15 @@ export const copy = {
   addAndPublish: "Añadir y publicar",
   upload: "Elegir imagen",
   changeImage: "Cambiar imagen",
-  imageHint: "JPEG, PNG o WebP. Se conservan las proporciones.",
+  imageHint:
+    "JPEG, PNG o WebP. La foto se recorta para llenar cada espacio de visualización.",
+  imageBestSize: "Recomendado: al menos {width} × {height} px.",
+  imageTipArtist: "Coloca el rostro en la parte superior.",
+  imageTipGift: "Coloca el regalo en el centro.",
+  imageTipPoster:
+    "Coloca el motivo en el centro; en móviles solo se ve la parte central.",
+  imageTooSmall:
+    "Esta imagen mide {width} × {height} px, menos de lo recomendado, y puede verse borrosa en pantallas grandes.",
   name: "Nombre",
   description: "Descripción",
   price: "Precio",
@@ -35,6 +80,7 @@ export const copy = {
   processing: "Procesando y publicando…",
   published: "Publicado",
   retry: "Reintentar",
+  dismiss: "Cerrar",
   loadFailed: "No se pudo cargar la lista. Inténtalo de nuevo.",
   emptyArtists: "Añade tu primer artista.",
   emptyGifts: "Añade tu primer regalo.",
@@ -97,4 +143,31 @@ export const copy = {
   archived: "Archivado",
   imageUnavailable: "Imagen no disponible",
   readOnly: "Solo lectura",
+  deleteTitle: "Eliminar definitivamente",
+  deleteWarning:
+    "Se quitará del sitio web y de esta lista. No se puede deshacer. Los pedidos existentes conservan su registro.",
+  deleteTypeName: "Escribe el nombre exacto para confirmar",
+  deleteConfirm: "Eliminar definitivamente",
+  deleted: "Eliminado. Ya no aparece en el sitio web.",
+  posterDelete: "Eliminar",
+  posterDeleteWarning:
+    "¿Eliminar esta imagen del historial? No se puede deshacer. La imagen de inicio actual no cambia.",
+  posterDeleteConfirm: "Eliminar imagen",
+  posterDeleteCancel: "Conservar",
+  posterDeleted: "Imagen eliminada. La página de inicio no cambia.",
+  assignment: "Representante",
+  assignmentNone: "Sin asignar",
+  assignmentStudio: "Sin asignar (gestionado por el estudio)",
+  assignmentAll: "Todos los artistas",
+  assignmentFilter: "Mostrar artistas de",
+  assignmentInactive: "{name} (inactivo)",
+  assignmentImmediate: "El cambio se aplica al momento; no hace falta guardar.",
+  assignmentOnCreate:
+    "El artista pasará a este representante en cuanto se añada.",
+  assignmentSaved: "Representante actualizado.",
+  assignmentFailed: "No se pudo guardar el representante. Inténtalo de nuevo.",
+  assignmentStale:
+    "Otra persona cambió el representante. Vuelve a la lista y abre de nuevo al artista.",
+  assignmentMissed:
+    "El artista se añadió, pero no se guardó el representante. Abre al artista y elige de nuevo el representante.",
 } satisfies ManagementCopy;

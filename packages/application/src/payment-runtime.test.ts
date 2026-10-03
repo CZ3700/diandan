@@ -1,6 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
+import { countrySchema } from "@fan-support/contracts";
 import { PaymentRuntimeRepositoryError } from "@fan-support/persistence-port";
+import { id } from "./checkout-preflight.test-fixtures.js";
 import { paymentHarness } from "./payment-runtime.harness.js";
+
+const countries = (...codes: string[]) =>
+  codes.map((code) => countrySchema.parse(code));
 
 const load = () => import("./payment-runtime.js").catch(() => null);
 async function harness() {
@@ -103,6 +108,41 @@ describe("persistent payment application orchestration", () => {
     expect(h.provider.getPayment).not.toHaveBeenCalled();
     expect(h.keys.encryptEnvelope).toHaveBeenCalledOnce();
     expect(h.state().current.currentAttempt?.action).toEqual(before.action);
+  });
+  it("refreshes an expired original action after a matching query without creating another payment", async () => {
+    const h = await harness();
+    await h.app.create(h.create, h.context);
+    h.setReconcileStatus("REQUIRES_ACTION");
+    const attempt = h.state().current.currentAttempt!;
+    attempt.actionExpired = true;
+    attempt.recovery = "RECONCILE_REQUIRED";
+    const record = vi.spyOn(h.repo, "recordReconcile");
+    await h.app.recover(h.recover(attempt.id), h.freshContext());
+    expect(h.provider.getPayment).toHaveBeenCalledOnce();
+    expect(h.keys.encryptEnvelope).toHaveBeenCalledTimes(2);
+    expect(record.mock.calls[0]?.[0]).toMatchObject({
+      claim: {
+        attempt: {
+          id: attempt.id,
+          status: "REQUIRES_ACTION",
+          actionExpired: true,
+        },
+      },
+      action: { type: "REDIRECT" },
+    });
+    expect(h.provider.createPayment).toHaveBeenCalledOnce();
+  });
+  it("does not look up a new action when expired checkout resources are not recoverable", async () => {
+    const h = await harness();
+    await h.app.create(h.create, h.context);
+    h.setReconcileStatus("REQUIRES_ACTION");
+    const attempt = h.state().current.currentAttempt!;
+    attempt.actionExpired = true;
+    attempt.recovery = "NONE";
+    await h.app.recover(h.recover(attempt.id), h.freshContext());
+    expect(h.provider.getPayment).not.toHaveBeenCalled();
+    expect(h.keys.encryptEnvelope).toHaveBeenCalledOnce();
+    expect(h.provider.createPayment).toHaveBeenCalledOnce();
   });
   it.each(["GET", "KMS"])(
     "defers %s failure during lost-action recovery without recording a state transition",
@@ -295,6 +335,94 @@ describe("persistent payment application orchestration", () => {
     expect(h.provider.reconcilePayment).toHaveBeenCalledOnce();
     expect(h.state().current.currentAttempt?.status).toBe("PROCESSING");
   });
+  const createFailure = (
+    code: string,
+    recovery: "RETRY_SAME_COMMAND" | "RECONCILE_REQUIRED" | "NONE",
+  ) => ({
+    schemaVersion: 1,
+    operation: "CREATE_PAYMENT",
+    outcome: "FAILURE",
+    error: {
+      schemaVersion: 1,
+      code,
+      recovery,
+      ...(recovery === "RETRY_SAME_COMMAND" ? { retryAfterMs: 2000 } : {}),
+    },
+  });
+  it.each(["RATE_LIMITED", "TEMPORARY_UNAVAILABLE"])(
+    "a %s create the PSP never accepted stays CREATED and is resent with its frozen key (audit PAY-01)",
+    async (code) => {
+      const h = await harness();
+      h.provider.createPayment.mockResolvedValueOnce(
+        createFailure(code, "RETRY_SAME_COMMAND") as never,
+      );
+      const settle = vi.spyOn(h.repo, "settleCreate"),
+        deferred = vi.spyOn(h.repo, "deferRecovery");
+      expect(await h.app.create(h.create, h.context)).toMatchObject({
+        attempt: { status: "CREATED" },
+      });
+      expect(settle).not.toHaveBeenCalled();
+      expect(deferred.mock.calls[0]?.[0]).toMatchObject({ errorCode: code });
+      const attempt = h.state().current.currentAttempt!;
+      expect(attempt).toMatchObject({
+        status: "CREATED",
+        providerCallStarted: false,
+      });
+      expect(
+        await h.app.recover(h.recover(attempt.id), h.freshContext()),
+      ).toMatchObject({ attempt: { status: "REQUIRES_ACTION" } });
+      const [first, second] = h.provider.createPayment.mock.calls.map(
+        ([command]) => command,
+      );
+      expect(second?.providerIdempotencyKey).toBe(
+        first?.providerIdempotencyKey,
+      );
+      expect(h.provider.createPayment).toHaveBeenCalledTimes(2);
+    },
+  );
+  it.each([
+    ["TIMEOUT_OUTCOME_UNKNOWN", "RECONCILE_REQUIRED"],
+    ["AUTHENTICATION_FAILED", "NONE"],
+    ["IDEMPOTENCY_CONFLICT", "NONE"],
+  ] as const)(
+    "a %s create is never resent and stays uncertain",
+    async (code, recovery) => {
+      const h = await harness();
+      h.provider.createPayment.mockResolvedValueOnce(
+        createFailure(code, recovery) as never,
+      );
+      expect(await h.app.create(h.create, h.context)).toMatchObject({
+        attempt: { status: "UNKNOWN", recovery: "RECONCILE_REQUIRED" },
+      });
+      expect(h.provider.createPayment).toHaveBeenCalledOnce();
+    },
+  );
+  it("an UNKNOWN payment that cannot be reconciled raises the alert hook (audit PAY-01)", async () => {
+    const h = await harness();
+    const onRecoveryUnresolved = vi.fn(() => {
+      throw new Error("alert sink unavailable");
+    });
+    const module = await load();
+    const app = module!.createPaymentRuntimeUseCases({
+      ...h.dependencies,
+      onRecoveryUnresolved,
+    });
+    h.setOutcome("UNKNOWN");
+    await app.create(h.create, h.context);
+    expect(onRecoveryUnresolved).not.toHaveBeenCalled();
+    h.provider.reconcilePayment.mockResolvedValueOnce({
+      schemaVersion: 1,
+      operation: "RECONCILE_PAYMENT",
+      outcome: "FAILURE",
+      error: { schemaVersion: 1, code: "PAYMENT_NOT_FOUND", recovery: "NONE" },
+    } as never);
+    expect(await app.recoverNext()).toMatchObject({ processed: true });
+    expect(h.state().current.currentAttempt?.status).toBe("UNKNOWN");
+    expect(onRecoveryUnresolved).toHaveBeenCalledOnce();
+    await app.recoverNext();
+    expect(h.state().current.currentAttempt?.status).toBe("PROCESSING");
+    expect(onRecoveryUnresolved).toHaveBeenCalledOnce();
+  });
   it("fails uncertain when the provider response is malformed instead of retrying the charge", async () => {
     const h = await harness();
     h.setOutcome("MALFORMED");
@@ -307,27 +435,78 @@ describe("persistent payment application orchestration", () => {
     });
     expect(h.provider.createPayment).toHaveBeenCalledOnce();
   });
-  it("does not infer country or call the provider until an explicit eligible country is selected", async () => {
+  const readCapabilities = (
+    h: Awaited<ReturnType<typeof harness>>,
+    presentationLocale: "en" | "ja",
+    country?: string,
+  ) =>
+    h.app.capabilities(
+      {
+        schemaVersion: 1,
+        operation: "READ_PAYMENT_CAPABILITIES",
+        checkoutSessionId: h.create.checkoutSessionId,
+        presentationLocale,
+        ...(country === undefined ? {} : { country }),
+        supportedActionTypes: ["REDIRECT"],
+      } as Parameters<typeof h.app.capabilities>[0],
+      h.context,
+    );
+  it("resolves the country from published rules alone when every country sees the same methods", async () => {
     const h = await harness();
-    expect(
-      await h.app.capabilities(
-        {
-          schemaVersion: 1,
-          operation: "READ_PAYMENT_CAPABILITIES",
-          checkoutSessionId: h.create.checkoutSessionId,
-          presentationLocale: "ja",
-          supportedActionTypes: ["REDIRECT"],
-        },
-        h.context,
-      ),
-    ).toMatchObject({
+    h.state().current.routing!.routes[0]!.rule.countries = countries(
+      "US",
+      "TH",
+    );
+    expect(await readCapabilities(h, "en")).toMatchObject({
       action: "CAPABILITIES",
-      capabilities: { country: null, countries: ["US"], capabilities: [] },
+      capabilities: {
+        country: "TH",
+        countries: ["TH", "US"],
+        countrySelectionRequired: false,
+        capabilities: [{ id: h.create.capabilityId }],
+      },
     });
-    expect(h.provider.getCapabilities).not.toHaveBeenCalled();
+    expect(h.provider.getCapabilities).toHaveBeenCalledWith(
+      expect.objectContaining({ country: "TH" }),
+    );
+    expect(await readCapabilities(h, "ja")).toMatchObject({
+      capabilities: { country: "TH", countrySelectionRequired: false },
+    });
     expect(
       h.state().current.checkout.observation.consent.presentationLocale,
     ).toBe("en");
+  });
+  it("asks for a country, without inferring one or calling the provider, only when countries see different methods", async () => {
+    const h = await harness();
+    const routes = h.state().current.routing!.routes;
+    const regional = structuredClone(routes[0]!);
+    regional.providerConfigId = id(208) as typeof regional.providerConfigId;
+    regional.rule.id = id(207) as typeof regional.rule.id;
+    regional.rule.countries = countries("TH");
+    routes.push(regional);
+    routes[0]!.rule.countries = countries("TH", "US");
+    expect(await readCapabilities(h, "ja")).toMatchObject({
+      action: "CAPABILITIES",
+      capabilities: {
+        country: null,
+        countries: ["TH", "US"],
+        countrySelectionRequired: true,
+        capabilities: [],
+      },
+    });
+    expect(h.provider.getCapabilities).not.toHaveBeenCalled();
+    const thailand = await readCapabilities(h, "en", "TH");
+    expect(thailand).toMatchObject({
+      capabilities: { country: "TH", countrySelectionRequired: true },
+    });
+    expect(
+      "capabilities" in thailand &&
+        thailand.capabilities.capabilities.map((entry) => entry.id),
+    ).toEqual([h.create.capabilityId, id(207)]);
+    expect(await readCapabilities(h, "en", "JP")).toMatchObject({
+      outcome: "FAILURE",
+      code: "CAPABILITY_UNAVAILABLE",
+    });
   });
   it("rechecks authorization and version after decrypting an action, withholding a stale result", async () => {
     const h = await harness();

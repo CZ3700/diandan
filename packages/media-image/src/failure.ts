@@ -24,13 +24,16 @@ export function processingError(error: unknown): MediaProcessingError {
 
 /** Monotonic total budget bounds each storage request and native codec stage. */
 export class ProcessingBudget {
-  private readonly deadline = performance.now() + 180_000;
+  private readonly deadline: number;
   private expired = false;
 
   constructor(
     private readonly requestTimeoutMs: number,
     private readonly codecTimeoutSeconds: number,
-  ) {}
+    totalMs = 180_000,
+  ) {
+    this.deadline = performance.now() + totalMs;
+  }
 
   remainingMs(): number {
     const remaining = this.deadline - performance.now();

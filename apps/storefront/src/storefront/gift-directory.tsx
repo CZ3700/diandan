@@ -1,13 +1,19 @@
-import { GiftPagination } from "./gift-pagination";
+import type { ReactNode } from "react";
 import {
   type GiftDirectoryResponse,
   type GiftDiscoveryQuery,
   type SupportedLocale,
 } from "@fan-support/contracts";
-import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
-import { GiftDirectoryCard } from "./gift-directory-card";
-import { GiftFilters } from "./gift-filters";
-import { giftPageHref, giftResetHref } from "./gift-query";
+import { Price } from "@fan-support/ui";
+import type { StorefrontCopy } from "./copy";
+import { GiftListing } from "./gift-listing";
+import {
+  giftFilterHref,
+  giftPageHref,
+  giftResetHref,
+  type GiftFilters,
+  type GiftScopeInUrl,
+} from "./gift-query";
 
 export type GiftDirectoryProps = Readonly<{
   locale: SupportedLocale;
@@ -17,6 +23,7 @@ export type GiftDirectoryProps = Readonly<{
   contextQuery?: string;
   basePath?: string;
   headingLevel?: 1 | 2;
+  scope?: GiftScopeInUrl;
 }>;
 
 export function GiftDirectory({
@@ -27,9 +34,10 @@ export function GiftDirectory({
   contextQuery = "",
   basePath = "/gifts",
   headingLevel = 2,
+  scope = "EXPLICIT",
 }: GiftDirectoryProps) {
   const href = (page: number) =>
-    giftPageHref(query, basePath, contextQuery, page);
+    giftPageHref(query, basePath, contextQuery, page, scope);
   const Heading = headingLevel === 1 ? "h2" : "h3";
   if (initial.outcome === "FAILURE")
     return (
@@ -49,72 +57,83 @@ export function GiftDirectory({
         </a>
       </section>
     );
-  const { items, pageInfo } = initial;
-  const outOfRange = pageInfo.page > Math.max(1, pageInfo.totalPages);
-  const cardContext = contextQuery || href(query.page).split("?")[1] || "";
+  const filters: GiftFilters = {
+    sort: query.sort,
+    kind: query.kind,
+    category: query.category,
+    availability: query.availability,
+    priceMinMinor: query.priceMinMinor,
+    priceMaxMinor: query.priceMaxMinor,
+  };
+  const choose = (change: Partial<GiftFilters>) =>
+    giftFilterHref(
+      query,
+      basePath,
+      contextQuery,
+      { ...filters, ...change },
+      scope,
+    );
+  const categories = {
+    FLOWERS: copy.giftCategoryFlowers,
+    FOOD: copy.giftCategoryFood,
+    BEAUTY: copy.giftCategoryBeauty,
+    ACCESSORY: copy.giftCategoryAccessory,
+    OTHER: copy.giftCategoryOther,
+  };
+  // The toolbar offers only kinds and a price order; an address may still carry these.
+  const applied: ReactNode[] = [];
+  if (query.category)
+    applied.push(`${copy.giftCategoryLabel}: ${categories[query.category]}`);
+  if (query.availability !== "ALL")
+    applied.push(
+      `${copy.giftAvailabilityLabel}: ${
+        query.availability === "PURCHASABLE"
+          ? copy.giftAvailabilityPurchasable
+          : copy.giftAvailabilityUnavailable
+      }`,
+    );
+  for (const [label, amount] of [
+    [copy.giftPriceMinimum, query.priceMinMinor],
+    [copy.giftPriceMaximum, query.priceMaxMinor],
+  ] as const)
+    if (amount !== undefined)
+      applied.push(
+        <>
+          {label}:{" "}
+          <Price
+            amountMinor={amount}
+            currency={query.currency}
+            locale={locale}
+          />
+        </>,
+      );
   return (
     <section
       className="gift-directory"
       data-gift-directory
       data-outcome="success"
     >
-      <GiftFilters
-        key={JSON.stringify(query)}
+      <GiftListing
         locale={locale}
         copy={copy}
-        query={query}
-        contextQuery={contextQuery}
-        basePath={basePath}
-      />
-      <p className="gift-directory-count">
-        {formatStorefrontMessage(copy, "giftResultsCount", locale, {
-          count: pageInfo.totalItems,
-        })}
-      </p>
-      {items.length > 0 ? (
-        <ul className="gift-directory-grid">
-          {items.map((item) => (
-            <GiftDirectoryCard
-              key={item.gift.id}
-              item={item}
-              locale={locale}
-              copy={copy}
-              contextQuery={cardContext}
-              headingLevel={headingLevel === 1 ? 2 : 3}
-            />
-          ))}
-        </ul>
-      ) : (
-        <div
-          className="gift-directory-state"
-          data-gift-empty
-          data-gift-page-out-of-range={outOfRange || undefined}
-        >
-          <Heading>
-            {outOfRange
-              ? copy.giftPageOutOfRangeTitle
-              : copy.giftNoResultsTitle}
-          </Heading>
-          <p>
-            {outOfRange ? copy.giftPageOutOfRangeBody : copy.giftNoResultsBody}
-          </p>
-          <a
-            className="storefront-primary"
-            href={
-              outOfRange
-                ? href(1)
-                : giftResetHref(query, basePath, contextQuery)
-            }
-          >
-            {outOfRange ? copy.giftFirstPage : copy.giftResetFilters}
-          </a>
-        </div>
-      )}
-      <GiftPagination
-        pageInfo={pageInfo}
-        locale={locale}
-        copy={copy}
-        href={href}
+        headingLevel={headingLevel}
+        items={initial.items}
+        pageInfo={initial.pageInfo}
+        cardContext={contextQuery || href(query.page).split("?")[1] || ""}
+        kind={query.kind}
+        kindHref={(kind) => choose({ kind })}
+        sort={{ current: query.sort, href: (sort) => choose({ sort }) }}
+        applied={{
+          labels: applied,
+          clearHref: choose({
+            category: undefined,
+            availability: "ALL",
+            priceMinMinor: undefined,
+            priceMaxMinor: undefined,
+          }),
+        }}
+        pageHref={href}
+        resetHref={giftResetHref(query, basePath, contextQuery, scope)}
       />
     </section>
   );

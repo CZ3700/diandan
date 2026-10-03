@@ -103,6 +103,13 @@ export const eventEnvelopeSchema = z
   .discriminatedUnion("eventType", [
     z.strictObject({
       ...eventEnvelopeBaseShape,
+      eventType: z.literal("INFORMATION_PAGE_PUBLICATION_CHANGED"),
+      aggregateId: z.uuid(),
+      locale: supportedLocaleSchema,
+      payload: z.strictObject({ informationPagePublicationId: z.uuid() }),
+    }),
+    z.strictObject({
+      ...eventEnvelopeBaseShape,
       eventType: z.literal("CART_ITEM_ADDED"),
       aggregateId: cartIdSchema,
       payload: z.strictObject({
@@ -202,6 +209,9 @@ export const eventEnvelopeSchema = z
   .superRefine((event, refinement) => {
     let expectedAggregateId: string;
     switch (event.eventType) {
+      case "INFORMATION_PAGE_PUBLICATION_CHANGED":
+        expectedAggregateId = event.payload.informationPagePublicationId;
+        break;
       case "CART_ITEM_ADDED":
         expectedAggregateId = event.payload.cartId;
         break;

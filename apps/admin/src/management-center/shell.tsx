@@ -1,10 +1,19 @@
 import { exceptionsCopy } from "../management-exceptions/copy";
 import type { ReactNode } from "react";
-import type { SupportedLocale } from "@fan-support/contracts";
+import {
+  LOCALE_NATIVE_NAMES,
+  SUPPORTED_LOCALES,
+  type SupportedLocale,
+} from "@fan-support/contracts";
 import type { ManagementSection } from "./api";
 import { managementCopy } from "./copy";
 import { paymentCopy } from "../management-payments/copy";
 import { ordersCopy } from "../management-orders/copy";
+import { decorationCopy } from "../management-decoration/copy";
+import { accountCopy } from "../management-account/copy";
+import { staffCopy } from "../management-staff/copy";
+import { ledgerCopy } from "../management-ledger/copy";
+import { pageManagementCopy } from "./page-management-copy";
 
 export function ManagementShell({
   locale,
@@ -14,22 +23,67 @@ export function ManagementShell({
   disabled = false,
   accountAction,
   contentAllowed = true,
+  artistsOnly = false,
   ordersAvailable = false,
+  ledgerAvailable = false,
   paymentsAvailable = false,
   exceptionsAvailable = false,
+  decorationAvailable = false,
+  infoPagesAvailable = false,
+  policiesAvailable = false,
+  staffAvailable = false,
+  accountAvailable = false,
+  accountWarning,
+  beforeLeave,
+  languageDisabled = disabled,
 }: {
   locale: SupportedLocale;
-  section: ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS";
+  section:
+    | ManagementSection
+    | "ORDERS"
+    | "PAYMENTS"
+    | "EXCEPTIONS"
+    | "DECORATION"
+    | "INFO_PAGES"
+    | "POLICIES"
+    | "STAFF"
+    | "ACCOUNT"
+    | "LEDGER";
   onSection: (
-    section: ManagementSection | "ORDERS" | "PAYMENTS" | "EXCEPTIONS",
+    section:
+      | ManagementSection
+      | "ORDERS"
+      | "PAYMENTS"
+      | "EXCEPTIONS"
+      | "DECORATION"
+      | "INFO_PAGES"
+      | "POLICIES"
+      | "STAFF"
+      | "ACCOUNT"
+      | "LEDGER",
   ) => void;
   children: ReactNode;
   disabled?: boolean;
   accountAction?: ReactNode;
   contentAllowed?: boolean;
+  /** ADR-022: a broker manages artists only; gifts and posters are not offered. */
+  artistsOnly?: boolean;
   ordersAvailable?: boolean;
+  /** ADR-022 / L3-12: its own entry only for readers without the orders area (brokers); others reach it there. */
+  ledgerAvailable?: boolean;
   paymentsAvailable?: boolean;
   exceptionsAvailable?: boolean;
+  decorationAvailable?: boolean;
+  infoPagesAvailable?: boolean;
+  policiesAvailable?: boolean;
+  /** ADR-021: staff accounts, for holders of staff.manage. */
+  staffAvailable?: boolean;
+  /** ADR-021: the signed-in built-in account's own settings. */
+  accountAvailable?: boolean;
+  /** Shown under the entry while two-step verification is off. */
+  accountWarning?: string | undefined;
+  beforeLeave?: (() => boolean) | undefined;
+  languageDisabled?: boolean;
 }) {
   const copy = managementCopy(locale);
   return (
@@ -48,26 +102,64 @@ export function ManagementShell({
               >
                 {copy.artists}
               </button>
-              <button
-                type="button"
-                data-management-section="GIFTS"
-                aria-current={section === "GIFTS" ? "page" : undefined}
-                disabled={disabled}
-                onClick={() => onSection("GIFTS")}
-              >
-                {copy.gifts}
-              </button>
-              <button
-                type="button"
-                data-management-section="POSTERS"
-                aria-current={section === "POSTERS" ? "page" : undefined}
-                disabled={disabled}
-                onClick={() => onSection("POSTERS")}
-              >
-                {copy.posters}
-              </button>
+              {artistsOnly ? null : (
+                <>
+                  <button
+                    type="button"
+                    data-management-section="GIFTS"
+                    aria-current={section === "GIFTS" ? "page" : undefined}
+                    disabled={disabled}
+                    onClick={() => onSection("GIFTS")}
+                  >
+                    {copy.gifts}
+                  </button>
+                  <button
+                    type="button"
+                    data-management-section="POSTERS"
+                    aria-current={section === "POSTERS" ? "page" : undefined}
+                    disabled={disabled}
+                    onClick={() => onSection("POSTERS")}
+                  >
+                    {copy.posters}
+                  </button>
+                </>
+              )}
             </>
           ) : null}
+          {(infoPagesAvailable || policiesAvailable) && (
+            <button
+              type="button"
+              data-management-section="PAGES"
+              aria-current={
+                section === "INFO_PAGES" || section === "POLICIES"
+                  ? "page"
+                  : undefined
+              }
+              disabled={disabled}
+              onClick={() => {
+                if (
+                  disabled ||
+                  section === "INFO_PAGES" ||
+                  section === "POLICIES"
+                )
+                  return;
+                onSection(infoPagesAvailable ? "INFO_PAGES" : "POLICIES");
+              }}
+            >
+              {pageManagementCopy(locale).title}
+            </button>
+          )}
+          {decorationAvailable && (
+            <button
+              type="button"
+              data-management-section="DECORATION"
+              aria-current={section === "DECORATION" ? "page" : undefined}
+              disabled={disabled}
+              onClick={() => onSection("DECORATION")}
+            >
+              {decorationCopy(locale).title}
+            </button>
+          )}
           {ordersAvailable ? (
             <button
               type="button"
@@ -77,6 +169,17 @@ export function ManagementShell({
               onClick={() => onSection("ORDERS")}
             >
               {ordersCopy(locale).orders}
+            </button>
+          ) : null}
+          {ledgerAvailable ? (
+            <button
+              type="button"
+              data-management-section="LEDGER"
+              aria-current={section === "LEDGER" ? "page" : undefined}
+              disabled={disabled}
+              onClick={() => onSection("LEDGER")}
+            >
+              {ledgerCopy(locale).title}
             </button>
           ) : null}
           {paymentsAvailable ? (
@@ -101,7 +204,58 @@ export function ManagementShell({
               {exceptionsCopy(locale).title}
             </button>
           ) : null}
+          {staffAvailable ? (
+            <button
+              type="button"
+              data-management-section="STAFF"
+              aria-current={section === "STAFF" ? "page" : undefined}
+              disabled={disabled}
+              onClick={() => onSection("STAFF")}
+            >
+              {staffCopy(locale).title}
+            </button>
+          ) : null}
+          {accountAvailable ? (
+            <button
+              type="button"
+              data-management-section="ACCOUNT"
+              aria-current={section === "ACCOUNT" ? "page" : undefined}
+              aria-describedby={
+                accountWarning ? "mc-account-warning" : undefined
+              }
+              disabled={disabled}
+              onClick={() => onSection("ACCOUNT")}
+            >
+              {accountCopy(locale).title}
+              {accountWarning ? (
+                <span id="mc-account-warning" className="mc-nav-warning">
+                  {accountWarning}
+                </span>
+              ) : null}
+            </button>
+          ) : null}
         </nav>
+        <label className="mc-language mc-field">
+          <span>{copy.interfaceLanguage}</span>
+          <select
+            data-management-language
+            value={locale}
+            disabled={languageDisabled}
+            onChange={(event) => {
+              if (
+                (!beforeLeave || beforeLeave()) &&
+                event.currentTarget.value !== locale
+              )
+                window.location.assign(`/${event.currentTarget.value}`);
+            }}
+          >
+            {SUPPORTED_LOCALES.map((value) => (
+              <option key={value} value={value}>
+                {LOCALE_NATIVE_NAMES[value]}
+              </option>
+            ))}
+          </select>
+        </label>
         {accountAction}
       </aside>
       <main className="mc-main" id="management-main">

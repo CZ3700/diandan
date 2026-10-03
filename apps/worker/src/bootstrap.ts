@@ -31,6 +31,7 @@ export type CreateWorkerApplicationOptions = Readonly<{
   reliableEventsRuntime?: WorkerLifecycleResource;
   mediaProcessingRuntime?: WorkerLifecycleResource;
   publicationPurgeRuntime?: WorkerLifecycleResource;
+  managementCenterRuntime?: WorkerLifecycleResource;
 }>;
 
 function registerWorkerLifecycles(
@@ -90,6 +91,7 @@ export async function createWorkerApplication(
     { name: "reliable events", runtime: options.reliableEventsRuntime },
     { name: "media processing", runtime: options.mediaProcessingRuntime },
     { name: "publication purge", runtime: options.publicationPurgeRuntime },
+    { name: "management center", runtime: options.managementCenterRuntime },
   ]);
 
   const application = await NestFactory.create<NestFastifyApplication>(

@@ -9,6 +9,8 @@ export type IconName =
   | "minus"
   | "plus"
   | "shopping-bag"
+  | "sort-ascending"
+  | "sort-descending"
   | "warning";
 
 interface IconBaseProps {
@@ -46,6 +48,10 @@ function glyph(name: IconName): ReactElement {
       return <path d="M12 5v14M5 12h14" />;
     case "shopping-bag":
       return <path d="M6 8h12l-1 12H7L6 8Zm3 0V6a3 3 0 0 1 6 0v2" />;
+    case "sort-ascending":
+      return <path d="M7 19V5M3 9l4-4 4 4M14 7h3M14 12h5M14 17h7" />;
+    case "sort-descending":
+      return <path d="M7 5v14M3 15l4 4 4-4M14 7h7M14 12h5M14 17h3" />;
     case "warning":
       return (
         <>

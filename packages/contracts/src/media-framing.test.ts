@@ -89,6 +89,39 @@ test("contain plans preserve the full source and allow only semantic neutral let
   }
 });
 
+test("daily fill plans may enlarge a covering crop but must still fill the role canvas", () => {
+  // 2026-09-27: daily management images fill every display ratio, enlarging small sources.
+  const small = {
+    ...request,
+    sourceWidth: 540,
+    sourceHeight: 540,
+    fit: "COVER_ALLOW_ENLARGE",
+  } as const;
+  const filled = {
+    ...plan,
+    request: small,
+    sourceCrop: { x: 54, y: 0, width: 432, height: 540 },
+    destination: { x: 0, y: 0, width: 1_600, height: 2_000 },
+    background: "NONE",
+  } as const;
+  expect(framing?.mediaFramingRequestSchema.parse(small)).toEqual(small);
+  expect(
+    framing?.mediaFramingPlanSchema.parse(JSON.parse(JSON.stringify(filled))),
+  ).toEqual(filled);
+  for (const invalid of [
+    { ...filled, background: "NEUTRAL" },
+    { ...filled, destination: { x: 0, y: 200, width: 1_600, height: 1_600 } },
+    { ...filled, sourceCrop: { x: 0, y: 0, width: 540, height: 540 } },
+    { ...filled, sourceCrop: { x: 200, y: 0, width: 432, height: 540 } },
+    // Only the daily fill policy may enlarge; strict cover keeps refusing it.
+    { ...filled, request: { ...small, fit: "COVER" } },
+  ]) {
+    expect(framing?.mediaFramingPlanSchema.safeParse(invalid).success).toBe(
+      false,
+    );
+  }
+});
+
 test("returns versioned, JSON-safe success and structured input or resolution failures", () => {
   for (const result of [
     { schemaVersion: 1, outcome: "SUCCESS", plan },
@@ -172,4 +205,24 @@ test("rejects malformed plan geometry without throwing from arithmetic refinemen
     }).not.toThrow();
     expect(success).toBe(false);
   }
+});
+
+test("daily images recommend the smallest source that fills every role without enlargement", () => {
+  expect(framing?.DAILY_MANAGEMENT_IMAGE_ROLES).toEqual({
+    SAVE_ARTIST: ["PORTRAIT", "HERO_DESKTOP", "HERO_MOBILE"],
+    SAVE_GIFT: ["GIFT_PRIMARY"],
+    REPLACE_POSTER: ["HERO_DESKTOP", "HERO_MOBILE"],
+  });
+  // A cover crop reaches a role's master only when both source sides do.
+  expect(framing?.dailyManagementRecommendedSourceSize("SAVE_ARTIST")).toEqual({
+    width: 2_400,
+    height: 2_000,
+  });
+  expect(framing?.dailyManagementRecommendedSourceSize("SAVE_GIFT")).toEqual({
+    width: 1_200,
+    height: 1_200,
+  });
+  expect(
+    framing?.dailyManagementRecommendedSourceSize("REPLACE_POSTER"),
+  ).toEqual({ width: 2_400, height: 1_350 });
 });

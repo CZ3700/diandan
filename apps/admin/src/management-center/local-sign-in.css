@@ -1,0 +1,118 @@
+/* ADR-021 sign-in: a gilded name plate beside a quiet form. Tokens only. */
+.si-page {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+.si-plaque {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-4);
+  padding: var(--space-16) var(--layout-gutter-desktop);
+  border-inline-end: var(--border-width) solid var(--color-border);
+  background:
+    radial-gradient(
+      circle at 0% 100%,
+      color-mix(in srgb, var(--color-accent) 16%, transparent),
+      transparent 62%
+    ),
+    var(--color-surface);
+}
+.si-wordmark {
+  margin: 0;
+  color: var(--color-accent);
+  font-size: var(--type-heading-size);
+  line-height: var(--type-heading-script-leading);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.si-tagline {
+  margin: 0;
+  max-width: var(--layout-reading-max);
+  color: var(--color-text-muted);
+  line-height: var(--type-body-leading);
+}
+.si-panel {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: var(--space-12);
+  padding: var(--space-16) var(--layout-gutter-desktop);
+}
+.si-form,
+.si-language {
+  width: 100%;
+  max-width: calc(var(--space-32) * 3.25);
+}
+.si-form {
+  display: grid;
+  gap: var(--space-6);
+}
+.si-form h1 {
+  margin: 0;
+  font-size: calc(var(--type-body-size) * 1.85);
+  line-height: var(--type-heading-script-leading);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.si-intro,
+.si-note,
+.si-message {
+  margin: 0;
+  line-height: var(--type-body-leading);
+  overflow-wrap: anywhere;
+}
+.si-intro {
+  margin-block-start: calc(var(--space-2) * -1);
+  color: var(--color-text-muted);
+}
+.si-note {
+  padding-inline-start: var(--space-4);
+  border-inline-start: var(--border-width) solid var(--color-accent);
+}
+.si-message {
+  color: var(--color-danger);
+  font-weight: 700;
+}
+.si-code {
+  font-size: calc(var(--type-body-size) * 1.5);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--type-label-tracking);
+}
+.si-reveal,
+.si-switch {
+  justify-self: start;
+  /* Quiet actions line up with the field edges above them. */
+  padding-inline: 0;
+}
+.si-reveal {
+  margin-block-start: calc(var(--space-3) * -1);
+}
+.si-submit {
+  width: 100%;
+}
+.si-form .si-switch + .si-switch {
+  margin-block-start: calc(var(--space-4) * -1);
+}
+@media (max-width: 64rem) {
+  .si-page {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .si-plaque {
+    padding: var(--space-8) var(--layout-gutter);
+    border-inline-end: 0;
+    border-block-end: var(--border-width) solid var(--color-border);
+  }
+  .si-wordmark {
+    font-size: calc(var(--type-body-size) * 2.25);
+  }
+  .si-panel {
+    align-content: start;
+    gap: var(--space-8);
+    padding: var(--space-8) var(--layout-gutter);
+  }
+}

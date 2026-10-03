@@ -8,10 +8,11 @@ import {
   rm,
   writeFile,
 } from "node:fs/promises";
-import { createServer, type AddressInfo } from "node:net";
+import { createServer, Socket, type AddressInfo } from "node:net";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import process from "node:process";
+import { setTimeout as delay } from "node:timers/promises";
 import { promisify } from "node:util";
 import pg from "pg";
 
@@ -39,6 +40,7 @@ type NativePostgresClient = {
   connect(): Promise<unknown>;
   query(sql: string): Promise<unknown>;
   end(): Promise<unknown>;
+  abort?(): void;
 };
 
 export type NativePostgresOptions = Readonly<{
@@ -135,10 +137,12 @@ async function cleanOwnedCluster({
   const pidFile = await existing(pidPath);
   if (pidFile) {
     const [pid, ownedData] = (await readFile(pidPath, "utf8")).split("\n");
+    // PostgreSQL writes the data directory with forward slashes on every platform.
     if (
       pidFile.isSymbolicLink() ||
       !/^[1-9]\d*$/u.test(pid ?? "") ||
-      ownedData !== dataDirectory
+      ownedData === undefined ||
+      path.resolve(ownedData) !== path.resolve(dataDirectory)
     ) {
       throw new Error(
         "Native TEST PostgreSQL process ownership verification failed",
@@ -158,6 +162,80 @@ async function cleanOwnedCluster({
       throw new Error("Native TEST PostgreSQL shutdown not confirmed");
   }
   await rm(directory, { recursive: true });
+}
+
+const settleTimeoutMs = 5_000;
+
+/** Only the shutdown probe owns this socket; normal database clients are unchanged. */
+function createSettleClient(connection: PostgresConnectionConfig) {
+  const socket = new Socket();
+  const client = new pg.Client({ ...connection, stream: () => socket });
+  // Timeout can disconnect an idle probe before pg has observed its socket close.
+  client.on("error", () => undefined);
+  return {
+    connect: () => client.connect(),
+    query: (sql: string) => client.query(sql),
+    end: () => client.end(),
+    abort: () => socket.destroy(),
+  };
+}
+
+/**
+ * A pool the operation already closed can still be disconnecting: pg-pool
+ * settles end() before its clients' sockets close. A fast shutdown under such
+ * a connection reaches its client as 57P01 after the owner stopped listening,
+ * so the cluster is stopped only once other client backends have left, or
+ * after a short bound for connections an operation never closed.
+ */
+async function settleClientConnections(
+  createClient: NonNullable<NativePostgresOptions["createClient"]>,
+  connection: PostgresConnectionConfig,
+): Promise<void> {
+  const client = createClient({ ...connection, database: "postgres" });
+  const deadline = new AbortController();
+  let closing: Promise<unknown> | undefined;
+  const close = () => (closing ??= Promise.resolve().then(() => client.end()));
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+  const expired = new Promise<void>((resolve) => {
+    timeout = setTimeout(() => {
+      deadline.abort();
+      // Observe late rejection even when a stalled connect/query never finishes.
+      void close().catch(() => undefined);
+      try {
+        client.abort?.();
+      } catch {
+        // The probe may already be disconnected; cluster cleanup is still required.
+      }
+      resolve();
+    }, settleTimeoutMs);
+  });
+  const settle = async () => {
+    try {
+      await client.connect();
+      while (!deadline.signal.aborted) {
+        const result = (await client.query(
+          "SELECT count(*)::integer AS open FROM pg_stat_activity WHERE backend_type = 'client backend' AND pid <> pg_backend_pid()",
+        )) as { rows?: readonly { open?: unknown }[] } | undefined;
+        const open = result?.rows?.[0]?.open;
+        if (typeof open !== "number" || open === 0) return;
+        await delay(25, undefined, { signal: deadline.signal });
+      }
+    } catch {
+      // Settling is best effort; the owned cluster is stopped either way.
+    } finally {
+      try {
+        await close();
+      } catch {
+        // A failed settle connection may already be closed.
+      }
+    }
+  };
+  try {
+    // One deadline covers connect, every query, and release of this private probe.
+    await Promise.race([settle(), expired]);
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 /** A new, private TEST cluster only; no existing connection or data-directory input. */
@@ -205,6 +283,9 @@ export async function withNativeTestPostgres<Result>(
     mode: 0o600,
     flag: "wx",
   });
+  const createClient =
+    options.createClient ?? ((config) => new pg.Client(config));
+  let connection: PostgresConnectionConfig | undefined;
   let value: Result | undefined;
   let failure: Error | undefined;
   try {
@@ -250,7 +331,7 @@ export async function withNativeTestPostgres<Result>(
       "30",
       "start",
     ]);
-    const connection = {
+    connection = {
       host: "127.0.0.1",
       port,
       user: "fan_support_test",
@@ -259,9 +340,7 @@ export async function withNativeTestPostgres<Result>(
       ssl: false,
       connectionTimeoutMillis: 5000,
     };
-    const client = (
-      options.createClient ?? ((config) => new pg.Client(config))
-    )({ ...connection, database: "postgres" });
+    const client = createClient({ ...connection, database: "postgres" });
     try {
       await client.connect();
       await client.query("CREATE DATABASE fan_support_test");
@@ -279,6 +358,11 @@ export async function withNativeTestPostgres<Result>(
       "Native TEST PostgreSQL operation failed; inspect safe scenario evidence",
     );
   }
+  if (connection !== undefined)
+    await settleClientConnections(
+      options.createClient ?? createSettleClient,
+      connection,
+    );
   try {
     await cleanOwnedCluster({ directory, dataDirectory, runId, invoke });
   } catch (error) {

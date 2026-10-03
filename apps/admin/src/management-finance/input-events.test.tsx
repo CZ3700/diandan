@@ -43,6 +43,7 @@ test("two refund inputs retain their values when React runs state updaters after
     order: {
       orderId: id,
       publicOrderId: id,
+      publicOrderNo: "FS-7K3M9C",
       version: 1,
       presentationLocale: "en",
       orderStatus: "OPEN",

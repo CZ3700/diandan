@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { expect, test } from "vitest";
 import ts from "typescript";
 
-test.each(["site-header.tsx", "gift-recipient.tsx", "gift-filters-client.tsx"])(
+test.each(["site-header.tsx", "gift-recipient.tsx"])(
   "%s has no eager Drawer runtime import",
   (filename) => {
     const source = ts.createSourceFile(

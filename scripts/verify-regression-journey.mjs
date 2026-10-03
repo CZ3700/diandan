@@ -60,6 +60,8 @@ try {
   const { loadLocalState } = await import("./local-experience-state.mjs");
   const { verifyRegressionJourneys } =
     await import("../apps/api/scripts/regression-journey.mjs");
+  const { diagnoseJourneyInstance } =
+    await import("../apps/api/scripts/regression-journey-diagnostics.mjs");
   const state = await loadLocalState(root, instance);
   const local = (action, args = []) =>
     command(action, process.execPath, [
@@ -76,6 +78,12 @@ try {
         workspaceRoot: root,
         instance,
         output: path.join(output, "browser"),
+      }),
+    diagnose: () =>
+      diagnoseJourneyInstance({
+        config: state.config,
+        stateDirectory: state.stateDirectory,
+        output,
       }),
     stop: () => local("stop"),
     reset: () => local("reset", ["--confirm", state.config.instanceId]),

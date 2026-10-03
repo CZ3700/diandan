@@ -26,6 +26,8 @@ export type ArtistDirectoryProps = Readonly<{
   initialAnchor?: IdolId;
   contextQuery?: string;
   headingLevel?: 1 | 2;
+  /** False on the homepage, whose artist search sits under the section title. */
+  search?: boolean;
 }>;
 
 export function ArtistDirectory(props: ArtistDirectoryProps) {
@@ -48,6 +50,7 @@ function Directory({
   initialAnchor,
   contextQuery,
   headingLevel = 2,
+  search = true,
 }: ArtistDirectoryProps) {
   const Heading = headingLevel === 1 ? "h2" : "h3";
   const [state, dispatch] = useReducer(directoryReducer, undefined, () =>
@@ -148,13 +151,15 @@ function Directory({
 
   return (
     <div className={styles["directory"]} data-artist-directory="true">
-      <ArtistSearch
-        locale={locale}
-        copy={copy}
-        onSelect={(anchor) => {
-          void load("replace", anchor);
-        }}
-      />
+      {search ? (
+        <ArtistSearch
+          locale={locale}
+          copy={copy}
+          onSelect={(artist) => {
+            void load("replace", artist.id);
+          }}
+        />
+      ) : null}
       {state.anchor !== undefined || state.error === "ANCHOR_NOT_FOUND" ? (
         <Button
           variant="quiet"

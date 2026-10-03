@@ -1,5 +1,6 @@
 import { randomBytes, randomUUID } from "node:crypto";
 import {
+  access,
   mkdir,
   lstat,
   realpath,
@@ -10,8 +11,13 @@ import {
 } from "node:fs/promises";
 import { createServer } from "node:net";
 import path from "node:path";
-import { SUPPORTED_LOCALES } from "../packages/contracts/dist/index.js";
-import { localExperienceConfigSchema } from "../apps/api/scripts/local-experience-config.mjs";
+import { createLocalPaymentBinding } from "../apps/api/scripts/local-experience-payment-profile.mjs";
+import {
+  LOCAL_SERVICE_KEYS,
+  localExperienceConfigSchema,
+  localServiceOriginFor,
+  publicBaseDomainSchema,
+} from "../apps/api/scripts/local-experience-config.mjs";
 const token = () => randomBytes(32).toString("base64url");
 export async function localStateDirectory(workspaceRoot, instance) {
   if (!/^[a-z][a-z0-9-]{0,31}$/u.test(instance))
@@ -83,7 +89,28 @@ async function ports() {
     );
   }
 }
-export async function loadLocalState(workspaceRoot, instance = "default") {
+/** A public base domain is fixed when the instance is first created; later starts must repeat it or omit it. */
+export async function loadLocalState(
+  workspaceRoot,
+  instance = "default",
+  { publicBaseDomain, paymentProvider } = {},
+) {
+  if (
+    paymentProvider !== undefined &&
+    !["fake", "stripe-test"].includes(paymentProvider)
+  )
+    throw new Error("Invalid local payment provider");
+  if (
+    paymentProvider === "stripe-test" &&
+    (publicBaseDomain !== undefined ||
+      !/^(?:test|acceptance)-[a-z0-9-]+$/u.test(instance))
+  )
+    throw new Error("Stripe TEST requires an isolated loopback test instance");
+  if (
+    publicBaseDomain !== undefined &&
+    !publicBaseDomainSchema.safeParse(publicBaseDomain).success
+  )
+    throw new Error("Invalid public base domain");
   const stateDirectory = await localStateDirectory(workspaceRoot, instance),
     file = path.join(stateDirectory, "config.json");
   for (const relative of [
@@ -122,6 +149,20 @@ export async function loadLocalState(workspaceRoot, instance = "default") {
       throw new Error(
         "Invalid local state configuration; existing data was preserved",
       );
+    if (
+      publicBaseDomain !== undefined &&
+      parsed.data.exposure?.baseDomain !== publicBaseDomain
+    )
+      throw new Error(
+        "This instance was created with a different exposure; create a new instance for another domain",
+      );
+    if (
+      paymentProvider !== undefined &&
+      (parsed.data.paymentProvider ?? "fake") !== paymentProvider
+    )
+      throw new Error(
+        "This instance has a different payment provider; create a new instance",
+      );
     return { stateDirectory, config: parsed.data };
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
@@ -129,10 +170,14 @@ export async function loadLocalState(workspaceRoot, instance = "default") {
   const assigned = await ports(),
     instanceId = randomUUID(),
     suffix = randomBytes(6).toString("hex");
+  const exposure =
+    publicBaseDomain === undefined
+      ? undefined
+      : { mode: "PUBLIC", baseDomain: publicBaseDomain };
   const origins = Object.fromEntries(
-    ["storefront", "admin", "oidc", "psp", "mail", "media"].map((key) => [
+    LOCAL_SERVICE_KEYS.map((key) => [
       key,
-      `https://${key === "psp" ? "payments" : key}.example.invalid:${assigned[key]}`,
+      localServiceOriginFor(key, { exposure, port: assigned[key] }),
     ]),
   );
   const secrets = Object.fromEntries(
@@ -152,8 +197,10 @@ export async function loadLocalState(workspaceRoot, instance = "default") {
     instance,
     instanceId,
     workspaceRoot: await realpath(workspaceRoot),
+    ...(paymentProvider === "stripe-test" ? { paymentProvider } : {}),
     ports: assigned,
     origins,
+    ...(exposure ? { exposure } : {}),
     secrets,
     database: {
       user: "fan_support_local",
@@ -191,19 +238,11 @@ export async function loadLocalState(workspaceRoot, instance = "default") {
       psp: {
         databaseName: "p404_psp_" + randomBytes(16).toString("hex"),
         authorizationToken: token(),
-        binding: {
-          schemaVersion: 1,
-          providerAccountId: randomUUID(),
-          providerCode: "fake",
-          environment: "TEST",
-          allowedActionOrigins: [origins.psp],
-          localeMapping: Object.fromEntries(
-            SUPPORTED_LOCALES.map((locale) => [
-              locale,
-              { providerLocale: locale, fallbackUsed: false },
-            ]),
-          ),
-        },
+        binding: createLocalPaymentBinding(
+          paymentProvider ?? "fake",
+          randomUUID(),
+          origins,
+        ),
         webhookEndpointId: randomUUID(),
       },
       mail: {
@@ -230,6 +269,57 @@ export async function loadLocalState(workspaceRoot, instance = "default") {
     flag: "wx",
   });
   return { stateDirectory, config };
+}
+/** Switches how operators sign in to an existing instance; takes effect at the next start. */
+export async function setLocalAdminSignIn(workspaceRoot, instance, mode) {
+  if (!["LOCAL_OIDC", "LOCAL_ACCOUNT"].includes(mode))
+    throw new Error("Admin sign-in must be LOCAL_OIDC or LOCAL_ACCOUNT");
+  await access(
+    path.join(
+      await localStateDirectory(workspaceRoot, instance),
+      "config.json",
+    ),
+  ).catch(() => {
+    throw new Error("Unknown local instance; start it first");
+  });
+  const { stateDirectory, config } = await loadLocalState(
+    workspaceRoot,
+    instance,
+  );
+  const next = localExperienceConfigSchema.parse({
+    ...config,
+    adminSignIn: mode,
+  });
+  await writePrivateJson(path.join(stateDirectory, "config.json"), next);
+  return next;
+}
+/**
+ * Switches an existing instance between compiled applications (PREBUILT) and development servers.
+ * DEVELOPMENT removes the field, so code from before the switch can read the configuration again.
+ * Takes effect at the next start.
+ */
+export async function setLocalWebMode(workspaceRoot, instance, mode) {
+  if (!["PREBUILT", "DEVELOPMENT"].includes(mode))
+    throw new Error("Web mode must be PREBUILT or DEVELOPMENT");
+  await access(
+    path.join(
+      await localStateDirectory(workspaceRoot, instance),
+      "config.json",
+    ),
+  ).catch(() => {
+    throw new Error("Unknown local instance; start it first");
+  });
+  const { stateDirectory, config } = await loadLocalState(
+    workspaceRoot,
+    instance,
+  );
+  const rest = { ...config };
+  delete rest.webMode;
+  const next = localExperienceConfigSchema.parse(
+    mode === "PREBUILT" ? { ...rest, webMode: mode } : rest,
+  );
+  await writePrivateJson(path.join(stateDirectory, "config.json"), next);
+  return next;
 }
 export async function resetLocalState(workspaceRoot, instance, confirmation) {
   const state = await loadLocalState(workspaceRoot, instance);

@@ -1,3 +1,38 @@
+import { createStorefrontBrandRepository } from "./storefront-brand-repository.js";
+import { createStorefrontBrandAuthorizationRepository } from "./admin-authorization-repository.js";
+import type {
+  StorefrontBrandRepositories,
+  StorefrontBrandTransactionManager,
+} from "@fan-support/persistence-port";
+import { createInformationPageRepository } from "./information-pages-repository.js";
+import { createWishGalleryRepository } from "./wish-gallery-repository.js";
+import type {
+  WishGalleryRepository,
+  WishGalleryTransactionManager,
+} from "@fan-support/persistence-port";
+import { createInformationPageAuthorizationRepository } from "./admin-authorization-repository.js";
+import type {
+  InformationPageRepositories,
+  InformationPageTransactionManager,
+} from "@fan-support/persistence-port";
+import { createStorefrontNavigationRepository } from "./storefront-navigation-repository.js";
+import type {
+  StorefrontNavigationRepositories,
+  StorefrontNavigationTransactionManager,
+} from "@fan-support/persistence-port";
+import { createStorefrontThemeRepository } from "./storefront-theme-repository.js";
+import type {
+  StorefrontThemeRepositories,
+  StorefrontThemeTransactionManager,
+} from "@fan-support/persistence-port";
+import { createHomeLayoutRepository } from "./home-layout-repository.js";
+import type {
+  HomeLayoutRepositories,
+  HomeLayoutTransactionManager,
+  CatalogDisplayOrderRepositories,
+  CatalogDisplayOrderTransactionManager,
+} from "@fan-support/persistence-port";
+import { createCatalogDisplayOrderRepository } from "./catalog-display-order-repository.js";
 import { createAdminExceptionsRepository } from "./admin-exceptions-repository.js";
 import type {
   AdminExceptionsRepository,
@@ -20,22 +55,36 @@ import type {
   PaymentHealthTransactionManager,
 } from "@fan-support/persistence-port";
 import { createAdminOrdersRepository } from "./admin-orders-repository.js";
+import { createAdminLedgerRepository } from "./admin-ledger-repository.js";
+import { createAdminArtistNoteRepository } from "./admin-artist-notes-repository.js";
 import { createAdminOrderResendRepository } from "./admin-notification-resend-repository.js";
 import { createAdminOrderResendNotificationRepository } from "./admin-notification-resend-worker.js";
 import type {
+  AdminLedgerRepositories,
+  AdminLedgerTransactionManager,
+  AdminArtistNoteRepositories,
+  AdminArtistNoteTransactionManager,
   AdminOrdersRepositories,
   AdminOrdersTransactionManager,
 } from "@fan-support/persistence-port";
 import { createAdminAccessRepository } from "./admin-access-repository.js";
+import { createAdminLocalLoginRepository } from "./admin-local-login-repository.js";
+import { createAdminLocalAccountRepository } from "./admin-local-account-repository.js";
+import { createAdminLocalStaffRepository } from "./admin-local-staff-repository.js";
 import type {
   AdminAccessRepositories,
   AdminAccessTransactionManager,
+  AdminLocalAccessRepositories,
+  AdminLocalAccessTransactionManager,
 } from "@fan-support/persistence-port";
 import { createNotificationRepository } from "./notification-repository.js";
+import { createNotificationSubmissionRepository } from "./notification-submission-repository.js";
 import { createCommerceExpiryRepository } from "./commerce-expiry-repository.js";
 import type {
   NotificationRepository,
   NotificationTransactionManager,
+  NotificationSubmissionRepository,
+  NotificationSubmissionTransactionManager,
   CommerceExpiryRepository,
   CommerceExpiryTransactionManager,
 } from "@fan-support/persistence-port";
@@ -144,7 +193,10 @@ import { createResourceManagementRepository } from "./resource-management-reposi
 import { createResourceAuthorizationRepository } from "./resource-authorization-repository.js";
 import { createBaseContentReviewRepository } from "./base-content-review-repository.js";
 import { createBaseContentPreviewRepository } from "./base-content-preview-repository.js";
-import { createAdminAuthorizationRepository } from "./admin-authorization-repository.js";
+import {
+  createAdminAuthorizationRepository,
+  createHomeLayoutAuthorizationRepository,
+} from "./admin-authorization-repository.js";
 import { createContentReviewRepository } from "./content-review-repository.js";
 import { createContentPreviewRepository } from "./content-preview-repository.js";
 import { createMediaProcessingRepository } from "./media-processing-repository.js";
@@ -203,14 +255,25 @@ import {
 } from "./errors.js";
 
 export interface PostgresPersistence {
+  readonly homeLayoutTransactionManager: HomeLayoutTransactionManager;
+  readonly catalogDisplayOrderTransactionManager: CatalogDisplayOrderTransactionManager;
+  readonly informationPageTransactionManager: InformationPageTransactionManager;
+  readonly storefrontNavigationTransactionManager: StorefrontNavigationTransactionManager;
+  readonly storefrontBrandTransactionManager: StorefrontBrandTransactionManager;
+  readonly storefrontThemeTransactionManager: StorefrontThemeTransactionManager;
+  readonly wishGalleryTransactionManager: WishGalleryTransactionManager;
   readonly adminPaymentConfigurationTransactionManager: AdminPaymentConfigurationTransactionManager;
   readonly adminExceptionsTransactionManager: AdminExceptionsTransactionManager;
   readonly adminFinanceTransactionManager: AdminFinanceTransactionManager;
   readonly paymentHealthTransactionManager: PaymentHealthTransactionManager;
   readonly adminOrdersTransactionManager: AdminOrdersTransactionManager;
+  readonly adminLedgerTransactionManager: AdminLedgerTransactionManager;
+  readonly adminArtistNoteTransactionManager: AdminArtistNoteTransactionManager;
   readonly adminOrderResendNotificationTransactionManager: NotificationTransactionManager;
   readonly adminAccessTransactionManager: AdminAccessTransactionManager;
+  readonly adminLocalAccessTransactionManager: AdminLocalAccessTransactionManager;
   readonly notificationTransactionManager: NotificationTransactionManager;
+  readonly notificationSubmissionTransactionManager: NotificationSubmissionTransactionManager;
   readonly commerceExpiryTransactionManager: CommerceExpiryTransactionManager;
   readonly orderAccessTransactionManager: OrderAccessTransactionManager;
   readonly orderPaymentApplicationTransactionManager: OrderPaymentApplicationTransactionManager;
@@ -269,13 +332,24 @@ type PersistencePoolFactory = (
   config: NormalizedPostgresConnectionConfig,
 ) => ManagedPersistencePool;
 
+const consumeClosingPoolFailure = (): void => {
+  // A connection the pool already let go of has nothing left to report.
+};
+
 function createNodePostgresPool(
   config: NormalizedPostgresConnectionConfig,
 ): ManagedPersistencePool {
   const pool = new Pool(config as PoolConfig);
   return {
     connect: async () => (await pool.connect()) as TransactionClient,
-    end: () => pool.end(),
+    end: () => {
+      // pg-pool settles end() once it has detached its idle clients, before they
+      // finish disconnecting, and still re-emits their server errors (57P01 when
+      // the server stops right after). The owner removes its listener once end()
+      // settles, so those late errors are consumed here instead of crashing.
+      pool.on("error", consumeClosingPoolFailure);
+      return pool.end();
+    },
     on: (_event, listener) => {
       pool.on("error", listener);
     },
@@ -423,6 +497,19 @@ export function createPostgresPersistenceWithPoolFactory(
       adminOrderResends: createAdminOrderResendRepository(client, scope),
     }),
   });
+  const adminLedgerRunner = createTransactionRunner<AdminLedgerRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      adminLedger: createAdminLedgerRepository(client, scope),
+    }),
+  });
+  const adminArtistNoteRunner =
+    createTransactionRunner<AdminArtistNoteRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        adminArtistNotes: createAdminArtistNoteRepository(client, scope),
+      }),
+    });
   const adminOrderResendRunner =
     createTransactionRunner<NotificationRepository>({
       acquireClient: async () => pool.connect(),
@@ -441,6 +528,11 @@ export function createPostgresPersistenceWithPoolFactory(
         ),
       ),
   });
+  const notificationSubmissionRunner =
+    createTransactionRunner<NotificationSubmissionRepository>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: createNotificationSubmissionRepository,
+    });
   const commerceExpiryRunner =
     createTransactionRunner<CommerceExpiryRepository>({
       acquireClient: async () => pool.connect(),
@@ -607,6 +699,80 @@ export function createPostgresPersistenceWithPoolFactory(
       contentDrafts: createContentDraftRepository(client, transactionScope),
     }),
   });
+  const homeLayoutRunner = createTransactionRunner<HomeLayoutRepositories>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) => ({
+      authorization: createHomeLayoutAuthorizationRepository(client, scope),
+      homeLayout: createHomeLayoutRepository(client, scope),
+    }),
+  });
+  const catalogDisplayOrderRunner =
+    createTransactionRunner<CatalogDisplayOrderRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createHomeLayoutAuthorizationRepository(client, scope),
+        displayOrder: createCatalogDisplayOrderRepository(
+          client,
+          scope,
+          options?.catalogPublicMediaBaseUrl ?? "",
+        ),
+      }),
+    });
+  const wishGalleryRunner = createTransactionRunner<WishGalleryRepository>({
+    acquireClient: async () => pool.connect(),
+    createRepositories: (client, scope) =>
+      createWishGalleryRepository(
+        client,
+        scope,
+        options?.catalogPublicMediaBaseUrl ?? "",
+      ),
+  });
+  const storefrontBrandRunner =
+    createTransactionRunner<StorefrontBrandRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createStorefrontBrandAuthorizationRepository(
+          client,
+          scope,
+        ),
+        storefrontBrand: createStorefrontBrandRepository(
+          client,
+          scope,
+          options?.catalogPublicMediaBaseUrl,
+        ),
+        resources: createResourceManagementRepository(client, scope),
+      }),
+    });
+  const storefrontThemeRunner =
+    createTransactionRunner<StorefrontThemeRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createHomeLayoutAuthorizationRepository(client, scope),
+        storefrontTheme: createStorefrontThemeRepository(client, scope),
+      }),
+    });
+  const informationPageRunner =
+    createTransactionRunner<InformationPageRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createInformationPageAuthorizationRepository(
+          client,
+          scope,
+        ),
+        informationPages: createInformationPageRepository(client, scope),
+      }),
+    });
+  const storefrontNavigationRunner =
+    createTransactionRunner<StorefrontNavigationRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        authorization: createHomeLayoutAuthorizationRepository(client, scope),
+        storefrontNavigation: createStorefrontNavigationRepository(
+          client,
+          scope,
+        ),
+      }),
+    });
   const adminContentRunner = createTransactionRunner<AdminContentRepositories>({
     acquireClient: async () => pool.connect(),
     createRepositories: (client, scope) => ({
@@ -764,6 +930,16 @@ export function createPostgresPersistenceWithPoolFactory(
       adminAccess: createAdminAccessRepository(client, scope),
     }),
   });
+  const adminLocalAccessRunner =
+    createTransactionRunner<AdminLocalAccessRepositories>({
+      acquireClient: async () => pool.connect(),
+      createRepositories: (client, scope) => ({
+        adminAccess: createAdminAccessRepository(client, scope),
+        localLogin: createAdminLocalLoginRepository(client, scope),
+        localAccount: createAdminLocalAccountRepository(client, scope),
+        localStaff: createAdminLocalStaffRepository(client, scope),
+      }),
+    });
   const adminSessionRunner = createTransactionRunner<AdminSessionRepositories>({
     acquireClient: async () => pool.connect(),
     createRepositories: (client, scope) => ({
@@ -1138,6 +1314,20 @@ export function createPostgresPersistenceWithPoolFactory(
         );
       },
     },
+    // Explicit row locks (identity, account, login) serialize built-in sign-in without serialization aborts.
+    adminLocalAccessTransactionManager: {
+      async runInAdminLocalAccessTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminLocalAccessRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
     adminSessionTransactionManager: {
       async runInAdminSessionTransaction(work) {
         if (lifecycle !== "OPEN")
@@ -1263,6 +1453,32 @@ export function createPostgresPersistenceWithPoolFactory(
         );
       },
     },
+    adminLedgerTransactionManager: {
+      async runInAdminLedgerTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminLedgerRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    adminArtistNoteTransactionManager: {
+      async runInAdminArtistNoteTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return adminArtistNoteRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
     adminOrderResendNotificationTransactionManager: {
       async runInNotificationTransaction(work) {
         if (lifecycle !== "OPEN")
@@ -1284,6 +1500,19 @@ export function createPostgresPersistenceWithPoolFactory(
             recovery: "NONE",
           });
         return notificationRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    notificationSubmissionTransactionManager: {
+      async runInNotificationSubmissionTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return notificationSubmissionRunner.run(
           { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
           work,
         );
@@ -1478,6 +1707,97 @@ export function createPostgresPersistenceWithPoolFactory(
     },
     baseContentTransactionManager,
     contentAuthoringTransactionManager,
+    homeLayoutTransactionManager: {
+      async runInHomeLayoutTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return homeLayoutRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    catalogDisplayOrderTransactionManager: {
+      async runInCatalogDisplayOrderTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return catalogDisplayOrderRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    wishGalleryTransactionManager: {
+      async runInWishGalleryTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return wishGalleryRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    storefrontBrandTransactionManager: {
+      async runInStorefrontBrandTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return storefrontBrandRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    storefrontThemeTransactionManager: {
+      async runInStorefrontThemeTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return storefrontThemeRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    informationPageTransactionManager: {
+      async runInInformationPageTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return informationPageRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
+    storefrontNavigationTransactionManager: {
+      async runInStorefrontNavigationTransaction(work) {
+        if (lifecycle !== "OPEN")
+          throw createPersistenceTransactionFailureError({
+            code: "CONFIGURATION_ERROR",
+            recovery: "NONE",
+          });
+        return storefrontNavigationRunner.run(
+          { schemaVersion: 1, isolationLevel: "READ_COMMITTED" },
+          work,
+        );
+      },
+    },
     adminContentTransactionManager,
     transactionManager,
     reliableEventTransactionManager,

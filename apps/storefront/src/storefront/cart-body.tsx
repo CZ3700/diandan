@@ -82,6 +82,13 @@ function CartContents({
   const partial = cart?.items.some(
     (item) => !item.price.current || item.availability.status === "UNAVAILABLE",
   );
+  // A locked bag can still continue to its existing checkout, so it gets no removal instruction.
+  let footerHint = copy.checkoutEmpty;
+  if (partial)
+    footerHint =
+      cart?.status === "LOCKED"
+        ? copy.cartUnavailable
+        : copy.cartCheckoutBlocked;
   const Container = page ? "section" : "div";
   return (
     <Container
@@ -183,9 +190,7 @@ function CartContents({
           </button>
         )}
         {(!cart || cart.items.length === 0 || partial) && (
-          <p id={hintId}>
-            {partial ? copy.cartUnavailable : copy.checkoutEmpty}
-          </p>
+          <p id={hintId}>{footerHint}</p>
         )}
         <a
           className="storefront-secondary"

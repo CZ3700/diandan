@@ -21,12 +21,23 @@ const cases = {
     ["GET", "/api/admin/auth/callback"],
     ["POST", "/api/v1/admin/access/begin"],
     ["POST", "/api/v1/admin/access/callback"],
+    ["POST", "/api/admin/local-auth/login"],
+    ["POST", "/api/admin/local-auth/step"],
+    ["POST", "/api/v1/admin/local-access/login"],
+    ["POST", "/api/v1/admin/local-access/step"],
+    ["POST", "/api/v1/admin/local-access/logout"],
   ],
   ORDER_ACCESS: [
     ["POST", "/api/storefront/order-access/exchange"],
     ["POST", "/api/v1/order-access/revoke"],
     ["POST", "/api/storefront/checkout/sessions/test-id/order-access"],
     ["GET", "/api/v1/orders/test-order"],
+    ["POST", "/api/v1/order-access/locate"],
+    [
+      "GET",
+      "/api/storefront/orders/test-order/delivery-proofs/test-proof/thumbnail",
+    ],
+    ["GET", "/api/v1/orders/test-order/delivery-proofs/test-proof/display"],
   ],
   CART: [
     ["POST", "/api/storefront/cart"],
@@ -79,6 +90,26 @@ test("all six sensitive operations cover actual BFF and API paths without groupi
     assert.equal(matches("GET", "/en/idols"), false);
     assert.equal(matches("GET", "/_next/static/file.js"), false);
   }
+});
+
+test("built-in account sign-in shares the LOGIN bucket without catching neighbouring admin routes", () => {
+  const login = routes().LOGIN;
+  const matches = (method, path) =>
+    login.some(
+      (route) => route.method === method && new RegExp(route.path).test(path),
+    );
+  for (const path of [
+    "/api/admin/local-authority",
+    "/api/admin/local-auth/session",
+    "/api/v1/admin/local-access/staff",
+    "/api/v1/admin/local-access",
+  ])
+    assert.equal(matches("POST", path), false, path);
+  for (const path of [
+    "/api/admin/local-auth/login",
+    "/api/v1/admin/local-access/step",
+  ])
+    assert.equal(matches("GET", path), false, `GET ${path}`);
 });
 
 test("write scopes exclude safe reads and WAF uses source IP instead of spoofable forwarded headers", () => {

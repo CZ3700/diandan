@@ -9,6 +9,9 @@ export async function register(): Promise<void> {
     return;
   }
 
+  const { assertAdminStartupConfig } = await import("./server/startup-config");
+  assertAdminStartupConfig();
+
   const [nodeObservability, observability] = await Promise.all([
     import("@fan-support/observability/node"),
     import("@fan-support/observability"),

@@ -34,7 +34,7 @@ import {
   createTestResourceManagementComposition,
   createTestPublicationPreflightComposition,
   createTestPublicationRuntimeComposition,
-} from "../dist/index.js";
+} from "../dist/testing/index.js";
 import { createWorkerMediaProcessingComposition } from "../../worker/dist/media-processing-composition.js";
 import { createMediaProcessingWorkerRuntime } from "../../worker/dist/media-processing-runtime.js";
 import { createPublicationPurgeWorkerRuntime } from "../../worker/dist/publication-purge-runtime.js";
@@ -742,7 +742,7 @@ export async function verifyAdminWorkspaceScenario(
               CORSRules: [
                 {
                   AllowedOrigins: [origin],
-                  AllowedMethods: ["PUT"],
+                  AllowedMethods: ["PUT", "GET", "HEAD"],
                   AllowedHeaders: ["*"],
                   ExposeHeaders: ["ETag", "x-amz-checksum-sha256"],
                   MaxAgeSeconds: 60,

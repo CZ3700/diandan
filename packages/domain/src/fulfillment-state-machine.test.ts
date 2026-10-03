@@ -73,6 +73,49 @@ describe("fulfillment state machine", () => {
     }
   });
 
+  test("system digital delivery moves only PENDING straight to DELIVERED", () => {
+    const system = (expectedVersion = 3, currentVersion = 3) => ({
+      kind: "SYSTEM_DIGITAL_DELIVERY" as const,
+      expectedVersion,
+      currentVersion,
+    });
+    expect(
+      decideFulfillmentTransition("PENDING", "DELIVERED", system()),
+    ).toMatchObject({
+      decision: "APPLIED",
+      reasonCode: "VIRTUAL_GIFT_AUTO_DELIVERED",
+      effects: [{ type: "FULFILLMENT_STATUS_CHANGED" }],
+    });
+    for (const [from, to] of [
+      ["PENDING", "PREPARING"],
+      ["PENDING", "ON_HOLD"],
+      ["PENDING", "CANCELED"],
+      ["PREPARING", "DELIVERED"],
+      ["ON_HOLD", "DELIVERED"],
+      ["ON_HOLD", "PENDING"],
+    ] as const) {
+      expect(decideFulfillmentTransition(from, to, system())).toMatchObject({
+        decision: "REJECTED",
+        reasonCode: "FULFILLMENT_TRANSITION_NOT_ALLOWED",
+      });
+    }
+    expect(
+      decideFulfillmentTransition("PENDING", "DELIVERED", system(2, 3)),
+    ).toMatchObject({
+      decision: "REJECTED",
+      reasonCode: "FULFILLMENT_STALE_VERSION",
+    });
+    expect(
+      decideFulfillmentTransition("DELIVERED", "DELIVERED", system()),
+    ).toMatchObject({ decision: "NOOP" });
+    expect(
+      decideFulfillmentTransition("CANCELED", "DELIVERED", system()),
+    ).toMatchObject({
+      decision: "CONFLICT",
+      reasonCode: "FULFILLMENT_TERMINAL_STATE_CONFLICT",
+    });
+  });
+
   test("makes same-state requests no-ops and terminal contradictions conflicts", () => {
     expect(
       decideFulfillmentTransition("DELIVERED", "DELIVERED", {

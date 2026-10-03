@@ -299,3 +299,47 @@ test("invalid recording instants and incomplete database writes cannot claim per
   ).rejects.toMatchObject({ code: "CONTENT_UNAVAILABLE" });
   expect(query).toHaveBeenCalledTimes(3);
 });
+
+test("reused provider observation retains the fresh authorization query audit without rewriting old evidence", async () => {
+  const { query, persist } = setup([
+    { id: id(20), audit_log_id: id(21), matches: true },
+  ]);
+  const source = command(false);
+  const action = {
+    schemaVersion: 1,
+    type: "REDIRECT",
+    ciphertext: `enc:v1:${"a".repeat(43)}`,
+    encryptedDataKey: `enc:v1:${"b".repeat(43)}`,
+    encryptionKeyVersion: "test-key-v1",
+    expiresAt: "2026-09-09T00:10:00.000Z",
+  };
+  const refresh = paymentRuntimeRecordReconcileCommandSchema.parse({
+    ...source,
+    action,
+    claim: {
+      ...source.claim,
+      attempt: {
+        ...source.claim.attempt,
+        status: "REQUIRES_ACTION",
+        action,
+        actionExpired: true,
+      },
+    },
+    event: { ...source.event, status: "REQUIRES_ACTION" },
+  });
+  await expect(persist(refresh)).resolves.toEqual({
+    providerEventId: id(20),
+    auditLogId: id(21),
+  });
+  const writes = query.mock.calls.filter(([sql]) => sql.includes("INSERT"));
+  expect(writes).toHaveLength(1);
+  expect(writes[0]?.[0]).toContain("INSERT INTO public.audit_logs");
+  expect(writes[0]?.[1]).toEqual([
+    id(10),
+    "payment-runtime",
+    id(6),
+    id(11),
+    id(12),
+    recordedAt,
+  ]);
+});

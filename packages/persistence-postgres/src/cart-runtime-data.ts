@@ -67,6 +67,16 @@ export function cartItemRecord(row: DraftRow) {
     displayMode: row["display_mode"],
     nicknameProvided: row["display_mode"] === "nickname",
     hasFanMessage: row["has_fan_message"],
+    ...(row["gallery_visibility"]
+      ? {
+          galleryPreference: {
+            visibility: row["gallery_visibility"],
+            ...(row["gallery_visibility"] === "PUBLIC_NAMED"
+              ? { publicAlias: row["gallery_public_alias"] }
+              : {}),
+          },
+        }
+      : {}),
   });
 }
 

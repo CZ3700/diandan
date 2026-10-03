@@ -44,11 +44,13 @@ export async function loadEditableCartItem(
   const rows = await draftRows(
     client,
     `SELECT item.id,item.cart_id,variant.gift_id,item.gift_variant_id,intent.idol_id,
+ preference.visibility gallery_visibility,preference.public_alias gallery_public_alias,
  item.version::text,item.quantity,item.observed_price_id,item.display_mode,item.has_fan_message,
  intent.id support_intent_id,intent.version::text intent_version,intent.fan_message_locale,
  intent.status intent_status,intent.privacy_state,intent.expires_at<=clock_timestamp() intent_expired
  FROM public.cart_items item JOIN public.support_intents intent ON intent.cart_item_id=item.id
  JOIN public.gift_variants variant ON variant.id=item.gift_variant_id
+ LEFT JOIN public.cart_wish_gallery_preferences preference ON preference.cart_item_id=item.id
  WHERE item.id=$1::uuid AND item.cart_id=$2::uuid FOR UPDATE OF item,intent`,
     [command.itemId, cart.id],
   );

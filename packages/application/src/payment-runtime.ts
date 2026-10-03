@@ -42,6 +42,7 @@ export function createPaymentRuntimeUseCases({
   providerDirectory,
   configuration,
   health,
+  onRecoveryUnresolved,
 }: {
   transactions: PaymentRuntimeTransactionManager;
   keyManagement: KeyManagementPort;
@@ -49,6 +50,7 @@ export function createPaymentRuntimeUseCases({
   providerDirectory?: PaymentRuntimeProviderDirectory;
   configuration: PaymentRuntimeConfiguration;
   health?: PaymentRuntimeHealthOptions;
+  onRecoveryUnresolved?: () => void;
 }) {
   const registered = paymentProviderRegistrations(providers, providerDirectory);
   const runtime: PaymentRuntime = {
@@ -61,6 +63,7 @@ export function createPaymentRuntimeUseCases({
     ...(health === undefined
       ? {}
       : { health: createPaymentRuntimeHealth(health, registered) }),
+    ...(onRecoveryUnresolved === undefined ? {} : { onRecoveryUnresolved }),
   };
   const execute = async (
     operation: PaymentRuntimeCommand["operation"],

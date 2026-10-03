@@ -1,4 +1,6 @@
 import "server-only";
+import { readPublicStorefrontNavigation } from "../server/public-storefront-navigation";
+import { NavigationProvider } from "./navigation-provider";
 import { readCartRestorationHint } from "../server/cart-restoration-hint";
 import "./cart.css";
 import { CartProvider } from "./cart-provider";
@@ -23,14 +25,16 @@ import { SiteHeader } from "./site-header";
 import { SiteFooter, PageState } from "./page-parts";
 import { MarketChoices, PolicyLinks } from "./commerce-context";
 import type { GiftDirectorySection } from "./gift-directory-section";
-import { GiftDetail } from "./gift-detail";
+import { giftDetailBody } from "./gift-detail-body";
 import { GiftDetailPolicyLinks } from "./gift-detail-context-section";
 import { PolicyBody } from "./gift-content";
 import { formatStorefrontMessage } from "./copy";
-import { giftRecoveryQuery } from "./gift-selection";
 import { queryString } from "./navigation";
 import { createStorefrontLoading } from "./route-states";
 import { GiftPageSeo, loadGiftSeo } from "./gift-seo";
+import { regionEntries } from "./region-entry";
+import { publicNavigationQuery } from "./navigation-target";
+import { InformationPageFooter } from "./information-page-footer";
 
 type Kind = "gifts" | "gift" | "policy" | "region";
 type PageDefinition =
@@ -63,12 +67,13 @@ export function createGiftStorefrontPage(
         };
       },
     );
-    const [copy, detail, restoreOnLoad] = await Promise.all([
+    const [copy, detail, restoreOnLoad, navigation] = await Promise.all([
       loadStorefrontCopy(locale),
       handle?.success
         ? readGiftDetailPage(locale, handle.data, values)
         : undefined,
       readCartRestorationHint(),
+      readPublicStorefrontNavigation(),
       kind === "gift" || kind === "gifts" ? undefined : contextRead,
     ]);
     const contextQuery = queryString(values);
@@ -161,101 +166,92 @@ export function createGiftStorefrontPage(
       }
     } else {
       if (!detail) notFound();
-      const { handle, result, scoped, artists, selection } = detail;
-      if (result.outcome === "FAILURE" && result.code === "NOT_FOUND")
-        notFound();
-      if (scoped?.outcome === "FAILURE" && scoped.code === "NOT_FOUND")
+      if (
+        detail.result.outcome === "FAILURE" &&
+        detail.result.code === "NOT_FOUND"
+      )
         notFound();
       if (
-        result.outcome !== "SUCCESS" ||
-        selection.kind === "INVALID_QUERY" ||
-        (scoped?.outcome === "FAILURE" && scoped.code !== "MARKET_UNAVAILABLE")
+        detail.scoped?.outcome === "FAILURE" &&
+        detail.scoped.code === "NOT_FOUND"
       )
-        content = (
-          <PageState
-            locale={locale}
-            copy={copy}
-            title={copy.contentError}
-            body={
-              selection.kind === "INVALID_QUERY"
-                ? copy.marketInvalid
-                : copy.contentErrorBody
-            }
-            contextQuery={
-              selection.kind === "INVALID_QUERY"
-                ? giftRecoveryQuery(contextQuery)
-                : contextQuery
-            }
-            retryPath={`/gifts/${handle}`}
-          />
-        );
-      else
-        content = (
-          <GiftDetail
-            locale={locale}
-            copy={copy}
-            content={scoped?.outcome === "SUCCESS" ? scoped : result}
-            {...(scoped?.outcome === "SUCCESS" ? { commerce: scoped } : {})}
-            context={contextRead}
-            artists={artists}
-            contextQuery={contextQuery}
-            {...(selection.kind === "VALID" && selection.variantId
-              ? { variantId: selection.variantId }
-              : {})}
-            marketError={scoped?.outcome === "FAILURE"}
-          />
-        );
+        notFound();
+      content = giftDetailBody({
+        locale,
+        copy,
+        detail,
+        values,
+        context: contextRead,
+      });
     }
+    const region = regionEntries(locale, copy, contextQuery);
     return (
-      <div className="storefront" lang={locale}>
-        <CartProvider
-          key={locale}
-          locale={locale}
-          restoreOnLoad={restoreOnLoad}
-        >
-          <SiteHeader
+      <NavigationProvider result={navigation}>
+        <div className="storefront" lang={locale}>
+          <CartProvider
+            key={locale}
+            locale={locale}
+            restoreOnLoad={restoreOnLoad}
+          >
+            <SiteHeader
+              locale={locale}
+              copy={copy}
+              name={name}
+              contextQuery={contextQuery}
+              active={kind === "gifts" || kind === "gift" ? "gifts" : "other"}
+              regionEntry={region.header}
+            />
+            <main id="main-content" tabIndex={-1}>
+              <Suspense fallback={null}>
+                <GiftPageSeo
+                  locale={locale}
+                  kind={kind}
+                  values={values}
+                  {...(routeParams.handle
+                    ? { handle: routeParams.handle }
+                    : {})}
+                />
+              </Suspense>
+              {content}
+            </main>
+          </CartProvider>
+          <SiteFooter
             locale={locale}
             copy={copy}
             name={name}
-            contextQuery={contextQuery}
-            active={kind === "gifts" || kind === "gift" ? "gifts" : "other"}
+            contextQuery={publicNavigationQuery(contextQuery)}
+            region={region.footer}
+            // Lazy server elements handed to the client footer carry keys (see region-entry).
+            informationLinks={
+              <Suspense key="information-links" fallback={null}>
+                <InformationPageFooter
+                  locale={locale}
+                  contextQuery={contextQuery}
+                />
+              </Suspense>
+            }
+            policyLinks={
+              kind === "gift" || kind === "gifts" ? (
+                <GiftDetailPolicyLinks
+                  key="policy-links"
+                  locale={locale}
+                  copy={copy}
+                  context={contextRead}
+                  contextQuery={publicNavigationQuery(contextQuery)}
+                />
+              ) : (
+                <PolicyLinks
+                  key="policy-links"
+                  locale={locale}
+                  copy={copy}
+                  context={await contextRead}
+                  contextQuery={publicNavigationQuery(contextQuery)}
+                />
+              )
+            }
           />
-          <main id="main-content" tabIndex={-1}>
-            <Suspense fallback={null}>
-              <GiftPageSeo
-                locale={locale}
-                kind={kind}
-                values={values}
-                {...(routeParams.handle ? { handle: routeParams.handle } : {})}
-              />
-            </Suspense>
-            {content}
-          </main>
-        </CartProvider>
-        <SiteFooter
-          locale={locale}
-          copy={copy}
-          name={name}
-          contextQuery={contextQuery}
-          policyLinks={
-            kind === "gift" || kind === "gifts" ? (
-              <GiftDetailPolicyLinks
-                locale={locale}
-                copy={copy}
-                context={contextRead}
-                contextQuery={contextQuery}
-              />
-            ) : (
-              <PolicyLinks
-                locale={locale}
-                copy={copy}
-                context={await contextRead}
-                contextQuery={contextQuery}
-              />
-            )
-          }
-        />
-      </div>
+        </div>
+      </NavigationProvider>
     );
   }
   if (kind === "gifts" || kind === "region") {

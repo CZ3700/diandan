@@ -13,6 +13,8 @@ import {
   notificationCommandSchema,
   notificationLocaleSnapshotSchema,
 } from "./fulfillment-notification.js";
+import { giftKindSchema } from "./gift-commerce-profile.js";
+import { publicOrderNoSchema } from "./identifiers.js";
 import { supportedLocaleSchema } from "./locale.js";
 import {
   notificationPortCommandSchema,
@@ -56,6 +58,8 @@ export const orderNotificationItemSchema = z
     variantLocale: supportedLocaleSchema.nullable(),
     quantity: z.number().int().min(1).max(2_147_483_647),
     lineTotalMinor: minorAmountSchema,
+    /** ADR-019 (template v2). Archived v1 variables omit it and parse as null; null also marks legacy lines. */
+    giftKind: giftKindSchema.nullable().default(null),
   })
   .refine((v) => (v.variantName === null) === (v.variantLocale === null));
 /** No live catalog lookup or private support-intent fields. Frozen before sending. */
@@ -63,6 +67,8 @@ export const orderNotificationBaseVariablesSchema = z.strictObject({
   schemaVersion: version,
   siteName: text.max(120),
   publicOrderId: id,
+  /** Template v2 shows it (F1-2). Archived v1 variables omit it and parse as null. */
+  publicOrderNo: publicOrderNoSchema.nullable().default(null),
   orderedAt: contentTimestampSchema,
   currency: currencySchema,
   totalMinor: minorAmountSchema,
@@ -146,7 +152,7 @@ export const orderNotificationContentSchema =
 export const notificationEmailDispatchSchema =
   notificationPortCommandSchema.extend({
     recipient: z.email().max(254),
-    /** Immutable receiver-enforced cutoff. After it, only a stored receipt may be returned. */
+    /** Frozen cutoff: gateway receivers enforce it; native providers use it for platform admission only. */
     dispatchNotAfter: contentTimestampSchema,
   });
 export const notificationGatewayProfileSchema = z.strictObject({

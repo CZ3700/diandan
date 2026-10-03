@@ -1,6 +1,8 @@
 import { URL } from "node:url";
 import { randomBytes, randomUUID } from "node:crypto";
 import { createStructuredLogger } from "@fan-support/observability";
+import { createDeliveryProofProcessor } from "@fan-support/media-image";
+import { createS3MediaStorageAdapter } from "@fan-support/media-s3";
 import {
   createAdminCatalogUseCases,
   createManagementCenterUseCases,
@@ -9,7 +11,7 @@ import { createApiApplication } from "../dist/bootstrap.js";
 import {
   createLocalOidcAdminAccessComposition,
   createLocalAdminOrdersComposition,
-} from "../dist/index.js";
+} from "../dist/testing/index.js";
 import { preflightEnvironment } from "./publication-preflight-http-fixtures.mjs";
 import { seedAdminOrdersRoles } from "./admin-orders-fixtures.mjs";
 import {
@@ -82,6 +84,25 @@ export async function createAdminOrdersRuntime(context, options = {}) {
     },
     { identityTransport: { fetch: idp.fetch } },
   );
+  // Delivery proofs use the private SOURCE bucket of the same ephemeral S3 (V2 §4-6).
+  const proofStorage = context.s3
+    ? createS3MediaStorageAdapter({
+        schemaVersion: 1,
+        sourceBucket: context.s3.sourceBucket,
+        derivativeBucket: context.s3.derivativeBucket,
+        publicMediaOrigin: context.gateway.origin,
+        maxUploadBytes: 33554432,
+        region: "us-east-1",
+        authentication: {
+          mode: "static",
+          endpoint: context.s3.endpoint,
+          presignEndpoint: context.s3.endpoint,
+          accessKeyId: context.s3.accessKeyId,
+          secretAccessKey: context.s3.secretAccessKey,
+          forcePathStyle: true,
+        },
+      })
+    : undefined;
   const orders = createLocalAdminOrdersComposition({
     environment: "LOCAL_OIDC",
     database,
@@ -89,6 +110,15 @@ export async function createAdminOrdersRuntime(context, options = {}) {
     tokenPepper,
     allowedOrigin: adminOrigin,
     publicMediaBaseUrl: context.gateway.origin,
+    proofs: proofStorage
+      ? {
+          storage: proofStorage,
+          processor: createDeliveryProofProcessor({
+            storage: proofStorage,
+            now: () => new Date(),
+          }),
+        }
+      : undefined,
   });
   const additional =
     (await options.composeAdditional?.({ tokenPepper, adminOrigin })) ?? {};
@@ -246,11 +276,47 @@ export async function createAdminOrdersRuntime(context, options = {}) {
     idp.setSubject(actor.subject);
     idp.setMode("valid");
     await page.context().clearCookies();
-    await page.goto(`${adminOrigin}/${locale}`, {
-      waitUntil: "domcontentloaded",
-    });
-    await page.locator('form[action="/api/admin/auth/begin"] button').click();
-    await page.locator(".mc-account button").waitFor({ timeout: 60000 });
+    // A sign-in that never reaches the workspace is reported with the request
+    // paths and statuses it made (no query strings, tokens or cookies).
+    const seen = [];
+    const record = (response) => {
+      const url = new URL(response.url());
+      if (url.pathname.startsWith("/api/admin/") || url.origin !== adminOrigin)
+        seen.push(
+          `${response.request().method()} ${url.origin === adminOrigin ? "" : "idp:"}${url.pathname} ${response.status()}`,
+        );
+    };
+    page.on("response", record);
+    try {
+      await page.goto(`${adminOrigin}/${locale}`, {
+        waitUntil: "domcontentloaded",
+      });
+      await page.locator('form[action="/api/admin/auth/begin"] button').click();
+      await page.locator(".mc-account button").waitFor({ timeout: 60000 });
+    } catch (error) {
+      console.error(
+        `Admin sign-in diagnostic ${JSON.stringify({
+          role,
+          locale,
+          width: page.viewportSize()?.width ?? null,
+          path: new URL(page.url()).pathname,
+          loginButtons: await page
+            .locator('form[action="/api/admin/auth/begin"] button')
+            .count()
+            .catch(() => null),
+          alerts: (
+            await page
+              .locator('[role="alert"]')
+              .allInnerTexts()
+              .catch(() => [])
+          ).map((text) => text.slice(0, 80)),
+          responses: seen.slice(-12),
+        })}`,
+      );
+      throw error;
+    } finally {
+      page.off("response", record);
+    }
     for (const cookie of await page.context().cookies())
       registerSecret(cookie.value);
   }

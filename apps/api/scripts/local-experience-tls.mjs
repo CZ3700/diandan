@@ -82,16 +82,33 @@ export async function prepareLocalTls({ config, stateDirectory }) {
   await rm(csr);
   await rm(extensions);
 }
+/** An IPv4 loopback address such as 127.0.0.2; public instances give each web app its own. */
+function isLoopbackAddress(value) {
+  const parts = /^127\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/u.exec(value);
+  return parts !== null && parts.slice(1).every((part) => Number(part) <= 255);
+}
 export async function startLocalProxy({
   config,
+  address = "127.0.0.1",
   port,
   origin,
+  additionalOrigins = [],
   target,
   own,
   name,
 }) {
-  const destination = new URL(target),
-    publicHost = new URL(origin).host;
+  if (!isLoopbackAddress(address))
+    throw new Error("Proxy must listen on a loopback address");
+  const destination = new URL(target);
+  // Object storage also answers its public presign host when the instance is exposed.
+  const publicHosts = new Set(
+    [origin, ...additionalOrigins].map((value) => {
+      const url = new URL(value);
+      if (url.protocol !== "https:" || url.origin !== value)
+        throw new Error("Proxy origins must be exact https origins");
+      return url.host;
+    }),
+  );
   if (
     destination.protocol !== "http:" ||
     destination.hostname !== "127.0.0.1" ||
@@ -100,13 +117,13 @@ export async function startLocalProxy({
     throw new Error("Proxy requires an owned loopback origin");
   const sockets = new Set();
   const valid = (request) =>
-    request.headers.host === publicHost &&
+    publicHosts.has(request.headers.host) &&
     request.url?.startsWith("/") &&
     !request.url.startsWith("//") &&
     new URL(request.url, target).origin === target;
   const headers = (request) => ({
     ...request.headers,
-    "x-forwarded-host": publicHost,
+    "x-forwarded-host": request.headers.host,
     "x-forwarded-proto": "https",
   });
   const server = httpsServer(
@@ -182,7 +199,7 @@ export async function startLocalProxy({
   });
   await new Promise((resolve, reject) => {
     server.once("error", reject);
-    server.listen(port, "127.0.0.1", resolve);
+    server.listen(port, address, resolve);
   });
   own(
     name,

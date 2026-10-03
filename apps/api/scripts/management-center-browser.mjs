@@ -9,6 +9,7 @@ import {
   managementCenterResponseSchema,
 } from "@fan-support/contracts";
 import { createManagementResponseObserver } from "./management-center-response-observer.mjs";
+import { createManagementListBrowser } from "./management-center-list-browser.mjs";
 
 const requireFromRoot = createRequire(
   new globalThis.URL("../../../package.json", import.meta.url),
@@ -52,6 +53,85 @@ export function posterVisibilityEvidence({
       (expectedImages === undefined ||
         JSON.stringify(publicImages) === JSON.stringify(expectedImages)),
   };
+}
+
+/** apps/admin `management-center/shell.tsx` section order. */
+const MANAGEMENT_SECTION_ORDER = [
+  "ARTISTS",
+  "GIFTS",
+  "POSTERS",
+  "PAGES",
+  "DECORATION",
+  "ORDERS",
+  "LEDGER",
+  "PAYMENTS",
+  "EXCEPTIONS",
+  "STAFF",
+  "ACCOUNT",
+];
+/** The admin reads, by BFF operation, that decide which sections the shell offers. */
+const MANAGEMENT_AREA_READS = new Set([
+  "session",
+  "orders-context",
+  "ledger-context",
+  "payment-config-read",
+  "exceptions-context",
+  "staff-context",
+  "account-context",
+]);
+
+/** Whether a read grants its area, as `management-center/access.ts` and `center.tsx` accept it. */
+export function managementAreaGrant(area, body) {
+  if (body?.outcome !== "SUCCESS") return false;
+  switch (area) {
+    case "session":
+      return (
+        Array.isArray(body.permissions) &&
+        body.permissions.includes("content.read")
+      );
+    case "orders-context":
+      return (
+        body.kind === "CONTEXT" &&
+        Array.isArray(body.permissions) &&
+        body.permissions.includes("orders.read")
+      );
+    case "exceptions-context":
+      return body.kind === "CONTEXT" && body.permissions?.canRead === true;
+    case "ledger-context":
+      return body.kind === "CONTEXT";
+    case "payment-config-read":
+      return body.kind === "WORKSPACE";
+    case "staff-context":
+      return body.kind === "STAFF_CONTEXT";
+    case "account-context":
+      return body.kind === "ACCOUNT";
+    default:
+      return false;
+  }
+}
+
+/** The sections the admin shell renders for the access the operator's reads granted. */
+export function expectedManagementSections({ content, artistsOnly, granted }) {
+  const has = (area) => granted.has(area);
+  const visible = new Set();
+  if (content) {
+    visible.add("ARTISTS");
+    if (!artistsOnly) {
+      visible.add("GIFTS");
+      visible.add("POSTERS");
+    }
+  }
+  if (has("content-read")) {
+    visible.add("PAGES");
+    visible.add("DECORATION");
+  }
+  if (has("orders-context")) visible.add("ORDERS");
+  if (has("ledger-context") && !has("orders-context")) visible.add("LEDGER");
+  if (has("payment-config-read")) visible.add("PAYMENTS");
+  if (has("exceptions-context")) visible.add("EXCEPTIONS");
+  if (has("staff-context")) visible.add("STAFF");
+  if (has("account-context")) visible.add("ACCOUNT");
+  return MANAGEMENT_SECTION_ORDER.filter((value) => visible.has(value));
 }
 
 /** Real TEST operator only. No credential, signed URL, request body, HAR or trace is saved. */
@@ -144,7 +224,21 @@ export async function verifyManagementCenterBrowser({
     grants: [],
     submits: 0,
     putAttempts: 0,
+    // Area read → granted, from the admin's own reads; no body is kept.
+    areas: new Map(),
+    areaReads: [],
   };
+  page.on("response", (response) => {
+    const url = new globalThis.URL(response.url());
+    const area = url.pathname.replace(/^\/api\/admin\//u, "");
+    if (url.origin !== adminOrigin || !MANAGEMENT_AREA_READS.has(area)) return;
+    observed.areaReads.push(
+      response.json().then(
+        (body) => observed.areas.set(area, managementAreaGrant(area, body)),
+        () => observed.areas.set(area, false),
+      ),
+    );
+  });
   for (const [surface, target] of [
     ["admin", page],
     ["storefront", publicPage],
@@ -512,6 +606,16 @@ export async function verifyManagementCenterBrowser({
     publicCheck = null;
     return images;
   }
+  const listBrowser = createManagementListBrowser({
+    page,
+    client,
+    observed,
+    assert,
+    settledResponses,
+    section,
+    back,
+    tabTo,
+  });
   try {
     await context.addCookies(
       ["session", "csrf"].map((name) => ({
@@ -542,9 +646,43 @@ export async function verifyManagementCenterBrowser({
       await page.evaluate(() => globalThis.document.cookie === ""),
       "operator credentials are inaccessible to browser JavaScript",
     );
+    await Promise.all(observed.areaReads);
+    const expectedSections = expectedManagementSections({
+      content: observed.context !== null,
+      artistsOnly: observed.context?.artists?.scope === "ASSIGNED",
+      granted: new Set(
+        [...observed.areas]
+          .filter(([, granted]) => granted)
+          .map(([area]) => (area === "session" ? "content-read" : area)),
+      ),
+    });
+    const renderedSections = () =>
+      page
+        .locator("[data-management-section]")
+        .evaluateAll((nodes) =>
+          nodes.map((node) => node.getAttribute("data-management-section")),
+        );
+    let sections = await renderedSections();
+    for (
+      const deadline = Date.now() + 10_000;
+      sections.join() !== expectedSections.join() && Date.now() < deadline;
+      sections = await renderedSections()
+    )
+      await page.waitForTimeout(250);
+    report.managementSections = { expected: expectedSections, sections };
     assert(
-      (await page.locator("[data-management-section]").count()) === 3,
-      "default management entry exposes only artists, gifts and posters",
+      expectedSections.slice(0, 3).join() === "ARTISTS,GIFTS,POSTERS",
+      "the daily operator's content keeps the artists, gifts and posters entries",
+    );
+    assert(
+      sections.join() === expectedSections.join(),
+      "management entry offers exactly the sections the operator's actual access grants",
+    );
+    assert(
+      (await page
+        .locator('[data-management-section="ARTISTS"]')
+        .getAttribute("aria-current")) === "page",
+      "management entry opens on artists",
     );
     assert(
       observed.context?.defaults?.priceScope !== null &&
@@ -645,7 +783,6 @@ export async function verifyManagementCenterBrowser({
     for (const [index, giftKind] of [
       "VIRTUAL",
       "PHYSICAL",
-      "WISH",
       "MERCHANDISE",
     ].entries()) {
       await begin("GIFTS");
@@ -700,6 +837,75 @@ export async function verifyManagementCenterBrowser({
       );
       gifts.push({ operation: result, item: gift });
     }
+    // SPEC 6.3.0: a wish needs its one artist and is a single purchase held at the
+    // configured default inventory location.
+    await begin("GIFTS");
+    const wishName = `测试礼物 WISH ${suffix}`;
+    await fillContent({
+      name: wishName,
+      description,
+      image: sourceImages.gift,
+      giftKind: "WISH",
+      price: "23",
+    });
+    assert(
+      (await page.locator('[data-management-wish="NEW"]').count()) === 1 &&
+        (await page.locator(field("policy")).count()) === 0 &&
+        (await page.locator(field("quantity")).count()) === 0,
+      "WISH asks for its artist and fixes a single purchase instead of a sale policy",
+    );
+    const beforeWish = observed.submits;
+    await page.locator("[data-management-submit]").click();
+    await expect(
+      page.locator("#management-wish-artist-search"),
+    ).toHaveAttribute("aria-invalid", "true");
+    assert(
+      observed.submits === beforeWish,
+      "a WISH without its artist sends no business mutation",
+    );
+    const defaultLocation = observed.context.defaults.inventoryLocationId;
+    assert(
+      typeof defaultLocation === "string",
+      "the TEST runtime configures a default inventory location for a wish's single unit",
+    );
+    await page
+      .locator(`[data-management-wish-artist="${artist.result.targetId}"]`)
+      .click();
+    await page.locator(".mc-wish-selected").waitFor();
+    const wishOperation = await operationAfter(
+      () => page.locator("[data-management-submit]").click(),
+      "SAVE_GIFT",
+    );
+    await mediaProof(wishOperation, sourceImages.gift, ["GIFT_PRIMARY"]);
+    const wishItem = observed.lists
+      .get("GIFTS")
+      .items.find((entry) => entry.id === wishOperation.result.targetId);
+    assert(
+      wishItem?.giftKind === "WISH" &&
+        wishItem.inventory?.policy === "TRACKED" &&
+        wishItem.inventory.quantity === 1 &&
+        wishItem.inventory.locationId === defaultLocation &&
+        wishItem.wish?.artistId.toLowerCase() ===
+          artist.result.targetId.toLowerCase() &&
+        wishItem.wish.status === "AVAILABLE",
+      "WISH list holds one unit at the default location, bound to its artist and open",
+    );
+    const wishRows = (
+      await client.query(
+        "SELECT w.idol_id,w.inventory_location_id,v.inventory_policy,b.on_hand::integer AS on_hand,b.reserved::integer AS reserved FROM public.wish_bindings w JOIN public.gift_variants v ON v.id=w.gift_variant_id JOIN public.inventory_items i ON i.gift_variant_id=v.id JOIN public.inventory_balances b ON b.inventory_item_id=i.id AND b.location_id=w.inventory_location_id WHERE w.gift_id=$1",
+        [wishOperation.result.targetId],
+      )
+    ).rows;
+    assert(
+      wishRows.length === 1 &&
+        wishRows[0].idol_id === artist.result.targetId.toLowerCase() &&
+        wishRows[0].inventory_location_id === defaultLocation &&
+        wishRows[0].inventory_policy === "TRACKED" &&
+        wishRows[0].on_hand === 1 &&
+        wishRows[0].reserved === 0,
+      "PG binds the wish to its artist with exactly one unit at the default location",
+    );
+    const wish = { operation: wishOperation, item: wishItem };
     const oldGift = gifts[0].item;
     await (await findItem("GIFTS", oldGift.id)).click();
     const giftUploads = observed.putAttempts;
@@ -727,6 +933,10 @@ export async function verifyManagementCenterBrowser({
       "gift price edit preserves image and type without another upload",
     );
     gifts[0] = { operation: editedGift, item: currentGift };
+    report.cases.push({ name: step, status: "PASS" });
+
+    step = "real-catalog-filters-and-price-order";
+    await listBrowser.verifyGiftFilters(scope);
     report.cases.push({ name: step, status: "PASS" });
 
     step = "poster-replacement-and-history-restore";
@@ -804,6 +1014,12 @@ export async function verifyManagementCenterBrowser({
         await navigate(locale);
         for (const sectionName of ["ARTISTS", "GIFTS", "POSTERS"]) {
           await section(sectionName);
+          await listBrowser.verifyMatrix({
+            locale,
+            sectionName,
+            artistId: artist.result.targetId,
+            artistName,
+          });
           await pictures(page, "[data-management-list] .mc-item-photo img");
           await page.evaluate(() => globalThis.scrollTo(0, 0));
           await panel(
@@ -848,6 +1064,8 @@ export async function verifyManagementCenterBrowser({
     await tabTo('[data-management-section="GIFTS"]');
     await page.keyboard.press("Enter");
     await page.locator('[data-management-list="GIFTS"]').waitFor();
+    await settledResponses();
+    await listBrowser.verifyKeyboard();
     await tabTo("[data-management-new]");
     await page.keyboard.press("Enter");
     await page.locator("[data-management-form]").waitFor();
@@ -989,10 +1207,14 @@ export async function verifyManagementCenterBrowser({
               "aria-valuemax",
               String(CART_RUNTIME_MAX_QUANTITY),
             );
-            await quantity.press("End");
-            await expect(quantity).toHaveValue(
-              String(CART_RUNTIME_MAX_QUANTITY),
-            );
+            // SSR already renders an enabled input; a key pressed before hydration is lost.
+            await expect(async () => {
+              await quantity.press("End");
+              await expect(quantity).toHaveValue(
+                String(CART_RUNTIME_MAX_QUANTITY),
+                { timeout: 1000 },
+              );
+            }).toPass({ timeout: 30000, intervals: [100, 250, 500] });
             await expect(
               offer.locator('[data-quantity-action="increase"]'),
             ).toBeDisabled();
@@ -1039,15 +1261,61 @@ export async function verifyManagementCenterBrowser({
               `${locale} ${gift.giftKind} offers cart entry without bypassing cart validation`,
             );
             publicCheck.stage = "CONTENT";
+            // L2-17: the description is read under the gift's name; there is no details section.
             await expect(
               publicPage.locator(
-                '[aria-labelledby="gift-information-title"] .gift-description-text',
+                ".gift-detail-summary .gift-short-description",
               ),
             ).toContainText(description);
+            await expect(
+              publicPage.locator(".gift-detail-information"),
+            ).toHaveCount(0);
           } else {
             publicCheck.stage = "CONTENT";
-            await expect(publicPage.locator(".storefront-story")).toContainText(
+            const artistDescription = publicPage.locator(
+              ".storefront-artist-hero p[data-artist-description]",
+            );
+            await expect(artistDescription).toHaveCount(1);
+            await expect(artistDescription).toHaveAttribute("lang", "zh-CN");
+            const toggle = publicPage.locator(
+              "[data-artist-description-toggle]",
+            );
+            await publicPage.evaluate(async () => {
+              await globalThis.document.fonts.ready;
+              await new Promise((resolve) =>
+                globalThis.requestAnimationFrame(() =>
+                  globalThis.requestAnimationFrame(resolve),
+                ),
+              );
+            });
+            const overflows = await artistDescription.evaluate((element) => {
+              const lineHeight = Number.parseFloat(
+                globalThis.getComputedStyle(element).lineHeight,
+              );
+              if (!Number.isFinite(lineHeight) || lineHeight <= 0)
+                throw new Error(
+                  "Artist description has no measurable line height",
+                );
+              return element.scrollHeight > lineHeight + 1;
+            });
+            if (overflows) {
+              await expect(toggle).toBeVisible();
+              await expect(toggle).toHaveAttribute("aria-expanded", "false");
+              await toggle.click();
+              await expect(toggle).toHaveAttribute("aria-expanded", "true");
+            } else await expect(toggle).toHaveCount(0);
+            await expect
+              .poll(() =>
+                artistDescription.evaluate(
+                  (element) => element.clientHeight + 1 >= element.scrollHeight,
+                ),
+              )
+              .toBe(true);
+            await expect(artistDescription).toHaveText(
               `${description} 已更新。`,
+            );
+            await expect(publicPage.locator(".storefront-story")).toHaveCount(
+              0,
             );
           }
           publicCheck.stage = "ROBOTS";
@@ -1086,6 +1354,80 @@ export async function verifyManagementCenterBrowser({
               publicPage,
             );
         }
+        // The wish published above: one unit for its bound artist and no quantity choice.
+        publicCheck = {
+          locale,
+          kind: "wish",
+          viewport,
+          stage: "HTTP",
+          httpStatus: null,
+        };
+        const wishUrl = new globalThis.URL(
+          `/${locale}/gifts/${wish.operation.result.handle}`,
+          storefrontOrigin,
+        );
+        wishUrl.searchParams.set("market", scope.market);
+        wishUrl.searchParams.set("currency", scope.currency);
+        wishUrl.searchParams.set("idol", artist.result.targetId);
+        const wishResponse = await publicPage.goto(wishUrl.href, {
+          waitUntil: "domcontentloaded",
+          timeout: 60_000,
+        });
+        publicCheck.httpStatus = wishResponse?.status() ?? null;
+        assert(
+          wishResponse?.status() === 200,
+          `${locale} wish created through management is public HTTP 200`,
+        );
+        publicCheck.stage = "TITLE";
+        await expect(publicPage.locator("h1")).toHaveText(wishName, {
+          timeout: 45_000,
+        });
+        publicCheck.stage = "IDENTITY";
+        await expect(publicPage.locator("[data-gift-detail]")).toHaveAttribute(
+          "data-gift-detail",
+          wish.item.id,
+        );
+        publicCheck.stage = "RECIPIENT";
+        await expect(
+          publicPage.locator('.wish-recipient[data-wish-status="AVAILABLE"] a'),
+        ).toHaveText(artistName);
+        publicCheck.stage = "INVENTORY_POLICY";
+        const wishOffer = publicPage.locator("[data-gift-offer]");
+        await expect(wishOffer).toHaveAttribute(
+          "data-availability",
+          "AVAILABLE",
+        );
+        await expect(wishOffer).toHaveAttribute(
+          "data-inventory-policy",
+          "TRACKED",
+        );
+        await expect(wishOffer.locator("[data-stock-remaining]")).toContainText(
+          "1",
+        );
+        publicCheck.stage = "PURCHASE_ENTRY";
+        await expect(wishOffer.getByRole("spinbutton")).toHaveCount(0);
+        await expect(
+          wishOffer.locator('form[data-cart-add] button[type="submit"]'),
+        ).toBeEnabled();
+        report.publicPages.push({
+          locale,
+          kind: "wish",
+          width: viewport.width,
+          status: wishResponse.status(),
+          sourceLocale: "zh-CN",
+          giftKind: "WISH",
+          recipientId: artist.result.targetId,
+          availability: "AVAILABLE",
+          inventoryPolicy: "TRACKED",
+          quantityCeiling: 1,
+          purchaseEntry: "ADD_TO_CART_FORM",
+          commerceTransactionVerified: false,
+        });
+        if (locale === "zh-CN")
+          await panel(
+            `${locale}-${viewport.width}-public-gifts-wish`,
+            publicPage,
+          );
         if (locale === "zh-CN") {
           await homeImages();
           publicCheck = {

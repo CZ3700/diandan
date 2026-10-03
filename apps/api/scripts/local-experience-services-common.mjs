@@ -13,12 +13,20 @@ export const privateHeaders = Object.freeze({
   "content-security-policy":
     "default-src 'none'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
 });
+/** Loopback origins name their port; public origins are a service label under the instance's base domain on 443. */
 export function localServiceOrigin(value) {
   const url = new URL(value);
+  const loopback =
+    /^[a-z][a-z0-9-]*\.example\.invalid$/u.test(url.hostname) && url.port;
+  const exposed =
+    /^(?:storefront|admin|oidc|payments|mail|media)(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?){2,}$/u.test(
+      url.hostname,
+    ) &&
+    !url.hostname.endsWith(".example.invalid") &&
+    !url.port;
   if (
     url.protocol !== "https:" ||
-    !/^[a-z][a-z0-9-]*\.example\.invalid$/u.test(url.hostname) ||
-    !url.port ||
+    !(loopback || exposed) ||
     url.origin !== value
   )
     throw new TypeError("Invalid local service origin");
@@ -61,8 +69,9 @@ export const escapeHtml = (value) =>
 export function htmlPage(title, content) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title></head><body><main><h1>${escapeHtml(title)}</h1>${content}</main></body></html>`;
 }
-export async function startLocalTlsServer({ origin, tls, handle }) {
+export async function startLocalTlsServer({ origin, port, tls, handle }) {
   localServiceOrigin(origin);
+  const listenPort = port ?? Number(new URL(origin).port);
   const server = createServer(
     {
       cert: await readFile(tls.certificatePath),
@@ -87,7 +96,7 @@ export async function startLocalTlsServer({ origin, tls, handle }) {
   );
   await new Promise((resolve, reject) => {
     server.once("error", reject);
-    server.listen(Number(new URL(origin).port), "127.0.0.1", resolve);
+    server.listen(listenPort, "127.0.0.1", resolve);
   });
   let closing;
   return {
@@ -104,8 +113,19 @@ export async function startLocalTlsServer({ origin, tls, handle }) {
 export async function createLocalExperienceFetch({
   origins,
   caCertificatePath,
+  targets = {},
 }) {
   const approved = new Set(origins.map(localServiceOrigin));
+  // Public origins have no port: owned services are reached directly, never through the edge.
+  const targetFor = (url) => {
+    const target = targets[url.origin] ?? {
+      address: "127.0.0.1",
+      port: Number(url.port),
+    };
+    if (!/^127\.\d{1,3}\.\d{1,3}\.\d{1,3}$/u.test(target.address))
+      throw new TypeError("Owned services are reached only on loopback");
+    return target;
+  };
   const ca = await readFile(caCertificatePath);
   return async (input, init = {}) => {
     const url = new URL(
@@ -113,11 +133,12 @@ export async function createLocalExperienceFetch({
     );
     if (!approved.has(url.origin) || url.username || url.password || url.hash)
       throw new TypeError("Unapproved local service target");
+    const target = targetFor(url);
     return new Promise((resolve, reject) => {
       const outgoing = request(
         {
-          hostname: "127.0.0.1",
-          port: Number(url.port),
+          hostname: target.address,
+          port: target.port,
           servername: url.hostname,
           ca,
           rejectUnauthorized: true,

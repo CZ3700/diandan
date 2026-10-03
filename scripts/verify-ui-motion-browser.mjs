@@ -20,6 +20,7 @@ import {
 import { createServer } from "node:net";
 import path from "node:path";
 import { spawn } from "node:child_process";
+import { resolveSpawnCommand } from "./spawn-command.mjs";
 import { fileURLToPath } from "node:url";
 import { inflateSync } from "node:zlib";
 
@@ -30,6 +31,11 @@ import {
   observePage,
   summarizeAxeResult,
 } from "./verify-ui-primitives-browser.mjs";
+
+function spawnArguments(command, arguments_) {
+  const resolved = resolveSpawnCommand(command, arguments_);
+  return [resolved.command, resolved.args];
+}
 
 const scriptPath = fileURLToPath(import.meta.url);
 const defaultWorkspaceRoot = path.resolve(path.dirname(scriptPath), "..");
@@ -782,12 +788,26 @@ export function assessMotionPerformance(metrics, expectedWidth) {
       `raw layout shift must remain zero; measured ${String(metrics.rawLayoutShift)}`,
     );
   }
+  // 2026-10-01 user decision: the zero budget guards the motion and interaction
+  // phase after the load event; tasks that start while the page loads are kept
+  // in the evidence but do not fail the gate. Unplaceable tasks count as after.
+  const loadEventEnd = metrics?.navigation?.loadEventEnd;
+  if (!finite(loadEventEnd) || loadEventEnd <= 0) {
+    errors.push(
+      `page load completion must be recorded to place long tasks; measured ${String(loadEventEnd)}`,
+    );
+  }
   if (!Array.isArray(metrics.longTasks)) {
     errors.push("long task evidence must be an array");
-  } else if (metrics.longTasks.length > 0) {
-    errors.push(
-      `long task budget exceeded: ${String(metrics.longTasks.length)}`,
+  } else if (finite(loadEventEnd) && loadEventEnd > 0) {
+    const afterLoad = metrics.longTasks.filter(
+      (task) => !finite(task?.startTime) || task.startTime >= loadEventEnd,
     );
+    if (afterLoad.length > 0) {
+      errors.push(
+        `long task budget exceeded after load: ${String(afterLoad.length)}`,
+      );
+    }
   }
   for (const observer of ["event", "layoutShift", "longTask", "lcp"]) {
     if (
@@ -2455,7 +2475,7 @@ export async function replaceMotionEvidenceDirectory(candidate, target) {
 }
 
 async function captureCommand(command, arguments_, cwd) {
-  const child = spawn(command, arguments_, {
+  const child = spawn(...spawnArguments(command, arguments_), {
     cwd,
     stdio: ["ignore", "pipe", "pipe"],
   });
@@ -2478,7 +2498,7 @@ async function runCommand(
   { cwd, env = process.env, logPath, registry },
 ) {
   const processGroup = process.platform !== "win32";
-  const child = spawn(command, arguments_, {
+  const child = spawn(...spawnArguments(command, arguments_), {
     cwd,
     detached: processGroup,
     env,
@@ -3452,6 +3472,10 @@ async function collectPerformance(
         .reduce((total, entry) => total + Number(entry.transferSize ?? 0), 0),
       lcpMs: window.__p205MotionMetrics.lcpMs,
       longTasks: window.__p205MotionMetrics.longTasks,
+      navigation: {
+        loadEventEnd:
+          performance.getEntriesByType("navigation")[0]?.loadEventEnd ?? null,
+      },
       observers: window.__p205MotionMetrics.observers,
       raf: {
         maxFrameDeltaMs: Math.max(...deltas),
@@ -3473,6 +3497,7 @@ async function collectPerformance(
         lcpMs: metrics.lcpMs,
         cls: metrics.cls,
         longTasks: metrics.longTasks,
+        navigation: metrics.navigation,
         raf: metrics.raf,
         interactionLatency: metrics.interactionLatency,
         phaseTimes,

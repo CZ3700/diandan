@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { DEFAULT_LOCALE } from "@fan-support/contracts";
 import {
   loadAdminRuntimeConfig,
   loadAdminWorkspaceConfig,
@@ -8,7 +9,8 @@ export const dynamic = "force-dynamic";
 
 export default function AdminRuntimePage() {
   loadAdminRuntimeConfig();
-  if (loadAdminWorkspaceConfig().mode === "TEST") redirect("/en");
+  if (loadAdminWorkspaceConfig().mode !== "DISABLED")
+    redirect(`/${DEFAULT_LOCALE}`);
 
   return (
     <main className="runtime-shell">

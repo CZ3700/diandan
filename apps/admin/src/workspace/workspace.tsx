@@ -480,7 +480,6 @@ export function AdminWorkspace({ locale }: { locale: SupportedLocale }) {
             </footer>
           </>
         )}
-        <footer className="admin-review-note">{t("reviewPending")}</footer>
       </main>
     </div>
   );

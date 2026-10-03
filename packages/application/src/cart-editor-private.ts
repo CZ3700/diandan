@@ -55,6 +55,9 @@ export async function decryptCartEditor(
   return cartEditorContentSchema.parse({
     displayMode: snapshot.item.displayMode,
     fanMessageLocale: snapshot.fanMessageLocale,
+    ...("galleryPreference" in snapshot.item
+      ? { galleryPreference: snapshot.item.galleryPreference }
+      : {}),
     ...(fanMessage === undefined ? {} : { fanMessage }),
     ...(displayName === undefined ? {} : { displayName }),
   });

@@ -36,6 +36,21 @@ it("places artist names and empty state immediately below the containing section
   }
 });
 
+// L2-15: the server cannot know the scroll position, so no card is raised before hydration.
+it("server renders the artist track flat, ready for the wave", async () => {
+  const { ArtistDirectory } = await import("./artist-directory");
+  const html = renderToStaticMarkup(
+    <ArtistDirectory
+      locale="en"
+      copy={copy}
+      initial={directoryFixturePage([1, 2, 3])}
+      headingLevel={2}
+    />,
+  );
+  expect(html.match(/data-artist-card=/gu)?.length).toBe(3);
+  expect(html).not.toContain("data-wave");
+});
+
 it("server renders a named search and explicit failure recovery without fake artist cards", async () => {
   const loaded = await import("./artist-directory").catch(() => undefined);
   expect(
@@ -114,4 +129,18 @@ it("renders a distinct empty state with no retry loop or invented artists", asyn
   expect(html).toContain("artistEmptyTitle");
   expect(html).toContain("artistEmptyDescription");
   expect(html).not.toContain("artistLoadMore");
+});
+
+it("leaves the search to the homepage section title when asked", async () => {
+  const { ArtistDirectory } = await import("./artist-directory");
+  const html = renderToStaticMarkup(
+    <ArtistDirectory
+      locale="en"
+      copy={copy}
+      initial={directoryFixturePage([1])}
+      search={false}
+    />,
+  );
+  expect(html).not.toContain("data-artist-search");
+  expect(html).toContain("Fictional 1");
 });

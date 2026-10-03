@@ -1,6 +1,6 @@
 import { createStructuredLogger } from "@fan-support/observability";
 import { createApiApplication } from "../dist/bootstrap.js";
-import { createTestCheckoutPreflightComposition } from "../dist/checkout-composition.js";
+import { createTestCheckoutPreflightComposition } from "../dist/testing/checkout-composition.js";
 import { withCartStorefrontFixture } from "./cart-storefront-runtime.mjs";
 import { publicationMediaEnvironment } from "./publication-runtime-http-media.mjs";
 import { preflightEnvironment } from "./publication-preflight-http-fixtures.mjs";

@@ -13,6 +13,7 @@ test("exports the complete public domain decision surface", () => {
     "calculateOrderAmounts",
     "decideDisputeTransitionCommand",
     "decideFinanceEvidence",
+    "decideFulfillmentTransition",
     "decideFulfillmentTransitionCommand",
     "decideIdempotency",
     "decideOrderLifecycleTransitionCommand",

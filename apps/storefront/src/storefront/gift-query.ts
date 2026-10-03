@@ -1,10 +1,7 @@
 import {
   giftDiscoveryQuerySchema,
-  minorAmountSchema,
   slugSchema,
-  type CurrencyCode,
   type GiftDiscoveryQuery,
-  type MinorAmount,
   type SupportedLocale,
 } from "@fan-support/contracts";
 import { queryString, storefrontHref } from "./navigation";
@@ -42,7 +39,12 @@ export type PreparedGiftQuery =
 export type GiftFilters = Readonly<
   Pick<
     GiftDiscoveryQuery,
-    "sort" | "category" | "priceMinMinor" | "priceMaxMinor" | "availability"
+    | "sort"
+    | "category"
+    | "kind"
+    | "priceMinMinor"
+    | "priceMaxMinor"
+    | "availability"
   >
 >;
 
@@ -54,6 +56,7 @@ const fields = [
   "pageSize",
   "sort",
   "category",
+  "kind",
   "priceMinMinor",
   "priceMaxMinor",
   "availability",
@@ -88,7 +91,12 @@ export function prepareGiftQuery(
   const input: Record<string, unknown> = { schemaVersion: 1, locale };
   for (const key of fields) {
     const value = values[key];
-    if (value === undefined) continue;
+    // Older filter forms wrote an unchosen kind or category as an empty value.
+    if (
+      value === undefined ||
+      ((key === "category" || key === "kind") && value === "")
+    )
+      continue;
     if (typeof value !== "string") return invalid;
     if (numericFields.has(key)) {
       if (!/^(?:0|[1-9]\d{0,15})$/u.test(value)) return invalid;
@@ -109,15 +117,25 @@ export function prepareGiftQuery(
   };
 }
 
+/**
+ * EXPLICIT: the fan chose this market, so links keep it. IMPLICIT: the sole published market
+ * (ADR-017 addendum) priced the page, so links leave it out and stay canonical.
+ */
+export type GiftScopeInUrl = "EXPLICIT" | "IMPLICIT";
+
 function directoryHref(
   query: GiftDiscoveryQuery,
   basePath: string,
   contextQuery: string,
+  scope: GiftScopeInUrl,
 ): string {
   const context = new URLSearchParams(contextQuery);
   for (const field of fields) context.delete(field);
   for (const [key, value] of serializeQuery(query)) {
-    if (key !== "locale") context.set(key, value);
+    if (key === "locale") continue;
+    if (scope === "IMPLICIT" && (key === "market" || key === "currency"))
+      continue;
+    context.set(key, value);
   }
   return storefrontHref(query.locale, basePath, context.toString());
 }
@@ -127,11 +145,13 @@ export function giftPageHref(
   basePath: string,
   contextQuery: string,
   page: number,
+  scope: GiftScopeInUrl = "EXPLICIT",
 ): string {
   return directoryHref(
     giftDiscoveryQuerySchema.parse({ ...query, page }),
     basePath,
     contextQuery,
+    scope,
   );
 }
 
@@ -140,18 +160,21 @@ export function giftFilterHref(
   basePath: string,
   contextQuery: string,
   filters: GiftFilters,
+  scope: GiftScopeInUrl = "EXPLICIT",
 ): string {
   return directoryHref(
     giftDiscoveryQuerySchema.parse({
       ...query,
       ...filters,
       category: filters.category,
+      kind: filters.kind,
       priceMinMinor: filters.priceMinMinor,
       priceMaxMinor: filters.priceMaxMinor,
       page: 1,
     }),
     basePath,
     contextQuery,
+    scope,
   );
 }
 
@@ -159,74 +182,13 @@ export function giftResetHref(
   query: GiftDiscoveryQuery,
   basePath: string,
   contextQuery: string,
+  scope: GiftScopeInUrl = "EXPLICIT",
 ): string {
-  return giftFilterHref(query, basePath, contextQuery, {
-    sort: "RECOMMENDED",
-    availability: "ALL",
-  });
-}
-
-function priceNotation(locale: SupportedLocale, currency: CurrencyCode) {
-  const digits =
-    new Intl.NumberFormat(locale, {
-      style: "currency",
-      currency,
-    }).resolvedOptions().maximumFractionDigits ?? 0;
-  const number = new Intl.NumberFormat(locale, {
-    useGrouping: false,
-    maximumFractionDigits: 0,
-  });
-  const decimal = new Intl.NumberFormat(locale, {
-    useGrouping: false,
-    minimumFractionDigits: 1,
-  })
-    .formatToParts(1n)
-    .find((part) => part.type === "decimal")!.value;
-  return { digits, number, decimal };
-}
-
-/** Price editing uses local decimal notation, no grouping, and exact integer arithmetic. */
-export function parseGiftPriceInput(
-  input: string,
-  locale: SupportedLocale,
-  currency: CurrencyCode,
-):
-  | Readonly<{ valid: true; amountMinor?: MinorAmount }>
-  | Readonly<{ valid: false }> {
-  let value = input.normalize("NFKC").trim();
-  if (value === "") return { valid: true };
-  const { digits, number, decimal } = priceNotation(locale, currency);
-  for (let digit = 0; digit <= 9; digit++)
-    value = value.replaceAll(number.format(digit), String(digit));
-  const parts = value.split(decimal);
-  const whole = parts[0] ?? "";
-  const fraction = parts[1] ?? "";
-  if (
-    parts.length > 2 ||
-    !/^\d+$/u.test(whole) ||
-    (parts.length === 2 && (!/^\d+$/u.test(fraction) || digits === 0)) ||
-    fraction.length > digits ||
-    whole.length > 16
-  )
-    return { valid: false };
-  const amount =
-    BigInt(whole) * 10n ** BigInt(digits) +
-    BigInt(fraction.padEnd(digits, "0") || "0");
-  if (amount > BigInt(Number.MAX_SAFE_INTEGER)) return { valid: false };
-  return { valid: true, amountMinor: minorAmountSchema.parse(Number(amount)) };
-}
-
-export function formatGiftPriceInput(
-  amount: MinorAmount | undefined,
-  locale: SupportedLocale,
-  currency: CurrencyCode,
-): string {
-  if (amount === undefined) return "";
-  const { digits, number, decimal } = priceNotation(locale, currency);
-  const scale = 10n ** BigInt(digits);
-  const value = BigInt(amount);
-  const whole = number.format(value / scale);
-  if (digits === 0) return whole;
-  const fraction = (value % scale).toString().padStart(digits, "0");
-  return `${whole}${decimal}${[...fraction].map((digit) => number.format(Number(digit))).join("")}`;
+  return giftFilterHref(
+    query,
+    basePath,
+    contextQuery,
+    { sort: "RECOMMENDED", availability: "ALL" },
+    scope,
+  );
 }

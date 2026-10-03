@@ -104,7 +104,7 @@ async function validateObservabilityPackage() {
     "@opentelemetry/resources": "2.11.0",
     "@opentelemetry/sdk-trace-node": "2.11.0",
     "@opentelemetry/semantic-conventions": "1.43.0",
-    fastify: "5.12.1",
+    fastify: "5.12.4",
     zod: "4.5.4",
   };
   if (!isDeepEqual(manifest.dependencies, expectedDependencies)) {

@@ -18,6 +18,7 @@ import { outboxEvents } from "./schema.js";
 type AggregateType =
   | "CART"
   | "CONTENT_PUBLICATION"
+  | "INFORMATION_PAGE_PUBLICATION"
   | "ORDER"
   | "PAYMENT_ATTEMPT"
   | "REFUND"
@@ -42,6 +43,7 @@ type CommerceContext = Readonly<{
 const aggregateTypes = {
   CART_ITEM_ADDED: "CART",
   CONTENT_PUBLICATION_CHANGED: "CONTENT_PUBLICATION",
+  INFORMATION_PAGE_PUBLICATION_CHANGED: "INFORMATION_PAGE_PUBLICATION",
   PAYMENT_STATUS_CHANGED: "PAYMENT_ATTEMPT",
   ORDER_PAYMENT_CONFIRMED: "ORDER",
   REFUND_STATUS_CHANGED: "REFUND",
@@ -65,6 +67,8 @@ function expectedSubjects(command: AppendOutboxEventCommand): Readonly<{
       };
     case "CONTENT_PUBLICATION_CHANGED":
       return { primary: event.payload.contentPublicationId };
+    case "INFORMATION_PAGE_PUBLICATION_CHANGED":
+      return { primary: event.payload.informationPagePublicationId };
     case "PAYMENT_STATUS_CHANGED":
       return {
         primary: event.payload.paymentAttemptId,
@@ -270,6 +274,14 @@ async function loadCommerceContext(
          where id = ${event.aggregateId}
       `);
       break;
+    case "INFORMATION_PAGE_PUBLICATION_CHANGED":
+      result = await database.execute(sql`
+        select ${event.locale}::text as locale, null::text as market,
+               null::text as currency, version::text as aggregate_version,
+               null::text as secondary_subject_id
+          from information_page_publications where id = ${event.aggregateId}
+      `);
+      break;
     case "PAYMENT_CONFIG_PUBLISHED":
       result = await database.execute(sql`
         select null::text as locale,
@@ -345,7 +357,8 @@ function commerceContextMatches(
     (command.market ?? null) === context.market &&
     (command.currency ?? null) === context.currency &&
     (command.secondarySubjectId ?? null) === context.secondarySubjectId &&
-    (command.event.eventType !== "CONTENT_PUBLICATION_CHANGED" ||
+    ((command.event.eventType !== "CONTENT_PUBLICATION_CHANGED" &&
+      command.event.eventType !== "INFORMATION_PAGE_PUBLICATION_CHANGED") ||
       command.event.locale === context.locale)
   );
 }

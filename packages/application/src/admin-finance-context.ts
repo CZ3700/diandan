@@ -20,6 +20,7 @@ export type AdminFinanceDependencies = Readonly<{
   providerDirectory?: PaymentRuntimeProviderDirectory;
   leaseMs?: number;
   retryAfterMs?: number;
+  onRefundUnresolved?: () => void;
 }>;
 export const financeFailure = (
   code: AdminFinanceFailure["code"],

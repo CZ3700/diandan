@@ -6,6 +6,7 @@ import { setTimeout as delay } from "node:timers/promises";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { createTestTlsMaterial } from "../../../packages/identity-oidc/src/test-support/https-idp.mjs";
+import { startLocalProxy } from "./local-experience-tls.mjs";
 
 export async function reserveAdminAccessOrigin() {
   const server = createServer();
@@ -23,7 +24,13 @@ export async function startAdminAccessNext({
   issuer,
   accessKey,
   logs,
+  // LOCAL_ACCOUNT (ADR-021) needs no identity provider.
+  mode = "LOCAL_OIDC",
+  // The compiled admin (already built) in the test tier behind a TLS proxy, as on stg PREBUILT.
+  compiled = false,
 }) {
+  if (compiled && mode !== "LOCAL_ACCOUNT")
+    throw new Error("The compiled test-tier admin runs built-in accounts only");
   const tls = createTestTlsMaterial(new URL(adminOrigin).hostname);
   const declaration = path.join(workspaceRoot, "apps/admin/next-env.d.ts"),
     before = await readFile(declaration, "utf8");
@@ -33,15 +40,18 @@ export async function startAdminAccessNext({
     ),
   );
   Object.assign(environment, {
-    NODE_ENV: "development",
-    FAN_SUPPORT_DEPLOYMENT_ENV: "development",
+    NODE_ENV: compiled ? "test" : "development",
+    FAN_SUPPORT_DEPLOYMENT_ENV: compiled ? "test" : "development",
     FAN_SUPPORT_SITE_ORIGIN: adminOrigin,
     FAN_SUPPORT_INTERNAL_API_ORIGIN: apiOrigin,
-    FAN_SUPPORT_ADMIN_MODE: "LOCAL_OIDC",
+    FAN_SUPPORT_ADMIN_MODE: mode,
     FAN_SUPPORT_ADMIN_ACCESS_KEY: accessKey,
-    FAN_SUPPORT_ADMIN_OIDC_ISSUER: issuer,
+    ...(issuer === undefined ? {} : { FAN_SUPPORT_ADMIN_OIDC_ISSUER: issuer }),
     NEXT_TELEMETRY_DISABLED: "1",
   });
+  const backendPort = compiled
+    ? new URL(await reserveAdminAccessOrigin()).port
+    : undefined;
   const child = spawn(
     process.execPath,
     [
@@ -50,16 +60,20 @@ export async function startAdminAccessNext({
         path.join(workspaceRoot, "apps/api/scripts/admin-access-test-dns.mjs"),
       ).href,
       path.join(workspaceRoot, "apps/admin/node_modules/next/dist/bin/next"),
-      "dev",
-      "--hostname",
-      new URL(adminOrigin).hostname,
-      "--port",
-      new URL(adminOrigin).port,
-      "--experimental-https",
-      "--experimental-https-key",
-      tls.keyPath,
-      "--experimental-https-cert",
-      tls.certPath,
+      ...(compiled
+        ? ["start", "--hostname", "127.0.0.1", "--port", backendPort]
+        : [
+            "dev",
+            "--hostname",
+            new URL(adminOrigin).hostname,
+            "--port",
+            new URL(adminOrigin).port,
+            "--experimental-https",
+            "--experimental-https-key",
+            tls.keyPath,
+            "--experimental-https-cert",
+            tls.certPath,
+          ]),
     ],
     {
       cwd: path.join(workspaceRoot, "apps/admin"),
@@ -72,10 +86,12 @@ export async function startAdminAccessNext({
   // Keep complete native logs in memory for canary assertions; never persist raw credentials.
   child.stdout.on("data", (chunk) => logs.push(chunk.toString()));
   child.stderr.on("data", (chunk) => logs.push(chunk.toString()));
+  const proxies = [];
   let stopped = false;
   async function stop() {
     if (stopped) return;
     stopped = true;
+    for (const close of proxies) await close();
     if (child.exitCode === null && child.signalCode === null) {
       child.kill("SIGTERM");
       await Promise.race([closed, delay(5000)]);
@@ -100,6 +116,8 @@ export async function startAdminAccessNext({
         {
           hostname: "127.0.0.1",
           servername: new URL(adminOrigin).hostname,
+          // The compiled path's proxy answers only its public host.
+          ...(compiled ? { headers: { host: new URL(adminOrigin).host } } : {}),
           ca: tls.cert,
           timeout: 2000,
         },
@@ -113,6 +131,17 @@ export async function startAdminAccessNext({
       req.end();
     });
   try {
+    if (compiled)
+      await startLocalProxy({
+        config: {
+          tls: { certificatePath: tls.certPath, privateKeyPath: tls.keyPath },
+        },
+        port: Number(new URL(adminOrigin).port),
+        origin: adminOrigin,
+        target: `http://127.0.0.1:${backendPort}`,
+        own: (_name, close) => proxies.push(close),
+        name: "compiled admin TLS",
+      });
     const deadline = Date.now() + 90000;
     while (Date.now() < deadline && child.exitCode === null) {
       try {

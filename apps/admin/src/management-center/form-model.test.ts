@@ -18,6 +18,7 @@ const context = managementCenterResponseSchema.parse({
   categories: ["OTHER"],
   poster: { available: false, version: 0, currentRevisionId: null },
   operations: [],
+  artists: { scope: "ALL", canAssign: false, brokers: [] },
 }) as ManagementContext;
 it("starts with the interface content language and actual configured scope without fake stock", () => {
   const draft = initialContentDraft("zh-CN", context, null);
@@ -75,4 +76,44 @@ it("reports missing image and fields and requires real stock configuration only 
       false,
     ),
   ).toMatchObject({ quantity: "invalidQuantity", locationId: "noLocation" });
+});
+it("keeps an existing tracked gift's location instead of adopting a later workspace default", async () => {
+  const { managementCenterListItemSchema } =
+    await import("@fan-support/contracts");
+  const item = managementCenterListItemSchema.parse({
+    kind: "GIFT",
+    id: "10000000-0000-4000-8000-000000000001",
+    version: 2,
+    sourceLocale: "en",
+    name: "Gift",
+    description: "Original",
+    image: null,
+    status: "active",
+    handle: "gift",
+    giftKind: "PHYSICAL",
+    category: "OTHER",
+    price: { market: "GLOBAL", currency: "USD", amountMinor: 2400 },
+    inventory: {
+      policy: "TRACKED",
+      quantity: 7,
+      locationId: "10000000-0000-4000-8000-000000000002",
+    },
+    eligibility: { rule: "ALL_ACTIVE_ARTISTS" },
+    canEdit: true,
+    inventoryPolicyLocked: true,
+  });
+  if (item.kind !== "GIFT") throw new Error("Fixture must be a gift");
+  const draft = initialContentDraft(
+    "en",
+    {
+      ...context,
+      defaults: {
+        ...context.defaults!,
+        inventoryLocationId: "10000000-0000-4000-8000-000000000003",
+      },
+    },
+    item,
+  );
+  expect(draft.locationId).toBe("10000000-0000-4000-8000-000000000002");
+  expect(draft.quantity).toBe("7");
 });

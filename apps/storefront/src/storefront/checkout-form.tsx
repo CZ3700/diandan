@@ -4,7 +4,8 @@ import type {
   CheckoutPreflightView,
   SupportedLocale,
 } from "@fan-support/contracts";
-import { formatStorefrontMessage, type StorefrontCopy } from "./copy";
+import type { StorefrontCopy } from "./copy";
+import { CheckoutPolicyConsent } from "./checkout-policy-consent";
 export function CheckoutForm({
   preflight,
   locale,
@@ -23,14 +24,14 @@ export function CheckoutForm({
   onConfirm: () => void;
 }>) {
   const id = useId();
-  const [accepted, setAccepted] = useState<ReadonlySet<string>>(new Set());
+  const [accepted, setAccepted] = useState(false);
   return (
     <form
       className="checkout-form"
       data-checkout-form
       onSubmit={(event) => {
         event.preventDefault();
-        if (!busy && accepted.size === preflight.policies.length) onConfirm();
+        if (!busy && accepted) onConfirm();
       }}
     >
       <label className="checkout-field" htmlFor={`${id}-email`}>
@@ -53,39 +54,25 @@ export function CheckoutForm({
       <p id={`${id}-email-hint`} className="checkout-hint">
         {copy.checkoutEmailHint}
       </p>
-      <div className="checkout-policies">
-        {preflight.policies.map((policy) => (
-          <div key={policy.policyKey} lang={policy.locale}>
-            <label>
-              <input
-                type="checkbox"
-                data-checkout-policy={policy.policyKey}
-                required
-                disabled={busy}
-                checked={accepted.has(policy.policyKey)}
-                onChange={(event) => {
-                  const next = new Set(accepted);
-                  if (event.currentTarget.checked) next.add(policy.policyKey);
-                  else next.delete(policy.policyKey);
-                  setAccepted(next);
-                }}
-              />
-              <span>
-                {formatStorefrontMessage(copy, "checkoutConsent", locale, {
-                  policy: policy.title,
-                })}
-              </span>
-            </label>
-          </div>
-        ))}
-      </div>
+      <p className="checkout-hint" data-checkout-gift-notice>
+        {copy.checkoutGiftNotice}
+      </p>
+      <CheckoutPolicyConsent
+        policies={preflight.policies}
+        locale={locale}
+        copy={copy}
+        inputId={`${id}-consent`}
+        accepted={accepted}
+        busy={busy}
+        onChange={setAccepted}
+      />
       <button
         className="storefront-primary"
         type="submit"
         data-checkout-confirm
-        disabled={busy || accepted.size !== preflight.policies.length}
+        disabled={busy || !accepted}
       >
-        {busy ? copy.checkoutChecking : copy.checkoutConfirm}
+        {busy ? copy.checkoutChecking : copy.checkoutPay}
       </button>
     </form>
   );

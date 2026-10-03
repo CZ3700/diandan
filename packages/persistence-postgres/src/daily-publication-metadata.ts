@@ -1,6 +1,8 @@
+import { resolveManagementClaimImageSource } from "./management-image-source.js";
 import { randomUUID } from "node:crypto";
 import {
   dailyMediaMetadataDocumentSchema,
+  mediaFocalPointSchema,
   supportedLocaleSchema,
   type ManagementCenterClaim,
   type ManagementCenterFailure,
@@ -51,18 +53,28 @@ export async function prepareDailyMediaMetadata(
   | ManagementCenterFailure
   | { schemaVersion: 1; outcome: "SUCCESS"; metadataRevisionId: string }
 > {
+  const focal = mediaFocalPointSchema.safeParse(input.focalPoint);
+  if (!focal.success) return managementFailure("INVALID_COMMAND");
   const claim = await loadDailyClaim(client, input);
   if (!claim) return managementFailure("NEEDS_AUTHORIZATION");
   if (!("image" in claim.intent) || claim.intent.image === null)
     return managementFailure("INVALID_COMMAND");
-  const [source] = await draftRows(
-    client,
-    `SELECT u.registered_asset_id FROM public.media_upload_reservations u JOIN public.media_assets a ON a.id=u.registered_asset_id WHERE u.id=$1 AND u.actor_id=$2 AND u.status='REGISTERED' AND a.identity_kind='SOURCE' AND a.processing_status<>'ARCHIVED' AND a.rights_status='APPROVED' FOR SHARE OF u,a`,
-    [claim.intent.image.uploadId, claim.actorId],
-  );
-  if (!source) return managementFailure("UPLOAD_NOT_READY");
+  let sourceAssetId: string;
+  if ("currentImage" in claim.intent.image) {
+    const resolved = await resolveManagementClaimImageSource(client, claim);
+    if (resolved.outcome === "FAILURE") return resolved;
+    sourceAssetId = resolved.source.assetId;
+  } else {
+    const [source] = await draftRows(
+      client,
+      `SELECT u.registered_asset_id FROM public.media_upload_reservations u JOIN public.media_assets a ON a.id=u.registered_asset_id WHERE u.id=$1 AND u.actor_id=$2 AND u.status='REGISTERED' AND a.identity_kind='SOURCE' AND a.processing_status<>'ARCHIVED' AND a.rights_status='APPROVED' FOR SHARE OF u,a`,
+      [claim.intent.image.uploadId, claim.actorId],
+    );
+    if (!source) return managementFailure("UPLOAD_NOT_READY");
+    sourceAssetId = String(source["registered_asset_id"]);
+  }
   if (input.processingJobId === null) {
-    if (source["registered_asset_id"] !== input.assetId)
+    if (sourceAssetId !== input.assetId)
       return managementFailure("INVALID_COMMAND");
   } else {
     const checkpoint = claim.checkpoint.jobs.find(
@@ -74,7 +86,7 @@ export async function prepareDailyMediaMetadata(
       `SELECT j.id FROM public.media_processing_jobs j JOIN public.media_assets a ON a.id=j.output_asset_id WHERE j.id=$1 AND j.source_asset_id=$2 AND j.output_asset_id=$3 AND j.source_metadata_revision_id=$4 AND j.role=$5 AND j.status='SUCCEEDED' AND a.identity_kind='PROCESSED_MASTER' AND a.processing_status='READY' AND a.rights_status='APPROVED' FOR SHARE OF j,a`,
       [
         input.processingJobId,
-        source["registered_asset_id"],
+        sourceAssetId,
         input.assetId,
         checkpoint.metadataRevisionId,
         checkpoint.role,
@@ -125,13 +137,21 @@ export async function prepareDailyMediaMetadata(
     },
     structure: {
       presentationKind: "INFORMATIVE",
-      focalPoint: { x: 0.5, y: 0.5 },
+      focalPoint: focal.data,
     },
   });
   await insertDailyDocument(client, claim, document, input.processingJobId);
   await client.query(
-    `INSERT INTO public.media_metadata_revisions(id,media_asset_id,revision,lifecycle,presentation_kind,focal_x,focal_y,created_by,created_at) VALUES($1,$2,$3,'DRAFT','INFORMATIVE',0.5,0.5,$4,$5)`,
-    [revisionId, input.assetId, document.revisionNumber, claim.actorId, at],
+    `INSERT INTO public.media_metadata_revisions(id,media_asset_id,revision,lifecycle,presentation_kind,focal_x,focal_y,created_by,created_at) VALUES($1,$2,$3,'DRAFT','INFORMATIVE',$6,$7,$4,$5)`,
+    [
+      revisionId,
+      input.assetId,
+      document.revisionNumber,
+      claim.actorId,
+      at,
+      focal.data.x,
+      focal.data.y,
+    ],
   );
   return {
     schemaVersion: 1,

@@ -75,7 +75,7 @@ test("an already loaded matching search needs no new network response", () => {
         busy: false,
         failed: false,
         query: target.publicId,
-        rows: [{ orderId: target.orderId, publicId: target.publicId }],
+        rows: [{ orderId: target.orderId, publicOrderNo: "FS-7K3M9C" }],
       },
       target,
     ),
@@ -90,15 +90,16 @@ test("search completion rejects old input, busy results and an unfiltered list",
     busy: false,
     failed: false,
     query: target.publicId,
-    rows: [{ orderId: target.orderId, publicId: target.publicId }],
+    rows: [{ orderId: target.orderId, publicOrderNo: "FS-7K3M9C" }],
   };
   for (const change of [
     { busy: true },
     { failed: true },
     { query: "" },
     { rows: [] },
-    { rows: [...ready.rows, { orderId: "other", publicId: "other" }] },
-    { rows: [{ orderId: "other", publicId: target.publicId }] },
+    { rows: [...ready.rows, { orderId: "other", publicOrderNo: "FS-0000AB" }] },
+    { rows: [{ orderId: "other", publicOrderNo: "FS-7K3M9C" }] },
+    { rows: [{ orderId: target.orderId, publicOrderNo: target.publicId }] },
   ])
     assert.equal(
       browser.adminOrdersSearchReady({ ...ready, ...change }, target),

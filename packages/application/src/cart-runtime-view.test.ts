@@ -67,3 +67,25 @@ test("an unavailable current content proof cannot become a successful cart proje
     module.readCartRuntimeView!(repos, f.cart, "en"),
   ).rejects.toMatchObject({ code: "CONTENT_UNAVAILABLE" });
 });
+test("a deleted gift the repository no longer resolves marks only its line unavailable", async () => {
+  const f = fixture();
+  current.readGift.mockClear();
+  const repos = {
+    cartRuntime: {
+      listItems: async () => [f.item],
+      resolveGiftHandle: async () => null,
+    },
+    storefrontCommerce: {},
+  } as unknown as CartRuntimeRepositories;
+  const result = await module.readCartRuntimeView!(repos, f.cart, "en");
+  expect(result.items).toEqual([
+    expect.objectContaining({
+      id: f.item.id,
+      availability: expect.objectContaining({
+        status: "UNAVAILABLE",
+        reason: "GIFT_UNAVAILABLE",
+      }),
+    }),
+  ]);
+  expect(current.readGift).not.toHaveBeenCalled();
+});

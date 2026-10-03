@@ -1,6 +1,33 @@
 # 管理中心本地登录与权限验证
 
-本入口用于 P5-01 的本地 OIDC、PostgreSQL 会话和现有内容权限验证。运营仍从 `/:locale` 的一个管理中心点击「登录」，进入已有艺人、礼物、海报操作；本轮没有新增人员管理界面。任务状态以 [Phase 5](../progress/phase-5-operations-payments.md) 和 [MASTER](../progress/MASTER.md) 为准，本地验证不代表生产身份接入或上线批准。
+首发使用内置账号 `LOCAL_ACCOUNT`（ADR-021），不需要外部 IdP；当前任务以[上线进度](../progress/launch-progress.md)为准。本文同时保留旧 OIDC 验收入口，旧六角色内容矩阵不代表现在的员工账号或订单权限。本地验证不代表正式人员接入或上线批准。
+
+2026-09-29 接续 L3-05：正式模式已补入当前开发范围，状态以 [上线进度](../progress/launch-progress.md) 为准；下方 P5-01 六角色矩阵只描述旧本地内容验收。正式 Web 模式和实际人员接入边界见 [生产配置](production-configuration.md#管理-web-的正式登录)，不再用旧 Phase 排期判断现有订单/财务功能。
+
+## 内置账号的正式配置验证
+
+在无运行实例共用 `.next` 的独立源码副本中，先构建现有产物，再复用登录浏览器用例：
+
+```sh
+mise exec node@24.20.0 -- corepack pnpm exec turbo run build --filter=@fan-support/api... --filter=@fan-support/admin... --output-logs=errors-only --concurrency=2
+mise exec node@24.20.0 -- node apps/api/scripts/admin-local-sign-in-browser.mjs --formal
+```
+
+需要本机 Chrome 与可用的临时 PostgreSQL；原生 PG 二进制沿用 `POSTGRES_TEST_BIN`。`--formal` 启动真实 `next start`，固定 `NODE_ENV=production`、`FAN_SUPPORT_DEPLOYMENT_ENV=staging`、`FAN_SUPPORT_ADMIN_MODE=LOCAL_ACCOUNT`，BFF 通过校验证书的自有 HTTPS API 通信，不设置 OIDC；浏览器仅信任本次证书指纹。默认开发模式与 `--compiled` 的 TEST 路径保留，`--formal` 与 `--compiled` 不能同时指定。
+
+这证明 **Admin 正式配置与 HTTPS 接线**；API 使用正式管理组合、真实临时 PG，但仍注入 TEST KMS 与限域资源，未通过正式 API/Worker main 启动，不能据此关闭真实 KMS/S3、正式人员恢复或部署验收。用例复用七语双端、错误登录、键盘/减少动态、TOTP、恢复码、临时密码更换和锁定；输出在 `output/checks/l3-10/browser-formal-*/`，不保存真实身份或凭据。
+
+## 正式构建的隔离验证
+
+```sh
+# 正式 API 管理组合 + 实际临时 PostgreSQL + 自有 HTTPS IdP
+mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/api test:postgres:production-admin-oidc
+
+# 加上正式 Next 构建与浏览器；先正常停止占用同一 .next 的本地体验
+mise exec node@24.20.0 -- corepack pnpm --filter @fan-support/api test:browser:production-admin-oidc
+```
+
+该入口使用显式 `OIDC` 与正式 Node/Next 模式，实际 OIDC adapter 验证签名、PKCE、nonce 与 MFA，平台仍查 PostgreSQL 的人员和权限。只使用临时测试身份、数据库、受限本地 TLS 材料，不连接现有持久体验、真实 IdP 或生产数据库；报告位于 `output/checks/l3-admin-oidc/`。不能将模拟 MFA 声明当成真实设备验收；正式登录账号、预授权、恢复与撤权需在身份服务准备后另外完成。
 
 ## 验证命令
 
@@ -38,7 +65,7 @@ mise exec node@24.20.0 -- corepack pnpm verify:management-center
 
 这些配置只在服务端读取；页面仅接收「是否可以登录」布尔值。不得使用 `NEXT_PUBLIC_*` 暴露密钥。旧 `TEST` 夹具保留原行为，不替代真实 OIDC 验证。推荐直接运行上面的验收命令，由脚本分配临时端口、凭据与 TLS 材料；不复制脚本生成的值作为正式配置。
 
-API 通过 [createLocalOidcAdminAccessComposition](../../apps/api/src/admin-access-composition.ts) 显式组合，普通启动不会自动启用该接入。调用者提供 `environment: "LOCAL_OIDC"`、数据库、`allowedOrigin`、`settings`、`provider`、`accessKey`、`tokenPepper` 和独立 `subjectPepper`，并把返回的路由与生命周期资源交给 `createApiApplication`。三个秘密都应独立随机生成、仅服务端持有；`tokenPepper` 与 `subjectPepper` 不得相同。
+API 通过 [createLocalOidcAdminAccessComposition](../../apps/api/src/testing/admin-access-composition.ts) 显式组合，普通启动不会自动启用该接入。调用者提供 `environment: "LOCAL_OIDC"`、数据库、`allowedOrigin`、`settings`、`provider`、`accessKey`、`tokenPepper` 和独立 `subjectPepper`，并把返回的路由与生命周期资源交给 `createApiApplication`。三个秘密都应独立随机生成、仅服务端持有；`tokenPepper` 与 `subjectPepper` 不得相同。
 
 `settings` 包含 `schemaVersion`、issuer、clientId、精确 callback URI、policyVersion、登录/会话 TTL 和最大认证年龄；callback 固定为 `${allowedOrigin}/api/admin/auth/callback`。`provider` 包含同一 issuer/clientId/callback、客户端认证方式及明确的 MFA ACR/AMR 接受策略。使用仓库合同校验，不把任意 IdP 声明当作 MFA 或平台权限。本地 IdP 的客户端认证及 MFA 声明只是夹具值，不能直接视作真实供应商配置。
 

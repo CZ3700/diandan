@@ -126,11 +126,14 @@ export async function verifyPaymentRuntimeBrowser(context) {
     }
   }
   async function post(suffix, action, schema = paymentRuntimeResponseSchema) {
-    const observed = page.waitForResponse(
-      (response) =>
-        new globalThis.URL(response.url()).pathname === suffix &&
-        response.request().method() === "POST",
-    );
+    const observed = page.waitForResponse((response) => {
+      const pathname = new globalThis.URL(response.url()).pathname;
+      return (
+        (typeof suffix === "string"
+          ? pathname === suffix
+          : suffix.test(pathname)) && response.request().method() === "POST"
+      );
+    });
     await action();
     const response = await observed;
     const parsed = schema.safeParse(await response.json());
@@ -318,27 +321,42 @@ export async function verifyPaymentRuntimeBrowser(context) {
             .locator("[data-checkout-policy]")
             .all())
             await policy.check();
-          const created = await post(
-            "/api/storefront/checkout/sessions",
-            () => page.locator("[data-checkout-confirm]").click(),
-            checkoutPreflightResponseSchema,
-          );
+          const unknownCase = locale === "en" && width === 390;
+          if (unknownCase)
+            await psp.arm({ operation: "CREATE_PAYMENT", mode: "AFTER" });
+          stage = `${locale}-${width}-confirm-and-pay`;
+          // Register both responses before confirmation: the sole method starts in the same action.
+          const [attempt, created] = await Promise.all([
+            post(
+              /^\/api\/storefront\/checkout\/sessions\/[^/]+\/attempts$/u,
+              async () => {},
+            ),
+            post(
+              "/api/storefront/checkout/sessions",
+              () => page.locator("[data-checkout-confirm]").click(),
+              checkoutPreflightResponseSchema,
+            ),
+          ]);
           const sessionId = created.checkout.id;
-          await page.locator("[data-payment-country]").waitFor();
+          check(
+            attempt.attempt.checkoutSessionId === sessionId,
+            "The one confirmation creates payment for the same checkout",
+          );
+          if (!unknownCase) {
+            await page.waitForURL((url) => url.origin === psp.origin);
+            await expect(page.locator("[data-test-psp-capture]")).toBeVisible();
+            // Return without paying to exercise reload, locale changes and explicit resume below.
+            await page.goto(`${origin}/${locale}/checkout`, {
+              waitUntil: "networkidle",
+            });
+          }
           check(
             (await page.locator("[data-checkout-email]").count()) === 0,
             "Confirmed checkout clears and unmounts private email",
           );
-          await page.locator("[data-payment-country]").selectOption("US");
-          const button = page.locator("[data-payment-create]");
-          await button.waitFor();
-          const unknownCase = locale === "en" && width === 390;
-          if (unknownCase)
-            await psp.arm({ operation: "CREATE_PAYMENT", mode: "AFTER" });
-          stage = `${locale}-${width}-attempt`;
-          const attempt = await post(
-            `/api/storefront/checkout/sessions/${sessionId}/attempts`,
-            () => button.click(),
+          check(
+            (await page.locator("[data-payment-country]").count()) === 0,
+            "Single-method confirmation needs no country or method action",
           );
           if (unknownCase) {
             await page.locator('[data-payment-state="UNKNOWN"]').waitFor();

@@ -66,6 +66,8 @@ const transientCodes: readonly string[] = [
 const processingErrorSchema = z
   .strictObject({ code: errorCodeSchema, retryable: z.boolean() })
   .refine((value) => value.retryable === transientCodes.includes(value.code));
+/** Shared stable error vocabulary for every image-processing adapter. */
+export const mediaProcessingErrorSchema = processingErrorSchema;
 
 export const mediaImageProcessingCommandSchema = z.strictObject({
   schemaVersion: schemaVersionSchema,

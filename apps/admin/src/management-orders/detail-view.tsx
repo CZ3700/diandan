@@ -11,8 +11,11 @@ import { PhotoView } from "../management-center/photo-view";
 import type { OrdersApi, OrdersContext, OrdersDetail } from "./api";
 import { ordersCopy } from "./copy";
 import { orderStatusLabel } from "./labels";
+import { OrderStatus } from "./order-status";
 import { PrivateMessage } from "./private-message";
 import { PrivateNotes } from "./private-notes";
+import { DeliveryProofPanel } from "./delivery-proof-panel";
+import { DeliveryProofs } from "./delivery-proofs";
 import type { FinanceApi } from "../management-finance/api";
 import { FinancePanel } from "../management-finance/panel";
 export type MutationRunner = (
@@ -29,6 +32,9 @@ type DetailProps = {
   onReload: () => void;
   financeApi?: FinanceApi | undefined;
   onFinanceBusy?: ((busy: boolean) => void) | undefined;
+  /** The person just acted in payments and refunds; keep that section open. */
+  financeOpen?: boolean | undefined;
+  onFinanceUpdated?: (() => void) | undefined;
 };
 function usePrivatePanel() {
   const [opened, setOpened] = useState(false);
@@ -59,6 +65,16 @@ function OrderLine({
   );
   const [confirmed, setConfirmed] = useState(false);
   const [reason, setReason] = useState("PREPARATION_DELAYED");
+  const [proofMode, setProofMode] = useState<"DELIVER" | "ATTACH" | null>(null);
+  const proofOpener = useRef<HTMLButtonElement>(null),
+    proofWasOpen = useRef(false);
+  useEffect(() => {
+    if (proofMode === null && proofWasOpen.current)
+      proofOpener.current?.focus();
+    proofWasOpen.current = proofMode !== null;
+  }, [proofMode]);
+  const canDeliver = line.allowedActions.includes("DELIVER"),
+    canAddProofs = line.proofActions.includes("ATTACH") && !canDeliver;
   const canRead =
     context.permissions.includes("orders.message.read") &&
     line.privacyState === "ACTIVE" &&
@@ -109,6 +125,11 @@ function OrderLine({
                   ? common.preorder
                   : copy.legacy}
           </p>
+          {line.giftKind === "VIRTUAL" ? (
+            <p className="mc-hint" data-order-digital>
+              {copy.digitalDelivery}
+            </p>
+          ) : null}
           <p>
             {new Intl.NumberFormat(locale).format(snapshot.quantity)} ×{" "}
             <Price
@@ -118,9 +139,12 @@ function OrderLine({
             />
           </p>
         </div>
-        <strong className="mo-line-status">
-          {orderStatusLabel(snapshot.fulfillmentStatus, copy)}
-        </strong>
+        <OrderStatus
+          className="mo-line-status"
+          kind="fulfillment"
+          status={snapshot.fulfillmentStatus}
+          copy={copy}
+        />
       </div>
       <div className="mo-line-review">
         <span>
@@ -196,24 +220,57 @@ function OrderLine({
             {copy.prepare}
           </Button>
         ) : null}
-        {line.allowedActions.includes("DELIVER") ? (
+        {canDeliver && proofMode === null ? (
           <Button
+            ref={proofOpener}
             type="button"
             data-order-deliver
             disabled={busy}
-            onClick={() =>
-              void onMutation(() =>
-                api.deliver({
-                  ...command,
-                  reasonCode: "ORDER_DELIVERY_CONFIRMED",
-                }),
-              )
-            }
+            onClick={() => setProofMode("DELIVER")}
           >
             {copy.deliver}
           </Button>
         ) : null}
+        {canAddProofs && proofMode === null ? (
+          <Button
+            ref={proofOpener}
+            type="button"
+            variant="secondary"
+            data-order-add-proofs
+            disabled={busy}
+            onClick={() => setProofMode("ATTACH")}
+          >
+            {copy.addProofs}
+          </Button>
+        ) : null}
       </div>
+      {proofMode !== null ? (
+        <DeliveryProofPanel
+          mode={proofMode}
+          line={line}
+          detail={detail}
+          api={api}
+          locale={locale}
+          busy={busy}
+          onMutation={onMutation}
+          onClose={() => setProofMode(null)}
+        />
+      ) : null}
+      {line.proofs.length > 0 ? (
+        <DeliveryProofs
+          line={line}
+          detail={detail}
+          api={api}
+          locale={locale}
+          busy={busy}
+          canView={context.permissions.some(
+            (permission) =>
+              permission === "orders.fulfillment" ||
+              permission === "orders.manage",
+          )}
+          onMutation={onMutation}
+        />
+      ) : null}
       {manager ? (
         <details className="mc-options" data-manager-actions>
           <summary>{copy.managerActions}</summary>
@@ -321,39 +378,15 @@ export function OrdersDetailView(props: DetailProps) {
             amountMinor={detail.order.amount.totalAmountMinor}
           />
           <p>
-            {detail.order.paymentStatus === "PENDING"
-              ? copy.paymentPending
-              : orderStatusLabel(detail.order.paymentStatus, copy)}
+            <OrderStatus
+              kind="payment"
+              status={detail.order.paymentStatus}
+              copy={copy}
+            />
           </p>
         </div>
       </div>
       <p className="mc-hint">{copy.studioDelivery}</p>
-      {props.financeApi && props.onFinanceBusy ? (
-        <FinancePanel
-          api={props.financeApi}
-          orderId={detail.orderId}
-          actorId={context.actorId}
-          locale={locale}
-          onBusy={props.onFinanceBusy}
-          onUpdated={props.onReload}
-          itemTitles={Object.fromEntries(
-            detail.items.map((line) => {
-              const snapshot = detail.order.items.find(
-                (item) => item.position === line.position,
-              );
-              const position = new Intl.NumberFormat(locale).format(
-                line.position,
-              );
-              return [
-                line.itemId,
-                snapshot
-                  ? `${position} · ${snapshot.gift.title} · ${snapshot.idol.displayName}`
-                  : position,
-              ];
-            }),
-          )}
-        />
-      ) : null}
       <ul className="mo-lines">
         {detail.items.map((line) => (
           <OrderLine
@@ -420,6 +453,36 @@ export function OrdersDetailView(props: DetailProps) {
             </Button>
           )}
         </section>
+      ) : null}
+      {/* Delivery first; payments and refunds wait, folded, at the bottom (user request
+          2026-09-29), opening by themselves when something there needs a person. */}
+      {props.financeApi && props.onFinanceBusy ? (
+        <FinancePanel
+          collapsible
+          initiallyOpen={props.financeOpen === true}
+          api={props.financeApi}
+          orderId={detail.orderId}
+          actorId={context.actorId}
+          locale={locale}
+          onBusy={props.onFinanceBusy}
+          onUpdated={props.onFinanceUpdated ?? props.onReload}
+          itemTitles={Object.fromEntries(
+            detail.items.map((line) => {
+              const snapshot = detail.order.items.find(
+                (item) => item.position === line.position,
+              );
+              const position = new Intl.NumberFormat(locale).format(
+                line.position,
+              );
+              return [
+                line.itemId,
+                snapshot
+                  ? `${position} · ${snapshot.gift.title} · ${snapshot.idol.displayName}`
+                  : position,
+              ];
+            }),
+          )}
+        />
       ) : null}
     </div>
   );

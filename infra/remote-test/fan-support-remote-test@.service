@@ -1,0 +1,25 @@
+# Remote TEST environment: one publicly exposed local-experience instance (%i).
+# TEST adapters only; never staging or production. See docs/runbooks/remote-test-environment.md.
+[Unit]
+Description=Fan Support remote TEST environment (%i)
+Requires=docker.service
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=xiadan
+Group=xiadan
+WorkingDirectory=/home/xiadan/app
+Environment=FAN_SUPPORT_LOCAL_POSTGRES_BIN=/usr/lib/postgresql/18/bin
+Environment=COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+Environment=NEXT_TELEMETRY_DISABLED=1
+# The detached supervisor stays in this unit's cgroup; stop asks it to shut down first.
+ExecStart=/usr/local/bin/pnpm local:start --instance %i --skip-build --startup-timeout-seconds 1500
+ExecStop=/usr/local/bin/pnpm local:stop --instance %i
+TimeoutStartSec=1600
+TimeoutStopSec=180
+
+[Install]
+WantedBy=multi-user.target

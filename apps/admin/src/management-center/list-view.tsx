@@ -3,10 +3,12 @@ import {
   type ManagementCenterListItem,
   type SupportedLocale,
 } from "@fan-support/contracts";
+import { useState } from "react";
 import { Button, Icon, Price } from "@fan-support/ui";
-import type { ManagementList } from "./api";
+import type { ManagementList, PosterItem } from "./api";
 import { managementCopy } from "./copy";
-import { giftKindLabel } from "./form-fields";
+import { brokerName } from "./artist-assignment";
+import { giftKindLabel, wishStatusLabel } from "./form-fields";
 import { PhotoView } from "./photo-view";
 export type ListViewProps = {
   locale: SupportedLocale;
@@ -14,6 +16,12 @@ export type ListViewProps = {
   busy: boolean;
   onSelect: (item: ManagementCenterListItem) => void;
   onPage: (page: number) => void;
+  /** L2-09: old posters can be deleted after an inline confirmation. */
+  onDeletePoster?: (item: PosterItem) => void;
+  /** ADR-022: accounts that manage every artist see whom each one belongs to. */
+  showAssignment?: boolean;
+  /** A name, type or assignment filter is on, so an empty list means no match. */
+  filtered?: boolean;
 };
 export function ManagementListView({
   locale,
@@ -21,14 +29,20 @@ export function ManagementListView({
   busy,
   onSelect,
   onPage,
+  onDeletePoster,
+  showAssignment = false,
+  filtered = false,
 }: ListViewProps) {
   const copy = managementCopy(locale);
+  const [confirming, setConfirming] = useState<string | null>(null);
   const poster = list.section === "POSTERS";
   const empty = poster
     ? copy.emptyPosters
-    : list.section === "ARTISTS"
-      ? copy.emptyArtists
-      : copy.emptyGifts;
+    : filtered
+      ? copy.noResults
+      : list.section === "ARTISTS"
+        ? copy.emptyArtists
+        : copy.emptyGifts;
   const pages = Math.max(1, Math.ceil(list.totalItems / list.pageSize));
   return (
     <div data-management-list={list.section}>
@@ -42,6 +56,13 @@ export function ManagementListView({
             const isPoster = item.kind === "POSTER";
             const unavailable = isPoster && !item.canRestore && !item.current;
             const readOnly = item.kind === "GIFT" && !item.canEdit;
+            // Sorting is a view in the default currency; the editor still receives item.price.
+            const displayedPrice =
+              item.kind === "GIFT"
+                ? item.sortPrice === undefined
+                  ? item.price
+                  : item.sortPrice
+                : null;
             const name = isPoster
               ? new Intl.DateTimeFormat(locale, {
                   dateStyle: "medium",
@@ -105,16 +126,29 @@ export function ManagementListView({
                     </span>
                   </span>
                   {item.kind === "GIFT" ? (
-                    <span className="mc-item-line">
+                    <span className="mc-item-line mc-item-gift">
                       <span>{giftKindLabel(item.giftKind, copy)}</span>
-                      {item.price ? (
+                      {"wish" in item ? (
+                        <span
+                          className="mc-item-wish"
+                          data-management-wish-status={item.wish.status}
+                        >
+                          {item.wish.artistName} ·{" "}
+                          {wishStatusLabel(item.wish.status, copy)}
+                        </span>
+                      ) : null}
+                      {displayedPrice ? (
                         <Price
                           locale={locale}
-                          currency={item.price.currency}
-                          amountMinor={item.price.amountMinor}
+                          currency={displayedPrice.currency}
+                          amountMinor={displayedPrice.amountMinor}
                         />
                       ) : (
-                        <span>—</span>
+                        <span>
+                          {item.sortPrice === null
+                            ? copy.priceUnavailable
+                            : "—"}
+                        </span>
                       )}
                     </span>
                   ) : null}
@@ -124,7 +158,68 @@ export function ManagementListView({
                       ? ` · ${copy.original} · ${LOCALE_NATIVE_NAMES[item.sourceLocale]}`
                       : ""}
                   </span>
+                  {showAssignment && item.kind === "ARTIST" ? (
+                    <span
+                      className="mc-item-meta"
+                      data-management-assignment={
+                        item.assignment?.brokerId ?? "UNASSIGNED"
+                      }
+                    >
+                      {item.assignment
+                        ? `${copy.assignment} · ${brokerName(item.assignment, copy)}`
+                        : copy.assignmentNone}
+                    </span>
+                  ) : null}
                 </button>
+                {item.kind === "POSTER" && item.canDelete && onDeletePoster ? (
+                  confirming === item.id ? (
+                    <div
+                      className="mc-poster-delete"
+                      role="group"
+                      aria-label={`${copy.posterDelete} · ${name}`}
+                      data-management-poster-confirm={item.id}
+                    >
+                      <p>{copy.posterDeleteWarning}</p>
+                      <div className="mc-poster-delete-actions">
+                        <Button
+                          variant="danger"
+                          size="compact"
+                          type="button"
+                          disabled={busy}
+                          data-management-poster-delete-confirm
+                          onClick={() => {
+                            setConfirming(null);
+                            onDeletePoster(item);
+                          }}
+                        >
+                          {copy.posterDeleteConfirm}
+                        </Button>
+                        <Button
+                          variant="quiet"
+                          size="compact"
+                          type="button"
+                          onClick={() => setConfirming(null)}
+                        >
+                          {copy.posterDeleteCancel}
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <Button
+                      variant="quiet"
+                      size="compact"
+                      type="button"
+                      className="mc-poster-delete-trigger"
+                      disabled={busy}
+                      aria-label={`${copy.posterDelete} · ${name}`}
+                      data-management-poster-delete={item.id}
+                      onClick={() => setConfirming(item.id)}
+                    >
+                      <Icon name="close" decorative />
+                      {copy.posterDelete}
+                    </Button>
+                  )
+                ) : null}
               </li>
             );
           })}

@@ -18,7 +18,13 @@ import { createServer } from "node:net";
 import os from "node:os";
 import path from "node:path";
 import { spawn } from "node:child_process";
+import { resolveSpawnCommand } from "./spawn-command.mjs";
 import { fileURLToPath } from "node:url";
+
+function spawnArguments(command, arguments_) {
+  const resolved = resolveSpawnCommand(command, arguments_);
+  return [resolved.command, resolved.args];
+}
 
 const scriptPath = fileURLToPath(import.meta.url);
 const defaultWorkspaceRoot = path.resolve(path.dirname(scriptPath), "..");
@@ -417,12 +423,22 @@ export function assessPageMetrics(metrics) {
     Number(metrics?.document?.scrollWidth ?? 0),
     Number(metrics?.document?.bodyScrollWidth ?? 0),
   );
-  if (clientWidth <= 0 || scrollWidth > clientWidth + 0.5) {
+  // A fractional layout viewport (native zoom with a classic scrollbar) rounds
+  // clientWidth down and scrollWidth up; content ending at its edge fits.
+  const layoutWidth = Number(metrics?.document?.layoutWidth);
+  const fits = Number.isFinite(layoutWidth)
+    ? Math.max(clientWidth, Math.ceil(layoutWidth))
+    : clientWidth;
+  if (clientWidth <= 0 || scrollWidth > fits + 0.5) {
+    const overflowing = metrics?.document?.overflowing;
     errors.push(
       "horizontal overflow: clientWidth=" +
         String(clientWidth) +
         " scrollWidth=" +
-        String(scrollWidth),
+        String(scrollWidth) +
+        (Array.isArray(overflowing) && overflowing.length
+          ? " overflowing=" + overflowing.join(" | ")
+          : ""),
     );
   }
   for (const clipped of metrics?.clippedText ?? []) {
@@ -617,12 +633,12 @@ export function assessNativeZoomMeasurements({
     ["baseline", baseline],
     ["zoomed", zoomed],
   ]) {
+    // The visual viewport excludes a classic scrollbar; innerWidth includes it.
+    const layoutWidth = Number.isFinite(measurement?.layoutViewportWidth)
+      ? measurement.layoutViewportWidth
+      : measurement?.innerWidth;
     if (
-      !approximatelyEqual(
-        measurement?.visualViewport?.width,
-        measurement?.innerWidth,
-        2,
-      ) ||
+      !approximatelyEqual(measurement?.visualViewport?.width, layoutWidth, 2) ||
       !approximatelyEqual(
         measurement?.visualViewport?.height,
         measurement?.innerHeight,
@@ -1674,7 +1690,7 @@ async function runCommand(
   arguments_,
   { cwd, env = process.env, logPath, stream = true },
 ) {
-  const child = spawn(command, arguments_, {
+  const child = spawn(...spawnArguments(command, arguments_), {
     cwd,
     env,
     stdio: ["ignore", "pipe", "pipe"],
@@ -3061,6 +3077,7 @@ async function collectNativeWindowMeasurement(page) {
     devicePixelRatio: window.devicePixelRatio,
     innerHeight: window.innerHeight,
     innerWidth: window.innerWidth,
+    layoutViewportWidth: document.documentElement.clientWidth,
     outerHeight: window.outerHeight,
     outerWidth: window.outerWidth,
     screen: {

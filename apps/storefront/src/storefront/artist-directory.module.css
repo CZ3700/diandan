@@ -9,6 +9,17 @@
   z-index: var(--layer-raised);
 }
 
+/* Homepage search under the section title: its label and hint stay for assistive technology. */
+.compact :global(.fs-field__label),
+.compact :global(.fs-field__hint) {
+  position: absolute;
+  inline-size: var(--border-width);
+  block-size: var(--border-width);
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .suggestions {
   position: absolute;
   inset-inline: 0;
@@ -64,17 +75,21 @@
   display: flex;
   justify-content: flex-end;
   gap: var(--space-2);
-  margin-block-end: var(--space-4);
 }
 
 .track {
+  /* L2-15: the offset parent for measuring which card leads on touch screens. */
+  position: relative;
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: min(78vw, calc(var(--space-4) * 21));
+  /* Several artists side by side: two and a bit on a phone, about six on a desktop. */
+  grid-auto-columns: min(42vw, calc(var(--space-4) * 13));
   gap: var(--space-6);
   list-style: none;
-  margin: 0;
-  padding: var(--space-2) var(--space-1) var(--space-4);
+  /* The track bleeds into the page gutter so a raised card and its glass mount are never
+     cut; the first card still lines up with the section title. */
+  margin: 0 calc(-1 * var(--space-3));
+  padding: var(--space-8) var(--space-3) var(--space-6);
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   scroll-snap-type: x proximity;
@@ -89,25 +104,169 @@
 }
 
 .card {
+  /* Glass colours derive from the published theme; light palettes can retune them here. */
+  --artist-glass-light: var(--color-text);
+  --artist-glass-fill: var(--color-surface-raised);
+  --artist-glass-shade: var(--color-bg);
+  position: relative;
   min-width: 0;
   scroll-snap-align: start;
-  scroll-margin-inline: var(--space-2);
+  scroll-margin-inline: var(--space-3);
+}
+
+/* L2-16 light palettes: white catches the light, while the edge and the cast shadow take the
+   ink colour so the mount still reads on pale paper. */
+:global(html[data-storefront-scheme="LIGHT"]) .card {
+  --artist-glass-light: var(--color-surface-raised);
+  --artist-glass-shade: color-mix(in srgb, var(--color-text) 24%, transparent);
 }
 
 .card a {
+  position: relative;
   display: block;
   color: inherit;
   text-decoration: none;
 }
 
+/* L2-15: the glass mount hugs the photo and name of the leading card. It stays invisible at
+   rest and never takes pointer events; the figure paints above it. */
+.card a::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--space-2));
+  border: var(--border-width) solid
+    color-mix(in srgb, var(--artist-glass-light) 16%, transparent);
+  border-radius: var(--radius-control);
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in srgb, var(--artist-glass-light) 18%, transparent),
+      color-mix(in srgb, var(--artist-glass-light) 5%, transparent) 38%,
+      transparent 68%
+    ),
+    color-mix(in srgb, var(--artist-glass-fill) 58%, transparent);
+  box-shadow:
+    /* A bevel: light catches the top-left edge, the bottom-right edge falls into shade. */
+    inset var(--border-width) var(--border-width) 0
+      color-mix(in srgb, var(--artist-glass-light) 38%, transparent),
+    inset calc(-1 * var(--border-width)) calc(-1 * var(--border-width)) 0
+      color-mix(in srgb, var(--artist-glass-shade) 55%, transparent),
+    0 var(--space-3) var(--space-6) calc(-1 * var(--space-2))
+      color-mix(in srgb, var(--artist-glass-shade) 92%, transparent),
+    0 0 var(--space-4) color-mix(in srgb, var(--color-accent) 24%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-control-effective) var(--ease-out);
+}
+
+:global(html[data-storefront-scheme="LIGHT"]) .card a::before {
+  border-color: color-mix(in srgb, var(--color-text) 12%, transparent);
+}
+
 .card figure {
+  position: relative;
   margin: 0;
 }
 
 .portrait {
+  position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
+  border-radius: calc(var(--radius-control) - var(--space-2));
   background: var(--color-surface);
+}
+
+/* A crisp glare across the photo, as if seen through the glass. */
+.portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 28%,
+    color-mix(in srgb, var(--artist-glass-light) 24%, transparent) 38%,
+    color-mix(in srgb, var(--artist-glass-light) 8%, transparent) 46%,
+    transparent 54%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-control-effective) var(--ease-out);
+}
+
+.card:is([data-wave="peak"], :focus-within) a::before,
+.card:is([data-wave="peak"], :focus-within) .portrait::after {
+  opacity: 1;
+}
+
+.card:is([data-wave="peak"], :focus-within) a::before {
+  -webkit-backdrop-filter: saturate(180%) blur(calc(var(--space-4) * 1.25));
+  backdrop-filter: saturate(180%) blur(calc(var(--space-4) * 1.25));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover a::before,
+  .card:hover .portrait::after {
+    opacity: 1;
+  }
+
+  .card:hover a::before {
+    -webkit-backdrop-filter: saturate(180%) blur(calc(var(--space-4) * 1.25));
+    backdrop-filter: saturate(180%) blur(calc(var(--space-4) * 1.25));
+  }
+}
+
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .card a::before {
+    background: var(--artist-glass-fill);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .card a::before {
+    background: var(--artist-glass-fill);
+  }
+}
+
+/* The wave moves only with STANDARD motion and no reduced-motion request; SUBTLE keeps the
+   glass fade, NONE shows the glass without any transition. */
+@media (prefers-reduced-motion: no-preference) {
+  :global(html[data-storefront-motion="STANDARD"]) .card {
+    transition: transform var(--motion-layout-effective) var(--ease-out);
+  }
+
+  :global(html[data-storefront-motion="STANDARD"]) .card[data-wave="near"],
+  :global(html[data-storefront-motion="STANDARD"])
+    :where(.card:focus-within)
+    + .card,
+  :global(html[data-storefront-motion="STANDARD"])
+    .card:has(+ :where(.card:focus-within)) {
+    transform: translateY(calc(-1.5 * var(--space-1))) scale(1.012);
+  }
+
+  :global(html[data-storefront-motion="STANDARD"])
+    .card:is([data-wave="peak"], :focus-within) {
+    transform: translateY(calc(-1 * var(--space-3))) scale(1.03);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :global(html[data-storefront-motion="STANDARD"]) :where(.card:hover) + .card,
+  :global(html[data-storefront-motion="STANDARD"])
+    .card:has(+ :where(.card:hover)) {
+    transform: translateY(calc(-1.5 * var(--space-1))) scale(1.012);
+  }
+
+  :global(html[data-storefront-motion="STANDARD"]) .card:hover {
+    transform: translateY(calc(-1 * var(--space-3))) scale(1.03);
+  }
+}
+
+:global(html[data-storefront-motion="NONE"]) .card,
+:global(html[data-storefront-motion="NONE"]) .card a::before,
+:global(html[data-storefront-motion="NONE"]) .portrait::after {
+  transition: none;
 }
 
 .portrait > * {
@@ -116,16 +275,12 @@
 }
 
 .card figcaption {
-  padding-block: var(--space-4);
+  padding-block: var(--space-3) var(--space-2);
 }
 
 .card figcaption :is(h2, h3) {
-  margin: 0 0 var(--space-2);
-  font-size: clamp(
-    calc(var(--space-4) * 1.35),
-    2.3vw,
-    calc(var(--space-4) * 1.8)
-  );
+  margin: 0 0 var(--space-1);
+  font-size: clamp(var(--type-body-size), 1.4vw, calc(var(--space-4) * 1.25));
   line-height: 1.3;
   overflow-wrap: anywhere;
 }
@@ -164,10 +319,6 @@
 }
 
 @media (max-width: 48rem) {
-  .track {
-    gap: var(--space-4);
-  }
-
   .search {
     margin-block-end: var(--space-4);
   }

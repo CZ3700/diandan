@@ -36,10 +36,10 @@ export function ExceptionDetailView({
           <dt>{c.status}</dt>
           <dd>{statusLabel(item.status, c)}</dd>
         </div>
-        {item.publicOrderId ? (
+        {item.publicOrderNo ? (
           <div>
             <dt>{c.order}</dt>
-            <dd>{item.publicOrderId}</dd>
+            <dd>{item.publicOrderNo}</dd>
           </div>
         ) : null}
         <div>

@@ -22,6 +22,7 @@ const paths = {
   bootstrap: `/checkout/sessions/${checkoutTestId}/order-access`,
   read: `/orders/${orderTestId}`,
   revoke: "/order-access/revoke",
+  locate: "/order-access/locate",
 };
 function req(
   path: string,
@@ -104,7 +105,7 @@ test("the four allowlisted routes isolate credentials and expose only validated 
     const response = await run(
       req(path, method, body, {
         authorization: "private",
-        "x-forwarded-for": "untrusted",
+        "x-forwarded-for": "192.0.2.1, 203.0.113.7",
       }),
       fetcher,
     );
@@ -124,10 +125,28 @@ test("the four allowlisted routes isolate credentials and expose only validated 
     expect(forwarded.get("cookie")).toBe(cookie);
     expect(forwarded.get("x-csrf-token")).toBe(csrf);
     expect(forwarded.get("authorization")).toBeNull();
-    expect(forwarded.get("x-forwarded-for")).toBeNull();
+    expect(forwarded.get("x-forwarded-for")).toBe("192.0.2.1, 203.0.113.7");
     expect(forwarded.get("origin")).toBe(siteOrigin);
   }
 });
+test("the edge forwarded chain is kept from the right within 512 bytes, so spoofed prefixes are the only loss", async () => {
+  const { forwardedClientChain } = await import("./order-proxy-request");
+  const chain = (value?: string) =>
+    forwardedClientChain(
+      new Headers(value === undefined ? {} : { "x-forwarded-for": value }),
+    );
+  expect(chain()).toBeUndefined();
+  expect(chain(" , ")).toBeUndefined();
+  expect(chain(" 203.0.113.7 ")).toBe("203.0.113.7");
+  expect(chain("192.0.2.1,, 203.0.113.7")).toBe("192.0.2.1, 203.0.113.7");
+  const spoofed = Array.from({ length: 60 }, (_, i) => `198.51.100.${i}`);
+  const kept = chain(`${spoofed.join(", ")}, 203.0.113.7, 10.20.0.5`)!;
+  expect(new TextEncoder().encode(kept).byteLength).toBeLessThanOrEqual(512);
+  expect(kept.endsWith(", 198.51.100.59, 203.0.113.7, 10.20.0.5")).toBe(true);
+  expect(spoofed.some((entry) => kept.startsWith(`${entry}, `))).toBe(true);
+  expect(chain(`${"x".repeat(600)}, 203.0.113.7`)).toBe("203.0.113.7");
+});
+
 test("invalid paths, methods, queries, origin, metadata, schemas and cookie/CSRF ambiguity never dispatch", async () => {
   const fetcher = vi.fn<typeof fetch>(async () => granted());
   const invalid = [
@@ -459,4 +478,59 @@ test("an already-aborted inbound request never contacts the upstream", async () 
   );
   expect((await run(incoming, fetcher)).status).toBe(503);
   expect(fetcher).not.toHaveBeenCalled();
+});
+
+test("locate forwards only the order cookie and returns no credential", async () => {
+  const located = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    action: "LOCATED",
+    publicOrderId: orderTestId,
+  };
+  const fetcher = vi.fn<typeof fetch>(async () =>
+    orderTestResponse(located, 200),
+  );
+  const response = await run(
+    req(paths.locate, "POST", { schemaVersion: 1, publicOrderNo: "FS-7K3M9C" }),
+    fetcher,
+  );
+  expect(response.status).toBe(200);
+  expect(await response.json()).toEqual(located);
+  expect(response.headers.get("set-cookie")).toBeNull();
+  expect(response.headers.get("x-csrf-token")).toBeNull();
+  const [url, init] = fetcher.mock.calls[0]!;
+  expect(String(url)).toBe(internalApiOrigin + "/api/v1/order-access/locate");
+  const headers = new Headers(init?.headers);
+  expect(headers.get("cookie")).toBe(`__Host-fan-order=${orderTestToken}`);
+  expect(headers.has("x-csrf-token")).toBe(false);
+  for (const body of [
+    { schemaVersion: 1, publicOrderNo: "fs-7k3m9c" },
+    {
+      schemaVersion: 1,
+      publicOrderNo: "FS-7K3M9C",
+      publicOrderId: orderTestId,
+    },
+  ]) {
+    const rejected = vi.fn<typeof fetch>();
+    expect((await run(req(paths.locate, "POST", body), rejected)).status).toBe(
+      400,
+    );
+    expect(rejected).not.toHaveBeenCalled();
+  }
+  for (const forged of [
+    orderTestResponse(located, 200, { "x-csrf-token": orderTestCsrf }),
+    orderTestResponse(located, 200, { "set-cookie": orderTestCookie }),
+    orderTestResponse(orderTestRead, 200, { "x-csrf-token": orderTestCsrf }),
+  ])
+    expect(
+      (
+        await run(
+          req(paths.locate, "POST", {
+            schemaVersion: 1,
+            publicOrderNo: "FS-7K3M9C",
+          }),
+          async () => forged,
+        )
+      ).status,
+    ).toBe(503);
 });

@@ -9,6 +9,10 @@ import { loadGiftDirectoryRecords } from "./catalog-publication-loader.js";
 import { catalogRecord, catalogRows } from "./catalog-publication-mapper.js";
 import { buildGiftBrowseQuery } from "./gift-browse-sql.js";
 import {
+  parsePublishedGiftKind,
+  recordConfirmsGiftKind,
+} from "./published-gift-kind.js";
+import {
   persistenceTransactionFailureFromPostgres,
   type TransactionClient,
   type TransactionScopeControl,
@@ -54,9 +58,15 @@ export function createGiftBrowseRepository(
           const totalItems = Number(count);
           if (!Array.isArray(row["ids"]))
             throw new Error("CATALOG_BROWSE_INVALID");
-          const ids = row["ids"].map((id: unknown) =>
-            giftIdSchema.parse(id).toLowerCase(),
-          );
+          const window = row["ids"].map((entry: unknown) => {
+            if (!Array.isArray(entry) || entry.length !== 2)
+              throw new Error("CATALOG_BROWSE_INVALID");
+            return {
+              id: giftIdSchema.parse(entry[0]).toLowerCase(),
+              giftKind: parsePublishedGiftKind(entry[1]),
+            };
+          });
+          const ids = window.map((entry) => entry.id);
           const offset = (query.page - 1) * query.pageSize;
           if (
             ids.length !==
@@ -82,7 +92,8 @@ export function createGiftBrowseRepository(
                 (item.schemaVersion === 3
                   ? item.context.current.document.ownerId
                   : item.source.base.id
-                ).toLowerCase() !== ids[index],
+                ).toLowerCase() !== ids[index] ||
+                !recordConfirmsGiftKind(item, window[index]!.giftKind),
             )
           )
             throw new Error("CATALOG_BROWSE_INVALID");
@@ -92,6 +103,7 @@ export function createGiftBrowseRepository(
             catalogVersion,
             totalItems,
             items,
+            giftKinds: window.map((entry) => entry.giftKind),
           });
         } catch (error: unknown) {
           throw persistenceTransactionFailureFromPostgres(error);

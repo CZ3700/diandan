@@ -5,6 +5,12 @@ packages:
 allowBuilds:
   esbuild: true
 
+# braces is reached only through @next/eslint-plugin-next and has no upstream
+# fix; scripts/security-dependencies.test.mjs keeps it off production paths.
+audit:
+  ignore:
+    - GHSA-vfj7-8cjw-p6xm
+
 autoInstallPeers: false
 engineStrict: true
 linkWorkspacePackages: true

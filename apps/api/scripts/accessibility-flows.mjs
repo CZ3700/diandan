@@ -34,30 +34,38 @@ async function inspectHomepageControls({
   report,
 }) {
   const initialContext = new URL(page.url());
-  const selector = page.locator("#gifts [data-gift-browse-category]");
-  const category = await selector
-    .locator("option")
-    .evaluateAll((options) => options.find((option) => option.value)?.value);
-  assert(category, "Homepage offers a real category filter");
-  await tools.select(page, selector, category, "home-category");
+  // L2-17: the gift section offers kinds as links that take effect at once.
+  const kind = await page
+    .locator("#gifts [data-gift-kind-option]")
+    .evaluateAll(
+      (links) =>
+        links
+          .map((link) => link.getAttribute("data-gift-kind-option"))
+          .find((value) => value && value !== "ALL") ?? null,
+    );
+  assert(kind, "Homepage offers a real gift kind filter");
+  assert(
+    (await page.locator("#gifts form, #gifts select").count()) === 0,
+    "Homepage gift kinds need no form or apply step",
+  );
   await tools.activate(
     page,
-    page.locator('#gifts form[method="get"] button[type=submit]'),
-    "home-apply-category",
+    page.locator(`#gifts [data-gift-kind-option="${kind}"]`),
+    "home-kind",
   );
-  await page.waitForURL((url) => url.searchParams.get("category") === category);
+  await page.waitForURL((url) => url.searchParams.get("kind") === kind);
   await expect(
     page.locator('#gifts [data-gift-browse][data-outcome="success"]'),
   ).toBeVisible();
-  await tools.select(page, selector, "", "home-clear-category");
+  await expect(
+    page.locator(`#gifts [data-gift-kind-option="${kind}"]`),
+  ).toHaveAttribute("aria-current", "true");
   await tools.activate(
     page,
-    page.locator('#gifts form[method="get"] button[type=submit]'),
-    "home-clear-apply",
+    page.locator('#gifts [data-gift-kind-option="ALL"]'),
+    "home-all-kinds",
   );
-  await page.waitForURL(
-    (url) => (url.searchParams.get("category") ?? "") === "",
-  );
+  await page.waitForURL((url) => !url.searchParams.has("kind"));
   await expect(
     page.locator(`#gifts [data-gift-link="${facts.giftId}"]`),
   ).toBeVisible();
@@ -65,7 +73,7 @@ async function inspectHomepageControls({
     assert(
       new URL(page.url()).searchParams.get(key) ===
         initialContext.searchParams.get(key),
-      "Homepage category changes preserve the economic context",
+      "Homepage kind changes preserve the economic context",
     );
   await navigate(page, `${config.origins.storefront}/${cell.locale}?page=999`);
   await expect(
@@ -92,8 +100,8 @@ async function inspectHomepageControls({
     "Out-of-range recovery reaches the actual first page",
   );
   report.homepageControls = {
-    categoryGet: true,
-    clearGet: true,
+    kindLink: true,
+    allKindsLink: true,
     outOfRangeRecovery: true,
     economicContextUnchanged: true,
     paginationNextBack: "NOT_EXERCISED_SINGLE_PUBLISHED_GIFT",
@@ -166,10 +174,16 @@ export async function accessibilityCustomerFlow({
   cell.giftBeforeMarket = true;
   report.stage = `${cell.id}:gift`;
   await tools.inspect(page, cell, "gift");
-  const market = page.locator(
-    `[data-market-choices] [data-market="${facts.commerceContext.market}"][data-currency="${facts.commerceContext.currency}"]`,
-  );
-  await tools.activate(page, market, "purchase-market");
+  // V2 §4-2: a sole published market streams the priced panel in place of the region choice.
+  await expect(
+    page.locator("[data-market-choices], [data-gift-purchase]").first(),
+  ).toBeVisible();
+  if ((await page.locator("[data-market-choices]").count()) > 0) {
+    const market = page.locator(
+      `[data-market-choices] [data-market="${facts.commerceContext.market}"][data-currency="${facts.commerceContext.currency}"]`,
+    );
+    await tools.activate(page, market, "purchase-market");
+  }
   const recipient = page.locator("[data-gift-recipient-picker] button").first();
   await expect(recipient).toBeVisible();
   if (locale === "en") await tools.modal(page, recipient, "recipient-dialog");
@@ -261,38 +275,6 @@ export async function accessibilityCustomerFlow({
     `a11y-${randomUUID()}@example.test`,
     "checkout-email",
   );
-  const resultPromise = page.waitForResponse(
-    (response) =>
-      new URL(response.url()).pathname ===
-        "/api/storefront/checkout/sessions" &&
-      response.request().method() === "POST",
-  );
-  await tools.activate(
-    page,
-    page.locator("[data-checkout-confirm]"),
-    "confirm-checkout",
-  );
-  const response = await resultPromise;
-  assert(response.status() === 200, "Keyboard checkout creation succeeds");
-  const result = checkoutPreflightResponseSchema.parse(await response.json());
-  assert(
-    result.outcome === "SUCCESS" && "checkout" in result,
-    "Keyboard checkout satisfies the canonical contract",
-  );
-  await expect(page.locator("[data-payment-country]")).toBeVisible();
-  const country = await page
-    .locator("[data-payment-country] option")
-    .evaluateAll(
-      (options) =>
-        options.find((option) => option.value && !option.disabled)?.value,
-    );
-  assert(country, "A configured payment country exists");
-  await tools.select(
-    page,
-    page.locator("[data-payment-country]"),
-    country,
-    "payment-country",
-  );
   const observer = observeLocalBrowserPayment({
     page,
     config,
@@ -300,12 +282,32 @@ export async function accessibilityCustomerFlow({
     readBodyForStage: (stage) => stage === "FIRST_PAYMENT_RETURN",
   });
   try {
+    const resultPromise = page.waitForResponse(
+      (response) =>
+        new URL(response.url()).pathname ===
+          "/api/storefront/checkout/sessions" &&
+        response.request().method() === "POST",
+    );
     await tools.activate(
       page,
-      page.locator("[data-payment-create]").first(),
-      "create-payment",
+      page.locator("[data-checkout-confirm]"),
+      "confirm-and-pay",
     );
+    const response = await resultPromise;
+    assert(response.status() === 200, "Keyboard checkout creation succeeds");
+    const result = checkoutPreflightResponseSchema.parse(await response.json());
+    assert(
+      result.outcome === "SUCCESS" && "checkout" in result,
+      "Keyboard checkout satisfies the canonical contract",
+    );
+    await page.waitForURL((url) => url.origin === config.origins.psp);
+    await expect(page.locator("[data-test-psp-capture]")).toBeVisible();
+    // Confirmation alone reaches payment; revisiting also checks the keyboard resume path.
+    await page.goto(`${config.origins.storefront}/${locale}/checkout`, {
+      waitUntil: "networkidle",
+    });
     await expect(page.locator("[data-payment-continue]")).toBeVisible();
+    await expect(page.locator("[data-payment-country]")).toHaveCount(0);
     purchase = await state.purchase(result.checkout.publicOrderId);
     const current = await readCurrentPurchase(page);
     assert(
@@ -371,7 +373,9 @@ export async function accessibilityMailOrder({
   );
   const link = page
     .locator("article")
-    .filter({ hasText: purchase.publicOrderId })
+    .filter({
+      has: page.locator(`a[href*="order=${purchase.publicOrderId}"]`),
+    })
     .locator('a[href*="/order-access#"]');
   await expect(link).toHaveCount(1);
   await tools.activate(page, link, "mail-order-link");
@@ -499,6 +503,14 @@ export async function accessibilityAdminFlow({
       page.locator("[data-order-deliver]").first(),
       "deliver-gift",
     );
+    await expect(page.locator('[data-proof-panel="DELIVER"]')).toBeVisible();
+    await tools.inspect(page, cell, "delivery-panel");
+    await tools.activate(
+      page,
+      page.locator('[data-proof-submit="DELIVER"]'),
+      "confirm-delivery",
+    );
+    await expect(page.locator("[data-proof-panel]")).toHaveCount(0);
     await expect(page.locator("[data-order-deliver]")).toHaveCount(0);
     await expect(page.locator("[data-orders-workspace]")).toHaveAttribute(
       "aria-busy",

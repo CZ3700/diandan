@@ -5,6 +5,7 @@ import { setTimeout as delay } from "node:timers/promises";
 import {
   resolveInternalApiRuntimeConfig,
   resolveServerRuntimeConfig,
+  resolveStorefrontPreviewConfig,
 } from "@fan-support/config/server";
 import { createLocalLifecycle } from "./local-experience-lifecycle.mjs";
 import {
@@ -25,6 +26,9 @@ const environment = {
   FAN_SUPPORT_INTERNAL_API_ORIGIN: "http://127.0.0.1:3444",
   FAN_SUPPORT_ADMIN_MODE: "LOCAL_OIDC",
   FAN_SUPPORT_ADMIN_ACCESS_KEY: "private-administrator-key",
+  FAN_SUPPORT_ADMIN_ORIGIN: "https://admin.example.invalid:7444",
+  FAN_SUPPORT_ADMIN_ORIGIN_SECRET: "private-origin-fixture",
+  FAN_SUPPORT_ADMIN_SESSION_KEY: "private-session-fixture",
 };
 
 test("compiled regression mode is explicit and rejects ordinary instances before startup", () => {
@@ -158,6 +162,32 @@ test("production compilation serves the existing TEST tier through owned strict 
   assert.equal(f.reads(), 1);
   assert.deepEqual(await f.lifecycle.stop(), []);
   assert.deepEqual(f.events, ["proxy", "close:proxy", "kill:start"]);
+});
+
+test("compiled preview keeps only the exact public admin origin while removing administrative credentials", async () => {
+  const f = fixture();
+  try {
+    await f.start();
+    for (const command of f.commands) {
+      const runtime = command.options.env;
+      assert.equal(
+        resolveStorefrontPreviewConfig({ environment: runtime }).adminOrigin,
+        environment.FAN_SUPPORT_ADMIN_ORIGIN,
+      );
+      assert.deepEqual(
+        Object.keys(runtime)
+          .filter((key) => key.startsWith("FAN_SUPPORT_ADMIN_"))
+          .sort(),
+        ["FAN_SUPPORT_ADMIN_MODE", "FAN_SUPPORT_ADMIN_ORIGIN"],
+      );
+      assert.equal(runtime.FAN_SUPPORT_ADMIN_MODE, "DISABLED");
+      assert.equal(runtime.FAN_SUPPORT_ADMIN_ACCESS_KEY, undefined);
+      assert.equal(runtime.FAN_SUPPORT_ADMIN_ORIGIN_SECRET, undefined);
+      assert.equal(runtime.FAN_SUPPORT_ADMIN_SESSION_KEY, undefined);
+    }
+  } finally {
+    await f.lifecycle.stop();
+  }
 });
 
 test("failed compilation never starts a server or proxy and remains cleanable", async () => {

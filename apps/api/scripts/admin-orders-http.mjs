@@ -64,7 +64,7 @@ async function run(database, s3, ui) {
       check,
       progress,
       verify: async (original) => {
-        const context = { ...original, workspaceRoot };
+        const context = { ...original, workspaceRoot, s3 };
         progress("OIDC and admin orders API composition");
         const runtime = await createAdminOrdersRuntime(context),
           payment = createOrderPaymentProtocolClient(context);
@@ -72,6 +72,21 @@ async function run(database, s3, ui) {
           context,
           runtime,
           payment,
+        );
+        const { verifyMixedFulfillmentLifecycle } =
+          await import("./order-lifecycle-mixed-fixture.mjs");
+        const { verifyLatePaymentLifecycle } =
+          await import("./order-lifecycle-late-fixture.mjs");
+        const lifecycle = {
+          mixed: await verifyMixedFulfillmentLifecycle(context, {
+            runtime,
+            payment,
+          }),
+          late: await verifyLatePaymentLifecycle(context, { runtime, payment }),
+        };
+        await writeFile(
+          path.join(output, "lifecycle.json"),
+          JSON.stringify(lifecycle, null, 2) + "\n",
         );
         progress("durable original notification preparation");
         const transport = createNotificationFixtureTransport(),

@@ -32,11 +32,38 @@ function harness(fail = false) {
   };
 }
 describe("media processing repository", () => {
-  test("reports a PostgreSQL serialization failure inside enqueue as an explicit conflict", async () => {
+  test.each(["40001", "40P01"])(
+    "poisons the outer transaction for a replay when enqueue meets SQLSTATE %s",
+    async (sqlState) => {
+      const statements: string[] = [];
+      const query = async (sql: string) => {
+        statements.push(sql);
+        if (sql.includes("media-processing:canonical-source"))
+          throw Object.assign(new Error("synthetic transient conflict"), {
+            code: sqlState,
+          });
+        return { rows: [] };
+      };
+      const repository = createMediaProcessingRepository(
+        { query, release: () => undefined },
+        { markRollbackOnly: vi.fn(), trackOperation: async (work) => work() },
+      );
+      // A domain CONFLICT is terminal for the management center; contention is not.
+      await expect(repository.enqueue(enqueue)).rejects.toMatchObject({
+        name: "PersistenceTransactionFailureError",
+        code: "TRANSACTION_ABORTED",
+        recovery: "RETRY_SAME_COMMAND",
+      });
+      expect(
+        statements.some((sql) => sql.startsWith("ROLLBACK TO SAVEPOINT")),
+      ).toBe(true);
+    },
+  );
+  test("still reports a duplicate row inside enqueue as an explicit conflict", async () => {
     const query = async (sql: string) => {
       if (sql.includes("media-processing:canonical-source"))
-        throw Object.assign(new Error("synthetic serialization failure"), {
-          code: "40001",
+        throw Object.assign(new Error("synthetic unique violation"), {
+          code: "23505",
         });
       return { rows: [] };
     };

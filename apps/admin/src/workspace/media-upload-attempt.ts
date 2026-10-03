@@ -20,58 +20,72 @@ export function createMediaUploadAttempt(transport: typeof fetch = fetch) {
     registered: boolean;
     assetId: string | null;
   } | null = null;
+  async function transfer(
+    client: AdminClient,
+    source: Source,
+    bytes: ArrayBuffer,
+  ) {
+    const fingerprint = JSON.stringify(source);
+    if (
+      !checkpoint ||
+      checkpoint.fingerprint !== fingerprint ||
+      (!checkpoint.putComplete &&
+        Date.parse(checkpoint.grant.grant.expiresAt) <= Date.now())
+    ) {
+      const grant = await client.call(
+        "media-upload-begin",
+        {
+          schemaVersion: 1,
+          ...source,
+          expectedVersion: 0,
+          reasonCode: "MEDIA_UPLOAD",
+        },
+        adminResourceResponseSchema,
+        true,
+      );
+      if (grant.kind !== "UPLOAD_GRANT")
+        throw new AdminClientError("INVALID_RESPONSE");
+      checkpoint = {
+        fingerprint,
+        grant,
+        putComplete: false,
+        registered: false,
+        assetId: null,
+      };
+    }
+    const current = checkpoint;
+    if (!current.putComplete) {
+      let response: Response;
+      try {
+        response = await transport(current.grant.grant.url, {
+          method: current.grant.grant.method,
+          headers: current.grant.grant.headers,
+          body: bytes,
+          credentials: "omit",
+          redirect: "error",
+          referrerPolicy: "no-referrer",
+          signal: AbortSignal.timeout(30000),
+        });
+      } catch {
+        throw new AdminClientError("NETWORK_ERROR");
+      }
+      // A conditional PUT may have succeeded before its response was lost. COMPLETE must still
+      // verify the canonical object's checksum, full bytes and decoder evidence in either case.
+      if (!response.ok && response.status !== 412)
+        throw new AdminClientError("UPLOAD_FAILED");
+      current.putComplete = true;
+    }
+    return current;
+  }
   return {
+    /** Transfers bytes only; the consuming workflow must verify and prepare them. */
+    async transfer(client: AdminClient, source: Source, bytes: ArrayBuffer) {
+      return {
+        uploadId: (await transfer(client, source, bytes)).grant.uploadId,
+      };
+    },
     async upload(client: AdminClient, source: Source, bytes: ArrayBuffer) {
-      const fingerprint = JSON.stringify(source);
-      if (
-        !checkpoint ||
-        checkpoint.fingerprint !== fingerprint ||
-        (!checkpoint.putComplete &&
-          Date.parse(checkpoint.grant.grant.expiresAt) <= Date.now())
-      ) {
-        const grant = await client.call(
-          "media-upload-begin",
-          {
-            schemaVersion: 1,
-            ...source,
-            expectedVersion: 0,
-            reasonCode: "MEDIA_UPLOAD",
-          },
-          adminResourceResponseSchema,
-          true,
-        );
-        if (grant.kind !== "UPLOAD_GRANT")
-          throw new AdminClientError("INVALID_RESPONSE");
-        checkpoint = {
-          fingerprint,
-          grant,
-          putComplete: false,
-          registered: false,
-          assetId: null,
-        };
-      }
-      const current = checkpoint;
-      if (!current.putComplete) {
-        let response: Response;
-        try {
-          response = await transport(current.grant.grant.url, {
-            method: current.grant.grant.method,
-            headers: current.grant.grant.headers,
-            body: bytes,
-            credentials: "omit",
-            redirect: "error",
-            referrerPolicy: "no-referrer",
-            signal: AbortSignal.timeout(30000),
-          });
-        } catch {
-          throw new AdminClientError("NETWORK_ERROR");
-        }
-        // A conditional PUT may have succeeded before its response was lost. COMPLETE must still
-        // verify the canonical object's checksum, full bytes and decoder evidence in either case.
-        if (!response.ok && response.status !== 412)
-          throw new AdminClientError("UPLOAD_FAILED");
-        current.putComplete = true;
-      }
+      const current = await transfer(client, source, bytes);
       if (!current.registered) {
         await client.call(
           "media-upload-complete",

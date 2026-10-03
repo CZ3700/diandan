@@ -39,6 +39,12 @@ export interface NotificationEmailTransport {
     command: NotificationEmailDispatch,
   ): Promise<SendNotificationResponse>;
 }
+/** A single provider submission without a deduplication guarantee. Always use a durable admission journal. */
+export interface NotificationEmailSubmitter {
+  sendEmail(
+    command: NotificationEmailDispatch,
+  ): Promise<SendNotificationResponse>;
+}
 export interface OrderNotificationTemplates {
   select(
     eventType: OrderNotificationEventType,

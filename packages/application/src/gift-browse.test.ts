@@ -193,3 +193,33 @@ test("accepts proven English fallback while rejecting wrong locale, mutated text
       }).execute({ schemaVersion: 1, ...query }),
     ).resolves.toMatchObject({ code: "CATALOG_UNAVAILABLE" });
 });
+
+test("attaches each gift's published kind and fails closed when a filtered page carries another kind", async () => {
+  const record = createFictionalGiftBrowseRecord();
+  const page = { ...snapshot, totalItems: 1, items: [record] };
+  await expect(
+    harness({ ...page, giftKinds: ["WISH"] }).execute({
+      schemaVersion: 1,
+      locale: "en",
+    }),
+  ).resolves.toMatchObject({
+    outcome: "SUCCESS",
+    items: [{ title: "Fictional gift", giftKind: "WISH" }],
+  });
+  const subject = harness({ ...page, giftKinds: ["WISH"] });
+  await expect(
+    subject.execute({ schemaVersion: 1, locale: "en", kind: "WISH" }),
+  ).resolves.toMatchObject({ outcome: "SUCCESS" });
+  expect(subject.browseGifts).toHaveBeenCalledWith({
+    schemaVersion: 1,
+    query: expect.objectContaining({ kind: "WISH" }),
+  });
+  for (const result of [
+    { ...page, giftKinds: ["PHYSICAL"] },
+    { ...page, giftKinds: [null] },
+    page,
+  ])
+    await expect(
+      harness(result).execute({ schemaVersion: 1, locale: "en", kind: "WISH" }),
+    ).resolves.toMatchObject({ code: "CATALOG_UNAVAILABLE" });
+});

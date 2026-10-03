@@ -30,6 +30,58 @@ const operation = {
   result: null,
   failure: null,
 };
+test("original preview is a private read bound to the current target and version", async () => {
+  const app = Fastify({ logger: false });
+  const target = { kind: "ARTIST", id, expectedVersion: 2 };
+  const result = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "ORIGINAL_IMAGE",
+    target,
+    currentImage: { assetId: id, metadataRevisionId: id },
+    focalPoint: { x: 0.5, y: 0.3 },
+    sourceWidth: 800,
+    sourceHeight: 1200,
+    download: {
+      method: "GET",
+      url: "https://media.example.invalid/private-preview",
+      headers: {},
+      expiresAt: "2026-09-28T08:00:00Z",
+    },
+  };
+  const execute = vi.fn().mockResolvedValue(result);
+  registerManagementCenterRoute(app, {
+    allowedOrigin: origin,
+    useCases: { execute },
+  });
+  const read = () =>
+    app.inject({
+      method: "POST",
+      url: "/api/v1/admin/management/images/read",
+      headers,
+      payload: { schemaVersion: 1, target },
+    });
+  try {
+    const response = await read();
+    expect(response.statusCode).toBe(200);
+    expect(response.headers["cache-control"]).toBe("private, no-store");
+    expect(execute).toHaveBeenCalledWith(
+      expect.objectContaining({
+        command: { schemaVersion: 1, action: "READ_IMAGE_SOURCE", target },
+      }),
+    );
+    for (const changed of [
+      { ...target, id: id.replace(/1$/u, "2") },
+      { ...target, kind: "GIFT" },
+      { ...target, expectedVersion: 3 },
+    ]) {
+      execute.mockResolvedValueOnce({ ...result, target: changed });
+      expect((await read()).statusCode).toBe(503);
+    }
+  } finally {
+    await app.close();
+  }
+});
 test("a locked inventory policy returns the precise private 409 failure", async () => {
   const app = Fastify({ logger: false });
   const value = {
@@ -172,6 +224,71 @@ test("status checks exact operation ID and never returns another operation", asy
           payload: { schemaVersion: 1, operationId: id },
         })
       ).statusCode,
+    ).toBe(403);
+  } finally {
+    await app.close();
+  }
+});
+test("assigning an artist is a private mutation bound to the artist and broker it asked for", async () => {
+  const app = Fastify({ logger: false });
+  const brokerId = id.replace(/1$/u, "2");
+  const assigned = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    kind: "ARTIST_ASSIGNED",
+    artistId: id,
+    assignment: { brokerId, displayName: "Mina Park", active: true },
+  };
+  const execute = vi.fn().mockResolvedValue(assigned);
+  registerManagementCenterRoute(app, {
+    allowedOrigin: origin,
+    useCases: { execute },
+  });
+  const assign = (payload: Record<string, unknown>, extra = {}) =>
+    app.inject({
+      method: "POST",
+      url: "/api/v1/admin/management/artists/assign",
+      headers: { ...headers, ...extra },
+      payload: { schemaVersion: 1, ...payload },
+    });
+  const body = { artistId: id, brokerId, expectedBrokerId: null };
+  try {
+    const response = await assign(body);
+    expect(response.statusCode).toBe(200);
+    expect(response.headers["cache-control"]).toBe("private, no-store");
+    expect(execute).toHaveBeenCalledWith(
+      expect.objectContaining({
+        command: {
+          schemaVersion: 1,
+          action: "ASSIGN_ARTIST",
+          ...body,
+          idempotencyKey: headers["idempotency-key"],
+        },
+      }),
+    );
+    // Another artist, another broker, or "unassigned" when a broker was asked for.
+    for (const wrong of [
+      { ...assigned, artistId: brokerId },
+      { ...assigned, assignment: { ...assigned.assignment, brokerId: id } },
+      { ...assigned, assignment: null },
+    ]) {
+      execute.mockResolvedValueOnce(wrong);
+      expect((await assign(body)).statusCode).toBe(503);
+    }
+    execute.mockResolvedValueOnce({ ...assigned, assignment: null });
+    expect(
+      (await assign({ ...body, brokerId: null, expectedBrokerId: brokerId }))
+        .statusCode,
+    ).toBe(200);
+    execute.mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "FORBIDDEN",
+    });
+    expect((await assign(body)).statusCode).toBe(403);
+    expect((await assign({ ...body, actorId: id })).statusCode).toBe(400);
+    expect(
+      (await assign(body, { origin: "https://other.invalid" })).statusCode,
     ).toBe(403);
   } finally {
     await app.close();

@@ -6,9 +6,11 @@ import {
 } from "@fan-support/config/server";
 import { matchesConfiguredRequestOrigin } from "./request-origin";
 import {
+  forwardedClientChain,
   orderRequestCredentials,
   parseOrderRoute,
 } from "./order-proxy-request";
+import { validateWishWithdrawResponse } from "../storefront/wish-withdraw-validation";
 import { validatedOrderCookie } from "./order-proxy-cookie";
 import {
   OrderBodyLimitError,
@@ -106,6 +108,8 @@ export async function proxyOrderRequest(
       return failure(403, "ACCESS_DENIED");
     }
     headers.set("origin", options.siteOrigin);
+    const forwarded = forwardedClientChain(request.headers);
+    if (forwarded) headers.set("x-forwarded-for", forwarded);
     if (body !== undefined) headers.set("content-type", "application/json");
     const path = incoming.pathname.replace(/^\/api\/storefront\//u, "/api/v1/");
     if (abort.signal.aborted) return failure();
@@ -125,8 +129,29 @@ export async function proxyOrderRequest(
     try {
       const maximum = orderResponseBudget(operation);
       checkOrderResponseHeaders(upstream.headers, maximum);
+      const value: unknown = JSON.parse(
+        await readOrderBody(upstream.body, maximum, abort.signal),
+      );
+      if (operation.kind === "wish-withdraw") {
+        const { retryAfterSeconds, ...result } = validateWishWithdrawResponse(
+          value,
+          upstream.status,
+          upstream.headers,
+          operation.entryId,
+        );
+        if (abort.signal.aborted) return failure();
+        return Response.json(result, {
+          status: upstream.status,
+          headers: {
+            ...orderPrivateHeaders,
+            ...(retryAfterSeconds === undefined
+              ? {}
+              : { "retry-after": String(retryAfterSeconds) }),
+          },
+        });
+      }
       const { result, csrf, retryAfterSeconds } = validateOrderResponse(
-        JSON.parse(await readOrderBody(upstream.body, maximum, abort.signal)),
+        value,
         upstream.status,
         upstream.headers,
         operation,

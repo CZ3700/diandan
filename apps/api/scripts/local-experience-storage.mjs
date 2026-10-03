@@ -9,6 +9,7 @@ import {
   PutBucketCorsCommand,
 } from "@aws-sdk/client-s3";
 import { startLocalProxy } from "./local-experience-tls.mjs";
+import { localObjectStoragePresignEndpoint } from "./local-experience-config.mjs";
 const execute = promisify(execFile);
 const S3_IMAGE =
   "versity/versitygw:v1.7.0@sha256:c4cbd9d9cb8dedbb055ac788dbd02635651b9b1cebac95b095b3217231aa87ad";
@@ -17,6 +18,23 @@ export function verifyOwnedContainer(container, instanceId) {
     container?.Config?.Labels?.["com.fan-support.local-instance"] !== instanceId
   )
     throw new Error("Local container ownership mismatch");
+}
+/** Browser CORS is scoped to this instance's admin; it does not grant S3 object access. */
+export function localStorageCorsConfiguration(config, bucket) {
+  return {
+    CORSRules: [
+      {
+        AllowedOrigins: [config.origins.admin],
+        AllowedMethods:
+          bucket === config.s3.sourceBucket
+            ? ["PUT", "GET", "HEAD"]
+            : ["GET", "HEAD"],
+        AllowedHeaders: ["*"],
+        ExposeHeaders: ["ETag"],
+        MaxAgeSeconds: 300,
+      },
+    ],
+  };
 }
 export async function startS3(context) {
   const { config, stateDirectory, own } = context,
@@ -63,6 +81,11 @@ export async function startS3(context) {
         "--cap-drop=ALL",
         "--security-opt=no-new-privileges",
         "--pids-limit=128",
+        // Native Linux Docker keeps host ownership on the 0700 bind mount; without
+        // DAC override only the owning user can write it (macOS file sharing maps it).
+        ...(process.platform === "linux"
+          ? ["--user", `${process.getuid()}:${process.getgid()}`]
+          : []),
         S3_IMAGE,
       ]);
     } finally {
@@ -94,16 +117,18 @@ export async function startS3(context) {
     await delay(100);
   }
   if (!ready) throw new Error("Object storage did not become healthy");
-  const endpoint = `https://localhost:${config.ports.s3}`;
+  const endpoint = `https://localhost:${config.ports.s3}`,
+    presignEndpoint = localObjectStoragePresignEndpoint(config);
   await startLocalProxy({
     config,
     port: config.ports.s3,
     origin: endpoint,
+    additionalOrigins: presignEndpoint === endpoint ? [] : [presignEndpoint],
     target: `http://127.0.0.1:${config.ports.s3Backend}`,
     own,
     name: "object storage TLS",
   });
-  const s3 = { schemaVersion: 1, endpoint, ...config.s3 };
+  const s3 = { schemaVersion: 1, endpoint, presignEndpoint, ...config.s3 };
   const client = new S3Client({
     region: "us-east-1",
     endpoint,
@@ -126,18 +151,7 @@ export async function startS3(context) {
     await client.send(
       new PutBucketCorsCommand({
         Bucket,
-        CORSConfiguration: {
-          CORSRules: [
-            {
-              AllowedOrigins: [config.origins.admin],
-              AllowedMethods:
-                Bucket === s3.sourceBucket ? ["PUT"] : ["GET", "HEAD"],
-              AllowedHeaders: ["*"],
-              ExposeHeaders: ["ETag"],
-              MaxAgeSeconds: 300,
-            },
-          ],
-        },
+        CORSConfiguration: localStorageCorsConfiguration(config, Bucket),
       }),
     );
   }

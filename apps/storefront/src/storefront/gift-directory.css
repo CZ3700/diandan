@@ -1,17 +1,141 @@
 .gift-directory {
   min-width: 0;
 }
+/* A new page scrolls the gifts back under the sticky header, not behind it. */
+.gift-navigation {
+  scroll-margin-block-start: calc(var(--space-16) + var(--space-8));
+}
+.gift-navigation:focus {
+  outline: none;
+}
+
+/* L2-17 (user request 2026-09-30): kinds on the left, count and price order on the right.
+   There is no "apply" step: each choice is a link that changes the gifts in place. */
+.gift-toolbar {
+  /* Every control is this tall, so the row keeps its height when the price order arrives. */
+  --gift-control-size: calc(var(--space-8) + var(--space-3));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-6);
+  padding-block-end: var(--space-6);
+}
+.gift-toolbar__kinds {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.gift-toolbar__kinds ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.gift-directory .gift-kind-chip {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--gift-control-size);
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  transition:
+    color var(--motion-fast-effective) var(--ease-out),
+    border-color var(--motion-fast-effective) var(--ease-out),
+    background-color var(--motion-fast-effective) var(--ease-out);
+}
+.gift-directory .gift-kind-chip:hover {
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
+}
+.gift-directory .gift-kind-chip[aria-current] {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-weight: 700;
+}
 .gift-directory-count {
-  padding-block: var(--space-6);
+  display: flex;
+  align-items: center;
+  min-block-size: var(--gift-control-size);
   color: var(--color-text-muted);
 }
+/* Price order: the word and two round arrows. The active one is filled like the chosen
+   kind and links back to the recommended order. */
+.gift-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.gift-sort__label {
+  padding-inline-end: var(--space-1);
+  color: var(--color-text-muted);
+}
+.gift-directory .gift-sort__option {
+  display: grid;
+  place-items: center;
+  inline-size: var(--gift-control-size);
+  block-size: var(--gift-control-size);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-text-muted);
+  transition:
+    color var(--motion-fast-effective) var(--ease-out),
+    border-color var(--motion-fast-effective) var(--ease-out),
+    background-color var(--motion-fast-effective) var(--ease-out);
+}
+.gift-directory .gift-sort__option .fs-icon {
+  inline-size: var(--space-6);
+  block-size: var(--space-6);
+}
+.gift-directory .gift-sort__option:hover {
+  border-color: var(--color-text-muted);
+  color: var(--color-text);
+}
+.gift-directory .gift-sort__option[aria-current] {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+/* An address may still carry a category, a price range or an availability filter. */
+.gift-filter-summary,
+.gift-filter-summary ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-6);
+}
+.gift-filter-summary {
+  padding-block-end: var(--space-6);
+}
+.gift-filter-summary ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: var(--color-text-muted);
+}
+.gift-filter-summary a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--space-12);
+}
+
+/* Four to a row on a desktop: one page of twelve is three full rows. */
 .gift-directory-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-12) var(--space-6);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-8) var(--space-6);
   list-style: none;
   padding: 0;
   margin: 0;
+  transition: opacity var(--motion-control-effective) var(--ease-out);
+}
+/* While a choice loads the current gifts stay in place, dimmed only if it takes a moment. */
+.gift-navigation[data-gift-pending] .gift-directory-grid {
+  opacity: 0.5;
+  transition-delay: var(--motion-fast-effective);
 }
 .gift-directory-card {
   min-width: 0;
@@ -21,27 +145,74 @@
   color: inherit;
   text-decoration: none;
 }
+/* L2-14 (user request 2026-09-30): each gift photo sits inside a mat, like a framed print,
+   with an even border of about 7% of the card on every layout. The hover zoom stays inside
+   the inner frame; the mat's hairline turns gold on hover and keyboard focus. */
+.gift-directory-grid {
+  --gift-mat: clamp(var(--space-4), 1.7vw, var(--space-6));
+}
 .gift-directory-card__media {
   aspect-ratio: 1;
-  overflow: hidden;
-  background: var(--color-surface);
+  padding: var(--gift-mat);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-text) 4%, var(--color-surface)),
+    var(--color-surface)
+  );
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius-media);
+  transition: border-color var(--motion-control-effective) var(--ease-out);
 }
 .gift-directory-card__media > * {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--radius-media) / 2);
+  box-shadow: 0 var(--space-2) var(--space-6)
+    color-mix(in srgb, var(--color-bg) 55%, transparent);
 }
 .gift-directory .gift-directory-card__media .fs-media__image {
-  object-fit: contain;
+  object-fit: cover;
+}
+.gift-directory-card
+  > a:is(:hover, :focus-visible)
+  .gift-directory-card__media {
+  border-color: var(--color-accent);
 }
 .gift-directory-card__body {
-  padding-block: var(--space-4);
+  padding-block-start: var(--space-3);
 }
 .gift-directory .gift-directory-card__body :is(h2, h3) {
-  margin: 0 0 var(--space-2);
+  margin: 0 0 var(--space-1);
   font-size: var(--type-body-size);
   font-weight: 500;
   line-height: var(--type-body-leading);
+  overflow-wrap: anywhere;
+}
+.gift-directory-card__kind {
+  margin: 0 0 var(--space-1);
+  color: var(--color-accent);
+  font-size: var(--type-label-size);
+  font-weight: 600;
+}
+.gift-directory-card__kind:lang(en),
+.gift-directory-card__kind:lang(es),
+.gift-directory-card__kind:lang(pt),
+.gift-directory-card__kind:lang(vi) {
+  text-transform: uppercase;
+  letter-spacing: var(--type-label-tracking);
+}
+/* The card shows the start of the summary; the gift's own page shows all of it. */
+.gift-directory-card__summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  /* Two lines are always reserved, so prices line up across a row. */
+  min-block-size: calc(var(--type-body-size) * var(--type-body-leading) * 2);
+  margin: 0 0 var(--space-2);
+  color: var(--color-text-muted);
   overflow-wrap: anywhere;
 }
 .gift-directory-card__price {
@@ -61,173 +232,38 @@
   text-decoration-color: var(--color-accent);
   text-underline-offset: var(--link-underline-offset);
 }
+/* The price line keeps its height while the offer is read, then the price arrives in place. */
+.gift-directory-card__pending > span,
+[data-gift-placeholder] .gift-directory-card__media > span,
+[data-gift-placeholder] .gift-directory-card__body > span {
+  display: block;
+  border-radius: var(--radius-control);
+  background: var(--color-surface-raised);
+  color: transparent;
+}
+.gift-directory-card__pending {
+  margin: 0;
+}
+.gift-directory-card__pending > span {
+  inline-size: calc(var(--space-16) + var(--space-8));
+  block-size: calc(var(--type-body-size) * var(--type-body-leading));
+}
+[data-gift-placeholder] .gift-directory-card__media > span {
+  box-shadow: none;
+}
+[data-gift-placeholder] .gift-directory-card__body > span {
+  inline-size: 70%;
+  block-size: calc(var(--type-body-size) * var(--type-body-leading));
+  margin-block-end: var(--space-2);
+}
+[data-gift-placeholder] .gift-directory-card__body > span + span {
+  inline-size: 40%;
+}
 .gift-directory-state {
   padding-block: var(--space-8);
 }
 .gift-directory-state p {
   color: var(--color-text-muted);
-}
-.gift-filter-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-3) var(--space-6);
-  padding-block: var(--space-4);
-  border-block: var(--border-width) solid var(--color-border);
-}
-.gift-filter-sort {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2) var(--space-4);
-  min-width: 0;
-  max-width: 100%;
-}
-.gift-filter-sort-form {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3);
-  min-width: 0;
-  max-width: 100%;
-}
-.gift-filter-sort > span {
-  color: var(--color-text-muted);
-}
-.gift-filter-sort select {
-  min-width: 0;
-  max-width: 100%;
-  min-height: var(--space-12);
-  padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-control);
-  background: var(--color-bg);
-  color: var(--color-text);
-  font: inherit;
-}
-.gift-filter-disclosure {
-  position: relative;
-  min-width: 0;
-  max-width: 100%;
-}
-.gift-filter-disclosure summary,
-.gift-filters__mobile .fs-overlay-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  min-height: var(--space-12);
-  padding: var(--space-2) var(--space-4);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-control);
-  background: transparent;
-  color: var(--color-text);
-  font: inherit;
-  cursor: pointer;
-}
-.gift-filter-disclosure summary {
-  list-style: none;
-}
-.gift-filter-disclosure summary::-webkit-details-marker {
-  display: none;
-}
-.gift-filter-disclosure-icon {
-  color: var(--color-accent);
-}
-.gift-filter-disclosure[open] .gift-filter-disclosure-icon {
-  transform: rotate(45deg);
-}
-.gift-filter-disclosure > .gift-filter-form {
-  position: absolute;
-  inset-inline-end: 0;
-  inset-block-start: calc(100% + var(--space-3));
-  z-index: var(--layer-raised);
-  width: min(calc(var(--space-4) * 38), calc(100vw - var(--layout-gutter) * 2));
-}
-.gift-filter-summary,
-.gift-filter-summary ul,
-.gift-filter-sort-links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2) var(--space-6);
-}
-.gift-filter-summary {
-  padding-block-start: var(--space-3);
-}
-.gift-filter-summary ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  color: var(--color-text-muted);
-}
-.gift-filter-sort-links a {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--space-12);
-  text-decoration: underline;
-}
-.gift-filter-form {
-  padding: var(--space-6);
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-control);
-  background: var(--color-surface);
-}
-.gift-filter-selects {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-4);
-}
-.gift-filter-select {
-  display: grid;
-  gap: var(--space-2);
-  min-width: 0;
-}
-.gift-filter-select select {
-  min-width: 0;
-  width: 100%;
-  min-height: var(--space-12);
-  padding: var(--space-3);
-  border: var(--border-width) solid var(--color-text-muted);
-  border-radius: var(--radius-control);
-  background: var(--color-surface-raised);
-  color: var(--color-text);
-  font: inherit;
-}
-.gift-filter-prices {
-  min-width: 0;
-  border: 0;
-  padding: 0;
-  margin: var(--space-6) 0;
-}
-.gift-filter-prices legend {
-  padding: 0;
-}
-.gift-filter-hint {
-  color: var(--color-text-muted);
-  font-size: var(--type-body-size);
-  margin-block: var(--space-2) var(--space-4);
-}
-.gift-filter-price-inputs {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-4);
-}
-.gift-filter-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-4);
-}
-.gift-filter-actions a {
-  min-height: var(--space-12);
-  display: inline-flex;
-  align-items: center;
-}
-.gift-filters__mobile {
-  display: none;
 }
 .gift-pagination {
   margin-block-start: var(--space-8);
@@ -280,33 +316,53 @@
   align-items: center;
   gap: var(--space-2);
 }
-.gift-directory a:focus-visible,
-.gift-filter-toolbar :is(select, summary, button):focus-visible,
-.gift-filter-form :is(a, button, select):focus-visible {
+.gift-directory a:focus-visible {
   outline: var(--focus-ring-width) solid var(--color-accent);
   outline-offset: var(--focus-ring-offset);
 }
+/* Whose gifts these are, on a gift list opened for one artist. */
+.gift-directory-recipient {
+  padding-block-end: var(--space-4);
+}
+/* The gift pages start at their gifts: the title above them is gone (L2-17). */
+.storefront-directory.storefront-gifts {
+  padding-block-start: var(--space-8);
+}
+@media (max-width: 64rem) {
+  .gift-directory-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 @media (max-width: 48rem) {
   .gift-directory-grid {
+    --gift-mat: var(--space-3);
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-6) var(--space-4);
   }
-  .gift-filters__desktop {
+  /* One row of kinds that scrolls sideways; the count and the price order share the next. */
+  .gift-toolbar {
+    padding-block-end: var(--space-4);
+  }
+  .gift-toolbar__kinds {
+    flex-basis: 100%;
+    margin-inline: calc(var(--layout-gutter) * -1);
+  }
+  .gift-toolbar__kinds ul {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-inline: var(--layout-gutter);
+    scrollbar-width: none;
+  }
+  .gift-toolbar__kinds ul::-webkit-scrollbar {
     display: none;
   }
-  .gift-filters__mobile {
-    display: block;
+  .gift-directory-count {
+    flex: 1 1 auto;
   }
-  .gift-filter-form--mobile {
-    padding: 0;
-    border: 0;
-    background: transparent;
-  }
-  .gift-filter-form--mobile .gift-filter-selects {
-    grid-template-columns: 1fr;
-  }
-  .gift-filter-form--mobile .gift-filter-price-inputs {
-    grid-template-columns: 1fr;
+  .gift-directory-card__summary {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    min-block-size: calc(var(--type-body-size) * var(--type-body-leading));
   }
   .gift-directory .gift-directory-card__body :is(h2, h3) {
     font-size: var(--type-body-size);
@@ -317,19 +373,10 @@
     order: -1;
   }
 }
-
-.gift-browse-description {
-  color: var(--color-text-muted);
-  margin: 0;
-  overflow-wrap: anywhere;
-}
-.gift-browse-filters button {
-  color: var(--color-text);
-  background: transparent;
-  border: var(--border-width) solid var(--color-border);
-  border-radius: var(--radius-control);
-  min-height: var(--space-12);
-  padding: var(--space-2) var(--space-4);
-  font: inherit;
-  cursor: pointer;
+@media (prefers-reduced-motion: reduce) {
+  .gift-directory-grid,
+  .gift-directory .gift-kind-chip,
+  .gift-directory .gift-sort__option {
+    transition: none;
+  }
 }

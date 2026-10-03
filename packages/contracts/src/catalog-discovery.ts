@@ -3,6 +3,7 @@ import { z } from "zod";
 import { giftCategorySchema } from "./catalog-content.js";
 import { sourceHashSchema } from "./content-lifecycle.js";
 import { currencySchema, marketSchema, minorAmountSchema } from "./commerce.js";
+import { giftKindSchema } from "./gift-commerce-profile.js";
 import { idolIdSchema } from "./identifiers.js";
 import { supportedLocaleSchema } from "./locale.js";
 import { schemaVersionSchema } from "./versioning.js";
@@ -117,6 +118,7 @@ export const giftDiscoveryQuerySchema = z
     pageSize: pageSizeSchema.default(CATALOG_DISCOVERY_LIMITS.giftPageDefault),
     sort: giftDiscoverySortSchema.default("RECOMMENDED"),
     category: giftCategorySchema.optional(),
+    kind: giftKindSchema.optional(),
     priceMinMinor: minorAmountSchema.optional(),
     priceMaxMinor: minorAmountSchema.optional(),
     availability: giftDiscoveryAvailabilitySchema.default("ALL"),
@@ -175,6 +177,7 @@ export const catalogPageInfoSchema = z
 
 const sortFieldSchema = z.enum([
   "MATCH_RANK",
+  "MANUAL_POSITION",
   "DISPLAY_ORDER",
   "PUBLISHED_AT",
   "PRICE_MINOR",
@@ -196,7 +199,7 @@ export const idolDiscoveryPlanSchema = z
       z.literal("PREFIX"),
       z.literal("CONTAINS"),
     ]),
-    orderBy: z.array(orderTermSchema).min(2).max(3),
+    orderBy: z.array(orderTermSchema).min(3).max(4),
     take: z
       .number()
       .int()
@@ -223,7 +226,7 @@ export const giftDiscoveryPlanSchema = z
           CATALOG_DISCOVERY_LIMITS.giftPageMaximum,
       ),
     take: pageSizeSchema,
-    orderBy: z.array(orderTermSchema).length(2),
+    orderBy: z.array(orderTermSchema).min(2).max(3),
   })
   .meta({
     "x-runtime-invariants": [
@@ -242,6 +245,7 @@ export const changeGiftDiscoveryQuerySchema = z.strictObject({
     sort: giftDiscoverySortSchema.optional(),
     idolId: idolIdSchema.nullable().optional(),
     category: giftCategorySchema.nullable().optional(),
+    kind: giftKindSchema.nullable().optional(),
     priceMinMinor: minorAmountSchema.nullable().optional(),
     priceMaxMinor: minorAmountSchema.nullable().optional(),
     availability: giftDiscoveryAvailabilitySchema.optional(),

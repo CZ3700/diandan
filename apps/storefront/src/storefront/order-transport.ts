@@ -1,9 +1,14 @@
 import {
   checkoutSessionIdSchema,
   publicOrderIdSchema,
+  publicOrderNoSchema,
   orderAccessRawTokenSchema,
   type OrderAccessResponse,
 } from "@fan-support/contracts";
+import {
+  validateWishWithdrawResponse,
+  type WishWithdrawReply,
+} from "./wish-withdraw-validation";
 import { orderAbortable, readOrderBody } from "./order-transport-io";
 import {
   checkOrderResponseHeaders,
@@ -18,17 +23,19 @@ export type OrderReply =
       retryAfterSeconds?: number;
     })
   | { schemaVersion: 1; outcome: "UNKNOWN" };
-const unknown = (): OrderReply => ({ schemaVersion: 1, outcome: "UNKNOWN" });
-const denied = (): OrderReply => ({
-  schemaVersion: 1,
-  outcome: "FAILURE",
-  code: "ACCESS_DENIED",
-});
-const invalid = (): OrderReply => ({
-  schemaVersion: 1,
-  outcome: "FAILURE",
-  code: "INVALID_REQUEST",
-});
+const unknown = () => ({ schemaVersion: 1, outcome: "UNKNOWN" }) as const;
+const denied = () =>
+  ({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "ACCESS_DENIED",
+  }) as const;
+const invalid = () =>
+  ({
+    schemaVersion: 1,
+    outcome: "FAILURE",
+    code: "INVALID_REQUEST",
+  }) as const;
 type Call = OrderOperation & { path: string; body?: string; csrf?: string };
 
 /** Cookie authority stays in the browser; order-scoped CSRF exists only for this lifecycle. */
@@ -37,13 +44,24 @@ export function createOrderTransport(fetcher: typeof fetch = fetch) {
     sequence = 0;
   let authority: { publicOrderId: string; csrf: string } | undefined;
   const active = new Set<AbortController>();
-  async function request(call: Call): Promise<OrderReply> {
+  function request(
+    call: Extract<Call, { kind: "wish-withdraw" }>,
+  ): Promise<WishWithdrawReply>;
+  function request(
+    call: Exclude<Call, { kind: "wish-withdraw" }>,
+  ): Promise<OrderReply>;
+  async function request(call: Call): Promise<OrderReply | WishWithdrawReply> {
     if (disposed) return unknown();
     const generation = ++sequence;
     const abort = new AbortController();
     active.add(abort);
     const timer = setTimeout(() => abort.abort(), 15_000);
-    if (call.kind !== "read") authority = undefined;
+    if (
+      call.kind !== "read" &&
+      call.kind !== "locate" &&
+      call.kind !== "wish-withdraw"
+    )
+      authority = undefined;
     try {
       const headers = new Headers({ accept: "application/json" });
       if (call.body !== undefined)
@@ -65,8 +83,24 @@ export function createOrderTransport(fetcher: typeof fetch = fetch) {
       try {
         const maximum = orderResponseBudget(call);
         checkOrderResponseHeaders(response.headers, maximum);
+        const value: unknown = JSON.parse(
+          await readOrderBody(response.body, maximum, abort.signal),
+        );
+        if (call.kind === "wish-withdraw") {
+          const result = validateWishWithdrawResponse(
+            value,
+            response.status,
+            response.headers,
+            call.entryId,
+          );
+          if (disposed || generation !== sequence || abort.signal.aborted)
+            return unknown();
+          if (result.outcome === "FAILURE" && result.code === "ACCESS_DENIED")
+            authority = undefined;
+          return result;
+        }
         const { result, csrf, retryAfterSeconds } = validateOrderResponse(
-          JSON.parse(await readOrderBody(response.body, maximum, abort.signal)),
+          value,
           response.status,
           response.headers,
           call,
@@ -81,7 +115,7 @@ export function createOrderTransport(fetcher: typeof fetch = fetch) {
           };
         }
         if (result.action === "REVOKED") authority = undefined;
-        else
+        else if (result.action !== "LOCATED")
           authority = {
             publicOrderId:
               result.action === "GRANTED"
@@ -137,6 +171,18 @@ export function createOrderTransport(fetcher: typeof fetch = fetch) {
         path: `/api/storefront/orders/${encodeURIComponent(publicOrderId)}`,
       });
     },
+    /** Resolves a typed public number through this browser's order session; grants nothing. */
+    async locate(publicOrderNo: string): Promise<OrderReply> {
+      if (disposed) return unknown();
+      if (!publicOrderNoSchema.safeParse(publicOrderNo).success)
+        return invalid();
+      return request({
+        kind: "locate",
+        publicOrderNo,
+        path: "/api/storefront/order-access/locate",
+        body: JSON.stringify({ schemaVersion: 1, publicOrderNo }),
+      });
+    },
     async revoke(publicOrderId: string): Promise<OrderReply> {
       if (disposed) return unknown();
       if (!publicOrderIdSchema.safeParse(publicOrderId).success)
@@ -151,6 +197,30 @@ export function createOrderTransport(fetcher: typeof fetch = fetch) {
         publicOrderId,
         path: "/api/storefront/order-access/revoke",
         body: JSON.stringify({ schemaVersion: 1, publicOrderId }),
+        csrf: authority.csrf,
+      });
+    },
+    async withdrawWish(
+      publicOrderId: string,
+      entryId: string,
+    ): Promise<WishWithdrawReply> {
+      if (disposed) return unknown();
+      if (
+        !publicOrderIdSchema.safeParse(publicOrderId).success ||
+        !publicOrderIdSchema.safeParse(entryId).success
+      )
+        return invalid();
+      if (
+        !authority ||
+        authority.publicOrderId.toLowerCase() !== publicOrderId.toLowerCase()
+      )
+        return denied();
+      return request({
+        kind: "wish-withdraw",
+        publicOrderId,
+        entryId,
+        path: `/api/storefront/orders/${encodeURIComponent(publicOrderId)}/wish-gallery/${encodeURIComponent(entryId)}/withdraw`,
+        body: JSON.stringify({ schemaVersion: 1 }),
         csrf: authority.csrf,
       });
     },

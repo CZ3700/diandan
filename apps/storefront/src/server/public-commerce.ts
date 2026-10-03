@@ -246,6 +246,7 @@ function directoryCommand(query: URLSearchParams) {
     "pageSize",
     "sort",
     "category",
+    "kind",
     "priceMinMinor",
     "priceMaxMinor",
     "availability",
@@ -294,6 +295,8 @@ export function fetchStorefrontGiftDirectory(
           (item) =>
             item.offer.market === command.market &&
             item.offer.currency === command.currency &&
+            (command.kind === undefined ||
+              item.gift.giftKind === command.kind) &&
             localeMatches(item.gift.localeContext, command.locale, false),
         )),
     fetcher,

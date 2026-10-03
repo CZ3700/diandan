@@ -18,7 +18,7 @@ let alternatingRequests = 0;
 const html = (content, locale = "ja") =>
   `<!doctype html><html lang="${locale}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TEST collector</title></head><body><main>${content}</main></body></html>`;
 const normal =
-  '<article class="storefront-story"><h1 id="artist-title">TEST artist content</h1><p lang="ja">TEST published content for the measurement fixture.</p></article>';
+  '<section class="storefront-artist-hero"><h1 id="artist-title">TEST artist content</h1><p data-artist-description lang="ja">TEST published content for the measurement fixture.</p></section>';
 const unavailable =
   '<section class="storefront-state"><h1>TEST temporarily unavailable</h1></section>';
 const server = createServer((request, response) => {
@@ -79,7 +79,12 @@ try {
     { name: "missing-marker", body: "<h1>TEST empty</h1>", valid: false },
     {
       name: "empty-marker-box",
-      body: '<article class="storefront-story" style="height:100px"></article>',
+      body: '<h1 id="artist-title">TEST artist content</h1><p data-artist-description lang="ja" style="height:100px"></p>',
+      valid: false,
+    },
+    {
+      name: "description-without-language",
+      body: '<h1 id="artist-title">TEST artist content</h1><p data-artist-description>TEST published content.</p>',
       valid: false,
     },
     {
@@ -122,7 +127,7 @@ try {
     const config = createAcceptanceLighthouseConfig(
       {
         kind: fixture.kind ?? "artist",
-        selector: fixture.selector ?? ".storefront-story",
+        selector: fixture.selector ?? "p[data-artist-description][lang]",
         locale: "ja",
       },
       fixture.expectedUrl ?? expectedUrl,
@@ -141,7 +146,7 @@ try {
   await context.close();
   const preflight = await globalThis.fetch(origin + "/ja/alternating");
   assert.equal(preflight.status, 200);
-  assert.match(await preflight.text(), /storefront-story/);
+  assert.match(await preflight.text(), /data-artist-description/);
   for (const fixture of [
     { name: "normal", valid: true },
     { name: "alternating", valid: false },
@@ -149,7 +154,7 @@ try {
     const target = {
       kind: "artist",
       locale: "ja",
-      selector: ".storefront-story",
+      selector: "p[data-artist-description][lang]",
     };
     const result = await lighthouse(
       origin + `/ja/${fixture.name}`,

@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 
-import { expect, test } from "vitest";
+import { beforeAll, expect, test } from "vitest";
 import { z } from "zod";
 
 import { paymentWebhookEndpointIdSchema } from "./identifiers.js";
@@ -8,6 +8,14 @@ import * as artifacts from "./artifact-documents.js";
 import * as registry from "./artifact-registry.js";
 
 type JsonObject = Record<string, unknown>;
+
+let documents: ReturnType<typeof artifacts.createContractArtifactDocuments>;
+let firstRender: ReturnType<typeof artifacts.renderContractArtifactDocuments>;
+
+beforeAll(() => {
+  documents = artifacts.createContractArtifactDocuments();
+  firstRender = artifacts.renderContractArtifactDocuments();
+});
 
 /** Payment operations expose account identities only to authorized configuration staff. */
 function withoutPaymentConfiguration(document: JsonObject): JsonObject {
@@ -61,15 +69,11 @@ function isStrictVersionedRoot(schema: JsonObject): boolean {
   );
 }
 
-test("renders deterministic JSON Schema and OpenAPI documents from one registry", async () => {
+test("describes JSON Schema and OpenAPI documents from one registry", () => {
   expect(artifacts, "artifact renderer module must exist").toBeDefined();
   expect(artifacts?.createContractArtifactDocuments).toBeTypeOf("function");
   expect(artifacts?.renderContractArtifactDocuments).toBeTypeOf("function");
 
-  const documents = artifacts?.createContractArtifactDocuments() as Readonly<{
-    jsonSchema: JsonObject;
-    openapi: JsonObject;
-  }>;
   const jsonDefinitions = documents.jsonSchema["$defs"] as JsonObject;
   const openapiComponents = (documents.openapi["components"] as JsonObject)[
     "schemas"
@@ -274,18 +278,17 @@ test("renders deterministic JSON Schema and OpenAPI documents from one registry"
     expect(urlSchema["format"]).toBe("uri");
     expect(urlSchema["pattern"]).toBe("^https:\\/\\/(?![^/?#]*@)");
   }
+});
 
-  const firstRender = artifacts?.renderContractArtifactDocuments();
-  const secondRender = artifacts?.renderContractArtifactDocuments();
+test("renders deterministic JSON Schema and OpenAPI documents", () => {
+  const secondRender = artifacts.renderContractArtifactDocuments();
   expect(firstRender).toEqual(secondRender);
   expect(firstRender?.jsonSchema.endsWith("\n")).toBe(true);
   expect(firstRender?.openapi.endsWith("\n")).toBe(true);
 });
 
-test("documents the exact raw payment webhook HTTP boundary", async () => {
-  const { createContractArtifactDocuments } =
-    await import("./artifact-documents.js");
-  const { openapi } = createContractArtifactDocuments();
+test("documents the exact raw payment webhook HTTP boundary", () => {
+  const { openapi } = documents;
   const components = openapi["components"] as JsonObject;
   const schemas = components["schemas"] as JsonObject;
   const securitySchemes = components["securitySchemes"] as JsonObject;
@@ -304,6 +307,9 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
   ).toEqual([
     "/api/storefront/rum",
     "/api/v1/admin-preview-media/read",
+    "/api/v1/admin/artist-notes/context",
+    "/api/v1/admin/artist-notes/read",
+    "/api/v1/admin/artist-notes/save",
     "/api/v1/admin/catalog/history/read",
     "/api/v1/admin/catalog/idols/create",
     "/api/v1/admin/catalog/idols/rename",
@@ -318,6 +324,8 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/content-review/preview/revoke",
     "/api/v1/admin/content-review/read",
     "/api/v1/admin/content-review/submit",
+    "/api/v1/admin/display-order/read",
+    "/api/v1/admin/display-order/save",
     "/api/v1/admin/exceptions/context",
     "/api/v1/admin/exceptions/detail",
     "/api/v1/admin/exceptions/list",
@@ -343,10 +351,32 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/gift-commerce/prices/read",
     "/api/v1/admin/gift-commerce/prices/rollback",
     "/api/v1/admin/gift-commerce/variants/save",
+    "/api/v1/admin/home-layout/draft",
+    "/api/v1/admin/home-layout/history",
+    "/api/v1/admin/home-layout/publish",
+    "/api/v1/admin/home-layout/read",
+    "/api/v1/admin/home-layout/restore",
+    "/api/v1/admin/information-pages/approve",
+    "/api/v1/admin/information-pages/history",
+    "/api/v1/admin/information-pages/list",
+    "/api/v1/admin/information-pages/publish",
+    "/api/v1/admin/information-pages/read",
+    "/api/v1/admin/information-pages/restore",
+    "/api/v1/admin/information-pages/save",
+    "/api/v1/admin/information-pages/submit",
+    "/api/v1/admin/information-pages/unpublish",
+    "/api/v1/admin/ledger/artist",
+    "/api/v1/admin/ledger/context",
+    "/api/v1/admin/ledger/export",
+    "/api/v1/admin/ledger/message/read",
+    "/api/v1/admin/ledger/overview",
+    "/api/v1/admin/management/artists/assign",
     "/api/v1/admin/management/context",
+    "/api/v1/admin/management/images/read",
     "/api/v1/admin/management/list",
     "/api/v1/admin/management/operations/read",
     "/api/v1/admin/management/operations/retry",
+    "/api/v1/admin/management/posters/archive",
     "/api/v1/admin/management/submit",
     "/api/v1/admin/management/uploads/prepare",
     "/api/v1/admin/orders/context",
@@ -360,6 +390,11 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/orders/notes/read",
     "/api/v1/admin/orders/notification/resend",
     "/api/v1/admin/orders/prepare",
+    "/api/v1/admin/orders/proof-uploads/begin",
+    "/api/v1/admin/orders/proof-uploads/complete",
+    "/api/v1/admin/orders/proofs/attach",
+    "/api/v1/admin/orders/proofs/view",
+    "/api/v1/admin/orders/proofs/withdraw",
     "/api/v1/admin/orders/resume",
     "/api/v1/admin/payment-configuration/approve",
     "/api/v1/admin/payment-configuration/publish",
@@ -379,6 +414,22 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/admin/resources/uploads/complete",
     "/api/v1/admin/resources/uploads/read",
     "/api/v1/admin/session/read",
+    "/api/v1/admin/storefront-brand/draft",
+    "/api/v1/admin/storefront-brand/history",
+    "/api/v1/admin/storefront-brand/prepare",
+    "/api/v1/admin/storefront-brand/publish",
+    "/api/v1/admin/storefront-brand/read",
+    "/api/v1/admin/storefront-brand/restore",
+    "/api/v1/admin/storefront-navigation/draft",
+    "/api/v1/admin/storefront-navigation/history",
+    "/api/v1/admin/storefront-navigation/publish",
+    "/api/v1/admin/storefront-navigation/read",
+    "/api/v1/admin/storefront-navigation/restore",
+    "/api/v1/admin/storefront-theme/draft",
+    "/api/v1/admin/storefront-theme/history",
+    "/api/v1/admin/storefront-theme/publish",
+    "/api/v1/admin/storefront-theme/read",
+    "/api/v1/admin/storefront-theme/restore",
     "/api/v1/admin/translation-transfer/export",
     "/api/v1/admin/translation-transfer/import",
     "/api/v1/admin/translation-workspace/read",
@@ -406,8 +457,11 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/idols/{handle}",
     "/api/v1/media/{mediaAssetId}",
     "/api/v1/order-access/exchange",
+    "/api/v1/order-access/locate",
     "/api/v1/order-access/revoke",
     "/api/v1/orders/{publicOrderId}",
+    "/api/v1/orders/{publicOrderId}/delivery-proofs/{proofId}/{rendition}",
+    "/api/v1/orders/{publicOrderId}/wish-gallery/{entryId}/withdraw",
     "/api/v1/policies/{policyKey}",
     "/api/v1/storefront-context",
     "/api/v1/storefront-gifts/{handle}",
@@ -415,6 +469,13 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
     "/api/v1/storefront-seo/catalog",
     "/api/v1/storefront-seo/entity",
     "/api/v1/storefront-seo/index",
+    "/api/v1/storefront/home-layout",
+    "/api/v1/storefront/information-pages",
+    "/api/v1/storefront/information-pages/{pageKey}",
+    "/api/v1/storefront/storefront-brand",
+    "/api/v1/storefront/storefront-navigation",
+    "/api/v1/storefront/storefront-theme",
+    "/api/v1/storefront/wish-gallery",
     "/api/v1/webhooks/payments/{endpointId}",
   ]);
   expect(operation["operationId"]).toBe("receivePaymentWebhook");
@@ -560,16 +621,30 @@ test("documents the exact raw payment webhook HTTP boundary", async () => {
   }
 });
 
-test("marks every registered top-level contract with an explicit version policy", async () => {
-  const [{ createContractArtifactDocuments }, { contractArtifactRegistry }] =
-    await Promise.all([
-      import("./artifact-documents.js"),
-      import("./artifact-registry.js"),
-    ]);
-  const definitions = createContractArtifactDocuments().jsonSchema[
-    "$defs"
-  ] as JsonObject;
+test("marks every registered top-level contract with an explicit version policy", () => {
+  const { contractArtifactRegistry } = registry;
+  const definitions = documents.jsonSchema["$defs"] as JsonObject;
   const unversionedValueObjects = new Set([
+    "StorefrontBrandRevision",
+    "StorefrontBrandPublication",
+    "StorefrontLogoView",
+    "AdminArtistNoteContent",
+    "AdminArtistNoteGate",
+    "AdminArtistNoteVersion",
+    "AdminArtistNoteEnvelope",
+    "AdminLedgerTimeZone",
+    "AdminLedgerPeriod",
+    "AdminLedgerResolvedPeriod",
+    "AdminLedgerBrokerFilter",
+    "AdminLedgerExportScope",
+    "AdminLedgerTotal",
+    "AdminLedgerArtist",
+    "AdminLedgerArtistRow",
+    "AdminLedgerLine",
+    "AdminLedgerExportLine",
+    "WishGalleryPreference",
+    "WishGalleryEntry",
+    "WishSupportRecord",
     "AdminOrdersPermission",
     "AdminOrdersListItem",
     "AdminOrdersLine",
@@ -577,6 +652,8 @@ test("marks every registered top-level contract with an explicit version policy"
     "AdminOrdersNotification",
     "AdminOrdersPrincipal",
     "AdminOrdersNoteEnvelope",
+    "AdminOrdersProof",
+    "OrderAccessDeliveryProof",
 
     "OrderNotificationUrl",
     "CheckoutPolicyAcceptance",
@@ -587,6 +664,7 @@ test("marks every registered top-level contract with an explicit version policy"
     "ManagementCenterIntent",
     "ManagementCenterOperation",
     "ManagementCenterListItem",
+    "ManagementCenterBroker",
     "ManagementCenterPreparedMedia",
     "ManagementCenterCheckpoint",
     "DailyPublicationCurrentMedia",
@@ -609,8 +687,7 @@ test("marks every registered top-level contract with an explicit version policy"
 });
 
 test("keeps committed contract artifacts byte-for-byte fresh", async () => {
-  const artifacts = await import("./artifact-documents.js");
-  const rendered = artifacts.renderContractArtifactDocuments();
+  const rendered = firstRender;
   const [jsonSchema, openapi] = await Promise.all([
     readFile(
       new URL("../generated/contracts.schema.json", import.meta.url),
@@ -628,12 +705,8 @@ test("keeps committed contract artifacts byte-for-byte fresh", async () => {
   expect(openapi).toBe(rendered.openapi);
 });
 
-test("describes real public directory operations with explicit language and commerce context", async () => {
-  const { createContractArtifactDocuments } =
-    await import("./artifact-documents.js");
-  const paths = createContractArtifactDocuments().openapi[
-    "paths"
-  ] as JsonObject;
+test("describes real public directory operations with explicit language and commerce context", () => {
+  const paths = documents.openapi["paths"] as JsonObject;
   for (const [path, responseName] of [
     ["/api/v1/idols", "IdolDirectoryResponse"],
     ["/api/v1/gifts", "GiftDirectoryResponse"],
@@ -656,12 +729,8 @@ test("describes real public directory operations with explicit language and comm
   }
 });
 
-test("maps the public idol query parameter to the internal gift recipient field", async () => {
-  const { createContractArtifactDocuments } =
-    await import("./artifact-documents.js");
-  const paths = createContractArtifactDocuments().openapi[
-    "paths"
-  ] as JsonObject;
+test("maps the public idol query parameter to the internal gift recipient field", () => {
+  const paths = documents.openapi["paths"] as JsonObject;
   const get = (paths["/api/v1/gifts"] as JsonObject)["get"] as JsonObject;
   const names = (get["parameters"] as JsonObject[]).map((p) => p["name"]);
   expect(names).toContain("idol");

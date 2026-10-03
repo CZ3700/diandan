@@ -1,4 +1,5 @@
 import { expect, it, vi } from "vitest";
+import { orderTestDetail } from "../server/order-test-support";
 const load = () => import("./order-controller").catch(() => null);
 const id = "10000000-0000-4000-8000-000000000001";
 const other = "10000000-0000-4000-8000-000000000002";
@@ -22,6 +23,8 @@ function transport() {
     read: vi.fn().mockResolvedValue(denied),
     exchange: vi.fn().mockResolvedValue(grant),
     bootstrap: vi.fn(),
+    locate: vi.fn(),
+    withdrawWish: vi.fn(),
     revoke: vi.fn().mockResolvedValue({
       schemaVersion: 1,
       outcome: "SUCCESS",
@@ -275,4 +278,119 @@ it("suspension clears private details but preserves a pending close operation ac
   await controller.resume();
   expect(controller.snapshot().revoked).toBe(true);
   expect(api.revoke).toHaveBeenCalledTimes(2);
+});
+
+it("locates a public number without reading or rotating access and reports denial", async () => {
+  const loaded = await load();
+  expect(loaded?.createOrderController).toBeTypeOf("function");
+  if (!loaded) return;
+  const api = transport();
+  api.locate
+    .mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      action: "LOCATED",
+      publicOrderId: id,
+    })
+    .mockResolvedValueOnce(denied);
+  const controller = loaded.createOrderController(() => api);
+  expect(await controller.locate("FS-7K3M9C")).toBe(id);
+  expect(controller.snapshot()).toMatchObject({ busy: false, error: null });
+  expect(await controller.locate("FS-7K3M9C")).toBeNull();
+  expect(controller.snapshot()).toMatchObject({
+    busy: false,
+    error: "ACCESS_DENIED",
+    order: null,
+  });
+  expect(api.locate).toHaveBeenCalledWith("FS-7K3M9C");
+  expect(api.read).not.toHaveBeenCalled();
+  expect(api.exchange).not.toHaveBeenCalled();
+});
+
+it("withdraws only a shown public wish and keeps the order visible on recoverable errors", async () => {
+  const { createOrderController } = (await load())!;
+  const api = transport();
+  const entryId = "20000000-0000-4000-8000-000000000001";
+  const wishSupport = {
+    visibility: "PUBLIC_ANONYMOUS",
+    entryId,
+    supportedAt: "2026-10-01T00:00:00Z",
+    withdrawn: false,
+    revoked: false,
+  };
+  const order = {
+    ...orderTestDetail,
+    items: [{ ...orderTestDetail.items[0], giftKind: "WISH", wishSupport }],
+  };
+  api.read.mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    action: "READ",
+    order,
+  });
+  api.withdrawWish
+    .mockResolvedValueOnce({ schemaVersion: 1, outcome: "UNKNOWN" })
+    .mockResolvedValueOnce({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      withdrawn: { schemaVersion: 1, entryId, withdrawn: true },
+    });
+  const controller = createOrderController(() => api);
+  expect(await controller.withdrawWish(entryId)).toBe(false);
+  await controller.read(id);
+  expect(await controller.withdrawWish(other)).toBe(false);
+  expect(api.withdrawWish).not.toHaveBeenCalled();
+  expect(await controller.withdrawWish(entryId)).toBe(false);
+  expect(controller.snapshot().order).toEqual(order);
+  expect(await controller.withdrawWish(entryId)).toBe(true);
+  expect(api.withdrawWish).toHaveBeenLastCalledWith(id, entryId);
+  expect(controller.snapshot().order?.items[0]).toMatchObject({
+    wishSupport: { withdrawn: true },
+  });
+  expect(await controller.withdrawWish(entryId)).toBe(false);
+  expect(api.withdrawWish).toHaveBeenCalledTimes(2);
+});
+it("ignores a withdrawal response after the order session is suspended", async () => {
+  const { createOrderController } = (await load())!;
+  const api = transport();
+  const entryId = "20000000-0000-4000-8000-000000000001";
+  api.read.mockResolvedValue({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    action: "READ",
+    order: {
+      ...orderTestDetail,
+      items: [
+        {
+          ...orderTestDetail.items[0],
+          giftKind: "WISH",
+          wishSupport: {
+            visibility: "PUBLIC_ANONYMOUS",
+            entryId,
+            supportedAt: "2026-10-01T00:00:00Z",
+            withdrawn: false,
+            revoked: false,
+          },
+        },
+      ],
+    },
+  });
+  let done!: (reply: unknown) => void;
+  api.withdrawWish.mockImplementationOnce(
+    () =>
+      new Promise((resolve) => {
+        done = resolve;
+      }),
+  );
+  const controller = createOrderController(() => api);
+  await controller.read(id);
+  const withdrawing = controller.withdrawWish(entryId);
+  controller.suspend();
+  done({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    withdrawn: { schemaVersion: 1, entryId, withdrawn: true },
+  });
+  expect(await withdrawing).toBe(false);
+  expect(controller.snapshot().order).toBeNull();
 });

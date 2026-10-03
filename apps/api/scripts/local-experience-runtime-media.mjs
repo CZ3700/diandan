@@ -1,4 +1,6 @@
 import {
+  createDeliveryProofProcessor,
+  createDeliveryProofReader,
   createMediaSourceInspector,
   createMediaImageProcessor,
 } from "@fan-support/media-image";
@@ -18,7 +20,8 @@ export function createLocalExperienceMedia({ config, s3 }) {
     authentication: {
       mode: "static",
       endpoint: s3.endpoint,
-      presignEndpoint: s3.endpoint,
+      // Browsers and the processor use the public presign host; SDK calls stay on loopback.
+      presignEndpoint: s3.presignEndpoint ?? s3.endpoint,
       accessKeyId: s3.accessKeyId,
       secretAccessKey: s3.secretAccessKey,
       forcePathStyle: true,
@@ -28,5 +31,11 @@ export function createLocalExperienceMedia({ config, s3 }) {
     storage,
     inspector: createMediaSourceInspector({ storage, now: () => new Date() }),
     processor: createMediaImageProcessor({ storage, now: () => new Date() }),
+    // Private delivery photos stay in the SOURCE bucket (V2 §4-6).
+    proofProcessor: createDeliveryProofProcessor({
+      storage,
+      now: () => new Date(),
+    }),
+    proofReader: createDeliveryProofReader({ storage, now: () => new Date() }),
   };
 }

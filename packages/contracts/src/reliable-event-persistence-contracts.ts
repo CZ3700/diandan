@@ -599,6 +599,9 @@ export const loadOutboxDispatchContextResponseSchema = z
     let expectedSecondarySubjectId: string | undefined;
     let requiresContentRevisionSubject = false;
     switch (event.eventType) {
+      case "INFORMATION_PAGE_PUBLICATION_CHANGED":
+        expectedPrimarySubjectId = event.payload.informationPagePublicationId;
+        break;
       case "CART_ITEM_ADDED":
         expectedPrimarySubjectId = event.payload.cartId;
         expectedSecondarySubjectId = event.payload.cartItemId;

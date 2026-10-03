@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vitest";
 
@@ -77,7 +78,31 @@ describe("Media", () => {
       />,
     );
 
-    expect(markup).toContain("object-position:100% 0%");
+    // The focus lives on the frame: in-app browsers (WeChat) overwrite <img style> before
+    // hydration, which must neither lose the focus nor raise a hydration mismatch.
+    expect(markup).toContain("--fs-media-focus:100% 0%");
+    expect(markup).toContain('data-media-focus="true"');
+    expect(markup).not.toMatch(/<img[^>]+style=/u);
+    const frame = MediaFrame({
+      alternative,
+      failed: false,
+      focalPoint: { x: 1, y: 0 },
+      height: 5,
+      src: "https://media.example.test/portrait.avif",
+      width: 4,
+    }) as ReactElement<{ children: ReactElement<Record<string, unknown>> }>;
+    expect(frame.props.children.props["suppressHydrationWarning"]).toBe(true);
+    expect(
+      renderToStaticMarkup(
+        <MediaFrame
+          alternative={alternative}
+          failed={false}
+          height={5}
+          src="https://media.example.test/portrait.avif"
+          width={4}
+        />,
+      ),
+    ).not.toContain("data-media-focus");
     expect(() =>
       renderToStaticMarkup(
         <MediaFrame

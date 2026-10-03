@@ -31,6 +31,7 @@ const media = {
 export const orderTestDetail = orderAccessDetailSchema.parse({
   schemaVersion: 1,
   publicOrderId: orderTestId,
+  publicOrderNo: "FS-7K3M9C",
   presentationLocale: "en",
   orderStatus: "OPEN",
   paymentStatus: "PAID",
@@ -70,7 +71,10 @@ export const orderTestDetail = orderAccessDetailSchema.parse({
       lineTotalMinor: 100,
       currency: "USD",
       displayMode: "anonymous",
+      giftKind: "PHYSICAL",
       fulfillmentStatus: "PENDING",
+      deliveryProofs: [],
+      supportCertificate: null,
     },
   ],
   createdAt: "2026-09-01T00:00:00Z",

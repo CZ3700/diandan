@@ -29,6 +29,7 @@ afterEach(() => {
 });
 
 test("starts Node telemetry only in the Node.js runtime", async () => {
+  vi.stubEnv("FAN_SUPPORT_ADMIN_MODE", undefined);
   const telemetry = { shutdown: vi.fn() };
   const startNodeTelemetry = vi.fn(() => telemetry);
   const createStructuredLogger = vi.fn(() => ({ error: vi.fn() }));
@@ -63,6 +64,7 @@ test("starts Node telemetry only in the Node.js runtime", async () => {
 });
 
 test("does not load Node observability outside the Node.js runtime", async () => {
+  vi.stubEnv("FAN_SUPPORT_ADMIN_MODE", "invalid-mode");
   const startNodeTelemetry = vi.fn();
   const createStructuredLogger = vi.fn(() => ({ error: vi.fn() }));
   const installSafeConsoleErrorBoundary = vi.fn();
@@ -139,3 +141,35 @@ test("logs a fixed safe event without reading the original request error", async
   });
   expect(JSON.stringify(error.mock.calls)).not.toContain(canary);
 });
+
+test.each(["staging", "production"])(
+  "invalid %s OIDC configuration fails before the server starts telemetry or handles requests",
+  async (tier) => {
+    const startNodeTelemetry = vi.fn();
+    vi.doMock("@fan-support/observability/node", () => ({
+      startNodeTelemetry,
+      installTelemetrySignalExitBoundary: vi.fn(),
+    }));
+    vi.doMock("@fan-support/observability", () => ({
+      createStructuredLogger: vi.fn(() => ({ error: vi.fn() })),
+      installSafeConsoleErrorBoundary: vi.fn(),
+    }));
+    vi.stubEnv("NEXT_RUNTIME", "nodejs");
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("FAN_SUPPORT_DEPLOYMENT_ENV", tier);
+    vi.stubEnv("FAN_SUPPORT_ADMIN_MODE", "OIDC");
+    vi.stubEnv("FAN_SUPPORT_SITE_ORIGIN", "https://admin.example.invalid");
+    vi.stubEnv(
+      "FAN_SUPPORT_INTERNAL_API_ORIGIN",
+      "https://api.example.invalid",
+    );
+    vi.stubEnv("FAN_SUPPORT_ADMIN_ACCESS_KEY", "PRIVATE_CONFIG_CANARY");
+    vi.stubEnv("FAN_SUPPORT_ADMIN_OIDC_ISSUER", undefined);
+    const { register } = await loadInstrumentationModule();
+    await expect(register()).rejects.toMatchObject({
+      code: "CONFIG_INVALID",
+      message: expect.not.stringContaining("PRIVATE_CONFIG_CANARY"),
+    });
+    expect(startNodeTelemetry).not.toHaveBeenCalled();
+  },
+);

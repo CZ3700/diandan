@@ -6,7 +6,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { setTimeout } from "node:timers";
 import { fileURLToPath } from "node:url";
-import { Client, Pool } from "pg";
+import { Client } from "pg";
 import { withNativeFinancePostgres } from "../../../apps/api/scripts/admin-finance-native-postgres.mjs";
 import {
   loadMigrationManifest,
@@ -14,7 +14,7 @@ import {
   withEphemeralPostgres,
 } from "../dist/index.js";
 import { runMigrationCommandOnSession } from "../dist/migrations/runner.js";
-import { createPostgresPersistenceWithPoolFactory } from "../dist/postgres-persistence.js";
+import { createPostgresPersistence } from "../dist/postgres-persistence.js";
 import { createProcessWebhookInbox } from "../../application/dist/process-webhook-inbox.js";
 const root = path.resolve(
     path.dirname(fileURLToPath(import.meta.url)),
@@ -44,12 +44,20 @@ const harness = args.includes("--native-bin")
 try {
   await harness(async (database) => {
     const client = new Client(database);
+    // A failed step leaves this connection open while the harness stops the
+    // server; its 57P01 must not hide the step's own error reported below.
+    client.on("error", () => {});
     await client.connect();
     const session = {
       query: async (text, values = []) => client.query(text, [...values]),
     };
     const manifests = await loadMigrationManifest({ workspaceRoot: root });
-    await runMigrationCommandOnSession(session, manifests, { direction: "up" });
+    // The runner only rolls back the applied head, so the 0037 round trip runs
+    // while 0037 is the head and the suite then continues on the current schema.
+    await runMigrationCommandOnSession(session, manifests, {
+      direction: "up",
+      targetVersion: "0037",
+    });
     check(
       (
         await client.query(
@@ -64,7 +72,7 @@ try {
           rows: (await client.query(text, [...values])).rows,
         }),
       });
-    const before = await capture();
+    const at0037 = await capture();
     await runMigrationCommandOnSession(session, manifests, {
       direction: "down",
       confirmVersion: "0037",
@@ -74,9 +82,16 @@ try {
       targetVersion: "0037",
     });
     check(
-      JSON.stringify(before) === JSON.stringify(await capture()),
+      JSON.stringify(at0037) === JSON.stringify(await capture()),
       "0037 up/down/up identical catalog",
     );
+    await runMigrationCommandOnSession(session, manifests, { direction: "up" });
+    const head = (
+      await client.query(
+        "SELECT max(version) AS version FROM schema_migrations",
+      )
+    ).rows[0].version;
+    const before = await capture();
     if (args.includes("--write-catalog"))
       await writeFile(
         path.join(root, "database/schema/expected-catalog.json"),
@@ -94,12 +109,7 @@ try {
         ),
       "current schema matches reviewed catalog",
     );
-    const make = () =>
-      createPostgresPersistenceWithPoolFactory(
-        database,
-        {},
-        (cfg) => new Pool(cfg),
-      );
+    const make = () => createPostgresPersistence(database, {});
     let first = make();
     const second = make();
     const tx = (work, p = first) =>
@@ -591,16 +601,24 @@ try {
       );
       await client.query("COMMIT");
       failure(await run(secondCmd), "UNAUTHENTICATED");
-      let blocked = false;
+      // Later migrations keep the runner from reaching 0037, so its own down SQL
+      // is probed directly for the recovery-history guard.
+      let refusal;
+      await client.query("BEGIN");
       try {
-        await runMigrationCommandOnSession(session, manifests, {
-          direction: "down",
-          confirmVersion: "0037",
-        });
-      } catch {
-        blocked = true;
+        await client.query(
+          manifests.find((row) => row.version === "0037").down.sql,
+        );
+      } catch (error) {
+        refusal = { code: error.code, message: error.message };
+      } finally {
+        await client.query("ROLLBACK");
       }
-      check(blocked, "downgrade refuses permanent recovery history");
+      check(
+        refusal?.code === "55000" &&
+          refusal.message === "exception recovery history cannot be downgraded",
+        "downgrade refuses permanent recovery history",
+      );
       check(
         (
           await client.query(
@@ -608,6 +626,14 @@ try {
           )
         ).rows[0].total === 3,
         "receipts survive guarded downgrade",
+      );
+      check(
+        (
+          await client.query(
+            "SELECT max(version) AS version FROM schema_migrations",
+          )
+        ).rows[0].version === head,
+        "the guarded downgrade leaves the registered head in place",
       );
     } finally {
       await first.close();

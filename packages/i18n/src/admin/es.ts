@@ -17,7 +17,7 @@ export default {
   giftType: "Tipo de regalo",
   kindVirtual: "Regalo virtual",
   kindPhysical: "Regalo físico",
-  kindWish: "Regalo de deseos",
+  kindWish: "Regalo deseado",
   kindMerchandise: "Artículos de colección",
   kindOther: "Otro regalo",
   inventoryPolicy: "Política de venta",
@@ -28,7 +28,8 @@ export default {
     "No requiere existencias. El estudio prepara cada pedido pagado.",
   trackedHint:
     "Solo se venden unidades sin reservar. Los ajustes requieren un motivo.",
-  preorderHint: "Indica cómo se preparará la preventa y cuándo se entregará.",
+  preorderHint:
+    "Indica una estimación clara de preparación y entrega para las preventas.",
   studioDelivery: "El estudio prepara y entrega el regalo al artista.",
   variants: "Variantes",
   variantLabel: "Nombre de variante",
@@ -100,10 +101,10 @@ export default {
   listStyle: "Estilo de lista",
   ordered: "Numerada",
   unordered: "Con viñetas",
-  captionEnabled: "Incluir pie de foto",
+  captionEnabled: "Incluir pie de imagen",
   detailsReview: "Revisar detalles",
   emptyDetails: "Aún no hay bloques.",
-  noPrices: "No hay lista para este mercado y moneda.",
+  noPrices: "No hay lista de precios para este mercado y moneda.",
   noInventory: "No se ha creado saldo de existencias.",
   savedCommercial: "Cambios guardados.",
   workspace: "Espacio de contenido",
@@ -244,6 +245,5 @@ export default {
   changedFields: "Campos modificados",
   copyScope: "Guardar esta revisión requiere acceso a otros idiomas.",
   localPreview: "Vista local de administración",
-  reviewPending: "Las traducciones de interfaz esperan aprobación humana.",
   openGenerated: "Editar imagen generada",
 } as const;

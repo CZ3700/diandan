@@ -19,16 +19,22 @@ function expectedDirectory(fixtures, scope, query) {
       .filter((artist) => artist.acceptingGifts)
       .map((artist) => artist.id),
   );
+  // SPEC 6.3.0: the fixture binds no wish, so its WISH gifts list without an offer and
+  // no artist filter includes them.
+  const unboundWish = (gift) => gift.giftKind === "WISH";
   const items = fixtures.gifts
     .filter((gift) => ["active", "paused"].includes(gift.status))
     .filter(
       (gift) =>
         !query.idol ||
-        gift.variants.some((variant) => variant.eligible.includes(query.idol)),
+        (!unboundWish(gift) &&
+          gift.variants.some((variant) =>
+            variant.eligible.includes(query.idol),
+          )),
     )
     .map((gift) => {
       const prices =
-        gift.status !== "active"
+        gift.status !== "active" || unboundWish(gift)
           ? []
           : gift.variants
               .filter(
@@ -274,17 +280,17 @@ export async function verifyGiftStorefrontProtocol({
     giftDirectoryResponseSchema,
     400,
   );
+  // A deleted (archived) gift is gone, not temporarily unavailable (1717eda0), and an
+  // unpublished draft has no public head: both answer NOT_FOUND.
   for (const gift of fixtures.gifts.slice(25)) {
     const unavailable = await get(
       `/api/v1/gift-content/${gift.handle}?locale=en`,
       publishedGiftCommerceResponseSchema,
-      gift.status === "archived" ? 503 : 404,
+      404,
     );
     check(
-      unavailable.outcome === "FAILURE" &&
-        unavailable.code ===
-          (gift.status === "archived" ? "CONTENT_UNAVAILABLE" : "NOT_FOUND"),
-      "archived published owner fails current proof closed and unpublished draft has no public head",
+      unavailable.outcome === "FAILURE" && unavailable.code === "NOT_FOUND",
+      "deleted published gift and unpublished draft both have no public content",
     );
   }
   check(

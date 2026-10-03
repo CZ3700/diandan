@@ -13,11 +13,13 @@ const events: readonly OrderNotificationEventType[] = [
   "DELIVERED",
 ];
 const publicOrderId = "71000000-0000-4000-8000-000000000001";
+const publicOrderNo = "FS-7K3M9C";
 const rawToken = "A".repeat(43);
 const variables = {
   schemaVersion: 1 as const,
   siteName: "Studio Preview",
   publicOrderId,
+  publicOrderNo,
   orderedAt: "2026-09-15T23:30:00-07:00",
   currency: "USD",
   totalMinor: 12345,
@@ -86,7 +88,7 @@ it("renders all three events completely in all seven locales with original snaps
   for (const locale of SUPPORTED_LOCALES)
     for (const event of events) {
       const selection = templates.select(event, locale);
-      expect(selection.templateVersion).toMatch(/^v1\.[a-f0-9]{64}$/u);
+      expect(selection.templateVersion).toMatch(/^v3\.[a-f0-9]{64}$/u);
       expect(selection).toMatchObject({
         requestedLocale: locale,
         resolvedLocale: locale,
@@ -99,7 +101,7 @@ it("renders all three events completely in all seven locales with original snaps
       expect(content.html).toContain('lang="ja"');
       expect(content.html).toContain('lang="zh-CN"');
       expect(content.html).toContain("鲜花与心意");
-      expect(content.text).toContain(publicOrderId);
+      expect(content.text).toContain(publicOrderNo);
       expect(content.text).toContain("123");
       expect(content.subject + content.preheader + content.text).not.toMatch(
         /\{\w+\}/u,
@@ -108,17 +110,95 @@ it("renders all three events completely in all seven locales with original snaps
     }
 });
 
-it("blocks all draft production templates including English incident fallback", async () => {
+it("marks digital support lines and adds the support-record note only when a VIRTUAL line exists", async () => {
   const { createOrderNotificationTemplates } = await api();
-  expect(() => createOrderNotificationTemplates({ mode: "APPROVED" })).toThrow(
-    "NOTIFICATION_TEMPLATES_UNAPPROVED",
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  for (const locale of SUPPORTED_LOCALES) {
+    const selection = templates.select("PAYMENT_CONFIRMED", locale);
+    const studio = templates.render(
+      command(selection, {
+        items: [{ ...variables.items[0], giftKind: "PHYSICAL" }],
+      }),
+    );
+    expect(studio.html).not.toContain("data-mail-digital");
+    const mixed = templates.render(
+      command(selection, {
+        items: [
+          { ...variables.items[0], giftKind: "VIRTUAL" },
+          { ...variables.items[0], giftName: "Studio gift", giftKind: null },
+        ],
+      }),
+    );
+    expect(mixed.html.match(/data-mail-digital-note/gu)).toHaveLength(1);
+    expect(mixed.html.match(/data-mail-digital\s/gu)).toHaveLength(1);
+    expect(mixed.text).not.toContain("undefined");
+    expect(mixed.text.length).toBeGreaterThan(studio.text.length);
+    expect(mixed.subject).toBe(studio.subject);
+  }
+});
+
+it("shows the public order number and keeps the UUID only inside the link", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  for (const locale of SUPPORTED_LOCALES) {
+    const selection = templates.select("PREPARING", locale);
+    const content = templates.render(command(selection));
+    expect(content.html).toMatch(
+      new RegExp(`data-mail-order[^>]*>${publicOrderNo}</div>`, "u"),
+    );
+    const withoutLink = (value: string) =>
+      value
+        .replaceAll(variables.orderUrl.replaceAll("&", "&amp;"), "")
+        .replaceAll(variables.orderUrl, "");
+    expect(withoutLink(content.html)).not.toContain(publicOrderId);
+    expect(withoutLink(content.text)).not.toContain(publicOrderId);
+    expect(() =>
+      templates.render(command(selection, { publicOrderNo: null })),
+    ).toThrow("NOTIFICATION_VARIABLES_INVALID");
+  }
+});
+
+it("still renders archived v1 selections byte-for-byte without a gift kind", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const { templateVersionV1, eventTemplateKeys } =
+    await import("./v1/identity.js");
+  const templates = createOrderNotificationTemplates({ mode: "TEST_DRAFT" });
+  const archived = command({
+    eventType: "DELIVERED",
+    requestedLocale: "th",
+    resolvedLocale: "th",
+    fallbackUsed: false,
+    templateKey: eventTemplateKeys.DELIVERED,
+    templateVersion: templateVersionV1("DELIVERED"),
+  });
+  const content = templates.render(archived);
+  expect(content.html).toContain('<html lang="th">');
+  // v1 predates public numbers: it keeps showing the UUID it was reviewed with.
+  expect(content.text).toContain(`: ${publicOrderId}`);
+  expect(
+    templates.render({
+      ...archived,
+      variables: { ...archived.variables, publicOrderNo: null },
+    }).text,
+  ).toBe(content.text);
+  expect(content.html).not.toContain("data-mail-digital");
+  expect(templates.select("DELIVERED", "th").templateVersion).not.toBe(
+    archived.locale.templateVersion,
+  );
+});
+
+it("allows real sends once the current templates carry exact approved evidence, including English incident fallback", async () => {
+  const { createOrderNotificationTemplates } = await api();
+  const approved = createOrderNotificationTemplates({ mode: "APPROVED" });
+  expect(approved.select("PAYMENT_CONFIRMED", "th").templateVersion).toMatch(
+    /^v3\./u,
   );
   expect(() =>
     createOrderNotificationTemplates({
       mode: "APPROVED",
       incidentFallbackLocales: ["ja"],
     }),
-  ).toThrow("NOTIFICATION_TEMPLATES_UNAPPROVED");
+  ).not.toThrow();
 });
 
 it("falls back as one whole English template and keeps replay independent of current incident configuration", async () => {
@@ -216,8 +296,8 @@ it("uses the real order date in UTC, deterministic bytes, and a one-time latest-
   const content = templates.render(frozen);
   expect(content.text).toContain("Sep 16, 2026");
   expect(content.text).toContain("UTC");
-  expect(content.text).toContain("one-time");
-  expect(content.text).toContain("latest notification");
+  expect(content.text).toContain("works once");
+  expect(content.text).toContain("use the link in the most recent one");
   expect(content.text).not.toMatch(
     /settled|estimated|arrive|delivered at|prepared at/iu,
   );
@@ -287,8 +367,8 @@ it("omits a remainder notice for ten or fewer items and handles the singular ele
   const eleven = templates.render(
     command(selection, { items: [...items, variables.items[0]] }),
   );
-  expect(eleven.text).toContain("1 more item");
-  expect(eleven.text).toContain("complete order");
+  expect(eleven.text).toContain("1 more gift");
+  expect(eleven.text).toContain("full order");
 });
 
 it("describes historical events without promising the order's current readiness", async () => {
@@ -302,7 +382,9 @@ it("describes historical events without promising the order's current readiness"
   const preparing = templates.render(
     command(templates.select("PREPARING", "en")),
   );
-  expect(preparing.subject).toContain("preparation started");
-  expect(preparing.preheader).toContain("has started");
-  expect(preparing.text).not.toContain("is preparing");
+  expect(preparing.subject).toContain("has started preparing");
+  expect(preparing.text).toContain("has started preparing");
+  expect(
+    preparing.subject + preparing.preheader + preparing.text,
+  ).not.toContain("is preparing");
 });

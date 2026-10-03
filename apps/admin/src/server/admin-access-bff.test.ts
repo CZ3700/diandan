@@ -115,7 +115,7 @@ test("login begins with a private API request and a browser-bound Secure cookie,
   expect(response.status).toBe(200);
   expect(response.headers.get("location")).toBeNull();
   const cookies = response.headers.getSetCookie();
-  expect(cookies).toHaveLength(1);
+  expect(cookies).toHaveLength(2);
   expect(cookies[0]).toContain(`__Host-fan-admin-login=${browserToken}`);
   for (const flag of [
     "Secure",
@@ -145,7 +145,7 @@ test("login begins with a private API request and a browser-bound Secure cookie,
   expect(init).toMatchObject({ cache: "no-store", redirect: "error" });
   assertPrivate(response);
 });
-test("failed login start clears only the binding and returns a generic retryable failure", async () => {
+test("failed login start clears login binding and language hint and returns a generic retryable failure", async () => {
   const { bff, fetcher } = await setup();
   fetcher.mockRejectedValue(new Error("private-provider-detail"));
   const response = await bff.begin(begin());
@@ -156,7 +156,7 @@ test("failed login start clears only the binding and returns a generic retryable
     outcome: "FAILURE",
     code: "ACCESS_UNAVAILABLE",
   });
-  expect(response.headers.getSetCookie()).toHaveLength(1);
+  expect(response.headers.getSetCookie()).toHaveLength(2);
   expect(response.headers.getSetCookie()[0]).toContain(
     "__Host-fan-admin-login=; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age=0",
   );
@@ -200,7 +200,7 @@ test("callback binds the browser cookie and optional issuer, then rotates both s
     state,
   });
   const cookies = response.headers.getSetCookie();
-  expect(cookies).toHaveLength(3);
+  expect(cookies).toHaveLength(4);
   for (const name of ["session", "csrf"]) {
     const cookie = cookies.find((value) =>
       value.startsWith(`__Host-fan-admin-${name}=`),
@@ -228,7 +228,7 @@ test.each([
     const { bff, fetcher } = await setup(sessionResult);
     const response = await bff.callback(callback(query));
     expect(response.headers.get("location")).toBe(`${origin}/en?login=failed`);
-    expect(response.headers.getSetCookie()).toHaveLength(1);
+    expect(response.headers.getSetCookie()).toHaveLength(2);
     expect(response.headers.getSetCookie()[0]).toContain("Max-Age=0");
     expect(fetcher).not.toHaveBeenCalled();
     expect(await response.text()).toBe("");
@@ -292,7 +292,7 @@ test("logout revokes on API with bound CSRF before clearing cookies", async () =
     csrfToken,
     revokeAll: false,
   });
-  expect(response.headers.getSetCookie()).toHaveLength(3);
+  expect(response.headers.getSetCookie()).toHaveLength(4);
   expect(
     response.headers
       .getSetCookie()

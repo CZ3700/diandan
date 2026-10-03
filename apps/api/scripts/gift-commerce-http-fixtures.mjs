@@ -4,7 +4,7 @@ import {
   createCatalogDirectoryUseCases,
   createPublishedGiftCommerceUseCases,
 } from "@fan-support/application";
-import { createTestGiftCommerceComposition } from "../dist/gift-commerce-composition.js";
+import { createTestGiftCommerceComposition } from "../dist/testing/gift-commerce-composition.js";
 import { seedGiftCommerceMarket } from "../../../packages/persistence-postgres/scripts/postgres-gift-commerce-fixtures.mjs";
 import { workspaceTranslations } from "./admin-workspace-fixtures.mjs";
 import { verifyGiftCommerceBrowser } from "./gift-commerce-browser.mjs";
@@ -284,7 +284,8 @@ async function prepare({
     "content/save",
     {
       expectedBaseVersion: gift.gift.version,
-      giftKind: "WISH",
+      // A plain kind: since SPEC 6.3.0 a WISH sells only once bound to its one artist.
+      giftKind: "PHYSICAL",
       authoring: {
         schemaVersion: 1,
         action: "CREATE",
@@ -302,7 +303,7 @@ async function prepare({
   );
   gift = await readGift(giftId);
   check(
-    gift.latestProfile?.profile.giftKind === "WISH" &&
+    gift.latestProfile?.profile.giftKind === "PHYSICAL" &&
       gift.selectedRevisionId === revisionId,
     "current profile binds actual new revision",
   );
@@ -433,7 +434,7 @@ async function prepare({
       gift.gift.publishedRevisionId === revisionId,
     "first publication activates completely new gift",
   );
-  async function publicGift(locale = "en", kind = "WISH", id = revisionId) {
+  async function publicGift(locale = "en", kind = "PHYSICAL", id = revisionId) {
     const response = await globalThis.fetch(
       `${base}/api/v1/gift-content/studio-wish?locale=${locale}`,
     );
@@ -659,7 +660,7 @@ async function prepare({
     },
     "manager",
   );
-  await publicGift("en", "WISH", revisionId);
+  await publicGift("en", "PHYSICAL", revisionId);
   await offer(1500);
   gift = await readGift(giftId);
   await mutate("gifts/status", {
@@ -759,7 +760,7 @@ async function prepare({
     importedGift.selectedProfile.profile.giftKind === "VIRTUAL",
     "actual translation IMPORT preserves exact source classification",
   );
-  await publicGift("en", "WISH", revisionId);
+  await publicGift("en", "PHYSICAL", revisionId);
   fixtures.commerce = {
     configured,
     giftId,

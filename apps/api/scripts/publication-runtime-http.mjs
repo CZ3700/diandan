@@ -33,11 +33,11 @@ import {
 } from "@fan-support/persistence-postgres";
 import { createPostgresPersistenceWithPoolFactory } from "../../../packages/persistence-postgres/dist/postgres-persistence.js";
 import { createApiApplication } from "../dist/bootstrap.js";
-import { createTestPublicationRuntimeComposition } from "../dist/publication-runtime-composition.js";
-import { createTestPublicationPreflightComposition } from "../dist/publication-preflight-composition.js";
-import { createTestContentAuthoringComposition } from "../dist/content-authoring-composition.js";
-import { createTestBaseContentComposition } from "../dist/base-content-composition.js";
-import { createTestAdminContentComposition } from "../dist/admin-content-composition.js";
+import { createTestPublicationRuntimeComposition } from "../dist/testing/publication-runtime-composition.js";
+import { createTestPublicationPreflightComposition } from "../dist/testing/publication-preflight-composition.js";
+import { createTestContentAuthoringComposition } from "../dist/testing/content-authoring-composition.js";
+import { createTestBaseContentComposition } from "../dist/testing/base-content-composition.js";
+import { createTestAdminContentComposition } from "../dist/testing/admin-content-composition.js";
 import { createPublicationPurgeWorkerRuntime } from "../../worker/dist/publication-purge-runtime.js";
 import { seedPublicationRuntimeFixtures } from "../../../packages/persistence-postgres/scripts/postgres-publication-runtime-fixtures.mjs";
 import {
@@ -48,7 +48,7 @@ import {
   preflightEnvironment,
   preflightBusinessState,
 } from "./publication-preflight-http-fixtures.mjs";
-import { createTestResourceManagementComposition } from "../dist/resource-management-composition.js";
+import { createTestResourceManagementComposition } from "../dist/testing/resource-management-composition.js";
 import {
   withEphemeralS3,
   runS3IntegrationChild,

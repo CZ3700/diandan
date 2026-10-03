@@ -99,6 +99,10 @@ export async function readCommerceInventory(
   c: GiftCommerceReadCommand,
 ) {
   if (c.action !== "READ_INVENTORY") return commerceFailure("INVALID_COMMAND");
+  await client.query(
+    "SELECT wish_id FROM public.wish_bindings WHERE gift_variant_id=$1 FOR UPDATE",
+    [c.giftVariantId],
+  );
   const [variant] = await draftRows(
     client,
     "SELECT id FROM public.gift_variants WHERE id=$1",

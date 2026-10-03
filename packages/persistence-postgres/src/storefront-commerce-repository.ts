@@ -170,16 +170,20 @@ export function createStorefrontCommerceRepository(
             outcome: "FAILURE",
             code: "MARKET_UNAVAILABLE",
           };
+        const recipientId =
+          "wish" in projected.content.view
+            ? (projected.content.view.wish?.artistId ?? command.idolId)
+            : command.idolId;
         let recipient: Extract<
           StorefrontGiftContextResponse,
           { outcome: "SUCCESS" }
         >["recipient"] = { kind: "NONE" };
-        if (command.idolId !== undefined) {
-          recipient = { kind: "UNAVAILABLE", idolId: command.idolId };
+        if (recipientId !== undefined) {
+          recipient = { kind: "UNAVAILABLE", idolId: recipientId };
           const rows = await draftRows(
             client,
             `SELECT handle FROM public.idols WHERE id=$1`,
-            [command.idolId],
+            [recipientId],
           );
           if (rows.length === 1) {
             const artist = await load(
@@ -193,7 +197,7 @@ export function createStorefrontCommerceRepository(
                 publicArtist.outcome === "SUCCESS" &&
                 publicArtist.content.kind === "IDOL" &&
                 publicArtist.content.view.id.toLowerCase() ===
-                  command.idolId.toLowerCase()
+                  recipientId.toLowerCase()
               )
                 recipient = { kind: "PUBLISHED", context: artist.context };
             }
@@ -206,7 +210,7 @@ export function createStorefrontCommerceRepository(
           ),
           market: command.market,
           currency: command.currency,
-          idolId: command.idolId ?? null,
+          idolId: recipientId ?? null,
         });
         const proven = await verifyStorefrontRecipientWitnesses(
           current.witnesses,

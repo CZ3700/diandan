@@ -9,6 +9,7 @@ import {
   SUPPORTED_LOCALES,
   LOCALE_NATIVE_NAMES,
   storefrontHomepageResponseSchema,
+  publishedContentResponseSchema,
 } from "@fan-support/contracts";
 
 /** No HAR, traces, cookies, signed URLs or request bodies are persisted. */
@@ -347,14 +348,36 @@ export async function createStorefrontBrowserVerifier({
               `${label} ${kind} Content-Language matches globalThis.URL`,
             );
             await images(`${label}-${kind}`);
-            if (kind === "detail")
-              check(
-                (await page.locator(".storefront-story p").count()) > 0 &&
-                  !(
-                    await page.locator(".storefront-story").innerText()
-                  ).includes("<p>"),
-                "published biography renders controlled paragraphs rather than literal tags",
+            if (kind === "detail") {
+              const detailResponse = await globalThis.fetch(
+                `${base}/api/v1/idols/${fixtures.artists[0].handle}?locale=${locale}`,
+                { signal: globalThis.AbortSignal.timeout(30_000) },
               );
+              const detail = publishedContentResponseSchema.parse(
+                await detailResponse.json(),
+              );
+              check(
+                detailResponse.status === 200 &&
+                  detail.outcome === "SUCCESS" &&
+                  detail.content.kind === "IDOL",
+                "artist description uses actual published public content",
+              );
+              const description = page.locator(
+                ".storefront-artist-hero p[data-artist-description][lang]",
+              );
+              check(
+                (await page.locator("[data-artist-description]").count()) ===
+                  1 &&
+                  (await description.count()) === 1 &&
+                  (await description.textContent()).trim() ===
+                    detail.content.view.shortBio.trim() &&
+                  (await description.getAttribute("lang")) ===
+                    detail.content.view.localeContext.resolvedLocale &&
+                  !(await description.textContent()).includes("<p>") &&
+                  (await page.locator(".storefront-story").count()) === 0,
+                "the unique top description renders the actual localized short biography without duplicating rich story paragraphs",
+              );
+            }
             if (kind === "home")
               check(
                 (await page
@@ -386,45 +409,33 @@ export async function createStorefrontBrowserVerifier({
         "SSR delivers first real artist window with crawlable hrefs without JavaScript",
       );
       await noScript.close();
-      step = "homepage search locates a distant actual artist";
-      await goto("/en?market=GLOBAL&currency=USD#artists");
-      await page.locator("[data-artist-search]").fill(fixtures.target.name);
+      // The homepage search sits under the artist section title (L2-13): a picked result
+      // opens the artist; anchoring and language restore stay on /idols, covered below.
+      step = "homepage artist search opens a distant actual artist";
+      await goto("/en?market=GLOBAL&currency=USD");
+      check(
+        (await page.locator("[data-artist-search]").count()) === 1 &&
+          (await page.locator("#artists [data-artist-search]").count()) === 1,
+        "homepage offers exactly one artist search, under the artist title",
+      );
+      await page
+        .locator("#artists [data-artist-search]")
+        .fill(fixtures.target.name);
       await page
         .locator(`[data-artist-result="${fixtures.target.id}"]`)
         .waitFor();
+      await screenshot("en-home-artist-search.png");
       await page
         .locator(`[data-artist-result="${fixtures.target.id}"]`)
         .click();
-      await page.waitForFunction(
-        (id) =>
-          globalThis.document.activeElement?.getAttribute(
-            "data-artist-link",
-          ) === id,
-        fixtures.target.id,
+      await page.waitForURL(
+        (url) => url.pathname === `/en/idols/${fixtures.target.handle}`,
       );
       check(
-        new globalThis.URL(page.url()).pathname === "/en" &&
-          new globalThis.URL(page.url()).searchParams.get("anchorId") ===
-            fixtures.target.id,
-        "homepage retains its route while focusing the actual distant artist window",
-      );
-      await screenshot("en-home-search-anchor.png");
-      await page.locator(".storefront-desktop-language button").click();
-      await page
-        .getByRole("menuitemradio", {
-          name: LOCALE_NATIVE_NAMES["zh-CN"],
-          exact: true,
-        })
-        .click();
-      await page.waitForURL((url) => url.pathname === "/zh-CN");
-      await page
-        .locator(`[data-artist-link="${fixtures.target.id}"]`)
-        .waitFor();
-      check(
-        new globalThis.URL(page.url()).searchParams.get("anchorId") ===
-          fixtures.target.id &&
+        new globalThis.URL(page.url()).searchParams.get("market") ===
+          "GLOBAL" &&
           new globalThis.URL(page.url()).searchParams.get("currency") === "USD",
-        "homepage language navigation restores the actual anchored artist and independent currency context",
+        "homepage hero search opens the actual artist with the independent commerce context",
       );
       await goto(
         "/en/idols?market=GLOBAL&currency=USD&gift=rose-palace#artists",

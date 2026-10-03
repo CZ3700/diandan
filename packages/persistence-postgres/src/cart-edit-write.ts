@@ -1,3 +1,4 @@
+import { writeCartWishGalleryPreference } from "./wish-gallery-preference.js";
 import type { CartEditWriteMutationCommand } from "@fan-support/contracts";
 import {
   cartEditEncryptedBytes,
@@ -87,6 +88,11 @@ export async function writeCartMutation(
         receipt.occurredAt,
       ],
     );
+    if (personal.galleryPreference)
+      await writeCartWishGalleryPreference(client, {
+        cartItemId: command.itemId,
+        preference: personal.galleryPreference,
+      });
   } else if (change.kind === "REMOVE") {
     await client.query(
       `UPDATE public.support_intents SET status='CANCELED',version=version+1,updated_at=$2::timestamptz WHERE id=$1::uuid`,

@@ -1,5 +1,42 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  allGifts: "すべて",
+  priceOrder: "価格で並べ替え",
+  priceAscending: "価格の安い順",
+  priceDescending: "価格の高い順",
+  priceUnavailable: "価格未設定",
+  wishArtist: "受け取るアーティスト",
+  wishArtistRequired: "このウィッシュを受け取るアーティストを選んでください。",
+  wishArtistChoose: "このアーティストを選ぶ",
+  wishArtistChange: "別のアーティストを選ぶ",
+  wishArtistLocked: "このウィッシュの受取人は確定しており、変更できません。",
+  wishOnlyOnce:
+    "各ウィッシュは一度だけサポートできます。お支払い確認後に販売を終了します。",
+  wishArtistUnavailable:
+    "このアーティストは現在ウィッシュギフトを受け取れません。",
+  wishAvailable: "サポート受付中",
+  wishReserved: "お支払いを確認中",
+  wishSupported: "サポート済み",
+  wishUnavailable: "受付停止中",
+  interfaceLanguage: "表示言語",
+  discardEdits: "未保存の変更を破棄して、このページを離れますか？",
+  adjustFocus: "画像の焦点を調整",
+  focusHint:
+    "元の写真で残したい被写体を選びます。矢印キーで微調整、Shift + 矢印キーで大きく移動できます。",
+  focusHorizontal: "横方向の焦点",
+  focusVertical: "縦方向の焦点",
+  resetFocus: "焦点をリセット",
+  previewPortrait: "ポートレート",
+  previewDesktop: "パソコン用バナー",
+  previewMobile: "スマートフォン用バナー",
+  previewGift: "ギフト画像",
+  originalLoading: "元の写真を読み込み中…",
+  originalUnavailable:
+    "元の写真を読み込めませんでした。変更は保持されています。再試行してください。",
+  reuploadRequired:
+    "この画像を調整するには、元の写真を再アップロードしてください。",
+  imageUnchanged: "新しい写真を選ぶか焦点を調整してから公開してください。",
+
   login: "ログイン",
   loginHint: "ログインしてアーティスト、ギフト、ポスターを管理します。",
   loginFailed: "ログインできませんでした。もう一度お試しください。",
@@ -22,7 +59,15 @@ export const copy = {
   addAndPublish: "追加して公開",
   upload: "画像を選ぶ",
   changeImage: "画像を変更",
-  imageHint: "JPEG・PNG・WebP。画像の縦横比を保ちます。",
+  imageHint:
+    "JPEG・PNG・WebPに対応。各表示枠いっぱいに合わせて切り抜かれます。",
+  imageBestSize: "推奨サイズは {width} × {height} px 以上です。",
+  imageTipArtist: "顔は画像の上部に配置してください。",
+  imageTipGift: "ギフトは画像の中央に配置してください。",
+  imageTipPoster:
+    "被写体は中央に。スマートフォンでは中央部分のみ表示されます。",
+  imageTooSmall:
+    "この画像は {width} × {height} px で推奨サイズより小さいため、大きな画面ではぼやけて見える場合があります。",
   name: "名前",
   description: "説明",
   price: "価格",
@@ -36,6 +81,7 @@ export const copy = {
   processing: "処理して公開しています…",
   published: "公開済み",
   retry: "再試行",
+  dismiss: "閉じる",
   loadFailed: "一覧を読み込めませんでした。再試行してください。",
   emptyArtists: "最初のアーティストを追加しましょう。",
   emptyGifts: "最初のギフトを追加しましょう。",
@@ -95,4 +141,30 @@ export const copy = {
   archived: "アーカイブ済み",
   imageUnavailable: "画像を表示できません",
   readOnly: "閲覧のみ",
+  deleteTitle: "完全に削除",
+  deleteWarning:
+    "サイトとこの一覧から削除され、元に戻せません。既存の注文の記録はそのまま残ります。",
+  deleteTypeName: "確認のため名前を正確に入力してください",
+  deleteConfirm: "完全に削除",
+  deleted: "削除しました。サイトには表示されなくなりました。",
+  posterDelete: "削除",
+  posterDeleteWarning:
+    "この画像を履歴から削除しますか？元に戻せません。現在のトップ画像には影響しません。",
+  posterDeleteConfirm: "削除する",
+  posterDeleteCancel: "残す",
+  posterDeleted: "画像を削除しました。トップページは変わりません。",
+  assignment: "担当マネージャー",
+  assignmentNone: "未割り当て",
+  assignmentStudio: "未割り当て（スタジオが直接管理）",
+  assignmentAll: "すべてのアーティスト",
+  assignmentFilter: "担当で絞り込む",
+  assignmentInactive: "{name}（停止中）",
+  assignmentImmediate: "ここでの変更はすぐに反映されます。保存は不要です。",
+  assignmentOnCreate: "追加と同時に、このマネージャーの担当になります。",
+  assignmentSaved: "担当を更新しました。",
+  assignmentFailed: "担当を保存できませんでした。もう一度お試しください。",
+  assignmentStale:
+    "ほかの人が担当を変更しました。一覧に戻って開き直してください。",
+  assignmentMissed:
+    "アーティストは追加されましたが、担当が保存されていません。アーティストを開いて担当を選び直してください。",
 } satisfies ManagementCopy;

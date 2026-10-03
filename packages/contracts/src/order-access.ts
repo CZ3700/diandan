@@ -13,11 +13,18 @@ import {
   contentTimestampSchema,
   sourceHashSchema,
 } from "./content-lifecycle.js";
+import {
+  DELIVERY_PROOF_PROFILE,
+  deliveryProofRenditionNameSchema,
+  deliveryProofRenditionSchema,
+} from "./delivery-proof.js";
 import { canonicalRequestIdSchema } from "./envelopes.js";
+import { giftKindSchema } from "./gift-commerce-profile.js";
 import {
   checkoutSessionIdSchema,
   orderIdSchema,
   publicOrderIdSchema,
+  publicOrderNoSchema,
 } from "./identifiers.js";
 import { DEFAULT_LOCALE, supportedLocaleSchema } from "./locale.js";
 import {
@@ -29,6 +36,7 @@ import {
 import { orderPaymentStatusSchema } from "./payment.js";
 import { publicMediaUrlSchema, slugSchema } from "./presentation.js";
 import { paymentRuntimeOriginSchema } from "./payment-runtime-config.js";
+import { wishSupportRecordSchema } from "./wish-gallery.js";
 
 const version = z.literal(1);
 const sessionTtl = z.number().int().min(1).max(86_400);
@@ -71,6 +79,11 @@ export const orderAccessRevokeRequestSchema = z.strictObject({
   schemaVersion: version,
   publicOrderId: publicOrderIdSchema,
 });
+/** Finds the order behind a typed public number; only this browser's order session can answer. */
+export const orderAccessLocateRequestSchema = z.strictObject({
+  schemaVersion: version,
+  publicOrderNo: publicOrderNoSchema,
+});
 export const orderAccessIssueCommandSchema = z.strictObject({
   schemaVersion: version,
   orderId: orderIdSchema,
@@ -103,12 +116,36 @@ export const orderAccessRevokeCommandSchema = z.strictObject({
   ...orderAccessReadCommandSchema.shape,
   ...requestTrace,
 });
+export const orderAccessLocateCommandSchema = z.strictObject({
+  schemaVersion: version,
+  publicOrderNo: publicOrderNoSchema,
+  sessionCandidates: orderAccessCandidatesSchema,
+});
+/** One private delivery photo of this order; the session, not the identifiers, authorizes it. */
+export const orderAccessProofCommandSchema = z.strictObject({
+  schemaVersion: version,
+  publicOrderId: publicOrderIdSchema,
+  proofId: z.uuid(),
+  rendition: deliveryProofRenditionNameSchema,
+  sessionCandidates: orderAccessCandidatesSchema,
+});
+/** Internal: the authorized storage identity handed to the private reader, never to browsers. */
+export const orderAccessProofLocationSchema = z.strictObject({
+  schemaVersion: version,
+  publicOrderId: publicOrderIdSchema,
+  proofId: z.uuid(),
+  rendition: deliveryProofRenditionSchema,
+});
 export const orderAccessGrantSchema = z.strictObject({
   schemaVersion: version,
   publicOrderId: publicOrderIdSchema,
   expiresAt: contentTimestampSchema,
 });
 export const orderAccessRevokedSchema = z.strictObject({
+  schemaVersion: version,
+  publicOrderId: publicOrderIdSchema,
+});
+export const orderAccessLocatedSchema = z.strictObject({
   schemaVersion: version,
   publicOrderId: publicOrderIdSchema,
 });
@@ -158,32 +195,96 @@ export const orderAccessMediaSchema = z.strictObject({
   alt: checkoutText(300),
   locale: orderAccessLocaleSchema,
 });
-export const orderAccessItemSchema = z
+const proofEdge = z
+  .number()
+  .int()
+  .min(1)
+  .max(DELIVERY_PROOF_PROFILE.renditions.display.maxEdge);
+/** Opaque reference only: bytes are served by the session-bound proof route. */
+export const orderAccessDeliveryProofSchema = z
   .strictObject({
-    schemaVersion: version,
-    position: z.number().int().min(1).max(500),
-    idol: z.strictObject({
-      handle: slugSchema,
-      displayName: checkoutText(40),
-      locale: orderAccessLocaleSchema,
-      portrait: orderAccessMediaSchema,
-    }),
-    gift: z.strictObject({
-      title: checkoutText(160),
-      variantLabel: checkoutText(80).nullable(),
-      locale: orderAccessLocaleSchema,
-      image: orderAccessMediaSchema,
-    }),
-    quantity: cartRuntimeQuantitySchema,
-    unitAmountMinor: minorAmountSchema,
-    lineSubtotalMinor: minorAmountSchema,
-    taxAmountMinor: minorAmountSchema,
-    discountAmountMinor: minorAmountSchema,
-    lineTotalMinor: minorAmountSchema,
-    currency: currencySchema,
-    displayMode: z.enum(["anonymous", "nickname"]),
-    fulfillmentStatus: fulfillmentStatusSchema,
+    proofId: z.uuid(),
+    width: proofEdge,
+    height: proofEdge,
+    thumbnailWidth: proofEdge,
+    thumbnailHeight: proofEdge,
   })
+  .refine(
+    (value) =>
+      value.thumbnailWidth <= value.width &&
+      value.thumbnailHeight <= value.height &&
+      Math.max(value.thumbnailWidth, value.thumbnailHeight) <=
+        DELIVERY_PROOF_PROFILE.renditions.thumbnail.maxEdge,
+  );
+export const orderAccessSupportCertificateSchema = z.strictObject({
+  deliveredAt: contentTimestampSchema,
+  revoked: z.boolean(),
+});
+const legacyOrderAccessItemSchema = z.strictObject({
+  schemaVersion: version,
+  position: z.number().int().min(1).max(500),
+  idol: z.strictObject({
+    handle: slugSchema,
+    displayName: checkoutText(40),
+    locale: orderAccessLocaleSchema,
+    portrait: orderAccessMediaSchema,
+  }),
+  gift: z.strictObject({
+    title: checkoutText(160),
+    variantLabel: checkoutText(80).nullable(),
+    locale: orderAccessLocaleSchema,
+    image: orderAccessMediaSchema,
+  }),
+  quantity: cartRuntimeQuantitySchema,
+  unitAmountMinor: minorAmountSchema,
+  lineSubtotalMinor: minorAmountSchema,
+  taxAmountMinor: minorAmountSchema,
+  discountAmountMinor: minorAmountSchema,
+  lineTotalMinor: minorAmountSchema,
+  currency: currencySchema,
+  displayMode: z.enum(["anonymous", "nickname"]),
+  /** Purchase-time classification snapshot; null only for pre-profile legacy lines (ADR-019). */
+  giftKind: giftKindSchema.nullable(),
+  fulfillmentStatus: fulfillmentStatusSchema,
+  /** Studio photos shown only after a physical line is delivered (V2 §4-6). */
+  deliveryProofs: z
+    .array(orderAccessDeliveryProofSchema)
+    .max(DELIVERY_PROOF_PROFILE.maxActiveProofsPerLine),
+  /**
+   * ADR-019 supplement (L3-09): facts for the fan's savable support certificate, present
+   * exactly on delivered virtual lines. `revoked` once succeeded refunds cover the whole
+   * line. Never carries the message, the fan's name, amounts or contact details.
+   */
+  supportCertificate: orderAccessSupportCertificateSchema.nullable(),
+});
+export const orderAccessItemSchema = z
+  .union([
+    legacyOrderAccessItemSchema,
+    legacyOrderAccessItemSchema.extend({
+      wishSupport: wishSupportRecordSchema,
+    }),
+  ])
+  .refine((value) => !("wishSupport" in value) || value.giftKind === "WISH", {
+    message: "Only a wish can carry a wish support record",
+  })
+  .refine(
+    (value) =>
+      value.deliveryProofs.length === 0 ||
+      (value.fulfillmentStatus === "DELIVERED" &&
+        value.giftKind !== "VIRTUAL" &&
+        new Set(value.deliveryProofs.map((proof) => proof.proofId)).size ===
+          value.deliveryProofs.length),
+    { message: "Only delivered physical lines carry distinct delivery proofs" },
+  )
+  .refine(
+    (value) =>
+      (value.supportCertificate !== null) ===
+      (value.giftKind === "VIRTUAL" && value.fulfillmentStatus === "DELIVERED"),
+    {
+      message:
+        "Exactly the delivered virtual lines carry a support certificate",
+    },
+  )
   .refine(
     (value) =>
       BigInt(value.unitAmountMinor) * BigInt(value.quantity) ===
@@ -197,6 +298,8 @@ export const orderAccessDetailSchema = z
   .strictObject({
     schemaVersion: version,
     publicOrderId: publicOrderIdSchema,
+    /** Fan-facing number; publicOrderId stays in URLs and APIs. */
+    publicOrderNo: publicOrderNoSchema,
     presentationLocale: supportedLocaleSchema,
     orderStatus: orderStatusSchema,
     paymentStatus: orderPaymentStatusSchema,
@@ -262,6 +365,12 @@ export const orderAccessResponseSchema = z.union([
     action: z.literal("REVOKED"),
     publicOrderId: publicOrderIdSchema,
   }),
+  z.strictObject({
+    schemaVersion: version,
+    outcome: z.literal("SUCCESS"),
+    action: z.literal("LOCATED"),
+    publicOrderId: publicOrderIdSchema,
+  }),
 ]);
 export const orderAccessRateCommandSchema = z.strictObject({
   schemaVersion: version,
@@ -311,6 +420,19 @@ export type OrderAccessReadCommand = z.infer<
 export type OrderAccessRevokeCommand = z.infer<
   typeof orderAccessRevokeCommandSchema
 >;
+export type OrderAccessLocateCommand = z.infer<
+  typeof orderAccessLocateCommandSchema
+>;
+export type OrderAccessLocated = z.infer<typeof orderAccessLocatedSchema>;
+export type OrderAccessProofCommand = z.infer<
+  typeof orderAccessProofCommandSchema
+>;
+export type OrderAccessProofLocation = z.infer<
+  typeof orderAccessProofLocationSchema
+>;
+export type OrderAccessDeliveryProof = z.infer<
+  typeof orderAccessDeliveryProofSchema
+>;
 export type OrderAccessGrant = z.infer<typeof orderAccessGrantSchema>;
 export type OrderAccessRevoked = z.infer<typeof orderAccessRevokedSchema>;
 export type OrderAccessFailureCode = z.infer<
@@ -318,6 +440,9 @@ export type OrderAccessFailureCode = z.infer<
 >;
 export type OrderAccessDetail = z.infer<typeof orderAccessDetailSchema>;
 export type OrderAccessItem = z.infer<typeof orderAccessItemSchema>;
+export type OrderAccessSupportCertificate = z.infer<
+  typeof orderAccessSupportCertificateSchema
+>;
 export type OrderAccessLocale = z.infer<typeof orderAccessLocaleSchema>;
 export type OrderAccessResponse = z.infer<typeof orderAccessResponseSchema>;
 export type OrderAccessRateCommand = z.infer<

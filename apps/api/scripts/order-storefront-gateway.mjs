@@ -3,7 +3,7 @@ import { createServer, request as httpRequest } from "node:http";
 import { setTimeout as delay } from "node:timers/promises";
 
 const isOrder = (path) =>
-  /^\/api\/(?:v1|storefront)\/(?:order-access\/(?:exchange|revoke)|orders\/[^/]+|checkout\/sessions\/[^/]+\/order-access)$/u.test(
+  /^\/api\/(?:v1|storefront)\/(?:order-access\/(?:exchange|revoke|locate)|orders\/[^/]+|checkout\/sessions\/[^/]+\/order-access)$/u.test(
     path,
   );
 

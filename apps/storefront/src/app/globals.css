@@ -1,8 +1,11 @@
 @import "tailwindcss" source(none);
 @import "@fan-support/design-tokens/foundations.css";
+@import "@fan-support/design-tokens/storefront-theme.css";
 @import "@fan-support/ui/interactions.css";
 @import "@fan-support/ui/motion.css";
 @import "@fan-support/ui/primitives.css";
+@import "../storefront/presentation.css";
+@import "../storefront/detail-templates.css";
 
 * {
   box-sizing: border-box;

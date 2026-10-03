@@ -126,6 +126,7 @@
 
 .fs-media {
   @apply grid place-items-center;
+  --fs-media-focus: 50% 50%;
   inline-size: 100%;
   overflow: hidden;
   border: var(--border-width) solid var(--color-border);
@@ -146,6 +147,11 @@
 
 .fs-media--contain .fs-media__image {
   object-fit: contain;
+}
+
+/* Focus is set on the frame; in-app browsers may overwrite the image's inline style. */
+.fs-media[data-media-focus] .fs-media__image {
+  object-position: var(--fs-media-focus);
 }
 
 .fs-media__fallback {

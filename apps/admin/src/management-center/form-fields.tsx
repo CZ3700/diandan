@@ -1,4 +1,8 @@
-import { LOCALE_NATIVE_NAMES, SUPPORTED_LOCALES } from "@fan-support/contracts";
+import {
+  LOCALE_NATIVE_NAMES,
+  SUPPORTED_LOCALES,
+  type WishGiftSummary,
+} from "@fan-support/contracts";
 import type { ReactNode } from "react";
 import type { ManagementContext } from "./api";
 import type { ManagementCopy } from "./copy";
@@ -75,6 +79,18 @@ export function giftKindLabel(
       return copy.other;
   }
 }
+export function wishStatusLabel(
+  status: WishGiftSummary["status"],
+  copy: ManagementCopy,
+) {
+  const keys = {
+    AVAILABLE: "wishAvailable",
+    RESERVED: "wishReserved",
+    SUPPORTED: "wishSupported",
+    UNAVAILABLE: "wishUnavailable",
+  } as const;
+  return copy[keys[status]];
+}
 function categoryLabel(
   category: ContentDraft["category"],
   copy: ManagementCopy,
@@ -100,6 +116,7 @@ export function ContentOptions({
   gift,
   errors,
   inventoryPolicyLocked,
+  commerceScopeLocked = false,
 }: {
   draft: ContentDraft;
   update: (patch: Partial<ContentDraft>) => void;
@@ -108,6 +125,7 @@ export function ContentOptions({
   gift: boolean;
   errors: FormErrors;
   inventoryPolicyLocked: boolean;
+  commerceScopeLocked?: boolean;
 }) {
   return (
     <details
@@ -141,6 +159,7 @@ export function ContentOptions({
                 name="market"
                 label={copy.market}
                 value={draft.market}
+                disabled={commerceScopeLocked}
                 onChange={(value) =>
                   update({
                     market: value,
@@ -152,6 +171,12 @@ export function ContentOptions({
                 }
               >
                 <option value="">—</option>
+                {commerceScopeLocked &&
+                !context.markets.some(
+                  (entry) => entry.market === draft.market,
+                ) ? (
+                  <option value={draft.market}>{draft.market}</option>
+                ) : null}
                 {context.markets.map((entry) => (
                   <option key={entry.market} value={entry.market}>
                     {entry.market}
@@ -162,9 +187,18 @@ export function ContentOptions({
                 name="currency"
                 label={copy.currency}
                 value={draft.currency}
+                disabled={commerceScopeLocked}
                 onChange={(value) => update({ currency: value, price: "" })}
               >
                 <option value="">—</option>
+                {commerceScopeLocked &&
+                !context.markets
+                  .find((entry) => entry.market === draft.market)
+                  ?.currencies.some(
+                    (currency) => currency === draft.currency,
+                  ) ? (
+                  <option value={draft.currency}>{draft.currency}</option>
+                ) : null}
                 {context.markets
                   .find((entry) => entry.market === draft.market)
                   ?.currencies.map((currency) => (
@@ -188,23 +222,25 @@ export function ContentOptions({
                 </option>
               ))}
             </ManagementSelect>
-            <ManagementSelect
-              name="policy"
-              label={copy.inventory}
-              value={draft.policy}
-              disabled={inventoryPolicyLocked}
-              description={
-                inventoryPolicyLocked ? copy.inventoryPolicyLocked : undefined
-              }
-              onChange={(value) =>
-                update({ policy: value as ContentDraft["policy"] })
-              }
-            >
-              <option value="PROCURE_ON_DEMAND">{copy.madeToOrder}</option>
-              <option value="TRACKED">{copy.tracked}</option>
-              <option value="PREORDER">{copy.preorder}</option>
-            </ManagementSelect>
-            {draft.policy === "TRACKED" ? (
+            {draft.giftKind !== "WISH" ? (
+              <ManagementSelect
+                name="policy"
+                label={copy.inventory}
+                value={draft.policy}
+                disabled={inventoryPolicyLocked}
+                description={
+                  inventoryPolicyLocked ? copy.inventoryPolicyLocked : undefined
+                }
+                onChange={(value) =>
+                  update({ policy: value as ContentDraft["policy"] })
+                }
+              >
+                <option value="PROCURE_ON_DEMAND">{copy.madeToOrder}</option>
+                <option value="TRACKED">{copy.tracked}</option>
+                <option value="PREORDER">{copy.preorder}</option>
+              </ManagementSelect>
+            ) : null}
+            {draft.giftKind !== "WISH" && draft.policy === "TRACKED" ? (
               <div className="mc-field">
                 <label htmlFor="management-quantity">{copy.quantity}</label>
                 <input

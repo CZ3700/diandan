@@ -169,7 +169,8 @@ export function createGiftStorefrontNext({
         },
         stdio: ["ignore", "pipe", "pipe"],
       });
-      logTo(build, `next-build-${generation}.log`);
+      // Build output is redacted above; .txt lets the regression collector keep it for CI diagnosis.
+      logTo(build, `next-build-${generation}.txt`);
       const [code] = await once(build, "exit");
       check(
         code === 0,

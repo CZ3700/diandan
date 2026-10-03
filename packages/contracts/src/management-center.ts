@@ -12,11 +12,19 @@ import {
 } from "./admin-content.js";
 import { currencySchema, marketSchema, minorAmountSchema } from "./commerce.js";
 import { giftCategorySchema } from "./catalog-content.js";
+import { artistSearchTermSchema } from "./catalog-discovery.js";
 import { giftKindSchema } from "./gift-commerce-profile.js";
+import { wishGiftSummarySchema } from "./wish-binding.js";
 import { publicMediaViewSchema, slugSchema } from "./presentation.js";
 import { mediaMimeTypeSchema } from "./media-content.js";
 import { MEDIA_IMAGE_PROFILE } from "./media-processing.js";
 import { mediaUploadGrantResponseSchema } from "./resource-management.js";
+
+import {
+  managementImageInputSchema,
+  managementImageTargetSchema,
+  managementOriginalImageSchema,
+} from "./management-image.js";
 
 const uuid = z.uuid();
 const version = schemaVersionSchema;
@@ -26,7 +34,7 @@ const sequence = z
   .nonnegative()
   .max(Number.MAX_SAFE_INTEGER - 1);
 const text = (limit: number) => z.string().trim().min(1).max(limit);
-const image = z.strictObject({ uploadId: uuid });
+const image = managementImageInputSchema;
 const scope = { market: marketSchema, currency: currencySchema };
 export const managementCenterPriceSchema = z.strictObject({
   ...scope,
@@ -49,19 +57,45 @@ const editable = {
   description: text(600),
   image: image.nullable(),
 };
-export const managementCenterIntentSchema = z
-  .discriminatedUnion("kind", [
-    z.strictObject({ kind: z.literal("SAVE_ARTIST"), ...editable }),
+export const managementCommerceEditSchema = z.strictObject({
+  price: z.discriminatedUnion("mode", [
+    z.strictObject({ mode: z.literal("PRESERVE") }),
     z.strictObject({
-      kind: z.literal("SAVE_GIFT"),
-      ...editable,
-      name: text(100),
-      giftKind: giftKindSchema,
-      category: giftCategorySchema,
-      price: managementCenterPriceSchema,
-      inventory: managementCenterInventorySchema,
-      eligibility: z.strictObject({ rule: z.literal("ALL_ACTIVE_ARTISTS") }),
+      mode: z.literal("SET"),
+      baseline: managementCenterPriceSchema,
     }),
+  ]),
+  inventory: z.discriminatedUnion("mode", [
+    z.strictObject({ mode: z.literal("PRESERVE") }),
+    z.strictObject({
+      mode: z.literal("SET"),
+      baseline: managementCenterInventorySchema,
+    }),
+  ]),
+});
+const giftEditable = {
+  kind: z.literal("SAVE_GIFT"),
+  ...editable,
+  name: text(100),
+  giftKind: giftKindSchema,
+  category: giftCategorySchema,
+  price: managementCenterPriceSchema,
+  inventory: managementCenterInventorySchema,
+  eligibility: z.discriminatedUnion("rule", [
+    z.strictObject({ rule: z.literal("ALL_ACTIVE_ARTISTS") }),
+    z.strictObject({ rule: z.literal("SINGLE_ARTIST"), idolId: uuid }),
+  ]),
+};
+export const managementCenterIntentSchema = z
+  .union([
+    z.strictObject({ kind: z.literal("SAVE_ARTIST"), ...editable }),
+    z.union([
+      z.strictObject(giftEditable),
+      z.strictObject({
+        ...giftEditable,
+        commerceEdit: managementCommerceEditSchema,
+      }),
+    ]),
     z.strictObject({
       kind: z.literal("REPLACE_POSTER"),
       sourceLocale: supportedLocaleSchema,
@@ -76,6 +110,26 @@ export const managementCenterIntentSchema = z
     }),
   ])
   .superRefine((value, context) => {
+    if (
+      value.kind === "SAVE_GIFT" &&
+      value.eligibility.rule === "SINGLE_ARTIST" &&
+      value.giftKind !== "WISH"
+    )
+      context.addIssue({
+        code: "custom",
+        path: ["eligibility"],
+        message: "Only wish gifts bind a single artist",
+      });
+    if (
+      value.kind === "SAVE_GIFT" &&
+      "commerceEdit" in value &&
+      value.id === null
+    )
+      context.addIssue({
+        code: "custom",
+        path: ["commerceEdit"],
+        message: "Commerce baselines require an existing gift",
+      });
     if (value.kind === "SAVE_ARTIST" || value.kind === "SAVE_GIFT") {
       if ((value.id === null) !== (value.expectedVersion === 0))
         context.addIssue({
@@ -84,7 +138,10 @@ export const managementCenterIntentSchema = z
           message:
             "New targets require version zero; edits require the current version",
         });
-      if (value.id === null && value.image === null)
+      if (
+        value.id === null &&
+        (value.image === null || "currentImage" in value.image)
+      )
         context.addIssue({
           code: "custom",
           path: ["image"],
@@ -99,6 +156,7 @@ export const managementCenterFailureSchema = adminContentFailureSchema.extend({
       "MANAGEMENT_UNAVAILABLE",
       "NEEDS_AUTHORIZATION",
       "MEDIA_FAILED",
+      "REUPLOAD_REQUIRED",
       "UPLOAD_NOT_READY",
       "HERO_NOT_CONFIGURED",
       "DEFAULTS_NOT_CONFIGURED",
@@ -158,14 +216,52 @@ const pagination = {
   page: sequence.positive().max(1_000_000),
   pageSize: z.number().int().min(1).max(50),
 };
+/** ADR-022: the broker an artist belongs to. `brokerId` is the staff identity; no login name or contact detail. */
+export const managementCenterBrokerSchema = z.strictObject({
+  brokerId: uuid,
+  displayName: z.string().min(1).max(80),
+  /** False once the account is suspended or no longer a broker; the artist then needs reassigning. */
+  active: z.boolean(),
+});
+const assignmentFilter = z.discriminatedUnion("kind", [
+  z.strictObject({ kind: z.literal("UNASSIGNED") }),
+  z.strictObject({ kind: z.literal("BROKER"), brokerId: uuid }),
+]);
 export const managementCenterCommandSchema = z.discriminatedUnion("action", [
   z.strictObject({ schemaVersion: version, action: z.literal("CONTEXT") }),
   z.strictObject({
     schemaVersion: version,
-    action: z.literal("LIST"),
-    section: z.enum(["ARTISTS", "GIFTS", "POSTERS"]),
-    ...pagination,
+    action: z.literal("READ_IMAGE_SOURCE"),
+    target: managementImageTargetSchema,
   }),
+  z
+    .strictObject({
+      schemaVersion: version,
+      action: z.literal("LIST"),
+      section: z.enum(["ARTISTS", "GIFTS", "POSTERS"]),
+      ...pagination,
+      /** Omitted lists every artist the account may manage. */
+      assignment: assignmentFilter.optional(),
+      /** Literal, case-insensitive matching against the displayed artist name. */
+      search: artistSearchTermSchema.optional(),
+      giftKind: giftKindSchema.optional(),
+      /** Omitted keeps newest first; price sorts use the published management defaults. */
+      sort: z.enum(["NEWEST", "PRICE_ASC", "PRICE_DESC"]).optional(),
+    })
+    .refine(
+      (value) => value.assignment === undefined || value.section === "ARTISTS",
+      { path: ["assignment"], message: "Only artists are assigned" },
+    )
+    .refine(
+      (value) => value.search === undefined || value.section === "ARTISTS",
+      { path: ["search"], message: "Only artists support name search" },
+    )
+    .refine(
+      (value) =>
+        (value.giftKind === undefined && value.sort === undefined) ||
+        value.section === "GIFTS",
+      { message: "Only gifts support kind filters and price ordering" },
+    ),
   z.strictObject({
     schemaVersion: version,
     action: z.literal("PREPARE_UPLOAD"),
@@ -179,12 +275,34 @@ export const managementCenterCommandSchema = z.discriminatedUnion("action", [
     rightsConfirmed: z.literal(true),
     ...mutation,
   }),
-  z.strictObject({
-    schemaVersion: version,
-    action: z.literal("SUBMIT"),
-    intent: managementCenterIntentSchema,
-    ...mutation,
-  }),
+  z
+    .strictObject({
+      schemaVersion: version,
+      action: z.literal("SUBMIT"),
+      intent: managementCenterIntentSchema,
+      ...mutation,
+    })
+    .superRefine(({ intent }, context) => {
+      if (intent.kind !== "SAVE_GIFT" || intent.giftKind !== "WISH") return;
+      // Historical operation intents remain parseable; only new submissions require a binding.
+      if (intent.eligibility.rule !== "SINGLE_ARTIST")
+        context.addIssue({
+          code: "custom",
+          path: ["intent", "eligibility"],
+          message: "Wish gifts require one artist",
+        });
+      if (
+        intent.inventory.policy !== "TRACKED" ||
+        intent.inventory.quantity > 1 ||
+        (intent.id === null && intent.inventory.quantity !== 1)
+      )
+        context.addIssue({
+          code: "custom",
+          path: ["intent", "inventory"],
+          message:
+            "Wish gifts require one tracked unit; existing stock may be preserved",
+        });
+    }),
   z.strictObject({
     schemaVersion: version,
     action: z.literal("READ_OPERATION"),
@@ -195,6 +313,24 @@ export const managementCenterCommandSchema = z.discriminatedUnion("action", [
     action: z.literal("RETRY_OPERATION"),
     operationId: uuid,
     expectedVersion: sequence.positive(),
+    ...mutation,
+  }),
+  // L2-09: removes an old poster from the list; the poster on the homepage cannot be archived.
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("ARCHIVE_POSTER"),
+    revisionId: uuid,
+    expectedVersion: sequence.positive(),
+    sourceLocale: supportedLocaleSchema,
+    ...mutation,
+  }),
+  // L3-11: `idols.assign` only. `expectedBrokerId` is the assignment the editor showed.
+  z.strictObject({
+    schemaVersion: version,
+    action: z.literal("ASSIGN_ARTIST"),
+    artistId: uuid,
+    brokerId: uuid.nullable(),
+    expectedBrokerId: uuid.nullable(),
     ...mutation,
   }),
 ]);
@@ -215,21 +351,30 @@ const listingBase = {
   status: z.enum(["draft", "active", "paused", "archived"]),
   handle: slugSchema,
 };
-export const managementCenterListItemSchema = z.discriminatedUnion("kind", [
-  z.strictObject({ kind: z.literal("ARTIST"), ...listingBase }),
-  z.strictObject({
-    kind: z.literal("GIFT"),
-    ...listingBase,
-    giftKind: giftKindSchema,
-    category: giftCategorySchema,
-    price: managementCenterPriceSchema.nullable(),
-    inventory: managementCenterInventorySchema.nullable(),
-    eligibility: z.strictObject({
-      rule: z.enum(["ALL_ACTIVE_ARTISTS", "EXPLICIT_ARTISTS"]),
-    }),
-    canEdit: z.boolean(),
-    inventoryPolicyLocked: z.boolean(),
+const managementCenterGiftListItemSchema = z.strictObject({
+  kind: z.literal("GIFT"),
+  ...listingBase,
+  giftKind: giftKindSchema,
+  category: giftCategorySchema,
+  price: managementCenterPriceSchema.nullable(),
+  /** Display-only comparison price; never an edit baseline. Present only with LIST.priceScope. */
+  sortPrice: managementCenterPriceSchema.nullable().exactOptional(),
+  inventory: managementCenterInventorySchema.nullable(),
+  eligibility: z.strictObject({
+    rule: z.enum(["ALL_ACTIVE_ARTISTS", "EXPLICIT_ARTISTS"]),
   }),
+  canEdit: z.boolean(),
+  inventoryPolicyLocked: z.boolean(),
+});
+export const managementCenterListItemSchema = z.union([
+  z.strictObject({
+    kind: z.literal("ARTIST"),
+    ...listingBase,
+    /** The broker the artist belongs to; null is unassigned. A broker's list holds only its own. */
+    assignment: managementCenterBrokerSchema.nullable(),
+  }),
+  managementCenterGiftListItemSchema,
+  managementCenterGiftListItemSchema.extend({ wish: wishGiftSummarySchema }),
   z
     .strictObject({
       kind: z.literal("POSTER"),
@@ -240,18 +385,32 @@ export const managementCenterListItemSchema = z.discriminatedUnion("kind", [
       current: z.boolean(),
       image: publicMediaViewSchema.nullable(),
       canRestore: z.boolean(),
+      canDelete: z.boolean(),
       createdAt: contentTimestampSchema,
     })
-    .refine((value) => !value.canRestore || value.image !== null),
+    .refine((value) => !value.canRestore || value.image !== null)
+    .refine((value) => !(value.current && value.canDelete)),
 ]);
 const success = { schemaVersion: version, outcome: z.literal("SUCCESS") };
 export const managementCenterResponseSchema = z.union([
   managementCenterFailureSchema,
+  managementOriginalImageSchema,
   mediaUploadGrantResponseSchema.options[0],
   z.strictObject({
     ...success,
     kind: z.literal("OPERATION"),
     operation: managementCenterOperationSchema,
+  }),
+  z.strictObject({
+    ...success,
+    kind: z.literal("POSTER_ARCHIVED"),
+    revisionId: uuid,
+  }),
+  z.strictObject({
+    ...success,
+    kind: z.literal("ARTIST_ASSIGNED"),
+    artistId: uuid,
+    assignment: managementCenterBrokerSchema.nullable(),
   }),
   z
     .strictObject({
@@ -261,6 +420,7 @@ export const managementCenterResponseSchema = z.union([
       ...pagination,
       totalItems: sequence,
       items: z.array(managementCenterListItemSchema).max(50),
+      priceScope: z.strictObject(scope).exactOptional(),
     })
     .superRefine((value, context) => {
       const expected = Math.max(
@@ -283,6 +443,24 @@ export const managementCenterResponseSchema = z.union([
         context.addIssue({
           code: "custom",
           message: "Listing scope and cardinality must match",
+        });
+      const validPrices = value.priceScope
+        ? value.section === "GIFTS" &&
+          value.items.every(
+            (item) =>
+              item.kind === "GIFT" &&
+              item.sortPrice !== undefined &&
+              (item.sortPrice === null ||
+                (item.sortPrice.market === value.priceScope?.market &&
+                  item.sortPrice.currency === value.priceScope.currency)),
+          )
+        : value.items.every(
+            (item) => item.kind !== "GIFT" || item.sortPrice === undefined,
+          );
+      if (!validPrices)
+        context.addIssue({
+          code: "custom",
+          message: "Sort prices must match the gift list price scope",
         });
     }),
   z.strictObject({
@@ -319,6 +497,18 @@ export const managementCenterResponseSchema = z.union([
           : value.version === 0 && value.currentRevisionId === null,
       ),
     operations: z.array(managementCenterOperationSchema).max(10),
+    /** ADR-022: ASSIGNED accounts (brokers) manage only their own artists and no other section. */
+    artists: z
+      .strictObject({
+        scope: z.enum(["ALL", "ASSIGNED"]),
+        canAssign: z.boolean(),
+        brokers: z.array(managementCenterBrokerSchema).max(500),
+      })
+      .refine(
+        (value) =>
+          value.scope === "ALL" ||
+          (!value.canAssign && value.brokers.length === 0),
+      ),
   }),
 ]);
 export type ManagementCenterIntent = z.infer<
@@ -341,4 +531,7 @@ export type ManagementCenterFailure = z.infer<
 >;
 export type ManagementCenterListItem = z.infer<
   typeof managementCenterListItemSchema
+>;
+export type ManagementCenterBroker = z.infer<
+  typeof managementCenterBrokerSchema
 >;

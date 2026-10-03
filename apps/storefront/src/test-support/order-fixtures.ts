@@ -13,6 +13,7 @@ const language = {
 export const orderFixture = orderAccessDetailSchema.parse({
   schemaVersion: 1,
   publicOrderId: checkoutFixture.publicOrderId,
+  publicOrderNo: "FS-7K3M9C",
   presentationLocale: checkoutFixture.presentationLocale,
   orderStatus: "OPEN",
   paymentStatus: "PAID",
@@ -50,7 +51,10 @@ export const orderFixture = orderAccessDetailSchema.parse({
     lineTotalMinor: line.lineTotalMinor,
     currency: checkoutFixture.currency,
     displayMode: "anonymous",
+    giftKind: "PHYSICAL",
     fulfillmentStatus: "PENDING",
+    deliveryProofs: [],
+    supportCertificate: null,
   })),
   createdAt: "2026-09-01T00:00:00.000Z",
   updatedAt: "2026-09-16T00:00:00.000Z",

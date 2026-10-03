@@ -144,7 +144,100 @@ test("renders bounded server pagination and real gift links carrying the complet
   expect(html).toContain('value="1234"');
   expect(html).toContain("$12.34");
   expect(html).toContain('loading="lazy"');
-  expect(html).not.toContain("A fictional gift</p>");
+  // L2-17: a priced card shows the same summary as the content card.
+  expect(html).toContain(
+    '<p class="gift-directory-card__summary" lang="en">A fictional gift</p>',
+  );
+});
+
+test("the toolbar offers kinds and a price order as links, with no form, panel or apply step", async () => {
+  const { GiftDirectory } = await component();
+  const html = renderToStaticMarkup(
+    <GiftDirectory
+      locale="en"
+      copy={copy}
+      query={{ ...query, sort: "PRICE_DESC" }}
+      initial={page(25, 2, 1234)}
+      contextQuery="market=TEST&currency=USD&cart=one&page=2&sort=PRICE_DESC"
+    />,
+  );
+  for (const gone of ["<form", "<select", "<details", "<button", "<input"])
+    expect(html).not.toContain(gone);
+  expect(html).not.toContain("data-gift-applied-filters");
+  const link = (marker: string) => {
+    const anchor = new RegExp(`<a\\b[^>]*${marker}[^>]*>`, "u").exec(html)?.[0];
+    const href = /href="([^"]+)"/u.exec(anchor ?? "")?.[1];
+    if (!anchor || !href) throw new Error(`Missing link ${marker}`);
+    return {
+      anchor,
+      url: new URL(href.replaceAll("&amp;", "&"), "https://fixture.invalid"),
+    };
+  };
+  const descending = link('data-gift-sort-option="PRICE_DESC"');
+  expect(descending.anchor).toContain('aria-current="true"');
+  expect(descending.anchor).toContain('data-gift-nav="sort:RECOMMENDED"');
+  expect(descending.url.searchParams.get("sort")).toBe("RECOMMENDED");
+  const ascending = link('data-gift-sort-option="PRICE_ASC"');
+  expect(ascending.anchor).not.toContain("aria-current");
+  expect(ascending.url.searchParams.get("sort")).toBe("PRICE_ASC");
+  const virtual = link('data-gift-kind-option="VIRTUAL"');
+  for (const { url } of [descending, ascending, virtual]) {
+    expect(url.pathname).toBe("/en/gifts");
+    expect(url.searchParams.get("page")).toBe("1");
+    expect(url.searchParams.get("market")).toBe("TEST");
+    expect(url.searchParams.get("cart")).toBe("one");
+  }
+  expect(virtual.url.searchParams.get("kind")).toBe("VIRTUAL");
+  expect(virtual.url.searchParams.get("sort")).toBe("PRICE_DESC");
+  expect(html).toContain('<p class="gift-directory-count" aria-live="polite">');
+});
+
+test("filters the toolbar no longer offers are still honoured, named and clearable when an address carries them", async () => {
+  const { GiftDirectory } = await component();
+  const html = renderToStaticMarkup(
+    <GiftDirectory
+      locale="en"
+      copy={copy}
+      query={giftDiscoveryQuerySchema.parse({
+        ...query,
+        kind: "PHYSICAL",
+        sort: "PRICE_ASC",
+        category: "FLOWERS",
+        availability: "PURCHASABLE",
+        priceMinMinor: 1234,
+        priceMaxMinor: 4321,
+      })}
+      initial={page(25, 2, 1234)}
+    />,
+  );
+  const summary =
+    /<div class="gift-filter-summary"[^>]*>(.*?)<\/div>/su.exec(html)?.[1] ??
+    "";
+  expect(summary).toContain(
+    `${copy.giftCategoryLabel}: ${copy.giftCategoryFlowers}`,
+  );
+  expect(summary).toContain(
+    `${copy.giftAvailabilityLabel}: ${copy.giftAvailabilityPurchasable}`,
+  );
+  expect(summary).toContain(copy.giftPriceMinimum);
+  expect(summary).toContain("$12.34");
+  expect(summary).toContain("$43.21");
+  const clear = new URL(
+    (/href="([^"]+)"[^>]*data-gift-reset/u.exec(summary)?.[1] ?? "").replaceAll(
+      "&amp;",
+      "&",
+    ),
+    "https://fixture.invalid",
+  );
+  // Clearing them keeps what the toolbar shows: the kind and the price order.
+  expect(Object.fromEntries(clear.searchParams)).toMatchObject({
+    kind: "PHYSICAL",
+    sort: "PRICE_ASC",
+    availability: "ALL",
+    page: "1",
+  });
+  for (const name of ["category", "priceMinMinor", "priceMaxMinor"])
+    expect(clear.searchParams.has(name)).toBe(false);
 });
 
 test("an unpriced record has an honest unavailable label and no fabricated price or cart action", async () => {

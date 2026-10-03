@@ -35,6 +35,22 @@ export async function publishDailyGiftPrice(
     : null;
   if (current.head && (!source || !source.book.singleWindow))
     throw new Error("Daily price source unavailable");
+  if (
+    "commerceEdit" in claim.intent &&
+    claim.intent.commerceEdit.price.mode === "PRESERVE"
+  ) {
+    if (
+      !current.head ||
+      !source ||
+      !source.prices.some(
+        (row) =>
+          String(row["giftVariantId"]).toLowerCase() ===
+          giftVariantId.toLowerCase(),
+      )
+    )
+      throw new Error("Current gift price unavailable");
+    return { pricePublicationId: String(current.head["publication_id"]) };
+  }
   const common = {
     schemaVersion: 1,
     principal: {

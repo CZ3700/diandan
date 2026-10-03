@@ -326,6 +326,53 @@ it("rechecks a hosted action on explicit continue and refuses one that expired m
     "attempt",
   ]);
 });
+it("continues a fresh redirect or a component this release can launch, and nothing else", async () => {
+  const loaded = await load();
+  if (!loaded) throw new Error("Missing controller");
+  const ready = (action: object) => ({
+    ...currentFixture.attempt,
+    status: "REQUIRES_ACTION",
+    recovery: "NONE",
+    action,
+    actionExpiresAt: "2026-09-10T00:00:00Z",
+  });
+  const component = (componentKey: string) => ({
+    schemaVersion: 1,
+    type: "PROVIDER_COMPONENT",
+    componentKey,
+    clientToken: "A".repeat(40),
+  });
+  const redirect = {
+    schemaVersion: 1,
+    type: "REDIRECT",
+    url: "https://payments.example/continue",
+  };
+  for (const [action, expected] of [
+    [redirect, { type: "REDIRECT", url: redirect.url }],
+    [
+      component("airwallex-hpp"),
+      { type: "PROVIDER_COMPONENT", action: component("airwallex-hpp") },
+    ],
+    [component("paypal-buttons"), null],
+  ] as const) {
+    const attempt = ready(action);
+    const request = vi
+      .fn()
+      .mockResolvedValueOnce({ ...currentFixture, attempt })
+      .mockResolvedValueOnce({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        action: "READ",
+        attempt,
+      });
+    const controller = loaded.createCheckoutController("en", {
+      request,
+      dispose: vi.fn(),
+    });
+    await controller.initialize();
+    expect(await controller.continuePayment()).toEqual(expected);
+  }
+});
 it("invalidates old capabilities after a configuration conflict instead of offering the stale choice again", async () => {
   const loaded = await load();
   if (!loaded) throw new Error("Missing controller");
@@ -356,6 +403,7 @@ it("invalidates old capabilities after a configuration conflict instead of offer
         amountMinor: 1500,
         countries: ["US"],
         country: "US",
+        countrySelectionRequired: false,
         capabilities: [capability],
       },
     })
@@ -383,8 +431,9 @@ it("keeps the country control mounted while new methods are loading", async () =
     market: "TEST",
     currency: "USD",
     amountMinor: 1500,
-    countries: ["US"],
+    countries: ["TH", "US"],
     country: null,
+    countrySelectionRequired: true,
     capabilities: [],
   };
   let resolve!: (value: unknown) => void;
@@ -411,7 +460,11 @@ it("keeps the country control mounted while new methods are loading", async () =
   const reading = controller.capabilities("US");
   expect(controller.snapshot()).toMatchObject({
     busy: true,
-    capabilities: { country: "US", countries: ["US"], capabilities: [] },
+    capabilities: {
+      country: "US",
+      countries: ["TH", "US"],
+      capabilities: [],
+    },
   });
   resolve({
     schemaVersion: 1,

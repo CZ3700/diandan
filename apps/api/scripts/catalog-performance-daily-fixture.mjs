@@ -5,7 +5,7 @@ import path from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { managementCenterResponseSchema } from "@fan-support/contracts";
 import { createMediaImageProcessor } from "@fan-support/media-image";
-import { createTestManagementCenterComposition } from "../dist/index.js";
+import { createTestManagementCenterComposition } from "../dist/testing/index.js";
 import { configureCartDailyGiftFixture } from "./cart-daily-gift-fixture.mjs";
 import { createPublicationMediaFixture } from "./publication-runtime-http-media.mjs";
 

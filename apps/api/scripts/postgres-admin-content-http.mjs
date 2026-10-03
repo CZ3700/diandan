@@ -22,7 +22,7 @@ import {
 } from "@fan-support/persistence-postgres";
 import { createPostgresPersistenceWithPoolFactory } from "../../../packages/persistence-postgres/dist/postgres-persistence.js";
 import { createApiApplication } from "../dist/bootstrap.js";
-import { createTestAdminContentComposition } from "../dist/admin-content-composition.js";
+import { createTestAdminContentComposition } from "../dist/testing/admin-content-composition.js";
 import {
   seedAdminContentFixtures,
   revokeAdminContentLocaleGrant,

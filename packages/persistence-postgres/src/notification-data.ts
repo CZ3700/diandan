@@ -106,13 +106,15 @@ export async function hasLaterNotification(
 export async function hasPendingAdminNotificationResend(
   client: TransactionClient,
   orderId: unknown,
+  exceptNotificationId?: string,
 ) {
   const [row] = await draftRows(
     client,
     `SELECT EXISTS(SELECT 1 FROM public.admin_notification_resends manual WHERE manual.order_id=$1::uuid AND
       (manual.status IN('REQUESTED','PROCESSING','RETRY_SCHEDULED') OR
-       (manual.status<>'SENT' AND manual.dedupe_until>clock_timestamp() AND EXISTS(SELECT 1 FROM public.admin_notification_resend_attempts a WHERE a.resend_id=manual.id AND a.outcome='UNKNOWN')))) blocked`,
-    [orderId],
+       (manual.status<>'SENT' AND NOT public.notification_submission_definite(manual.id) AND manual.dedupe_until>clock_timestamp() AND EXISTS(SELECT 1 FROM public.admin_notification_resend_attempts a WHERE a.resend_id=manual.id AND a.outcome='UNKNOWN'))))
+       OR public.notification_submission_unresolved($1::uuid,$2::uuid) blocked`,
+    [orderId, exceptNotificationId ?? null],
   );
   return row?.["blocked"] === true;
 }

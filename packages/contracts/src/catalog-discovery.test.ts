@@ -86,3 +86,22 @@ test("pagination metadata is internally consistent, including an out-of-range em
     }).success,
   ).toBe(true);
 });
+
+test("gift discovery filters by a published gift kind and resets to the first page when it changes", async () => {
+  const contract = await schema("giftDiscoveryQuerySchema");
+  expect(contract.safeParse({ ...commercial, kind: "WISH" }).success).toBe(
+    true,
+  );
+  expect(contract.safeParse({ ...commercial, kind: "wish" }).success).toBe(
+    false,
+  );
+  const change = await schema("changeGiftDiscoveryQuerySchema");
+  for (const kind of ["VIRTUAL", null])
+    expect(
+      change.safeParse({
+        schemaVersion: 1,
+        query: commercial,
+        changes: { kind },
+      }).success,
+    ).toBe(true);
+});

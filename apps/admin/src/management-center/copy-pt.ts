@@ -1,5 +1,42 @@
 import type { ManagementCopy } from "./copy";
 export const copy = {
+  allGifts: "Todos",
+  priceOrder: "Ordenar por preço",
+  priceAscending: "Preço: do menor ao maior",
+  priceDescending: "Preço: do maior ao menor",
+  priceUnavailable: "Preço indisponível",
+  wishArtist: "Artista destinatário",
+  wishArtistRequired: "Escolha o artista que receberá este presente de desejo.",
+  wishArtistChoose: "Escolher este artista",
+  wishArtistChange: "Escolher outro artista",
+  wishArtistLocked:
+    "Este desejo está vinculado a este artista e não pode ser reatribuído.",
+  wishOnlyOnce:
+    "Cada desejo recebe apoio apenas uma vez. A venda termina após a confirmação do pagamento.",
+  wishArtistUnavailable:
+    "Este artista não pode receber presentes de desejo no momento.",
+  wishAvailable: "Disponível para apoiar",
+  wishReserved: "Pagamento em andamento",
+  wishSupported: "Desejo apoiado",
+  wishUnavailable: "Indisponível",
+  interfaceLanguage: "Idioma da interface",
+  discardEdits: "Descartar as alterações não guardadas e sair desta página?",
+  adjustFocus: "Ajustar o foco do recorte",
+  focusHint:
+    "Escolha o motivo na foto original. Use as setas para pequenos movimentos ou Shift + seta para movimentos maiores.",
+  focusHorizontal: "Foco horizontal",
+  focusVertical: "Foco vertical",
+  resetFocus: "Repor foco",
+  previewPortrait: "Retrato",
+  previewDesktop: "Banner para computador",
+  previewMobile: "Banner para telemóvel",
+  previewGift: "Foto do presente",
+  originalLoading: "A carregar a foto original…",
+  originalUnavailable:
+    "Não foi possível carregar a foto original. Tente novamente; as alterações foram mantidas.",
+  reuploadRequired: "Envie novamente a foto original para ajustar esta imagem.",
+  imageUnchanged: "Escolha uma nova foto ou ajuste o foco antes de publicar.",
+
   login: "Entrar",
   loginHint: "Entre para gerenciar artistas, presentes e cartazes.",
   loginFailed: "Não foi possível entrar. Tente novamente.",
@@ -21,7 +58,15 @@ export const copy = {
   addAndPublish: "Adicionar e publicar",
   upload: "Escolher imagem",
   changeImage: "Alterar imagem",
-  imageHint: "JPEG, PNG ou WebP. As proporções são mantidas.",
+  imageHint:
+    "JPEG, PNG ou WebP. A foto é recortada para preencher cada espaço de exibição.",
+  imageBestSize: "Recomendado: pelo menos {width} × {height} px.",
+  imageTipArtist: "Mantenha o rosto na parte superior.",
+  imageTipGift: "Mantenha o presente no centro.",
+  imageTipPoster:
+    "Mantenha o assunto no centro; no celular aparece só a parte central.",
+  imageTooSmall:
+    "Esta imagem tem {width} × {height} px, abaixo do recomendado, e pode ficar desfocada em telas grandes.",
   name: "Nome",
   description: "Descrição",
   price: "Preço",
@@ -35,6 +80,7 @@ export const copy = {
   processing: "A processar e publicar…",
   published: "Publicado",
   retry: "Tentar novamente",
+  dismiss: "Fechar",
   loadFailed: "Não foi possível carregar a lista. Tente novamente.",
   emptyArtists: "Adicione o primeiro artista.",
   emptyGifts: "Adicione o primeiro presente.",
@@ -95,4 +141,32 @@ export const copy = {
   archived: "Arquivado",
   imageUnavailable: "Imagem indisponível",
   readOnly: "Apenas leitura",
+  deleteTitle: "Excluir definitivamente",
+  deleteWarning:
+    "Será removido do site e desta lista. Não é possível desfazer. Os pedidos existentes mantêm seu registro.",
+  deleteTypeName: "Digite o nome exato para confirmar",
+  deleteConfirm: "Excluir definitivamente",
+  deleted: "Excluído. Não aparece mais no site.",
+  posterDelete: "Excluir",
+  posterDeleteWarning:
+    "Excluir esta imagem do histórico? Não é possível desfazer. A imagem inicial atual não é afetada.",
+  posterDeleteConfirm: "Excluir imagem",
+  posterDeleteCancel: "Manter",
+  posterDeleted: "Imagem excluída. A página inicial não mudou.",
+  assignment: "Agente",
+  assignmentNone: "Sem agente",
+  assignmentStudio: "Sem agente (gerido pelo estúdio)",
+  assignmentAll: "Todos os artistas",
+  assignmentFilter: "Mostrar artistas de",
+  assignmentInactive: "{name} (inativo)",
+  assignmentImmediate:
+    "A alteração é aplicada de imediato; não é preciso guardar.",
+  assignmentOnCreate:
+    "O artista passa para este agente assim que for adicionado.",
+  assignmentSaved: "Agente atualizado.",
+  assignmentFailed: "Não foi possível guardar o agente. Tente novamente.",
+  assignmentStale:
+    "Outra pessoa alterou o agente. Volte à lista e abra o artista novamente.",
+  assignmentMissed:
+    "O artista foi adicionado, mas o agente não foi guardado. Abra o artista e escolha o agente novamente.",
 } satisfies ManagementCopy;

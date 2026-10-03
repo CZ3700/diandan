@@ -11,10 +11,11 @@ const resource = () => ({
   stop: vi.fn(async () => undefined),
 });
 
-it("wires media and reliable event runtimes into the production worker", async () => {
+it("wires media, management center, purge and reliable event runtimes into the production worker", async () => {
   const reliable = resource(),
     media = resource(),
-    purge = resource();
+    purge = resource(),
+    management = resource();
   const application = {} as NestFastifyApplication;
   const createApplication = vi.fn(async () => application);
   expect(production.createProductionWorkerApplication).toBeTypeOf("function");
@@ -28,6 +29,7 @@ it("wires media and reliable event runtimes into the production worker", async (
           createReliableComposition: () => reliable,
           createMediaComposition: async () => media,
           createPurgeComposition: async () => purge,
+          createManagementComposition: async () => management,
         },
       },
     ),
@@ -39,6 +41,7 @@ it("wires media and reliable event runtimes into the production worker", async (
       reliableEventsRuntime: reliable,
       mediaProcessingRuntime: media,
       publicationPurgeRuntime: purge,
+      managementCenterRuntime: management,
     },
   );
 });
@@ -46,7 +49,8 @@ it("wires media and reliable event runtimes into the production worker", async (
 it("releases constructed resources when worker creation fails", async () => {
   const reliable = resource(),
     media = resource(),
-    purge = resource();
+    purge = resource(),
+    management = resource();
   const failure = new Error("controlled startup failure");
   await expect(
     production.createProductionWorkerApplication(
@@ -60,6 +64,7 @@ it("releases constructed resources when worker creation fails", async () => {
           createReliableComposition: () => reliable,
           createMediaComposition: async () => media,
           createPurgeComposition: async () => purge,
+          createManagementComposition: async () => management,
         },
       },
     ),
@@ -67,6 +72,7 @@ it("releases constructed resources when worker creation fails", async () => {
   expect(reliable.stop).toHaveBeenCalledTimes(1);
   expect(media.stop).toHaveBeenCalledTimes(1);
   expect(purge.stop).toHaveBeenCalledTimes(1);
+  expect(management.stop).toHaveBeenCalledTimes(1);
 });
 
 it("releases the reliable queue if media composition cannot be constructed", async () => {

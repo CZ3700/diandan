@@ -2,7 +2,7 @@ import * as homepageModule from "./storefront-homepage-route.js";
 import Fastify from "fastify";
 import { expect, test, vi } from "vitest";
 import type { StorefrontHomepageRouteDependencies } from "./storefront-homepage-route.js";
-import { storefrontHomepageFixture } from "./storefront-homepage-fixtures.js";
+import { storefrontHomepageFixture } from "./test-support/storefront-homepage-fixtures.js";
 import { SUPPORTED_LOCALES } from "@fan-support/contracts";
 
 async function setup() {

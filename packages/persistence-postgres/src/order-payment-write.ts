@@ -19,6 +19,12 @@ import {
 } from "./payment-runtime-history.js";
 import { paymentEventTime } from "./payment-runtime-data.js";
 import { applyOrderPaymentInventory } from "./order-payment-inventory.js";
+import { deliverDigitalFulfillments } from "./digital-fulfillment.js";
+import { deriveFulfillmentAggregate } from "./fulfillment-aggregate.js";
+import {
+  lockOrderWishBindings,
+  recordPaidWishSupports,
+} from "./wish-gallery-payment.js";
 import {
   rejectOrderPayment,
   recordOrderPaymentResult,
@@ -148,7 +154,7 @@ export async function applyOrderPaymentAggregate(input: Input) {
     return review("ORDER_STATE_CONFLICT");
   const lines = await draftRows(
     client,
-    `SELECT i.id,i.cart_item_id,i.gift_variant_id,i.quantity,i.support_intent_id,v.inventory_policy,s.status intent_status FROM public.order_items i JOIN public.gift_variants v ON v.id=i.gift_variant_id JOIN public.support_intents s ON s.id=i.support_intent_id WHERE i.order_id=$1::uuid ORDER BY i.id FOR UPDATE OF s`,
+    `SELECT i.id,i.cart_item_id,i.gift_variant_id,i.quantity,i.support_intent_id,i.gift_kind,v.inventory_policy,s.status intent_status FROM public.order_items i JOIN public.gift_variants v ON v.id=i.gift_variant_id JOIN public.support_intents s ON s.id=i.support_intent_id WHERE i.order_id=$1::uuid ORDER BY i.id FOR UPDATE OF s`,
     [order["id"]],
   );
   if (
@@ -350,6 +356,8 @@ export async function applyOrderPaymentAggregate(input: Input) {
   // The existing inventory guard permits release only after trusted failure is visible on this same client.
   if (!success && attempt["status"] !== event["normalized_status"])
     await setAttempt(input, at);
+  const hasWish = lines.some((line) => line["gift_kind"] === "WISH");
+  if (hasWish) await lockOrderWishBindings(client, refs.orderId);
   await applyOrderPaymentInventory({
     repository: input.inventory,
     targets: reservations.map((r, i) => ({
@@ -370,36 +378,89 @@ export async function applyOrderPaymentAggregate(input: Input) {
   if (success && attempt["status"] !== event["normalized_status"])
     await setAttempt(input, at);
   if (success) {
-    const held = unavailable ? "ON_HOLD" : "PENDING";
-    if (unavailable)
-      for (const f of fulfillments) {
-        await client.query(
-          `UPDATE public.fulfillments SET status='ON_HOLD',hold_reason_code='LATE_PAYMENT_INVENTORY_UNAVAILABLE',version=version+1,updated_at=GREATEST($2::timestamptz,updated_at) WHERE id=$1::uuid`,
-          [f["id"], at],
-        );
-        await insertPaymentRow(client, "fulfillment_events", {
-          id: randomUUID(),
-          fulfillment_id: f["id"],
-          order_id: order["id"],
-          sequence: Number(f["version"]) + 1,
-          from_status: f["status"],
-          to_status: held,
-          authority_kind: "SYSTEM",
-          reason_code: "LATE_PAYMENT_INVENTORY_UNAVAILABLE",
-          request_id: command.requestId,
-          correlation_id: command.correlationId,
-          occurred_at: at,
+    // ADR-019: a VIRTUAL line whose own reservation is intact is delivered now; every other line
+    // keeps the existing rule (all held for review when any reservation was released).
+    const lineByItem = new Map(lines.map((l) => [String(l["id"]), l]));
+    const reservationUnavailable = (cartItemId: unknown) =>
+      reservationRows.some(
+        (r) =>
+          r["cart_item_id"] === cartItemId &&
+          ["RELEASED", "EXPIRED"].includes(String(r["status"])),
+      );
+    const statuses = new Map<string, string>();
+    const digital = [];
+    for (const f of fulfillments) {
+      const line = lineByItem.get(String(f["order_item_id"]));
+      if (!line) return rejectOrderPayment("INTEGRITY_VIOLATION");
+      if (
+        line["gift_kind"] === "VIRTUAL" &&
+        !reservationUnavailable(line["cart_item_id"])
+      ) {
+        digital.push({
+          fulfillmentId: String(f["id"]),
+          orderItemId: String(f["order_item_id"]),
+          status: String(f["status"]),
+          version: Number(f["version"]),
+          giftKind: "VIRTUAL",
         });
-        await appendOutbox(
+        continue;
+      }
+      if (!unavailable) {
+        statuses.set(String(f["id"]), "PENDING");
+        continue;
+      }
+      await client.query(
+        `UPDATE public.fulfillments SET status='ON_HOLD',hold_reason_code='LATE_PAYMENT_INVENTORY_UNAVAILABLE',version=version+1,updated_at=GREATEST($2::timestamptz,updated_at) WHERE id=$1::uuid`,
+        [f["id"], at],
+      );
+      await insertPaymentRow(client, "fulfillment_events", {
+        id: randomUUID(),
+        fulfillment_id: f["id"],
+        order_id: order["id"],
+        sequence: Number(f["version"]) + 1,
+        from_status: f["status"],
+        to_status: "ON_HOLD",
+        authority_kind: "SYSTEM",
+        reason_code: "LATE_PAYMENT_INVENTORY_UNAVAILABLE",
+        request_id: command.requestId,
+        correlation_id: command.correlationId,
+        occurred_at: at,
+      });
+      await appendOutbox(
+        input,
+        "FULFILLMENT_STATUS_CHANGED",
+        String(f["id"]),
+        refs.orderId,
+        Number(f["version"]) + 1,
+        { fulfillmentId: f["id"], orderId: order["id"], status: "ON_HOLD" },
+        at,
+      );
+      statuses.set(String(f["id"]), "ON_HOLD");
+    }
+    const delivered = await deliverDigitalFulfillments(client, {
+      orderId: refs.orderId,
+      lines: digital,
+      at,
+      taskName: command.taskName,
+      requestId: command.requestId,
+      correlationId: command.correlationId,
+      appendOutbox: (event) =>
+        appendOutbox(
           input,
           "FULFILLMENT_STATUS_CHANGED",
-          String(f["id"]),
-          refs.orderId,
-          Number(f["version"]) + 1,
-          { fulfillmentId: f["id"], orderId: order["id"], status: held },
-          at,
-        );
-      }
+          event.fulfillmentId,
+          event.orderId,
+          event.version,
+          {
+            fulfillmentId: event.fulfillmentId,
+            orderId: event.orderId,
+            status: "DELIVERED",
+          },
+          event.at,
+        ),
+    });
+    for (const id of delivered) statuses.set(id, "DELIVERED");
+    const held = deriveFulfillmentAggregate([...statuses.values()]);
     await client.query(
       `UPDATE public.support_intents s SET status='CONVERTED',version=version+1,updated_at=GREATEST($2::timestamptz,updated_at) WHERE s.id IN(SELECT support_intent_id FROM public.order_items WHERE order_id=$1::uuid)`,
       [order["id"], at],
@@ -412,6 +473,12 @@ export async function applyOrderPaymentAggregate(input: Input) {
       `UPDATE public.orders SET order_status='OPEN',payment_status='PAID',fulfillment_status=$2,version=version+1,updated_at=$3::timestamptz WHERE id=$1::uuid`,
       [order["id"], held, at],
     );
+    if (hasWish)
+      await recordPaidWishSupports(client, {
+        orderId: refs.orderId,
+        providerEventId: String(event["id"]),
+        supportedAt: at,
+      });
     await insertPaymentRow(client, "order_events", {
       id: randomUUID(),
       order_id: order["id"],

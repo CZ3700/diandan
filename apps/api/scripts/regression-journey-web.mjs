@@ -86,7 +86,10 @@ export async function startRegressionStorefront(context, supplied = {}) {
   const runtime = {
     ...Object.fromEntries(
       Object.entries(environment).filter(
-        ([key]) => !key.startsWith("FAN_SUPPORT_ADMIN_"),
+        // Preview needs its public embedding origin, never the administrative credentials.
+        ([key]) =>
+          key === "FAN_SUPPORT_ADMIN_ORIGIN" ||
+          !key.startsWith("FAN_SUPPORT_ADMIN_"),
       ),
     ),
     NODE_ENV: "test",

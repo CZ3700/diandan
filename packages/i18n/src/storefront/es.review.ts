@@ -2,11 +2,11 @@ export default {
   schemaVersion: 1,
   namespace: "storefront",
   locale: "es",
-  status: "DRAFT",
+  status: "APPROVED",
   sourceHash:
-    "55dbbc46e3ed4dfc60f25811b2919fa9ad291e299575778bbfb78f52b016a49a",
+    "027796b6d03b8aea828140cc5d9243327cdffdf709e44545423517d632e5f846",
   translationHash:
-    "df94c36679a42a235022601a0350bed8bc8e2563c589b108c4332403eff76044",
-  reviewer: null,
-  approvedCommit: null,
+    "a880df10eec2514699fb1690fb38fdaef45369fd01d3dec2b1ead05063b3b72f",
+  reviewer: "Cz",
+  approvedCommit: "8049ebb3931082db3d8fcee5f7633bf64b32debd",
 } as const;

@@ -104,6 +104,7 @@ export async function runPaymentRollout(database, s3) {
           canaries,
         });
         const cohorts = [];
+        const before = await psp.counts();
         let admitted, excluded;
         const actual = (
           await client.query(
@@ -159,9 +160,14 @@ export async function runPaymentRollout(database, s3) {
               country: "",
               target,
             });
+            const view = response.data.capabilities;
+            const eligible = decision.kind === "ELIGIBLE";
             check(
-              response.data.capabilities.capabilities.length === 0,
-              "Country-free capability discovery does not dispatch a payment",
+              view.countrySelectionRequired === false &&
+                view.country === (eligible ? "US" : null) &&
+                view.capabilities.length === (eligible ? 1 : 0) &&
+                (!eligible || view.capabilities[0].id === route.capabilityId),
+              "Country-free discovery resolves the published route only for the admitted cohort",
             );
             check(
               response.data.capabilities.countries.includes("US") ===
@@ -169,6 +175,15 @@ export async function runPaymentRollout(database, s3) {
               "Two independent APIs reproduce the deterministic cohort for the same server-issued checkout",
             );
           }
+          check(
+            (
+              await client.query(
+                "SELECT count(*)::int count FROM payment_attempts a JOIN orders o ON o.id=a.order_id WHERE o.checkout_session_id=$1",
+                [value.id],
+              )
+            ).rows[0].count === 0,
+            "Capability discovery creates no PostgreSQL payment attempt for either cohort",
+          );
           if (decision.kind === "ELIGIBLE") admitted ??= value;
           else excluded ??= value;
         }
@@ -241,11 +256,14 @@ export async function runPaymentRollout(database, s3) {
             observations.every((value) => value.locale === "en"),
           "Persisted provider capability command contexts retain the checkout consent language despite presentation changes",
         );
+        check(
+          JSON.stringify(await psp.counts()) === JSON.stringify(before),
+          "Country-free and localized discovery cause zero PSP financial side effects",
+        );
 
         progress(
           "forged rule and rollout seed cannot authorize excluded checkout",
         );
-        const before = await psp.counts();
         for (const target of [a.base, b.base]) {
           await payment.capabilities(excluded.session, excluded.id, {
             target,

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { wishGiftSummarySchema } from "./wish-binding.js";
 
 import {
   catalogOperationalStatusSchema,
@@ -25,6 +26,7 @@ import {
   translationRevisionIdSchema,
 } from "./identifiers.js";
 import { contentLocaleContextSchema } from "./content-provenance.js";
+import { giftKindSchema } from "./gift-commerce-profile.js";
 import { localeContextSchema } from "./locale.js";
 import {
   publishedMediaViewSchema,
@@ -304,6 +306,9 @@ function createPublishedGiftView<
       description: giftTranslationFieldsSchema.shape.description,
       fulfillmentDescription: fields.fulfillmentDescription,
       category: giftRevisionSchema.shape.category,
+      /** Attached by directory reads only; null is an unclassified legacy revision (ADR-019). */
+      giftKind: giftKindSchema.nullable().optional(),
+      wish: wishGiftSummarySchema.optional(),
       contents: fields.contents,
       deliveryEstimate: fields.deliveryEstimate,
       shippingMode: giftRevisionSchema.shape.shippingMode,

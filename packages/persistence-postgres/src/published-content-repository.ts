@@ -51,10 +51,12 @@ async function resolveOwner(
   if (locator.kind === "IDOL" || locator.kind === "GIFT") {
     const [row] = await draftRows(
       client,
-      `SELECT id FROM public.${locator.kind === "IDOL" ? "idols" : "gifts"} WHERE handle=$1`,
+      `SELECT id,status FROM public.${locator.kind === "IDOL" ? "idols" : "gifts"} WHERE handle=$1`,
       [locator.handle],
     );
-    if (!row) return undefined;
+    // A deleted (archived) artist or gift no longer exists publicly: its detail page is a 404,
+    // not the "temporarily unavailable" state reserved for real read failures.
+    if (!row || row["status"] === "archived") return undefined;
     return contentAuthoringTargetSchema.parse({
       kind: locator.kind,
       [locator.kind === "IDOL" ? "idolId" : "giftId"]: row["id"],

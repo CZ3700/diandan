@@ -134,7 +134,7 @@ export function FinanceListView({
                     disabled={busy}
                     onClick={() => onSelect(order.orderId)}
                   >
-                    <strong>{order.publicOrderId}</strong>
+                    <strong>{order.publicOrderNo}</strong>
                     <span>
                       {financeStatus(order.paymentStatus, copy)}
                       {order.disputeStatus !== "NONE"

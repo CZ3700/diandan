@@ -21,12 +21,14 @@ const anonymous = cartRuntimeAddCommandSchema.options[0].pick({
   displayMode: true,
   fanMessage: true,
   fanMessageLocale: true,
+  galleryPreference: true,
 });
 const nickname = cartRuntimeAddCommandSchema.options[1].pick({
   displayMode: true,
   displayName: true,
   fanMessage: true,
   fanMessageLocale: true,
+  galleryPreference: true,
 });
 /** Explicitly authorized editor response only; never part of a public cart view. */
 export const cartEditorContentSchema = z.discriminatedUnion("displayMode", [

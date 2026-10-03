@@ -1,5 +1,5 @@
 import "server-only";
-import { Suspense, type ComponentProps } from "react";
+import { Suspense, type ComponentProps, type ReactNode } from "react";
 import type { StorefrontContextResponse } from "@fan-support/contracts";
 import { MarketChoices, PolicyLinks } from "./commerce-context";
 
@@ -8,13 +8,17 @@ type MarketsProps = Omit<
   "context" | "headingLevel"
 > & {
   context: Promise<StorefrontContextResponse>;
+  /** With one published market there is no choice to make: the offer takes its place. */
+  soleOffer?: (context: StorefrontContextResponse) => Promise<ReactNode>;
 };
 type PoliciesProps = Omit<ComponentProps<typeof PolicyLinks>, "context"> & {
   context: Promise<StorefrontContextResponse>;
 };
 
-async function Markets({ context, ...props }: MarketsProps) {
-  return <MarketChoices {...props} context={await context} />;
+async function Markets({ context, soleOffer, ...props }: MarketsProps) {
+  const resolved = await context;
+  const offer = soleOffer ? await soleOffer(resolved) : undefined;
+  return offer ?? <MarketChoices {...props} context={resolved} />;
 }
 
 /** Keep the same heading and reserved region while actual markets are loading. */

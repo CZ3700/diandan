@@ -17,7 +17,7 @@ locals {
   "LOGIN": [
     {
       "method": "POST",
-      "path": "^/api/(admin/auth/(begin|logout)|v1/admin/access/(begin|callback|logout))/?$"
+      "path": "^/api/(admin/(auth/(begin|logout)|local-auth/(login|step))|v1/admin/(access/(begin|callback|logout)|local-access/(login|step|logout)))/?$"
     },
     {
       "method": "GET",
@@ -27,11 +27,15 @@ locals {
   "ORDER_ACCESS": [
     {
       "method": "POST",
-      "path": "^/api/(storefront|v1)/(order-access/(exchange|revoke)|checkout/sessions/[^/]+/order-access)/?$"
+      "path": "^/api/(storefront|v1)/(order-access/(exchange|revoke|locate)|checkout/sessions/[^/]+/order-access)/?$"
     },
     {
       "method": "GET",
       "path": "^/api/(storefront|v1)/orders/[^/]+/?$"
+    },
+    {
+      "method": "GET",
+      "path": "^/api/(storefront|v1)/orders/[^/]+/delivery-proofs/[^/]+/(thumbnail|display)/?$"
     }
   ],
   "CART": [

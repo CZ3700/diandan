@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import type { SupportedLocale } from "@fan-support/contracts";
 import { CartHeader } from "./cart-header";
 import { LazyDrawer } from "./lazy-drawer";
@@ -8,8 +9,15 @@ import {
   createPresentationLocaleUrl,
   serializePresentationLocaleCookie,
 } from "../presentation-locale";
-import { storefrontHref } from "./navigation";
+import {
+  navigationTargetHref,
+  publicNavigationQuery,
+} from "./navigation-target";
+import { SiteNavigation } from "./site-navigation";
+import { SiteMenuPreview } from "./site-menu-preview";
+import { useStorefrontNavigation } from "./navigation-provider";
 import type { StorefrontCopy } from "./copy";
+import { SiteBrand } from "./site-brand";
 
 export function SiteHeader({
   locale,
@@ -17,13 +25,17 @@ export function SiteHeader({
   name,
   contextQuery,
   active,
+  regionEntry,
 }: Readonly<{
   locale: SupportedLocale;
   copy: StorefrontCopy;
   name: string;
   contextQuery: string;
   active: "home" | "artists" | "gifts" | "other";
+  /** Server-decided region entry; a sole published market hides it (ADR-017 addendum). */
+  regionEntry?: ReactNode;
 }>) {
+  const { source, version, previewView } = useStorefrontNavigation();
   const [menu, setMenu] = useState(false),
     [scrolled, setScrolled] = useState(false);
   const cancelDrawerLanguage = useRef<(() => void) | null>(null);
@@ -33,30 +45,14 @@ export function SiteHeader({
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
   }, []);
-  const links = [
-    { path: "/", label: copy.navHome, key: "home" },
-    { path: "/idols", label: copy.navArtists, key: "artists" },
-    { path: "/gifts", label: copy.navGifts, key: "gifts" },
-  ];
-  const navigation = (showOrderLookup = false) => (
-    <nav aria-label={copy.navLabel}>
-      {links.map((link) => (
-        <a
-          key={link.path}
-          href={storefrontHref(locale, link.path, contextQuery)}
-          aria-current={
-            active !== "other" && active === link.key ? "page" : undefined
-          }
-        >
-          {link.label}
-        </a>
-      ))}
-      {showOrderLookup && (
-        <a href={storefrontHref(locale, "/orders/lookup", contextQuery)}>
-          {copy.navOrders}
-        </a>
-      )}
-    </nav>
+  const navigation = (includeOrders = false) => (
+    <SiteNavigation
+      locale={locale}
+      copy={copy}
+      contextQuery={contextQuery}
+      active={active}
+      includeOrders={includeOrders}
+    />
   );
   const language = (inDrawer = false) => (
     <HeaderLanguage
@@ -78,23 +74,45 @@ export function SiteHeader({
       }}
     />
   );
+  const menuContent = () => (
+    <div className="storefront-drawer-nav">
+      {navigation(true)}
+      {language(true)}
+      {regionEntry ?? (
+        <>
+          <p>{copy.regionHint}</p>
+          <a href={navigationTargetHref(locale, "REGION", contextQuery)}>
+            {copy.region}
+          </a>
+        </>
+      )}
+    </div>
+  );
   return (
     <>
       <a className="storefront-skip" href="#main-content">
         {copy.skip}
       </a>
-      <header className="storefront-header" data-scrolled={scrolled}>
+      <header
+        className="storefront-header"
+        data-scrolled={scrolled}
+        data-navigation-source={source}
+        data-navigation-version={version}
+      >
         <a
           className="storefront-wordmark"
-          href={storefrontHref(locale, "/", contextQuery)}
+          href={navigationTargetHref(locale, "HOME", contextQuery)}
         >
-          {name}
-          <span aria-hidden="true">.</span>
+          <SiteBrand name={name} />
         </a>
         <div className="storefront-desktop-nav">{navigation()}</div>
         <div className="storefront-header-utilities">
           <div className="storefront-desktop-language">{language()}</div>
-          <CartHeader locale={locale} copy={copy} contextQuery={contextQuery} />
+          <CartHeader
+            locale={locale}
+            copy={copy}
+            contextQuery={publicNavigationQuery(contextQuery)}
+          />
           <div className="storefront-navigation-menu storefront-mobile-menu">
             <LazyDrawer
               loadingLabel={copy.loading}
@@ -123,18 +141,14 @@ export function SiteHeader({
                 </>
               }
             >
-              <div className="storefront-drawer-nav">
-                {navigation(true)}
-                {language(true)}
-                <p>{copy.regionHint}</p>
-                <a href={storefrontHref(locale, "/region", contextQuery)}>
-                  {copy.region}
-                </a>
-              </div>
+              {menuContent()}
             </LazyDrawer>
           </div>
         </div>
       </header>
+      {previewView === "menu" && (
+        <SiteMenuPreview copy={copy}>{menuContent()}</SiteMenuPreview>
+      )}
     </>
   );
 }

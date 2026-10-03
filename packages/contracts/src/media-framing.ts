@@ -23,6 +23,35 @@ export const MEDIA_FRAMING_MASTER_SIZES = Object.freeze({
   GIFT_PRIMARY: Object.freeze({ width: 1_200, height: 1_200 }),
 });
 
+/** Roles each image of the daily management center produces. */
+export const DAILY_MANAGEMENT_IMAGE_ROLES = Object.freeze({
+  SAVE_ARTIST: Object.freeze([
+    "PORTRAIT",
+    "HERO_DESKTOP",
+    "HERO_MOBILE",
+  ] as const),
+  SAVE_GIFT: Object.freeze(["GIFT_PRIMARY"] as const),
+  REPLACE_POSTER: Object.freeze(["HERO_DESKTOP", "HERO_MOBILE"] as const),
+});
+export type DailyManagementImageKind =
+  keyof typeof DAILY_MANAGEMENT_IMAGE_ROLES;
+
+/**
+ * Smallest source that fills every role of the kind without enlargement: a covering crop
+ * reaches a role's master only when both source sides are at least the master's sides.
+ */
+export function dailyManagementRecommendedSourceSize(
+  kind: DailyManagementImageKind,
+): Readonly<{ width: number; height: number }> {
+  const masters = DAILY_MANAGEMENT_IMAGE_ROLES[kind].map(
+    (role) => MEDIA_FRAMING_MASTER_SIZES[role],
+  );
+  return Object.freeze({
+    width: Math.max(...masters.map((size) => size.width)),
+    height: Math.max(...masters.map((size) => size.height)),
+  });
+}
+
 const dimensionSchema = z
   .number()
   .int()
@@ -52,7 +81,10 @@ export const mediaFramingRequestSchema = z.strictObject({
   sourceWidth: dimensionSchema,
   sourceHeight: dimensionSchema,
   role: roleSchema,
-  fit: z.enum(["COVER", "CONTAIN"]),
+  // COVER and CONTAIN never enlarge (strict qualification). COVER_ALLOW_ENLARGE is the daily
+  // management policy (user decision 2026-09-27): fill the role's ratio, enlarging a small
+  // crop; the plan's crop versus destination records whether enlargement happened.
+  fit: z.enum(["COVER", "CONTAIN", "COVER_ALLOW_ENLARGE"]),
   focalPoint: mediaFocalPointSchema,
 });
 
@@ -114,13 +146,14 @@ export const mediaFramingPlanSchema = planShapeSchema
       reject("destination", "placement must stay within the master canvas");
     }
     if (
-      destination.width > sourceCrop.width ||
-      destination.height > sourceCrop.height
+      request.fit !== "COVER_ALLOW_ENLARGE" &&
+      (destination.width > sourceCrop.width ||
+        destination.height > sourceCrop.height)
     ) {
       reject("destination", "source pixels must never be enlarged");
     }
 
-    if (request.fit === "COVER") {
+    if (request.fit === "COVER" || request.fit === "COVER_ALLOW_ENLARGE") {
       if (plan.background !== "NONE") {
         reject("background", "a covering image does not require letterboxing");
       }
@@ -200,7 +233,8 @@ export const mediaFramingPlanSchema = planShapeSchema
     "x-runtime-invariants": [
       "source dimensions describe pixels after EXIF orientation correction",
       "plan binds the original asset, metadata revision, checksum, role, fit and focal point",
-      "master canvas dimensions are fixed by role; plans never enlarge source pixels",
+      "master canvas dimensions are fixed by role; COVER and CONTAIN plans never enlarge source pixels",
+      "COVER_ALLOW_ENLARGE fills the canvas like COVER and may enlarge a crop smaller than the canvas",
       "contain retains the complete source and uses one uniform scale rounded to integer raster pixels",
       "a framing plan is deterministic geometry, not evidence of completed media processing or publication",
     ],

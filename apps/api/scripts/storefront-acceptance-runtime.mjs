@@ -20,7 +20,7 @@ import {
   createTestPublicationPreflightComposition,
   createTestPublicationRuntimeComposition,
   createTestGiftCommerceComposition,
-} from "../dist/index.js";
+} from "../dist/testing/index.js";
 import { createWorkerMediaProcessingComposition } from "../../worker/dist/media-processing-composition.js";
 import { createMediaProcessingWorkerRuntime } from "../../worker/dist/media-processing-runtime.js";
 import {

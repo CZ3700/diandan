@@ -1,8 +1,12 @@
 import { expect, test } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
-import { SUPPORTED_LOCALES } from "@fan-support/contracts";
+import {
+  SUPPORTED_LOCALES,
+  adminOrdersListItemSchema,
+} from "@fan-support/contracts";
 import * as views from "./list-view";
 import * as messages from "./copy";
+import { fulfillmentTone, paymentTone } from "./labels";
 test("order lists offer semantic search, independent filters and bounded pagination in every language", () => {
   expect(views.OrdersListView).toBeTypeOf("function");
   for (const locale of SUPPORTED_LOCALES) {
@@ -36,6 +40,88 @@ test("order lists offer semantic search, independent filters and bounded paginat
     expect(html).toContain("data-orders-fulfillment");
     expect(html).not.toContain("supportIntentId");
   }
+});
+test("order rows show the public number support hears, not the UUID", () => {
+  const html = renderToStaticMarkup(
+    <views.OrdersListView
+      locale="en"
+      list={{
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "LIST",
+        page: 1,
+        pageSize: 12,
+        totalItems: 1,
+        items: [
+          adminOrdersListItemSchema.parse({
+            orderId: "10000000-0000-4000-8000-000000000001",
+            publicOrderId: "20000000-0000-4000-8000-000000000002",
+            publicOrderNo: "FS-7K3M9C",
+            version: 1,
+            presentationLocale: "en",
+            orderStatus: "OPEN",
+            paymentStatus: "PAID",
+            disputeStatus: "NONE",
+            fulfillmentStatus: "PREPARING",
+            currency: "USD",
+            totalAmountMinor: 1200,
+            itemCount: 1,
+            pendingReviewCount: 0,
+            createdAt: "2026-09-26T00:00:00.000Z",
+            updatedAt: "2026-09-26T00:00:00.000Z",
+          }),
+        ],
+      }}
+      filters={{
+        page: 1,
+        pageSize: 12,
+        query: "",
+        fulfillment: "ALL",
+        moderation: "ALL",
+      }}
+      busy={false}
+      onFilters={() => {}}
+      onSelect={() => {}}
+      onPage={() => {}}
+    />,
+  );
+  expect(html).toContain("<strong>FS-7K3M9C</strong>");
+  expect(html).not.toContain("20000000-0000-4000-8000-000000000002");
+  // User request 2026-09-29: delivery and payment states are told apart by colour.
+  expect(html).toContain(
+    '<span class="mo-status" data-tone="progress" data-status-kind="fulfillment">Preparing</span>',
+  );
+  expect(html).toContain(
+    '<span class="mo-status" data-tone="success" data-status-kind="payment">Paid</span>',
+  );
+});
+test("order states map to distinct colour tones for handling delivery", () => {
+  expect(
+    Object.fromEntries(
+      (
+        ["PENDING", "PREPARING", "DELIVERED", "ON_HOLD", "CANCELED"] as const
+      ).map((status) => [status, fulfillmentTone(status)]),
+    ),
+  ).toEqual({
+    PENDING: "attention",
+    PREPARING: "progress",
+    DELIVERED: "success",
+    ON_HOLD: "danger",
+    CANCELED: "neutral",
+  });
+  expect(
+    Object.fromEntries(
+      (
+        ["UNPAID", "PENDING", "PAID", "PARTIALLY_REFUNDED", "REFUNDED"] as const
+      ).map((status) => [status, paymentTone(status)]),
+    ),
+  ).toEqual({
+    UNPAID: "attention",
+    PENDING: "attention",
+    PAID: "success",
+    PARTIALLY_REFUNDED: "danger",
+    REFUNDED: "danger",
+  });
 });
 test("seven order vocabularies contain equal complete keys", () => {
   expect(messages.ordersCopy).toBeTypeOf("function");

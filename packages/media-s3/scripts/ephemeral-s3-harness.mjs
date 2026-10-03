@@ -232,7 +232,9 @@ function startVersityContainer({ containerName, environmentFilePath, runId }) {
       "--tmpfs",
       "/data/iam:rw,nosuid,nodev,noexec,size=16m",
       "--tmpfs",
-      "/data/s3:rw,nosuid,nodev,noexec,size=128m",
+      // Seeded catalogs keep full-size PNG masters (a 2400x1350 hero is ~5-8 MB);
+      // 128m filled mid-suite and surfaced as STORAGE_UNAVAILABLE media jobs.
+      "/data/s3:rw,nosuid,nodev,noexec,size=512m",
       "--tmpfs",
       "/tmp:rw,nosuid,nodev,noexec,size=16m",
       "--stop-timeout",

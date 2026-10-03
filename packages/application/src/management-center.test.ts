@@ -1,5 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ManagementCenterPreparedMedia } from "@fan-support/contracts";
+import {
+  credentiallessHttpsUrlSchema,
+  type CreateMediaDownloadGrantCommand,
+  type ManagementCenterPreparedMedia,
+} from "@fan-support/contracts";
 import {
   createManagementCenterUseCases,
   createManagementCenterWorker,
@@ -67,6 +71,19 @@ function fixture() {
     submit: vi.fn().mockResolvedValue(success),
     read: vi.fn().mockResolvedValue(success),
     retry: vi.fn().mockResolvedValue(success),
+    archivePoster: vi.fn().mockResolvedValue({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      kind: "POSTER_ARCHIVED",
+      revisionId: id,
+    }),
+    assignArtist: vi.fn().mockResolvedValue({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      kind: "ARTIST_ASSIGNED",
+      artistId: id,
+      assignment: { brokerId: id, displayName: "Mina Park", active: true },
+    }),
     context: vi.fn(),
     list: vi.fn(),
     claim: vi.fn().mockResolvedValue(claim),
@@ -303,24 +320,47 @@ describe("management publication transaction retries", () => {
     );
   });
 
-  it("records one fenced failure after three aborts, without a fourth publication", async () => {
+  it("requeues the fenced operation after three aborts instead of failing it, without a fourth publication", async () => {
     vi.useFakeTimers();
     const f = rollbackFixture(3);
     const pending = f.worker.processNext();
     await vi.runAllTimersAsync();
-    expect(await pending).toBe("FAILED");
+    expect(await pending).toBe("PENDING");
     expect(f.state.committed).toBe(0);
     expect(f.publication.publish).toHaveBeenCalledTimes(3);
     expect(f.operations.loadClaim).toHaveBeenCalledTimes(3);
     expect(f.operations.claim).toHaveBeenCalledTimes(1);
     expect(f.media.prepare).toHaveBeenCalledTimes(1);
-    expect(f.operations.fail).toHaveBeenCalledExactlyOnceWith({
+    expect(f.operations.fail).not.toHaveBeenCalled();
+    expect(f.operations.defer).toHaveBeenCalledExactlyOnceWith({
       operationId: id,
       leaseTokenDigest: f.operations.claim.mock.calls[0]![0].leaseTokenDigest,
-      code: "PUBLICATION_FAILED",
-      retryable: true,
     });
   });
+
+  it.each(["revoked", "aborted"])(
+    "does not report PENDING when requeueing after three aborts is %s",
+    async (mode) => {
+      vi.useFakeTimers();
+      const f = rollbackFixture(3);
+      if (mode === "revoked")
+        f.operations.defer.mockResolvedValue({
+          schemaVersion: 1,
+          outcome: "FAILURE",
+          code: "NEEDS_AUTHORIZATION",
+        });
+      else
+        f.operations.defer.mockRejectedValue(
+          transactionFailure("TRANSACTION_ABORTED"),
+        );
+      const pending = f.worker.processNext();
+      await vi.runAllTimersAsync();
+      expect(await pending).toBe("UNAVAILABLE");
+      expect(f.publication.publish).toHaveBeenCalledTimes(3);
+      expect(f.operations.defer).toHaveBeenCalledTimes(1);
+      expect(f.operations.fail).not.toHaveBeenCalled();
+    },
+  );
 
   it.each(["authority-or-lease", "intent", "fence", "operation"])(
     "stops if the next transaction reload rejects %s",
@@ -446,6 +486,7 @@ describe("management publication rollback outcomes", () => {
         code: "PUBLICATION_FAILED",
         retryable: true,
       });
+      expect(f.operations.defer).not.toHaveBeenCalled();
       expect(f.publication.publish).toHaveBeenCalledTimes(1);
       expect(f.operations.complete).toHaveBeenCalledTimes(1);
     },
@@ -516,6 +557,82 @@ describe("management publication rollback outcomes", () => {
   });
 });
 describe("management orchestration", () => {
+  it("assigns an artist without a source-locale authority and passes only ids", async () => {
+    const f = fixture();
+    const result = await f.useCases.execute({
+      ...f.request,
+      command: {
+        schemaVersion: 1,
+        action: "ASSIGN_ARTIST",
+        artistId: id,
+        brokerId: id,
+        expectedBrokerId: null,
+        idempotencyKey: "management-assign-01",
+      },
+    });
+    expect(result).toMatchObject({
+      kind: "ARTIST_ASSIGNED",
+      artistId: id,
+      assignment: { brokerId: id },
+    });
+    expect(f.operations.authorize.mock.calls[0]?.[0]).not.toHaveProperty(
+      "sourceLocale",
+    );
+    expect(f.operations.assignArtist).toHaveBeenCalledWith({
+      principal,
+      requestId: id,
+      artistId: id,
+      brokerId: id,
+      expectedBrokerId: null,
+    });
+    expect(f.operations.submit).not.toHaveBeenCalled();
+  });
+  it("returns the repository's refusal to assign unchanged", async () => {
+    const f = fixture();
+    f.operations.assignArtist.mockResolvedValue({
+      schemaVersion: 1,
+      outcome: "FAILURE",
+      code: "FORBIDDEN",
+    });
+    expect(
+      await f.useCases.execute({
+        ...f.request,
+        command: {
+          schemaVersion: 1,
+          action: "ASSIGN_ARTIST",
+          artistId: id,
+          brokerId: null,
+          expectedBrokerId: id,
+          idempotencyKey: "management-assign-02",
+        },
+      }),
+    ).toEqual({ schemaVersion: 1, outcome: "FAILURE", code: "FORBIDDEN" });
+  });
+  it("archives an old poster under the poster's source-locale authority", async () => {
+    const f = fixture();
+    const result = await f.useCases.execute({
+      ...f.request,
+      command: {
+        schemaVersion: 1,
+        action: "ARCHIVE_POSTER",
+        revisionId: id,
+        expectedVersion: 4,
+        sourceLocale: "ja",
+        idempotencyKey: "management-archive-01",
+      },
+    });
+    expect(result).toMatchObject({ kind: "POSTER_ARCHIVED", revisionId: id });
+    expect(f.operations.authorize.mock.calls[0]?.[0]).toMatchObject({
+      sourceLocale: "ja",
+    });
+    expect(f.operations.archivePoster).toHaveBeenCalledWith({
+      principal,
+      requestId: id,
+      revisionId: id,
+      expectedVersion: 4,
+    });
+    expect(f.operations.submit).not.toHaveBeenCalled();
+  });
   it("authorizes actual source locale and persists only credential digests and IDs", async () => {
     const f = fixture();
     expect(await f.useCases.execute(f.request)).toEqual(success);
@@ -804,3 +921,188 @@ describe("management orchestration", () => {
     expect(f.operations.complete).not.toHaveBeenCalled();
   });
 });
+
+it.each([false, true])(
+  "authorizes the stable original through canonical transaction snapshots (normalized UUID target: %s)",
+  async (normalizeTarget) => {
+    const f = fixture();
+    const target = {
+      kind: "ARTIST",
+      id: "A1000000-BBBB-4CCC-8DDD-EEEEEEEEEEEE",
+      expectedVersion: 2,
+    };
+    const resolvedTarget = normalizeTarget
+      ? { ...target, id: target.id.toLowerCase() }
+      : target;
+    const source = {
+      assetId: id,
+      metadataRevisionId: id,
+      objectKey: "uploads/original.png",
+      checksumSha256: "a".repeat(64),
+      mimeType: "image/png",
+      width: 1600,
+      height: 2400,
+      byteSize: 100,
+    };
+    const readImageSource = vi.fn(async () => ({
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      target: resolvedTarget,
+      currentImage: { assetId: id, metadataRevisionId: id },
+      focalPoint: { x: 0.5, y: 0.3 },
+      source,
+      orientation: 6,
+    }));
+    let inTransaction = false;
+    const storage = {
+      createDownloadGrant: vi.fn(
+        async (input: CreateMediaDownloadGrantCommand) => {
+          expect(inTransaction).toBe(false);
+          return {
+            schemaVersion: 1 as const,
+            outcome: "SUCCESS" as const,
+            operation: "CREATE_DOWNLOAD_GRANT" as const,
+            value: {
+              storageClass: input.storageClass,
+              objectKey: input.objectKey,
+              expiresAt: input.expiresAt,
+              method: "GET" as const,
+              url: credentiallessHttpsUrlSchema.parse(
+                "https://media.example.test/temporary",
+              ),
+              headers: {},
+            },
+          };
+        },
+      ),
+    };
+    const useCases = createManagementCenterUseCases({
+      tokenPepper: "c".repeat(64),
+      resourceManagement: { execute: vi.fn() },
+      storage,
+      transactions: {
+        runInManagementCenterTransaction: async (work) => {
+          inTransaction = true;
+          try {
+            const result = await work({
+              operations: { ...f.operations, readImageSource },
+              publication: {},
+            } as never);
+            // Real transaction-runner returns immutable snapshots with alphabetically ordered keys.
+            return JSON.parse(
+              JSON.stringify(result, (_key, value: unknown) =>
+                value !== null &&
+                typeof value === "object" &&
+                !Array.isArray(value)
+                  ? Object.fromEntries(
+                      Object.entries(value).sort(([left], [right]) =>
+                        left < right ? -1 : left > right ? 1 : 0,
+                      ),
+                    )
+                  : value,
+              ),
+            );
+          } finally {
+            inTransaction = false;
+          }
+        },
+      },
+    });
+    const result = await useCases.execute({
+      ...f.request,
+      command: { schemaVersion: 1, action: "READ_IMAGE_SOURCE", target },
+    });
+    expect(result).toMatchObject({
+      outcome: "SUCCESS",
+      kind: "ORIGINAL_IMAGE",
+      sourceWidth: 2400,
+      sourceHeight: 1600,
+      target: resolvedTarget,
+    });
+    expect(JSON.stringify(result)).not.toContain("objectKey");
+    expect(storage.createDownloadGrant).toHaveBeenCalledOnce();
+  },
+);
+
+it.each(["session", "source", "time"])(
+  "does not release a signed original when %s changes while signing",
+  async (change) => {
+    const f = fixture();
+    const target = { kind: "ARTIST", id, expectedVersion: 2 };
+    const original = {
+      schemaVersion: 1,
+      outcome: "SUCCESS",
+      target,
+      currentImage: { assetId: id, metadataRevisionId: id },
+      focalPoint: { x: 0.5, y: 0.3 },
+      source: {
+        assetId: id,
+        metadataRevisionId: id,
+        objectKey: "uploads/original.png",
+        checksumSha256: "a".repeat(64),
+        mimeType: "image/png",
+        width: 1600,
+        height: 2400,
+        byteSize: 100,
+      },
+      orientation: 6,
+    };
+    const readImageSource = vi.fn(async () => original);
+    const storage = {
+      createDownloadGrant: vi.fn(
+        async (input: CreateMediaDownloadGrantCommand) => {
+          if (change === "session")
+            f.operations.authorize.mockResolvedValue({
+              schemaVersion: 1,
+              outcome: "FAILURE",
+              code: "UNAUTHENTICATED",
+            } as never);
+          if (change === "source")
+            readImageSource.mockResolvedValue({
+              ...original,
+              source: { ...original.source, checksumSha256: "b".repeat(64) },
+            });
+          if (change === "time")
+            f.operations.authorize.mockResolvedValue({
+              schemaVersion: 1,
+              outcome: "SUCCESS",
+              principal: { ...principal, authorizedAt: "2026-09-08T00:03:00Z" },
+            });
+          return {
+            schemaVersion: 1 as const,
+            outcome: "SUCCESS" as const,
+            operation: "CREATE_DOWNLOAD_GRANT" as const,
+            value: {
+              storageClass: input.storageClass,
+              objectKey: input.objectKey,
+              expiresAt: input.expiresAt,
+              method: "GET" as const,
+              url: credentiallessHttpsUrlSchema.parse(
+                "https://media.example.test/temporary",
+              ),
+              headers: {},
+            },
+          };
+        },
+      ),
+    };
+    const useCases = createManagementCenterUseCases({
+      tokenPepper: "c".repeat(64),
+      resourceManagement: { execute: vi.fn() },
+      storage,
+      transactions: {
+        runInManagementCenterTransaction: (work) =>
+          work({
+            operations: { ...f.operations, readImageSource },
+            publication: {},
+          } as never),
+      },
+    });
+    const result = await useCases.execute({
+      ...f.request,
+      command: { schemaVersion: 1, action: "READ_IMAGE_SOURCE", target },
+    });
+    expect(result.outcome).toBe("FAILURE");
+    expect(JSON.stringify(result)).not.toContain("temporary");
+  },
+);

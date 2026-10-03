@@ -13,10 +13,24 @@ The returned synchronous `select` and `render` methods implement the
 `OrderNotificationTemplates` port structurally. The factory has no provider,
 database, catalog, clock, network, or log dependencies. The worker composition
 must permit `TEST_DRAFT` only for its explicit local TEST transport. A real send
-requires `APPROVED`; this currently fails because all 21 review records are
-machine-assisted drafts with no human reviewer or approval commit.
+requires `APPROVED`: all 21 current v3 records carry an approver and the commit
+that introduced the reviewed copy. Any later copy change invalidates them until
+it is approved again.
 
 ## Version and review evidence
+
+`v3/` is the current version (2026-10-03 copy review): the v2 variables, layout
+and renderer with revised copy in all seven locales — gifts are for the artist and
+nothing is shipped to the fan, the single-use link expires and the newest email's
+link should be used, support is reachable through the website, and the PREPARING
+mail reports that preparation has started rather than claiming current progress.
+New selections use v3 identities only; `render` still replays messages by their
+pinned v1 or v2 identity.
+
+`v2/` (2026-09-26, ADR-019) is an archive: every item carries its purchase-time
+`giftKind`, a VIRTUAL line is marked as digital support and one support-record note
+is added when the order contains such a line. The order section shows the
+fan-facing `publicOrderNo` (F1-2); `publicOrderId` only binds the link fragment.
 
 `v1/` is an archive, not an editable “latest” catalog. Each event's `v1.<sha256>`
 identity covers all seven locales' subject, preheader, body copy, HTML and text
@@ -25,7 +39,7 @@ Email styles are a frozen projection of the existing design tokens; live shared
 token changes must not change previously requested mail. The renderer uses system
 fonts and no external media or trackers.
 
-The 21 records in `v1/reviews.json` bind the exact English source, translation,
+The 21 records in each version's `reviews.json` bind the exact English source, translation,
 variable schema and template version. `APPROVED` requires the full seven-language
 set for all three events, valid human-review evidence and exact hashes. Updating
 hashes does not approve a translation. Never manufacture reviewer names or

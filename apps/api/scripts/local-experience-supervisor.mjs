@@ -18,8 +18,16 @@ import {
 } from "./local-experience-bootstrap.mjs";
 import { startLocalExperienceServices } from "./local-experience-services.mjs";
 import { startLocalWeb } from "./local-experience-web.mjs";
+import {
+  assertPrebuiltWebCurrent,
+  workspaceRevision,
+} from "./local-experience-web-build.mjs";
 import { startLocalMedia } from "./local-experience-media.mjs";
 import { startLocalHomepageBootstrap } from "./local-experience-homepage.mjs";
+import { ensureLocalDefaultInventoryLocation } from "./local-experience-default-location.mjs";
+import { Client } from "pg";
+import { reportPostgresFailures } from "./local-experience-postgres-failures.mjs";
+reportPostgresFailures(Client, (line) => process.stdout.write(line));
 const workspaceRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "../../..",
@@ -129,6 +137,12 @@ const startup = lifecycle.start(async () => {
     }),
   );
   lifecycle.checkStarting();
+  // Holding the checkout: no build can run now, and a missing or stale one fails before any process.
+  if (config.webMode === "PREBUILT")
+    await assertPrebuiltWebCurrent(
+      workspaceRoot,
+      await workspaceRevision(workspaceRoot),
+    );
   await new Promise((resolve, reject) => {
     control.once("error", reject);
     control.listen(config.ports.control, "127.0.0.1", resolve);
@@ -151,6 +165,11 @@ const startup = lifecycle.start(async () => {
   context.runtime = await startLocalExperienceRuntime(context);
   lifecycle.checkStarting();
   context.business = await bootstrapLocalPolicies({
+    ...context,
+    base: `http://127.0.0.1:${config.ports.api}`,
+  });
+  lifecycle.checkStarting();
+  await ensureLocalDefaultInventoryLocation({
     ...context,
     base: `http://127.0.0.1:${config.ports.api}`,
   });

@@ -124,7 +124,9 @@ export async function observeOrderStorefrontPage(
             ? "EXCHANGE"
             : url.pathname.endsWith("/revoke")
               ? "REVOKE"
-              : "BOOTSTRAP",
+              : url.pathname.endsWith("/locate")
+                ? "LOCATE"
+                : "BOOTSTRAP",
         status: entry.status(),
         action: data?.action ?? null,
         code: data?.outcome === "FAILURE" ? data.code : null,

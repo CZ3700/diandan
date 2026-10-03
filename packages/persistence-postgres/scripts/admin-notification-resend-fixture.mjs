@@ -14,6 +14,13 @@ import { preflightEnvironment } from "../../../apps/api/scripts/publication-pref
 import { createWorkerReliableEventsComposition } from "../../../apps/worker/dist/reliable-events-composition.js";
 import { createReliableEventsWorkerRuntime } from "../../../apps/worker/dist/reliable-events-runtime.js";
 import { createTestWorkerNotifications } from "../../../apps/worker/dist/notification-composition.js";
+import { createNotificationFulfillmentFixture } from "./notification-fulfillment-fixture.mjs";
+import {
+  verifyDigitalNotificationResends,
+  verifyDigitalResendDelivery,
+  verifyResendHistoryGuard,
+} from "./admin-notification-resend-digital-fixture.mjs";
+
 const sha = (value) =>
   createHash("sha256").update(JSON.stringify(value)).digest("hex");
 
@@ -22,6 +29,7 @@ export async function verifyAdminNotificationResends(context) {
   const scalar = async (sql, params = []) =>
     (await client.query(sql, params)).rows[0];
   const payment = createOrderPaymentProtocolClient(context);
+  const advance = await createNotificationFulfillmentFixture(context);
   const access = createOrderAccessProtocolClient({
     ...context,
     canaries: payment.canaries,
@@ -119,7 +127,7 @@ export async function verifyAdminNotificationResends(context) {
     "INSERT INTO admin_sessions(id,admin_identity_id,session_token_digest,csrf_token_digest,authenticated_with_mfa,expires_at) VALUES($1,$2,decode($3,'hex'),decode($4,'hex'),true,clock_timestamp()+interval '1 hour')",
     [sessionId, adminId, sessionDigest, csrfDigest],
   );
-  async function paid(notifications = automatic) {
+  async function paid(notifications = automatic, options = {}) {
     const original = payment.checkout.add;
     payment.checkout.add = async (session, line) => {
       const added = await original(session, line),
@@ -152,7 +160,7 @@ export async function verifyAdminNotificationResends(context) {
     };
     let value;
     try {
-      value = await payment.fresh({ locale: "en" });
+      value = await payment.fresh({ locale: "en", lines: options.lines });
     } finally {
       payment.checkout.add = original;
     }
@@ -167,7 +175,22 @@ export async function verifyAdminNotificationResends(context) {
       [context.endpoint.providerAccountId, JSON.parse(signed.rawBody).event_id],
     );
     await payment.apply(event.id);
-    const state = await payment.assertPaid(value);
+    const state = options.fulfillmentStatus
+      ? await payment.state(value)
+      : await payment.assertPaid(value);
+    if (options.fulfillmentStatus)
+      check(
+        state.payment_status === "PAID" &&
+          state.order_status === "OPEN" &&
+          state.attempt_status === "SUCCEEDED" &&
+          state.cart_status === "CONVERTED" &&
+          state.converted_intents === state.items &&
+          state.fulfillments === state.items &&
+          state.fulfillment_status === options.fulfillmentStatus &&
+          state.captures === 1 &&
+          state.confirmations === 1,
+        "digital resend fixture retains actual canonical capture and line fulfillment",
+      );
     const source = await scalar(
       "SELECT id FROM outbox_events WHERE aggregate_id=$1 AND event_type='ORDER_PAYMENT_CONFIRMED'",
       [state.order_id],
@@ -225,6 +248,22 @@ export async function verifyAdminNotificationResends(context) {
     payment.canaries.push(match[1]);
     return { token: match[1], publicOrderId: match[2] };
   };
+  const digitalContext = {
+    context,
+    paid,
+    command,
+    request,
+    automatic,
+    manual,
+    advance,
+    gateway,
+    captures,
+    access,
+    token,
+    scalar,
+    state,
+  };
+  const preparedMixed = await verifyDigitalNotificationResends(digitalContext);
   progress("operator resend durable receipt, fresh link and receiver recovery");
   const value = await paid(),
     first = await command(value),
@@ -577,6 +616,14 @@ export async function verifyAdminNotificationResends(context) {
     (await manual.deliver(unknown.resultId)).decision === "SKIP",
     "deadline recovery never creates another attempt for terminal unknown history",
   );
+  // The existing real-clock deadline also expires the earlier mixed-order cooldown.
+  await verifyDigitalResendDelivery(
+    digitalContext,
+    preparedMixed,
+    "PREPARING",
+    "MIXED_PREPARING",
+  );
+  const historyGuard = await verifyResendHistoryGuard(digitalContext);
   check(
     payment.canaries.every(
       (value) => !context.logLines.some((line) => line.includes(value)),
@@ -597,83 +644,11 @@ export async function verifyAdminNotificationResends(context) {
     actualPgBoss: true,
     actualUnknownCutoffSeconds: 60,
     transactionRollback: true,
+    digitalPaymentResends: ["VIRTUAL", "MIXED"],
+    mixedPreparingSourceSupersedesBeforeMaterialization: true,
+    mixedPreparingResend: true,
+    historyGuard,
     scope:
       "Synthetic local data and local TEST receiver; no production email or physical delivery",
   };
-
-  // Existing database-enforced WORKER event fixture. Admin fulfillment itself is tested separately.
-  async function advance(value, status) {
-    const requestId = randomUUID(),
-      correlationId = randomUUID(),
-      sourceId = randomUUID();
-    await client.query("BEGIN");
-    try {
-      const order = await scalar(
-        "SELECT * FROM orders WHERE id=$1 FOR UPDATE",
-        [value.state.order_id],
-      );
-      const fulfillment = await scalar(
-        "SELECT * FROM fulfillments WHERE order_id=$1 FOR UPDATE",
-        [order.id],
-      );
-      await client.query(
-        "UPDATE fulfillments SET status=$2,version=version+1,prepared_at=transaction_timestamp(),updated_at=transaction_timestamp() WHERE id=$1",
-        [fulfillment.id, status],
-      );
-      await client.query(
-        "UPDATE orders SET fulfillment_status=$2,version=version+1,updated_at=transaction_timestamp() WHERE id=$1",
-        [order.id, status],
-      );
-      await client.query(
-        `INSERT INTO order_events(id,order_id,sequence,event_type,from_order_status,to_order_status,from_payment_status,to_payment_status,from_dispute_status,to_dispute_status,from_fulfillment_status,to_fulfillment_status,from_payment_attempt_id,to_payment_attempt_id,authority_kind,reason_code,request_id,correlation_id,occurred_at) VALUES($1,$2,$3,'FULFILLMENT_AGGREGATE_CHANGED',$4,$4,$5,$5,$6,$6,$7,$8,$9,$9,'FULFILLMENT','TEST_FULFILLMENT_TRANSITION',$10,$11,transaction_timestamp())`,
-        [
-          randomUUID(),
-          order.id,
-          Number(order.version) + 1,
-          order.order_status,
-          order.payment_status,
-          order.dispute_status,
-          order.fulfillment_status,
-          status,
-          order.current_payment_attempt_id,
-          requestId,
-          correlationId,
-        ],
-      );
-      await client.query(
-        `INSERT INTO fulfillment_events(id,fulfillment_id,order_id,sequence,from_status,to_status,authority_kind,reason_code,request_id,correlation_id,occurred_at) VALUES($1,$2,$3,$4,$5,$6,'WORKER','TEST_FULFILLMENT_TRANSITION',$7,$8,transaction_timestamp())`,
-        [
-          randomUUID(),
-          fulfillment.id,
-          order.id,
-          Number(fulfillment.version) + 1,
-          fulfillment.status,
-          status,
-          requestId,
-          correlationId,
-        ],
-      );
-      await client.query(
-        `INSERT INTO outbox_events(id,event_type,aggregate_type,aggregate_id,aggregate_version,primary_subject_id,secondary_subject_id,locale,market,currency,idempotency_key,correlation_id,request_id,occurred_at,available_at,payload_status) VALUES($1,'FULFILLMENT_STATUS_CHANGED','FULFILLMENT',$2,$3,$2,$4,$5,$6,$7,$8,$9,$10,transaction_timestamp(),transaction_timestamp(),$11)`,
-        [
-          sourceId,
-          fulfillment.id,
-          Number(fulfillment.version) + 1,
-          order.id,
-          order.presentation_locale,
-          order.market,
-          order.currency,
-          `resend-fixture:${sourceId}`,
-          correlationId,
-          requestId,
-          status,
-        ],
-      );
-      await client.query("COMMIT");
-      return sourceId;
-    } catch (error) {
-      await client.query("ROLLBACK");
-      throw error;
-    }
-  }
 }

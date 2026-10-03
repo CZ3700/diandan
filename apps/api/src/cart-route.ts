@@ -252,7 +252,10 @@ export function registerCartRoute(
                 await options.useCases[action](command, context),
               );
               if (result.outcome === "FAILURE") {
-                if (result.code === "CART_EXPIRED") clearCookie(reply);
+                // A paid checkout's return page still proves access with this cookie, so a read
+                // (such as the header bag) must not clear it; the next new cart replaces it.
+                if (result.code === "CART_EXPIRED" && action !== "read")
+                  clearCookie(reply);
                 return reply.code(failureStatus(result.code)).send(result);
               }
               if (

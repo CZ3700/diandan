@@ -418,6 +418,10 @@ async function runAdapterIntegration() {
     await downloadResponse.body?.cancel();
     fail("presigned-download-failed");
   }
+  if (downloadResponse.headers.get("cache-control") !== "private, no-store") {
+    await downloadResponse.body?.cancel();
+    fail("private-download-cache-policy-mismatch");
+  }
   const downloadedPayload = Buffer.from(await downloadResponse.arrayBuffer());
   if (!downloadedPayload.equals(payload)) {
     fail("downloaded-payload-mismatch");

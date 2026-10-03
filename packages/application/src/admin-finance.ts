@@ -42,6 +42,9 @@ export function createAdminFinanceUseCases(
     ),
     leaseMs,
     retryAfterMs,
+    ...(dependencies.onRefundUnresolved === undefined
+      ? {}
+      : { onRefundUnresolved: dependencies.onRefundUnresolved }),
   });
   return Object.freeze({
     async execute(input: unknown): Promise<AdminFinanceResponse> {

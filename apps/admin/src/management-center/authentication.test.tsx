@@ -62,7 +62,7 @@ test("expired session offers sign-in again and active session keeps the existing
       <ManagementCenter locale="en" authenticationAvailable />,
     ),
   ).toContain("Your session has ended");
-  state.session = { outcome: "SUCCESS" };
+  state.session = { outcome: "SUCCESS", permissions: [], localeScopes: [] };
   const html = renderToStaticMarkup(
     <ManagementCenter locale="en" authenticationAvailable />,
   );

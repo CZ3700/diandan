@@ -21,8 +21,17 @@ vi.mock("./workspace", () => ({
   ),
 }));
 vi.mock("../management-center/center", () => ({
-  ManagementCenter: ({ locale }: { locale: string }) => (
-    <div data-daily-center={locale} />
+  ManagementCenter: ({
+    locale,
+    authenticationAvailable,
+  }: {
+    locale: string;
+    authenticationAvailable: boolean;
+  }) => (
+    <div
+      data-daily-center={locale}
+      data-authentication-available={authenticationAvailable}
+    />
   ),
 }));
 
@@ -72,3 +81,17 @@ test("LOCAL_OIDC keeps both existing workspaces available without changing the o
     'data-advanced-workspace="en"',
   );
 });
+
+test.each(["LOCAL_OIDC", "OIDC"])(
+  "%s enables the existing login UI in all seven languages without exposing credentials",
+  async (mode) => {
+    state.mode = mode;
+    const { WorkspacePage } = await import("./pages");
+    for (const locale of SUPPORTED_LOCALES) {
+      const html = renderToStaticMarkup(<WorkspacePage locale={locale} />);
+      expect(html).toContain(`data-daily-center="${locale}"`);
+      expect(html).toContain('data-authentication-available="true"');
+      expect(html).not.toContain("adminAccessKey");
+    }
+  },
+);

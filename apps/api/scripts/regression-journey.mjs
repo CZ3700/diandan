@@ -305,20 +305,19 @@ export async function verifyRegressionJourneys({
         await page
           .locator(`[data-payment-state="${outcome}"]`)
           .waitFor({ timeout: 90000 });
-        await page.locator("[data-payment-method-refresh]").click();
-        const countryControl = page.locator("[data-payment-country]");
-        await countryControl.waitFor();
-        const retryCountry = await countryControl
-          .locator("option")
-          .evaluateAll(
-            (options) => options.find((option) => option.value)?.value,
-          );
-        assert(
-          retryCountry,
-          "Failed payment retains configured retry countries",
-        );
-        await countryControl.selectOption(retryCountry);
+        // The return page re-reads the methods by itself; the refresh control only appears
+        // when that read did not complete.
+        await page
+          .locator("[data-payment-create], [data-payment-method-refresh]")
+          .first()
+          .waitFor();
+        const refresh = page.locator("[data-payment-method-refresh]");
+        if (await refresh.count()) await refresh.click();
         await page.locator("[data-payment-create]").first().waitFor();
+        assert(
+          (await page.locator("[data-payment-country]").count()) === 0,
+          "Retry lists methods again without asking for a country",
+        );
         const current = await readCurrentPurchase(page);
         assert(
           current.attempt.status === outcome && current.attempt.canRetry,

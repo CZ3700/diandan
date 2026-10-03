@@ -55,3 +55,63 @@ test("both apps, the Next lint plugin and their locked versions stay aligned", a
   assert.equal(lint.specifier, version);
   assert.equal(lint.version.split("(")[0], version);
 });
+
+/** Every locked package reachable from a workspace's production dependencies. */
+function productionPackages(lock) {
+  const reached = new Set();
+  const queue = [];
+  const visit = (key) => {
+    if (reached.has(key)) return;
+    reached.add(key);
+    queue.push(key);
+  };
+  const visitImporter = (importer) => {
+    const entry = lock.importers[importer];
+    assert.ok(entry, `Unresolved workspace link ${importer}`);
+    const dependencies = {
+      ...entry.dependencies,
+      ...entry.optionalDependencies,
+    };
+    for (const [name, { version }] of Object.entries(dependencies))
+      visit(
+        version.startsWith("link:")
+          ? `importer:${path.posix.join(importer, version.slice(5))}`
+          : `${name}@${version}`,
+      );
+  };
+  for (const importer of Object.keys(lock.importers)) visitImporter(importer);
+  while (queue.length > 0) {
+    const key = queue.shift();
+    if (key.startsWith("importer:")) {
+      visitImporter(key.slice("importer:".length));
+      continue;
+    }
+    const snapshot = lock.snapshots[key];
+    assert.ok(snapshot !== undefined, `Unresolved locked package ${key}`);
+    const dependencies = {
+      ...snapshot?.dependencies,
+      ...snapshot?.optionalDependencies,
+    };
+    for (const [name, version] of Object.entries(dependencies))
+      visit(
+        lock.snapshots[`${name}@${version}`] === undefined
+          ? version
+          : `${name}@${version}`,
+      );
+  }
+  return [...reached].filter((key) => !key.startsWith("importer:"));
+}
+
+// GHSA-vfj7-8cjw-p6xm (braces) has no upstream fix and arrives only through
+// @next/eslint-plugin-next; pnpm-workspace.yaml ignores it only while no
+// production path can reach braces.
+test("the ignored braces advisory stays off every production dependency path", async () => {
+  const workspace = parse(await read("pnpm-workspace.yaml"));
+  assert.deepEqual(workspace.audit.ignore, ["GHSA-vfj7-8cjw-p6xm"]);
+  const production = productionPackages(parse(await read("pnpm-lock.yaml")));
+  assert.ok(production.some((key) => key.startsWith("next@")));
+  assert.deepEqual(
+    production.filter((key) => key.startsWith("braces@")),
+    [],
+  );
+});

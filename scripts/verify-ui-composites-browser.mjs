@@ -18,6 +18,7 @@ import { createServer } from "node:net";
 import os from "node:os";
 import path from "node:path";
 import { spawn } from "node:child_process";
+import { resolveSpawnCommand } from "./spawn-command.mjs";
 import { fileURLToPath } from "node:url";
 
 import {
@@ -30,6 +31,11 @@ import {
   readPngDimensions,
   summarizeAxeResult,
 } from "./verify-ui-primitives-browser.mjs";
+
+function spawnArguments(command, arguments_) {
+  const resolved = resolveSpawnCommand(command, arguments_);
+  return [resolved.command, resolved.args];
+}
 
 const scriptPath = fileURLToPath(import.meta.url);
 const defaultWorkspaceRoot = path.resolve(path.dirname(scriptPath), "..");
@@ -744,7 +750,11 @@ function assessCompositeScenarioEvidence(result, expected) {
     if (!String(result.metrics.heroCurrentSrc).endsWith(expectedHeroSource)) {
       errors.push("scenario metrics must prove responsive Hero art direction");
     }
-    errors.push(...assessCompositeMetrics(result.metrics));
+    errors.push(
+      ...assessCompositeMetrics(result.metrics, {
+        stress: expected.group === "stress",
+      }),
+    );
   }
   errors.push(
     ...assessCompositeDiagnosticsEvidence(
@@ -994,19 +1004,29 @@ const heroFrameMeasurementFields = Object.freeze([
   "Width",
 ]);
 
-function isStableHeroFrame(stability) {
+// Stress cells carry exaggerated copy whose wrapping depends on platform fonts: the ready Hero
+// may only grow downward there, while its position and width stay put (2026-09-27 decision).
+const heroGrowthFields = Object.freeze([
+  "AnchorTop",
+  "DocumentHeight",
+  "Height",
+]);
+
+function isStableHeroFrame(stability, { allowGrowth = false } = {}) {
   return heroFrameMeasurementFields.every((field) => {
     const before = stability?.[`before${field}`];
     const after = stability?.[`after${field}`];
     return (
       Number.isFinite(before) &&
       Number.isFinite(after) &&
-      Math.abs(before - after) <= 1
+      (allowGrowth && heroGrowthFields.includes(field)
+        ? after >= before - 1
+        : Math.abs(before - after) <= 1)
     );
   });
 }
 
-export function assessCompositeMetrics(metrics) {
+export function assessCompositeMetrics(metrics, { stress = false } = {}) {
   const errors = [...assessPageMetrics(metrics?.base)];
   for (const [component, minimum] of Object.entries(expectedComponentCounts)) {
     if (Number(metrics?.componentCounts?.[component] ?? 0) < minimum) {
@@ -1039,7 +1059,7 @@ export function assessCompositeMetrics(metrics) {
   }
   const transitionStability = metrics?.heroTransitionStability;
   if (
-    !isStableHeroFrame(transitionStability) ||
+    !isStableHeroFrame(transitionStability, { allowGrowth: stress }) ||
     transitionStability?.beforeState !== "loading" ||
     transitionStability?.afterState !== "ready"
   ) {
@@ -1058,7 +1078,7 @@ export function assessCompositeMetrics(metrics) {
     failureStability.requestedSrc.length === 0
   ) {
     errors.push(
-      "Hero failure layout shift must stay within one CSS pixel of the ready frame",
+      `Hero failure layout shift must stay within one CSS pixel of the ready frame: ${JSON.stringify(failureStability)}`,
     );
   }
   if (metrics?.heroFailureOverlap !== false) {
@@ -1410,7 +1430,7 @@ async function runCommand(
   arguments_,
   { cwd, env = process.env, logPath },
 ) {
-  const child = spawn(command, arguments_, {
+  const child = spawn(...spawnArguments(command, arguments_), {
     cwd,
     env,
     stdio: ["ignore", "pipe", "pipe"],
@@ -1441,7 +1461,7 @@ async function runCommand(
 }
 
 async function captureCommand(command, arguments_, cwd) {
-  const child = spawn(command, arguments_, {
+  const child = spawn(...spawnArguments(command, arguments_), {
     cwd,
     stdio: ["ignore", "pipe", "pipe"],
   });
@@ -2162,7 +2182,34 @@ async function collectMetrics(page) {
         document: {
           bodyScrollWidth: document.body.scrollWidth,
           clientWidth: document.documentElement.clientWidth,
+          layoutWidth: document.documentElement.getBoundingClientRect().width,
           scrollWidth: document.documentElement.scrollWidth,
+          // Diagnostics only: the deepest elements whose right edge passes the viewport,
+          // including sub-pixel edges that round scrollWidth up by one.
+          overflowing: [...document.body.querySelectorAll("*")]
+            .filter(
+              (element) =>
+                element.getBoundingClientRect().right >
+                document.documentElement.clientWidth,
+            )
+            .filter(
+              (element, _index, all) =>
+                !all.some(
+                  (other) => other !== element && element.contains(other),
+                ),
+            )
+            .slice(0, 8)
+            .map((element) => {
+              const classes =
+                typeof element.className === "string"
+                  ? element.className.trim().split(/\s+/u).slice(0, 3)
+                  : [];
+              const marks = [...element.attributes]
+                .filter((attribute) => attribute.name.startsWith("data-fs"))
+                .slice(0, 2)
+                .map((attribute) => `[${attribute.name}=${attribute.value}]`);
+              return `${element.tagName.toLowerCase()}${classes.map((name) => `.${name}`).join("")}${marks.join("")} right=${element.getBoundingClientRect().right.toFixed(3)}`;
+            }),
         },
         fontsStatus: document.fonts.status,
         replacementGlyphs: (document.body.innerText.match(/�/gu) ?? []).length,
@@ -2660,7 +2707,9 @@ async function runScenario({ AxeBuilder, browser, candidate, origin, entry }) {
       heroFailureStability,
       heroTransitionStability,
     };
-    const errors = assessCompositeMetrics(metrics);
+    const errors = assessCompositeMetrics(metrics, {
+      stress: entry.group === "stress",
+    });
     const expectedMedia =
       entry.viewport.width < 768 ? "hero-mobile.png" : "hero-desktop.png";
     if (!String(metrics.heroCurrentSrc).endsWith(expectedMedia)) {
@@ -2828,6 +2877,7 @@ async function runNativeZoomPass({
       devicePixelRatio: window.devicePixelRatio,
       innerHeight: window.innerHeight,
       innerWidth: window.innerWidth,
+      layoutViewportWidth: document.documentElement.clientWidth,
       outerHeight: window.outerHeight,
       outerWidth: window.outerWidth,
       visualViewport:

@@ -1,6 +1,6 @@
 import { createStructuredLogger } from "@fan-support/observability";
 import { createApiApplication } from "../dist/bootstrap.js";
-import { createTestOrderAccessComposition } from "../dist/order-access-composition.js";
+import { createTestOrderAccessComposition } from "../dist/testing/order-access-composition.js";
 import { createOrderAccessCredentials } from "../dist/order-access-credentials.js";
 import { preflightEnvironment } from "./publication-preflight-http-fixtures.mjs";
 import { publicationMediaEnvironment } from "./publication-runtime-http-media.mjs";

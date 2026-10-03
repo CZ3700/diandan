@@ -14,6 +14,15 @@ import {
   type CheckoutReply,
   type CheckoutTransport,
 } from "./checkout-transport";
+import {
+  canLaunchPaymentComponent,
+  isPerformableActionType,
+  type ProviderComponentAction,
+} from "./payment-components";
+/** What the fan's explicit "pay" leads to: a hosted page, or a provider component launch. */
+export type PaymentContinuation =
+  | Readonly<{ type: "REDIRECT"; url: string }>
+  | Readonly<{ type: "PROVIDER_COMPONENT"; action: ProviderComponentAction }>;
 export type CheckoutSnapshot = Readonly<{
   busy: boolean;
   initialized: boolean;
@@ -54,6 +63,7 @@ export function createCheckoutController(
   let epoch = 0;
   let active = true;
   let pending: CheckoutCall | null = null;
+  let paymentOperation: symbol | null = null;
   let returnLocator: Readonly<{ session: string; attempt: string }> | undefined;
   const listeners = new Set<() => void>();
   function update(change: Partial<CheckoutSnapshot>) {
@@ -151,7 +161,7 @@ export function createCheckoutController(
     else if ("cart" in result) update({ ...common, cart: result.cart });
     return true;
   }
-  async function capabilities(country?: string) {
+  async function loadCapabilities(country?: string): Promise<boolean> {
     if (
       !state.checkout ||
       state.checkout.expired ||
@@ -159,7 +169,7 @@ export function createCheckoutController(
       state.busy ||
       pending
     )
-      return;
+      return false;
     update({
       capabilities: state.capabilities
         ? {
@@ -171,22 +181,26 @@ export function createCheckoutController(
           }
         : null,
     });
-    await run(checkoutCalls.capabilities(state.checkout.id, locale, country));
+    return run(checkoutCalls.capabilities(state.checkout.id, locale, country));
   }
   async function validate(version: number) {
-    if (!pending) await run(checkoutCalls.validate(version, locale));
+    if (!pending && !paymentOperation)
+      await run(checkoutCalls.validate(version, locale));
   }
   async function initialize(
     locator?: Readonly<{ session: string; attempt: string }>,
   ) {
+    if (paymentOperation || pending || state.busy) return;
     active = true;
-    if (pending || state.busy) return;
     if (locator) returnLocator = locator;
     if (returnLocator) {
       if (!(await run(checkoutCalls.session(returnLocator.session)))) return;
-      await run(
-        checkoutCalls.attempt(returnLocator.session, returnLocator.attempt),
-      );
+      if (
+        await run(
+          checkoutCalls.attempt(returnLocator.session, returnLocator.attempt),
+        )
+      )
+        await loadCapabilities();
       return;
     }
     if (!(await run(checkoutCalls.current()))) {
@@ -204,7 +218,7 @@ export function createCheckoutController(
       return;
     }
     if (state.checkout) {
-      await capabilities();
+      await loadCapabilities();
       return;
     }
     if (!(await run(checkoutCalls.cart(locale)))) return;
@@ -215,12 +229,16 @@ export function createCheckoutController(
     }
     await validate(state.cart.version);
   }
-  async function confirm(email: string) {
-    if (pending || state.busy || !state.preflight || state.checkout) return;
-    if (await run(checkoutCalls.create(state.preflight, email)))
-      await capabilities();
+  async function confirmCheckout(email: string): Promise<boolean> {
+    if (pending || state.busy || !state.preflight || state.checkout)
+      return false;
+    if (!(await run(checkoutCalls.create(state.preflight, email))))
+      return false;
+    return loadCapabilities();
   }
-  async function start(capability: PaymentRuntimeCapabilityView) {
+  async function createPayment(
+    capability: PaymentRuntimeCapabilityView,
+  ): Promise<boolean> {
     if (
       pending ||
       state.busy ||
@@ -232,8 +250,8 @@ export function createCheckoutController(
         (value) => value.id === capability.id,
       )
     )
-      return;
-    await run(
+      return false;
+    return run(
       checkoutCalls.start(
         state.checkout.id,
         capability,
@@ -242,17 +260,18 @@ export function createCheckoutController(
     );
   }
   async function refresh() {
-    if (!active || pending || state.busy) return;
-    if (state.checkout && state.attempt)
-      await run(checkoutCalls.attempt(state.checkout.id, state.attempt.id));
-    else await initialize();
+    if (!active || paymentOperation || pending || state.busy) return;
+    if (state.checkout && state.attempt) {
+      if (await run(checkoutCalls.attempt(state.checkout.id, state.attempt.id)))
+        await loadCapabilities();
+    } else await initialize();
   }
   async function retry() {
-    if (!active || state.busy) return;
+    if (!active || paymentOperation || state.busy) return;
     if (pending) {
       const call = pending;
       if (await run(call)) {
-        if (state.checkout) await capabilities();
+        if (state.checkout) await loadCapabilities();
       }
       return;
     }
@@ -260,23 +279,73 @@ export function createCheckoutController(
       state.checkout &&
       state.attempt &&
       ["CREATE_PENDING", "RECONCILE_REQUIRED"].includes(state.attempt.recovery)
-    )
-      await run(checkoutCalls.recover(state.checkout.id, state.attempt.id));
-    else await initialize();
+    ) {
+      if (await run(checkoutCalls.recover(state.checkout.id, state.attempt.id)))
+        await loadCapabilities();
+    } else await initialize();
   }
-  async function continuePayment(): Promise<string | null> {
+  async function readContinuation(): Promise<PaymentContinuation | null> {
     if (pending || state.busy || !state.checkout || !state.attempt) return null;
     if (
       !(await run(checkoutCalls.attempt(state.checkout.id, state.attempt.id)))
     )
       return null;
     const attempt = state.attempt;
-    return attempt?.status === "REQUIRES_ACTION" &&
-      attempt.recovery === "NONE" &&
-      !attempt.actionExpired &&
-      attempt.action?.type === "REDIRECT"
-      ? attempt.action.url
+    const action = attempt?.action;
+    if (
+      attempt?.status !== "REQUIRES_ACTION" ||
+      attempt.recovery !== "NONE" ||
+      attempt.actionExpired ||
+      !action
+    )
+      return null;
+    if (action.type === "REDIRECT")
+      return { type: "REDIRECT", url: action.url };
+    return action.type === "PROVIDER_COMPONENT" &&
+      canLaunchPaymentComponent(action)
+      ? { type: "PROVIDER_COMPONENT", action }
       : null;
+  }
+  /** Only an explicit pay action may join these steps; recovery and polling never start a new payment. */
+  async function paymentChain(
+    operation: (current: () => boolean) => Promise<PaymentContinuation | null>,
+  ): Promise<PaymentContinuation | null> {
+    if (!active || paymentOperation || pending || state.busy) return null;
+    const token = Symbol();
+    const version = epoch;
+    paymentOperation = token;
+    const current = () =>
+      active && epoch === version && paymentOperation === token;
+    try {
+      const continuation = await operation(current);
+      return current() ? continuation : null;
+    } finally {
+      if (paymentOperation === token) paymentOperation = null;
+    }
+  }
+  async function startAndContinue(
+    capability: PaymentRuntimeCapabilityView,
+    current: () => boolean,
+  ) {
+    if (!(await createPayment(capability)) || !current()) return null;
+    return readContinuation();
+  }
+  function startAndPay(capability: PaymentRuntimeCapabilityView) {
+    return paymentChain((current) => startAndContinue(capability, current));
+  }
+  function confirmAndPay(email: string) {
+    return paymentChain(async (current) => {
+      if (!(await confirmCheckout(email)) || !current()) return null;
+      const caps = state.capabilities;
+      if (!caps?.country || caps.countrySelectionRequired || state.attempt)
+        return null;
+      const methods = caps.capabilities.filter((capability) =>
+        capability.supportedActionTypes.some(isPerformableActionType),
+      );
+      return methods.length === 1
+        ? startAndContinue(methods[0]!, current)
+        : null;
+    });
   }
   return {
     snapshot: () => state,
@@ -288,16 +357,27 @@ export function createCheckoutController(
     },
     initialize,
     validate,
-    confirm,
-    capabilities,
-    start,
+    async confirm(email: string) {
+      if (!paymentOperation) await confirmCheckout(email);
+    },
+    async capabilities(country?: string) {
+      if (!paymentOperation) await loadCapabilities(country);
+    },
+    async start(capability: PaymentRuntimeCapabilityView) {
+      if (!paymentOperation) await createPayment(capability);
+    },
+    confirmAndPay,
+    startAndPay,
     refresh,
     retry,
-    continuePayment,
+    async continuePayment() {
+      return paymentOperation ? null : readContinuation();
+    },
     dispose() {
       active = false;
       epoch++;
       pending = null;
+      paymentOperation = null;
       transport.dispose();
       state = initial();
       for (const listener of listeners) listener();

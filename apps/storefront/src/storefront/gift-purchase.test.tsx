@@ -344,6 +344,48 @@ describe("gift purchase presentation against canonical offer contracts", () => {
     expect(html).not.toContain('role="spinbutton"');
   });
 
+  it("virtual gifts explain digital fulfilment instead of studio stock preparation", () => {
+    const text = (value: string) =>
+      value.replaceAll("&", "&amp;").replaceAll("'", "&#x27;");
+    const virtual = (overrides: Partial<StorefrontGiftOffer>) => {
+      const gift = fixture(overrides);
+      return storefrontGiftResponseSchema.parse({
+        ...gift,
+        classification: { ...gift.classification, giftKind: "VIRTUAL" },
+      }) as ReturnType<typeof fixture>;
+    };
+    const unbounded = Number.MAX_SAFE_INTEGER;
+    for (const offer of [
+      { stock: { kind: "PROCURE_ON_DEMAND" }, maxQuantity: unbounded },
+      {
+        stock: { kind: "PREORDER" },
+        availability: "PREORDER",
+        maxQuantity: unbounded,
+      },
+    ] as const) {
+      const html = render(virtual(offer));
+      expect(html).toContain(text(copy.giftKindVirtualBody));
+      for (const studioCopy of [
+        copy.giftProcureBody,
+        copy.giftPreorderBody,
+        copy.giftProcureOnDemand,
+        copy.giftPreorder,
+      ])
+        expect(html).not.toContain(text(studioCopy));
+    }
+    const tracked = render(
+      virtual({ stock: { kind: "TRACKED", availableQuantity: 3 } }),
+    );
+    expect(tracked).toContain(text(copy.giftKindVirtualBody));
+    expect(tracked).toContain("3 available");
+    expect(tracked).not.toContain(text(copy.giftTracked));
+    const physical = render(
+      fixture({ stock: { kind: "PROCURE_ON_DEMAND" }, maxQuantity: unbounded }),
+    );
+    expect(physical).toContain(text(copy.giftProcureBody));
+    expect(physical).not.toContain(text(copy.giftKindVirtualBody));
+  });
+
   it("unknown variants stay unselected rather than substituting the first available offer", () => {
     const html = render(fixture(), "20000000-0000-4000-8000-000000000099");
     expect(html).toContain(copy.giftNotAvailable);
@@ -371,7 +413,9 @@ describe("gift purchase presentation against canonical offer contracts", () => {
         maxQuantity: 0,
       }),
     );
-    expect(html).toContain(copy.giftRecipientIneligible);
+    expect(html).toContain(
+      copy.giftRecipientIneligible.replaceAll("'", "&#x27;"),
+    );
     expect(html).not.toContain('role="spinbutton"');
   });
 

@@ -3,6 +3,14 @@ import {
   type AdminOrdersRouteDependencies,
 } from "./admin-orders-route.js";
 import {
+  registerAdminLedgerRoute,
+  type AdminLedgerRouteDependencies,
+} from "./admin-ledger-route.js";
+import {
+  registerAdminArtistNotesRoute,
+  type AdminArtistNotesRouteDependencies,
+} from "./admin-artist-notes-route.js";
+import {
   registerAdminFinanceRoute,
   type AdminFinanceRouteDependencies,
 } from "./admin-finance-route.js";
@@ -12,8 +20,14 @@ import {
 } from "./admin-payment-configuration-route.js";
 import {
   registerAdminAccessRoute,
+  registerAdminLocalAccessRoute,
   type AdminAccessRouteDependencies,
+  type AdminLocalAccessRouteDependencies,
 } from "./admin-access-route.js";
+import {
+  registerAdminAccountRoutes,
+  type AdminAccountRouteDependencies,
+} from "./admin-account-route.js";
 import {
   registerStorefrontCommerceRoute,
   type StorefrontCommerceRouteDependencies,
@@ -22,6 +36,40 @@ import {
   registerManagementCenterRoute,
   type ManagementCenterRouteDependencies,
 } from "./management-center-route.js";
+import {
+  registerHomeLayoutRoute,
+  registerPublicHomeLayoutRoute,
+  type HomeLayoutRouteDependencies,
+  type PublicHomeLayoutRouteDependencies,
+} from "./home-layout-route.js";
+import {
+  registerCatalogDisplayOrderRoute,
+  type CatalogDisplayOrderRouteDependencies,
+} from "./catalog-display-order-route.js";
+import {
+  registerStorefrontThemeRoute,
+  registerPublicStorefrontThemeRoute,
+  type StorefrontThemeRouteDependencies,
+  type PublicStorefrontThemeRouteDependencies,
+} from "./storefront-theme-route.js";
+import {
+  registerStorefrontBrandRoute,
+  registerPublicStorefrontBrandRoute,
+  type StorefrontBrandRouteDependencies,
+  type PublicStorefrontBrandRouteDependencies,
+} from "./storefront-brand-route.js";
+import {
+  registerStorefrontNavigationRoute,
+  registerPublicStorefrontNavigationRoute,
+  type StorefrontNavigationRouteDependencies,
+  type PublicStorefrontNavigationRouteDependencies,
+} from "./storefront-navigation-route.js";
+import {
+  registerInformationPagesRoute,
+  registerPublicInformationPagesRoute,
+  type InformationPagesRouteDependencies,
+  type PublicInformationPagesRouteDependencies,
+} from "./information-pages-route.js";
 import {
   registerGiftCommerceRoute,
   type GiftCommerceRouteDependencies,
@@ -119,6 +167,7 @@ import {
 } from "./payment-webhook-route.js";
 import { assertApiRuntimeConfig } from "./runtime-config.js";
 import { SafeHttpExceptionFilter } from "./safe-http-exception.filter.js";
+import { apiAdapterOptions } from "./trusted-proxy-config.js";
 
 export const apiNestApplicationOptions = Object.freeze({
   abortOnError: false,
@@ -140,12 +189,31 @@ export type CreateApiApplicationOptions = Readonly<{
   checkoutPreflightRuntime?: ApiLifecycleResource;
   paymentRuntimeRoute?: PaymentRuntimeRouteDependencies;
   paymentRuntime?: ApiLifecycleResource;
+  /** Refreshes the published payment directory; starts before payment recovery reads it. */
+  paymentConfigurationRuntime?: ApiLifecycleResource;
+  /** Owner holds on the process-wide pools; each pool closes after its last borrower stops. */
+  sharedResourcesRuntime?: ApiLifecycleResource;
   managementCenterRoute?: ManagementCenterRouteDependencies;
   managementCenterRuntime?: ApiLifecycleResource;
+  homeLayoutRoute?: HomeLayoutRouteDependencies;
+  catalogDisplayOrderRoute?: CatalogDisplayOrderRouteDependencies;
+  publicHomeLayoutRoute?: PublicHomeLayoutRouteDependencies;
+  storefrontThemeRoute?: StorefrontThemeRouteDependencies;
+  publicStorefrontThemeRoute?: PublicStorefrontThemeRouteDependencies;
+  storefrontBrandRoute?: StorefrontBrandRouteDependencies;
+  publicStorefrontBrandRoute?: PublicStorefrontBrandRouteDependencies;
+  storefrontNavigationRoute?: StorefrontNavigationRouteDependencies;
+  publicStorefrontNavigationRoute?: PublicStorefrontNavigationRouteDependencies;
+  informationPagesRoute?: InformationPagesRouteDependencies;
+  publicInformationPagesRoute?: PublicInformationPagesRouteDependencies;
   giftCommerceRoute?: GiftCommerceRouteDependencies;
   giftCommerceRuntime?: ApiLifecycleResource;
   publishedGiftCommerceRoute?: PublishedGiftCommerceRouteDependencies;
   adminOrdersRoute?: AdminOrdersRouteDependencies;
+  adminLedgerRoute?: AdminLedgerRouteDependencies;
+  adminLedgerRuntime?: ApiLifecycleResource;
+  adminArtistNotesRoute?: AdminArtistNotesRouteDependencies;
+  adminArtistNotesRuntime?: ApiLifecycleResource;
   adminOrdersRuntime?: ApiLifecycleResource;
   adminFinanceRoute?: AdminFinanceRouteDependencies;
   adminFinanceRuntime?: ApiLifecycleResource;
@@ -154,6 +222,8 @@ export type CreateApiApplicationOptions = Readonly<{
   adminPaymentConfigurationRoute?: AdminPaymentConfigurationRouteDependencies;
   adminPaymentConfigurationRuntime?: ApiLifecycleResource;
   adminAccessRoute?: AdminAccessRouteDependencies;
+  adminLocalAccessRoute?: AdminLocalAccessRouteDependencies;
+  adminAccountRoute?: AdminAccountRouteDependencies;
   adminAccessRuntime?: ApiLifecycleResource;
   adminSessionRoute?: AdminSessionRouteDependencies;
   adminSessionRuntime?: ApiLifecycleResource;
@@ -190,8 +260,12 @@ function registerApiLifecycle(
   adapter: FastifyAdapter,
   runtime: ApiLifecycleResource | undefined,
   name:
+    | "API shared resources"
+    | "API payment configuration projection"
     | "API admin access"
     | "API admin orders"
+    | "API admin ledger"
+    | "API admin artist notes"
     | "API admin finance"
     | "API admin exceptions"
     | "API payment configuration"
@@ -244,13 +318,23 @@ export async function createApiApplication(
 ): Promise<NestFastifyApplication> {
   assertApiRuntimeConfig(environment);
   const logger = options.logger ?? createStructuredLogger({ service: "api" });
-  const adapter = new FastifyAdapter({ logger: false });
+  const adapter = new FastifyAdapter(apiAdapterOptions(environment));
   registerFastifyObservability(adapter.getInstance(), {
     service: "api",
     logger,
   });
+  registerApiLifecycle(
+    adapter,
+    options.sharedResourcesRuntime,
+    "API shared resources",
+  );
   registerApiLifecycle(adapter, options.cartRuntime, "API cart");
   registerApiLifecycle(adapter, options.orderAccessRuntime, "API order access");
+  registerApiLifecycle(
+    adapter,
+    options.paymentConfigurationRuntime,
+    "API payment configuration projection",
+  );
   registerApiLifecycle(adapter, options.paymentRuntime, "API payment runtime");
   registerApiLifecycle(
     adapter,
@@ -275,7 +359,12 @@ export async function createApiApplication(
       ["/api/v1/order-access/exchange", "POST"],
       ["/api/v1/checkout/sessions/:checkoutSessionId/order-access", "POST"],
       ["/api/v1/order-access/revoke", "POST"],
+      ["/api/v1/order-access/locate", "POST"],
       ["/api/v1/orders/:publicOrderId", "GET"],
+      [
+        "/api/v1/orders/:publicOrderId/delivery-proofs/:proofId/:rendition",
+        "GET",
+      ],
     ] as const)
       adapter.getInstance().route({
         url,
@@ -390,6 +479,12 @@ export async function createApiApplication(
     "API admin workspace",
   );
   registerApiLifecycle(adapter, options.adminOrdersRuntime, "API admin orders");
+  registerApiLifecycle(adapter, options.adminLedgerRuntime, "API admin ledger");
+  registerApiLifecycle(
+    adapter,
+    options.adminArtistNotesRuntime,
+    "API admin artist notes",
+  );
   registerApiLifecycle(
     adapter,
     options.adminFinanceRuntime,
@@ -419,8 +514,25 @@ export async function createApiApplication(
     );
   if (options.adminOrdersRoute)
     registerAdminOrdersRoute(adapter.getInstance(), options.adminOrdersRoute);
+  if (options.adminLedgerRoute)
+    registerAdminLedgerRoute(adapter.getInstance(), options.adminLedgerRoute);
+  if (options.adminArtistNotesRoute)
+    registerAdminArtistNotesRoute(
+      adapter.getInstance(),
+      options.adminArtistNotesRoute,
+    );
   if (options.adminAccessRoute)
     registerAdminAccessRoute(adapter.getInstance(), options.adminAccessRoute);
+  if (options.adminLocalAccessRoute)
+    registerAdminLocalAccessRoute(
+      adapter.getInstance(),
+      options.adminLocalAccessRoute,
+    );
+  if (options.adminAccountRoute)
+    registerAdminAccountRoutes(
+      adapter.getInstance(),
+      options.adminAccountRoute,
+    );
   if (options.adminSessionRoute)
     registerAdminSessionRoute(adapter.getInstance(), options.adminSessionRoute);
   if (options.adminCatalogRoute)
@@ -479,6 +591,58 @@ export async function createApiApplication(
     registerManagementCenterRoute(
       adapter.getInstance(),
       options.managementCenterRoute,
+    );
+  if (options.homeLayoutRoute !== undefined)
+    registerHomeLayoutRoute(adapter.getInstance(), options.homeLayoutRoute);
+  if (options.catalogDisplayOrderRoute !== undefined)
+    registerCatalogDisplayOrderRoute(
+      adapter.getInstance(),
+      options.catalogDisplayOrderRoute,
+    );
+  if (options.publicHomeLayoutRoute !== undefined)
+    registerPublicHomeLayoutRoute(
+      adapter.getInstance(),
+      options.publicHomeLayoutRoute,
+    );
+  if (options.storefrontThemeRoute !== undefined)
+    registerStorefrontThemeRoute(
+      adapter.getInstance(),
+      options.storefrontThemeRoute,
+    );
+  if (options.publicStorefrontThemeRoute !== undefined)
+    registerPublicStorefrontThemeRoute(
+      adapter.getInstance(),
+      options.publicStorefrontThemeRoute,
+    );
+  if (options.storefrontBrandRoute !== undefined)
+    registerStorefrontBrandRoute(
+      adapter.getInstance(),
+      options.storefrontBrandRoute,
+    );
+  if (options.publicStorefrontBrandRoute !== undefined)
+    registerPublicStorefrontBrandRoute(
+      adapter.getInstance(),
+      options.publicStorefrontBrandRoute,
+    );
+  if (options.storefrontNavigationRoute !== undefined)
+    registerStorefrontNavigationRoute(
+      adapter.getInstance(),
+      options.storefrontNavigationRoute,
+    );
+  if (options.publicStorefrontNavigationRoute !== undefined)
+    registerPublicStorefrontNavigationRoute(
+      adapter.getInstance(),
+      options.publicStorefrontNavigationRoute,
+    );
+  if (options.informationPagesRoute !== undefined)
+    registerInformationPagesRoute(
+      adapter.getInstance(),
+      options.informationPagesRoute,
+    );
+  if (options.publicInformationPagesRoute !== undefined)
+    registerPublicInformationPagesRoute(
+      adapter.getInstance(),
+      options.publicInformationPagesRoute,
     );
   if (options.resourceManagementRoute !== undefined)
     registerResourceManagementRoute(

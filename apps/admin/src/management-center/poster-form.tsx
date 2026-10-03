@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Button } from "@fan-support/ui";
 import {
   LOCALE_NATIVE_NAMES,
@@ -8,23 +8,38 @@ import {
   type SupportedLocale,
 } from "@fan-support/contracts";
 import { managementCopy } from "./copy";
+import type { OriginalImage } from "./api";
+import type { PhotoEdit } from "./focal-model";
 import { PhotoInput } from "./photo-input";
 import { ManagementSelect } from "./form-fields";
 export type PosterFormProps = {
   locale: SupportedLocale;
   busy: boolean;
   current?: PublicMediaView | null | undefined;
-  onSubmit: (file: File, locale: SupportedLocale) => void;
+  onSubmit: (
+    file: File | null,
+    locale: SupportedLocale,
+    image: PhotoEdit | null,
+  ) => void;
+  loadOriginal?: (() => Promise<OriginalImage>) | undefined;
+  onDirtyChange?: ((dirty: boolean) => void) | undefined;
 };
 export function PosterForm({
   locale,
   busy,
   current,
   onSubmit,
+  loadOriginal,
+  onDirtyChange,
 }: PosterFormProps) {
   const copy = managementCopy(locale);
   const [sourceLocale, setSourceLocale] = useState(locale);
   const [file, setFile] = useState<File | null>(null);
+  const [image, setImage] = useState<PhotoEdit | null>(null);
+  const dirty = file !== null || image !== null || sourceLocale !== locale;
+  useLayoutEffect(() => {
+    onDirtyChange?.(dirty);
+  }, [dirty, onDirtyChange]);
   const [error, setError] = useState<keyof typeof copy | null>(null);
   return (
     <form
@@ -32,23 +47,25 @@ export function PosterForm({
       onSubmit={(event) => {
         event.preventDefault();
         if (busy) return;
-        if (!file) {
-          setError(error ?? "imageRequired");
+        if (!file && !image?.currentImage) {
+          setError(error ?? (current ? "imageUnchanged" : "imageRequired"));
           document.getElementById("management-image")?.focus();
           return;
         }
-        onSubmit(file, sourceLocale);
+        onSubmit(file, sourceLocale, image);
       }}
     >
       <fieldset className="mc-poster-form" disabled={busy}>
         <PhotoInput
           copy={copy}
           current={current}
+          loadOriginal={loadOriginal}
+          onImageEdit={setImage}
           file={file}
           onChange={setFile}
           onError={setError}
           error={error ? copy[error] : undefined}
-          poster
+          kind="REPLACE_POSTER"
         />
         <details className="mc-options">
           <summary>{copy.options}</summary>

@@ -1,3 +1,4 @@
+import { readManagementImageSource } from "./management-image-source.js";
 import {
   managementCenterCheckpointSchema,
   managementCenterIntentSchema,
@@ -10,7 +11,10 @@ import type {
   ManagementCenterOperationRepository,
 } from "@fan-support/persistence-port";
 import { draftRows } from "./content-draft-data.js";
-import { createResourceRun } from "./resource-management-data.js";
+import {
+  createResourceRun,
+  writeResourceAudit,
+} from "./resource-management-data.js";
 import {
   authorizeManagementSession,
   currentManagementDelegation,
@@ -23,6 +27,11 @@ import {
   readManagementCenterContext,
   readManagementCenterList,
 } from "./management-center-operation-read.js";
+import { assignArtist } from "./management-center-assignment.js";
+import {
+  currentArtistBroker,
+  managementGrants,
+} from "./management-center-scope.js";
 import type {
   TransactionClient,
   TransactionScopeControl,
@@ -73,17 +82,60 @@ export function createManagementCenterOperationRepository(
     );
     return response(input.operationId);
   }
+  /** ADR-022: true when the account manages every artist; a broker only those assigned to it. */
+  const managesAll = async (actorId: string) =>
+    (await managementGrants(client, actorId)).direct;
+  const ownsArtist = async (actorId: string, artistId: string) =>
+    (await currentArtistBroker(client, artistId))?.toLowerCase() ===
+    actorId.toLowerCase();
   return {
     authorize: (input) => run(() => authorizeManagementSession(client, input)),
-    context: (principal) =>
-      run(() => readManagementCenterContext(client, principal)),
-    list: (input) =>
-      run(() =>
-        readManagementCenterList(client, input.command, publicMediaBaseUrl),
+    readImageSource: (input) =>
+      run(async () =>
+        (await managesAll(input.principal.actorId)) ||
+        (input.target.kind === "ARTIST" &&
+          (await ownsArtist(input.principal.actorId, input.target.id)))
+          ? readManagementImageSource(client, input.target)
+          : managementFailure("FORBIDDEN"),
       ),
+    context: (principal) =>
+      run(async () =>
+        readManagementCenterContext(
+          client,
+          principal,
+          await managementGrants(client, principal.actorId),
+        ),
+      ),
+    list: (input) =>
+      run(async () => {
+        if (await managesAll(input.principal.actorId))
+          return readManagementCenterList(
+            client,
+            input.command,
+            publicMediaBaseUrl,
+            { scope: "ALL" },
+          );
+        // A broker has no gifts or posters, and its list is already its own assignment.
+        if (input.command.section !== "ARTISTS" || input.command.assignment)
+          return managementFailure("FORBIDDEN");
+        return readManagementCenterList(
+          client,
+          input.command,
+          publicMediaBaseUrl,
+          { scope: "ASSIGNED", brokerId: input.principal.actorId },
+        );
+      }),
+    assignArtist: (input) => run(() => assignArtist(client, input)),
     submit: (input) =>
       run(async () => {
         const intent = managementCenterIntentSchema.parse(input.intent);
+        if (
+          !(await managesAll(input.principal.actorId)) &&
+          (intent.kind !== "SAVE_ARTIST" ||
+            (intent.id !== null &&
+              !(await ownsArtist(input.principal.actorId, intent.id))))
+        )
+          return managementFailure("FORBIDDEN");
         const [existing] = await draftRows(
           client,
           `${managementOperationSql} WHERE o.actor_id=$1 AND o.idempotency_key=$2 FOR UPDATE OF o`,
@@ -98,7 +150,11 @@ export function createManagementCenterOperationRepository(
           return managementFailure("INVALID_COMMAND");
         if (
           intent.kind === "SAVE_GIFT" &&
-          intent.inventory.policy === "TRACKED"
+          intent.inventory.policy === "TRACKED" &&
+          !(
+            "commerceEdit" in intent &&
+            intent.commerceEdit.inventory.mode === "PRESERVE"
+          )
         ) {
           const [location] = await draftRows(
             client,
@@ -107,7 +163,11 @@ export function createManagementCenterOperationRepository(
           );
           if (!location) return managementFailure("NOT_FOUND");
         }
-        if ("image" in intent && intent.image !== null) {
+        if (
+          "image" in intent &&
+          intent.image !== null &&
+          "uploadId" in intent.image
+        ) {
           const [upload] = await draftRows(
             client,
             `SELECT id FROM public.media_upload_reservations WHERE id=$1 AND actor_id=$2 AND session_id=$3 AND (status='REGISTERED' OR expires_at>clock_timestamp()) FOR SHARE`,
@@ -134,7 +194,13 @@ export function createManagementCenterOperationRepository(
               target["status"] === "archived"
             )
               return managementFailure("TARGET_CONFLICT");
-            if (intent.kind === "SAVE_GIFT") {
+            if (
+              intent.kind === "SAVE_GIFT" &&
+              !(
+                "commerceEdit" in intent &&
+                intent.commerceEdit.inventory.mode === "PRESERVE"
+              )
+            ) {
               const variants = await draftRows(
                 client,
                 `SELECT v.inventory_policy,i.id inventory_item_id FROM public.gift_variants v LEFT JOIN public.inventory_items i ON i.gift_variant_id=v.id WHERE v.gift_id=$1 FOR SHARE OF v`,
@@ -160,6 +226,39 @@ export function createManagementCenterOperationRepository(
           if (Number(head["version"]) !== intent.expectedVersion)
             return managementFailure("TARGET_CONFLICT");
           targetId = head["homepage_revision_id"];
+          if (intent.kind === "RESTORE_POSTER") {
+            // An archived (deleted) poster cannot come back through restore.
+            const [source] = await draftRows(
+              client,
+              "SELECT 1 FROM public.homepage_revisions WHERE id=$1 AND lifecycle IN ('PUBLISHED','SUPERSEDED') FOR SHARE",
+              [intent.sourceRevisionId],
+            );
+            if (!source) return managementFailure("TARGET_CONFLICT");
+          }
+        }
+        if (
+          "image" in intent &&
+          intent.image &&
+          "currentImage" in intent.image
+        ) {
+          const original = await readManagementImageSource(client, {
+            kind:
+              intent.kind === "SAVE_ARTIST"
+                ? "ARTIST"
+                : intent.kind === "SAVE_GIFT"
+                  ? "GIFT"
+                  : "POSTER",
+            id: String(targetId),
+            expectedVersion: intent.expectedVersion,
+          });
+          if (original.outcome === "FAILURE") return original;
+          if (
+            original.currentImage.assetId !==
+              intent.image.currentImage.assetId ||
+            original.currentImage.metadataRevisionId !==
+              intent.image.currentImage.metadataRevisionId
+          )
+            return managementFailure("TARGET_CONFLICT");
         }
         await client.query(
           `INSERT INTO public.management_operations(id,actor_id,session_id,request_id,capability,intent,intent_hash,idempotency_key,status,phase,version,target_id,checkpoint,authorized_until,attempt_count,next_attempt_at,created_at,updated_at)
@@ -191,6 +290,67 @@ export function createManagementCenterOperationRepository(
           stored["intent_hash"].toString("hex") === input.intentHash
           ? managementOperationResponse(stored)
           : managementFailure("IDEMPOTENCY_CONFLICT");
+      }),
+    archivePoster: (input) =>
+      run(async () => {
+        if (!(await managesAll(input.principal.actorId)))
+          return managementFailure("FORBIDDEN");
+        // Same lock as poster publication, so a replace/restore never races an archive.
+        await client.query(
+          "SELECT pg_advisory_xact_lock(hashtextextended('fan-support:homepage',0))",
+        );
+        const [head] = await draftRows(
+          client,
+          "SELECT homepage_revision_id,version FROM public.homepage_publication_heads FOR SHARE",
+        );
+        if (!head) return managementFailure("HERO_NOT_CONFIGURED");
+        if (
+          Number(head["version"]) !== input.expectedVersion ||
+          String(head["homepage_revision_id"]).toLowerCase() ===
+            input.revisionId.toLowerCase()
+        )
+          return managementFailure("TARGET_CONFLICT");
+        const [revision] = await draftRows(
+          client,
+          "SELECT lifecycle FROM public.homepage_revisions WHERE id=$1 FOR UPDATE",
+          [input.revisionId],
+        );
+        if (!revision) return managementFailure("NOT_FOUND");
+        const archived = managementCenterResponseSchema.parse({
+          schemaVersion: 1,
+          outcome: "SUCCESS",
+          kind: "POSTER_ARCHIVED",
+          revisionId: input.revisionId,
+        });
+        if (revision["lifecycle"] === "ARCHIVED") return archived;
+        if (revision["lifecycle"] !== "SUPERSEDED")
+          return managementFailure("TARGET_CONFLICT");
+        const [pending] = await draftRows(
+          client,
+          `SELECT 1 FROM public.management_operations WHERE status IN ('QUEUED','RUNNING')
+          AND intent->>'kind'='RESTORE_POSTER' AND lower(intent->>'sourceRevisionId')=lower($1) LIMIT 1`,
+          [input.revisionId],
+        );
+        if (pending) return managementFailure("TARGET_CONFLICT");
+        const [instant] = await draftRows(
+          client,
+          `SELECT gen_random_uuid() AS audit_id,to_char(clock_timestamp() AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS now`,
+        );
+        await client.query(
+          "UPDATE public.homepage_revisions SET lifecycle='ARCHIVED',archived_at=GREATEST($2::timestamptz,superseded_at) WHERE id=$1 AND lifecycle='SUPERSEDED'",
+          [input.revisionId, instant?.["now"]],
+        );
+        await writeResourceAudit(client, {
+          auditId: String(instant?.["audit_id"]),
+          actorId: input.principal.actorId,
+          action: "HOMEPAGE_POSTER_ARCHIVE",
+          subjectType: "HOMEPAGE_REVISION",
+          subjectId: input.revisionId,
+          reasonCode: "DAILY_CENTER_DELETE",
+          requestId: input.requestId,
+          at: String(instant?.["now"]),
+        });
+        return archived;
       }),
     read: (input) =>
       run(async () => {

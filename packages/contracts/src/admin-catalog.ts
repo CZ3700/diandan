@@ -11,7 +11,7 @@ import {
 } from "./content-lifecycle.js";
 import { idempotencyKeySchema } from "./identifiers.js";
 import { supportedLocaleSchema } from "./locale.js";
-import { slugSchema } from "./presentation.js";
+import { publicMediaViewSchema, slugSchema } from "./presentation.js";
 import { schemaVersionSchema } from "./versioning.js";
 
 const version = schemaVersionSchema;
@@ -99,6 +99,7 @@ export const adminCatalogOwnerSchema = z.strictObject({
   handle: slugSchema.nullable(),
   acceptingGifts: z.boolean().nullable(),
   createdAt: contentTimestampSchema.nullable(),
+  image: publicMediaViewSchema.nullable().optional(),
   media: z
     .strictObject({
       width: z.number().int().positive(),

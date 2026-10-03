@@ -5,11 +5,21 @@ import { setTimeout as delay } from "node:timers/promises";
 import path from "node:path";
 import { preserveManagementNextDeclarations } from "./management-center-runtime-config.mjs";
 import { createLocalExperienceFetch } from "./local-experience-services-common.mjs";
+import {
+  localServiceTarget,
+  localServiceTargets,
+} from "./local-experience-config.mjs";
 import { localStorefrontIdentity } from "./local-experience-web-config.mjs";
+import {
+  localPaymentProfile,
+  withoutLocalPaymentCredentials,
+} from "./local-experience-payment-profile.mjs";
 import {
   regressionWebMode,
   startRegressionStorefront,
 } from "./regression-journey-web.mjs";
+import { startPrebuiltApp } from "./local-experience-web-prebuilt.mjs";
+import { createWebEventLog } from "./local-experience-web-events.mjs";
 
 export async function startLocalWeb(context) {
   const { config, workspaceRoot, own, progress } = context;
@@ -18,12 +28,21 @@ export async function startLocalWeb(context) {
   const fetcher = await createLocalExperienceFetch({
     origins: Object.values(config.origins),
     caCertificatePath: config.tls.caCertificatePath,
+    targets: localServiceTargets(config),
   });
+  const eventLog =
+    config.webMode === "PREBUILT"
+      ? createWebEventLog({
+          file: path.join(context.stateDirectory, "web-events.log"),
+        })
+      : undefined;
   for (const app of ["storefront", "admin"]) {
-    const port = config.ports[app],
+    // Next builds request URLs from --hostname:--port, so a public instance serves each app on
+    // 443 of its own loopback address (the DNS preload maps the hostname there).
+    const { port } = localServiceTarget(config, app),
       origin = config.origins[app];
     const env = Object.fromEntries(
-      Object.entries(process.env).filter(
+      Object.entries(withoutLocalPaymentCredentials(process.env)).filter(
         ([key]) => !key.startsWith("FAN_SUPPORT_"),
       ),
     );
@@ -35,9 +54,10 @@ export async function startLocalWeb(context) {
       FAN_SUPPORT_INTERNAL_API_ORIGIN: `http://127.0.0.1:${config.ports.api}`,
       FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN: config.origins.media,
       FAN_SUPPORT_PAYMENT_ACTION_ORIGINS_JSON: JSON.stringify([
-        config.origins.psp,
+        ...localPaymentProfile(config).actionOrigins,
       ]),
-      FAN_SUPPORT_ADMIN_MODE: "LOCAL_OIDC",
+      FAN_SUPPORT_ADMIN_ORIGIN: config.origins.admin,
+      FAN_SUPPORT_ADMIN_MODE: config.adminSignIn ?? "LOCAL_OIDC",
       FAN_SUPPORT_ADMIN_ACCESS_KEY: Buffer.from(
         config.secrets.accessKey,
         "base64url",
@@ -47,6 +67,10 @@ export async function startLocalWeb(context) {
       NEXT_TELEMETRY_DISABLED: "1",
       NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --import=${new URL("./local-experience-dns.mjs", import.meta.url).href}`,
     });
+    if (eventLog) {
+      await startPrebuiltApp({ ...context, fetcher }, app, env, { eventLog });
+      continue;
+    }
     if (app === "storefront" && mode === "production") {
       await startRegressionStorefront({
         ...context,
@@ -97,7 +121,10 @@ export async function startLocalWeb(context) {
       await closed;
     });
     let ready = false;
-    for (let i = 0; i < 180; i++) {
+    // A cold Next compile after a full workspace rebuild can outlast 90 seconds on a small
+    // server; the supervisor's --startup-timeout-seconds remains the operator's overall limit.
+    const deadline = Date.now() + 10 * 60_000;
+    while (Date.now() < deadline) {
       try {
         const result = await fetcher(origin + "/healthz");
         await result.body?.cancel();

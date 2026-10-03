@@ -2,20 +2,28 @@ import type { ExceptionsContext } from "../management-exceptions/api";
 import type { PaymentWorkspace } from "../management-payments/api";
 import { AdminClientError } from "../workspace/client";
 import type { OrdersContext } from "../management-orders/api";
+import type { LedgerContext } from "../management-ledger/api";
 const unavailable = (result: PromiseSettledResult<unknown>) =>
   result.status === "rejected" &&
   !(
     result.reason instanceof AdminClientError &&
     ["FORBIDDEN", "NOT_FOUND"].includes(result.reason.code)
   );
+/** ADR-022: a broker's daily center is its own artists and nothing else. */
+const assignedOnly = (content: PromiseSettledResult<unknown>) =>
+  content.status === "fulfilled" &&
+  (content.value as { artists?: { scope?: unknown } } | null)?.artists
+    ?.scope === "ASSIGNED";
 export function resolveManagementAccess(
   content: PromiseSettledResult<unknown>,
   orders: PromiseSettledResult<OrdersContext>,
   payments?: PromiseSettledResult<PaymentWorkspace> | undefined,
   exceptions?: PromiseSettledResult<ExceptionsContext> | undefined,
+  ledger?: PromiseSettledResult<LedgerContext> | undefined,
 ) {
   return {
     contentAllowed: content.status === "fulfilled",
+    artistsOnly: assignedOnly(content),
     orders:
       orders.status === "fulfilled" &&
       orders.value.permissions.includes("orders.read")
@@ -26,11 +34,14 @@ export function resolveManagementAccess(
       exceptions?.status === "fulfilled" && exceptions.value.permissions.canRead
         ? exceptions.value
         : null,
+    /** ADR-022 / L3-12: every artist (ledger.read) or only the reader's own (ledger.assigned). */
+    ledger: ledger?.status === "fulfilled" ? ledger.value : null,
     temporaryFailure:
       unavailable(content) ||
       unavailable(orders) ||
       (payments !== undefined && unavailable(payments)) ||
-      (exceptions !== undefined && unavailable(exceptions)),
+      (exceptions !== undefined && unavailable(exceptions)) ||
+      (ledger !== undefined && unavailable(ledger)),
   };
 }
 export function managementSectionUnavailable(
@@ -39,12 +50,14 @@ export function managementSectionUnavailable(
 ) {
   if (!access?.temporaryFailure) return false;
   const available =
-    section === "EXCEPTIONS"
-      ? access.exceptions
-      : section === "PAYMENTS"
-        ? access.payments
-        : section === "ORDERS"
-          ? access.orders
-          : access.contentAllowed;
+    section === "LEDGER"
+      ? access.ledger
+      : section === "EXCEPTIONS"
+        ? access.exceptions
+        : section === "PAYMENTS"
+          ? access.payments
+          : section === "ORDERS"
+            ? access.orders
+            : access.contentAllowed;
   return !available;
 }

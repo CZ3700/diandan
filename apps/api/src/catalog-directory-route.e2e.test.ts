@@ -1,7 +1,9 @@
 import Fastify from "fastify";
 import { expect, test, vi } from "vitest";
 
+import { publishedGiftViewSchema } from "@fan-support/contracts";
 import { registerCatalogDirectoryRoute } from "./catalog-directory-route.js";
+import { storefrontHomepageFixture } from "./test-support/storefront-homepage-fixtures.js";
 
 const emptyIdols = {
   schemaVersion: 1 as const,
@@ -171,6 +173,92 @@ test("maps all declared directory failures and rejects malformed application out
     });
     expect(invalid.statusCode).toBe(503);
     expect(invalid.body).not.toContain("fixture-private-canary");
+  } finally {
+    await app.close();
+  }
+});
+
+test("passes a gift kind through and rejects a priced page that substitutes another kind", async () => {
+  const hero = storefrontHomepageFixture().slots[0];
+  if (hero?.status !== "AVAILABLE" || hero.content.content.kind !== "IDOL")
+    throw new Error("Expected fictional artist");
+  const idol = hero.content.content.view;
+  const gift = publishedGiftViewSchema.parse({
+    schemaVersion: 1,
+    id: idol.id,
+    handle: "fictional-gift",
+    status: "active",
+    localeContext: {
+      schemaVersion: 1,
+      requestedLocale: "en",
+      resolvedLocale: "en",
+      fallbackUsed: false,
+    },
+    title: "Fictional gift",
+    shortDescription: "A fictional gift",
+    description: "A fictional gift",
+    fulfillmentDescription: "Prepared by the studio",
+    category: "OTHER",
+    contents: [{ componentCode: "GIFT", quantity: 1, unit: "ITEM" }],
+    deliveryEstimate: { minimum: 1, maximum: 2, unit: "DAY" },
+    shippingMode: "internal_to_idol",
+    primaryMedia: idol.portrait,
+    gallery: [],
+    variants: [
+      {
+        schemaVersion: 1,
+        id: idol.id,
+        label: "Standard",
+        status: "active",
+        inventoryPolicy: "PROCURE_ON_DEMAND",
+      },
+    ],
+    seoTitle: "Fictional gift",
+    seoDescription: "A fictional gift",
+  });
+  const page = (giftKind: "WISH" | "PHYSICAL" | null) => ({
+    ...emptyGifts,
+    items: [
+      {
+        schemaVersion: 1 as const,
+        gift: { ...gift, giftKind },
+        offer: {
+          schemaVersion: 1 as const,
+          market: "TEST",
+          currency: "USD",
+          priceMinor: 500,
+          purchasable: true,
+        },
+      },
+    ],
+    pageInfo: { ...emptyGifts.pageInfo, totalItems: 1, totalPages: 1 },
+  });
+  const readGifts = vi.fn(async () => page("WISH") as never);
+  const app = Fastify();
+  registerCatalogDirectoryRoute(app, {
+    readIdols: async () => emptyIdols,
+    readGifts,
+    browseGifts: async () => emptyGifts,
+  });
+  try {
+    const url = "/api/v1/gifts?locale=en&market=TEST&currency=USD&kind=WISH";
+    expect((await app.inject({ url })).statusCode).toBe(200);
+    expect(readGifts).toHaveBeenLastCalledWith(
+      expect.objectContaining({ kind: "WISH" }),
+    );
+    for (const other of ["PHYSICAL", null] as const) {
+      readGifts.mockResolvedValueOnce(page(other) as never);
+      expect((await app.inject({ url })).statusCode, String(other)).toBe(503);
+    }
+    readGifts.mockClear();
+    expect(
+      (
+        await app.inject({
+          url: "/api/v1/gifts?locale=en&market=TEST&currency=USD&kind=tip",
+        })
+      ).statusCode,
+    ).toBe(400);
+    expect(readGifts).not.toHaveBeenCalled();
   } finally {
     await app.close();
   }

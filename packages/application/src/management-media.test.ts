@@ -3,6 +3,7 @@ import {
   managementCenterClaimSchema,
   mediaUploadTicketSchema,
   sourceHashSchema,
+  type ManagementCenterCheckpoint,
 } from "@fan-support/contracts";
 import type { ManagementMediaTransactionManager } from "@fan-support/persistence-port";
 import { PersistenceTransactionFailureError } from "@fan-support/persistence-port";
@@ -467,6 +468,34 @@ describe("management media confirmed transaction aborts", () => {
     },
   );
 
+  test("daily artist images fill every role around the upper-third focus", async () => {
+    const f = transactionFixture(-1);
+    expect((await f.preparation.prepare(f.input)).outcome).toBe("READY");
+    const enqueued = f.resources.enqueueMedia.mock.calls.map(
+      ([command]) => command as unknown as { role: string; fit: string },
+    );
+    expect(enqueued.map(({ role, fit }) => [role, fit])).toEqual([
+      ["PORTRAIT", "COVER_ALLOW_ENLARGE"],
+      ["HERO_DESKTOP", "COVER_ALLOW_ENLARGE"],
+      ["HERO_MOBILE", "COVER_ALLOW_ENLARGE"],
+    ]);
+    const metadata = f.publication.prepareMediaMetadata.mock.calls.map(
+      (call) =>
+        (call as unknown[])[0] as {
+          processingJobId: string | null;
+          focalPoint: { x: number; y: number };
+        },
+    );
+    // The source revision drives the crop; masters are already framed around it.
+    expect(metadata[0]).toMatchObject({
+      processingJobId: null,
+      focalPoint: { x: 0.5, y: 0.3 },
+    });
+    expect(metadata.slice(1)).toHaveLength(3);
+    for (const derivative of metadata.slice(1))
+      expect(derivative.focalPoint).toEqual({ x: 0.5, y: 0.5 });
+  });
+
   test("a derivative retry reloads old job IDs and the retry flag after rollback", async () => {
     vi.useFakeTimers();
     const f = transactionFixture(2);
@@ -506,6 +535,18 @@ describe("management media confirmed transaction aborts", () => {
     expect(f.resources.enqueueMedia).toHaveBeenCalledTimes(3);
     const sourceReads = f.loaded.filter((row) => row.phase === 1);
     expect(sourceReads[1]?.checkpoint).toEqual(sourceReads[0]?.checkpoint);
+  });
+
+  test("a media enqueue serialization abort replays its phase instead of failing the operation", async () => {
+    vi.useFakeTimers();
+    const f = transactionFixture(-1, 0);
+    f.resources.enqueueMedia.mockRejectedValueOnce(aborted());
+    const pending = f.preparation.prepare(f.input);
+    await vi.runAllTimersAsync();
+    expect((await pending).outcome).toBe("READY");
+    expect(f.state.attempts).toEqual([1, 2, 1]);
+    expect(f.inspect).toHaveBeenCalledTimes(1);
+    expect(f.resources.enqueueMedia).toHaveBeenCalledTimes(4);
   });
 
   test.each([0, 1, 2])(
@@ -616,4 +657,107 @@ describe("management media confirmed transaction aborts", () => {
     expect(f.resources.registerUpload).not.toHaveBeenCalled();
     expect(vi.getTimerCount()).toBe(0);
   });
+});
+
+test("a focus edit reuses only its currently authorized source and enqueues the requested focus", async () => {
+  const claim = makeClaim();
+  if (claim.intent.kind !== "SAVE_ARTIST") throw new Error("fixture");
+  claim.intent.image = {
+    currentImage: { assetId: id, metadataRevisionId: id },
+    focalPoint: { x: 0.12345, y: 0.8 },
+  };
+  const resolveImageSource = vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    target: { kind: "ARTIST", id, expectedVersion: 1 },
+    currentImage: { assetId: id, metadataRevisionId: id },
+    focalPoint: { x: 0.5, y: 0.3 },
+    source: {
+      assetId: id,
+      metadataRevisionId: id,
+      checksumSha256: "a".repeat(64),
+      objectKey: "uploads/original.png",
+      mimeType: "image/png",
+      width: 2400,
+      height: 1600,
+      byteSize: 100,
+    },
+    orientation: 1,
+  }));
+  const prepareMediaMetadata = vi.fn(async () => ({
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    metadataRevisionId: id,
+  }));
+  const repositories = {
+    operations: {
+      loadClaim: async () => claim,
+      checkpoint: async (input: { checkpoint: ManagementCenterCheckpoint }) => {
+        claim.checkpoint = input.checkpoint;
+        return claim;
+      },
+    },
+    publication: { resolveImageSource, prepareMediaMetadata },
+    resources: {
+      enqueueMedia: async () => ({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "MUTATION",
+        resultId: id,
+        replayed: false,
+      }),
+      readMedia: async () => ({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "MEDIA",
+        media: {
+          schemaVersion: 1,
+          assetId: id,
+          identityKind: "SOURCE",
+          mimeType: "image/png",
+          width: 2400,
+          height: 1600,
+          byteSize: 100,
+          processingStatus: "READY",
+          rightsStatus: "APPROVED",
+          rightsVersion: 1,
+        },
+      }),
+      readMediaJob: async () => ({
+        schemaVersion: 1,
+        outcome: "SUCCESS",
+        kind: "MEDIA_JOB",
+        job: {
+          schemaVersion: 1,
+          generation: 1,
+          retryOfJobId: null,
+          snapshot: {
+            schemaVersion: 1,
+            jobId: id,
+            status: "PENDING",
+            attemptCount: 0,
+            outputAssetId: null,
+            error: null,
+            nextAttemptAt: now,
+          },
+        },
+      }),
+    },
+  };
+  const inspect = vi.fn();
+  const preparation = createManagementMediaPreparation({
+    transactions: {
+      runInManagementMediaTransaction: (work) => work(repositories as never),
+    },
+    inspector: { inspect },
+  });
+  expect(await preparation.prepare(claim)).toEqual({ outcome: "PENDING" });
+  expect(prepareMediaMetadata).toHaveBeenCalledWith(
+    expect.objectContaining({
+      focalPoint: { x: 0.12345, y: 0.8 },
+      processingJobId: null,
+    }),
+  );
+  expect(resolveImageSource).toHaveBeenCalled();
+  expect(inspect).not.toHaveBeenCalled();
 });

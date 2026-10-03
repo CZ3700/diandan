@@ -343,14 +343,23 @@ export async function verifyAcceptanceBrowser(input) {
         );
       report.metadata.push({ ...target, ...value });
     }
-    async function navigate(locator) {
+    /** Gift toolbar and pagination links change the list in place: no new document. */
+    async function inPlace(locator) {
       const before = page.url();
-      await Promise.all([
-        page.waitForURL((url) => url.href !== before, {
-          waitUntil: "networkidle",
-        }),
-        locator.click(),
-      ]);
+      await page.evaluate(() => {
+        globalThis.__giftDocument = "kept";
+      });
+      await locator.click();
+      await page.waitForURL((url) => url.href !== before);
+      await page
+        .locator("[data-gift-navigation]:not([data-gift-pending])")
+        .first()
+        .waitFor();
+      await page.waitForLoadState("networkidle");
+      check(
+        (await page.evaluate(() => globalThis.__giftDocument)) === "kept",
+        "a gift toolbar or pagination link changes the list without loading a new document",
+      );
     }
     try {
       report.publicationVisibility = await (
@@ -410,7 +419,8 @@ export async function verifyAcceptanceBrowser(input) {
       await save();
       step = "artist search anchor keyboard and language restore";
       await page.setViewportSize(acceptanceViewports[1]);
-      await goto("/en?market=GLOBAL&currency=USD#artists");
+      // The homepage hero search opens the artist; anchoring lives on the directory page.
+      await goto("/en/idols?market=GLOBAL&currency=USD#artists");
       const search = page.locator("[data-artist-search]");
       await search.fill(fixtures.target.name);
       await page
@@ -437,7 +447,7 @@ export async function verifyAcceptanceBrowser(input) {
           exact: true,
         })
         .click();
-      await page.waitForURL((url) => url.pathname === "/zh-CN");
+      await page.waitForURL((url) => url.pathname === "/zh-CN/idols");
       check(
         new globalThis.URL(page.url()).searchParams.get("anchorId") ===
           fixtures.target.id,
@@ -449,91 +459,86 @@ export async function verifyAcceptanceBrowser(input) {
       await screenshot("keyboard-search-language-anchor");
       report.cases.push({ name: step, pass: true });
 
-      step = "gift pagination filters and native back";
+      step = "gift pagination kinds price order and native back";
       const scope = new globalThis.URLSearchParams(fixtures.markets[0]);
+      const giftCards = () =>
+        page
+          .locator("[data-gift-card]")
+          .evaluateAll((cards) =>
+            cards.map((card) => card.getAttribute("data-gift-card")),
+          );
+      const marked = (selector) =>
+        page.locator(`${selector}[aria-current]`).waitFor();
       await goto(`/en/gifts?${scope}&sort=PRICE_ASC`);
-      const first = await page
-        .locator("[data-gift-card]")
-        .evaluateAll((cards) =>
-          cards.map((card) => card.getAttribute("data-gift-card")),
-        );
-      await navigate(page.locator("a[data-gift-next]"));
-      const second = await page
-        .locator("[data-gift-card]")
-        .evaluateAll((cards) =>
-          cards.map((card) => card.getAttribute("data-gift-card")),
-        );
+      const first = await giftCards();
+      await inPlace(page.locator("a[data-gift-next]"));
+      await marked('[data-gift-page="2"]');
+      const second = await giftCards();
       check(
         first.length === 12 &&
           second.length === 12 &&
           second.every((id) => !first.includes(id)),
         "real gift page two contains no page one duplicates",
       );
-      const filters = page.locator('[data-gift-filters="desktop"]');
-      const toolbarSort = page.locator("[data-gift-toolbar-sort]");
-      const beforeSort = page.url();
-      await toolbarSort.selectOption("PRICE_DESC");
+      // L2-17 (user request 2026-09-30): one row of kinds and a price order; every choice
+      // is a link that takes effect at once, with no panel and no apply step.
       check(
-        page.url() === beforeSort,
-        "changing the desktop sort selection does not navigate before explicit submit",
+        (await page
+          .locator(
+            "[data-gift-directory] form, [data-gift-directory] select, [data-gift-directory] details, [data-gift-directory] button",
+          )
+          .count()) === 0,
+        "the gift toolbar has no form, select, disclosure or apply button",
       );
-      await navigate(page.locator("[data-gift-toolbar-apply]"));
+      await inPlace(page.locator('[data-gift-sort-option="PRICE_DESC"]'));
+      await marked('[data-gift-sort-option="PRICE_DESC"]');
       const sorted = new globalThis.URL(page.url());
       check(
         sorted.searchParams.get("sort") === "PRICE_DESC" &&
           sorted.searchParams.get("page") === "1" &&
           sorted.searchParams.get("market") === fixtures.markets[0].market &&
           sorted.searchParams.get("currency") === fixtures.markets[0].currency,
-        "explicit desktop sort submit resets page and preserves the actual market and currency",
+        "choosing a price order returns to page one and preserves the actual market and currency",
       );
-      await page.locator(".gift-filter-disclosure summary").click();
-      await filters.waitFor({ state: "visible" });
-      await filters.locator("[data-gift-price-min]").fill("10.00");
-      await filters.locator("[data-gift-price-max]").fill("20.00");
-      await navigate(filters.locator("[data-gift-apply]"));
+      const kind = await page
+        .locator("[data-gift-kind-option]")
+        .nth(1)
+        .getAttribute("data-gift-kind-option");
+      await inPlace(page.locator(`[data-gift-kind-option="${kind}"]`));
+      await marked(`[data-gift-kind-option="${kind}"]`);
       check(
-        new globalThis.URL(page.url()).searchParams.get("priceMinMinor") ===
-          "1000" &&
-          new globalThis.URL(page.url()).searchParams.get("priceMaxMinor") ===
-            "2000" &&
+        new globalThis.URL(page.url()).searchParams.get("kind") === kind &&
           new globalThis.URL(page.url()).searchParams.get("sort") ===
             "PRICE_DESC" &&
           new globalThis.URL(page.url()).searchParams.get("page") === "1",
-        "filter navigation preserves exact minor units and applied sort and resets page",
+        "choosing a kind keeps the price order and returns to page one",
       );
-      await page.goBack({ waitUntil: "networkidle" });
-      await page.waitForFunction(
-        () =>
-          globalThis.document.querySelector("[data-gift-toolbar-sort]")
-            ?.value === "PRICE_DESC",
-      );
+      await page.goBack();
+      await marked('[data-gift-kind-option="ALL"]');
       check(
-        (await filters.locator("[data-gift-price-min]").inputValue()) === "" &&
-          new globalThis.URL(page.url()).searchParams.get("page") === "1",
-        "native Back restores the directly sorted page before amount filters",
+        !new globalThis.URL(page.url()).searchParams.has("kind") &&
+          new globalThis.URL(page.url()).searchParams.get("sort") ===
+            "PRICE_DESC",
+        "native Back restores the list before the kind was chosen",
       );
-      await page.goBack({ waitUntil: "networkidle" });
-      await page.waitForFunction(
-        () =>
-          globalThis.document.querySelector("[data-gift-toolbar-sort]")
-            ?.value === "PRICE_ASC",
-      );
+      await page.goBack();
+      await marked('[data-gift-sort-option="PRICE_ASC"]');
+      await marked('[data-gift-page="2"]');
       check(
-        (await filters.locator("[data-gift-price-min]").inputValue()) === "" &&
-          new globalThis.URL(page.url()).searchParams.get("page") === "2",
-        "native Back restores actual page, sort and amount form state",
+        new globalThis.URL(page.url()).searchParams.get("page") === "2" &&
+          JSON.stringify(await giftCards()) === JSON.stringify(second),
+        "native Back restores the actual page and price order",
       );
       report.cases.push({ name: step, pass: true });
 
-      step = "mobile filter focus reduced motion and cancellation";
+      step = "mobile menu focus reduced motion and overlay stacking";
       await page.setViewportSize(acceptanceViewports[0]);
       await goto(`/pt/gifts?${scope}`);
       const trigger = page.locator(
-        '.gift-filters__mobile [data-overlay-trigger="drawer"]',
+        '.storefront-mobile-menu [data-overlay-trigger="drawer"]',
       );
       await trigger.click();
-      const mobile = page.locator('[data-gift-filters="mobile"]');
-      await mobile.waitFor({ state: "visible" });
+      await page.getByRole("dialog").waitFor({ state: "visible" });
       const overlayStacking = await observeAcceptanceOverlayStacking(page);
       report.overlayStacking.push(overlayStacking);
       await save();
@@ -563,22 +568,14 @@ export async function verifyAcceptanceBrowser(input) {
             { timeout: 500 },
           );
       }
-      await mobile.locator("[data-gift-price-min]").fill("10,50");
-      await axe("mobile-filter-open");
+      await axe("mobile-menu-open");
       await page.keyboard.press("Escape");
       await page.getByRole("dialog").waitFor({ state: "hidden" });
       await page.waitForFunction(() =>
         globalThis.document.activeElement?.matches(
-          '.gift-filters__mobile [data-overlay-trigger="drawer"]',
+          '.storefront-mobile-menu [data-overlay-trigger="drawer"]',
         ),
       );
-      await trigger.click();
-      check(
-        (await mobile.locator("[data-gift-price-min]").inputValue()) === "",
-        "cancelled mobile input is discarded",
-      );
-      await page.keyboard.press("Escape");
-      await page.getByRole("dialog").waitFor({ state: "hidden" });
       check(
         await page.evaluate(
           () =>

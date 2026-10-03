@@ -357,9 +357,10 @@ export async function verifyAcceptanceSeo({
     before = await snapshot();
     await status("archived");
     await invalidated(before);
+    // Archiving is deletion: the artist is gone, not temporarily unavailable (1717eda0).
     await read(entityRoute(renamedLocator), {
-      status: 503,
-      code: "CONTENT_UNAVAILABLE",
+      status: 404,
+      code: "NOT_FOUND",
     });
     check(
       (await snapshot()).entities.length === initial.entities.length,

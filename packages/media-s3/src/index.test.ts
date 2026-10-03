@@ -135,6 +135,29 @@ function createHarness(
 }
 
 describe("S3 media storage adapter", () => {
+  test.each(["SOURCE", "DERIVATIVE"] as const)(
+    "private %s preview downloads cannot be retained by shared or browser caches",
+    async (storageClass) => {
+      const { adapter, presignCalls } = createHarness();
+      const result = await adapter.createDownloadGrant({
+        schemaVersion: 1,
+        operation: "CREATE_DOWNLOAD_GRANT",
+        storageClass,
+        objectKey: "source/private-preview.png",
+        expiresAt: new Date(now.getTime() + 120000).toISOString(),
+      });
+      expect(result.outcome).toBe("SUCCESS");
+      expect(presignCalls).toEqual([
+        expect.objectContaining({
+          command: expect.objectContaining({
+            input: expect.objectContaining({
+              ResponseCacheControl: "private, no-store",
+            }),
+          }),
+        }),
+      ]);
+    },
+  );
   test.each([1000, 45000, 59999])(
     "honors an upload session ceiling of %i milliseconds without extending it",
     async (remaining) => {

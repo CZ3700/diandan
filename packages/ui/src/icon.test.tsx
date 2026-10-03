@@ -44,6 +44,8 @@ describe("Icon", () => {
       "minus",
       "plus",
       "shopping-bag",
+      "sort-ascending",
+      "sort-descending",
       "warning",
     ] as const) {
       const markup = renderToStaticMarkup(<Icon decorative name={name} />);

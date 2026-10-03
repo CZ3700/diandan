@@ -81,7 +81,15 @@ function setup() {
     replayed: false,
   }));
   const repositories = {
-    adminOrders: { execute, preparePrivate, confirmPrivate },
+    adminOrders: {
+      execute,
+      preparePrivate,
+      confirmPrivate,
+      reserveProofUpload: vi.fn(),
+      readProofUpload: vi.fn(),
+      completeProofUpload: vi.fn(),
+      readProofRendition: vi.fn(),
+    },
     adminOrderResends: { request: resend },
   } as AdminOrdersRepositories;
   const run = vi.fn(

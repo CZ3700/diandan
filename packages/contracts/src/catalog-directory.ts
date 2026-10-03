@@ -22,6 +22,7 @@ import {
   idolDiscoveryPlanSchema,
   idolDiscoveryQuerySchema,
 } from "./catalog-discovery.js";
+import { giftKindSchema } from "./gift-commerce-profile.js";
 import { idolIdSchema } from "./identifiers.js";
 import {
   giftPublicProjectionSourceSchema,
@@ -109,6 +110,8 @@ function giftSnapshot<R extends z.ZodType>(record: R) {
             schemaVersion: schemaVersionSchema,
             record,
             offer: catalogDirectoryOfferSchema,
+            /** The published classification; null is an unclassified legacy revision. */
+            giftKind: giftKindSchema.nullable().optional(),
           }),
         )
         .max(CATALOG_DISCOVERY_LIMITS.giftPageMaximum),

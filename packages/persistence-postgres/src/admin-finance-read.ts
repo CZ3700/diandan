@@ -1,6 +1,7 @@
 import {
   type AdminFinanceStoreRequest,
   adminFinanceOrderSummarySchema,
+  normalizePublicOrderNo,
 } from "@fan-support/contracts";
 import {
   draftRows,
@@ -21,6 +22,7 @@ function summary(row: DraftRow) {
   return adminFinanceOrderSummarySchema.parse({
     orderId: row["id"],
     publicOrderId: row["public_order_id"],
+    publicOrderNo: row["public_order_no"],
     version: Number(row["version"]),
     presentationLocale: row["presentation_locale"],
     orderStatus: row["order_status"],
@@ -43,16 +45,22 @@ export async function readAdminFinance(
 ) {
   const c = request.command;
   if (c.action === "LIST") {
-    const filter = `WHERE ($1='' OR strpos(o.public_order_id::text,lower($1))>0) AND ($2='ALL' OR ($2='REFUNDS' AND EXISTS(SELECT 1 FROM refunds WHERE order_id=o.id)) OR ($2='DISPUTES' AND EXISTS(SELECT 1 FROM disputes WHERE order_id=o.id AND status<>'NONE')) OR ($2='NEEDS_RECONCILIATION' AND (EXISTS(SELECT 1 FROM admin_finance_operations x WHERE x.order_id=o.id AND x.phase<>'COMPLETE') OR EXISTS(SELECT 1 FROM payment_attempts a WHERE a.id=o.current_payment_attempt_id AND a.status IN('PROCESSING','UNKNOWN')) OR EXISTS(SELECT 1 FROM admin_finance_application_receipts x WHERE x.order_id=o.id AND x.decision='REVIEW'))))`;
+    const filter = `WHERE ($1='' OR strpos(o.public_order_id::text,lower($1))>0 OR strpos(o.public_order_no,upper($1))>0 OR o.public_order_no=$3::text) AND ($2='ALL' OR ($2='REFUNDS' AND EXISTS(SELECT 1 FROM refunds WHERE order_id=o.id)) OR ($2='DISPUTES' AND EXISTS(SELECT 1 FROM disputes WHERE order_id=o.id AND status<>'NONE')) OR ($2='NEEDS_RECONCILIATION' AND (EXISTS(SELECT 1 FROM admin_finance_operations x WHERE x.order_id=o.id AND x.phase<>'COMPLETE') OR EXISTS(SELECT 1 FROM payment_attempts a WHERE a.id=o.current_payment_attempt_id AND a.status IN('PROCESSING','UNKNOWN')) OR EXISTS(SELECT 1 FROM admin_finance_application_receipts x WHERE x.order_id=o.id AND x.decision='REVIEW'))))`;
     const [count] = await draftRows(
       client,
       `SELECT count(*) total FROM orders o ${filter}`,
-      [c.query, c.filter],
+      [c.query, c.filter, normalizePublicOrderNo(c.query)],
     );
     const rows = await draftRows(
       client,
-      `${summarySql} ${filter} ORDER BY o.updated_at DESC,o.id LIMIT $3 OFFSET $4`,
-      [c.query, c.filter, c.pageSize, (c.page - 1) * c.pageSize],
+      `${summarySql} ${filter} ORDER BY o.updated_at DESC,o.id LIMIT $4 OFFSET $5`,
+      [
+        c.query,
+        c.filter,
+        normalizePublicOrderNo(c.query),
+        c.pageSize,
+        (c.page - 1) * c.pageSize,
+      ],
     );
     return parseFinanceResponse({
       schemaVersion: 1,

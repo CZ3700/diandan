@@ -28,6 +28,18 @@ const safeError = (error) => ({
 async function inputs() {
   const files = new Set([
     "database/migrations/0029_notifications.up.sql",
+    "database/migrations/0050_notification-submissions.up.sql",
+    "packages/contracts/src/notification-submission.ts",
+    "packages/contracts/dist/notification-submission.js",
+    "packages/application/src/notification-submission.ts",
+    "packages/application/dist/notification-submission.js",
+    "packages/persistence-port/src/notification-submission.ts",
+    "packages/persistence-port/dist/notification-submission.js",
+    "apps/worker/src/notification-composition.ts",
+    "apps/worker/dist/notification-composition.js",
+    "packages/notification-provider/src/harness.tls.ts",
+    "apps/worker/src/notification-config.ts",
+    "apps/worker/dist/notification-config.js",
     "packages/persistence-postgres/src/postgres-persistence.ts",
     "packages/persistence-postgres/dist/postgres-persistence.js",
     "packages/contracts/src/order-notification.ts",
@@ -55,18 +67,18 @@ async function inputs() {
   const prefixes = [
     [
       "packages/persistence-postgres/src",
-      /^(?:notification-|order-access-).*\.ts$/u,
+      /^(?:notification-|admin-notification-resend-|order-access-).*\.ts$/u,
     ],
     [
       "packages/persistence-postgres/dist",
-      /^(?:notification-|order-access-).*\.js$/u,
+      /^(?:notification-|admin-notification-resend-|order-access-).*\.js$/u,
     ],
     ["packages/persistence-postgres/scripts", /^notification-.*\.mjs$/u],
     ["packages/application/src", /^order-notification.*\.ts$/u],
     ["packages/application/dist", /^order-notification.*\.js$/u],
-    ["packages/notification-provider/src", /^gateway.*\.ts$/u],
-    ["packages/notification-provider/dist", /^gateway.*\.js$/u],
-    ["apps/worker/scripts", /^notification-gateway.*\.mjs$/u],
+    ["packages/notification-provider/src", /^(?:gateway|zeptomail).*\.ts$/u],
+    ["packages/notification-provider/dist", /^(?:gateway|zeptomail).*\.js$/u],
+    ["apps/worker/scripts", /^notification-(?:gateway|zeptomail).*\.mjs$/u],
   ];
   for (const [directory, pattern] of prefixes)
     for (const file of await readdir(path.join(workspaceRoot, directory)))
@@ -102,11 +114,14 @@ async function inputs() {
 export async function runOrderNotifications(
   database,
   s3,
-  { verifyWorker = verifyNotificationWorker } = {},
+  {
+    verifyWorker = verifyNotificationWorker,
+    outputRoot = "output/checks/p4-06-notifications/persistence",
+  } = {},
 ) {
   const output = path.join(
     workspaceRoot,
-    "output/checks/p4-06-notifications/persistence",
+    outputRoot,
     `run-${new Date().toISOString().replaceAll(":", "-")}`,
   );
   await mkdir(output, { recursive: true });

@@ -7,13 +7,16 @@ import {
 import { AdminClientError } from "../workspace/client";
 import type { ManagementApi, PreparedUpload } from "./api";
 import { imageSelectionIssue } from "./inputs";
+import type { PhotoEdit } from "./focal-model";
 export type SubmissionPhase = "UPLOADING" | "SUBMITTING";
+type ImageIntent = Exclude<ManagementCenterIntent, { kind: "RESTORE_POSTER" }>;
 export type SubmissionIntent =
   | ManagementCenterIntent
-  | (Omit<
-      Extract<ManagementCenterIntent, { kind: "REPLACE_POSTER" }>,
-      "image"
-    > & { image: null });
+  | (ImageIntent extends infer Intent
+      ? Intent extends ImageIntent
+        ? Omit<Intent, "image"> & { image: Intent["image"] | PhotoEdit | null }
+        : never
+      : never);
 /** Local upload checkpoints contain no credentials or source text and never enter browser storage. */
 export function createManagementSubmission(
   api: ManagementApi,
@@ -73,7 +76,17 @@ export function createManagementSubmission(
         // A 412 only permits server-side inspection; it is never proof that publication succeeded.
         upload.complete = true;
       }
-      ready = { ...intent, image: { uploadId: upload.grant.uploadId } };
+      const focalPoint =
+        "image" in intent && intent.image && "focalPoint" in intent.image
+          ? intent.image.focalPoint
+          : undefined;
+      ready = {
+        ...intent,
+        image: {
+          uploadId: upload.grant.uploadId,
+          ...(focalPoint ? { focalPoint } : {}),
+        },
+      };
     }
     const parsed = managementCenterIntentSchema.safeParse(ready);
     if (!parsed.success) throw new AdminClientError("INVALID_COMMAND");

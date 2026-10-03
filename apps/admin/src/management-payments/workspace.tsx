@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { SupportedLocale } from "@fan-support/contracts";
 import { Button } from "@fan-support/ui";
 import { AdminClientError } from "../workspace/client";
@@ -15,6 +15,8 @@ import {
 } from "./pending-store";
 import { availableValidationModes } from "./authority";
 import { paymentCopy } from "./copy";
+import { canLeaveDecoration } from "../management-decoration/navigation";
+import { managementCopy } from "../management-center/copy";
 import { ConfigurationSummary } from "./configuration-summary";
 import { PaymentEditor } from "./editor";
 import { PaymentReviewPanel } from "./review-panel";
@@ -25,12 +27,28 @@ export function PaymentsWorkspace({
   initial,
   locale,
   onBusy,
+  onDirtyChange,
 }: {
   api: PaymentConfigurationApi;
   initial: PaymentWorkspace;
   locale: SupportedLocale;
   onBusy: (busy: boolean) => void;
+  onDirtyChange?: ((dirty: boolean) => void) | undefined;
 }) {
+  const [dirty, setDirty] = useState(false);
+  useLayoutEffect(() => {
+    onDirtyChange?.(dirty);
+  }, [dirty, onDirtyChange]);
+  useLayoutEffect(() => () => onDirtyChange?.(false), [onDirtyChange]);
+  useLayoutEffect(() => {
+    if (!dirty) return;
+    const prevent = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", prevent);
+    return () => window.removeEventListener("beforeunload", prevent);
+  }, [dirty]);
   const c = paymentCopy(locale),
     [workspace, setWorkspace] = useState(initial),
     [editing, setEditing] = useState(false),
@@ -85,7 +103,12 @@ export function PaymentsWorkspace({
   async function load(
     revisionId: string | null = workspace.selected?.revisionId ?? null,
   ) {
-    if (active.current) return;
+    if (
+      !canLeaveDecoration({ busy: active.current, dirty }, () =>
+        window.confirm(managementCopy(locale).discardEdits),
+      )
+    )
+      return;
     working(true);
     setError(null);
     setValidation(null);
@@ -252,7 +275,15 @@ export function PaymentsWorkspace({
           accounts={workspace.accounts}
           locale={locale}
           busy={blocked}
-          back={() => setEditing(false)}
+          onDirtyChange={setDirty}
+          back={() => {
+            if (
+              canLeaveDecoration({ busy: active.current, dirty }, () =>
+                window.confirm(managementCopy(locale).discardEdits),
+              )
+            )
+              setEditing(false);
+          }}
           save={(configuration) =>
             mutate({
               action: "SAVE",

@@ -774,11 +774,19 @@ export function resolveCachePurgeRuntimeConfig(
 export type AdminRuntimeConfig = Readonly<
   | {
       schemaVersion: 1;
-      mode: "LOCAL_OIDC";
+      mode: "LOCAL_OIDC" | "OIDC";
       siteOrigin: string;
       internalApiOrigin: string;
       adminAccessKey: string;
       oidcIssuer: string;
+    }
+  | {
+      schemaVersion: 1;
+      /** ADR-021 built-in accounts; no identity provider. */
+      mode: "LOCAL_ACCOUNT";
+      siteOrigin: string;
+      internalApiOrigin: string;
+      adminAccessKey: string;
     }
   | { schemaVersion: 1; mode: "DISABLED" }
   | {
@@ -788,7 +796,12 @@ export type AdminRuntimeConfig = Readonly<
       internalApiOrigin: string;
     }
 >;
-/** Production identity remains closed pending UAT; TEST and OIDC protocol access are development-only. */
+/**
+ * Formal identity is explicit; TEST and LOCAL_OIDC never become production fallbacks.
+ * LOCAL_ACCOUNT checks like OIDC on staging/production and like LOCAL_OIDC on the
+ * development-mode remote TEST instance; the compiled remote TEST instance runs it in the
+ * test tier with a public HTTPS site and a loopback HTTP API, nothing else.
+ */
 export function resolveAdminRuntimeConfig(
   sources: RuntimeConfigSources,
 ): AdminRuntimeConfig {
@@ -804,12 +817,41 @@ export function resolveAdminRuntimeConfig(
     return Object.freeze({ schemaVersion: 1, mode: "DISABLED" });
   if (
     layered.FAN_SUPPORT_ADMIN_MODE !== "TEST" &&
-    layered.FAN_SUPPORT_ADMIN_MODE !== "LOCAL_OIDC"
+    layered.FAN_SUPPORT_ADMIN_MODE !== "LOCAL_OIDC" &&
+    layered.FAN_SUPPORT_ADMIN_MODE !== "OIDC" &&
+    layered.FAN_SUPPORT_ADMIN_MODE !== "LOCAL_ACCOUNT"
   )
     throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
   const runtime = resolveServerRuntimeConfig(sources);
   const internal = resolveInternalApiRuntimeConfig(sources);
-  if (
+  const mode = layered.FAN_SUPPORT_ADMIN_MODE;
+  // The compiled remote TEST instance: built-in accounts in the test tier behind its loopback API.
+  const compiledTest =
+    mode === "LOCAL_ACCOUNT" && runtime.deploymentEnvironment === "test";
+  const formal =
+    mode === "OIDC" ||
+    (mode === "LOCAL_ACCOUNT" &&
+      runtime.deploymentEnvironment !== "development" &&
+      !compiledTest);
+  if (compiledTest) {
+    if (
+      runtime.nodeEnvironment !== "test" ||
+      !isPublicSiteOrigin(runtime.siteOrigin) ||
+      new URL(runtime.siteOrigin).protocol !== "https:" ||
+      !isLoopbackHttpOrigin(internal.origin)
+    )
+      throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
+  } else if (formal) {
+    if (
+      !["staging", "production"].includes(runtime.deploymentEnvironment) ||
+      runtime.nodeEnvironment !== "production" ||
+      !isPublicSiteOrigin(runtime.siteOrigin) ||
+      new URL(runtime.siteOrigin).protocol !== "https:" ||
+      !isPublicSiteOrigin(internal.origin) ||
+      new URL(internal.origin).protocol !== "https:"
+    )
+      throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
+  } else if (
     runtime.deploymentEnvironment !== "development" ||
     runtime.nodeEnvironment !== "development" ||
     (layered.FAN_SUPPORT_ADMIN_MODE === "TEST"
@@ -819,11 +861,22 @@ export function resolveAdminRuntimeConfig(
     !isLoopbackHttpOrigin(internal.origin)
   )
     throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_MODE"]);
-  if (layered.FAN_SUPPORT_ADMIN_MODE === "LOCAL_OIDC") {
-    const key = z
-      .string()
-      .regex(/^[a-f0-9]{64}$/u)
-      .safeParse(layered.FAN_SUPPORT_ADMIN_ACCESS_KEY);
+  const key = z
+    .string()
+    .regex(/^[a-f0-9]{64}$/u)
+    .safeParse(layered.FAN_SUPPORT_ADMIN_ACCESS_KEY);
+  if (mode === "LOCAL_ACCOUNT") {
+    if (!key.success)
+      throw new ConfigValidationError(["FAN_SUPPORT_ADMIN_ACCESS_KEY"]);
+    return Object.freeze({
+      schemaVersion: 1,
+      mode,
+      siteOrigin: runtime.siteOrigin,
+      internalApiOrigin: internal.origin,
+      adminAccessKey: key.data,
+    });
+  }
+  if (mode === "LOCAL_OIDC" || mode === "OIDC") {
     const issuer = identityPortCommandSchema.options[0].shape.issuer.safeParse(
       layered.FAN_SUPPORT_ADMIN_OIDC_ISSUER,
     );
@@ -834,7 +887,7 @@ export function resolveAdminRuntimeConfig(
       ]);
     return Object.freeze({
       schemaVersion: 1,
-      mode: "LOCAL_OIDC",
+      mode,
       siteOrigin: runtime.siteOrigin,
       internalApiOrigin: internal.origin,
       adminAccessKey: key.data,
@@ -850,5 +903,6 @@ export function resolveAdminRuntimeConfig(
 }
 
 export { resolveStorefrontConfig } from "./storefront-config.js";
+export { resolveStorefrontPreviewConfig } from "./storefront-preview-config.js";
 
 export { resolveRumConfig, type RumConfig } from "./rum-config.js";

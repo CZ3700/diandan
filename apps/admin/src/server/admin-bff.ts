@@ -13,6 +13,7 @@ import {
   type AdminCredentials,
 } from "./admin-api-client";
 import { getAdminOperation } from "./admin-operations";
+import { matchesConfiguredRequestOrigin } from "./request-origin";
 
 export function readAdminCookies(
   header: string | null,
@@ -52,7 +53,7 @@ export function createAdminBff(
     if (options.config.mode === "DISABLED") return adminError("NOT_FOUND", 404);
     const url = new URL(request.url);
     if (url.search) return adminError("INVALID_COMMAND", 400);
-    if (url.origin !== options.config.siteOrigin)
+    if (!matchesConfiguredRequestOrigin(request, options.config.siteOrigin))
       return adminError("FORBIDDEN", 403);
     const origin = request.headers.get("origin");
     const site = request.headers.get("sec-fetch-site");

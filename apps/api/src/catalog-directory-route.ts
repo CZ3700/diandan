@@ -38,6 +38,7 @@ const GIFT_QUERY_FIELDS = new Set([
   "pageSize",
   "sort",
   "category",
+  "kind",
   "priceMinMinor",
   "priceMaxMinor",
   "availability",
@@ -185,6 +186,8 @@ export function registerCatalogDirectoryRoute(
             (item) =>
               item.offer.market !== query.data.market ||
               item.offer.currency !== query.data.currency ||
+              (query.data.kind !== undefined &&
+                item.gift.giftKind !== query.data.kind) ||
               !matchesPublicContentLocale(
                 item.gift.localeContext,
                 query.data.locale,

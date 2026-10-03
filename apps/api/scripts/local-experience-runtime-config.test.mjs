@@ -59,6 +59,11 @@ test("runtime passes only canonical service environment and retains the persiste
     environment.FAN_SUPPORT_OBJECT_STORAGE_PUBLIC_MEDIA_ORIGIN,
     config.origins.media,
   );
+  // The edge, BFF and API share loopback; only those hops may name the fan's address.
+  assert.equal(
+    environment.FAN_SUPPORT_TRUSTED_PROXY_CIDRS,
+    "127.0.0.0/8,::1/128",
+  );
   assert.throws(
     () =>
       module.localExperienceEnvironment({

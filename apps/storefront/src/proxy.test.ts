@@ -4,7 +4,7 @@ import { expect, test } from "vitest";
 import { isCanonicalRequestId } from "@fan-support/observability";
 
 type ProxyModule = Readonly<{
-  proxy: (request: NextRequest) => Response;
+  proxy: (request: NextRequest) => Promise<Response>;
 }>;
 
 async function loadProxyModule(): Promise<ProxyModule> {
@@ -22,7 +22,7 @@ async function loadProxyModule(): Promise<ProxyModule> {
 test("preserves a canonical request ID for the route and response", async () => {
   const { proxy } = await loadProxyModule();
   const requestId = "018f47a4-7b7c-4f27-8b35-25c984619a11";
-  const response = proxy(
+  const response = await proxy(
     new NextRequest("https://storefront.example.invalid/healthz", {
       headers: { "x-request-id": requestId },
     }),
@@ -48,7 +48,7 @@ test.each([
     headers.set("x-request-id", candidate);
   }
 
-  const response = proxy(
+  const response = await proxy(
     new NextRequest("https://storefront.example.invalid/healthz", { headers }),
   );
   const responseRequestId = response.headers.get("x-request-id");
@@ -63,7 +63,7 @@ test.each([
 
 test("redirects the root using only a validated site locale cookie and preserves query", async () => {
   const { proxy } = await loadProxyModule();
-  const response = proxy(
+  const response = await proxy(
     new NextRequest(
       "https://storefront.example.invalid/?market=TEST&currency=USD",
       { headers: { cookie: "site_locale=ja", "accept-language": "th" } },
@@ -77,7 +77,7 @@ test("redirects the root using only a validated site locale cookie and preserves
 });
 test("normalizes locale case only, and overwrites client-supplied locale headers", async () => {
   const { proxy } = await loadProxyModule();
-  const normalized = proxy(
+  const normalized = await proxy(
     new NextRequest(
       "https://storefront.example.invalid/ZH-cn/idols/someone?currency=USD",
     ),
@@ -86,7 +86,7 @@ test("normalizes locale case only, and overwrites client-supplied locale headers
   expect(normalized.headers.get("location")).toBe(
     "https://storefront.example.invalid/zh-CN/idols/someone?currency=USD",
   );
-  const page = proxy(
+  const page = await proxy(
     new NextRequest("https://storefront.example.invalid/vi/idols/someone", {
       headers: { "x-storefront-locale": "ja" },
     }),

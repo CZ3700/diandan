@@ -2,6 +2,7 @@ import { Buffer } from "node:buffer";
 import { beforeEach, expect, test, vi } from "vitest";
 import {
   cartRuntimeRequestContextSchema,
+  cartEditorResponseSchema,
   type CartEditWriteMutationCommand,
   type CartEditMutationReceipt,
 } from "@fan-support/contracts";
@@ -629,4 +630,64 @@ test("invalid encrypted bytes are not silently converted into replacement-charac
     ),
   ).toMatchObject({ code: "TEMPORARY_UNAVAILABLE" });
   expect(h.repositories.cartEdit.confirmPrivateRead).not.toHaveBeenCalled();
+});
+
+test.each([
+  { visibility: "PRIVATE" },
+  { visibility: "PUBLIC_ANONYMOUS" },
+  { visibility: "PUBLIC_NAMED", publicAlias: "Fictional public alias" },
+] as const)(
+  "authorized wish editor preserves independent $visibility preference",
+  async (galleryPreference) => {
+    const h = harness();
+    h.state().item = {
+      ...h.state().item,
+      displayMode: "nickname",
+      nicknameProvided: true,
+      galleryPreference,
+    };
+    h.state().privateContent.displayNameCiphertext = ciphertext;
+    const result = cartEditorResponseSchema.parse(
+      await h.app.readEditor(
+        { ...h.target, operation: "READ_CART_ITEM_EDITOR" },
+        h.context,
+      ),
+    );
+    expect(result).toMatchObject({
+      outcome: "SUCCESS",
+      action: "EDITOR_READ",
+      content: {
+        displayMode: "nickname",
+        displayName: privateName(),
+        galleryPreference,
+      },
+    });
+    if (result.outcome !== "SUCCESS") return;
+    expect(JSON.stringify(result.content.galleryPreference)).not.toContain(
+      privateName(),
+    );
+    expect(h.state().audits).toBe(1);
+    expect(h.repositories.cartEdit.confirmPrivateRead).toHaveBeenCalledOnce();
+  },
+);
+test("legacy private editor does not invent a gallery preference from a private name", async () => {
+  const h = harness();
+  h.state().item = {
+    ...h.state().item,
+    displayMode: "nickname",
+    nicknameProvided: true,
+  };
+  h.state().privateContent.displayNameCiphertext = ciphertext;
+  const result = cartEditorResponseSchema.parse(
+    await h.app.readEditor(
+      { ...h.target, operation: "READ_CART_ITEM_EDITOR" },
+      h.context,
+    ),
+  );
+  expect(result).toMatchObject({
+    outcome: "SUCCESS",
+    content: { displayName: privateName() },
+  });
+  if (result.outcome !== "SUCCESS") return;
+  expect(result.content).not.toHaveProperty("galleryPreference");
 });

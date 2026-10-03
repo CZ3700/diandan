@@ -115,11 +115,6 @@ export async function verifyDrawerLazyBrowser({
       trigger: "[data-gift-recipient-picker] .fs-overlay-trigger",
       failure: "[data-gift-recipient-picker] [data-drawer-load-failure]",
     },
-    filters: {
-      url: `${origin}/en/gifts?${query}`,
-      trigger: ".gift-filters__mobile .fs-overlay-trigger",
-      failure: ".gift-filters__mobile [data-drawer-load-failure]",
-    },
   };
   try {
     await withAcceptanceBrowser({ gateway }, async (browser) => {
@@ -423,9 +418,11 @@ export async function verifyDrawerLazyBrowser({
           },
         );
       }
+      // The gift directory no longer has a filter drawer (L2-17); the recipient picker is
+      // the drawer whose recovery reloads a page with its own query.
       await run(
         "consecutive-failure-reload",
-        "filters",
+        "recipient",
         async ({
           page,
           mode,
@@ -454,8 +451,8 @@ export async function verifyDrawerLazyBrowser({
           await trigger.click();
           await popup.waitFor({ state: "visible" });
           check(
-            await page.locator('[data-gift-filters="mobile"]').isVisible(),
-            "explicit recovery restores the actual filter form",
+            await popup.locator("[data-recipient-option]").first().isVisible(),
+            "explicit recovery restores the actual recipient choices",
           );
         },
       );

@@ -1,5 +1,4 @@
 import {
-  currencySchema,
   giftDiscoveryQuerySchema,
   minorAmountSchema,
 } from "@fan-support/contracts";
@@ -138,50 +137,31 @@ test("page and filter links preserve context, reset only filter navigation, and 
   expect(() => giftPageHref(fixture, "/gifts", context, 1001)).toThrow();
 });
 
-test("price inputs convert local decimal notation exactly and respect currency exponents", async () => {
-  const { parseGiftPriceInput, formatGiftPriceInput } = await model();
-  for (const [locale, currency, input, minor] of [
-    ["en", "USD", "10.29", 1029],
-    ["pt", "USD", "10,29", 1029],
-    ["vi", "USD", "10,29", 1029],
-    ["ja", "JPY", "29", 29],
-    ["en", "KWD", "1.123", 1123],
-    ["zh-CN", "USD", "１０.２９", 1029],
-    ["en", "USD", "90071992547409.91", Number.MAX_SAFE_INTEGER],
-  ] as const) {
-    const code = currencySchema.parse(currency);
-    expect(parseGiftPriceInput(input, locale, code)).toEqual({
-      valid: true,
-      amountMinor: minor,
-    });
-    expect(
-      parseGiftPriceInput(
-        formatGiftPriceInput(minorAmountSchema.parse(minor), locale, code),
-        locale,
-        code,
-      ),
-    ).toEqual({ valid: true, amountMinor: minor });
-  }
-  expect(parseGiftPriceInput("", "en", currencySchema.parse("USD"))).toEqual({
-    valid: true,
+test("an empty kind or category left by an older filter form means no choice, so the list is still priced", async () => {
+  const { prepareGiftQuery } = await model();
+  const prepared = prepareGiftQuery("zh-CN", {
+    market: "TEST",
+    currency: "USD",
+    kind: "VIRTUAL",
+    category: "",
+    page: "1",
+    pageSize: "12",
   });
-  for (const value of [
-    "1,000.00",
-    "1e2",
-    "-1",
-    "+1",
-    "1.123",
-    "90071992547409.92",
-    "1.",
-  ]) {
+  expect(prepared).toMatchObject({ valid: true, query: { kind: "VIRTUAL" } });
+  if (!prepared.valid) return;
+  expect(prepared.query).not.toHaveProperty("category");
+  expect(new URLSearchParams(prepared.apiQuery).has("category")).toBe(false);
+  const neither = prepareGiftQuery("en", {
+    market: "TEST",
+    currency: "USD",
+    kind: "",
+    category: "",
+  });
+  expect(neither.valid).toBe(true);
+  if (neither.valid) expect(neither.query).not.toHaveProperty("kind");
+  // Other empty fields remain malformed rather than silently ignored.
+  for (const name of ["sort", "availability", "page", "idol"])
     expect(
-      parseGiftPriceInput(value, "en", currencySchema.parse("USD")),
-    ).toEqual({ valid: false });
-  }
-  expect(parseGiftPriceInput("1.5", "ja", currencySchema.parse("JPY"))).toEqual(
-    { valid: false },
-  );
-  expect(
-    parseGiftPriceInput("1.25", "pt", currencySchema.parse("USD")),
-  ).toEqual({ valid: false });
+      prepareGiftQuery("en", { market: "TEST", currency: "USD", [name]: "" }),
+    ).toMatchObject({ valid: false, reason: "INVALID_QUERY" });
 });

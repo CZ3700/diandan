@@ -112,7 +112,13 @@ async function beginAdd(
 function usable(cart: CartRuntimeHeader | null): CartRuntimeHeader {
   if (cart === null) return reject("CART_NOT_FOUND");
   const parsed = cartRuntimeHeaderSchema.parse(cart);
-  if (parsed.expired || parsed.status === "EXPIRED")
+  // A converted cart became an order; for the fan it is finished exactly like an expired one,
+  // so its credential is cleared and the next gift starts a new cart. LOCKED stays locked.
+  if (
+    parsed.expired ||
+    parsed.status === "EXPIRED" ||
+    parsed.status === "CONVERTED"
+  )
     return reject("CART_EXPIRED");
   return parsed;
 }
@@ -337,6 +343,9 @@ export function createCartRuntimeUseCases({
               fanMessageLocale: command.fanMessageLocale,
               displayMode: command.displayMode,
               privateContent,
+              ...(command.galleryPreference
+                ? { galleryPreference: command.galleryPreference }
+                : {}),
               requestId: request.requestId,
               correlationId: request.correlationId,
             }),

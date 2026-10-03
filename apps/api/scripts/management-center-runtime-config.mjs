@@ -64,6 +64,13 @@ export async function prepareManagementRuntime({
       )
     ).rows;
     if (!market) throw new Error("MANAGEMENT_MARKET_NOT_CONFIGURED");
+    // Wishes and limited gifts take their stock location from these defaults.
+    const [location] = (
+      await client.query(
+        "SELECT id FROM public.inventory_locations WHERE status='ACTIVE' ORDER BY location_key LIMIT 1",
+      )
+    ).rows;
+    if (!location) throw new Error("MANAGEMENT_LOCATION_NOT_CONFIGURED");
     const presentation = {
       themeAccent: artistPresentation.themeAccent,
       heroTextTone: artistPresentation.heroTextTone,
@@ -73,8 +80,14 @@ export async function prepareManagementRuntime({
       [config, actor],
     );
     await client.query(
-      "INSERT INTO public.management_defaults(config_version_id,market,currency,inventory_policy,inventory_location_id,eligibility_rule,artist_presentation) VALUES($1,$2,$3,'PROCURE_ON_DEMAND',NULL,'ALL_ACTIVE_ARTISTS',$4)",
-      [config, market.market, market.default_currency, presentation],
+      "INSERT INTO public.management_defaults(config_version_id,market,currency,inventory_policy,inventory_location_id,eligibility_rule,artist_presentation) VALUES($1,$2,$3,'TRACKED',$4,'ALL_ACTIVE_ARTISTS',$5)",
+      [
+        config,
+        market.market,
+        market.default_currency,
+        location.id,
+        presentation,
+      ],
     );
     await client.query(
       "UPDATE public.config_versions SET lifecycle='VALIDATED' WHERE id=$1",

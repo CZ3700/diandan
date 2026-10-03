@@ -1,6 +1,5 @@
 import { expect, test, vi } from "vitest";
 import { createApiApplication } from "./bootstrap.js";
-import { createProductionApiApplication } from "./production-application.js";
 const environment = {
   NODE_ENV: "test",
   FAN_SUPPORT_DEPLOYMENT_ENV: "test",
@@ -51,40 +50,4 @@ test("unconfigured payment routes remain private typed failures before reading c
   } finally {
     await app.close();
   }
-});
-
-test("production forwards the explicit payment composition and closes it on later bootstrap failure", async () => {
-  const stop = vi.fn(async () => {});
-  const payment = {
-    paymentRuntimeRoute: { marker: "payment" },
-    paymentRuntime: { start: vi.fn(), stop },
-  };
-  const createPaymentComposition = vi.fn(() => payment);
-  const createApplication = vi.fn(async () => {
-    throw new Error("TEST bootstrap failed");
-  });
-  await expect(
-    createProductionApiApplication(environment, {
-      logger,
-      factories: {
-        createComposition: () => ({ reliableEventsRuntime: { stop: vi.fn() } }),
-        createCatalogComposition: () => ({
-          catalogDirectoryRuntime: { stop: vi.fn() },
-        }),
-        createPublishedComposition: () => ({
-          publishedContentRuntime: { stop: vi.fn() },
-        }),
-        createCartComposition: () => undefined,
-        createCheckoutComposition: () => undefined,
-        createPaymentComposition,
-        createApplication,
-      } as never,
-    }),
-  ).rejects.toThrow("TEST bootstrap failed");
-  expect(createPaymentComposition).toHaveBeenCalledWith(environment);
-  expect(createApplication).toHaveBeenCalledWith(
-    environment,
-    expect.objectContaining(payment),
-  );
-  expect(stop).toHaveBeenCalledTimes(1);
 });

@@ -230,4 +230,37 @@ describe("catalog directory repository", () => {
       totalItems: 120,
     });
   });
+
+  test("a gift kind reaches SQL as the final parameter and unknown window kinds fail closed", async () => {
+    const plan = createGiftDiscoveryPlan({
+      schemaVersion: 1,
+      locale: "en",
+      market: "TEST",
+      currency: "USD",
+      kind: "MERCHANDISE",
+    });
+    const empty = harness([
+      { catalog_version: version, total_items: "0", items: [] },
+    ]);
+    await empty.repository.readGifts({ schemaVersion: 1, plan });
+    expect(
+      (empty.query.mock.calls[0] as unknown as [string, unknown[]])[1].at(-1),
+    ).toBe("MERCHANDISE");
+    const tampered = harness([
+      {
+        catalog_version: version,
+        total_items: "1",
+        items: [
+          {
+            id: "10000000-0000-4000-8000-000000000001",
+            priceMinor: null,
+            giftKind: "TIP",
+          },
+        ],
+      },
+    ]);
+    await expect(
+      tampered.repository.readGifts({ schemaVersion: 1, plan }),
+    ).rejects.toThrow();
+  });
 });
