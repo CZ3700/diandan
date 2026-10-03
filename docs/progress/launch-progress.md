@@ -1,5 +1,21 @@
 # 当前上线进度
 
+## P-20261003 审计整改 1A：恢复 CI 门禁
+
+- **状态**：LOCAL_ACCEPTED（待云 CI 判定），2026-10-03。Claude（Cz 会话）实现与验证，基线 `cbcf8a9a`。用户批准上线前审计第一阶段的 1A 批次，范围只限恢复 CI 门禁，不改变业务行为。
+- **CI-1**：后台政策文案（e876c25c，3 处）与页面管理文案（cbcf8a9a，1 处）用了列出全部七个语言键的对象字面量，违反 `check:contracts` 规则"完整 SupportedLocale 集合只由 contracts 持有"。后一处被 ui-composites 的偶发预加载告警遮蔽，因此 37045406906 与 37059111543 两轮 CI 没有暴露它。
+  - 修法沿用 1cf89660 的模式：每种语言一个模块级常量，加 `switch` 取值。文案、导出名、类型形状都不变。
+  - 用新旧两版逐语言比对，7 种语言的输出逐值一致，键的顺序也一致（政策 58 个键，页面管理 3 个键）。
+- **OPS-11**：braces 3.0.3 的高危公告 GHSA-vfj7-8cjw-p6xm 于 10-02 22:36Z 审核，上游没有修复；它唯一的引入路径是根目录开发依赖 `@next/eslint-plugin-next`。
+  - 在 `pnpm-workspace.yaml` 中用 pnpm 11.16+ 的 `audit.ignore` 忽略这条公告。
+  - `security-dependencies.test.mjs` 新增一个守卫：遍历锁文件里各工作区的生产依赖路径，一旦 braces 出现在生产路径上就失败。正向对照能走到 next；反向对照把开发依赖当生产依赖时，能抓到 braces。
+- **验证**：
+  - `check:contracts`（canonical locale ownership preserved）通过；`security:dependencies` 退出 0（1 high ignored）；prettier、eslint 通过。
+  - typecheck 69/69、build 38/38；后台测试 139 个文件、721 条全部通过。
+  - `check:dev` 的 test 步在本机因并发冷导入超时 5 秒而不稳定：位置每轮不同，改动前在 HEAD 上同样出现；storefront、application、persistence-postgres 单独整包运行都全部通过。没有修改测试超时，交由云 CI 判定。
+- **未变更**：依赖版本、迁移、业务源码均未改动。stg 未部署，仍停在 `e07161fa`。`copy.ts` 的结构已经改变，并行修改该文件的人需要先变基。
+- **上线前审计**：完整报告只在主审本机，按用户决定不入库。共 95 条，其中 P1 13 条；12 项业务事项用户已确认采纳推荐。后续 1B、1C、1D 批次须另行批准。
+
 ## P-20261003 页面管理入口合并
 
 - BLOCKED_EXTERNAL（剩余浏览器矩阵/公开 TEST 部署）；代码完成，2026-10-03。root统筹/浏览器，catalog_integration_audit实现，research_gifts_a独立PG夹具，research_gifts_b同步CI模型和复核；基线`3790ac30`。
