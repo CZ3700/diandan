@@ -47,7 +47,10 @@ test("notification stage migration restores the prior catalog only without retai
     try {
       const originalCatalog = await capture();
       const original = await evidence();
-      const upgraded = await migrate({ direction: "up" });
+      const upgraded = await migrate({
+        direction: "up",
+        targetVersion: headVersion,
+      });
       assert.equal(upgraded.currentVersion, headVersion);
       assert.deepEqual(upgraded.appliedVersions, [headVersion]);
       const currentCatalog = await capture();

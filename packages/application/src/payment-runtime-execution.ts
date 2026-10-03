@@ -34,6 +34,25 @@ const defer = (
     ),
   );
 
+/**
+ * Port contract: RETRY_SAME_COMMAND marks the same command as safe to resend. Adapters return these
+ * two codes only for a 429, a 409 in-flight duplicate or a request never sent (audit PAY-01).
+ */
+function unacceptedCreate(input: unknown) {
+  const parsed = paymentPortResponseSchema.safeParse(input);
+  if (
+    !parsed.success ||
+    parsed.data.operation !== "CREATE_PAYMENT" ||
+    parsed.data.outcome !== "FAILURE" ||
+    parsed.data.error.recovery !== "RETRY_SAME_COMMAND"
+  )
+    return null;
+  const { code } = parsed.data.error;
+  return code === "RATE_LIMITED" || code === "TEMPORARY_UNAVAILABLE"
+    ? code
+    : null;
+}
+
 async function executeCreate(
   runtime: PaymentRuntime,
   claim: PaymentRuntimeClaim,
@@ -41,14 +60,17 @@ async function executeCreate(
   const provider = findPaymentProvider(runtime.providers, claim.attempt);
   if (!provider) return defer(runtime, claim, "PROVIDER_UNAVAILABLE");
   let result: PaymentRuntimeSettleCreateCommand["result"];
+  let unaccepted: string | null = null;
   try {
+    const input = (
+      await observePaymentProvider(runtime.health, claim.createCommand, () =>
+        provider.provider.createPayment(claim.createCommand),
+      )
+    ).response;
+    unaccepted = unacceptedCreate(input);
     const response = readPaymentCreateResult(
       claim.createCommand,
-      (
-        await observePaymentProvider(runtime.health, claim.createCommand, () =>
-          provider.provider.createPayment(claim.createCommand),
-        )
-      ).response,
+      input,
       provider.configuration,
       claim.supportedActionTypes,
       {
@@ -80,6 +102,8 @@ async function executeCreate(
       reasonCode: "PROVIDER_OUTCOME_UNCERTAIN",
     };
   }
+  // The attempt stays CREATED with no provider call recorded; the next claim resends the frozen command and key.
+  if (unaccepted !== null) return defer(runtime, claim, unaccepted);
   const command = paymentRuntimeSettleCreateCommandSchema.parse({
     schemaVersion: 1,
     claim,
@@ -99,8 +123,18 @@ async function executeReconcile(
   runtime: PaymentRuntime,
   claim: PaymentRuntimeClaim,
 ) {
+  const unresolved = async (errorCode: string) => {
+    const record = await defer(runtime, claim, errorCode);
+    if (claim.attempt.status === "UNKNOWN")
+      try {
+        runtime.onRecoveryUnresolved?.();
+      } catch {
+        /* An unavailable alert sink never blocks the durable recovery it reports. */
+      }
+    return record;
+  };
   const provider = findPaymentProvider(runtime.providers, claim.attempt);
-  if (!provider) return defer(runtime, claim, "PROVIDER_UNAVAILABLE");
+  if (!provider) return unresolved("PROVIDER_UNAVAILABLE");
   const frozen = claim.createCommand;
   const command = paymentPortCommandSchema.parse({
     schemaVersion: 1,
@@ -118,7 +152,7 @@ async function executeReconcile(
       : { externalReference: claim.attempt.externalReference }),
   });
   if (command.operation !== "RECONCILE_PAYMENT")
-    return defer(runtime, claim, "INVALID_COMMAND");
+    return unresolved("INVALID_COMMAND");
   let input: unknown;
   try {
     input = (
@@ -127,7 +161,7 @@ async function executeReconcile(
       )
     ).response;
   } catch {
-    return defer(runtime, claim, "PROVIDER_QUERY_UNAVAILABLE");
+    return unresolved("PROVIDER_QUERY_UNAVAILABLE");
   }
   const response = paymentPortResponseSchema.safeParse(input);
   if (
@@ -136,7 +170,7 @@ async function executeReconcile(
     response.data.outcome !== "SUCCESS" ||
     !paymentPortResponseMatchesCommand(command, response.data)
   )
-    return defer(runtime, claim, "PROVIDER_QUERY_UNAVAILABLE");
+    return unresolved("PROVIDER_QUERY_UNAVAILABLE");
   let record = paymentRuntimeRecordReconcileCommandSchema.parse({
     schemaVersion: 1,
     claim,
@@ -166,7 +200,7 @@ async function executeReconcile(
       externalReference: record.event.association.externalReference,
     });
     if (lookup.operation !== "GET_PAYMENT")
-      return defer(runtime, claim, "INVALID_COMMAND");
+      return unresolved("INVALID_COMMAND");
     try {
       const action = readPaymentRecoveryAction(
         lookup,
@@ -182,14 +216,13 @@ async function executeReconcile(
           fallbackUsed: claim.attempt.providerLocaleFallbackUsed,
         },
       );
-      if (action === null)
-        return defer(runtime, claim, "PROVIDER_ACTION_UNAVAILABLE");
+      if (action === null) return unresolved("PROVIDER_ACTION_UNAVAILABLE");
       record = paymentRuntimeRecordReconcileCommandSchema.parse({
         ...record,
         action: await encryptPaymentAction(runtime, claim.attempt, action),
       });
     } catch {
-      return defer(runtime, claim, "PROVIDER_ACTION_UNAVAILABLE");
+      return unresolved("PROVIDER_ACTION_UNAVAILABLE");
     }
   }
   return runtime.run(async ({ paymentRuntime }) =>

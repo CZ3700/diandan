@@ -27,6 +27,8 @@ export type PaymentRuntime = Readonly<{
   providers: readonly PaymentRuntimeProviderRegistration[];
   configuration: PaymentRuntimeConfiguration;
   health?: PaymentRuntimeHealth;
+  /** Raised each time an UNKNOWN attempt still cannot be reconciled (audit PAY-01). */
+  onRecoveryUnresolved?: () => void;
 }>;
 export const paymentFailure = (
   code: PaymentRuntimeFailureCode,

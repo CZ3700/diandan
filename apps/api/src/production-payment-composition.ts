@@ -1,3 +1,4 @@
+import type { StructuredLogger } from "@fan-support/observability";
 import type { PaymentConnectorFactory } from "@fan-support/payment-port";
 
 import type { ApiLifecycleResource } from "./bootstrap.js";
@@ -28,6 +29,7 @@ export function createProductionPaymentComposition(
     factories: readonly PaymentConnectorFactory[];
     resources: ApiProductionResources;
     publicMediaBaseUrl: string;
+    logger?: StructuredLogger;
   }>,
 ): ProductionPaymentComposition {
   const configurationPersistence =
@@ -64,6 +66,11 @@ export function createProductionPaymentComposition(
             healthPolicies: options.config.healthPolicies,
             readHealthPolicies: projection.readPolicies,
             ...keys,
+            onRecoveryUnresolved: () =>
+              options.logger?.warn("payment_runtime.recovery_unresolved", {
+                outcome: "failure",
+                errorCode: "PAYMENT_OUTCOME_UNKNOWN",
+              }),
           });
     return Object.freeze({ projection, paymentConfigurationRuntime, payment });
   } catch (error) {

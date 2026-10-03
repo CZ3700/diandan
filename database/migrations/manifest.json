@@ -650,6 +650,16 @@
         "up": "7e8a828e37fd8f04d6489a8ef8565b839207ea36bb00912c56d75e02d6a7b2af",
         "down": "71f13dca547c035f8df718668892ec7d21343b0ea2a456d3130caf3a732a5dc8"
       }
+    },
+    {
+      "version": "0066",
+      "name": "payment-recovery-backoff",
+      "up": "database/migrations/0066_payment-recovery-backoff.up.sql",
+      "down": "database/migrations/0066_payment-recovery-backoff.down.sql",
+      "sha256": {
+        "up": "e716c210d39178afc326621f49601f484c1bdf3d816c817eee5c4a299034872d",
+        "down": "b08c2ff89daf9d47e90cadf7a876634c41e53e52527e5cea3ce39dee7e565e88"
+      }
     }
   ]
 }

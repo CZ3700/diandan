@@ -216,7 +216,7 @@ export async function recordPaymentReconcile(
   const complete =
     canApply && ["FAILED", "CANCELED", "EXPIRED"].includes(target);
   await client.query(
-    `UPDATE public.payment_runtime_operations SET phase=$2,lease_token_digest=NULL,lease_expires_at=NULL,audit_log_id=NULL,next_attempt_at=CASE WHEN $2::text='RECONCILE' THEN clock_timestamp()+$3::bigint*interval '1 millisecond' ELSE NULL END,last_error_code=NULL,version=version+1,updated_at=GREATEST(clock_timestamp(),updated_at) WHERE id=$1::uuid`,
+    `UPDATE public.payment_runtime_operations SET phase=$2,lease_token_digest=NULL,lease_expires_at=NULL,audit_log_id=NULL,next_attempt_at=CASE WHEN $2::text='RECONCILE' THEN clock_timestamp()+$3::bigint*interval '1 millisecond' ELSE NULL END,last_error_code=NULL,defer_count=0,version=version+1,updated_at=GREATEST(clock_timestamp(),updated_at) WHERE id=$1::uuid`,
     [
       claim.operationId,
       pending ? "EVIDENCE_PENDING" : complete ? "COMPLETE" : "RECONCILE",
@@ -257,8 +257,9 @@ export async function deferPaymentRecovery(
         claim.correlationId,
       ],
     );
+  // Each consecutive deferral doubles the wait, capped at one hour (audit PAY-01); the right side reads the old count.
   await client.query(
-    `UPDATE public.payment_runtime_operations SET lease_token_digest=NULL,lease_expires_at=NULL,audit_log_id=NULL,next_attempt_at=clock_timestamp()+$2::bigint*interval '1 millisecond',last_error_code=$3,version=version+1,updated_at=GREATEST(clock_timestamp(),updated_at) WHERE id=$1::uuid`,
+    `UPDATE public.payment_runtime_operations SET lease_token_digest=NULL,lease_expires_at=NULL,audit_log_id=NULL,next_attempt_at=clock_timestamp()+LEAST(3600000,$2::bigint*power(2,LEAST(defer_count,9))::bigint)*interval '1 millisecond',defer_count=defer_count+1,last_error_code=$3,version=version+1,updated_at=GREATEST(clock_timestamp(),updated_at) WHERE id=$1::uuid`,
     [claim.operationId, command.retryAfterMs, command.errorCode],
   );
   const attempt = await loadPaymentAttempt(client, claim.attempt.id);

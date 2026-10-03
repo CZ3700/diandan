@@ -23661,6 +23661,16 @@
       "generation": ""
     },
     {
+      "table": "payment_runtime_operations",
+      "position": 18,
+      "name": "defer_count",
+      "dataType": "integer",
+      "notNull": true,
+      "defaultExpression": "0",
+      "identity": "",
+      "generation": ""
+    },
+    {
       "table": "payment_transactions",
       "position": 1,
       "name": "id",
@@ -60227,6 +60237,22 @@
       "name": "payment_runtime_operations_created_at_not_null",
       "kind": "NOT_NULL",
       "definition": "NOT NULL created_at",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_defer_count_check",
+      "kind": "CHECK",
+      "definition": "CHECK (defer_count >= 0)",
+      "deferrable": false,
+      "initiallyDeferred": false
+    },
+    {
+      "table": "payment_runtime_operations",
+      "name": "payment_runtime_operations_defer_count_not_null",
+      "kind": "NOT_NULL",
+      "definition": "NOT NULL defer_count",
       "deferrable": false,
       "initiallyDeferred": false
     },

@@ -187,6 +187,7 @@ export async function createProductionApiApplication(
             factories: connectorFactories,
             resources,
             publicMediaBaseUrl,
+            logger,
           });
     if (payment !== undefined) {
       owned.push(payment.paymentConfigurationRuntime);

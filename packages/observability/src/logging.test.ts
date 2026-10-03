@@ -141,6 +141,7 @@ test("money-recovery alerts keep their own event and code (audit PAY-04)", async
     ["admin_finance.refund_unresolved", "REFUND_OUTCOME_UNKNOWN"],
     ["admin_finance.review_required", "FINANCE_REVIEW_REQUIRED"],
     ["order_payment.review_required", "PAYMENT_REVIEW_REQUIRED"],
+    ["payment_runtime.recovery_unresolved", "PAYMENT_OUTCOME_UNKNOWN"],
   ] as const;
   for (const [event, errorCode] of alerts)
     logger.warn(event, { errorCode, outcome: "failure" });

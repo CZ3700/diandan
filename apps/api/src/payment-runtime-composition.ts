@@ -35,6 +35,8 @@ export type PaymentRuntimeComposeOptions = {
   keyManagement: KeyManagementPort;
   activePepperVersion: string;
   pepperVersions: readonly string[];
+  /** Alert sink for UNKNOWN attempts that still cannot be reconciled (audit PAY-01). */
+  onRecoveryUnresolved?: () => void;
 };
 export type PaymentRuntimeComposition = {
   paymentRuntimeRoute: PaymentRuntimeRouteDependencies;
@@ -147,6 +149,9 @@ export function composePaymentRuntime(
       keyManagement: options.keyManagement,
       providers,
       ...(providerDirectory === undefined ? {} : { providerDirectory }),
+      ...(options.onRecoveryUnresolved === undefined
+        ? {}
+        : { onRecoveryUnresolved: options.onRecoveryUnresolved }),
       configuration,
       ...(policies === undefined
         ? {}

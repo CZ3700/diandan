@@ -335,6 +335,94 @@ describe("persistent payment application orchestration", () => {
     expect(h.provider.reconcilePayment).toHaveBeenCalledOnce();
     expect(h.state().current.currentAttempt?.status).toBe("PROCESSING");
   });
+  const createFailure = (
+    code: string,
+    recovery: "RETRY_SAME_COMMAND" | "RECONCILE_REQUIRED" | "NONE",
+  ) => ({
+    schemaVersion: 1,
+    operation: "CREATE_PAYMENT",
+    outcome: "FAILURE",
+    error: {
+      schemaVersion: 1,
+      code,
+      recovery,
+      ...(recovery === "RETRY_SAME_COMMAND" ? { retryAfterMs: 2000 } : {}),
+    },
+  });
+  it.each(["RATE_LIMITED", "TEMPORARY_UNAVAILABLE"])(
+    "a %s create the PSP never accepted stays CREATED and is resent with its frozen key (audit PAY-01)",
+    async (code) => {
+      const h = await harness();
+      h.provider.createPayment.mockResolvedValueOnce(
+        createFailure(code, "RETRY_SAME_COMMAND") as never,
+      );
+      const settle = vi.spyOn(h.repo, "settleCreate"),
+        deferred = vi.spyOn(h.repo, "deferRecovery");
+      expect(await h.app.create(h.create, h.context)).toMatchObject({
+        attempt: { status: "CREATED" },
+      });
+      expect(settle).not.toHaveBeenCalled();
+      expect(deferred.mock.calls[0]?.[0]).toMatchObject({ errorCode: code });
+      const attempt = h.state().current.currentAttempt!;
+      expect(attempt).toMatchObject({
+        status: "CREATED",
+        providerCallStarted: false,
+      });
+      expect(
+        await h.app.recover(h.recover(attempt.id), h.freshContext()),
+      ).toMatchObject({ attempt: { status: "REQUIRES_ACTION" } });
+      const [first, second] = h.provider.createPayment.mock.calls.map(
+        ([command]) => command,
+      );
+      expect(second?.providerIdempotencyKey).toBe(
+        first?.providerIdempotencyKey,
+      );
+      expect(h.provider.createPayment).toHaveBeenCalledTimes(2);
+    },
+  );
+  it.each([
+    ["TIMEOUT_OUTCOME_UNKNOWN", "RECONCILE_REQUIRED"],
+    ["AUTHENTICATION_FAILED", "NONE"],
+    ["IDEMPOTENCY_CONFLICT", "NONE"],
+  ] as const)(
+    "a %s create is never resent and stays uncertain",
+    async (code, recovery) => {
+      const h = await harness();
+      h.provider.createPayment.mockResolvedValueOnce(
+        createFailure(code, recovery) as never,
+      );
+      expect(await h.app.create(h.create, h.context)).toMatchObject({
+        attempt: { status: "UNKNOWN", recovery: "RECONCILE_REQUIRED" },
+      });
+      expect(h.provider.createPayment).toHaveBeenCalledOnce();
+    },
+  );
+  it("an UNKNOWN payment that cannot be reconciled raises the alert hook (audit PAY-01)", async () => {
+    const h = await harness();
+    const onRecoveryUnresolved = vi.fn(() => {
+      throw new Error("alert sink unavailable");
+    });
+    const module = await load();
+    const app = module!.createPaymentRuntimeUseCases({
+      ...h.dependencies,
+      onRecoveryUnresolved,
+    });
+    h.setOutcome("UNKNOWN");
+    await app.create(h.create, h.context);
+    expect(onRecoveryUnresolved).not.toHaveBeenCalled();
+    h.provider.reconcilePayment.mockResolvedValueOnce({
+      schemaVersion: 1,
+      operation: "RECONCILE_PAYMENT",
+      outcome: "FAILURE",
+      error: { schemaVersion: 1, code: "PAYMENT_NOT_FOUND", recovery: "NONE" },
+    } as never);
+    expect(await app.recoverNext()).toMatchObject({ processed: true });
+    expect(h.state().current.currentAttempt?.status).toBe("UNKNOWN");
+    expect(onRecoveryUnresolved).toHaveBeenCalledOnce();
+    await app.recoverNext();
+    expect(h.state().current.currentAttempt?.status).toBe("PROCESSING");
+    expect(onRecoveryUnresolved).toHaveBeenCalledOnce();
+  });
   it("fails uncertain when the provider response is malformed instead of retrying the charge", async () => {
     const h = await harness();
     h.setOutcome("MALFORMED");
