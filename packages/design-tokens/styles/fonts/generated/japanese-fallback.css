@@ -1799,10 +1799,10 @@
   unicode-range:
     U+A5, U+4E80, U+4F34, U+4F73, U+4F75, U+511F, U+5192, U+52AA, U+53C8,
     U+570F, U+57CB, U+596E, U+5D8B, U+5F66, U+5FD9, U+62DB, U+62F6, U+6328,
-    U+633F, U+63A7, U+6469, U+6BBF, U+6C41, U+6C57, U+6D44, U+6DBC, U+706F,
-    U+72C2, U+72ED, U+7551, U+75F4, U+7949, U+7E26, U+7FD4, U+8150, U+8AF8,
-    U+8B0E, U+8B72, U+8CA7, U+934B, U+9A0E, U+9A12, U+9B42, U+FF41, U+FF43,
-    U+FF45, U+FF49, U+FF4F, U+FF62-FF63;
+    U+633F, U+6469, U+6BBF, U+6C41, U+6C57, U+6D44, U+6DBC, U+706F, U+72C2,
+    U+72ED, U+7551, U+75F4, U+7949, U+7E26, U+7FD4, U+8150, U+8AF8, U+8B0E,
+    U+8B72, U+8CA7, U+934B, U+9A0E, U+9A12, U+9B42, U+FF41, U+FF43, U+FF45,
+    U+FF49, U+FF4F, U+FF62-FF63;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -1843,11 +1843,10 @@
     format("woff2-variations");
   unicode-range:
     U+2460, U+4E5F, U+4E7E, U+4ED9, U+501F, U+502B, U+5968, U+5974, U+5AC1,
-    U+5B99, U+5BA3, U+5BE7, U+5C64, U+5CB8, U+5EC3, U+5F1F, U+616E, U+6297,
-    U+62E0, U+62EC, U+6368, U+642D, U+65E6, U+6717, U+676F, U+6B04, U+732E,
-    U+7652, U+76CA, U+76D7, U+7802, U+7E70, U+7F6A, U+8133, U+81E8, U+866B,
-    U+878D, U+88F8, U+8A5E, U+8CDB, U+907A, U+90E1, U+96F2, U+9F8D, U+FF35,
-    U+FF37, U+FF40, U+FF9D;
+    U+5B99, U+5C64, U+5CB8, U+5EC3, U+5F1F, U+616E, U+6297, U+62E0, U+62EC,
+    U+6368, U+642D, U+65E6, U+6717, U+676F, U+732E, U+7652, U+76CA, U+76D7,
+    U+7802, U+7E70, U+7F6A, U+8133, U+81E8, U+866B, U+88F8, U+8A5E, U+8CDB,
+    U+907A, U+90E1, U+96F2, U+9F8D, U+FF35, U+FF37, U+FF40, U+FF9D;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -1934,10 +1933,10 @@
   unicode-range:
     U+25CB, U+4E71, U+4F59, U+50D5, U+520A, U+5217, U+5230, U+523A-523B, U+541B,
     U+5439, U+5747, U+59C9, U+5BDF, U+5C31, U+5DE8, U+5E7C, U+5F69, U+6050,
-    U+60D1, U+63CF, U+663C, U+67C4, U+6885, U+6C38, U+6D6E, U+6DB2, U+6DF7,
-    U+6E2C, U+6F5F, U+7532, U+76E3-76E4, U+7701, U+793C, U+79F0, U+7A93, U+7D00,
-    U+7DE0, U+7E54, U+8328, U+8840, U+969C, U+96E8, U+9811, U+9AEA, U+9B5A,
-    U+FF24, U+FF2E, U+FF57;
+    U+63CF, U+663C, U+67C4, U+6885, U+6C38, U+6D6E, U+6DB2, U+6DF7, U+6E2C,
+    U+6F5F, U+7532, U+76E3-76E4, U+7701, U+793C, U+79F0, U+7D00, U+7DE0, U+7E54,
+    U+8328, U+8840, U+969C, U+96E8, U+9811, U+9AEA, U+9B5A, U+FF24, U+FF2E,
+    U+FF57;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -1951,8 +1950,8 @@
     U+5C90, U+5DF1, U+5E2D, U+5E33, U+5F3E, U+6298, U+6383, U+653B, U+6697,
     U+6804, U+6A39, U+6CCA, U+6E90, U+6F2B, U+702C, U+7206, U+7236, U+7565,
     U+7591, U+75C7, U+75DB, U+7B4B, U+7BB1, U+7D99, U+7FBD, U+8131, U+885B,
-    U+8B1D, U+8FF7, U+9003, U+9045, U+96A0, U+9732, U+990A, U+99D0, U+9E97,
-    U+9F62, U+FF25, U+FF2D;
+    U+8B1D, U+9003, U+9045, U+96A0, U+9732, U+990A, U+99D0, U+9E97, U+9F62,
+    U+FF25, U+FF2D;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -1962,12 +1961,12 @@
   src: url("../../../node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-100-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
-    U+4E08, U+4F9D, U+5012, U+514D, U+51B7, U+5275, U+53CA, U+53F8, U+5584,
-    U+57FC, U+5B9D, U+5BFA, U+5C3E, U+5F01, U+5FB4, U+5FD7, U+606F, U+62E1,
-    U+6563, U+6674, U+6CB3, U+6D3E, U+6D74, U+6E2F, U+718A, U+7247, U+79D8,
-    U+7D14, U+7D66, U+7D71, U+7DF4, U+7E41, U+80CC, U+8155, U+83D3, U+8A95,
-    U+8AB2, U+8AD6, U+8CA1, U+9000, U+9006, U+9678, U+97D3, U+9808, U+98EF,
-    U+9A5A, U+9B45, U+FF23, U+FF30;
+    U+4E08, U+5012, U+514D, U+51B7, U+5275, U+53CA, U+53F8, U+5584, U+57FC,
+    U+5B9D, U+5BFA, U+5C3E, U+5F01, U+5FB4, U+5FD7, U+606F, U+62E1, U+6563,
+    U+6674, U+6CB3, U+6D3E, U+6D74, U+6E2F, U+718A, U+7247, U+79D8, U+7D14,
+    U+7D66, U+7D71, U+7DF4, U+7E41, U+80CC, U+8155, U+83D3, U+8A95, U+8AB2,
+    U+8AD6, U+8CA1, U+9000, U+9006, U+9678, U+97D3, U+9808, U+98EF, U+9A5A,
+    U+9B45, U+FF23, U+FF30;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -1996,7 +1995,7 @@
     U+5238, U+547C, U+5802, U+5922, U+5A66, U+5C0E, U+5DE6, U+5FD8, U+5FEB,
     U+6797, U+685C, U+6B7B, U+6C5F-6C60, U+6CC9, U+6CE2, U+6D17, U+7167, U+7642,
     U+76DB, U+8001, U+821E, U+8857, U+89D2, U+8B1B, U+8CB4, U+8CDE, U+8F03,
-    U+8F2A, U+968E, U+9B54, U+9E7F, U+9EBB, U+FF05, U+FF33;
+    U+8F2A, U+9B54, U+9E7F, U+9EBB, U+FF05, U+FF33;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2021,12 +2020,11 @@
   src: url("../../../node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-104-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
-    U+4E01, U+4E21, U+4E38, U+52A9, U+547D, U+592E, U+5931, U+5B63, U+5C40,
-    U+5DDE, U+5E78, U+5EFA, U+604B, U+6075, U+62C5, U+632F, U+6A19, U+6C0F,
-    U+6C11, U+6C96, U+6E05, U+70BA, U+71B1, U+7387, U+7403, U+75C5, U+795D,
-    U+7B54, U+7CBE, U+7D19, U+7FA4, U+8089, U+81F4, U+8208, U+8336, U+8457,
-    U+8A33, U+8C4A, U+8CA0, U+8CC0, U+9014, U+964D, U+9803, U+983C, U+98DB,
-    U+FF17, U+FF21;
+    U+4E21, U+4E38, U+52A9, U+547D, U+592E, U+5931, U+5B63, U+5C40, U+5DDE,
+    U+5E78, U+5EFA, U+604B, U+6075, U+62C5, U+632F, U+6A19, U+6C0F, U+6C11,
+    U+6C96, U+6E05, U+70BA, U+71B1, U+7387, U+7403, U+75C5, U+795D, U+7B54,
+    U+7CBE, U+7D19, U+7FA4, U+8089, U+81F4, U+8208, U+8336, U+8457, U+8A33,
+    U+8C4A, U+8CA0, U+8CC0, U+9014, U+964D, U+9803, U+98DB, U+FF17, U+FF21;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2037,10 +2035,10 @@
     format("woff2-variations");
   unicode-range:
     U+25A0, U+5341, U+56F2, U+5BBF, U+5C45, U+5C55, U+5C5E, U+5DEE, U+5E9C,
-    U+5F7C, U+627F, U+65CF, U+661F, U+666E, U+66DC, U+6975, U+6A4B, U+6B32,
-    U+6DF1, U+6E29, U+6FC0, U+738B, U+7686, U+7A76, U+7A81, U+7C73, U+7D75,
-    U+7DD2, U+82E5, U+85AC, U+888B, U+899A, U+8A31, U+8A8C, U+8AB0, U+8B58,
-    U+904A, U+9060, U+9280, U+9CE5, U+FF18;
+    U+5F7C, U+65CF, U+661F, U+666E, U+66DC, U+6975, U+6A4B, U+6B32, U+6DF1,
+    U+6E29, U+6FC0, U+738B, U+7686, U+7A76, U+7A81, U+7C73, U+7D75, U+7DD2,
+    U+82E5, U+85AC, U+888B, U+899A, U+8A31, U+8A8C, U+8B58, U+904A, U+9060,
+    U+9280, U+9CE5, U+FF18;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2050,11 +2048,11 @@
   src: url("../../../node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-106-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
-    U+30F6, U+50AC, U+5178, U+51E6, U+5224, U+52DD, U+5883, U+590F, U+5A5A,
-    U+5BB3, U+5C65, U+5E03, U+5E2B, U+5E30, U+5EB7, U+6271, U+679A, U+6A2A,
-    U+6CA2, U+6D0B, U+713C, U+74B0, U+7981, U+7A0B, U+7BC0, U+7D1A, U+7D61,
-    U+7FD2, U+822C, U+8996, U+8CAC, U+8CBB, U+8D77, U+8DEF, U+9020, U+9152,
-    U+9244, U+9662, U+967A, U+96E3, U+9759, U+FF16;
+    U+30F6, U+50AC, U+5178, U+5224, U+52DD, U+5883, U+590F, U+5A5A, U+5BB3,
+    U+5C65, U+5E03, U+5E2B, U+5E30, U+5EB7, U+6271, U+679A, U+6A2A, U+6CA2,
+    U+6D0B, U+713C, U+74B0, U+7981, U+7A0B, U+7BC0, U+7D1A, U+7FD2, U+8996,
+    U+8CAC, U+8D77, U+8DEF, U+9020, U+9152, U+9244, U+9662, U+967A, U+96E3,
+    U+9759, U+FF16;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2066,9 +2064,9 @@
   unicode-range:
     U+2192, U+4E45, U+4F50, U+4F8B, U+4FC2, U+5024, U+5150, U+5370, U+53BB,
     U+56DB, U+56E3, U+57CE, U+5BC4, U+5BCC, U+60AA, U+6238, U+6280, U+629C,
-    U+6539, U+670D, U+677E-677F, U+6839, U+69CB, U+6B4C, U+6BB5, U+6F14, U+72EC,
-    U+7389, U+7814, U+79CB, U+79D1, U+7D0D, U+85E4, U+8D64, U+9632, U+96E2,
-    U+9805, U+99AC, U+FF1E;
+    U+6539, U+670D, U+677E-677F, U+6839, U+69CB, U+6B4C, U+6F14, U+72EC, U+7389,
+    U+7814, U+79CB, U+79D1, U+7D0D, U+85E4, U+8D64, U+9632, U+96E2, U+9805,
+    U+99AC, U+FF1E;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2095,7 +2093,7 @@
     U+266A, U+533A, U+5343, U+534A, U+56F3, U+5BAE, U+5E0C, U+5F35, U+5F79,
     U+6226, U+65C5, U+6625, U+6751, U+6821, U+6B69, U+6BCE, U+706B, U+7C21,
     U+7CFB, U+805E, U+80B2, U+82B8, U+843D, U+8853, U+88C5, U+8D8A, U+8FBA,
-    U+9069, U+9752, U+9999, U+FF0F-FF10, U+FF14-FF15;
+    U+9752, U+9999, U+FF0F-FF10, U+FF14-FF15;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2105,10 +2103,10 @@
   src: url("../../../node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-110-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
-    U+4E95, U+4F01, U+4F1D, U+4FBF, U+5171, U+5177, U+53CB, U+53CE, U+53F0,
-    U+5668, U+5712, U+5BA4, U+5CA1, U+653E, U+65AD, U+65E9, U+6750, U+6B74,
-    U+6E80, U+7248, U+7531, U+753A, U+77F3, U+798F, U+7F6E, U+8449, U+88FD,
-    U+89B3, U+8A55, U+8AC7, U+8B77, U+8DB3, U+8EFD, U+9031, U+9580, U+96D1;
+    U+4E95, U+4F01, U+4FBF, U+5171, U+5177, U+53CB, U+53CE, U+53F0, U+5668,
+    U+5712, U+5BA4, U+5CA1, U+653E, U+65AD, U+65E9, U+6750, U+6B74, U+6E80,
+    U+7248, U+7531, U+753A, U+77F3, U+798F, U+8449, U+88FD, U+89B3, U+8A55,
+    U+8AC7, U+8B77, U+8DB3, U+8EFD, U+9031, U+9580, U+96D1;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2119,8 +2117,8 @@
     format("woff2-variations");
   unicode-range:
     U+300E-300F, U+4E07, U+4E8C, U+512A, U+5149, U+52D9, U+5468, U+578B, U+57FA,
-    U+5BA2, U+5C02, U+5DE5, U+5F37, U+5F62, U+63D0, U+6848, U+6D41, U+7136,
-    U+7537, U+754C, U+79C1, U+7D4C, U+7DCF, U+7DDA, U+897F, U+904E, U+982D,
+    U+5DE5, U+5F37, U+5F62, U+6848, U+6D41, U+7136, U+7537, U+754C, U+79C1,
+    U+7BA1, U+7D44, U+7D4C, U+7DCF, U+7DDA, U+897F, U+904E, U+982D, U+9858,
     U+98A8, U+9A13, U+FF13, U+FF5C;
 }
 @font-face {
@@ -2131,10 +2129,10 @@
   src: url("../../../node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-112-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
-    U+4E16, U+4E3B, U+4EA4, U+4EE4, U+4F4D, U+4F4F, U+4F55, U+4F9B, U+5317,
-    U+53C2, U+53E4, U+548C, U+571F, U+5CF6, U+5E38, U+6559, U+662D, U+7523,
-    U+767D, U+770C, U+7A3F, U+7B2C, U+7B49, U+7D20, U+8003, U+8272, U+8AAC,
-    U+8CB7, U+8EE2, U+9055, U+90FD, U+91CD, U+97F3, U+984C, U+FF06;
+    U+4E16, U+4E3B, U+4EA4, U+4F4D, U+4F4F, U+4F55, U+5317, U+53C2, U+53E4,
+    U+548C, U+571F, U+5CF6, U+5E38, U+63B2, U+6559, U+662D, U+7523, U+767D,
+    U+770C, U+7A3F, U+7B49, U+7D20, U+8003, U+8272, U+8AAC, U+8CB7, U+8EE2,
+    U+90FD, U+91CD, U+97F3, U+984C, U+FF06;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2144,9 +2142,9 @@
   src: url("../../../node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-113-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
-    U+203B, U+4E09, U+4EAC, U+4ED5, U+5143, U+53E3, U+5411, U+5473, U+55B6,
-    U+5929, U+597D, U+5C4B, U+5DDD, U+5F97, U+6295, U+671B, U+76F8, U+795E,
-    U+7D39, U+8CEA, U+8ECA, U+904B, U+FF11-FF12;
+    U+203B, U+4E09, U+4EAC, U+4ED5, U+5143, U+5411, U+5473, U+55B6, U+5929,
+    U+597D, U+5C4B, U+5DDD, U+5F97, U+6295, U+671B, U+76F8, U+795E, U+7D39,
+    U+8ECA, U+904B, U+FF11-FF12;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2156,9 +2154,9 @@
   src: url("../../../node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-114-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
-    U+3005, U+4ECB, U+4FE1, U+500B, U+5186, U+5316, U+544A, U+54E1, U+5973,
-    U+5C71, U+5E97, U+601D, U+611B, U+611F, U+6728, U+6765, U+6D3B, U+6D77,
-    U+7530, U+7740, U+826F, U+9053, U+91CE;
+    U+3005, U+4ECB, U+5186, U+5316, U+544A, U+54E1, U+5973, U+5C71, U+5E02,
+    U+5E97, U+601D, U+611B, U+611F, U+6728, U+6765, U+6D3B, U+6D77, U+7530,
+    U+7740, U+826F, U+9053, U+91CE;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2168,8 +2166,8 @@
   src: url("../../../node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-115-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
-    U+4EE5, U+5148, U+56DE, U+591A, U+5B66, U+5BB6, U+5E73, U+5F53, U+6771,
-    U+69D8, U+6C34, U+6CBB, U+7F8E, U+8A71, U+96FB, U+FF5E;
+    U+4EE5, U+591A, U+5B66, U+5BB6, U+5E73, U+6771, U+69D8, U+6C34, U+6CBB,
+    U+7F8E, U+8A71, U+96FB, U+FF5E;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2179,8 +2177,7 @@
   src: url("../../../node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-116-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
-    U+A9, U+3010-3011, U+30E2, U+4F53, U+5916, U+5B50, U+696D, U+7279, U+7406,
-    U+767A-767B, U+81EA, U+9023, U+FF1F;
+    U+A9, U+3010-3011, U+30E2, U+4F53, U+5916, U+5B50, U+7279, U+81EA, U+FF1F;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2190,8 +2187,7 @@
   src: url("../../../node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-117-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
-    U+A0, U+3000, U+4E0A, U+5206, U+554F, U+5E74, U+5F0F, U+682A, U+6B63,
-    U+6C17, U+76EE, U+793E, U+FF01, U+FF08-FF09;
+    U+A0, U+3000, U+5206, U+5E74, U+5F0F, U+682A, U+6B63, U+6C17, U+FF01;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2216,11 +2212,11 @@
   unicode-range:
     U+2027, U+3041, U+3043, U+3045, U+3047, U+3049, U+304E, U+305A, U+305C,
     U+3062, U+3065, U+306C-306D, U+3071, U+3077, U+307A-307D, U+3083,
-    U+3085-3086, U+308D-308E, U+3091, U+3099-309A, U+309D-309E, U+30A5, U+30A7,
-    U+30A9, U+30AC, U+30B3, U+30B6, U+30BC-30BE, U+30C2, U+30C4-30C5, U+30CC,
-    U+30CE-30CF, U+30D1-30D2, U+30D4, U+30D6, U+30D8-30D9, U+30DC, U+30DF,
-    U+30E4, U+30E6, U+30E8, U+30EF-30F0, U+30F2, U+30F4, U+30FD-30FE, U+FF0C,
-    U+FF0E;
+    U+3085-3086, U+308D-308E, U+3091, U+3099-309A, U+309D-309E, U+30A5,
+    U+30A7-30A8, U+30AC, U+30B1, U+30B3, U+30B6, U+30BC-30BE, U+30C2,
+    U+30C4-30C5, U+30CC, U+30CE-30CF, U+30D1-30D2, U+30D4, U+30D8-30D9, U+30DC,
+    U+30DF, U+30E4, U+30E6, U+30E8, U+30EF-30F0, U+30F2, U+30F4, U+30FD-30FE,
+    U+FF0C, U+FF0E;
 }
 @font-face {
   font-family: "Noto Sans JP Variable";
@@ -2262,8 +2258,8 @@
   src: url("../../../node_modules/@fontsource-variable/noto-sans-jp/files/noto-sans-jp-latin-wght-normal.woff2")
     format("woff2-variations");
   unicode-range:
-    U+0-1F, U+21-2B, U+2D-2E, U+32-33, U+35-60, U+68, U+6A-6B, U+76-78, U+7A,
-    U+7C, U+7E-B6, U+B8-D6, U+D8-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA,
-    U+2DC, U+304, U+308, U+329, U+2000-2025, U+2027-206F, U+20AC, U+2122,
+    U+0-1F, U+21-2B, U+2D-2E, U+33, U+35-37, U+39-60, U+68, U+6A-6B, U+76-78,
+    U+7A, U+7C, U+7E-B6, U+B8-D6, U+D8-FF, U+131, U+152-153, U+2BB-2BC, U+2C6,
+    U+2DA, U+2DC, U+304, U+308, U+329, U+2000-2025, U+2027-206F, U+20AC, U+2122,
     U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
