@@ -21,6 +21,28 @@ import {
   type DraftRow,
 } from "./admin-finance-data.js";
 import { persistFinanceEvidence } from "./admin-finance-evidence.js";
+/**
+ * Unresolved provider work waits twice as long per claim, capped at one hour (audit PAY-04).
+ * A refund the PSP refused used to be queried every ten seconds forever.
+ */
+export function financeRetryDelayMs(
+  retryAfterMs: number,
+  generation: number,
+): number {
+  return Math.min(
+    3_600_000,
+    retryAfterMs * 2 ** Math.min(Math.max(generation - 1, 0), 9),
+  );
+}
+/** Only an undispatched mutation reads as PROVIDER_UNAVAILABLE; a refusal keeps the PSP's code. */
+export function financeSettleErrorCode(
+  result: AdminFinanceSettleCommand["result"],
+): string | null {
+  if (result.kind === "UNCERTAIN") return result.reasonCode;
+  return result.response.outcome === "SUCCESS"
+    ? null
+    : result.response.error.code;
+}
 export async function claimAdminFinance(
   client: TransactionClient,
   outbox: OutboxRepository,
@@ -199,15 +221,12 @@ export async function settleAdminFinance(
     `UPDATE admin_finance_operations SET phase=CASE WHEN $4::boolean THEN CASE WHEN refund_id IS NULL THEN 'CANCEL_READY' ELSE 'REFUND_READY' END ELSE phase END,lease_token_digest=NULL,lease_expires_at=NULL,claim=NULL,next_attempt_at=clock_timestamp()+$2::bigint*interval '1 millisecond',last_error_code=$3,updated_at=GREATEST(clock_timestamp(),updated_at) WHERE id=$1`,
     [
       claim.operationId,
-      success &&
-      ["REFUND_PAYMENT", "CANCEL_PAYMENT"].includes(claim.command.operation)
-        ? 0
-        : input.retryAfterMs,
-      success
-        ? null
-        : result.kind === "UNCERTAIN"
-          ? result.reasonCode
-          : "PROVIDER_UNAVAILABLE",
+      !success
+        ? financeRetryDelayMs(input.retryAfterMs, claim.generation)
+        : ["REFUND_PAYMENT", "CANCEL_PAYMENT"].includes(claim.command.operation)
+          ? 0
+          : input.retryAfterMs,
+      financeSettleErrorCode(result),
       notDispatched,
     ],
   );

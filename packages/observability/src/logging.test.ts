@@ -129,6 +129,28 @@ test("preserves allowlisted reliable-event infrastructure signals", async () => 
   ]);
 });
 
+test("money-recovery alerts keep their own event and code (audit PAY-04)", async () => {
+  const { createStructuredLogger } = await loadLoggingModule();
+  const lines: string[] = [];
+  const logger = createStructuredLogger({
+    service: "worker",
+    now: () => new Date("2026-10-03T04:00:00.000Z"),
+    write: (line) => lines.push(line),
+  });
+  const alerts = [
+    ["admin_finance.refund_unresolved", "REFUND_OUTCOME_UNKNOWN"],
+    ["admin_finance.review_required", "FINANCE_REVIEW_REQUIRED"],
+    ["order_payment.review_required", "PAYMENT_REVIEW_REQUIRED"],
+  ] as const;
+  for (const [event, errorCode] of alerts)
+    logger.warn(event, { errorCode, outcome: "failure" });
+  expect(lines.map((line) => JSON.parse(line) as unknown)).toEqual(
+    alerts.map(([event, errorCode]) =>
+      expect.objectContaining({ event, errorCode, outcome: "failure" }),
+    ),
+  );
+});
+
 test("does not inspect or serialize hostile and nested values", async () => {
   const { createStructuredLogger } = await loadLoggingModule();
   const canary = "PRIVATE_MESSAGE_CANARY_94271";

@@ -200,6 +200,7 @@ export async function createProductionApiApplication(
               config: config.admin,
               resources,
               payment: payment.projection,
+              logger,
               ...(options.factories?.identityTransport
                 ? { identityTransport: options.factories.identityTransport }
                 : {}),

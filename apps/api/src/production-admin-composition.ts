@@ -32,6 +32,7 @@ import {
   createOidcIdentityProvider,
   type OidcIdentityProviderDependencies,
 } from "@fan-support/identity-oidc";
+import type { StructuredLogger } from "@fan-support/observability";
 import type { PostgresPersistence } from "@fan-support/persistence-postgres";
 
 import type {
@@ -83,6 +84,8 @@ export type ProductionAdminCompositionOptions = Readonly<{
     "deployedAccounts" | "providerDirectory"
   >;
   identityTransport?: OidcIdentityProviderDependencies;
+  /** Receives money-recovery alerts; absent in compositions that run without the API logger. */
+  logger?: StructuredLogger;
 }>;
 export type ProductionAdminComposition = Readonly<{
   /** Present when OIDC is configured. */
@@ -181,6 +184,11 @@ export function createProductionAdminComposition(
       providers: [],
       providerDirectory: payment.providerDirectory,
       retryAfterMs: FINANCE_RETRY_AFTER_MS,
+      onRefundUnresolved: () =>
+        options.logger?.warn("admin_finance.refund_unresolved", {
+          outcome: "failure",
+          errorCode: "REFUND_OUTCOME_UNKNOWN",
+        }),
     });
     return Object.freeze({
       ...(oidc === undefined

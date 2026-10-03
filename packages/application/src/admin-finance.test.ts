@@ -296,6 +296,28 @@ test("mismatched provider output cannot become financial evidence", async () => 
   });
   expect(h.apply).not.toHaveBeenCalled();
 });
+test("a refund still unresolved after provider work raises the alert hook (audit PAY-04)", async () => {
+  const h = setup();
+  const onRefundUnresolved = vi.fn(() => {
+    throw new Error("alert sink unavailable");
+  });
+  const useCases = h.factory({ ...h.deps, onRefundUnresolved });
+  const deferred = {
+    schemaVersion: 1,
+    outcome: "SUCCESS",
+    operationId: other,
+    decision: "DEFERRED",
+    providerEventId: null,
+  };
+  h.claimNext.mockResolvedValueOnce(claim);
+  h.refundPayment.mockRejectedValueOnce(new Error("network"));
+  h.settle.mockResolvedValueOnce(deferred);
+  expect(await useCases.recoverNext()).toMatchObject({ processed: true });
+  expect(onRefundUnresolved).toHaveBeenCalledTimes(1);
+  h.claimNext.mockResolvedValueOnce(claim);
+  await useCases.recoverNext();
+  expect(onRefundUnresolved).toHaveBeenCalledTimes(1);
+});
 test("missing frozen provider records a bounded deferral and never routes to a replacement", async () => {
   const h = setup();
   h.claimNext.mockResolvedValueOnce({ ...claim, adapterKey: "different" });
