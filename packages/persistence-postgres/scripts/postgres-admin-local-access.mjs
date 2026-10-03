@@ -763,6 +763,16 @@ await withEphemeralPostgres(async (config) => {
       ["SELECT pg_sleep(0.01)"],
       ["UPDATE admin_local_logins SET step_attempts=1 WHERE id=$1", [doomed]],
     ]);
+    // The reused recovery code still counts: a correct password alone never clears second-factor failures.
+    equal(
+      (await account(ownerAccount)).failed_attempts,
+      1,
+      "a correct password keeps second-factor failures",
+    );
+    await client.query(
+      "UPDATE admin_local_accounts SET failed_attempts=0,version=version+1 WHERE id=$1",
+      [ownerAccount],
+    );
     const lockFlow = await start(ownerAccount, ownerHash);
     let last;
     for (let i = 0; i < 5; i++)
@@ -791,6 +801,21 @@ await withEphemeralPostgres(async (config) => {
       (await start(ownerAccount, ownerHash)).result.code,
       "ACCOUNT_LOCKED",
       "and on the next sign-in",
+    );
+    await client.query(
+      "UPDATE admin_local_accounts SET locked_until=NULL,failed_attempts=0,version=version+1 WHERE id=$1",
+      [ownerAccount],
+    );
+    for (const wrong of [3, 1]) {
+      const flow = await start(ownerAccount, ownerHash);
+      for (let i = 0; i < wrong; i++)
+        await complete(flow, { kind: "CODE_REJECTED" });
+    }
+    const crossFlow = await start(ownerAccount, ownerHash);
+    equal(
+      (await complete(crossFlow, { kind: "CODE_REJECTED" })).result.code,
+      "ACCOUNT_LOCKED",
+      "the fifth wrong code across sign-ins locks the account",
     );
     await client.query(
       "UPDATE admin_local_accounts SET locked_until=NULL,failed_attempts=0,version=version+1 WHERE id=$1",

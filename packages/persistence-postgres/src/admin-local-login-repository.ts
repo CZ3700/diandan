@@ -214,8 +214,9 @@ export function createAdminLocalLoginRepository(
           account["password_hash"] !== c.verifiedPasswordHash
         )
           return failure("INVALID_CREDENTIALS");
-        await clearCredentialFailures(client, account);
         const needsSecondFactor = account["totp_ciphertext"] !== null;
+        // With a second factor bound, only its success completes the sign-in and clears failures.
+        if (!needsSecondFactor) await clearCredentialFailures(client, account);
         const needsNewPassword = account["must_change_password"] === true;
         const steps = needsSecondFactor || needsNewPassword;
         const [login] = await draftRows(
