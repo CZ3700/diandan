@@ -52,7 +52,7 @@ Cookie 为 `__Host-fan-order`，Secure、HttpOnly、SameSite=Strict、Path=/、�
 
 session TTL 为 1–86400 秒，link TTL 为 1–604800 秒，计数窗口 1–3600 秒，各预算 1–10000；1 秒仅用于实际过期测试，运营值应随真实部署选定。Key rotation 会形成新版本计数桶，应由受控配置流程执行。
 
-应用限流身份来自 TCP 对端，存储前经 KMS 摘要；不会信任客户端 X-Forwarded-For。反向代理/BFF 部署下这会成为该对端共享的应用预算，真实客户端的入口限流应由受信任 ingress 配置，不能通过开启任意转发头信任解决。
+应用限流身份是 Fastify 的 `request.ip`，存储前经 KMS 摘要。未设置 `FAN_SUPPORT_TRUSTED_PROXY_CIDRS` 时它就是 TCP 对端，不信任任何 X-Forwarded-For；设置后只信任列出的精确地址或网段（不接受跳数、`/0` 或过宽网段），从 TCP 对端向左跳过受信任的代理，取第一个不受信任的地址。BFF（查单与送达照片代理）把边缘代理给出的 X-Forwarded-For 原样转发，超过 512 字节时只从左侧丢弃，绝不截掉右侧。staging/production 配置了查单时必须设置该变量（VPC CIDR + CloudFront origin-facing 前缀），否则启动失败；本地体验/stg 由运行时设为回环 `127.0.0.0/8,::1/128`，依赖 Caddy 对不受信任的访客重写 X-Forwarded-For。边缘 WAF 的 ORDER_ACCESS 规则仍按源 IP 另行限流。
 
 ## 验证入口
 

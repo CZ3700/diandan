@@ -55,6 +55,7 @@ export const commerceEnvironment = Object.freeze({
       revokeMax: 10,
     },
   }),
+  FAN_SUPPORT_TRUSTED_PROXY_CIDRS: "10.20.0.0/16",
 });
 
 export const paymentEnvironment = Object.freeze({

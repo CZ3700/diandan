@@ -215,8 +215,8 @@ export function registerOrderAccessRoute(
         )
           return fail(reply, "INVALID_REQUEST");
         try {
-          // No proxy-header trust: deployment proxies may enforce additional ingress limits.
-          const networkIdentity = request.raw.socket.remoteAddress;
+          // The TCP peer, or the nearest address forwarded through FAN_SUPPORT_TRUSTED_PROXY_CIDRS only.
+          const networkIdentity = request.ip;
           if (!networkIdentity) return fail(reply, "TEMPORARY_UNAVAILABLE");
           const rate = orderAccessRateResultSchema.parse(
             await options.useCases.consumeRateLimit({

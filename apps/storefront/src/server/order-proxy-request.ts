@@ -55,6 +55,27 @@ export function parseOrderRoute(
     return { kind: "read", publicOrderId: publicOrderIdSchema.parse(read[1]) };
   throw new Error("Invalid order route");
 }
+const FORWARDED_CHAIN_BYTES = 512;
+/**
+ * The edge proxy's X-Forwarded-For chain for the API, which trusts only its configured proxies.
+ * Proxies append on the right; an oversized chain loses entries from the left, never the right.
+ */
+export function forwardedClientChain(headers: Headers): string | undefined {
+  const kept: string[] = [];
+  let bytes = 0;
+  for (const segment of (headers.get("x-forwarded-for") ?? "")
+    .split(",")
+    .reverse()) {
+    const entry = segment.trim();
+    if (!entry) continue;
+    const size =
+      new TextEncoder().encode(entry).byteLength + (kept.length ? 2 : 0);
+    if (bytes + size > FORWARDED_CHAIN_BYTES) break;
+    kept.unshift(entry);
+    bytes += size;
+  }
+  return kept.length ? kept.join(", ") : undefined;
+}
 export function orderRequestCredentials(
   request: Request,
   operation: OrderOperation,

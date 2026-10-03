@@ -40,5 +40,7 @@ export function localExperienceEnvironment({ config, database, s3 }) {
     FAN_SUPPORT_OBJECT_STORAGE_SECRET_ACCESS_KEY: s3.secretAccessKey,
     FAN_SUPPORT_OBJECT_STORAGE_FORCE_PATH_STYLE: "true",
     FAN_SUPPORT_OBJECT_STORAGE_MAX_UPLOAD_BYTES: "33554432",
+    // Caddy replaces visitor-sent X-Forwarded-For; the BFF relays it and the API trusts only loopback hops.
+    FAN_SUPPORT_TRUSTED_PROXY_CIDRS: "127.0.0.0/8,::1/128",
   };
 }

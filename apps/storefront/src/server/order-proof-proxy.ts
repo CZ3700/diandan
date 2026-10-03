@@ -10,6 +10,7 @@ import {
   resolveServerRuntimeConfig,
 } from "@fan-support/config/server";
 import { matchesConfiguredRequestOrigin } from "./request-origin";
+import { forwardedClientChain } from "./order-proxy-request";
 import { orderAbortable } from "../storefront/order-transport-io";
 import { orderPrivateHeaders } from "../storefront/order-transport-validation";
 
@@ -133,6 +134,7 @@ export async function proxyOrderProofRequest(
       return failure(400, "INVALID_REQUEST");
     const token = orderCookie(request);
     if (!token) return failure(401, "ACCESS_DENIED");
+    const forwarded = forwardedClientChain(request.headers);
     const upstream = await orderAbortable(
       (options.fetcher ?? fetch)(
         new URL(
@@ -144,6 +146,7 @@ export async function proxyOrderProofRequest(
           headers: {
             origin: options.siteOrigin,
             cookie: `${cookieName}=${token}`,
+            ...(forwarded ? { "x-forwarded-for": forwarded } : {}),
           },
           cache: "no-store",
           credentials: "omit",

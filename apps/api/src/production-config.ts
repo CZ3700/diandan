@@ -13,6 +13,7 @@ import {
 } from "./admin-runtime-config.js";
 import { resolveCartRuntimeConfig } from "./cart-runtime-config.js";
 import { resolveOrderAccessRuntimeConfig } from "./order-access-runtime-config.js";
+import { resolveTrustedProxyCidrs } from "./trusted-proxy-config.js";
 import {
   resolvePaymentDeploymentConfig,
   type PaymentDeploymentConfig,
@@ -60,6 +61,7 @@ export function resolveApiProductionConfig(
     server.siteOrigin,
   );
   const admin = resolveAdminApiRuntimeConfig(environment);
+  const trustedProxies = resolveTrustedProxyCidrs(environment);
   if (keyManagement === undefined) {
     if (admin !== undefined)
       throw new TypeError("Administration requires key management");
@@ -68,6 +70,14 @@ export function resolveApiProductionConfig(
     if (payment.runtime !== undefined)
       throw new TypeError("Payment requires key management");
   }
+  // Deployed traffic always arrives through the BFF and edge proxies; untrusted, every fan would share one bucket.
+  if (
+    orderAccess !== undefined &&
+    trustedProxies === undefined &&
+    (server.deploymentEnvironment === "staging" ||
+      server.deploymentEnvironment === "production")
+  )
+    throw new TypeError("Order access requires trusted proxy addresses");
   return Object.freeze({
     siteOrigin: server.siteOrigin,
     databaseUrl: database.url,

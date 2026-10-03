@@ -117,8 +117,12 @@ async function setup(
     read(command: unknown): Promise<unknown>;
     withdraw(command: unknown): Promise<unknown>;
   },
+  trustProxy?: string[],
 ) {
-  const app = Fastify({ logger: false });
+  const app = Fastify({
+    logger: false,
+    ...(trustProxy === undefined ? {} : { trustProxy }),
+  });
   const keyManagement = {
     async computeBlindIndex(command: ComputeBlindIndexCommand) {
       return {
@@ -392,6 +396,34 @@ test("rate buckets derive from the actual peer, ignoring untrusted forwarded add
     await send("read", { remoteAddress: "127.0.0.2" });
     expect(useCases.consumeRateLimit.mock.lastCall![0]).not.toEqual(first);
     expect(JSON.stringify(first)).not.toContain("127.0.0.1");
+  } finally {
+    await app.close();
+  }
+});
+
+test("behind configured proxies each fan gets a bucket and spoofed forwarded entries change nothing", async () => {
+  const { app, send, useCases } = await setup(undefined, undefined, [
+    "127.0.0.0/8",
+    "10.0.0.0/8",
+  ]);
+  const bucket = async (remoteAddress: string, forwarded?: string) => {
+    await send("read", {
+      remoteAddress,
+      ...(forwarded === undefined
+        ? {}
+        : { headers: { "x-forwarded-for": forwarded } }),
+    });
+    return useCases.consumeRateLimit.mock.lastCall![0];
+  };
+  try {
+    const fan = await bucket("127.0.0.1", "203.0.113.7");
+    expect(await bucket("127.0.0.1", "198.51.100.9")).not.toEqual(fan);
+    expect(await bucket("127.0.0.1", "192.0.2.1, 203.0.113.7")).toEqual(fan);
+    expect(await bucket("127.0.0.1", "203.0.113.7, 10.1.2.3")).toEqual(fan);
+    const outsider = await bucket("198.51.100.20");
+    expect(await bucket("198.51.100.20", "203.0.113.7")).toEqual(outsider);
+    expect(outsider).not.toEqual(fan);
+    expect(JSON.stringify(fan)).not.toContain("203.0.113.7");
   } finally {
     await app.close();
   }

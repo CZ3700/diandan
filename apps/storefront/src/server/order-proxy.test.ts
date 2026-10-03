@@ -105,7 +105,7 @@ test("the four allowlisted routes isolate credentials and expose only validated 
     const response = await run(
       req(path, method, body, {
         authorization: "private",
-        "x-forwarded-for": "untrusted",
+        "x-forwarded-for": "192.0.2.1, 203.0.113.7",
       }),
       fetcher,
     );
@@ -125,10 +125,28 @@ test("the four allowlisted routes isolate credentials and expose only validated 
     expect(forwarded.get("cookie")).toBe(cookie);
     expect(forwarded.get("x-csrf-token")).toBe(csrf);
     expect(forwarded.get("authorization")).toBeNull();
-    expect(forwarded.get("x-forwarded-for")).toBeNull();
+    expect(forwarded.get("x-forwarded-for")).toBe("192.0.2.1, 203.0.113.7");
     expect(forwarded.get("origin")).toBe(siteOrigin);
   }
 });
+test("the edge forwarded chain is kept from the right within 512 bytes, so spoofed prefixes are the only loss", async () => {
+  const { forwardedClientChain } = await import("./order-proxy-request");
+  const chain = (value?: string) =>
+    forwardedClientChain(
+      new Headers(value === undefined ? {} : { "x-forwarded-for": value }),
+    );
+  expect(chain()).toBeUndefined();
+  expect(chain(" , ")).toBeUndefined();
+  expect(chain(" 203.0.113.7 ")).toBe("203.0.113.7");
+  expect(chain("192.0.2.1,, 203.0.113.7")).toBe("192.0.2.1, 203.0.113.7");
+  const spoofed = Array.from({ length: 60 }, (_, i) => `198.51.100.${i}`);
+  const kept = chain(`${spoofed.join(", ")}, 203.0.113.7, 10.20.0.5`)!;
+  expect(new TextEncoder().encode(kept).byteLength).toBeLessThanOrEqual(512);
+  expect(kept.endsWith(", 198.51.100.59, 203.0.113.7, 10.20.0.5")).toBe(true);
+  expect(spoofed.some((entry) => kept.startsWith(`${entry}, `))).toBe(true);
+  expect(chain(`${"x".repeat(600)}, 203.0.113.7`)).toBe("203.0.113.7");
+});
+
 test("invalid paths, methods, queries, origin, metadata, schemas and cookie/CSRF ambiguity never dispatch", async () => {
   const fetcher = vi.fn<typeof fetch>(async () => granted());
   const invalid = [

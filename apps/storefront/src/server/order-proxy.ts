@@ -6,6 +6,7 @@ import {
 } from "@fan-support/config/server";
 import { matchesConfiguredRequestOrigin } from "./request-origin";
 import {
+  forwardedClientChain,
   orderRequestCredentials,
   parseOrderRoute,
 } from "./order-proxy-request";
@@ -107,6 +108,8 @@ export async function proxyOrderRequest(
       return failure(403, "ACCESS_DENIED");
     }
     headers.set("origin", options.siteOrigin);
+    const forwarded = forwardedClientChain(request.headers);
+    if (forwarded) headers.set("x-forwarded-for", forwarded);
     if (body !== undefined) headers.set("content-type", "application/json");
     const path = incoming.pathname.replace(/^\/api\/storefront\//u, "/api/v1/");
     if (abort.signal.aborted) return failure();

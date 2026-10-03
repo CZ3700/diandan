@@ -72,6 +72,20 @@ test("relays one private photo with only the order cookie and inert image header
   });
 });
 
+test("photo reads relay the edge forwarded chain so the API rate-limits each fan separately", async () => {
+  const fetcher = vi.fn<typeof fetch>(async () => image());
+  const response = await run(
+    req(path, { "x-forwarded-for": "192.0.2.1, 203.0.113.7" }),
+    fetcher,
+  );
+  expect(response.status).toBe(200);
+  expect(fetcher.mock.calls[0]![1]!.headers).toEqual({
+    origin: siteOrigin,
+    cookie: `__Host-fan-order=${orderTestToken}`,
+    "x-forwarded-for": "192.0.2.1, 203.0.113.7",
+  });
+});
+
 test("malformed, cross-site or credential-free requests never reach the API", async () => {
   const fetcher = vi.fn<typeof fetch>(async () => image());
   for (const [request, status] of [

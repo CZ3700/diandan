@@ -47,6 +47,39 @@ test("surfaces that encrypt or authenticate refuse to start without key manageme
     ).toThrow(message);
 });
 
+test("deployed order access refuses to start without trusted proxies, so rate buckets never collapse onto the BFF", () => {
+  const untrusted = Object.fromEntries(
+    Object.entries(completeProductionEnvironment).filter(
+      ([name]) => name !== "FAN_SUPPORT_TRUSTED_PROXY_CIDRS",
+    ),
+  );
+  for (const tier of ["staging", "production"])
+    expect(() =>
+      resolveApiProductionConfig({
+        ...untrusted,
+        FAN_SUPPORT_DEPLOYMENT_ENV: tier,
+      }),
+    ).toThrow("Order access requires trusted proxy addresses");
+  expect(
+    resolveApiProductionConfig({
+      ...completeProductionEnvironment,
+      FAN_SUPPORT_DEPLOYMENT_ENV: "production",
+    }).orderAccess,
+  ).toBeDefined();
+  expect(() =>
+    resolveApiProductionConfig({
+      ...completeProductionEnvironment,
+      FAN_SUPPORT_TRUSTED_PROXY_CIDRS: "0.0.0.0/0",
+    }),
+  ).toThrow("Invalid trusted proxy configuration");
+  expect(
+    resolveApiProductionConfig({
+      ...coreEnvironment,
+      FAN_SUPPORT_DEPLOYMENT_ENV: "production",
+    }).orderAccess,
+  ).toBeUndefined();
+});
+
 test("unknown or retired deployment keys fail before any surface is considered", () => {
   expect(() =>
     resolveApiProductionConfig({

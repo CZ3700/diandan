@@ -167,6 +167,7 @@ import {
 } from "./payment-webhook-route.js";
 import { assertApiRuntimeConfig } from "./runtime-config.js";
 import { SafeHttpExceptionFilter } from "./safe-http-exception.filter.js";
+import { apiAdapterOptions } from "./trusted-proxy-config.js";
 
 export const apiNestApplicationOptions = Object.freeze({
   abortOnError: false,
@@ -317,7 +318,7 @@ export async function createApiApplication(
 ): Promise<NestFastifyApplication> {
   assertApiRuntimeConfig(environment);
   const logger = options.logger ?? createStructuredLogger({ service: "api" });
-  const adapter = new FastifyAdapter({ logger: false });
+  const adapter = new FastifyAdapter(apiAdapterOptions(environment));
   registerFastifyObservability(adapter.getInstance(), {
     service: "api",
     logger,
